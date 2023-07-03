@@ -7,7 +7,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/re
 import { ActionTooltip } from "../../../../components/ActionTooltip";
 import { queryKeys } from "../../../../constants";
 import { getInvitedUserTypeLabel } from "../../helpers";
-import { cancelInvitation, removeUser, resendInfo, resetMFA } from "../InviteUser.services";
+import { cancelInvitation, removeUser, resendInfo, reset2FA } from "../InviteUser.services";
 import { IUserNew } from "../User.types";
 import * as Styles from "./IvitedUsersTable.styles";
 import { IIvitedUsersTableProps } from "./IvitedUsersTable.types";
@@ -17,7 +17,7 @@ const columnHelper = createColumnHelper<IUserNew>();
 export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
   const { mutate: doCancelInvitation } = useMutation(cancelInvitation);
   const { mutate: doRemoveUser } = useMutation(removeUser);
-  const { mutate: doResetMFA } = useMutation(resetMFA);
+  const { mutate: doReset2FA } = useMutation(reset2FA);
   const { mutate: doResendInfo } = useMutation(resendInfo);
   const client = useQueryClient();
   const { showErrorToast, showSuccessToast } = useToast();
@@ -88,20 +88,20 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                 </Styles.ButtonActions>
                 <Styles.ButtonActions
                   onClick={() => {
-                    console.log("Reset MFA");
-                    doResetMFA(id, {
+                    console.log("Reset 2FA");
+                    doReset2FA(id, {
                       onSuccess: () => {
-                        showSuccessToast("MFA is successfully reset ");
+                        showSuccessToast("2FA is successfully reset ");
                         client.invalidateQueries([queryKeys.administration.users]).then(() => {
                         });
                       },
                       onError: () => {
-                        showErrorToast("Error while trying to Reset MFA ");
+                        showErrorToast("Error while trying to Reset 2FA ");
                       }
                     });
                   }}
                 >
-                  Reset MFA
+                  Reset 2FA
                 </Styles.ButtonActions>
                 <Styles.ButtonActions
                   onClick={() => {

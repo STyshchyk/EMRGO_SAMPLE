@@ -1,14 +1,14 @@
 import * as React from "react";
-import { FC } from "react";
-import { Link, Outlet } from "react-router-dom";
+import {FC} from "react";
+import {Link, Outlet} from "react-router-dom";
 
-import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
-import { ensureNotNull, useInternalMatchedPathTabs } from "@emrgo-frontend/utils";
+import {Badge, Tab, Tabs} from "@emrgo-frontend/shared-ui";
+import {ensureNotNull, useInternalMatchedPathTabs} from "@emrgo-frontend/utils";
 
 import routes from "../../constants/routes";
-import { useAdministrationContext } from "./Administration.provider";
+import {useAdministrationContext} from "./Administration.provider";
 import * as Styles from "./Administration.styles";
-import { IAdministrationProps } from "./Administration.types";
+import {IAdministrationProps} from "./Administration.types";
 
 
 const administrationTab = [
@@ -46,7 +46,6 @@ export const AdministrationComponent: FC<IAdministrationProps> = ({}: IAdministr
           </Tab>
         ))}
       </Tabs>
-
       <Outlet />
     </Styles.Administration>
   );

@@ -80,6 +80,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
       <Styles.Wrapper>
         <Formik
           enableReinitialize={!!modifyData}
+
           // In case if modify mode is selected populate values automatically
           initialValues={{
             statusId: modifyData?.statusId ?? null,
@@ -211,16 +212,15 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                         // isDisabled={modifyData}
                         value={values.issuer}
                         placeholder="Select issuer"
+                        component={FormikInputCustom}
                         type={"select"}
                         getOptionLabel={(option: any) => option.name}
                         getOptionValue={(option: any) => option}
-                        onChange={(selected: any) => {
-                          console.log(selected);
-                          setFieldValue("issuer", selected);
-                          setFieldValue("issuerJurisdiction", selected.jurisdiction);
-                          setFieldValue("industry", selected.description);
+                        onChange={async (selected: any) => {
+                          await setFieldValue("issuer", selected);
+                          await setFieldValue("issuerJurisdiction", selected.jurisdiction);
+                          await setFieldValue("industry", selected.description);
                         }}
-                        component={FormikInputCustom}
                       />
                     </Styles.TwoCol>
                     <Styles.TwoCol>
@@ -332,6 +332,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                           as={"input"}
                           options={csdData}
                           value={values.csd}
+                          type={"select"}
                           getOptionLabel={(option: any) => option.name}
                           getOptionValue={(option: any) => option}
                           onChange={(selected: any) => {
@@ -340,7 +341,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                           }}
 
                           label={"CSD"}
-                          component={MySelect}
+                          component={FormikInputCustom}
                         />
                       </div>
                     </Styles.TwoCol>

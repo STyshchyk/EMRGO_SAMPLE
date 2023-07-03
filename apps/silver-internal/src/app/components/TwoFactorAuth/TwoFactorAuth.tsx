@@ -1,21 +1,21 @@
-import { FC } from "react";
+import {FC} from "react";
 import QRCode from "react-qr-code";
-import { Link, useLocation } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
-import { Button, useToast } from "@emrgo-frontend/shared-ui";
-import { useMutation } from "@tanstack/react-query";
-import { Formik } from "formik";
+import {Button, useToast} from "@emrgo-frontend/shared-ui";
+import {useMutation} from "@tanstack/react-query";
+import {Formik} from "formik";
 import * as Yup from "yup";
 
 import routes from "../../constants/routes";
-import { useUserStore } from "../../pages/Authentication/store";
-import { useMFAModal } from "../../pages/Primaries/store/store";
-import { enableMFA, verifyMFA } from "../../services";
-import { Heading, OneCol, SubHeading } from "../Form";
-import { SixDigitCodeInput } from "../SixDigitCodeInput";
-import { MFATYPE } from "../TwoFAstepper/TwoFAstepper.types";
+import {useUserStore} from "../../pages/Authentication/store";
+import {useMFAModal} from "../../pages/Primaries/store/store";
+import {enableMFA, verifyMFA} from "../../services";
+import {Heading, OneCol, SubHeading} from "../Form";
+import {SixDigitCodeInput} from "../SixDigitCodeInput";
+import {MFATYPE} from "../TwoFAstepper/TwoFAstepper.types";
 import * as Styles from "./TwoFactorAuth.styles";
-import { ITwoFactorAuthProps } from "./TwoFactorAuth.types";
+import {ITwoFactorAuthProps} from "./TwoFactorAuth.types";
 
 export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, secret, mode, otpauth_url }) => {
   const { modalActions } = useMFAModal();
@@ -62,7 +62,7 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, secret, mode,
           <form onSubmit={handleSubmit}>
             <Styles.MainWrapper isVisible={mode === 1}>
               <Styles.LeftColumn isVisible={mode === 1}>
-                <Heading align={"center"}>Setup Two Factor Authentication (MFA)</Heading>
+                <Heading align={"center"}>Setup Two Factor Authentication (2FA)</Heading>
                 <SubHeading align={"center"}>
                   Scan the following QR code with a two-factor authentication app on your phone.
                 </SubHeading>
@@ -76,7 +76,7 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, secret, mode,
                 </div>
                 <SubHeading align={"center"}>
                   Download on of the supported applications through your mobile phone’s App Store: Google
-                  Authenticator, Microsoft Authenticator, Authy or any other MFA supported app that you
+                  Authenticator, Microsoft Authenticator, Authy or any other 2FA supported app that you
                   currently use
                 </SubHeading>
               </Styles.LeftColumn>

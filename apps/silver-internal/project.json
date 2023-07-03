@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/silver-internal"
+        "outputPath": "dist/apps/internal-ui"
       },
       "configurations": {
         "development": {

@@ -3,10 +3,7 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 
-import {
-  IInviteUserContex,
-  IInviteUserValues
-} from "./InviteUser.types";
+import { IInviteUserContex, IInviteUserValues } from "./InviteUser.types";
 
 const InviteUserContext = createContext<IInviteUserContex | null>(null);
 
@@ -20,6 +17,7 @@ const InviteUserSchema = Yup.object().shape({
     .max(50, "Second Name is Too Long!")
     .required("Second Name is Required"),
   email: Yup.string().email("Enter valid email").required("Email ID is Required"),
+  role: Yup.object().required("Select role")
 });
 export const InviteUserProvider = ({ children }: PropsWithChildren) => {
   /**
@@ -37,7 +35,7 @@ export const InviteUserProvider = ({ children }: PropsWithChildren) => {
     firstName: "",
     lastName: "",
     role: null,
-    email: "",
+    email: ""
   };
 
   /**
@@ -51,18 +49,19 @@ export const InviteUserProvider = ({ children }: PropsWithChildren) => {
    * You can also use this function to navigate to the next page.
    *
    */
-  const onSubmit = (values: IInviteUserValues, actions: FormikHelpers<IInviteUserValues>) => {};
+  const onSubmit = (values: IInviteUserValues, actions: FormikHelpers<IInviteUserValues>) => {
+  };
 
   const form = useFormik<IInviteUserValues>({
     initialValues,
     validateOnMount: true,
     validationSchema: InviteUserSchema,
-    onSubmit,
+    onSubmit
   });
 
   const state: IInviteUserContex = {
     form,
-    validationSchema: InviteUserSchema,
+    validationSchema: InviteUserSchema
   };
 
   return <InviteUserContext.Provider value={state}>{children}</InviteUserContext.Provider>;

@@ -4,17 +4,18 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-import { ErrorIcon as ErrorIconBase } from "../Icons";
+import { Error as GlobalError, ErrorIcon as GlobalErrorIcon } from "../Input/Input.styles";
 
-export const MySelect = styled.div`
-  /* Layout */
-  /* Element Styles */
-  /* Text styles */
+export const MySelect = styled.div<{ $maxWidth?: number }>`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: ${rem(8)};
+  max-width: ${({ $maxWidth }) => $maxWidth && rem($maxWidth)};
 `;
-const ReactSelectElement = styled(Select)`
+const ReactSelectElement = styled(Select)``;
 
-`;
-export const Error = styled.div`
+export const Error = styled(GlobalError)`
   /* Layout */
   display: flex;
   gap: ${rem(4)};
@@ -42,7 +43,7 @@ export const Error = styled.div`
   }
 `;
 
-export const ErrorIcon = styled(ErrorIconBase)`
+export const ErrorIcon = styled(GlobalErrorIcon)`
   width: ${rem(24)};
   height: ${rem(24)};
 
@@ -50,11 +51,11 @@ export const ErrorIcon = styled(ErrorIconBase)`
   ${({ theme }) => css`
     ${theme.mode === "light" &&
     css`
-      color: ${getTheme("colors.orange")};
+      color: ${getTheme("colors.red")};
     `}
     ${theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.orange")};
+      color: ${getTheme("colors.red")};
     `}
   `}
 `;

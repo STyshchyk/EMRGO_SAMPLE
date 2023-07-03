@@ -1,10 +1,11 @@
 import React from "react";
 
-import { FormikInput, IDropdownItem, MySelect, useToast } from "@emrgo-frontend/shared-ui";
+import { FormikInput, IDropdownItem, useToast } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
+import { FormikInputCustom } from "../../../../components/FormikInput";
 import { queryKeys } from "../../../../constants";
 import { TInvitedUserTypes } from "../../Administration.types";
 import { useInviteUserModal } from "../../store";
@@ -68,7 +69,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
           formikHelpers.setSubmitting(false);
         }}
       >
-        {({ values, setFieldValue, errors }) => (
+        {({ values, setFieldValue, errors, setErrors, setFieldError }) => (
           <Form className={"invite-user"}>
             <Styles.TwoCol>
               <label htmlFor="firstName">First name</label>
@@ -107,9 +108,13 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
               <label htmlFor="role">Select role</label>
               <Field
                 name="role"
-                component={MySelect}
+                component={FormikInputCustom}
+                type={"select"}
+                id={"role"}
+                error={errors?.role ?? ""}
                 onChange={(selected: TInvitedUserTypes) => {
                   setFieldValue("role", selected);
+                  console.log(errors);
                 }}
                 options={filterTypes2}
                 placeholder="Select role"

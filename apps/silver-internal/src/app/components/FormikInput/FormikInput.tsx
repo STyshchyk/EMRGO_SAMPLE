@@ -1,7 +1,6 @@
-import { Input } from "@emrgo-frontend/shared-ui";
+import { Input, MySelect } from "@emrgo-frontend/shared-ui";
 
 import { InputFile } from "../InputFile";
-import { MySelect } from "../MySelect";
 import { IFormikInputProps } from "./FormikInput.types";
 
 export const FormikInputCustom = <T, >({

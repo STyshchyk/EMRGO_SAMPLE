@@ -106,5 +106,8 @@ export const OpportunitySchema = Yup.object().shape({
       if (statusId === opStatus.open)
         return openEndDate >= minValidDateTommorow;
       else return true;
-    })
+    }),
+  issuer: Yup.object().required("required"),
+  sellSide: Yup.object().required("required"),
+  csd: Yup.object().required("required")
 });

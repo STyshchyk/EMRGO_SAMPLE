@@ -1,9 +1,19 @@
-import { getTheme } from "@emrgo-frontend/theme";
-import { rem, rgba } from "polished";
-import styled, { css } from "styled-components";
+import {getTheme} from "@emrgo-frontend/theme";
+import {rem, rgba} from "polished";
+import styled, {css} from "styled-components";
 
-import { CheckNotificationIcon as CheckNotificationIconBase, ErrorIcon as ErrorIconBase } from "../Icons";
-import { TMyInputVariants } from "./MyInput.types";
+import {
+  CheckNotificationIcon as CheckNotificationIconBase,
+  ErrorIcon as ErrorIconBase,
+} from "../Icons";
+import {
+  CheckNotificationIcon as GlobalCheckNotificationIcon,
+  Error as GlobalError,
+  ErrorIcon as GlobalErrorIcon,
+  InputContainer as GlobalInputContainer,
+  Label as GlobalLabel,
+} from "../Input/Input.styles";
+import {TMyInputVariants} from "./MyInput.types";
 
 export const Wrapper = styled.div<{ $maxWidth?: number }>`
   /* Layout */
@@ -13,10 +23,10 @@ export const Wrapper = styled.div<{ $maxWidth?: number }>`
   gap: ${rem(8)};
 
   /* Element Styles */
-  max-width: ${({ $maxWidth }) => $maxWidth && rem($maxWidth)};
+  max-width: ${({$maxWidth}) => $maxWidth && rem($maxWidth)};
 `;
 
-export const InputContainer = styled.div<{
+export const InputContainer = styled(GlobalInputContainer)<{
   $active: boolean;
   $hasFocus: boolean;
   $error: boolean;
@@ -25,6 +35,7 @@ export const InputContainer = styled.div<{
 }>`
   /* Layout */
   display: flex;
+  height: auto;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -35,67 +46,8 @@ export const InputContainer = styled.div<{
   border-radius: ${rem(4)};
   transition: all 0.2s ease-in-out;
 
-  /* Variants */
-  ${({ theme, variant = "default" }) =>
-    css`
-      ${theme.mode === "light" &&
-      css`
-        background: ${getTheme("colors.white.5")};
-        border: 1px solid ${getTheme("colors.strokes.light")};
-      `}
-      ${theme.mode === "dark" &&
-      css`
-        background: ${getTheme("colors.white.5")};
-        border: 1px solid ${getTheme("colors.strokes.dark")};
-      `}
-      ${variant === "signup" &&
-      css`
-        background: ${getTheme("colors.white.100")};
-        border: 1px solid ${getTheme("colors.strokes.light")};
-      `}
-    `} /* Focus States */ ${({ $hasFocus, theme }) =>
-    $hasFocus &&
-    css`
-      ${theme.mode === "light" &&
-      css`
-        border: 1px solid ${getTheme("colors.green5")};
-      `}
-      ${theme.mode === "dark" &&
-      css`
-        border: 1px solid ${getTheme("colors.green5")};
-      `}
-    `} /* Error States */ ${(props) =>
-    props.$error &&
-    css`
-      ${props.theme.mode === "light" &&
-      css`
-        border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.100")};
-      `}
-
-      ${props.theme.mode === "dark" &&
-      css`
-        border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.10")};
-      `}
-
-      ${props.variant === "signup" &&
-      css`
-        border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.100")};
-      `}
-    `}
-
-  ${({ $disabled }) => {
+  /* Error States */
+  ${({$disabled}) => {
     if ($disabled) {
       return css`
         opacity: 0.75;
@@ -111,7 +63,7 @@ export const InputContainerWrapper = styled.div`
   flex-grow: 1;
 `;
 
-export const Label = styled.label<{
+export const Label = styled(GlobalLabel)<{
   $active: boolean;
   $hasFocus: boolean;
   $error: boolean;
@@ -126,37 +78,6 @@ export const Label = styled.label<{
   /** Interaction */
   transition: all 0.2s ease-in-out;
   transform-origin: left top;
-
-  /* Variants */
-  ${({ theme, variant = "default" }) => css`
-    ${theme.mode === "light" &&
-    css`
-      color: ${getTheme("colors.black.60")};
-    `}
-    ${theme.mode === "dark" &&
-    css`
-      color: ${getTheme("colors.white.60")};
-    `}
-    ${variant === "signup" &&
-    css`
-      color: ${getTheme("colors.black.60")};
-    `}
-  `} /* Active States */ ${({ $active }) =>
-    !$active &&
-    css`
-      transform: translateY(${rem(5)}) scale(1.4);
-    `} /* Error State */ ${({ $error, theme }) =>
-    $error &&
-    css`
-      ${theme.mode === "light" &&
-      css`
-        color: ${getTheme("colors.orange")};
-      `}
-      ${theme.mode === "dark" &&
-      css`
-        color: ${getTheme("colors.orange")};
-      `}
-    `}
 `;
 
 export const Input = styled.textarea<{
@@ -172,7 +93,7 @@ export const Input = styled.textarea<{
   /* Element Styles */
   border: none;
   background: transparent;
-  max-width: ${({ $maxWidth }) => $maxWidth && rem($maxWidth - 20)};
+  max-width: ${({$maxWidth}) => $maxWidth && rem($maxWidth - 20)};
   /* Text styles */
   font-style: normal;
   font-weight: 500;
@@ -181,7 +102,7 @@ export const Input = styled.textarea<{
 
   /* Variants */
 
-  ${({ theme, variant = "default" }) => css`
+  ${({theme, variant = "default"}) => css`
     ${theme.mode === "light" &&
     css`
       color: ${getTheme("colors.black.100")};
@@ -203,7 +124,7 @@ export const Input = styled.textarea<{
   }
 
   /* States */
-  ${({ $disabled }) => {
+  ${({$disabled}) => {
     if ($disabled) {
       return css`
         cursor: default;
@@ -219,7 +140,7 @@ export const HelperText = styled.div<{ variant?: TMyInputVariants }>`
   align-items: center;
 
   /* Font Styles */
-  ${getTheme("typography.medium.02Tight")} /* Variants */ ${({ theme, variant = "default" }) => css`
+  ${getTheme("typography.medium.02Tight")} /* Variants */ ${({theme, variant = "default"}) => css`
     ${theme.mode === "light" &&
     css`
       color: ${getTheme("colors.black.50")};
@@ -235,7 +156,7 @@ export const HelperText = styled.div<{ variant?: TMyInputVariants }>`
   `}
 `;
 
-export const Error = styled.div`
+export const Error = styled(GlobalError)`
   /* Layout */
   display: flex;
   gap: ${rem(4)};
@@ -248,45 +169,22 @@ export const Error = styled.div`
   line-height: ${rem(24)};
 
   /* Variants */
-
-  span {
-    ${({ theme }) => css`
-      ${theme.mode === "light" &&
-      css`
-        color: ${getTheme("colors.black.80")};
-      `}
-      ${theme.mode === "dark" &&
-      css`
-        color: ${getTheme("colors.white.80")};
-      `}
-    `}
-  }
 `;
 
-export const ErrorIcon = styled(ErrorIconBase)`
+export const ErrorIcon = styled(GlobalErrorIcon)`
   width: ${rem(24)};
   height: ${rem(24)};
 
   /* Variants */
-  ${({ theme }) => css`
-    ${theme.mode === "light" &&
-    css`
-      color: ${getTheme("colors.orange")};
-    `}
-    ${theme.mode === "dark" &&
-    css`
-      color: ${getTheme("colors.orange")};
-    `}
-  `}
 `;
 
-export const CheckNotificationIcon = styled(CheckNotificationIconBase)<{
+export const CheckNotificationIcon = styled(GlobalCheckNotificationIcon)<{
   variant?: TMyInputVariants;
 }>`
   font-size: ${rem(24)};
 
   /* Variants */
-  ${({ theme, variant = "default" }) => css`
+  ${({theme, variant = "default"}) => css`
     ${theme.mode === "light" &&
     css`
       color: ${getTheme("colors.green3")};

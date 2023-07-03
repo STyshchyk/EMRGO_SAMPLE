@@ -1,6 +1,6 @@
 import {
   CheckNotificationIcon as CheckNotificationIconBase,
-  ErrorIcon as ErrorIconBase
+  ErrorIcon as ErrorIconBase,
 } from "@emrgo-frontend/shared-ui";
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
@@ -117,6 +117,7 @@ export const FileInput = styled.input`
 
 export const MyError = styled.div`
   /* Layout */
+  padding-top: 0.5rem;
   display: flex;
   gap: ${rem(4)};
   align-items: center;
@@ -126,6 +127,8 @@ export const MyError = styled.div`
   font-weight: 500;
   font-size: ${rem(12)};
   line-height: ${rem(24)};
+
+  /* Variants */
 
   span {
     ${({ theme }) => css`
@@ -142,9 +145,20 @@ export const MyError = styled.div`
 `;
 
 export const MyErrorIcon = styled(ErrorIconBase)`
-  color: ${getTheme("colors.orange")};
   width: ${rem(24)};
   height: ${rem(24)};
+
+  /* Variants */
+  ${({ theme }) => css`
+    ${theme.mode === "light" &&
+    css`
+      color: ${getTheme("colors.red")};
+    `}
+    ${theme.mode === "dark" &&
+    css`
+      color: ${getTheme("colors.orange")};
+    `}
+  `}
 `;
 
 export const MyCheckNotificationIcon = styled(CheckNotificationIconBase)`

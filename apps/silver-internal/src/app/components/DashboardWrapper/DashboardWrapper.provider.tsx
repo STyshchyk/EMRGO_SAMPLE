@@ -26,7 +26,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const user = useUserStore(state => state.user);
   const removeUser = useUserStore(state => state.removeUser);
   const [clientTermsDocumentURL, setClientTermsDocumentURL] = useState("");
-  const [showClientTermsModal, setShowClientTermsModal] = useState(!user?.hasAcceptedClientTerms);
+  const [showClientTermsModal, setShowClientTermsModal] = useState(false);
   const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
   const [showMFAModal, setShowMFAModal] = useState(true);
   const { disable } = useDarkMode();

@@ -23,7 +23,7 @@ export const removeUser = (id: string) => {
   });
 };
 
-export const resetMFA = (id: string) => {
+export const reset2FA = (id: string) => {
   return dashboardApi({
     method: "PUT",
     url: `/v2/internal/users/${id}/mfa/reset`
