@@ -1,0 +1,1 @@
+export { BannerSlideDescription } from "./BannerSlideDescription";

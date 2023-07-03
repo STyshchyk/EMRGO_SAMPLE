@@ -1,0 +1,13 @@
+{
+  "semi": true,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "importOrder": ["^react", "<THIRD_PARTY_MODULES>", "^[~]", "^[/]", "^[./]"],
+  "importOrderBuiltinModulesToTop": true,
+  "importOrderCaseInsensitive": true,
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+  "importOrderMergeDuplicateImports": true,
+  "importOrderCombineTypeAndValueImports": true,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}

@@ -1,0 +1,8 @@
+# !FOR DEVELOPMENT ONLY!
+version: '3.8'
+services:
+  web:
+    image: registry.gitlab.com/wethaq_sukuk/emrgo-frontend:patch-nx-build-process-e357c06a-silver-internal
+    container_name: emrgo-silver-internal
+    ports:
+      - 5000:80

@@ -1,0 +1,1 @@
+export { BannerSlideTitle } from "./BannerSlideTitle";

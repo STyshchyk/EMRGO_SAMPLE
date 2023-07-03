@@ -1,0 +1,14 @@
+# docker-compose.yml (Base)
+services:
+  emrgo-client-primaries-web:
+    image: $DOCKER_REGISTRY_IMAGE:$DOCKER_IMMUTABLE_IMAGE_TAG
+    restart: always
+    healthcheck:
+      test: 'curl -f http://localhost/healthcheck || exit 1'
+    networks:
+      - nginx_reverse_proxy_network
+    security_opt:
+      - 'no-new-privileges:true'
+networks:
+  nginx_reverse_proxy_network:
+    external: true

@@ -1,0 +1,22 @@
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+
+import { I{{pascalCase name}}Context } from "./{{pascalCase name}}.types";
+
+const {{pascalCase name}}Context = createContext<I{{pascalCase name}}Context | null>(null);
+
+/**
+  * @description
+  * @param {PropsWithChildren} { children }
+  * @returns {JSX.Element}
+  * Integration point for the {{pascalCase name}} template. Put any integration logic here.
+  * For example, if you need to fetch data from an API, you can do that here.
+  *
+  * TODO: Implement this code.
+  */
+export const {{pascalCase name}}Provider = ({ children }: PropsWithChildren) => {
+  const state: I{{pascalCase name}}Context = {};
+
+  return <{{pascalCase name}}Context.Provider value={state}>{children}</{{pascalCase name}}Context.Provider>
+};
+
+export const use{{pascalCase name}}Context = () => useContext({{pascalCase name}}Context);

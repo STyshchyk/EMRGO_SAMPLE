@@ -1,0 +1,88 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx", "@typescript-eslint", "simple-import-sort", "sort-destructure-keys"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": [
+        "plugin:@nx/javascript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {},
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      }
+    }
+  ],
+  "rules": {
+    "linebreak-style": ["error", "unix"],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-empty-pattern": "off",
+    "semi": ["error", "always"],
+    "react/display-name": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "lodash",
+        "message": "Please import functions directly lodash/some-function (https://lodash.com/per-method-packages)"
+      }
+    ],
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [["^\\u0000"], ["^react"], ["^@?\\w"], ["^~"], ["^\\."]]
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "prefix": ["I"]
+      },
+      {
+        "selector": "typeAlias",
+        "format": ["PascalCase"],
+        "prefix": ["T"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "name": "client-authentication",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/client-authentication/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/client-authentication"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "client-authentication:build",
+        "port": 3001
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "client-authentication:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "client-authentication:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "client-authentication:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "client-authentication:build:development"
+        },
+        "production": {
+          "buildTarget": "client-authentication:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/client-authentication"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/client-authentication"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/client-authentication/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "client-authentication:build"
+      }
+    }
+  },
+  "tags": []
+}

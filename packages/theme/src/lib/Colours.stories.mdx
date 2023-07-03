@@ -1,0 +1,82 @@
+import { ColorItem, ColorPalette, Meta } from "@storybook/blocks";
+import { useDarkMode } from "storybook-dark-mode";
+
+import { darkTheme, lightTheme } from "./index";
+
+export const Theme = ({ children }) => {
+  return children(useDarkMode() ? darkTheme : lightTheme);
+};
+
+<Meta title="Design system/Colours" />
+
+# Colours
+
+<Theme>
+  {(theme) => (
+    <ColorPalette>
+      <ColorItem
+        title="Greens"
+        colors={{
+          green1: theme.colors.green1,
+          green2: theme.colors.green2,
+          green3: theme.colors.green3,
+          green4: theme.colors.green4,
+          green5: theme.colors.green5,
+        }}
+      />
+      <ColorItem
+        title="Colours"
+        colors={{
+          red: theme.colors.red,
+          pink: theme.colors.pink,
+          orange: theme.colors.orange,
+          peach: theme.colors.peach,
+          green: theme.colors.green,
+          mint: theme.colors.mint,
+          blue: theme.colors.blue,
+          lightBlue: theme.colors.lightBlue,
+          grey: theme.colors.grey,
+        }}
+      />
+      <ColorItem
+        title="Background Colours"
+        colors={{
+          dark: theme.colors.dark,
+          light: theme.colors.light,
+        }}
+      />
+      <ColorItem
+        title="Blacks"
+        colors={{
+          "black.100": theme.colors.black["100"],
+          "black.90": theme.colors.black["90"],
+          "black.80": theme.colors.black["80"],
+          "black.70": theme.colors.black["70"],
+          "black.60": theme.colors.black["60"],
+          "black.50": theme.colors.black["50"],
+          "black.40": theme.colors.black["40"],
+          "black.30": theme.colors.black["30"],
+          "black.20": theme.colors.black["20"],
+          "black.10": theme.colors.black["10"],
+          "black.5": theme.colors.black["5"],
+        }}
+      />
+      <ColorItem
+        title="Whites"
+        colors={{
+          "white.100": theme.colors.white["100"],
+          "white.90": theme.colors.white["90"],
+          "white.80": theme.colors.white["80"],
+          "white.70": theme.colors.white["70"],
+          "white.60": theme.colors.white["60"],
+          "white.50": theme.colors.white["50"],
+          "white.40": theme.colors.white["40"],
+          "white.30": theme.colors.white["30"],
+          "white.20": theme.colors.white["20"],
+          "white.10": theme.colors.white["10"],
+          "white.5": theme.colors.white["5"],
+        }}
+      />
+    </ColorPalette>
+  )}
+</Theme>

@@ -1,0 +1,13 @@
+import { FC } from "react";
+
+import { I{{pascalCase name}}Props } from "./{{pascalCase name}}.types";
+import { {{pascalCase name}}Provider } from "./{{pascalCase name}}.provider";
+import { {{pascalCase name}}Component } from "./{{pascalCase name}}.component";
+
+export const {{pascalCase name}}: FC<I{{pascalCase name}}Props> = ({}: I{{pascalCase name}}Props) => {
+  return (
+    <{{pascalCase name}}Provider>
+      <{{pascalCase name}}Component />
+    </{{pascalCase name}}Provider>
+  );
+};

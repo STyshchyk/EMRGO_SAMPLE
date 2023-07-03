@@ -1,0 +1,49 @@
+# TODO: cleanup/refactor
+# NOTE: VALID TARGET_APP_NAME values:
+#   client-accounts, client-authentication, client-primaries and silver-internal
+
+include:
+  - local: .gitlab/ci/build_and_deploy.gitlab-ci.yml
+  - local: .gitlab/ci/rules.gitlab-ci.yml
+
+variables:
+  DOCKER_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE
+  DOCKER_IMMUTABLE_IMAGE_TAG: $CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA-$TARGET_APP_NAME
+  DOCKER_NODE_IMAGE: "node:19-bullseye"
+
+image: "docker:latest"
+services:
+  - "docker:dind"
+
+stages:
+  - deploy
+
+Deploy:client-authentication-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-authentication"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_auth_build_rules_develop
+
+Deploy:client-primaries-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-primaries"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_primaries_build_rules_develop
+
+Deploy:silver-internal-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-internal"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-internal_build_rules_develop

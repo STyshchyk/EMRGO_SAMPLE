@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "types": ["vite/client"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@emrgo-frontend/constants": ["packages/constants/src/index.ts"],
+      "@emrgo-frontend/services": ["packages/services/src/index.ts"],
+      "@emrgo-frontend/shared-ui": ["packages/shared-ui/src/index.ts"],
+      "@emrgo-frontend/theme": ["packages/theme/src/index.ts"],
+      "@emrgo-frontend/types": ["packages/types/src/index.ts"],
+      "@emrgo-frontend/utils": ["packages/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

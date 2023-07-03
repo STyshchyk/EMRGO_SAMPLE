@@ -1,0 +1,51 @@
+.build_and_deploy_config:
+  before_script:
+    - echo $TARGET_APP_NAME
+    # !INSTALL ALPINE LINUX DEPENDENCIES
+    - apk update && apk upgrade
+    - apk --no-cache add curl bash openssh-client
+    # !FETCH AND ADD SSH KEY TO THE SSH-AGENT
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - echo "$CI_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+    - >-
+      [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >
+      ~/.ssh/config
+    - ssh-add ~/.ssh/id_ed25519
+    - ssh-add -l
+    # !SET UP AND INITALIZE A DOTENV PROD FILE
+    - >-
+      curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst &&
+      chmod +x envsubst &&
+      mv envsubst /usr/local/bin
+    - docker info
+    - ls -al $PWD
+    - envsubst < $PWD/.env.production > $PWD/.env
+    - cat $PWD/.env
+  script:
+    # !BUILD AND PUSH IMMUTABLE IMAGE
+    - >-
+      docker build
+      --build-arg TARGET_APP_NAME
+      --build-arg GIT_COMMIT=${CI_COMMIT_SHA}
+      --build-arg GIT_SOURCE_BRANCH=${CI_COMMIT_BRANCH}
+      -t $DOCKER_REGISTRY_IMAGE:$DOCKER_IMMUTABLE_IMAGE_TAG
+      .
+    - docker image ls
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
+    - docker push $DOCKER_REGISTRY_IMAGE:$DOCKER_IMMUTABLE_IMAGE_TAG
+    - docker logout $CI_REGISTRY
+    #! DEPLOY IMMUTABLE IMAGE VIA SSH
+    - docker compose -f docker-compose.${TARGET_APP_NAME}.yml config > docker-compose.${TARGET_APP_NAME}_config.yml
+    - export DOCKER_HOST=$CI_SSH_REMOTE_URL
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" "${CI_REGISTRY}" --password-stdin
+    - docker compose -f docker-compose.${TARGET_APP_NAME}.yml down
+    - docker compose -f docker-compose.${TARGET_APP_NAME}.yml pull
+    - docker compose -f docker-compose.${TARGET_APP_NAME}.yml up -d
+    - docker logout $CI_REGISTRY
+  after_script:
+    - docker compose ls
+  interruptible: true
+  artifacts:
+    paths:
+      - docker-compose.${TARGET_APP_NAME}_config.yml

@@ -1,0 +1,79 @@
+{
+  "name": "client-account",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/client-account/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/client-account"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "client-account:build",
+        "port": 3004
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "client-account:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "client-account:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "client-account:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "client-account:build:development"
+        },
+        "production": {
+          "buildTarget": "client-account:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/client-account"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/client-account"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/client-account/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "client-account:build"
+      }
+    }
+  },
+  "tags": []
+}

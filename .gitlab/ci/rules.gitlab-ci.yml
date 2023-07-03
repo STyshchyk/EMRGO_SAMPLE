@@ -1,0 +1,71 @@
+# !REMINDER: There's no way to DRY UP those rules as array merging is not supported by GitLab CI/CD parser.
+
+.client_auth_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-authentication/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - package-lock.json
+          - package.json
+          - packages/**/*
+
+.client_primaries_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-primaries/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - package-lock.json
+          - package.json
+          - packages/**/*
+
+.client_secondaries_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-secondaries/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - package-lock.json
+          - package.json
+          - packages/**/*
+
+.client_accounts_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-accounts/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - package-lock.json
+          - package.json
+          - packages/**/*
+
+.silver-internal_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/silver-internal/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - package-lock.json
+          - package.json
+          - packages/**/*
