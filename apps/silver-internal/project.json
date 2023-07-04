@@ -25,7 +25,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "silver-internal:build",
-        "port": 3010
+        "port": 3015
       },
       "configurations": {
         "development": {

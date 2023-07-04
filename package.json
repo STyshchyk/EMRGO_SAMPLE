@@ -11,7 +11,8 @@
     "build:client-secondaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
     "build:silver-internal": "nx run-many -t build -p silver-internal --parallel=true --skip-nx-cache",
     "generate": "plop",
-    "g": "npm run generate"
+    "g": "npm run generate",
+    "lint:fix" : "eslint --fix  ./apps/silver-authentication"
   },
   "private": true,
   "dependencies": {
@@ -124,6 +125,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.0.4",
+    "vite": "^4.3.4",
     "vite-plugin-dts": "~1.7.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",

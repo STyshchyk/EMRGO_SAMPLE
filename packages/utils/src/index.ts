@@ -5,4 +5,5 @@ export * from "./lib/errors";
 export * from "./lib/misc";
 export * from "./lib/refs";
 export * from "./lib/routes";
+export * from "./lib/silver.routes";
 export * from "./lib/time";
