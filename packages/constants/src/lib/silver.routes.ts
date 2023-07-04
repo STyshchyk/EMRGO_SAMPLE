@@ -9,15 +9,12 @@ interface IRouteObject {
   [key: string]: string | IRouteObject | any;
 }
 
-const BASE_API_URL = import.meta.env["VITE_API_URL"];
-
 export const silverModuleURLs: IMap = {
   authentication: import.meta.env["VITE_INTERNAL_AUTH_URL"],
   administration: import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"],
   primaries: import.meta.env["VITE_INTERNAL_PRIMARIES_URL"],
   onboarding: import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
   dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
-
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
