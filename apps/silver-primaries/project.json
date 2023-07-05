@@ -24,7 +24,8 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "silver-primaries:build"
+        "buildTarget": "silver-primaries:build",
+        "port": 3012
       },
       "configurations": {
         "development": {

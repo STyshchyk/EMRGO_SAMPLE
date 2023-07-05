@@ -1,0 +1,1 @@
+export { blacklistedDomains } from "./blacklistedDomains";

@@ -1,4 +1,4 @@
-import {include} from "named-urls";
+import { include } from "named-urls";
 
 interface IMap {
   [key: string]: string | undefined;
@@ -14,7 +14,7 @@ export const silverModuleURLs: IMap = {
   administration: import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"],
   primaries: import.meta.env["VITE_INTERNAL_PRIMARIES_URL"],
   onboarding: import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
-  dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
+  dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"]
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
@@ -40,26 +40,22 @@ export const silverAuthenticationRoutes = {
 };
 
 export const silverPrimariesRoutes = {
-  home: "/",
-  primaries: include("primaries", {
-    home: "",
-    tradeOpportunityHome: "trade-opportunities",
+    home: "/",
     tradeOpportunity: include("/trade-opportunities", {
+      home: "",
       issuances: ":id/issuances",
       manageIssuers: "manage-issuers",
       manageSellside: "manage-sellside"
-    }),
-    tradeManagement: "trade-management",
-    postTrade: "post-trade"
-  }),
-};
+    })
+  }
+;
 
 export const silverAdministrationRoutes = {
   home: "/",
   administration: include("/administration", {
     home: "",
     users: "users"
-  }),
+  })
 };
 
 export const silverOnboardingRoutes = {
@@ -67,7 +63,7 @@ export const silverOnboardingRoutes = {
   onboarding: include("/onboarding", {
     home: "",
     users: "users"
-  }),
+  })
 };
 
 export const silverDataRoomRoutes = {
