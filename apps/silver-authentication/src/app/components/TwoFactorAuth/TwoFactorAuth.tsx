@@ -15,6 +15,8 @@ import {SixDigitCodeInput} from "../SixDigitCodeInput";
 import {MFATYPE} from "../TwoFAstepper/TwoFAstepper.types";
 import * as Styles from "./TwoFactorAuth.styles";
 import {ITwoFactorAuthProps} from "./TwoFactorAuth.types";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
+import { silverAdministrationRoutes, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
 
 export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, secret, mode, otpauth_url }) => {
   const { setVerifyMFA } = useUserStore();
@@ -31,7 +33,7 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, secret, mode,
   });
   const { mutate: doEnableMFA } = useMutation(enableMFA, {
     onSuccess: () => {
-      if (postRegistration) window.location.assign(routes.auth.login);
+      if (postRegistration) navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
     }, onError: () => {
       showErrorToast("Error while trying to enable mfa");
     }

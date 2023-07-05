@@ -51,7 +51,7 @@ export const ManageSellsideComponent: FC<IManageSellsideProps> = ({}: IManageSel
       <DashboardContent>
 
         <Breadcrumbs>
-          <BreadcrumbLink as={Link} to={routes.tradeOpportunity.home}>
+          <BreadcrumbLink as={Link} to={routes.primaries.tradeOpportunity.home}>
             Trade opportunities
           </BreadcrumbLink>
           <BreadcrumbLink isCurrent>{"Manage Sellside"}</BreadcrumbLink>

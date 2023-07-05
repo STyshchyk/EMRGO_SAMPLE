@@ -71,14 +71,14 @@ export const TradeOpportunitiesComponent: FC<
         </Button>
         <Button
           onClick={() => {
-            navigate(routes.tradeOpportunity.manageIssuers);
+            navigate(routes.primaries.tradeOpportunity.manageIssuers);
           }}
         >
           Manage Issuers
         </Button>
         <Button
           onClick={() => {
-            navigate(routes.tradeOpportunity.manageSellside);
+            navigate(routes.primaries.tradeOpportunity.manageSellside);
           }}
         >
           Manage Sellside

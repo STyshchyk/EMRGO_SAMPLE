@@ -17,10 +17,10 @@ import { PrimariesWrapper } from "./components/PrimariesWrapper";
 const router = createBrowserRouter([
   {
     path: routes.home,
-    element: <Navigate to={routes.tradeOpportunity.home} replace={true} />
+    element: <Navigate to={routes.primaries.tradeOpportunity.home} replace={true} />
   },
   {
-    path: routes.tradeOpportunity.home,
+    path: routes.primaries.tradeOpportunity.home,
     element: <PrimariesWrapper />,
     children: [
       {
@@ -28,21 +28,17 @@ const router = createBrowserRouter([
         element: <TradeOpportunities />
       },
       {
-        path: routes.tradeOpportunity.issuances,
+        path: routes.primaries.tradeOpportunity.issuances,
         element: <Issuances />
       },
       {
-        path: routes.tradeOpportunity.manageIssuers,
+        path: routes.primaries.tradeOpportunity.manageIssuers,
         element: <ManageIssuers />
       },
       {
-        path: routes.tradeOpportunity.manageSellside,
+        path: routes.primaries.tradeOpportunity.manageSellside,
         element: <ManageSellside />
       },
-      {
-        index: true,
-        element: <Navigate to={`${routes.tradeOpportunity.home}`} replace />
-      }
     ]
   }
 

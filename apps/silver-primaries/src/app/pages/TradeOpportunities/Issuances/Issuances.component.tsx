@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
+import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
 import {
   BreadcrumbLink,
   Breadcrumbs,
@@ -12,7 +13,6 @@ import {
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
-import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
 import { IssuanceTable } from "../IssuanceTable";
 import { useIssuancesContext } from "./Issuances.provider";
 import * as Styles from "./Issuances.styles";
@@ -25,7 +25,7 @@ export const IssuancesComponent: FC<IIssuancesProps> = ({}: IIssuancesProps) => 
     <>
       <Styles.Header>
         <Breadcrumbs>
-          <BreadcrumbLink as={Link} to={routes.tradeOpportunity.home}>
+          <BreadcrumbLink as={Link} to={routes.primaries.tradeOpportunity.home}>
             Trade opportunities
           </BreadcrumbLink>
           {data && <BreadcrumbLink isCurrent>{data.name}</BreadcrumbLink>}

@@ -1,11 +1,11 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { silverAuthenticationRoutes } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
-
-import routes from "../../constants/routes";
 import { useUserStore } from "../store";
 import { createPassword, ISetPassword } from "./CreatePassword.services";
 import { ICreatePasswordContext, ICreatePasswordFormValues } from "./CreatePassword.types";
@@ -77,7 +77,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     doCreatePassword(payload, {
       onSuccess: (response) => {
         setMFA(response);
-        navigate(routes.auth.completeRegistration);
+        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
       },
       onError: (error) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

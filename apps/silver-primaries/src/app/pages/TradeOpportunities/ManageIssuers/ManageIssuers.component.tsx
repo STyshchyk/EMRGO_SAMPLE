@@ -42,7 +42,7 @@ export const ManageIssuersComponent: FC<IManageIssuersProps> = ({}: IManageIssue
     <Styles.ManageIssuers>
       <DashboardContent>
         <Breadcrumbs>
-          <BreadcrumbLink as={Link} to={routes.tradeOpportunity.home}>
+          <BreadcrumbLink as={Link} to={routes.primaries.tradeOpportunity.home}>
             Trade opportunities
           </BreadcrumbLink>
           <BreadcrumbLink isCurrent>{"Manage Issuers"}</BreadcrumbLink>

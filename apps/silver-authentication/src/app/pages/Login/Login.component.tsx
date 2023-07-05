@@ -2,7 +2,9 @@ import * as React from "react";
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { silverAdministrationRoutes } from "@emrgo-frontend/constants";
 import { ArrowBackwardIcon, Button, FormikInput, Logo, useToast } from "@emrgo-frontend/shared-ui";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 import { useDarkMode } from "usehooks-ts";
@@ -17,8 +19,6 @@ import { loginSchema } from "./Login.schema";
 import { loginUser } from "./Login.services";
 import * as Styles from "./Login.styles";
 import { ILoginFormValues, ILoginProps } from "./Login.types";
-import { navigateModule, navigateSilverModule } from "@emrgo-frontend/utils";
-import { silverAdministrationRoutes } from "@emrgo-frontend/constants";
 
 
 const steps = [1, 2];
@@ -49,7 +49,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         //set light theme
         disable();
         // window.location.assign(routes.dash.administration.users);
-        navigateSilverModule("administration", silverAdministrationRoutes.home);
+        navigateSilverModule(silverModule.administration, silverAdministrationRoutes.home);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

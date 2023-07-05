@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev:all": "nx run-many -t serve --parallel=true --maxParallel=100 --skip-nx-cache",
-    "dev:silver": "nx run-many -t serve -p silver-authentication silver-administration silver-internal silver-primaries --parallel=true --maxParallel=100 --skip-nx-cache",
+    "dev:silver": "nx run-many -t serve -p silver-authentication silver-administration silver-primaries silver-onboarding silver-dataroom --parallel=true --maxParallel=100 --skip-nx-cache",
     "build:all": "nx run-many -t build --parallel=true  --skip-nx-cache",
     "build:client-account": "nx run-many -t build -p client-account --parallel=true --skip-nx-cache",
     "build:client-authentication": "nx run-many -t build -p client-authentication --parallel=true --skip-nx-cache",

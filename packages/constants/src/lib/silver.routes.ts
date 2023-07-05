@@ -40,15 +40,18 @@ export const silverAuthenticationRoutes = {
 };
 
 export const silverPrimariesRoutes = {
+  home: "/",
+  primaries: include("/primaries", {
     home: "/",
-    tradeOpportunity: include("/trade-opportunities", {
+    tradeOpportunity: include("trade-opportunities", {
       home: "",
       issuances: ":id/issuances",
       manageIssuers: "manage-issuers",
       manageSellside: "manage-sellside"
     })
-  }
-;
+  })
+};
+
 
 export const silverAdministrationRoutes = {
   home: "/",
