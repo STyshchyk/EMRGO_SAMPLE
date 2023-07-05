@@ -12,7 +12,7 @@
     "build:silver-internal": "nx run-many -t build -p silver-internal --parallel=true --skip-nx-cache",
     "generate": "plop",
     "g": "npm run generate",
-    "lint:fix" : "eslint --fix  ./apps/silver-authentication"
+    "lint:fix": "eslint --fix  ./apps/silver-authentication"
   },
   "private": true,
   "dependencies": {
