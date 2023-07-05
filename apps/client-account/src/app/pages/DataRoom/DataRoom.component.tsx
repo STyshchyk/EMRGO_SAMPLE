@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Button, ClientTermsModal, DashboardContent } from "@emrgo-frontend/shared-ui";
+import { Button, DashboardContent, TermsModal } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { AccountPanel } from "../../components/AccountPanel";
@@ -20,16 +20,12 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
     onViewPlatformTermsAndConditions,
     showPlatformTermsModal,
     onAcceptPlatformTerms,
-    onDownloadPlatformTerms,
-    onPrintPlatformTerms,
     onRejectPlatformTerms,
-    onSharePlatformTerms,
     showClientTermsModal,
     onAcceptClientTerms,
-    onDownloadClientTerms,
-    onPrintClientTerms,
     onRejectClientTerms,
-    onShareClientTerms,
+    clientTermsDocumentURL,
+    platformTermsDocumentURL,
   } = ensureNotNull(useDataRoomContext());
 
   return (
@@ -42,7 +38,7 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
             </AccountPanelHeader>
             <AccountPanelContent>
               <AccountPanelText>
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
                 quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
                 ultrices.
               </AccountPanelText>
@@ -92,24 +88,24 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
         </Styles.Container>
       </DashboardContent>
 
-      <ClientTermsModal
-        documentURL=""
+      <TermsModal
+        title="Platform Terms"
+        subtitle="Please accept our platform terms to proceed."
+        documentURL={platformTermsDocumentURL}
         isOpen={showPlatformTermsModal}
         onAccept={onAcceptPlatformTerms}
-        onDownload={onDownloadPlatformTerms}
-        onPrint={onPrintPlatformTerms}
         onReject={onRejectPlatformTerms}
-        onShare={onSharePlatformTerms}
+        hasAccepted={false}
       />
 
-      <ClientTermsModal
-        documentURL=""
+      <TermsModal
+        title="Client Terms"
+        subtitle="Please accept our client terms to proceed."
+        documentURL={clientTermsDocumentURL}
         isOpen={showClientTermsModal}
         onAccept={onAcceptClientTerms}
-        onDownload={onDownloadClientTerms}
-        onPrint={onPrintClientTerms}
         onReject={onRejectClientTerms}
-        onShare={onShareClientTerms}
+        hasAccepted={true}
       />
     </>
   );

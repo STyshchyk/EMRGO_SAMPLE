@@ -9,8 +9,6 @@ interface IRouteObject {
   [key: string]: string | IRouteObject | any;
 }
 
-export const BASE_API_URL = import.meta.env["VITE_API_URL"];
-
 export const clientModuleURLs: IMap = {
   authentication: import.meta.env["VITE_CLIENT_AUTH_URL"],
   primaries: import.meta.env["VITE_CLIENT_PRIMARIES_URL"],
@@ -18,7 +16,6 @@ export const clientModuleURLs: IMap = {
   account: import.meta.env["VITE_CLIENT_ACCOUNT_URL"],
 };
 
-console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
 console.debug("DEBUG clientModuleURLs: ", clientModuleURLs);
 
 export const clientAuthenticationRoutes = {
@@ -66,7 +63,6 @@ export const clientSecondariesRoutes = {
 
 export const clientAccountRoutes = {
   home: "/",
-  poof: "/poof",
   clientInvestmentProfile: include("/client-investment-profile", {
     home: "",
     form: "form/:typeFormId",
@@ -85,6 +81,8 @@ export const clientAccountRoutes = {
     dataRoom: "data-room",
   }),
 };
+
+export const BASE_API_URL = import.meta.env["VITE_API_URL"];
 
 export const getAllRoutes = (routesObj: IRouteObject, result: string[] = []): string[] => {
   for (const key in routesObj) {

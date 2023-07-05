@@ -1,7 +1,7 @@
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-export const BackgroundImage = styled.div<{ $reveal: boolean }>`
+export const EmrgoBackgroundAnimation = styled.div<{ $reveal: boolean }>`
   /* Layout */
   position: absolute;
   top: 0;

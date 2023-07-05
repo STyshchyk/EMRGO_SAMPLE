@@ -2,58 +2,21 @@ import { createContext, PropsWithChildren, useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import * as constants from "@emrgo-frontend/constants";
-import { useToast } from "@emrgo-frontend/shared-ui";
+import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { reverse } from "named-urls";
 
 import {
   createFormSession as createInvestmentFormSession,
   fetchInvestorProfileForms,
+  submitInvestorProfileForms,
 } from "../InvestmentProfile/InvestmentProfile.services";
 import { IInvestmentProfileSection } from "../InvestmentProfile/InvestmentProfile.types";
 import { fetchKYCForms } from "../KYC/KYC.services";
 import { IKYCSection } from "../KYC/KYC.types";
-import { IPlatformAccessContext, IQuestionnaireItem } from "./PlatformAccess.types";
+import { IPlatformAccessContext } from "./PlatformAccess.types";
 
 const PlatformAccessContext = createContext<IPlatformAccessContext | null>(null);
-
-const userProfilingQuestionnaireItems: IQuestionnaireItem[] = [
-  {
-    id: "questionnaire",
-    text: "Questionnaire",
-    timeRemaining: "5 minutes",
-    completed: true,
-  },
-  {
-    id: "upload-id",
-    text: "Upload ID",
-    timeRemaining: "2 minutes",
-  },
-];
-
-const kycQuestionnaireItems: IQuestionnaireItem[] = [
-  {
-    id: "corporate-details",
-    text: "Corporate Details",
-    timeRemaining: "5 minutes",
-    completed: true,
-  },
-  {
-    id: "shareholders-ubo",
-    text: "Shareholders / UBO",
-    timeRemaining: "5 minutes",
-  },
-  {
-    id: "key-individuals",
-    text: "Key Individuals",
-    timeRemaining: "5 minutes",
-  },
-  {
-    id: "supporting-documents",
-    text: "Supporting Documents",
-    timeRemaining: "5 minutes",
-  },
-];
 
 /**
  * @description
@@ -61,6 +24,8 @@ const kycQuestionnaireItems: IQuestionnaireItem[] = [
  * @returns {JSX.Element}
  */
 export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
+  const refreshProfile = useRefreshProfile();
+  const { user } = useUser();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
@@ -85,9 +50,12 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
 
   const { mutate: doInvestmentProfileCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doKYCCreateFormSession } = useMutation(createInvestmentFormSession);
+  const { mutate: doSubmitInvestmentProfile } = useMutation(submitInvestorProfileForms);
 
   const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
+
+  const redirectPath = constants.clientAccountRoutes.account.platformAccess;
 
   const onInvestmentProfileStartForm = (formId: string, formReferenceId: string) => {
     const requestPayload = {
@@ -100,7 +68,7 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
 
         const route = `${reverse(constants.clientAccountRoutes.clientInvestmentProfile.form, {
           typeFormId: formId,
-        })}/?session=${sessionId}`;
+        })}/?session=${sessionId}&redirect=${encodeURI(redirectPath)}`;
 
         navigate(route);
       },
@@ -118,7 +86,7 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
 
         const route = `${reverse(constants.clientAccountRoutes.kyc.form, {
           typeFormId: formId,
-        })}/?session=${sessionId}`;
+        })}/?session=${sessionId}&redirect=${redirectPath}`;
 
         navigate(route);
       },
@@ -126,7 +94,12 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
   };
 
   const onInvestmentProfileSubmit = () => {
-    navigate("thank-you");
+    doSubmitInvestmentProfile(undefined, {
+      onSuccess: (response) => {
+        investmentProfileRefetch();
+        refreshProfile();
+      },
+    });
   };
 
   const onKYCSubmit = () => {
@@ -182,6 +155,7 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const state: IPlatformAccessContext = {
+    user: user,
     userProfilingQuestionnaireItems: investmentProfileFormItems || [],
     kycQuestionnaireItems: kycFormItems || [],
     onInvestmentProfileStartForm: onInvestmentProfileStartForm,

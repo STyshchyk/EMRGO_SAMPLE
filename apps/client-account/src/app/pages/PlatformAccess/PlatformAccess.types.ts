@@ -1,10 +1,11 @@
-import { IQuestionnaireItemProps } from "@emrgo-frontend/types";
+import { IQuestionnaireItemProps, IUser } from "@emrgo-frontend/types";
 
 import { IKYCSectionItemProps } from "../../components/KYCSectionItem";
 
 export interface IPlatformAccessProps {}
 
 export interface IPlatformAccessContext {
+  user: IUser | null;
   userProfilingQuestionnaireItems: IKYCSectionItemProps[];
   kycQuestionnaireItems: IKYCSectionItemProps[];
   onInvestmentProfileStartForm: (formId: string, formReferenceId: string) => void;
