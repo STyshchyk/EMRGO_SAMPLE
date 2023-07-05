@@ -44,7 +44,7 @@ export const silverPrimariesRoutes = {
   primaries: include("primaries", {
     home: "",
     tradeOpportunityHome: "trade-opportunities",
-    tradeOpportunity: include("trade-opportunities", {
+    tradeOpportunity: include("/trade-opportunities", {
       issuances: ":id/issuances",
       manageIssuers: "manage-issuers",
       manageSellside: "manage-sellside"
@@ -56,7 +56,7 @@ export const silverPrimariesRoutes = {
 
 export const silverAdministrationRoutes = {
   home: "/",
-  administration: include("administration", {
+  administration: include("/administration", {
     home: "",
     users: "users"
   }),
@@ -64,7 +64,7 @@ export const silverAdministrationRoutes = {
 
 export const silverOnboardingRoutes = {
   home: "/",
-  onboarding: include("onboarding", {
+  onboarding: include("/onboarding", {
     home: "",
     users: "users"
   }),
@@ -72,7 +72,7 @@ export const silverOnboardingRoutes = {
 
 export const silverDataRoomRoutes = {
   home: "/",
-  dataRoom: include("data-room", {
+  dataRoom: include("/data-room", {
     home: "",
     platform: "platform",
     opportunities: "opportunities",

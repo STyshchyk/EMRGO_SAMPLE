@@ -1,9 +1,8 @@
+import { BASE_API_URL  as  BASE_URL} from "@emrgo-frontend/constants";
 import axios from "axios";
 
-import { config } from "../../../config";
 
-const BASE_API_URL = config.BASE_API_URL;
-
+const BASE_API_URL = BASE_URL;
 export const authApi = axios.create({
   baseURL: `${BASE_API_URL}`,
   headers: { "Content-Type": "application/json" },

@@ -6,14 +6,14 @@ import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
 import routes from "./constants/routes";
-import { CompleteRegistration } from "./pages/Authentication/CompleteRegistration";
-import { CreatePassword } from "./pages/Authentication/CreatePassword";
-import { Login } from "./pages/Authentication/Login";
-import { ResetPassword } from "./pages/Authentication/ResetPassword";
-import { ResetPasswordEmailConfirmation } from "./pages/Authentication/ResetPasswordEmailConfirmation";
-import { ResetPasswordOptions } from "./pages/Authentication/ResetPasswordOptions";
-import { TroubleSigningIn } from "./pages/Authentication/TroubleSigningIn";
-import { TroubleSigningInThanks } from "./pages/Authentication/TroubleSigningInThanks";
+import { CompleteRegistration } from "./pages/CompleteRegistration";
+import { CreatePassword } from "./pages/CreatePassword";
+import { Login } from "./pages/Login";
+import { ResetPassword } from "./pages/ResetPassword";
+import { ResetPasswordEmailConfirmation } from "./pages/ResetPasswordEmailConfirmation";
+import { ResetPasswordOptions } from "./pages/ResetPasswordOptions";
+import { TroubleSigningIn } from "./pages/TroubleSigningIn";
+import { TroubleSigningInThanks } from "./pages/TroubleSigningInThanks";
 
 const router = createBrowserRouter([
   {
@@ -69,7 +69,7 @@ function App() {
 
   return (
     // eslint-disable-next-line react/jsx-no-undef
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkTheme  }>
       <GlobalStyles />
       <UserProvider>
         <RouterProvider router={router} />

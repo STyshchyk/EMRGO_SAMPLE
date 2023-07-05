@@ -24,7 +24,8 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "silver-administration:build"
+        "buildTarget": "silver-administration:build",
+        "port": 3011
       },
       "configurations": {
         "development": {

@@ -8,7 +8,7 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 
 import routes from "../../constants/routes";
-import {useUserStore} from "../../pages/Authentication/store";
+import {useUserStore} from "../../pages/store";
 import {enableMFA, verifyMFA} from "../../services";
 import {Heading, OneCol, SubHeading} from "../Form";
 import {SixDigitCodeInput} from "../SixDigitCodeInput";

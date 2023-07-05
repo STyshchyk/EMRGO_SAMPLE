@@ -1,16 +1,47 @@
-import styled from "styled-components";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
-import NxWelcome from "./nx-welcome";
+import { silverAdministrationRoutes as routes } from "@emrgo-frontend/constants";
+import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
+import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
+import { ThemeProvider } from "styled-components";
+import { useDarkMode } from "usehooks-ts";
+import { Administration } from "./pages";
+import { User } from "./pages/Users";
 
-const StyledApp = styled.div`
-  // Your style here
-`;
+
+const router = createBrowserRouter([
+  {
+    path: routes.home,
+    element: <Navigate to={routes.administration.users} replace={true} />
+  },
+  {
+    path: routes.administration.users,
+    element: <Administration />,
+    children: [
+      {
+        index: true,
+        element: <User />
+      },
+      {
+        index: true,
+        element: <Navigate to={routes.administration.users} replace />
+      }
+    ]
+  }
+
+]);
 
 export function App() {
+  const { isDarkMode } = useDarkMode();
+
   return (
-    <StyledApp>
-      <NxWelcome title="silver-administration" />
-    </StyledApp>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <GlobalStyles />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+      <ToastProvider />
+    </ThemeProvider>
   );
 }
 

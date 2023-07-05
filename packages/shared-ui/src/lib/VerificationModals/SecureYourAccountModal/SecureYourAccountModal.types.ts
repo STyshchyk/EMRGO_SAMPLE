@@ -1,4 +1,4 @@
-import { TSecureAccountFlowOption } from "../DashboardWrapper.types";
+import { TSecureAccountFlowOption } from "../SilverDashboardWrapper.types";
 
 export interface ISecureYourAccountModalProps {
   isOpen: boolean;

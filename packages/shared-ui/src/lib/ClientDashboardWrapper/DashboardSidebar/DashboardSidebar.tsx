@@ -31,7 +31,6 @@ import {
   ensureNotNull,
   navigateModule,
   useClientMatchedPathSidebar,
-  useMatchedPathDashboard,
 } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
