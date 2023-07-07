@@ -130,6 +130,7 @@ export const MySelect = <
             ...ellipsis(),
             ...typography.regular["02Tight"]
 
+
           }),
           placeholder: (defaultStyles) => {
             return {

@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react";
 
-import { FormikInput, useToast,FormikInputCustom} from "@emrgo-frontend/shared-ui";
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { FormikInput, FormikInputCustom,useToast} from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 // TODO: MOVE THIS TO CONSTANTS
 import { convertToBase64, formatBytes, MAX_FILE_SIZE } from "../../../../utils";
 import { useAddSellsideStore } from "../../../store";
@@ -35,10 +35,7 @@ export const AddSellsideModal: FC<IAddSellsideModalProps> = () => {
           initialValues={initialValues}
           validationSchema={SellSideSchema}
           onSubmit={async (values, formikHelpers) => {
-            // @ts-ignore
-
-            // TODO : REDO upload files
-            const base64: string = await convertToBase64(values.logo);
+            const base64: any = await convertToBase64(values.logo);
             if (values.logo && values.logo.size > MAX_FILE_SIZE) {
               formikHelpers.setFieldError(
                 "logo",

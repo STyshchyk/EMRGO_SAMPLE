@@ -15,7 +15,7 @@ import {
 } from "../Input/Input.styles";
 import {TMyInputVariants} from "./MyInput.types";
 
-export const Wrapper = styled.div<{ $maxWidth?: number }>`
+export const Wrapper = styled.div<{ $maxWidth?: number, $maxHeight?: number }>`
   /* Layout */
   display: flex;
   flex-direction: column;
@@ -24,6 +24,7 @@ export const Wrapper = styled.div<{ $maxWidth?: number }>`
 
   /* Element Styles */
   max-width: ${({$maxWidth}) => $maxWidth && rem($maxWidth)};
+  max-height: ${({$maxHeight}) => $maxHeight && rem($maxHeight)};
 `;
 
 export const InputContainer = styled(GlobalInputContainer)<{
@@ -85,6 +86,7 @@ export const Input = styled.textarea<{
   $disabled?: boolean;
   variant?: TMyInputVariants;
   $maxWidth?: number;
+  $maxHeight?: number;
 }>`
   /* Layout */
   display: block;
@@ -94,6 +96,7 @@ export const Input = styled.textarea<{
   border: none;
   background: transparent;
   max-width: ${({$maxWidth}) => $maxWidth && rem($maxWidth - 20)};
+  max-height: ${({$maxHeight}) => $maxHeight && rem($maxHeight - 20)};
   /* Text styles */
   font-style: normal;
   font-weight: 500;

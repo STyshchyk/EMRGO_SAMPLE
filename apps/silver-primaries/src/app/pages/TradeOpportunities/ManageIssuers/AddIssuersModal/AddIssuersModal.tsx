@@ -1,11 +1,9 @@
 import React, { FC } from "react";
 
-import { MyTextArea, useToast, FormikInputCustom, Button } from "@emrgo-frontend/shared-ui";
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import {  Button,FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
-
-
-
 
 import { useAddIssuerStore } from "../../../store/store";
 import { postIssuer, updateIssuer } from "../Issuer.services";
@@ -13,7 +11,6 @@ import { IIssuer } from "../ManageIssuers.types";
 import { AddIssuersModalSchema } from "./AddIssuersModal.schema";
 import * as Styles from "./AddIssuersModal.styles";
 import { IAddIssuersModalProps } from "./AddIssuersModal.types";
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 
 const initialValues: IIssuer = {
   description: "",
@@ -24,6 +21,8 @@ const initialValues: IIssuer = {
 
 export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
   const queryClient = useQueryClient();
+  const { showErrorToast, showSuccessToast } = useToast();
+
   const { modifyData } = useAddIssuerStore();
   const { mutate: doPostIssuer } = useMutation(postIssuer);
   const { mutate: doUpdateIssuer } = useMutation(updateIssuer);
@@ -35,7 +34,6 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
         validationSchema={AddIssuersModalSchema}
         onSubmit={(values, formikHelpers) => {
           alert(JSON.stringify(values, null, 2));
-          const { showErrorToast, showSuccessToast } = useToast();
           if (!modifyData) {
             doPostIssuer(values, {
               onSuccess: () => {
@@ -104,17 +102,18 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 name={"description"}
                 label={"Issuer Description"}
                 as={"textarea"}
+                type={"textarea"}
                 rows={10}
                 cols={42}
                 maxWidth={494}
+                maxHeight={200}
                 errors={errors}
                 touched={touched}
-                component={MyTextArea}
+                component={FormikInputCustom}
               />
             </Styles.TwoCol>
             <Styles.TwoCol>
-              {/*TODO: FIX THIS BUTTON*/}
-              <Button disabled={!isValid}>
+              <Button disabled={!isValid} type={"submit"}>
                 {modifyData ? "Modify" : "Add"}
               </Button>
             </Styles.TwoCol>

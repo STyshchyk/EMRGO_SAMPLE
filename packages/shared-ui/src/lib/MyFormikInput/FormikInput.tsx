@@ -1,6 +1,7 @@
 import { Input, MySelect, InputFile} from "@emrgo-frontend/shared-ui";
 
 import { IFormikInputProps } from "./FormikInput.types";
+import { MyTextArea } from "../MyInput";
 
 export const FormikInputCustom = <T, >({
                                          form,
@@ -24,6 +25,7 @@ export const FormikInputCustom = <T, >({
       <InputFile id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
     );
   else if (type === "select") return <MySelect id={id} error={error} {...fieldProps} {...rest} />;
+  else if (type === "textarea")   return <MyTextArea id={id} error={error} {...fieldProps} accept={accept} type={type}  {...rest} />;
   return <Input id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />;
 
 };

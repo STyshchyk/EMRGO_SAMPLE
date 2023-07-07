@@ -23,6 +23,7 @@ export interface IMyInputProps extends HTMLAttributes<HTMLTextAreaElement> {
   id?: string;
   /** maximum width in pixels */
   maxWidth?: number;
+  maxHeight?: number;
   /** The input variant. Note Signup Variant should only be used on signup flows */
   variant?: TMyInputVariants;
 }

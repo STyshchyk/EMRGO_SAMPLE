@@ -86,6 +86,9 @@ export const TwoCol = styled.div`
     border-width: thin;
   }
 }
+button{
+  margin-left: auto;
+}
 
 `;
 
