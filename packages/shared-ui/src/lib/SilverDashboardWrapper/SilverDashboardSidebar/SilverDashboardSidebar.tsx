@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   AccountIcon,
@@ -14,17 +14,24 @@ import {
   SidebarListItemLink,
   SidebarListItemSecondaryLink
 } from "@emrgo-frontend/shared-ui";
-import { ensureNotNull, navigateSilverModule, useInternalMatchedPathDashboard } from "@emrgo-frontend/utils";
+import {
+  ensureNotNull,
+  navigateSilverModule,
+  silverModule,
+  useInternalMatchedPathDashboard
+} from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 
 import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.provider";
 import * as Styles from "./SilverDashboardSidebar.styles";
 import {
-  clientPrimariesRoutes,
-  getAllRoutes,
   getAllSilverRoutes,
-  silverAdministrationRoutes, silverDataRoomRoutes, silverOnboardingRoutes, silverPrimariesRoutes
+  silverAdministrationRoutes, silverAuthenticationRoutes,
+  silverDataRoomRoutes,
+  silverOnboardingRoutes,
+  silverPrimariesRoutes
 } from "@emrgo-frontend/constants";
+import { logoutUser } from "@emrgo-frontend/services";
 
 const mainRoutes = [
   {
@@ -59,9 +66,7 @@ const mainRoutes = [
 
 export const SilverDashboardSidebar = () => {
   const { numberOfNotifications } = ensureNotNull(useSilverDashboardWrapperContext());
-
-  // console.log(useMatch({ path: "primaries", end: false, caseSensitive: false }));
-  // console.log(value);
+  const { mutate: doLogout } = useMutation({ mutationFn: logoutUser });
   return (
     <Styles.DashboardSidebar>
       <SidebarHeader>
@@ -91,6 +96,8 @@ export const SilverDashboardSidebar = () => {
           <SidebarListItem>
             <SidebarListItemSecondaryLink
               onClick={() => {
+                doLogout();
+                navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
               }}
             >
               <SidebarListItemIcon>

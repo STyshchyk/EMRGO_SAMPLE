@@ -11,11 +11,10 @@ export const fetchUserProfile = async (): Promise<IUser> => {
   return data || [];
 };
 
-export const logoutUser = async (requestPayload: null) => {
+export const logoutUser = async () => {
   const promise = sharedDashboardApi({
     method: "post",
     url: `/v2/logout`,
-    data: requestPayload,
   });
   const data = await (await promise).data;
   return data || [];

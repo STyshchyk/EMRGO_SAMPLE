@@ -75,7 +75,7 @@ export const silverDataRoomRoutes = {
     home: "",
     platform: "platform",
     opportunities: "opportunities",
-    manageDocuments: "opportunities/manage-documents/:id"
+    manageDocuments: "opportunities/manage-documents/:id/"
   })
 };
 
