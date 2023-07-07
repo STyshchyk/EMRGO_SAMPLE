@@ -63,7 +63,7 @@ export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, 
       }}>
         Upload
       </Button>
-      <Button variant={"secondary"}>Notify Users</Button>
+      <Button variant={"secondary"} disabled={true}>Notify Users</Button>
     </Styles.PlatformTerms>
   );
 };

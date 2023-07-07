@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { silverQueryKeys as queryKeys} from "@emrgo-frontend/constants";
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { ActionTooltip, Table, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -35,6 +35,10 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
     }),
     columnHelper.accessor("jurisdiction", {
       header: "Issuer Jurisdiction"
+    }),
+    columnHelper.accessor("industry", {
+      header: "Industry",
+      cell: ({ cell }) => <span>{cell.getValue() ? cell.getValue() : "N/A"}</span>
     }),
     columnHelper.accessor("description", {
       header: "Description"

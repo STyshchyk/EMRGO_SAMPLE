@@ -1,4 +1,5 @@
 export * from "./lib/cookies";
+export * from "./lib/dateHandlers";
 export * from "./lib/dropdowns";
 export * from "./lib/emails";
 export * from "./lib/errors";

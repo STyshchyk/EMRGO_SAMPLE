@@ -15,7 +15,8 @@ import { IAddIssuersModalProps } from "./AddIssuersModal.types";
 const initialValues: IIssuer = {
   description: "",
   name: "",
-  jurisdiction: ""
+  jurisdiction: "",
+  industry: ""
 };
 
 
@@ -89,6 +90,17 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 id={"jurisdiction"}
                 name={"jurisdiction"}
                 label={"Issuer Jurisdiction"}
+                as={"input"}
+                type={"text"}
+                component={FormikInputCustom}
+              />
+            </Styles.TwoCol>
+            <Styles.TwoCol>
+              <label htmlFor={"industry"}>Industry</label>
+              <Field
+                id={"industry"}
+                name={"industry"}
+                label={"Industry"}
                 as={"input"}
                 type={"text"}
                 component={FormikInputCustom}

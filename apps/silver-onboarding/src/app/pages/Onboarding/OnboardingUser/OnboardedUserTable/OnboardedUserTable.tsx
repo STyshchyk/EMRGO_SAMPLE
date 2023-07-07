@@ -1,14 +1,16 @@
 import { FC } from "react";
 
-import { ActionTooltip, Table, useToast } from "@emrgo-frontend/shared-ui";
+import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox,useToast} from "@emrgo-frontend/shared-ui";
+import { trimDate } from "@emrgo-frontend/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { queryKeys } from "../../../../constants";
+import { silverQueryKeys  as queryKeys} from "@emrgo-frontend/constants";
 import { getKycLabel, IEntity, kycType } from "../OnboarderUsers/OnboardedUsers.types";
 import { kycSubmit } from "../OnboarderUsers/OnboardrdedUsers.service";
 import * as Styles from "./OnboardedUserTable.styles";
 import { IOnboardedUserTableProps } from "./OnboardedUserTable.types";
+
 
 const columnHelper = createColumnHelper<IEntity>();
 
@@ -41,7 +43,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
     }),
     columnHelper.accessor("userKycSubmissionDate", {
       header: "Client Profile TS",
-      cell: props => props.getValue() || "n/a"
+      cell: props => props.getValue() ? trimDate(props.getValue()) : "N/A"
     }),
     columnHelper.accessor("entityKycStatus", {
       header: "KYC",
@@ -49,7 +51,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
     }),
     columnHelper.accessor("entityKycSubmissionDate", {
       header: "KYC TS",
-      cell: props => props.getValue() || "n/a"
+      cell: props => props.getValue() ? trimDate(props.getValue()) : "N/A"
     }),
     columnHelper.display({
       id: "Actions",
@@ -60,19 +62,25 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
         const getRow = row.original;
         const userId = getRow.userId;
         const entityId = getRow.entityId;
+        const allowApproveKYC = getKycLabel(getRow.userKycStatus) ;
+        const allowApproveCP = getKycLabel(getRow.entityKycStatus) ;
+
         return (
           <ActionTooltip
             title={
-              <Styles.ButtonBox>
-                <Styles.ButtonActions
+              <TooltipButtonBox>
+                <TooltipButtonActions
                   onClick={() => {
                     window.open("https://admin.typeform.com/login");
                   }}
                 >
                   Open Typeform
-                </Styles.ButtonActions>
-                <Styles.ButtonActions
+                </TooltipButtonActions>
+                <TooltipButtonActions $disabled={allowApproveCP !== "Submitted"}
                   onClick={() => {
+
+                    if(allowApproveCP !== "Submitted") {showErrorToast(`Error while trying to approve KYC Profile with status ${allowApproveCP}`); return;}
+
                     doKycSumbit({
                       id: entityId,
                       isApproved: true,
@@ -85,9 +93,10 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   }}
                 >
                   Approve KYC
-                </Styles.ButtonActions>
-                <Styles.ButtonActions
+                </TooltipButtonActions>
+                <TooltipButtonActions $disabled={allowApproveKYC !== "Submitted"}
                   onClick={() => {
+                    if(allowApproveKYC !== "Submitted") {showErrorToast(`Error while trying to approve Client Profile with status ${allowApproveKYC}`); return;}
                     doKycSumbit({
                       id: userId,
                       isApproved: true,
@@ -100,8 +109,8 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   }}
                 >
                   Approve Client Profile
-                </Styles.ButtonActions>
-              </Styles.ButtonBox>
+                </TooltipButtonActions>
+              </TooltipButtonBox>
             }
           />
         );

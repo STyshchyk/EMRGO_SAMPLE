@@ -1,4 +1,5 @@
 export * from "./lib/config";
+export * from "./lib/dates";
 export * from "./lib/domains";
 export * from "./lib/keys";
 export * from "./lib/mocked";

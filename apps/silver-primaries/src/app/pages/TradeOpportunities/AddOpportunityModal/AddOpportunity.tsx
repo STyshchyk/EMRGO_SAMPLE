@@ -215,9 +215,10 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                         getOptionLabel={(option: any) => option.name}
                         getOptionValue={(option: any) => option}
                         onChange={async (selected: any) => {
+                          console.log(selected);
                           await setFieldValue("issuer", selected);
                           await setFieldValue("issuerJurisdiction", selected.jurisdiction);
-                          await setFieldValue("industry", selected.description);
+                          await setFieldValue("industry", selected.industry  ? selected.industry : "N/A");
                         }}
                       />
                     </Styles.TwoCol>
@@ -240,7 +241,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                         value={values.industry ?? ""}
                         as={"input"}
                         type={"text"}
-                        // disabled={true}
+                        disabled={true}
                         label={"Enter Industry"}
                         component={FormikInput}
                       />

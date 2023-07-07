@@ -14,6 +14,7 @@ export const OnboardedUserTable = styled.div`
 interface IActionProps extends AriaAttributes {
   $isToggled: boolean | undefined;
 }
+
 export const Content = styled.div``;
 export const Button = styled.button<IActionProps>`
   display: inline-flex;
@@ -57,44 +58,7 @@ export const Button = styled.button<IActionProps>`
     `}
 `;
 
-export const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  appearance: none;
-  cursor: pointer;
-  position: relative;
-  border-radius: 10px;
-  padding: 5px 10px;
-  gap: 5px 0px;
-  background-color: rgba(4, 37, 49, 0);
-  width: max-content;
-  z-index: 1000;
-  //border: 1px solid #446875;
-`;
 
-export const ButtonActions = styled.button`
-  display: flex;
-  margin: 5px 0px;
-  appearance: none;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  font-size: ${rem(12)};
-  &:hover {
-    color: #11e4d9;
-  }
-  ${(props) =>
-    props.theme.mode === "light" &&
-    css`
-      color: ${getTheme("colors.black.100")};
-    `}
-
-  ${(props) =>
-    props.theme.mode === "dark" &&
-    css`
-      color: ${getTheme("colors.white.100")};
-    `}
-`;
 
 export const PanelHeaderIconCustom = styled.span<{ margin?: string }>`
   display: inline-flex;
