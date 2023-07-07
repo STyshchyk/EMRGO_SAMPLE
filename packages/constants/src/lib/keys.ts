@@ -32,6 +32,8 @@ export const queryKeys = {
   miscelleneous: include("/miscelleneous", {
     documents: include("documents", {
       fetch: "fetch",
+      fetchPath: "fetch-path",
+      fetchLink: "fetch-link",
     }),
     dropdowns: include("dropdowns", {
       fetch: "fetch",

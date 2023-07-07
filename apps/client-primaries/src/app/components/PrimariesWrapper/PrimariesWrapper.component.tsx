@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { clientPrimariesRoutes, getAllRoutes } from "@emrgo-frontend/constants";
-import { Badge, ClientTermsModal, Tab, Tabs } from "@emrgo-frontend/shared-ui";
+import { Badge, Tab, Tabs, TermsModal } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull, useMatchedPath } from "@emrgo-frontend/utils";
 
 import { usePrimariesWrapperContext } from "./PrimariesWrapper.provider";
@@ -11,14 +11,17 @@ import { IPrimariesWrapperProps } from "./PrimariesWrapper.types";
 
 export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children }) => {
   const {
-    showClientTermsModal,
-    clientTermsDocumentURL,
-    onAcceptTerms,
-    onDownloadTerms,
-    onPrintTerms,
-    onShareTerms,
-    onRejectTerms,
+    user,
+    onAcceptPlatformTerms,
+    onRejectPlatformTerms,
+    onAcceptClientTerms,
+    onRejectClientTerms,
+    showTermsModal,
+    termsDocumentURL,
   } = ensureNotNull(usePrimariesWrapperContext());
+
+  const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
+  const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
   const primariesTabs = [
     {
@@ -53,16 +56,29 @@ export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children
           </Tab>
         ))}
       </Tabs>
-          
+
       {children}
-      <ClientTermsModal
-        isOpen={showClientTermsModal}
-        documentURL={clientTermsDocumentURL}
-        onAccept={onAcceptTerms}
-        onDownload={onDownloadTerms}
-        onPrint={onPrintTerms}
-        onShare={onShareTerms}
-        onReject={onRejectTerms}
+      <TermsModal
+        title="Platform Terms"
+        subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "tnc"}
+        onAccept={onAcceptPlatformTerms}
+        onReject={onRejectPlatformTerms}
+        hasAccepted={hasAcceptedPlatformTerms}
+        type={showTermsModal}
+      />
+
+      <TermsModal
+        title="Client Terms"
+        subtitle={!hasAcceptedClientTerms ? "Please accept our client terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "client_terms"}
+        onAccept={onAcceptClientTerms}
+        onReject={onRejectClientTerms}
+        // hasAccepted={hasAcceptedClientTerms}
+        type={showTermsModal}
+        hasAccepted={false}
       />
     </Styles.Primaries>
   );

@@ -6,4 +6,5 @@ export interface ITermsModalProps {
   hasAccepted?: boolean;
   onAccept?: () => void;
   onReject: () => void;
+  type: string;
 }

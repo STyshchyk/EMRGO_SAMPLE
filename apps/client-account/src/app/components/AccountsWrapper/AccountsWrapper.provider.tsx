@@ -18,6 +18,7 @@ export const AccountsWrapperProvider = ({ children }: PropsWithChildren) => {
   const { updateUser } = useUser();
 
   useQuery([constants.queryKeys.account.profile.fetch], {
+    staleTime: 60 * 60,
     queryFn: () => fetchUserProfile(),
     onSuccess: (response) => {
       const user = response;

@@ -15,18 +15,19 @@ import { IDataRoomProps } from "./DataRoom.types";
 
 export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => {
   const {
+    user,
     onViewClientTermsAndConditions,
-    onViewFeeSchedule,
     onViewPlatformTermsAndConditions,
-    showPlatformTermsModal,
     onAcceptPlatformTerms,
     onRejectPlatformTerms,
-    showClientTermsModal,
     onAcceptClientTerms,
     onRejectClientTerms,
-    clientTermsDocumentURL,
-    platformTermsDocumentURL,
+    showTermsModal,
+    termsDocumentURL,
   } = ensureNotNull(useDataRoomContext());
+
+  const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
+  const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
   return (
     <>
@@ -44,9 +45,15 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
               </AccountPanelText>
             </AccountPanelContent>
             <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewPlatformTermsAndConditions}>
-                View
-              </Button>
+              {!hasAcceptedPlatformTerms ? (
+                <Button variant="primary" onClick={onViewPlatformTermsAndConditions}>
+                  View & Accept
+                </Button>
+              ) : (
+                <Button variant="secondary" onClick={onViewPlatformTermsAndConditions}>
+                  View
+                </Button>
+              )}
             </AccountPanelFooter>
           </AccountPanel>
 
@@ -62,27 +69,15 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
               </AccountPanelText>
             </AccountPanelContent>
             <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewClientTermsAndConditions}>
-                View
-              </Button>
-            </AccountPanelFooter>
-          </AccountPanel>
-
-          <AccountPanel>
-            <AccountPanelHeader>
-              <AccountPanelHeaderTitle>Fee Schedule</AccountPanelHeaderTitle>
-            </AccountPanelHeader>
-            <AccountPanelContent>
-              <AccountPanelText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
-                quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices.
-              </AccountPanelText>
-            </AccountPanelContent>
-            <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewFeeSchedule}>
-                View
-              </Button>
+              {!hasAcceptedClientTerms ? (
+                <Button variant="primary" onClick={onViewClientTermsAndConditions}>
+                  View & Accept
+                </Button>
+              ) : (
+                <Button variant="secondary" onClick={onViewClientTermsAndConditions}>
+                  View
+                </Button>
+              )}
             </AccountPanelFooter>
           </AccountPanel>
         </Styles.Container>
@@ -90,22 +85,24 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
 
       <TermsModal
         title="Platform Terms"
-        subtitle="Please accept our platform terms to proceed."
-        documentURL={platformTermsDocumentURL}
-        isOpen={showPlatformTermsModal}
+        subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "tnc"}
         onAccept={onAcceptPlatformTerms}
         onReject={onRejectPlatformTerms}
-        hasAccepted={false}
+        hasAccepted={hasAcceptedPlatformTerms}
+        type={showTermsModal}
       />
 
       <TermsModal
         title="Client Terms"
-        subtitle="Please accept our client terms to proceed."
-        documentURL={clientTermsDocumentURL}
-        isOpen={showClientTermsModal}
+        subtitle={!hasAcceptedClientTerms ? "Please accept our client terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "client_terms"}
         onAccept={onAcceptClientTerms}
         onReject={onRejectClientTerms}
-        hasAccepted={true}
+        hasAccepted={hasAcceptedClientTerms}
+        type={showTermsModal}
       />
     </>
   );

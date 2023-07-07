@@ -1,15 +1,17 @@
+import { IUser } from "@emrgo-frontend/types";
+
 export interface IDataRoomProps {}
 
 export interface IDataRoomContext {
+  user: IUser | null;
+  
   onViewPlatformTermsAndConditions: () => void;
   onViewClientTermsAndConditions: () => void;
-  onViewFeeSchedule: () => void;
-  showPlatformTermsModal: boolean;
   onAcceptPlatformTerms: () => void;
   onRejectPlatformTerms: () => void;
-  showClientTermsModal: boolean;
   onAcceptClientTerms: () => void;
   onRejectClientTerms: () => void;
-  clientTermsDocumentURL: string;
-  platformTermsDocumentURL: string;
+
+  showTermsModal: string;
+  termsDocumentURL: string;
 }
