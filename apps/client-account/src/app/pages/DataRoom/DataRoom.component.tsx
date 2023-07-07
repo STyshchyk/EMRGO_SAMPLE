@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Button, ClientTermsModal, DashboardContent } from "@emrgo-frontend/shared-ui";
+import { Button, DashboardContent, TermsModal } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { AccountPanel } from "../../components/AccountPanel";
@@ -15,22 +15,19 @@ import { IDataRoomProps } from "./DataRoom.types";
 
 export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => {
   const {
+    user,
     onViewClientTermsAndConditions,
-    onViewFeeSchedule,
     onViewPlatformTermsAndConditions,
-    showPlatformTermsModal,
     onAcceptPlatformTerms,
-    onDownloadPlatformTerms,
-    onPrintPlatformTerms,
     onRejectPlatformTerms,
-    onSharePlatformTerms,
-    showClientTermsModal,
     onAcceptClientTerms,
-    onDownloadClientTerms,
-    onPrintClientTerms,
     onRejectClientTerms,
-    onShareClientTerms,
+    showTermsModal,
+    termsDocumentURL,
   } = ensureNotNull(useDataRoomContext());
+
+  const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
+  const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
   return (
     <>
@@ -42,15 +39,21 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
             </AccountPanelHeader>
             <AccountPanelContent>
               <AccountPanelText>
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
                 quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
                 ultrices.
               </AccountPanelText>
             </AccountPanelContent>
             <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewPlatformTermsAndConditions}>
-                View
-              </Button>
+              {!hasAcceptedPlatformTerms ? (
+                <Button variant="primary" onClick={onViewPlatformTermsAndConditions}>
+                  View & Accept
+                </Button>
+              ) : (
+                <Button variant="secondary" onClick={onViewPlatformTermsAndConditions}>
+                  View
+                </Button>
+              )}
             </AccountPanelFooter>
           </AccountPanel>
 
@@ -66,50 +69,40 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
               </AccountPanelText>
             </AccountPanelContent>
             <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewClientTermsAndConditions}>
-                View
-              </Button>
-            </AccountPanelFooter>
-          </AccountPanel>
-
-          <AccountPanel>
-            <AccountPanelHeader>
-              <AccountPanelHeaderTitle>Fee Schedule</AccountPanelHeaderTitle>
-            </AccountPanelHeader>
-            <AccountPanelContent>
-              <AccountPanelText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
-                quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices.
-              </AccountPanelText>
-            </AccountPanelContent>
-            <AccountPanelFooter>
-              <Button variant="secondary" onClick={onViewFeeSchedule}>
-                View
-              </Button>
+              {!hasAcceptedClientTerms ? (
+                <Button variant="primary" onClick={onViewClientTermsAndConditions}>
+                  View & Accept
+                </Button>
+              ) : (
+                <Button variant="secondary" onClick={onViewClientTermsAndConditions}>
+                  View
+                </Button>
+              )}
             </AccountPanelFooter>
           </AccountPanel>
         </Styles.Container>
       </DashboardContent>
 
-      <ClientTermsModal
-        documentURL=""
-        isOpen={showPlatformTermsModal}
+      <TermsModal
+        title="Platform Terms"
+        subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "tnc"}
         onAccept={onAcceptPlatformTerms}
-        onDownload={onDownloadPlatformTerms}
-        onPrint={onPrintPlatformTerms}
         onReject={onRejectPlatformTerms}
-        onShare={onSharePlatformTerms}
+        hasAccepted={hasAcceptedPlatformTerms}
+        type={showTermsModal}
       />
 
-      <ClientTermsModal
-        documentURL=""
-        isOpen={showClientTermsModal}
+      <TermsModal
+        title="Client Terms"
+        subtitle={!hasAcceptedClientTerms ? "Please accept our client terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "client_terms"}
         onAccept={onAcceptClientTerms}
-        onDownload={onDownloadClientTerms}
-        onPrint={onPrintClientTerms}
         onReject={onRejectClientTerms}
-        onShare={onShareClientTerms}
+        hasAccepted={hasAcceptedClientTerms}
+        type={showTermsModal}
       />
     </>
   );

@@ -1,5 +1,15 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
+import { queryKeys } from "@emrgo-frontend/constants";
+import {
+  acceptClientTerms,
+  acceptPlatformTerms,
+  fetchDocumentLink,
+  fetchDocumentPath,
+} from "@emrgo-frontend/services";
+import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { IDataRoomContext } from "./DataRoom.types";
 
 const DataRoomContext = createContext<IDataRoomContext | null>(null);
@@ -8,83 +18,88 @@ const DataRoomContext = createContext<IDataRoomContext | null>(null);
  * @description
  * @param {PropsWithChildren} { children }
  * @returns {JSX.Element}
- * Integration point for the DataRoom template. Put any integration logic here.
- * For example, if you need to fetch data from an API, you can do that here.
- *
- * TODO: Implement this code.
  */
 export const DataRoomProvider = ({ children }: PropsWithChildren) => {
-  const [showPlatformTermsModal, setShowPlatformTermsModal] = useState(false);
-  const [showClientTermsModal, setShowClientTermsModal] = useState(false);
+  const { user } = useUser();
+  const { showSuccessToast } = useToast();
+  const refreshProfile = useRefreshProfile();
+  const [showTermsModal, setShowTermsModal] = useState("");
+  const [termsDocumentURL, setTermsDocumentURL] = useState("");
+
+  const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
+  const { mutate: doAcceptPlatformTerms } = useMutation(acceptPlatformTerms);
+
+  const { data: documentDetails } = useQuery(
+    [queryKeys.miscelleneous.documents.fetchPath, showTermsModal],
+    {
+      staleTime: 60 * 60,
+      queryFn: () => fetchDocumentPath({ documentType: showTermsModal }),
+      enabled: showTermsModal !== "",
+    }
+  );
+
+  const documentPath = documentDetails?.path || "";
+
+  useQuery([queryKeys.miscelleneous.documents.fetchLink, documentPath], {
+    staleTime: 60 * 60,
+    queryFn: () => fetchDocumentLink({ path: documentPath }),
+    enabled: documentPath !== "",
+    onSuccess: (response) => {
+      setTermsDocumentURL(response?.url);
+    },
+  });
+
+  const resetTermsModal = () => {
+    setShowTermsModal("");
+    setTermsDocumentURL("");
+  };
 
   const onViewPlatformTermsAndConditions = () => {
-    setShowPlatformTermsModal(true);
+    setShowTermsModal("tnc");
   };
 
   const onViewClientTermsAndConditions = () => {
-    setShowClientTermsModal(true);
-  };
-
-  const onViewFeeSchedule = () => {
-    console.log("View fee schedule");
+    setShowTermsModal("client_terms");
   };
 
   const onAcceptPlatformTerms = () => {
-    setShowPlatformTermsModal(false);
-  };
-
-  const onDownloadPlatformTerms = () => {
-    console.log("Download platform terms");
-  };
-
-  const onPrintPlatformTerms = () => {
-    console.log("Print platform terms");
-  };
-
-  const onSharePlatformTerms = () => {
-    console.log("Share platform terms");
+    doAcceptPlatformTerms(undefined, {
+      onSuccess: (response) => {
+        refreshProfile();
+        showSuccessToast("Successfully accepted platform terms and conditions");
+      },
+    });
+    resetTermsModal();
   };
 
   const onRejectPlatformTerms = () => {
-    console.log("Reject platform terms");
+    resetTermsModal();
   };
 
   const onAcceptClientTerms = () => {
-    setShowClientTermsModal(false);
-  };
-
-  const onDownloadClientTerms = () => {
-    console.log("Download client terms");
-  };
-
-  const onPrintClientTerms = () => {
-    console.log("Print client terms");
-  };
-
-  const onShareClientTerms = () => {
-    console.log("Share client terms");
+    doAcceptClientTerms(undefined, {
+      onSuccess: (response) => {
+        refreshProfile();
+        showSuccessToast("Successfully accepted client terms and conditions");
+      },
+    });
+    resetTermsModal();
   };
 
   const onRejectClientTerms = () => {
-    console.log("Reject client terms");
+    resetTermsModal();
   };
 
   const state: IDataRoomContext = {
+    user,
     onViewPlatformTermsAndConditions,
     onViewClientTermsAndConditions,
-    onViewFeeSchedule,
-    showPlatformTermsModal,
     onAcceptPlatformTerms,
-    onDownloadPlatformTerms,
-    onPrintPlatformTerms,
-    onSharePlatformTerms,
     onRejectPlatformTerms,
-    showClientTermsModal,
     onAcceptClientTerms,
-    onDownloadClientTerms,
-    onPrintClientTerms,
-    onShareClientTerms,
     onRejectClientTerms,
+    showTermsModal,
+    termsDocumentURL,
   };
 
   return <DataRoomContext.Provider value={state}>{children}</DataRoomContext.Provider>;

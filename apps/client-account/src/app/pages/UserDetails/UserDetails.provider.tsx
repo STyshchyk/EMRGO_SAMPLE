@@ -1,10 +1,10 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
-import { clientAuthenticationRoutes, queryKeys } from "@emrgo-frontend/constants";
+import { clientAuthenticationRoutes } from "@emrgo-frontend/constants";
 import { logoutUser } from "@emrgo-frontend/services";
-import { useToast, useUser } from "@emrgo-frontend/shared-ui";
+import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { navigateModule } from "@emrgo-frontend/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { IEditCorporateLegalNameModalFormProps } from "./EditCorporateLegalNameModal";
 import { IEditEmailAddressModalFormProps } from "./EditEmailAddressModal/EditEmailAddressModal.types";
@@ -31,7 +31,7 @@ const UserDetailsContext = createContext<IUserDetailsContext | null>(null);
  * @returns {JSX.Element}
  */
 export const UserDetailsProvider = ({ children }: PropsWithChildren) => {
-  const queryClient = useQueryClient();
+  const refreshProfile = useRefreshProfile();
   const { user } = useUser();
   const { showSuccessToast } = useToast();
   // const user = mockedUser;
@@ -54,13 +54,6 @@ export const UserDetailsProvider = ({ children }: PropsWithChildren) => {
   // Name
   const setStateOfEditNameModal = (state: boolean) => {
     setIsEditNameModalOpen(state);
-  };
-
-  const refreshProfile = () => {
-    queryClient.invalidateQueries({
-      queryKey: [queryKeys.account.profile.fetch],
-      exact: true,
-    });
   };
 
   const onEditName = (values: IEditNameModalFormProps) => {

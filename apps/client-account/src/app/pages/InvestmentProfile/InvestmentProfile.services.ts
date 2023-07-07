@@ -28,3 +28,15 @@ export const createFormSession = async (
   const data = await (await promise).data;
   return data || [];
 };
+
+export const submitInvestorProfileForms = async (): Promise<IInvestProfileResponse> => {
+  const promise = dashboardApi({
+    method: "put",
+    url: `v2/client/kyc/submit`,
+    params: {
+      kycType: "user",
+    },
+  });
+  const data = await (await promise).data;
+  return data || [];
+};

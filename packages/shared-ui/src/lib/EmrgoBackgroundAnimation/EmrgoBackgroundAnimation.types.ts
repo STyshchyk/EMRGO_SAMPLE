@@ -1,4 +1,4 @@
-export interface IBackgroundImageProps {}
+export interface IEmrgoBackgroundAnimationProps {}
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

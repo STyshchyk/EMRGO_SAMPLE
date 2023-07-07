@@ -1,17 +1,22 @@
 import { PropsWithChildren } from "react";
 
+import { IUser } from "@emrgo-frontend/types";
+
 export interface IPrimariesWrapperProps extends PropsWithChildren {}
 
 export interface IPrimariesWrapperContext {
   numberOfNewTradeOpportunities: number;
   numberOfNotifications: number;
-  showClientTermsModal: boolean;
-  clientTermsDocumentURL: string;
-  onAcceptTerms: () => void;
-  onDownloadTerms: () => void;
-  onPrintTerms: () => void;
-  onShareTerms: () => void;
-  onRejectTerms: () => void;
+
+  user: IUser | null;
+
+  onAcceptPlatformTerms: () => void;
+  onRejectPlatformTerms: () => void;
+  onAcceptClientTerms: () => void;
+  onRejectClientTerms: () => void;
+
+  showTermsModal: string;
+  termsDocumentURL: string;
 }
 
 export type TIssuanceType = "sukuk" | "bonds" | "structured-products" | "certificates";

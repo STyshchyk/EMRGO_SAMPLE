@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import * as constants from "@emrgo-frontend/constants";
-import { useToast } from "@emrgo-frontend/shared-ui";
+import { useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { reverse } from "named-urls";
 
@@ -17,7 +17,8 @@ const KYCContext = createContext<IKYCContext | null>(null);
  * @returns {JSX.Element}
  */
 export const KYCProvider = ({ children }: PropsWithChildren) => {
-  const firstName = "Ryan";
+  const { user } = useUser();
+  const firstName = user?.firstName || "";
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();

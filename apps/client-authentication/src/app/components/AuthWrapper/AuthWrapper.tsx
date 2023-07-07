@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
 
+import { EmrgoBackgroundAnimation } from "@emrgo-frontend/shared-ui";
+
 import * as Styles from "./AuthWrapper.styles";
 import { IAuthWrapperProps } from "./AuthWrapper.types";
 import { BackButton } from "./BackButton";
-import { BackgroundImage } from "./BackgroundImage";
 import { FaqButton } from "./FaqButton";
 import { FaqSidebar } from "./FaqSidebar";
 
@@ -29,7 +30,7 @@ export const AuthWrapper: FC<IAuthWrapperProps> = ({ children, backUrl, hideFAQ 
 
         <FaqSidebar isOpen={isFaqSidebarOpen} onClose={closeFaqSidebar} />
       </Styles.PageContent>
-      {/* <BackgroundImage /> */}
+      <EmrgoBackgroundAnimation />
     </Styles.SignupFrame>
   );
 };

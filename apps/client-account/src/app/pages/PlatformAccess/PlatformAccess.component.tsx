@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { accountIdentification } from "@emrgo-frontend/constants";
 import {
   Button,
   DashboardContent,
@@ -18,6 +19,7 @@ import { IPlatformAccessProps } from "./PlatformAccess.types";
 
 export const PlatformAccessComponent: FC<IPlatformAccessProps> = (props: IPlatformAccessProps) => {
   const {
+    user,
     userProfilingQuestionnaireItems,
     kycQuestionnaireItems,
     onInvestmentProfileStartForm,
@@ -25,6 +27,9 @@ export const PlatformAccessComponent: FC<IPlatformAccessProps> = (props: IPlatfo
     onInvestmentProfileSubmit,
     onKYCSubmit,
   } = ensureNotNull(usePlatformAccessContext());
+
+  const entityKycStatus = user?.entityKycStatus;
+  const clientKycStatus = user?.clientKycStatus;
 
   const firstInvestmentProfileIncompleteForm = userProfilingQuestionnaireItems?.find(
     (form) => form.hasCompleted === false
@@ -59,27 +64,31 @@ export const PlatformAccessComponent: FC<IPlatformAccessProps> = (props: IPlatfo
             </QuestionnaireItems>
           </Styles.QuestionnairePanelContent>
           <AccountPanelFooter>
-            <div>
-              {!areAllInvestmentProfileSectionsComplete && (
-                <Button
-                  size="large"
-                  onClick={() =>
-                    onInvestmentProfileStartForm(
-                      firstInvestmentProfileIncompleteForm?.formId || "",
-                      firstInvestmentProfileIncompleteForm?.formReferenceId || ""
-                    )
-                  }
-                >
-                  Start {firstInvestmentProfileIncompleteForm?.label}
-                </Button>
-              )}
+            {clientKycStatus === accountIdentification.KYC_STATUS_PENDING ? (
+              <div>
+                {!areAllInvestmentProfileSectionsComplete && (
+                  <Button
+                    size="large"
+                    onClick={() =>
+                      onInvestmentProfileStartForm(
+                        firstInvestmentProfileIncompleteForm?.formId || "",
+                        firstInvestmentProfileIncompleteForm?.formReferenceId || ""
+                      )
+                    }
+                  >
+                    Start {firstInvestmentProfileIncompleteForm?.label}
+                  </Button>
+                )}
 
-              {areAllInvestmentProfileSectionsComplete && (
-                <Button size="large" onClick={onInvestmentProfileSubmit}>
-                  Submit Investment Profile
-                </Button>
-              )}
-            </div>
+                {areAllInvestmentProfileSectionsComplete && (
+                  <Button size="large" onClick={onInvestmentProfileSubmit}>
+                    Submit Investment Profile
+                  </Button>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </AccountPanelFooter>
         </AccountPanel>
 
