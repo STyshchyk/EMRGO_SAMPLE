@@ -47,8 +47,14 @@ export const silverPrimariesRoutes = {
       home: "",
       issuances: ":id/issuances",
       manageIssuers: "manage-issuers",
+      tradeTickets: ":id/trade-tickets",
       manageSellside: "manage-sellside"
+    }),
+    tradeManagement: include("trade-management", {
+      home: "",
+      tradeTickets: ":id/trade-tickets"
     })
+
   })
 };
 

@@ -20,11 +20,11 @@ const router = createBrowserRouter([
     element: <Navigate to={routes.primaries.tradeOpportunity.home} replace={true} />
   },
   {
-    path: routes.primaries.tradeOpportunity.home,
+    path: routes.primaries.home,
     element: <PrimariesWrapper />,
     children: [
       {
-        index: true,
+        path: routes.primaries.tradeOpportunity.home,
         element: <TradeOpportunities />
       },
       {
@@ -38,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: routes.primaries.tradeOpportunity.manageSellside,
         element: <ManageSellside />
+      },
+      {
+        path: routes.primaries.tradeManagement.home,
+        element: <p>Trade management</p>
       },
     ]
   }

@@ -33,13 +33,16 @@ export const useInternalMatchedPathDashboard = (tabs: { paths: string[]; key: st
 
 export const useInternalMatchedPathTabs = (tabs: { paths: string[]; key: string }[]) => {
   let matchedValue: any = null;
+  const {pathname} = useLocation()
+
   tabs.forEach(tab => {
     tab.paths.forEach(tabName => {
-      const match = useMatch(tabName);
+      const match = useMatch({ path: pathname, end: true, caseSensitive: false });
       if (match) matchedValue = tab;
     });
   });
-  return matchedValue.key ?? "";
+
+  return matchedValue ? pathname : "";
 };
 
 

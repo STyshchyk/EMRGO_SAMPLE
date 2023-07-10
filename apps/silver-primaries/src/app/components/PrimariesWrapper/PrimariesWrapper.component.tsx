@@ -16,14 +16,22 @@ const primariesTab = [
     paths: getAllSilverRoutes(silverPrimariesRoutes),
     path: silverPrimariesRoutes.primaries.tradeOpportunity.home,
     notification: 0
-  }
+  },
+  {
+    label: "Trade Management",
+    key: "trade-management",
+    paths: getAllSilverRoutes(silverPrimariesRoutes),
+    path: silverPrimariesRoutes.primaries.tradeManagement.home,
+    notification: 0
+  },
+
 ];
 export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children }: IPrimariesWrapperProps) => {
   const value: any = useInternalMatchedPathTabs(primariesTab);
   return <Styles.PrimariesWrapper>
     <Tabs value={value}>
       {primariesTab.map((tab) => (
-        <Tab value={tab.key} as={Link} to={tab.path} key={tab.key}>
+        <Tab value={tab.path} as={Link} to={tab.path} key={tab.path}>
           {tab.label}
           {tab.notification > 0 && <Badge>{tab.notification}</Badge>}
         </Tab>
