@@ -11,11 +11,11 @@ import styled from "styled-components";
 import {useTradeInterestModal, useTradeOpportunitiesStore} from "../store/store";
 import { AddOpportunity } from "./AddOpportunityModal";
 import { BankPanel } from "./BankPanel";
+import {TradeInterest} from "./TradeInterestModal";
 import { useTradeOpportunitiesContext } from "./TradeOpportunities.provider";
 import { getOppotunities } from "./TradeOpportunities.service";
 import * as Styles from "./TradeOpportunities.styles";
 import { ITradeOpportunitiesProps } from "./TradeOpportunities.types";
-import {TradeInterest} from "./TradeInterestModal";
 
 export const FileInput = styled.input`
   height: 3rem;

@@ -1,4 +1,4 @@
-export interface ITradeInterestModal {}
+export interface ITradeInterestModal{}
 
 
 export interface ITradeInterest{

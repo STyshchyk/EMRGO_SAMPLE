@@ -1,6 +1,6 @@
-import {IInvestmentBank, IOpportunityFetch} from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
-import {IIssuer} from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
-import {ISellside} from "../TradeOpportunities/ManageSellside/ManageSellside.types";
+import {IInvestmentBank, IOpportunityFetch } from "@emrgo-frontend/types";
+import {IIssuer } from "@emrgo-frontend/types";
+import {ISellside } from "@emrgo-frontend/types";
 
 export interface IIssuerStore {
   issuerData: IIssuer[] | [];

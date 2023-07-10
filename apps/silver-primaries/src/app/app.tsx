@@ -28,6 +28,10 @@ const router = createBrowserRouter([
         element: <TradeOpportunities />
       },
       {
+        path: routes.primaries.tradeOpportunity.tradeTickets,
+        element: <p>asdasd</p>
+      },
+      {
         path: routes.primaries.tradeOpportunity.issuances,
         element: <Issuances />
       },

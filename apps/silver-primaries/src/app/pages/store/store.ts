@@ -2,9 +2,9 @@ import {produce} from "immer";
 import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
 
-import {IOpportunityFetch} from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
-import {IIssuer} from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
-import {ISellside} from "../TradeOpportunities/ManageSellside/ManageSellside.types";
+import {IOpportunityFetch } from "@emrgo-frontend/types";
+import {IIssuer } from "@emrgo-frontend/types";
+import {ISellside } from "@emrgo-frontend/types";
 import {ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore} from "./store.types";
 
 export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(

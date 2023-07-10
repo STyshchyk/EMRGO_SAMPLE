@@ -32,10 +32,12 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const { opportunityData } = useTradeInterestModal();
   const { data } = useQuery({
     queryFn: async () => {
-      await getTradeInterests(opportunityData?.id);
+      const data = await getTradeInterests(opportunityData?.id);
+      return await (await data).data.data;
     },
     queryKey: [silverQueryKeys.primaries.tradeOpportunities.tradeInterest, opportunityData?.id]
   });
+  console.log(opportunityData?.id);
   const { mutate: doPostTradeInterest } = useMutation(postTradeInterest);
 
   const queryClient = useQueryClient();
