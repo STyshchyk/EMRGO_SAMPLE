@@ -2,15 +2,15 @@ import { BASE_API_URL, clientAuthenticationRoutes, silverAuthenticationRoutes } 
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 
-export const sharedDashboardApi = axios.create({
+export const sharedSilverDashboardApi = axios.create({
   baseURL: BASE_API_URL,
   withCredentials: true
 });
 
-sharedDashboardApi.defaults.headers.common["Content-Type"] = "application/json";
+sharedSilverDashboardApi.defaults.headers.common["Content-Type"] = "application/json";
 
 // Add an Axios interceptor to handle token refresh
-sharedDashboardApi.interceptors.response.use(
+sharedSilverDashboardApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -20,13 +20,13 @@ sharedDashboardApi.interceptors.response.use(
 
       // Make a request to the token refresh endpoint
       try {
-        await sharedDashboardApi({
+        await sharedSilverDashboardApi({
           method: "post",
           url: "v2/refreshTokens"
         });
 
         // Retry the original request with the updated token
-        return sharedDashboardApi(originalRequest);
+        return sharedSilverDashboardApi(originalRequest);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (refreshError: any) {
         // Handle refresh token request error

@@ -6,8 +6,8 @@ import {
   IShownStatus
 } from "@emrgo-frontend/types";
 
-import { sharedDashboardApi } from "./silver.instance";
-const dashboardApi = sharedDashboardApi;
+import { sharedSilverDashboardApi } from "./silver.instance";
+const dashboardApi = sharedSilverDashboardApi;
 export const postSellside = (requestData: ISellside) => {
   return dashboardApi({
     method: "POST",
