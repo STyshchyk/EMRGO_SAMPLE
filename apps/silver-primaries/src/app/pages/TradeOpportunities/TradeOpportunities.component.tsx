@@ -8,13 +8,14 @@ import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
-import { useTradeOpportunitiesStore } from "../store/store";
+import {useTradeInterestModal, useTradeOpportunitiesStore} from "../store/store";
 import { AddOpportunity } from "./AddOpportunityModal";
 import { BankPanel } from "./BankPanel";
 import { useTradeOpportunitiesContext } from "./TradeOpportunities.provider";
 import { getOppotunities } from "./TradeOpportunities.service";
 import * as Styles from "./TradeOpportunities.styles";
 import { ITradeOpportunitiesProps } from "./TradeOpportunities.types";
+import {TradeInterest} from "./TradeInterestModal";
 
 export const FileInput = styled.input`
   height: 3rem;
@@ -45,6 +46,7 @@ export const TradeOpportunitiesComponent: FC<
   } = ensureNotNull(useTradeOpportunitiesContext());
 
   const { isModalOpen, modalActions } = useTradeOpportunitiesStore();
+  const { isModalOpen:isTradeOpen, modalActions:tradeActions } = useTradeInterestModal();
   const [file, setFile] = useState<File>();
   const navigate = useNavigate();
   const {
@@ -96,6 +98,18 @@ export const TradeOpportunitiesComponent: FC<
         showCloseButton={true}
       >
         <AddOpportunity />
+      </Modal>
+      <Modal
+        isOpen={isTradeOpen}
+        width={1068}
+        variant="darkened"
+        onClose={() => {
+          tradeActions.setModalOpen(false);
+        }}
+        title={"Trade interest"}
+        showCloseButton={true}
+      >
+        <TradeInterest />
       </Modal>
 
       {!isError && opportunitiesData &&

@@ -1,5 +1,6 @@
 import { IInvestmentBank, IOpportunityPayload, IOppotunityDocument, IShownStatus } from "@emrgo-frontend/types";
-import { sharedDashboardApi } from "./silver.instance";
+
+import { sharedSilverDashboardApi } from "./silver.instance";
 
 export interface IDataRoomDocument {
   "id": string,
@@ -10,27 +11,35 @@ export interface IDataRoomDocument {
   "version": number
 }
 
-const dashboardApi = sharedDashboardApi;
 
 export const getOppotunities = async (): Promise<IInvestmentBank[]> => {
   //FIXME: update api path once data is available
-  const promise = dashboardApi({
+  const promise = sharedSilverDashboardApi({
     method: "GET",
     url: `/v1/internal/opportunities`
   });
   const data = await (await promise).data.data;
   return data || [];
 };
+export const getTradeInterests = async (id: string | undefined): Promise<any> => {
+  //FIXME: update api path once data is available
+  if (id === undefined) return Promise.reject();
+  const promise = sharedSilverDashboardApi({
+    method: "GET",
+    url: `/v1/internal/opportunities/${id}/participates`
+  });
+  return promise;
+};
 
 export const postOpportunity = (payload: IOpportunityPayload) => {
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "POST",
     url: "/v1/internal/opportunities",
     data: payload
   });
 };
 export const updateOpportunity = (payload: IOpportunityPayload) => {
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "PUT",
     url: `/v1/internal/opportunities/${payload.id}`,
     data: payload
@@ -38,7 +47,7 @@ export const updateOpportunity = (payload: IOpportunityPayload) => {
 };
 
 export const getDataRoomDocuments = async (): Promise<IDataRoomDocument[]> => {
-  const promise = dashboardApi({
+  const promise = sharedSilverDashboardApi({
     method: "GET",
     url: "/v1/utils/internal/dataroom"
   });
@@ -47,7 +56,7 @@ export const getDataRoomDocuments = async (): Promise<IDataRoomDocument[]> => {
 };
 
 export const updateDocument = async (file: { id: string, name: string, path: string }): Promise<any> => {
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "PUT",
     url: `/v1/utils/internal/dataroom/${file.id}`,
     data: {
@@ -58,16 +67,21 @@ export const updateDocument = async (file: { id: string, name: string, path: str
 };
 
 export const postDocument = async (document: { name: string, path: string }): Promise<any> => {
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "POST",
     url: `/v1/utils/internal/dataroom`,
     data: document
   });
 };
 
-export const postOpportunityDocument = async (document: { id: string, isPublic: boolean, name: string, path: string }) => {
+export const postOpportunityDocument = async (document: {
+  id: string,
+  isPublic: boolean,
+  name: string,
+  path: string
+}) => {
   if (!document.id) return Promise.reject();
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "POST",
     url: `/v1/internal/opportunities/${document.id}/documents`,
     data: {
@@ -81,7 +95,7 @@ export const postOpportunityDocument = async (document: { id: string, isPublic: 
 
 export const deleteOpportunityDocument = async (document: { opportunityId: string, docId: string }) => {
   if (!document.opportunityId || !document.docId) return Promise.reject();
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "DELETE",
     url: `/v1/internal/opportunities/${document.opportunityId}/documents/${document.docId}`
   });
@@ -89,7 +103,7 @@ export const deleteOpportunityDocument = async (document: { opportunityId: strin
 
 
 export const getOpportunityDocuments = async (id: string): Promise<IOppotunityDocument[]> => {
-  const promise = dashboardApi({
+  const promise = sharedSilverDashboardApi({
     method: "GET",
     url: `/v1/internal/opportunities/${id}/documents`
   });
@@ -99,7 +113,7 @@ export const getOpportunityDocuments = async (id: string): Promise<IOppotunityDo
 
 
 export const showOpportunity = (payload: IShownStatus) => {
-  return dashboardApi({
+  return sharedSilverDashboardApi({
     method: "PATCH",
     url: `/v1/internal/opportunities/${payload.id}/${payload.status}`
   });

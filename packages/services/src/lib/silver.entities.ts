@@ -1,6 +1,6 @@
 import {IEntity} from "@emrgo-frontend/types";
 
-import {  sharedSilverDashboardApi} from "./silver.instance";
+import {sharedSilverDashboardApi} from "./silver.instance";
 
 export const getEntities = async (): Promise<IEntity[]> => {
   const promise = sharedSilverDashboardApi({

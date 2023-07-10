@@ -113,14 +113,11 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 id={"description"}
                 name={"description"}
                 label={"Issuer Description"}
-                as={"textarea"}
                 type={"textarea"}
                 rows={10}
                 cols={42}
                 maxWidth={494}
                 maxHeight={200}
-                errors={errors}
-                touched={touched}
                 component={FormikInputCustom}
               />
             </Styles.TwoCol>

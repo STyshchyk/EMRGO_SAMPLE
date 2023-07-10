@@ -1,12 +1,7 @@
-import {
-  ISellside,
-} from "@emrgo-frontend/types";
-import { ICurrency } from "@emrgo-frontend/types";
-import {
-  IShownStatus
-} from "@emrgo-frontend/types";
+import {ICurrency, ISellside, IShownStatus,} from "@emrgo-frontend/types";
 
-import { sharedSilverDashboardApi } from "./silver.instance";
+import {sharedSilverDashboardApi} from "./silver.instance";
+
 const dashboardApi = sharedSilverDashboardApi;
 export const postSellside = (requestData: ISellside) => {
   return dashboardApi({

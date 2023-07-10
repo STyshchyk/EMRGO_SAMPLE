@@ -1,5 +1,6 @@
-import { dashboardApi } from "../../services/APIService";
-import { IInvestmentBank, IOpportunityPayload, IOppotunityDocument } from "./AddOpportunityModal/AddOpportunity.types";
+import {dashboardApi} from "../../services/APIService";
+import {IInvestmentBank, IOpportunityPayload, IOppotunityDocument} from "./AddOpportunityModal/AddOpportunity.types";
+import {ITradeInterest} from "./TradeInterestModal/TradeInterest.types";
 
 export interface IShownStatus {
   id?: string,
@@ -13,13 +14,19 @@ export enum TShown {
 
 
 export const getOppotunities = async (): Promise<IInvestmentBank[]> => {
-  //FIXME: update api path once data is available
   const promise = dashboardApi({
     method: "GET",
     url: `/v1/internal/opportunities`
   });
   const data = await (await promise).data.data;
   return data || [];
+};
+export const postTradeInterest = async (tradeInterest: ITradeInterest) => {
+  return dashboardApi({
+    method: "POST",
+    url: `/v1/internal/participating`,
+    data: tradeInterest
+  });
 };
 
 export const postOpportunity = (payload: IOpportunityPayload) => {

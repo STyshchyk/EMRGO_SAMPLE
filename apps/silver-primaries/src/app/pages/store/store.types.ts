@@ -1,6 +1,6 @@
-import { IInvestmentBank, IOpportunityFetch } from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
-import { IIssuer } from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
-import { ISellside } from "../TradeOpportunities/ManageSellside/ManageSellside.types";
+import {IInvestmentBank, IOpportunityFetch} from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
+import {IIssuer} from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
+import {ISellside} from "../TradeOpportunities/ManageSellside/ManageSellside.types";
 
 export interface IIssuerStore {
   issuerData: IIssuer[] | [];
@@ -57,9 +57,11 @@ export interface ISellSideStore {
 
 export interface IModal<T> {
   isModalOpen: boolean;
+  opportunityData?: IOpportunityFetch | null,
   modifyData?: T | null;
   modalActions: {
     setModifyData?: (data: T) => void;
+    setOpportunityData?: (opp?: IOpportunityFetch | null) => void;
     deleteModifyData?: () => void;
     setModalOpen: (flag: boolean) => void;
   };

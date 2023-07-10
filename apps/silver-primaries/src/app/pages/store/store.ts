@@ -1,11 +1,11 @@
-import { produce } from "immer";
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import {produce} from "immer";
+import {create} from "zustand";
+import {immer} from "zustand/middleware/immer";
 
-import { IOpportunityFetch } from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
-import { IIssuer } from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
-import { ISellside } from "../TradeOpportunities/ManageSellside/ManageSellside.types";
-import { ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore } from "./store.types";
+import {IOpportunityFetch} from "../TradeOpportunities/AddOpportunityModal/AddOpportunity.types";
+import {IIssuer} from "../TradeOpportunities/ManageIssuers/ManageIssuers.types";
+import {ISellside} from "../TradeOpportunities/ManageSellside/ManageSellside.types";
+import {ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore} from "./store.types";
 
 export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
   immer((set) => ({
@@ -60,12 +60,31 @@ export const useAddIssuerStore = create<IModal<IIssuer>>()((set, getState) => ({
 }));
 
 export const useMFAModal = create<IModal<any>>()((set, getState) => ({
-  isModalOpen:   false,
+  isModalOpen: false,
   modalActions: {
     setModalOpen: (flag) =>
       set(
         produce((state) => {
           state.isModalOpen = flag;
+        })
+      )
+  }
+}));
+
+export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
+  isModalOpen: false,
+  opportunityData: null,
+  modalActions: {
+    setModalOpen: (flag) =>
+      set(
+        produce((state) => {
+          state.isModalOpen = flag;
+        })
+      ),
+    setOpportunityData: (opp) =>
+      set(
+        produce((state) => {
+          state.opportunityData = opp;
         })
       )
   }

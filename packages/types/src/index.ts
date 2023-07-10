@@ -8,6 +8,7 @@ export * from "./lib/questionnaire";
 export * from "./lib/response";
 export * from "./lib/security";
 export * from "./lib/sellside";
+export * from "./lib/silver.entities";
 export * from "./lib/theme";
 export * from "./lib/user";
 export * from "./lib/util";

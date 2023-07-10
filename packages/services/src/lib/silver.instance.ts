@@ -1,5 +1,5 @@
-import { BASE_API_URL, clientAuthenticationRoutes, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
-import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
+import {BASE_API_URL, silverAuthenticationRoutes} from "@emrgo-frontend/constants";
+import {navigateSilverModule, silverModule} from "@emrgo-frontend/utils";
 import axios from "axios";
 
 export const sharedSilverDashboardApi = axios.create({

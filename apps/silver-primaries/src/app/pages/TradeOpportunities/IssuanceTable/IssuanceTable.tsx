@@ -2,14 +2,21 @@ import { useNavigate } from "react-router-dom";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
-import { ActionTooltip, currencyRenderer, Table, useToast } from "@emrgo-frontend/shared-ui";
+import {
+  ActionTooltip,
+  currencyRenderer,
+  Table,
+  TooltipButtonActions,
+  TooltipButtonBox,
+  useToast
+} from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { CountdownTimer } from "../../components/CountdownTimer";
 import { DataRoomLink } from "../../components/DataRoomLink";
 import { getOpportunityStatusLabel } from "../../helpers";
-import { useOpportunityStore, useTradeOpportunitiesStore } from "../../store";
+import {useOpportunityStore, useTradeInterestModal, useTradeOpportunitiesStore} from "../../store";
 import { IOpportunityFetch } from "../AddOpportunityModal/AddOpportunity.types";
 import { showOpportunity, TShown } from "../TradeOpportunities.service";
 import * as Styles from "./IssuanceTable.styles";
@@ -20,6 +27,7 @@ const columnHelper = createColumnHelper<IOpportunityFetch>();
 
 export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
   const { modalActions } = useTradeOpportunitiesStore();
+  const { modalActions: tradeActions} = useTradeInterestModal();
   const client = useQueryClient();
   const { showErrorToast } = useToast();
   const navigate = useNavigate();
@@ -96,11 +104,12 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
       },
       cell: ({ row }) => {
         const rowData = row.original;
+
         return (
           <ActionTooltip
             title={
-              <Styles.ButtonBox>
-                <Styles.ButtonActions
+              <TooltipButtonBox>
+                <TooltipButtonActions
                   onClick={() => {
                     modalActions.setModalOpen(true);
                     if (modalActions.setModifyData) {
@@ -109,8 +118,8 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                   }}
                 >
                   Modify Opportunity
-                </Styles.ButtonActions>
-                <Styles.ButtonActions
+                </TooltipButtonActions>
+                <TooltipButtonActions $disabled={!rowData.isShown}
                   onClick={() => {
                     if (!rowData.isShown) return;
                     setShownOpportunity({
@@ -120,8 +129,8 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                   }}
                 >
                   Deactivate Opportunity
-                </Styles.ButtonActions>
-                <Styles.ButtonActions
+                </TooltipButtonActions>
+                <TooltipButtonActions $disabled={rowData.isShown}
                   onClick={() => {
                     if (rowData.isShown) return;
                     setShownOpportunity({
@@ -131,14 +140,24 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                   }}
                 >
                   Activate Opportunity
-                </Styles.ButtonActions>
+                </TooltipButtonActions>
+                <TooltipButtonActions
+                  onClick={() => {
+                    if (tradeActions.setOpportunityData)
+                      tradeActions.setOpportunityData(rowData);
+
+                    tradeActions.setModalOpen(true);
+                  }}
+                >
+                  Create Trade Interest
+                </TooltipButtonActions>
                 {/*<Styles.ButtonActions*/}
                 {/*  onClick={() => {*/}
                 {/*    //TODO : ADD delete API*/}
                 {/*  }}>*/}
                 {/*  Delete Opportunity*/}
                 {/*</Styles.ButtonActions>*/}
-              </Styles.ButtonBox>
+              </TooltipButtonBox>
             }
           ></ActionTooltip>
         );
