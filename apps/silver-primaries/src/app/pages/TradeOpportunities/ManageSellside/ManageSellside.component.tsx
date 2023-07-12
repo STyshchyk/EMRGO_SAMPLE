@@ -20,7 +20,7 @@ import { useAddSellsideStore, useSellSideStore } from "../../store/store";
 import { AddSellsideModal } from "./AddSellsideModal";
 import * as Styles from "./ManageSellside.styles";
 import { IManageSellsideProps } from "./ManageSellside.types";
-import { doGetAllSellside } from "./Sellside.service";
+import { doGetAllSellside } from "@emrgo-frontend/services";
 import { SellsideTable } from "./SellsideTable";
 
 

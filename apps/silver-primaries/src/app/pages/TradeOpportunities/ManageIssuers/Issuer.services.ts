@@ -1,7 +1,7 @@
 import { IIssuer } from "@emrgo-frontend/types";
 
 import { dashboardApi } from "../../../services/APIService";
-import { IShownStatus } from "../TradeOpportunities.service";
+import { IShownStatus } from "@emrgo-frontend/types";
 
 
 export const postIssuer = (requestData: IIssuer) => {

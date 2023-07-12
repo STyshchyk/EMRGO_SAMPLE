@@ -1,9 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ITradeInterestModal{
-
-}
-
-
 export interface ITradeInterestPayload{
   detail: string,
   opportunityId: string,
@@ -18,5 +12,3 @@ export interface ITradeInterestFetch{
   email: string,
   detail: string,
 }
-
-

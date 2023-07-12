@@ -2,16 +2,18 @@ import React, { FC, useState } from "react";
 
 import { silverQueryKeys } from "@emrgo-frontend/constants";
 import { getEntities, getTradeInterests } from "@emrgo-frontend/services";
-import { FormikInput, FormikInputCustom, MySelect, useToast } from "@emrgo-frontend/shared-ui";
-import Button from "@mui/material/Button";
+import { postTradeInterest } from "@emrgo-frontend/services";
+import { Button, FormikInput, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
+import { ITradeInterestPayload } from "@emrgo-frontend/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 import { reverse } from "named-urls";
 
+import { SubHeading } from "../../../components/Form";
 import { useTradeInterestModal } from "../../store";
-import { postTradeInterest } from "../TradeOpportunities.service";
+import { tradeInterestSchema } from "./TradeInterest.schema";
 import * as Styles from "./TradeInterest.styles";
-import { ITradeInterestModal, ITradeInterestPayload } from "./TradeInterest.types";
+import { ITradeInterestModal } from "./TradeInterest.types";
 
 
 const initialValues: ITradeInterestPayload = {
@@ -26,6 +28,7 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const { modalActions } = useTradeInterestModal();
   const queryClient = useQueryClient();
   const { opportunityData } = useTradeInterestModal();
+  const { modifyData } = useTradeInterestModal();
 
   const { data: entityData } = useQuery(
     {
@@ -37,15 +40,16 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const { mutate: doPostTradeInterest } = useMutation(postTradeInterest);
   return (
     <Styles.AddSellsideModal>
+      {!modifyData && <SubHeading>Notify the Execution Manager of an intended trade</SubHeading>}
       <Styles.SellSideWrapper>
         <Formik
           initialValues={{
-            name: opportunityData?.issuer.name ?? "N/A",
-            buyside: { userId: "" },
-            detail: ""
+            name: modifyData ? modifyData.name : opportunityData?.issuer.name ?? "N/A",
+            buyside: modifyData ? modifyData.buyside : null,
+            detail: modifyData ? modifyData.detail : ""
           }
           }
-          validationSchema={null}
+          validationSchema={tradeInterestSchema}
           onSubmit={async (values, formikHelpers) => {
             const payload: ITradeInterestPayload = {
               opportunityId: opportunityData?.id ?? "",
@@ -91,16 +95,19 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
                   name={"buyside"}
                   label={"Select buy side"}
                   value={values.buyside}
+                  disabled={!modifyData}
                   maxWidth={291}
                   getOptionValue={(options: any) => options}
                   getOptionLabel={(options: any) => {
                     return `${options.firstName ?? ""} ${options.lastName ?? ""}`;
                   }}
                   options={entityData}
+                  isDisabled={modifyData}
                   onChange={(value: any) => {
                     setFieldValue("buyside", value);
                   }}
-                  component={MySelect}
+                  type={"select"}
+                  component={FormikInputCustom}
                 />
               </Styles.TwoCol>
               <Styles.TwoCol>
@@ -108,6 +115,7 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
                 <Field
                   id={"detail"}
                   name={"detail"}
+                  disabled={modifyData}
                   label={"Insert Trade Details"}
                   rows={10}
                   cols={45}
@@ -121,11 +129,9 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
               <div style={{ display: "flex", marginTop: "25px" }}>
                 <Styles.Spacer />
                 <Button
-                  variant="contained"
                   type={"submit"}
-                  style={{ backgroundColor: "#18686D", color: "white" }}
                 >
-                  Add
+                  {modifyData ? "Close" : "Notify"}
                 </Button>
               </div>
             </Form>

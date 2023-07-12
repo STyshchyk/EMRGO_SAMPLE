@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useTradeOpportunitiesStore } from "../../../store/store";
-import { shownSellside } from "../Sellside.service";
+import { shownSellside } from "@emrgo-frontend/services";
 import * as Styles from "./SellsideTable.styles";
 import { ISellsideTableProps } from "./SellsideTable.types";
 

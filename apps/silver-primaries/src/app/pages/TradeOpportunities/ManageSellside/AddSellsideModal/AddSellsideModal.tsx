@@ -9,7 +9,7 @@ import { Field, Form, Formik } from "formik";
 // TODO: MOVE THIS TO CONSTANTS
 import { convertToBase64, formatBytes, MAX_FILE_SIZE } from "../../../../utils";
 import { useAddSellsideStore } from "../../../store";
-import { postSellside } from "../Sellside.service";
+import { postSellside } from "@emrgo-frontend/services";
 import { SellSideSchema } from "./AddSellSideModal.schema";
 import * as Styles from "./AddSellsideModal.styles";
 import { IAddSellsideModalProps } from "./AddSellsideModal.types";

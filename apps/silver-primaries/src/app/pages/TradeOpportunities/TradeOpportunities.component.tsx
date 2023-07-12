@@ -1,19 +1,16 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { queryKeys } from "@emrgo-frontend/constants";
-import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import { queryKeys, silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
 import { Button, DashboardContent, Modal } from "@emrgo-frontend/shared-ui";
-import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
-import {useTradeInterestModal, useTradeOpportunitiesStore} from "../store/store";
+import { useTradeInterestModal, useTradeOpportunitiesStore } from "../store/store";
 import { AddOpportunity } from "./AddOpportunityModal";
 import { BankPanel } from "./BankPanel";
-import {TradeInterest} from "./TradeInterestModal";
-import { useTradeOpportunitiesContext } from "./TradeOpportunities.provider";
-import { getOppotunities } from "./TradeOpportunities.service";
+import { TradeInterest } from "../components/TradeInterestModal";
+import { getOppotunities } from "@emrgo-frontend/services";
 import * as Styles from "./TradeOpportunities.styles";
 import { ITradeOpportunitiesProps } from "./TradeOpportunities.types";
 
@@ -32,22 +29,9 @@ export const FileInput = styled.input`
 export const TradeOpportunitiesComponent: FC<
   ITradeOpportunitiesProps
 > = ({}: ITradeOpportunitiesProps) => {
-  const {
-    isAboutUsDisplayed,
-    setIsAboutUsDisplayed,
-    downloadData,
-    data,
-    searchQuery,
-    setSearchQuery,
-    filterType,
-    setFilterType,
-    filterStatus,
-    setFilterStatus
-  } = ensureNotNull(useTradeOpportunitiesContext());
 
   const { isModalOpen, modalActions } = useTradeOpportunitiesStore();
-  const { isModalOpen:isTradeOpen, modalActions:tradeActions } = useTradeInterestModal();
-  const [file, setFile] = useState<File>();
+  const { isModalOpen: isTradeOpen, modalActions: tradeActions } = useTradeInterestModal();
   const navigate = useNavigate();
   const {
     data: opportunitiesData,
@@ -105,6 +89,7 @@ export const TradeOpportunitiesComponent: FC<
         variant="darkened"
         onClose={() => {
           tradeActions.setModalOpen(false);
+          if (tradeActions.deleteModifyData) tradeActions.deleteModifyData();
         }}
         title={"Trade interest"}
         showCloseButton={true}

@@ -2,10 +2,9 @@ import React, { createContext, PropsWithChildren, useContext, useMemo } from "re
 import { useParams } from "react-router-dom";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-
+import { getOppotunities } from "@emrgo-frontend/services";
 import { useQuery } from "@tanstack/react-query";
 
-import { getOppotunities } from "../TradeOpportunities.service";
 import { useWatchlist } from "../useWatchlist";
 import { IIssuancesContext } from "./Issuances.types";
 

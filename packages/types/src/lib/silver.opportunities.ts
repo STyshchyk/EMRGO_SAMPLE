@@ -9,7 +9,14 @@ export enum TShown {
   show = "show",
   hide = "hide",
 }
-
+export interface IDataRoomDocument {
+  "id": string,
+  "lastUpdatedDate": string
+  "name": string,
+  "path": string,
+  "type": string,
+  "version": number
+}
 export interface IAddOpportunityModal {
   sellSide: string; //DropDown
   issuanceName: string;

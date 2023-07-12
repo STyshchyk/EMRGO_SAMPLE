@@ -1,15 +1,12 @@
-import { IInvestmentBank, IOpportunityPayload, IOppotunityDocument, IShownStatus } from "@emrgo-frontend/types";
+import {
+  IDataRoomDocument,
+  IInvestmentBank,
+  IOpportunityPayload,
+  IOppotunityDocument,
+  IShownStatus,
+  ITradeInterestPayload} from "@emrgo-frontend/types";
 
 import { sharedSilverDashboardApi } from "./silver.instance";
-
-export interface IDataRoomDocument {
-  "id": string,
-  "lastUpdatedDate": string
-  "name": string,
-  "path": string,
-  "type": string,
-  "version": number
-}
 
 
 export const getOppotunities = async (): Promise<IInvestmentBank[]> => {
@@ -29,6 +26,14 @@ export const getTradeInterests = async (id: string | undefined): Promise<any> =>
     url: `/v1/internal/opportunities/${id}/participates`
   });
   return promise;
+};
+
+export const postTradeInterest = async (tradeInterest: ITradeInterestPayload) => {
+  return sharedSilverDashboardApi({
+    method: "POST",
+    url: `/v1/internal/participating`,
+    data: tradeInterest
+  });
 };
 
 export const postOpportunity = (payload: IOpportunityPayload) => {

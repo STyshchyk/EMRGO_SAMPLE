@@ -17,7 +17,8 @@ import { reverse } from "named-urls";
 import { CountdownTimer } from "../../components/CountdownTimer";
 import { getOpportunityStatusLabel } from "../../helpers";
 import { useOpportunityStore, useTradeInterestModal, useTradeOpportunitiesStore } from "../../store";
-import { showOpportunity, TShown } from "../TradeOpportunities.service";
+import { TShown } from "@emrgo-frontend/types";
+import { showOpportunity } from "@emrgo-frontend/services";
 import { IIssuanceTableProps } from "./IssuanceTable.types";
 
 const columnHelper = createColumnHelper<IOpportunityFetch>();

@@ -1,4 +1,4 @@
-import {IInvestmentBank, IOpportunityFetch } from "@emrgo-frontend/types";
+import { ICurrency, IInvestmentBank, IOpportunityFetch } from "@emrgo-frontend/types";
 import {IIssuer } from "@emrgo-frontend/types";
 import {ISellside } from "@emrgo-frontend/types";
 
@@ -9,22 +9,22 @@ export interface IIssuerStore {
   };
 }
 
-export interface ICurrency {
-  id: string;
-  name: string;
-  nameAr: string;
-  label: string;
-  region: string;
-  value: string | null;
-  metadata: string | null;
-  order: string | null;
-  key: string | null;
-  parentId: string;
-  active: boolean;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// export interface ICurrency {
+//   id: string;
+//   name: string;
+//   nameAr: string;
+//   label: string;
+//   region: string;
+//   value: string | null;
+//   metadata: string | null;
+//   order: string | null;
+//   key: string | null;
+//   parentId: string;
+//   active: boolean;
+//   type: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 export interface ICurrencyStore {
   currencyData: ICurrency[] | [];

@@ -1,11 +1,11 @@
-import {produce} from "immer";
-import {create} from "zustand";
-import {immer} from "zustand/middleware/immer";
+import { produce } from "immer";
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
-import {IOpportunityFetch } from "@emrgo-frontend/types";
-import {IIssuer } from "@emrgo-frontend/types";
-import {ISellside } from "@emrgo-frontend/types";
-import {ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore} from "./store.types";
+import { IOpportunityFetch } from "@emrgo-frontend/types";
+import { IIssuer } from "@emrgo-frontend/types";
+import { ISellside } from "@emrgo-frontend/types";
+import { ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore } from "./store.types";
 
 export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
   immer((set) => ({
@@ -74,6 +74,7 @@ export const useMFAModal = create<IModal<any>>()((set, getState) => ({
 export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
   isModalOpen: false,
   opportunityData: null,
+  modifyData: null,
   modalActions: {
     setModalOpen: (flag) =>
       set(
@@ -81,6 +82,19 @@ export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
           state.isModalOpen = flag;
         })
       ),
+    setModifyData: (data) =>
+      set(
+        produce((state) => {
+          state.modifyData = data;
+        })
+      ),
+    deleteModifyData: () =>
+      set(
+        produce((state) => {
+          state.modifyData = null;
+        })
+      ),
+
     setOpportunityData: (opp) =>
       set(
         produce((state) => {
