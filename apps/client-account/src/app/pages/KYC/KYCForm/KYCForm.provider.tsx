@@ -18,10 +18,15 @@ export const KYCFormProvider = ({ children }: PropsWithChildren) => {
   const { search } = useLocation();
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
   const sessionId = searchParams.get("session");
+  const redirectPath = searchParams.get("redirect");
 
   const onSubmit = () => {
-    const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
-    navigate(route);
+    if (redirectPath) {
+      navigate(redirectPath);
+    } else {
+      const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
+      navigate(route);
+    }
   };
 
   const state: IKYCFormContext = {
@@ -30,11 +35,7 @@ export const KYCFormProvider = ({ children }: PropsWithChildren) => {
     onSubmit,
   };
 
-  return (
-    <KYCFormContext.Provider value={state}>
-      {children}
-    </KYCFormContext.Provider>
-  );
+  return <KYCFormContext.Provider value={state}>{children}</KYCFormContext.Provider>;
 };
 
 export const useKYCFormContext = () => useContext(KYCFormContext);

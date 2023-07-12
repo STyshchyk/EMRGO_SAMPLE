@@ -52,6 +52,7 @@ export const Subtitle = styled.div`
 export const Content = styled.div`
   /* Layout */
   overflow: auto;
+  width: 100%;
   padding: 0;
   margin: ${rem(24)} 0;
   flex-grow: 1;

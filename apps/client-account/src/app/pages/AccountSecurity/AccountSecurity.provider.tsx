@@ -1,14 +1,13 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
-import { queryKeys } from "@emrgo-frontend/constants";
 import {
   enableAuthenticatorMFA,
   requestResetAuthenticatorMFA,
   setupAuthenticatorMFA,
 } from "@emrgo-frontend/services";
-import { useToast, useUser } from "@emrgo-frontend/shared-ui";
+import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { TResetPasswordFlowView, TSecureAccountFlowView } from "@emrgo-frontend/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { IAccountSecurityContext } from "./AccountSecurity.types";
 
@@ -20,7 +19,7 @@ const AccountSecurityContext = createContext<IAccountSecurityContext | null>(nul
  * @returns {JSX.Element}
  */
 export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
-  const queryClient = useQueryClient();
+  const refreshProfile = useRefreshProfile();
   const [secureAccountFlowView, setSecureAccountFlowView] =
     useState<TSecureAccountFlowView>(undefined);
   const [resetPasswordFlowView, setResetPasswordFlowView] =
@@ -36,13 +35,6 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doEnableAuthenticatorMFA } = useMutation(enableAuthenticatorMFA);
 
   const { mutate: doRequestResetAuthenticatorMFA } = useMutation(requestResetAuthenticatorMFA);
-
-  const refreshProfile = () => {
-    queryClient.invalidateQueries({
-      queryKey: [queryKeys.account.profile.fetch],
-      exact: true,
-    });
-  };
 
   const onResetPasswordClick = () => {
     setResetPasswordFlowView("enter-email-address");
