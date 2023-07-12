@@ -30,12 +30,11 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const { data: entityData } = useQuery(
     {
       queryFn: getEntities,
-      queryKey: [silverQueryKeys.onboarding.fetch]
+      queryKey: [silverQueryKeys.onboarding.fetch],
+      select: (data) => data.filter(entity => entity.entityKycStatus === 3 && entity.userKycStatus === 3)
     }
   );
-
   const { mutate: doPostTradeInterest } = useMutation(postTradeInterest);
-
   return (
     <Styles.AddSellsideModal>
       <Styles.SellSideWrapper>
@@ -57,8 +56,9 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
             doPostTradeInterest(payload, {
               onSuccess: () => {
                 modalActions.setModalOpen(false);
-                queryClient.invalidateQueries([reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` })]).then(()=>{
-                  console.log("success");});
+                queryClient.invalidateQueries([reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` })]).then(() => {
+                  console.log("success");
+                });
                 showSuccessToast("Successfully created trade interest");
               },
               onError: () => {
