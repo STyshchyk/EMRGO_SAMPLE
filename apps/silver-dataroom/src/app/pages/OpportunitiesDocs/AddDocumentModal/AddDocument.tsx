@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { postOpportunityDocument, postSellside } from "@emrgo-frontend/services";
-import { FormikInput, FormikInputCustom, MySelect, useToast } from "@emrgo-frontend/shared-ui";
-import Button from "@mui/material/Button";
+import { FormikInput, FormikInputCustom, MySelect, useToast, Button } from "@emrgo-frontend/shared-ui";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
@@ -12,6 +12,7 @@ import { getFileUploadLink } from "../../../services/FileManager/FileManager";
 import { useAddDocumentsModal } from "../../store/store";
 import * as Styles from "./AddDocument.styles";
 import { IAddDocumentProps } from "./AddDocument.types";
+import { addDocumentSchema } from "./AddDocument.schema";
 
 const stages = [
   { label: "Open", value: true },
@@ -24,7 +25,7 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
   const [file, setFile] = useState<File>();
   const { showErrorToast, showSuccessToast } = useToast();
   const queryClient = useQueryClient();
-  const { mutate: doUploadFile } = useMutation(getFileUploadLink, {
+  const { mutate: doUploadFile, isLoading } = useMutation(getFileUploadLink, {
     onError: () => {
       showErrorToast("Error while posting file to oracle");
     }
@@ -47,6 +48,8 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
           stage: stages[0],
           file: null
         }}
+        validateOnMount={true}
+        validationSchema={addDocumentSchema}
         onSubmit={async (values, formikHelpers) => {
           // TODO : COMPLETE FILE UPLOAD FOR OPPORTUNITY
           const formData: any = new FormData();
@@ -65,7 +68,7 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
           formikHelpers.setSubmitting(false);
         }}
       >
-        {({ values, setFieldValue, errors, touched, setFieldError }) => (
+        {({ values, setFieldValue, errors, touched, isValid }) => (
           <Form>
             <Styles.TwoCol>
               <label>Document Title</label>
@@ -118,9 +121,8 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
             <div style={{ display: "flex", marginTop: "25px" }}>
               <Styles.Spacer />
               <Button
-                variant="contained"
                 type={"submit"}
-                style={{ backgroundColor: "#18686D", color: "white" }}
+                disabled={!isValid || isLoading}
               >
                 Add
               </Button>
