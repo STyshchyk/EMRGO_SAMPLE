@@ -19,6 +19,7 @@ export const buildSilverModuleURL = (module: silverModule, path: string) => {
 
 export const navigateSilverModule = (module: silverModule, path: string) => {
   const fullPath = buildSilverModuleURL(module, path);
+  console.log(fullPath);
   window.location.assign(fullPath);
 };
 
