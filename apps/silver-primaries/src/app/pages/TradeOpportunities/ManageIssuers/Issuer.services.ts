@@ -1,6 +1,8 @@
+import { IIssuer } from "@emrgo-frontend/types";
+
 import { dashboardApi } from "../../../services/APIService";
 import { IShownStatus } from "../TradeOpportunities.service";
-import { IIssuer } from "./ManageIssuers.types";
+
 
 export const postIssuer = (requestData: IIssuer) => {
   return dashboardApi({

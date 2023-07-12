@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { silverPrimariesRoutes, silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import {
   ActionTooltip,
   currencyRenderer,
@@ -12,6 +12,7 @@ import {
 import { IOpportunityFetch } from "@emrgo-frontend/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { reverse } from "named-urls";
 
 import { CountdownTimer } from "../../components/CountdownTimer";
 import { getOpportunityStatusLabel } from "../../helpers";
@@ -116,25 +117,29 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                 >
                   Modify Opportunity
                 </TooltipButtonActions>
-                <TooltipButtonActions $disabled={!rowData.isShown}
-                                      onClick={() => {
-                                        if (!rowData.isShown) return;
-                                        setShownOpportunity({
-                                          id: rowData.id,
-                                          status: TShown.hide
-                                        });
-                                      }}
+                <TooltipButtonActions
+                  $disabled={!rowData.isShown
+                  }
+                  onClick={() => {
+                    if (!rowData.isShown) return;
+                    setShownOpportunity({
+                      id: rowData.id,
+                      status: TShown.hide
+                    });
+                  }}
                 >
                   Deactivate Opportunity
                 </TooltipButtonActions>
-                <TooltipButtonActions $disabled={rowData.isShown}
-                                      onClick={() => {
-                                        if (rowData.isShown) return;
-                                        setShownOpportunity({
-                                          id: rowData.id,
-                                          status: TShown.show
-                                        });
-                                      }}
+                <TooltipButtonActions
+                  $disabled={rowData.isShown
+                  }
+                  onClick={() => {
+                    if (rowData.isShown) return;
+                    setShownOpportunity({
+                      id: rowData.id,
+                      status: TShown.show
+                    });
+                  }}
                 >
                   Activate Opportunity
                 </TooltipButtonActions>
@@ -150,9 +155,10 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                 </TooltipButtonActions>
                 <TooltipButtonActions
                   onClick={() => {
-                    if (tradeActions.setOpportunityData)
+                    if (tradeActions.setOpportunityData) {
                       tradeActions.setOpportunityData(rowData);
-
+                      navigate(reverse(`${silverPrimariesRoutes.primaries.tradeOpportunity.details.home}`, { opportunityId: `${rowData.id}` }));
+                    }
                   }}
                 >
                   View Trade Interest

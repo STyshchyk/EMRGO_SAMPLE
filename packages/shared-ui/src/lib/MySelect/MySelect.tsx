@@ -4,7 +4,6 @@ import makeAnimated from "react-select/animated";
 
 import { colors, typography } from "@emrgo-frontend/theme";
 import { ellipsis, rem } from "polished";
-import { useDarkMode } from "usehooks-ts";
 
 import * as Styles from "./MySelect.styles";
 import { IMySelectProps } from "./MySelect.types";
@@ -20,7 +19,7 @@ export const MySelect = <
     ...props
   }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
   const animatedComponents = makeAnimated();
-  const { isDarkMode } = useDarkMode();
+  const isDarkMode = false;
   const componentId = useId();
   const idValue = props.id ?? componentId;
 

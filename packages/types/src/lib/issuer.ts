@@ -1,5 +1,5 @@
 export interface IIssuer {
-  id: string;
+  id?: string;
   name: string;
   jurisdiction?: string;
   industry?: string;

@@ -2,12 +2,12 @@ import React, { FC } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import {  Button,FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
+import { IIssuer } from "@emrgo-frontend/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { useAddIssuerStore } from "../../../store/store";
 import { postIssuer, updateIssuer } from "../Issuer.services";
-import { IIssuer } from "../ManageIssuers.types";
 import { AddIssuersModalSchema } from "./AddIssuersModal.schema";
 import * as Styles from "./AddIssuersModal.styles";
 import { IAddIssuersModalProps } from "./AddIssuersModal.types";
@@ -15,8 +15,8 @@ import { IAddIssuersModalProps } from "./AddIssuersModal.types";
 const initialValues: IIssuer = {
   description: "",
   name: "",
+  industry: "",
   jurisdiction: "",
-  industry: ""
 };
 
 
@@ -85,17 +85,6 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
               />
             </Styles.TwoCol>
             <Styles.TwoCol>
-              <label htmlFor={"jurisdiction"}>Issuer Jurisdiction</label>
-              <Field
-                id={"jurisdiction"}
-                name={"jurisdiction"}
-                label={"Issuer Jurisdiction"}
-                as={"input"}
-                type={"text"}
-                component={FormikInputCustom}
-              />
-            </Styles.TwoCol>
-            <Styles.TwoCol>
               <label htmlFor={"industry"}>Industry</label>
               <Field
                 id={"industry"}
@@ -106,6 +95,18 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 component={FormikInputCustom}
               />
             </Styles.TwoCol>
+            <Styles.TwoCol>
+              <label htmlFor={"jurisdiction"}>Issuer Jurisdiction</label>
+              <Field
+                id={"jurisdiction"}
+                name={"jurisdiction"}
+                label={"Issuer Jurisdiction"}
+                as={"input"}
+                type={"text"}
+                component={FormikInputCustom}
+              />
+            </Styles.TwoCol>
+
             <Styles.TwoCol>
               <label htmlFor={"description"}>Issuer Description</label>
 

@@ -1,6 +1,10 @@
 
-import { ITradeInterest } from "../TradeInterestModal/TradeInterest.types";
+import {  ITradeInterestFetch } from "../TradeInterestModal/TradeInterest.types";
 
 export interface ITradeInterestTableProps {
-  tradeInterest: ITradeInterest[];
+  tradeInterest: ITradeInterestFetch[];
+}
+
+export interface ITradeInterestComponent{
+
 }

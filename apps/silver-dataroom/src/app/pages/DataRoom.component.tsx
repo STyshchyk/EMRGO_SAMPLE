@@ -2,10 +2,10 @@ import * as React from "react";
 import { FC } from "react";
 import { Link, Outlet } from "react-router-dom";
 
+import { silverDataRoomRoutes as routes } from "@emrgo-frontend/constants";
 import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
 import { useInternalMatchedPathTabs } from "@emrgo-frontend/utils";
 
-import { silverDataRoomRoutes as routes} from "@emrgo-frontend/constants";
 import * as Styles from "./DataRoom.styles";
 import { IDataRoomProps } from "./DataRoom.types";
 

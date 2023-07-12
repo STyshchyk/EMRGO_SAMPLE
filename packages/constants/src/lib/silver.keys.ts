@@ -9,7 +9,9 @@ export const silverQueryKeys = {
     tradeOpportunities: include("trade-opportunities", {
       fetch: "fetch",
       documents: "documents",
-      tradeInterest:"trade-interests",
+      tradeInterest: include(":tradeInterests", {
+        fetch: "tradeInterests"
+      }),
       dropdown: include("dropdonwn", {
         currency: "currency",
         csd: "csd",

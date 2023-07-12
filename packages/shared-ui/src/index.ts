@@ -12,6 +12,7 @@ export * from "./lib/Disclaimer/";
 export * from "./lib/Drawer/";
 export * from "./lib/Dropdown";
 export * from "./lib/FormikInput";
+export * from "./lib/Helpers";
 export * from "./lib/Hyperlink";
 export * from "./lib/IconButton";
 export * from "./lib/Icons";

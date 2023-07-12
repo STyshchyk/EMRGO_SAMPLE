@@ -1,26 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import {
-  ActionTooltip,
-  currencyRenderer,
-  Table,
-  TooltipButtonActions,
-  TooltipButtonBox,
-  useToast
-} from "@emrgo-frontend/shared-ui";
-import { IOpportunityFetch } from "@emrgo-frontend/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Span,Table, useToast } from "@emrgo-frontend/shared-ui";
+import { useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { CountdownTimer } from "../../components/CountdownTimer";
-import { getOpportunityStatusLabel } from "../../helpers";
-import { useOpportunityStore, useTradeInterestModal, useTradeOpportunitiesStore } from "../../store";
-import { showOpportunity, TShown } from "../TradeOpportunities.service";
+import { ITradeInterestFetch } from "../TradeInterestModal/TradeInterest.types";
 import { ITradeInterestTableProps } from "./TradeInterestTable.types";
-import { ITradeInterest } from "../TradeInterestModal";
 
-const columnHelper = createColumnHelper<ITradeInterest>();
+const columnHelper = createColumnHelper<ITradeInterestFetch>();
 
 export const TradeInterestTable = ({ tradeInterest }: ITradeInterestTableProps) => {
   const client = useQueryClient();
@@ -28,27 +15,35 @@ export const TradeInterestTable = ({ tradeInterest }: ITradeInterestTableProps) 
   const navigate = useNavigate();
 
   const columns = [
-    columnHelper.accessor("opportunityId", {
-      header: "Opportunity Id",
+    columnHelper.accessor("id", {
+      header: "Opportunity Id"
     }),
-    columnHelper.accessor("userId", {
-      header: "User Id",
+    columnHelper.accessor("firstName", {
+      header: "Full Name",
+      cell: ({ row }) => {
+        return `${row.original.firstName} ${row.original.lastName}`;
+      }
+    }),
+    columnHelper.accessor("email", {
+      header: "User Id"
     }),
     columnHelper.accessor("detail", {
       header: "Details",
-    }),
+      maxSize: 200,
+      cell: ({ cell }) => {
+        return <Span $width={400}>{cell.getValue()}</Span>;
+      }
+    })
   ];
   const table = useReactTable({
     columns,
     data: tradeInterest,
-    getCoreRowModel: getCoreRowModel(),
+    getCoreRowModel: getCoreRowModel()
 
   });
   return (
     <Table
       table={table}
-      // onRowClick={(row) => console.log(row)}
-      displayShown={true}
     />
   );
 };

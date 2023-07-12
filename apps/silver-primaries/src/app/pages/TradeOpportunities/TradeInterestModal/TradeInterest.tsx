@@ -6,14 +6,15 @@ import { FormikInput, FormikInputCustom, MySelect, useToast } from "@emrgo-front
 import Button from "@mui/material/Button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
+import { reverse } from "named-urls";
 
 import { useTradeInterestModal } from "../../store";
 import { postTradeInterest } from "../TradeOpportunities.service";
 import * as Styles from "./TradeInterest.styles";
-import { ITradeInterest, ITradeInterestModal } from "./TradeInterest.types";
+import { ITradeInterestModal, ITradeInterestPayload } from "./TradeInterest.types";
 
 
-const initialValues: ITradeInterest = {
+const initialValues: ITradeInterestPayload = {
   opportunityId: "",
   status: "assigned",
   detail: "",
@@ -23,24 +24,18 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const [file, setFile] = useState<File>();
   const { showErrorToast, showSuccessToast } = useToast();
   const { modalActions } = useTradeInterestModal();
-  const { data: entityData, isError, isLoading } = useQuery(
+  const queryClient = useQueryClient();
+  const { opportunityData } = useTradeInterestModal();
+
+  const { data: entityData } = useQuery(
     {
       queryFn: getEntities,
       queryKey: [silverQueryKeys.onboarding.fetch]
     }
   );
-  const { opportunityData } = useTradeInterestModal();
-  const { data } = useQuery({
-    queryFn: async () => {
-      const data = await getTradeInterests(opportunityData?.id);
-      return await (await data).data.data;
-    },
-    queryKey: [silverQueryKeys.primaries.tradeOpportunities.tradeInterest, opportunityData?.id]
-  });
-  console.log(opportunityData?.id);
+
   const { mutate: doPostTradeInterest } = useMutation(postTradeInterest);
 
-  const queryClient = useQueryClient();
   return (
     <Styles.AddSellsideModal>
       <Styles.SellSideWrapper>
@@ -53,7 +48,7 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
           }
           validationSchema={null}
           onSubmit={async (values, formikHelpers) => {
-            const payload: ITradeInterest = {
+            const payload: ITradeInterestPayload = {
               opportunityId: opportunityData?.id ?? "",
               userId: values.buyside.userId ?? "",
               detail: values.detail,
@@ -62,6 +57,8 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
             doPostTradeInterest(payload, {
               onSuccess: () => {
                 modalActions.setModalOpen(false);
+                queryClient.invalidateQueries([reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` })]).then(()=>{
+                  console.log("success");});
                 showSuccessToast("Successfully created trade interest");
               },
               onError: () => {
