@@ -14,13 +14,33 @@ const opportunityStatusLabels: Record<TOpportunityStatus, string> = {
   [opStatus.closed]: "Closed"
 };
 
-export const getIssuanceTypeLabel = (type: TIssuanceType) => {
-  return issuanceTypeLabels[type];
+
+
+export type TExecutedStatus =
+  "trade_notification"
+  | "pending_sellside"
+  | "pending_buyside"
+  | "pending_buyside"
+  | "rejected"
+  | "executed";
+
+const executedStatusLabels: Record<TExecutedStatus, string> = {
+  trade_notification: "Trade Notification",
+  pending_sellside: "Pending Sell-side",
+  pending_buyside: "Pending Buy-Side",
+  rejected: "Rejected",
+  executed: "Executed"
 };
 
 export const getOpportunityStatusLabel = (status: string | undefined) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+  // @ts-ignore
   return opportunityStatusLabels[status];
 };
 
+export const getIssuanceTypeLabel = (type: TIssuanceType) => {
+  return issuanceTypeLabels[type];
+};
+export const getExecutedStatusLabel = (type: TExecutedStatus) => {
+  return executedStatusLabels[type];
+};

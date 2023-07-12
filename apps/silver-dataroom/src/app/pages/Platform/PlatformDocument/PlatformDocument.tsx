@@ -1,10 +1,10 @@
 import React, { FC, useRef, useState } from "react";
 
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { Button, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Heading, SubHeading } from "../../../components/Form";
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { getFileUploadLink } from "../../../services/FileManager/FileManager";
 import { trimDate } from "../../../utils";
 import { updateDocument } from "../../DataRoom.service";
@@ -53,6 +53,7 @@ export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, 
       <Heading>{name}</Heading>
       <input
         type="file"
+        accept={"application/pdf"}
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}

@@ -1,7 +1,14 @@
 import { FC } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import { ActionTooltip, Table, useToast } from "@emrgo-frontend/shared-ui";
+import {
+  ActionTooltip,
+  Span,
+  Table,
+  TooltipButtonActions,
+  TooltipButtonBox,
+  useToast
+} from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
@@ -41,7 +48,8 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
       cell: ({ cell }) => <span>{cell.getValue() ? cell.getValue() : "N/A"}</span>
     }),
     columnHelper.accessor("description", {
-      header: "Description"
+      header: "Description",
+      cell: ({cell}) => <Span $width={200}>{cell.getValue()}</Span>
     }),
     columnHelper.display({
       id: "Actions",
@@ -53,8 +61,8 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
         return (
           <ActionTooltip
             title={
-              <Styles.ButtonBox>
-                <Styles.ButtonActions
+              <TooltipButtonBox>
+                <TooltipButtonActions
                   onClick={() => {
                     if (rowData && modalActions.setModifyData) {
                       console.log("rowData", rowData);
@@ -64,7 +72,7 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
                   }}
                 >
                   Modify Issuer
-                </Styles.ButtonActions>
+                </TooltipButtonActions>
                 {/*<Styles.ButtonActions*/}
                 {/*  onClick={() => {*/}
                 {/*    if (!rowData.isShown) return;*/}
@@ -94,7 +102,7 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
                 {/*>*/}
                 {/*  Delete Issuer*/}
                 {/*</Styles.ButtonActions>*/}
-              </Styles.ButtonBox>
+              </TooltipButtonBox>
             }
           ></ActionTooltip>
         );

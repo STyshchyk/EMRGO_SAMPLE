@@ -1,2 +1,3 @@
-export { IssuanceTable } from "./IssuanceTable";
-export type { IIssuanceTableProps } from "./IssuanceTable.types";
+export { ExecutedTable } from "./ExecutedTable";
+export { ExecutedTableComponent } from "./ExecutedTable.component";
+export type { IExecutedTableProps } from "./ExecutedTable.types";
