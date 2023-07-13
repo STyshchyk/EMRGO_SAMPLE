@@ -1,5 +1,6 @@
-import {FC} from "react";
+import { FC, useEffect } from "react";
 
+import { silverModuleURLs } from "@emrgo-frontend/constants";
 import {ensureNotNull} from "@emrgo-frontend/utils";
 
 import {SilverDashboardSidebar} from "./SilverDashboardSidebar";
@@ -18,7 +19,9 @@ export const SilverDashboardWrapperComponent: FC<
     onShareTerms,
     onRejectTerms
   } = ensureNotNull(useSilverDashboardWrapperContext());
-
+  useEffect(() => {
+    console.log(silverModuleURLs);
+  }, []);
   return (
     <Styles.Container>
       <SilverDashboardSidebar />
