@@ -8,7 +8,7 @@ const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(n
  * @description
  * @param {PropsWithChildren} { children }
  * @returns {JSX.Element}
- * Integration point for the DashboardWrapper template. Put any integration logic here.
+ * Integration point for the SilverDashboardWrapper template. Put any integration logic here.
  * For example, if you need to fetch data from an API, you can do that here.
  *
  * TODO: Implement this code.

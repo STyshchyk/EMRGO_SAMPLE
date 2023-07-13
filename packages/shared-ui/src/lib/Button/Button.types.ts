@@ -10,8 +10,6 @@ export interface IButtonProps extends PropsWithChildren {
   icon?: string;
   /** The button is disabled */
   disabled?: boolean;
-  type?: "submit" | "reset" | "button" | undefined;
-
   /** The color of the button */
   color?: TButtonColors;
   /** Callback fired when the button is clicked */

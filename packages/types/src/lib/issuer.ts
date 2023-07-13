@@ -1,5 +1,8 @@
 export interface IIssuer {
-  id: string;
+  id?: string;
   name: string;
-  isShown: boolean;
+  jurisdiction?: string;
+  industry?: string;
+  description?: string;
+  isShown?: string;
 }

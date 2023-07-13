@@ -110,7 +110,7 @@ export const InputContainer = styled.div<{
           ${getTheme("colors.white.100")};
       `}
     `}
-  
+
   ${({ $disabled }) => {
     if ($disabled) {
       return css`
@@ -179,7 +179,9 @@ export const Label = styled.label<{
       css`
         color: ${getTheme("colors.orange")};
       `}
-    `}
+    `
+
+}
 `;
 
 export const Input = styled.input<{

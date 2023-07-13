@@ -20,6 +20,7 @@ const InputComponent: ForwardRefRenderFunction<
     cols,
     id,
     maxWidth,
+    maxHeight,
     type,
     disabled,
     variant
@@ -48,7 +49,7 @@ const InputComponent: ForwardRefRenderFunction<
   };
 
   return (
-    <Styles.Wrapper $maxWidth={maxWidth}>
+    <Styles.Wrapper $maxWidth={maxWidth} $maxHeight={maxHeight}>
       <Styles.InputContainer
         $active={active}
         $error={!!error}
@@ -77,6 +78,7 @@ const InputComponent: ForwardRefRenderFunction<
             cols={cols}
             onChange={onChange}
             $maxWidth={maxWidth}
+            $maxHeight={maxHeight}
             name={idValue}
             onFocus={(e) => {
               focus();
@@ -104,4 +106,4 @@ const InputComponent: ForwardRefRenderFunction<
   );
 };
 
-export const MyInput = forwardRef(InputComponent);
+export const MyTextArea = forwardRef(InputComponent);

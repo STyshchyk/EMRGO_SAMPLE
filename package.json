@@ -3,15 +3,21 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:all": "nx run-many -t serve --parallel=true --maxParallel=100",
+    "dev:all": "nx run-many -t serve --parallel=true --maxParallel=100 --skip-nx-cache",
+    "dev:silver": "nx run-many -t serve -p silver-authentication silver-administration silver-primaries silver-onboarding silver-dataroom --parallel=true --maxParallel=100 --skip-nx-cache",
     "build:all": "nx run-many -t build --parallel=true  --skip-nx-cache",
     "build:client-account": "nx run-many -t build -p client-account --parallel=true --skip-nx-cache",
     "build:client-authentication": "nx run-many -t build -p client-authentication --parallel=true --skip-nx-cache",
     "build:client-primaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
     "build:client-secondaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
-    "build:silver-internal": "nx run-many -t build -p silver-internal --parallel=true --skip-nx-cache",
+    "build:silver-admin": "nx run-many -t build -p silver-administration --parallel=true --skip-nx-cache",
+    "build:silver-auth": "nx run-many -t build -p silver-authentication --parallel=true --skip-nx-cache",
+    "build:silver-dataroom": "nx run-many -t build -p silver-dataroom --parallel=true --skip-nx-cache",
+    "build:silver-onboarding": "nx run-many -t build -p silver-onboarding --parallel=true --skip-nx-cache",
+    "build:silver-primaries": "nx run-many -t build -p silver-primaries --parallel=true --skip-nx-cache",
     "generate": "plop",
-    "g": "npm run generate"
+    "g": "npm run generate",
+    "lint:fix": "eslint --fix  ./apps/silver-authentication"
   },
   "private": true,
   "dependencies": {
@@ -124,6 +130,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.0.4",
+    "vite": "^4.3.4",
     "vite-plugin-dts": "~1.7.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",

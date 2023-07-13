@@ -10,9 +10,11 @@
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
+          - docker-compose.prod.template.yml
           - package-lock.json
           - package.json
           - packages/**/*
+          - .env.production
 
 .client_primaries_build_rules_develop:
   rules:
@@ -24,9 +26,11 @@
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
+          - docker-compose.prod.template.yml
           - package-lock.json
           - package.json
           - packages/**/*
+          - .env.production
 
 .client_secondaries_build_rules_develop:
   rules:
@@ -38,9 +42,11 @@
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
+          - docker-compose.prod.template.yml
           - package-lock.json
           - package.json
           - packages/**/*
+          - .env.production
 
 .client_accounts_build_rules_develop:
   rules:
@@ -52,20 +58,104 @@
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
+          - docker-compose.prod.template.yml
           - package-lock.json
           - package.json
           - packages/**/*
+          - .env.production
 
-.silver-internal_build_rules_develop:
+# .silver-internal_build_rules_develop:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == "develop"
+#       when: always
+#       changes:
+#         paths:
+#           - apps/silver-internal/**/*
+#           - .gitlab-ci.yml
+#           - .gitlab/**/*
+#           - Dockerfile
+#           - package-lock.json
+#           - package.json
+#           - packages/**/*
+#           - .env.production
+#
+
+.silver-admin_build_rules_develop:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
       changes:
         paths:
-          - apps/silver-internal/**/*
+          - apps/silver-administration/**/*
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
+          - docker-compose.prod.template.yml
           - package-lock.json
           - package.json
           - packages/**/*
+          - .env.production
+
+.silver-auth_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/silver-authentication/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
+.silver-dataroom_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/silver-dataroom/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
+.silver-onboarding_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/silver-onboarding/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
+.silver-prim_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/silver-primaries/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production

@@ -33,7 +33,22 @@ export const TableActionButton = styled(BiDotsVerticalRounded)`
     `}
 `;
 
-export const ButtonActions = styled.button`
+export const TooltipButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  padding: 5px 10px;
+  gap: 5px 0px;
+  background-color: rgba(4, 37, 49, 0);
+  width: max-content;
+  z-index: 1000;
+  //border: 1px solid #446875;
+`;
+
+export const TooltipButtonActions = styled.button<{ $disabled?: boolean }>`
   display: flex;
   margin: 5px 0px;
   appearance: none;
@@ -42,19 +57,20 @@ export const ButtonActions = styled.button`
   border: none;
   font-size: ${rem(12)};
 
-  &:hover {
-    color: #11e4d9;
-  }
+
 
   ${(props) =>
-    props.theme.mode === "light" &&
-    css`
-      color: ${getTheme("colors.black.100")};
+  props.theme.mode === "light" &&
+  css`
+      color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.black.100")} ;
+      &:hover {
+        color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.green5")} ;
+      }
     `}
 
   ${(props) =>
-    props.theme.mode === "dark" &&
-    css`
+  props.theme.mode === "dark" &&
+  css`
       color: ${getTheme("colors.white.100")};
     `}
 `;

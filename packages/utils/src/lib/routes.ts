@@ -40,27 +40,6 @@ export const useClientMatchedPathSidebar = (paths: string[]) => {
   return isMatched;
 };
 
-export const useInternalMatchedPathDashboard = (tabs: { paths: string[]; key: string }) => {
-  let matchedValue = false;
-  tabs.paths.forEach(pathname => {
-    const match = useMatch({ path: pathname, end: true, caseSensitive: false });
-    if (match) matchedValue = true;
-  });
-  return matchedValue ? tabs.key : "";
-};
-
-export const useInternalMatchedPathTabs = (tabs: { paths: string[]; key: string }[]) => {
-  let matchedValue: any = null;
-  tabs.forEach(tab => {
-    tab.paths.forEach(tabName => {
-      const match = useMatch(tabName);
-      if (match) matchedValue = tab;
-    });
-  });
-  return matchedValue.key ?? "";
-};
-
-
 export const useClientMatchedPathDashboard = (tabs: { paths: string; key: string }) => {
   const location = useLocation();
   const { pathname } = location;

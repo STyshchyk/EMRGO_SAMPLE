@@ -6,6 +6,9 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "linebreak-style": "off",
+        "no-empty-pattern": "off",
+        "no-empty-function": "off",
         "@nx/enforce-module-boundaries": [
           "error",
           {
