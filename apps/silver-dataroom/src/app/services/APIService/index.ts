@@ -1,15 +1,12 @@
 import { BASE_API_URL as BASE_API, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { sharedSilverDashboardApi } from "@emrgo-frontend/services";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 
 const BASE_API_URL = BASE_API;
 
 
-export const dashboardApi = axios.create({
-  baseURL: `${BASE_API_URL}`,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true
-});
+export const dashboardApi = sharedSilverDashboardApi;
 
 dashboardApi.defaults.headers.common["Content-Type"] = "application/json";
 
