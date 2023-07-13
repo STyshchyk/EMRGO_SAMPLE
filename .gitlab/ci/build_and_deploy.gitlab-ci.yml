@@ -20,8 +20,11 @@
       mv envsubst /usr/local/bin
     - docker info
     - ls -al $PWD
+    # !PREPARE AND SUBST ENV VARS AND DOCKER-COMPOSE FILE
     - envsubst < $PWD/.env.production > $PWD/.env
+    - envsubst < $PWD/docker-compose.prod.template.yml > $PWD/docker-compose.${TARGET_APP_NAME}.yml
     - cat $PWD/.env
+    - cat $PWD/docker-compose.${TARGET_APP_NAME}.yml
   script:
     # !BUILD AND PUSH IMMUTABLE IMAGE
     - >-

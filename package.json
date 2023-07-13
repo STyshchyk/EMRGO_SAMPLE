@@ -10,7 +10,11 @@
     "build:client-authentication": "nx run-many -t build -p client-authentication --parallel=true --skip-nx-cache",
     "build:client-primaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
     "build:client-secondaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
-    "build:silver-internal": "nx run-many -t build -p silver-internal --parallel=true --skip-nx-cache",
+    "build:silver-admin": "nx run-many -t build -p silver-administration --parallel=true --skip-nx-cache",
+    "build:silver-auth": "nx run-many -t build -p silver-authentication --parallel=true --skip-nx-cache",
+    "build:silver-dataroom": "nx run-many -t build -p silver-dataroom --parallel=true --skip-nx-cache",
+    "build:silver-onboarding": "nx run-many -t build -p silver-onboarding --parallel=true --skip-nx-cache",
+    "build:silver-primaries": "nx run-many -t build -p silver-primaries --parallel=true --skip-nx-cache",
     "generate": "plop",
     "g": "npm run generate",
     "lint:fix": "eslint --fix  ./apps/silver-authentication"

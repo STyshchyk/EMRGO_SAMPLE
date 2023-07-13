@@ -1,6 +1,7 @@
 # TODO: cleanup/refactor
 # NOTE: VALID TARGET_APP_NAME values:
-#   client-accounts, client-authentication, client-primaries and silver-internal
+#   client-accounts, client-authentication, client-primaries
+#   silver-administration, silver-authentication, silver-dataroom, silver-onboarding, silver-primaries
 
 include:
   - local: .gitlab/ci/build_and_deploy.gitlab-ci.yml
@@ -38,7 +39,8 @@ Deploy:client-primaries-EXP-DIFC:
     - .build_and_deploy_config
     - .client_primaries_build_rules_develop
 
-Deploy:silver-internal-EXP-DIFC:
+# DISABLED
+.Deploy:silver-internal-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-internal"
   stage: deploy
@@ -47,3 +49,13 @@ Deploy:silver-internal-EXP-DIFC:
   extends:
     - .build_and_deploy_config
     - .silver-internal_build_rules_develop
+
+.Deploy:silver-auth-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-authentication"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-auth_build_rules_develop
