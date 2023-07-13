@@ -1,6 +1,6 @@
-# docker-compose.prod.template.yml (Base)
+# docker-compose.yml (Base)
 services:
-  $SERVICE_NAME: # TO BE REPLACED WITH THE NAME OF THE SERVICE DURING THE DEPLOY PROCESS
+  $TARGET_APP_NAME: # TO BE REPLACED WITH THE NAME OF THE SERVICE
     image: $DOCKER_REGISTRY_IMAGE:$DOCKER_IMMUTABLE_IMAGE_TAG
     restart: always
     healthcheck:
