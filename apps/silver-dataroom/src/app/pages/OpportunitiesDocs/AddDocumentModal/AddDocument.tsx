@@ -113,7 +113,6 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
                   }}
                   component={FormikInputCustom}
                   label={"Select file"}
-
                 />
               </div>
             </Styles.TwoCol>
