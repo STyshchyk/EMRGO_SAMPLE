@@ -12,10 +12,10 @@ export const LoginForm = styled.div<{ $isAligned?: boolean }>`
   min-height: calc(100vh);
 
   ${({ $isAligned }) =>
-          $isAligned && css`
-            justify-content: center;
-            align-items: center;
-          `}
+    $isAligned && css`
+      justify-content: center;
+      align-items: center;
+    `}
 
 `;
 export const Form = styled.div<{ $isAligned?: boolean }>`
@@ -26,11 +26,14 @@ export const Form = styled.div<{ $isAligned?: boolean }>`
   max-width: ${rem(500)};
 
 
-  ${({ $isAligned }) =>
-  $isAligned && css`
-            justify-content: center;
-            align-items: center;
-          `}
+  ${({ $isAligned }) => {
+    if ($isAligned) return (css`
+      justify-content: center;
+      align-items: center;
+    `);
+
+  }
+  }
 
 `;
 export const Spacer = styled.div`
