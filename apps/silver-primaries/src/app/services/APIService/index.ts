@@ -1,16 +1,13 @@
 import { BASE_API_URL as BASE_URL, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
-import { navigateModule } from "@emrgo-frontend/utils";
+import { sharedSilverDashboardApi } from "@emrgo-frontend/services";
+import { navigateModule, navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 
 
 const BASE_API_URL = BASE_URL;
 
 
-export const dashboardApi = axios.create({
-  baseURL: `${BASE_API_URL}`,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true
-});
+export const dashboardApi = sharedSilverDashboardApi;
 
 dashboardApi.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -40,7 +37,7 @@ dashboardApi.interceptors.response.use(
           refreshError.response.status === 500 ||
           refreshError.response.status === 502
         ) {
-          navigateModule("authentication", silverAuthenticationRoutes.home);
+          navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
         }
       }
     }
