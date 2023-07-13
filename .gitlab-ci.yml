@@ -39,17 +39,6 @@ Deploy:client-primaries-EXP-DIFC:
     - .build_and_deploy_config
     - .client_primaries_build_rules_develop
 
-# DISABLED
-.Deploy:silver-internal-EXP-DIFC:
-  variables:
-    TARGET_APP_NAME: "silver-internal"
-  stage: deploy
-  environment:
-    name: exp-difc
-  extends:
-    - .build_and_deploy_config
-    - .silver-internal_build_rules_develop
-
 Deploy:silver-admin-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-administration"
