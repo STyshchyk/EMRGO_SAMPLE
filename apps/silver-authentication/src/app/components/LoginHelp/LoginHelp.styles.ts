@@ -1,3 +1,4 @@
+import { getTheme } from "@emrgo-frontend/theme";
 import {rem} from "polished";
 import styled from "styled-components";
 
@@ -16,5 +17,6 @@ export const HelpListItem = styled.li`
   padding: 0;
 
   list-style: none;
-  color: white;
+
+  ${getTheme("typography.regular.02")}
 `;
