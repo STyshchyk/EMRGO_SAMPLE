@@ -50,7 +50,17 @@ Deploy:client-primaries-EXP-DIFC:
     - .build_and_deploy_config
     - .silver-internal_build_rules_develop
 
-.Deploy:silver-auth-EXP-DIFC:
+Deploy:silver-admin-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-administration"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-admin_build_rules_develop
+
+Deploy:silver-auth-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-authentication"
   stage: deploy
@@ -59,3 +69,33 @@ Deploy:client-primaries-EXP-DIFC:
   extends:
     - .build_and_deploy_config
     - .silver-auth_build_rules_develop
+
+Deploy:silver-dataroom-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-dataroom"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-dataroom_build_rules_develop
+
+Deploy:silver-onboarding-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-onboarding"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-onboarding_build_rules_develop
+
+Deploy:silver-prim-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-primaries"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-prim_build_rules_develop
