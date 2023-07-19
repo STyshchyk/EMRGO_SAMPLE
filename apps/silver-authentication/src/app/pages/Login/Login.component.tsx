@@ -73,6 +73,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
     <Styles.LoginForm>
       <Logo />
       <Formik
+        validateOnMount={true}
         enableReinitialize={true}
         initialValues={{
           email: "",
@@ -84,7 +85,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
           onSubmit(values);
         }}
       >
-        {({ values, setFieldValue, isValid }) => (
+        {({ values, setFieldValue, isValid, errors }) => (
           <Form>
             <React.Fragment>
               {activeStep === 0 && (
@@ -126,7 +127,11 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                       size="large"
                       type={"submit"}
                       component={Button}
-                      onClick={handleNext}
+                      disabled={errors.password || errors.email}
+                      onClick={() => {
+                        if (errors.password || errors.email)return;
+                        handleNext();
+                      }}
                     >
                       Submit
                     </Field>
