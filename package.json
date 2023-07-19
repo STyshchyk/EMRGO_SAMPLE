@@ -10,7 +10,7 @@
     "build:client-authentication": "nx run-many -t build -p client-authentication --parallel=true --skip-nx-cache",
     "build:client-primaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
     "build:client-secondaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
-    "build:silver-administration": "nx run-asdmany -t build -p silver-administration --parallel=true --skip-nx-cache",
+    "build:silver-administration": "nx run-many -t build -p silver-administration --parallel=true --skip-nx-cache",
     "build:silver-authentication": "nx run-many -t build -p silver-authentication --parallel=true --skip-nx-cache",
     "build:silver-dataroom": "nx run-many -t build -p silver-dataroom --parallel=true --skip-nx-cache",
     "build:silver-onboarding": "nx run-many -t build -p silver-onboarding --parallel=true --skip-nx-cache",
