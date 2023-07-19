@@ -3,7 +3,8 @@ import Select, { GroupBase, Props } from "react-select";
 import makeAnimated from "react-select/animated";
 
 import { colors, typography } from "@emrgo-frontend/theme";
-import { ellipsis, rem } from "polished";
+import { ellipsis, rem, rgba } from "polished";
+import { useDarkMode } from "usehooks-ts";
 
 import * as Styles from "./MySelect.styles";
 import { IMySelectProps } from "./MySelect.types";
@@ -18,11 +19,11 @@ export const MySelect = <
   ...props
 }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
   const animatedComponents = makeAnimated();
-  const isDarkMode = false;
+  const { isDarkMode } = useDarkMode();
   const componentId = useId();
   const idValue = props.id ?? componentId;
 
-  const getOptionStyles = (type: string, state: any, error?: string | boolean) => {
+  const getOptionStyles = (type: string, state?: any, error?: string | boolean) => {
     let styles = {};
     switch (type) {
       case "hover":
@@ -33,36 +34,41 @@ export const MySelect = <
       case "select":
         styles = {
           backgroundColor: isDarkMode
-            ? state.isSelected
-              ? colors.dark
-              : "transparent"
-            : state.isSelected
-            ? colors.black[20]
-            : "transparent",
+            ? state.isSelected ? colors.dark : "transparent"
+            : state.isSelected ? colors.black[20] : "transparent"
         };
         break;
       case "controlBackground":
         styles = {
           background: error
-            ? `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ), #FFFFFF`
-            : isDarkMode
-            ? colors.green3
-            : colors.black[5],
+            ? isDarkMode ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)` : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
+            : isDarkMode ? rgba(255, 255, 255, 0.05) : colors.black[5]
+        };
+        break;
+      case "placeholderColor" :
+        styles = {
+          color: error
+            ? isDarkMode ? colors.orange : colors.red
+            : isDarkMode ? colors.white[60] : colors.black[60]
         };
         break;
       case "controlBorder":
         styles = {
           border: error
-            ? `1px solid ${colors.red}`
+            ? isDarkMode ? `1px solid ${colors.orange}` : `1px solid ${colors.red}`
             : state.isFocused
-            ? `1px solid ${colors.green3}`
-            : `1px solid ${colors.strokes.light}`,
+              ? isDarkMode ? `1px solid ${colors.green5}` : `1px solid ${colors.green3}`
+              : isDarkMode ? `1px solid ${colors.strokes.dark}` : `1px solid ${colors.strokes.light}`
         };
         break;
       case "controlHover":
         styles = {
-          border: error ? `1px solid ${colors.red}` : `1px solid ${colors.green3}`,
-          boxShadow: error ? `0px 0px 1px ${colors.red}` : `0px 0px 1px ${colors.green3}`,
+          border: error
+            ? isDarkMode ? `1px solid ${colors.orange}` : `1px solid ${colors.red}`
+            : `1px solid ${colors.green3}`,
+          boxShadow: error
+            ? isDarkMode ? `0px 0px 1px ${colors.orange}` : `0px 0px 1px ${colors.red}`
+            : `0px 0px 1px ${colors.green3}`
         };
         break;
       default:
@@ -121,6 +127,7 @@ export const MySelect = <
             borderRadius: rem(4),
             padding: `${rem(2)} ${rem(4)}`,
             borderColor: isDarkMode
+<<<<<<< HEAD
               ? state.menuIsOpen
                 ? colors.green3
                 : colors.strokes.dark
@@ -128,17 +135,28 @@ export const MySelect = <
               ? colors.green3
               : colors.strokes.light,
             boxShadow: "none",
+=======
+              ? state.menuIsOpen ? colors.green3 : colors.strokes.dark
+              : state.menuIsOpen ? colors.green3 : colors.strokes.light,
+            boxShadow: "none"
+>>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
           }),
           singleValue: (styles, state) => ({
             ...styles,
-            color: error ? colors.red : colors.black[100],
+            color: error
+              ? isDarkMode ? colors.orange : colors.red
+              : isDarkMode ? colors.white[60] : colors.black[60],
             ...ellipsis(),
+<<<<<<< HEAD
             ...typography.regular["02Tight"],
+=======
+            ...typography.regular["02Tight"]
+>>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
           }),
           placeholder: (defaultStyles) => {
             return {
               ...defaultStyles,
-              color: error ? colors.red : colors.black[60],
+              ...getOptionStyles("placeholderColor", null, error),
               ...ellipsis(),
               ...typography.medium["02Tight"],
             };
@@ -150,8 +168,13 @@ export const MySelect = <
           indicatorsContainer: (base, props) => ({
             ...base,
             transform: props.selectProps.menuIsOpen ? "rotate(182deg)" : "none",
+<<<<<<< HEAD
             svg: error ? { fill: "red" } : "none",
           }),
+=======
+            svg: error ? { fill: isDarkMode ? `${colors.orange}` : `${colors.red}` } : "none"
+          })
+>>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
         }}
       />
       {!!error && (
