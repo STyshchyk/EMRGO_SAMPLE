@@ -1,0 +1,100 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.8.19",
+    "version": "2.0"
+  },
+  "extensionsUsed": ["KHR_draco_mesh_compression"],
+  "extensionsRequired": ["KHR_draco_mesh_compression"],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Sphere.018",
+      "rotation": [
+        -0.07694167643785477, -0.09800273180007935, -0.4279363751411438, 0.8951793909072876
+      ],
+      "scale": [2.5714142322540283, 2.5714147090911865, 2.5714144706726074],
+      "translation": [20.39859962463379, -70.58497619628906, -9.46108775679022e-6]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "A5",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.00030348263680934906, 0.023153342306613922, 0.03954622894525528, 1],
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Sphere.023",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "componentType": 5126,
+      "count": 40717,
+      "max": [0.9353737831115723, 0.9975767135620117, 0.8862171173095703],
+      "min": [-0.9353735446929932, -0.9975767135620117, -0.9353736639022827],
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 40717,
+      "type": "VEC3"
+    },
+    {
+      "componentType": 5126,
+      "count": 40717,
+      "type": "VEC2"
+    },
+    {
+      "componentType": 5123,
+      "count": 224256,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 164003,
+      "byteOffset": 0
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 164004,
+      "uri": "home.bin"
+    }
+  ]
+}

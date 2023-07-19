@@ -1,5 +1,6 @@
 import { FC, useLayoutEffect, useState } from "react";
 
+import { EmrgoBackgroundAnimation } from "@emrgo-frontend/shared-ui";
 import { useDarkMode } from "usehooks-ts";
 
 import * as Styles from "./AuthWrapper.styles";
@@ -32,7 +33,7 @@ export const AuthWrapper: FC<IAuthWrapperProps> = ({ children, backUrl, hideFAQ 
 
         <FaqSidebar isOpen={isFaqSidebarOpen} onClose={closeFaqSidebar} />
       </Styles.PageContent>
-      {/* <BackgroundImage /> */}
+      <EmrgoBackgroundAnimation />
     </Styles.SignupFrame>
   );
 };
