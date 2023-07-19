@@ -1,10 +1,10 @@
+import { IOpportunityFetch } from "@emrgo-frontend/types";
+import { IIssuer } from "@emrgo-frontend/types";
+import { ISellside } from "@emrgo-frontend/types";
 import { produce } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { IOpportunityFetch } from "@emrgo-frontend/types";
-import { IIssuer } from "@emrgo-frontend/types";
-import { ISellside } from "@emrgo-frontend/types";
 import { ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore } from "./store.types";
 
 export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
@@ -58,7 +58,30 @@ export const useAddIssuerStore = create<IModal<IIssuer>>()((set, getState) => ({
       )
   }
 }));
-
+export const useTradeTicketStore = create<IModal<IIssuer>>()((set, getState) => ({
+  isModalOpen: false,
+  modifyData: null,
+  modalActions: {
+    deleteModifyData: () =>
+      set(
+        produce((state) => ({
+          modifyData: null
+        }))
+      ),
+    setModifyData: (data) =>
+      set(
+        produce((state) => {
+          state.modifyData = data;
+        })
+      ),
+    setModalOpen: (flag) =>
+      set(
+        produce((state) => {
+          state.isModalOpen = flag;
+        })
+      )
+  }
+}));
 export const useMFAModal = create<IModal<any>>()((set, getState) => ({
   isModalOpen: false,
   modalActions: {
@@ -70,7 +93,6 @@ export const useMFAModal = create<IModal<any>>()((set, getState) => ({
       )
   }
 }));
-
 export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
   isModalOpen: false,
   opportunityData: null,
@@ -103,7 +125,6 @@ export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
       )
   }
 }));
-
 export const useAddSellsideStore = create<IModal<ISellside>>()((set) => ({
   isModalOpen: false,
   modalActions: {
@@ -115,7 +136,6 @@ export const useAddSellsideStore = create<IModal<ISellside>>()((set) => ({
       )
   }
 }));
-
 export const useSellSideStore = create<ISellSideStore>()((set) => ({
   sellSideData: [],
   sellSideActions: {
@@ -156,7 +176,6 @@ export const useOpportunityStore = create<IOpportunityStore>()((set) => ({
       )
   }
 }));
-
 export const useCurrencyStore = create<ICurrencyStore>()((set) => ({
   currencyData: [],
   csdData: [],
