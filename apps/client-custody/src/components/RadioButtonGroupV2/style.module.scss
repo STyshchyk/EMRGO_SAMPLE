@@ -1,0 +1,21 @@
+@import '../../styles/config.scss';
+
+.radio-button-group {
+  // font-family: 'D-DIN Exp';
+  &__label {
+    font-weight: bold;
+  }
+
+  .displayInline {
+    display: flex;
+  }
+
+  &__error {
+    color: $red-color;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 0.5em;
+    position: absolute;
+    text-transform: uppercase;
+  }
+}

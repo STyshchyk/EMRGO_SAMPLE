@@ -1,0 +1,10 @@
+.wrapper {
+  flex: 1;
+}
+
+.selectContainer {
+  width: '100%';
+  &:hover {
+    cursor: pointer;
+  }
+}

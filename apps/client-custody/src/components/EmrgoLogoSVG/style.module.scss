@@ -1,0 +1,31 @@
+@import '../../styles/config/colors';
+
+.logo {
+  width: 4em;
+  height: auto;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--full {
+    width: 7em;
+  }
+}
+.emrgo-logo-svg-light {
+  fill: #fff;
+  padding: auto;
+}
+
+.emrgo-logo-svg-light path[fill-rule='evenodd'] {
+  fill: #83abb9;
+}
+
+.emrgo-logo-svg-dark {
+  fill: #1c1b1f;
+  padding: auto;
+}
+
+.emrgo-logo-svg-dark path[fill-rule='evenodd'] {
+  fill: #446875;
+}

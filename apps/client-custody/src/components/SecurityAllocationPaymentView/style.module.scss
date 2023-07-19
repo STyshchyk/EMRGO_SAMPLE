@@ -1,0 +1,30 @@
+@import '../../styles/config.scss';
+
+
+.table {
+  &__wrapper {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 100%;
+  }
+
+  &__footer {
+    text-align: center;
+    font-weight: 700;
+    background-color: $lightgray-color!important;
+    color: $lightgray-color;
+  }
+  &__cell {
+    &--invalid {
+      font-weight: 700;
+      background-color: $orange-color !important;
+      color: white;
+    }
+  }
+}
+
+.action-button{
+  &__wrapper{
+    margin-top: 5rem;
+  }
+}

@@ -1,0 +1,59 @@
+@import '../../styles/config.scss';
+
+.checkbox-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  font-family: 'D-DIN Exp';
+  justify-content: flex-end;
+
+  &__default-checkbox {
+    border: 0;
+    clip-path: inset(50%);
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  &__custom-checkbox {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    transition: all 500ms;
+    width: 16px;
+
+    &--complete {
+      fill: $secondary-color;
+
+      &:focus {
+        fill: $lightsecondary-color;
+      }
+    }
+
+    &--incomplete {
+      fill: $primary-color;
+
+      &:focus {
+        fill: $lightprimary-color;
+      }
+    }
+  }
+
+  &--alternate {
+    &__label {
+      margin-left:0.5rem;
+      color: #ffffff;
+    }
+
+    &__custom-checkbox {
+      &--incomplete {
+        fill: #ffffff;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@import '../../styles/config.scss';
+
+.container {
+  color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+}
+
+.category{
+  margin-bottom: 2rem;
+  &__title{
+    color:$gray-color;
+    margin-top: 1rem; 
+    margin-bottom: 1rem;
+  }
+}
+
+.table{
+  width: 95vw;
+  // height: 40vh;
+  overflow: hidden;
+  margin-top:3rem;
+
+  &__title{
+    margin-bottom: 1rem;
+  }
+}
+
+.dropdown{
+  width:250px;
+}

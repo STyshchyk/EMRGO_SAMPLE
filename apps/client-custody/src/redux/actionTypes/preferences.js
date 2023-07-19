@@ -1,0 +1,3 @@
+export const PREFERENCES_FETCH_REQUESTED = 'preferences/FETCH_REQUESTED';
+export const PREFERENCES_FETCH_SUCCEEDED = 'preferences/FETCH_SUCCEEDED';
+export const PREFERENCES_FETCH_FAILED = 'preferences/FETCH_FAILED';

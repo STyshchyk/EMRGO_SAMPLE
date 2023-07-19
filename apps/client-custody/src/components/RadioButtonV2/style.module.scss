@@ -1,0 +1,61 @@
+@import '../../styles/config.scss';
+
+.radio-button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  // font-family: 'D-DIN Exp';
+  justify-content: flex-end;
+
+  &__label {
+    font-size: 14px;
+    line-height: 16px;
+    color: #143673;
+  }
+
+  &__default-radio-button {
+    border: 0;
+    clip-path: inset(50%);
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  &__custom-radio-button {
+    cursor: pointer;
+    display: inline-block;
+    height: 14px;
+    transition: all 500ms;
+    width: 14px;
+    min-height: 22px;
+    min-width: 22px;
+    margin-right: 7px;
+
+  &--complete {
+    fill: $secondary-color;
+
+    &:focus {
+      fill: $lightsecondary-color;
+    }
+  }
+
+  &--incomplete {
+    fill: $primary-color;
+
+    &:focus {
+      fill: $lightprimary-color;
+    }
+  }
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  fill: #9a9a9a;
+  color: #9a9a9a;
+}

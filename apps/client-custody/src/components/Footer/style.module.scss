@@ -1,0 +1,15 @@
+@import '../../styles/config.scss';
+
+.footer {
+  padding-top: 1rem;
+
+  &__copyright-text {
+    color: #b0b0b0;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: #b0b0b0;
+  }
+}

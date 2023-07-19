@@ -25,7 +25,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "client-account:build",
-        "port": 3004
+        "port": 3006
       },
       "configurations": {
         "development": {
