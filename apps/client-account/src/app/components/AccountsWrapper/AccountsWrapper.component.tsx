@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
-import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
+import { Badge, Tab, Tabs, useUser } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull, useMatchedPath } from "@emrgo-frontend/utils";
 
 import { useAccountsWrapperContext } from "./AccountsWrapper.provider";
@@ -37,10 +37,16 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
       paths: [routes.account.dataRoom],
       notification: 0,
     },
+    {
+      label: "Onboard User",
+      key: "onboard",
+      paths: [routes.account.onboardUser],
+      notification: 0,
+    },
   ];
 
   const value = useMatchedPath(primariesTabs);
-
+  const { user } = useUser();
   return (
     <Styles.Accounts>
       <Tabs value={value}>
