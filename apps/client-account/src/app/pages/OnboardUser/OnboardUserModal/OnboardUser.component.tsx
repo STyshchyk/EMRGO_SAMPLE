@@ -1,10 +1,11 @@
 import React from "react";
 
 import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
+import { onboardUser } from "../OnboardUser.service";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
 import { TwoCol } from "./OnboardUser.styles";
@@ -21,12 +22,19 @@ const initialValues: INewUser = {
 export const OnboardUserComponent = ({}: IOnboardedUser) => {
   const { showErrorToast, showSuccessToast } = useToast();
   const queryClient = useQueryClient();
+  const { mutate: doPostUser } = useMutation({
+    mutationFn: onboardUser,
+    onError: () => {
+      showErrorToast("Error while onboarding user");
+    }
+  });
   return (
     <Styles.OnboardUser>
       <Formik
         initialValues={initialValues}
         validationSchema={onboardUserSchema}
         onSubmit={(values, formikHelpers) => {
+          doPostUser(values);
           alert(JSON.stringify(values, null, 2));
           formikHelpers.setSubmitting(false);
         }}
@@ -92,7 +100,7 @@ export const OnboardUserComponent = ({}: IOnboardedUser) => {
                 }}
                 options={[
                   { label: "Investor", value: "invst_mgr" },
-                  { label: "Admin", value: "admin" },
+                  { label: "Admin", value: "admin" }
                 ]
                 }
                 placeholder="Select role"

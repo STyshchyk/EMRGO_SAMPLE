@@ -47,7 +47,7 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
   ];
   const value = useMatchedPath(primariesTabs);
   const { user } = useUser();
-
+  console.log(user);
   const filteredTabs = primariesTabs.filter(tab => {
     if (!tab.roles || tab.roles.length === 0) return true;
     return !!tab.roles.includes(user?.role ?? "");
