@@ -1,0 +1,69 @@
+@import '../config/colors';
+
+html {
+  color: $primary-color;
+  font-family: 'D-DIN Exp';
+  font-size: 100%;
+  line-height: 1.45;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+code,
+kbd,
+samp {
+  font-family: 'D-DIN Exp';
+  font-size: 100%;
+  line-height: 1.45;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.white-text {
+  color: #fff !important;
+}
+
+.black-text {
+  color: #000 !important;
+}
+
+.primary-text {
+  color: $primary-color !important;
+}
+
+.secondary-text {
+  color: $secondary-color;
+}
+
+.gray-text {
+  color: $gray-color;
+}
+
+.success-text {
+  color: $green-color;
+}
+
+.error-text {
+  color: $red-color;
+}
+
+.pending-text {
+  color: $orange-color;
+}
+
+.condensed-header {
+  margin: 1rem 0 1rem;
+}
+
+.bold {
+  font-weight: bold !important;
+}

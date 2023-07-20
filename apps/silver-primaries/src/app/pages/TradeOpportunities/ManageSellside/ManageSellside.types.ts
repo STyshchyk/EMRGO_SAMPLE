@@ -1,8 +1,6 @@
-export interface IManageSellsideProps {
-}
+export interface IManageSellsideProps {}
 
-export interface IManageSellsideContext {
-}
+export interface IManageSellsideContext {}
 
 export interface ISellside {
   id?: string;

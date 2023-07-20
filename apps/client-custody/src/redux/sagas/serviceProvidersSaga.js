@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as serviceProvidersActionCreators from '../actionCreators/serviceProviders';
-import * as actionTypes from '../actionTypes/serviceProviders';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as serviceProvidersActionCreators from "../actionCreators/serviceProviders";
+import * as actionTypes from "../actionTypes/serviceProviders";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchServiceProviders({ payload }) {
   try {
@@ -20,7 +20,10 @@ function* fetchServiceProviders({ payload }) {
 
 function* engageServiceProvidersForLA({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.engagementsAPI.engageServiceProvidersForLA, payload);
+    const response = yield call(
+      wethaqAPIService.engagementsAPI.engageServiceProvidersForLA,
+      payload
+    );
     const { data } = response;
     yield put(serviceProvidersActionCreators.doFetchServiceProviderListRequest(payload));
     yield call(toast.success, data.message);
@@ -34,7 +37,10 @@ function* engageServiceProvidersForLA({ payload }) {
 
 function* engageServiceProvidersForSP({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.engagementsAPI.engageServiceProvidersForSP, payload);
+    const response = yield call(
+      wethaqAPIService.engagementsAPI.engageServiceProvidersForSP,
+      payload
+    );
     const { data } = response;
     yield call(toast.success, data.message);
     yield put(serviceProvidersActionCreators.doEngageServiceProviderSPSuccess(response));

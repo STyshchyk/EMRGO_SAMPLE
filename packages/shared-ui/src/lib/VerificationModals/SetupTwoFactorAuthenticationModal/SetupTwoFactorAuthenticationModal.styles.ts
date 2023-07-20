@@ -3,10 +3,6 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-
-
-
-
 export const SetupTwoFactorAuthenticationModal = styled(Modal)`
   padding: ${rem(16)};
   width: 100%;

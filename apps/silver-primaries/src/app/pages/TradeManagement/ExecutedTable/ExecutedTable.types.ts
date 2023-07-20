@@ -4,6 +4,4 @@ export interface IExecutedTableProps {
   opportunities: IOpportunityFetch[];
 }
 
-export interface IExecutedTableCopmonent {
-
-}
+export interface IExecutedTableCopmonent {}

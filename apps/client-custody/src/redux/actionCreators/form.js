@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/form';
+import * as actionTypes from "../actionTypes/form";
 
 export const doFetchForm = createAction(actionTypes.FETCH_FORM_REQUESTED);
 export const doFetchFormSuccess = createAction(actionTypes.FETCH_FORM_SUCCEEDED);

@@ -8,7 +8,6 @@ import { useAdministrationContext } from "./Administration.provider";
 import * as Styles from "./Administration.styles";
 import { IAdministrationProps } from "./Administration.types";
 
-
 export const AdministrationComponent: FC<IAdministrationProps> = ({}: IAdministrationProps) => {
   return (
     <Styles.Administration>

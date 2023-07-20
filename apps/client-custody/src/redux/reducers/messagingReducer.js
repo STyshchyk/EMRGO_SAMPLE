@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/messaging';
+import * as actionCreators from "../actionCreators/messaging";
 
 const defaultState = {
   messagesData: {},
   isFetching: true,
   isSubmitting: false,
-  isMessageSocketOpen: false
+  isMessageSocketOpen: false,
 };
 
 const messagingReducer = handleActions(
@@ -40,7 +40,7 @@ const messagingReducer = handleActions(
     }),
     [actionCreators.doOpenMessageSocketFailure]: produce((draft) => {
       draft.isMessageSocketOpen = false;
-    })
+    }),
   },
   defaultState
 );

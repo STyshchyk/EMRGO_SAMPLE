@@ -1,8 +1,8 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getListOfValidPreferences = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/preferences`,
   });
 

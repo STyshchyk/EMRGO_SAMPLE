@@ -1,14 +1,14 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .container {
-  font-family: 'D-DIN Exp';
+  font-family: "D-DIN Exp";
   margin-bottom: 1rem;
 }
 
 .input-group {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-areas: 'label field';
+  grid-template-areas: "label field";
   gap: 1em;
   align-items: center;
   margin-bottom: 1rem;
@@ -42,8 +42,8 @@
   @media only screen and (max-width: $viewport-lg) {
     gap: 0.5em;
     grid-template-areas:
-      'label'
-      'field';
+      "label"
+      "field";
     grid-template-columns: 1fr;
     grid-template-rows:
       max-content /* header */

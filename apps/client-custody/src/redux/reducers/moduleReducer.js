@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/module';
+import * as actionCreators from "../actionCreators/module";
 
 const defaultState = {
   moduleDataLoading: false,
   isRequesting: false,
   moduleData: {},
-  message: {}
+  message: {},
 };
 
 const moduleReducer = handleActions(
@@ -63,7 +63,6 @@ const moduleReducer = handleActions(
     [actionCreators.doRequestModuleAccessFailure]: produce((draft) => {
       draft.isRequesting = false;
     }),
-    
   },
   defaultState
 );

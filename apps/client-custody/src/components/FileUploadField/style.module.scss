@@ -1,26 +1,26 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .container {
-  font-family: 'D-DIN Exp';
+  font-family: "D-DIN Exp";
   margin-bottom: 1rem;
 }
 
 .container__dense {
-  font-family: 'D-DIN Exp';
+  font-family: "D-DIN Exp";
 }
 
 .input-group {
   align-items: center;
   display: grid;
   gap: 1em;
-  grid-template-areas: 'label field';
+  grid-template-areas: "label field";
   grid-template-columns: minmax(0, auto) 1fr;
 
   &--sans-label {
     align-items: center;
     display: grid;
     gap: 0;
-    grid-template-areas: 'field';
+    grid-template-areas: "field";
     grid-template-columns: minmax(0, auto);
   }
 
@@ -36,8 +36,8 @@
   @media only screen and (max-width: $viewport-lg) {
     gap: 0.5em;
     grid-template-areas:
-      'label'
-      'field';
+      "label"
+      "field";
     grid-template-columns: 1fr;
     grid-template-rows:
       max-content

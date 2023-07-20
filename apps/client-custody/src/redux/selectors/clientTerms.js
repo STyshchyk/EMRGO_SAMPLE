@@ -4,7 +4,8 @@
 export const selectClientTermsPDF = (state) => state.clientTerms.clientTermsPDF;
 export const selectInstructionsFormTemplate = (state) => state.clientTerms.instructionsFormTemplate;
 export const selectW8BenFormTemplate = (state) => state.clientTerms.w8benFormTemplate;
-export const selectBoardResolutionFormTemplate = (state) => state.clientTerms.boardResolutionFormTemplate;
+export const selectBoardResolutionFormTemplate = (state) =>
+  state.clientTerms.boardResolutionFormTemplate;
 
 export const selectFetchingClientTerms = (state) => state.clientTerms.isFetchingTerms;
 export const selectFetchingInstructions = (state) => state.clientTerms.isFetchingInstructions;

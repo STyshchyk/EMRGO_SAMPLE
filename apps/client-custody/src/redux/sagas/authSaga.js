@@ -1,34 +1,34 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as authActionCreators from '../actionCreators/auth';
-import * as actionTypes from '../actionTypes/auth';
-import * as entityActionCreators from '../actionCreators/entities';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import doResetAppStates from '../actionCreators/app';
-import { clearAsyncDataStore } from '../configs/asyncDataStore';
+import { toast } from "react-toastify";
 
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import doResetAppStates from "../actionCreators/app";
+import * as authActionCreators from "../actionCreators/auth";
+import * as entityActionCreators from "../actionCreators/entities";
+import * as actionTypes from "../actionTypes/auth";
+import { clearAsyncDataStore } from "../configs/asyncDataStore";
 // eslint-disable-next-line import/no-cycle
-import { getPersistor } from '../configureStore';
-
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { getPersistor } from "../configureStore";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* loginUser({ payload }) {
   try {
     const response = yield call(wethaqAPIService.authAPI.authenticateUser, payload);
     const { data } = response;
-    if (data.message === 'User already logged in') {
+    if (data.message === "User already logged in") {
       yield call(toast.error, data.message);
-      yield call(toast.info, i18n.t('messages:Logging out'));
+      yield call(toast.info, i18n.t("messages:Logging out"));
       yield put(authActionCreators.doLogoutUser());
     } else {
       const messageCode = data.messageCode || null;
       if (messageCode) {
         switch (data.messageCode) {
-          case 'VERIFY_MFA':
+          case "VERIFY_MFA":
             yield put(authActionCreators.doLoginMFAFailure(data));
             break;
-          case 'SUCCESS':
+          case "SUCCESS":
             yield put(authActionCreators.doLoginUserSuccess(data));
             break;
           default:
@@ -39,7 +39,7 @@ function* loginUser({ payload }) {
       }
     }
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -47,10 +47,10 @@ function* loginUser({ payload }) {
 
     if (messageCode) {
       switch (messageCode) {
-        case 'OTP_REQUIRED':
+        case "OTP_REQUIRED":
           yield put(authActionCreators.doLoginOTPFailure(error.response.data));
           break;
-        case 'INVALID_PASSCODE':
+        case "INVALID_PASSCODE":
           yield call(toast.error, error.response.data.message);
           yield put(authActionCreators.doLoginOTPFailure(error.response.data));
           break;
@@ -68,11 +68,11 @@ function* loginUser({ payload }) {
 
 function* fetchCurrentUserData() {
   try {
-    yield call(toast.info, i18n.t('messages:Fetching userdata'));
+    yield call(toast.info, i18n.t("messages:Fetching userdata"));
     const response = yield call(wethaqAPIService.authAPI.fetchCurrentUserData);
     const { data } = response;
     yield put(authActionCreators.doFetchCurrentUserDataSuccess(data));
-    yield call(toast.success, i18n.t('messages:Userdata is successfully fetched'));
+    yield call(toast.success, i18n.t("messages:Userdata is successfully fetched"));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);

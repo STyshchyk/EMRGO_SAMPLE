@@ -5,5 +5,5 @@ export const SellSideSchema = Yup.object().shape({
     .min(2, "First Name is Too Short!")
     .max(50, "First Name is Too Long!")
     .required("First Name is Required"),
-  logo: Yup.string().required("File is required")
+  logo: Yup.string().required("File is required"),
 });

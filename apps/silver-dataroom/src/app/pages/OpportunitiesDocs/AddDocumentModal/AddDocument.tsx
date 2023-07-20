@@ -3,20 +3,25 @@ import { useParams } from "react-router-dom";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { postOpportunityDocument, postSellside } from "@emrgo-frontend/services";
-import { FormikInput, FormikInputCustom, MySelect, useToast, Button } from "@emrgo-frontend/shared-ui";
-
+import {
+  Button,
+  FormikInput,
+  FormikInputCustom,
+  MySelect,
+  useToast,
+} from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { getFileUploadLink } from "../../../services/FileManager/FileManager";
 import { useAddDocumentsModal } from "../../store/store";
+import { addDocumentSchema } from "./AddDocument.schema";
 import * as Styles from "./AddDocument.styles";
 import { IAddDocumentProps } from "./AddDocument.types";
-import { addDocumentSchema } from "./AddDocument.schema";
 
 const stages = [
   { label: "Open", value: true },
-  { label: "Client Questionnaire", value: false }
+  { label: "Client Questionnaire", value: false },
 ];
 export const AddDocument: FC<IAddDocumentProps> = ({}) => {
   const { id } = useParams();
@@ -28,17 +33,19 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
   const { mutate: doUploadFile, isLoading } = useMutation(getFileUploadLink, {
     onError: () => {
       showErrorToast("Error while posting file to oracle");
-    }
+    },
   });
 
   const { mutate: doPostOpportunityDocument } = useMutation(postOpportunityDocument, {
     onSuccess: () => {
-      queryClient.invalidateQueries([queryKeys.primaries.tradeOpportunities.documents, id]).then(() => {
-      });
+      queryClient
+        .invalidateQueries([queryKeys.primaries.tradeOpportunities.documents, id])
+        .then(() => {});
       modalActions.setModalOpen(false);
-    }, onError: () => {
+    },
+    onError: () => {
       showErrorToast("Error while posting opportunity document");
-    }
+    },
   });
   return (
     <Styles.AddDocument>
@@ -46,7 +53,7 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
         initialValues={{
           docTitle: "",
           stage: stages[0],
-          file: null
+          file: null,
         }}
         validateOnMount={true}
         validationSchema={addDocumentSchema}
@@ -54,16 +61,19 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
           // TODO : COMPLETE FILE UPLOAD FOR OPPORTUNITY
           const formData: any = new FormData();
           formData.append("file", file);
-          doUploadFile({ filename: "KYC", formData }, {
-            onSuccess: async (res) => {
-              doPostOpportunityDocument({
-                id: id ?? "",
-                path: res.path,
-                name: values.docTitle,
-                isPublic: values.stage.value
-              });
+          doUploadFile(
+            { filename: "KYC", formData },
+            {
+              onSuccess: async (res) => {
+                doPostOpportunityDocument({
+                  id: id ?? "",
+                  path: res.path,
+                  name: values.docTitle,
+                  isPublic: values.stage.value,
+                });
+              },
             }
-          });
+          );
           // alert(JSON.stringify(values, null, 2));
           formikHelpers.setSubmitting(false);
         }}
@@ -113,17 +123,13 @@ export const AddDocument: FC<IAddDocumentProps> = ({}) => {
                   }}
                   component={FormikInputCustom}
                   label={"Select file"}
-
                 />
               </div>
             </Styles.TwoCol>
 
             <div style={{ display: "flex", marginTop: "25px" }}>
               <Styles.Spacer />
-              <Button
-                type={"submit"}
-                disabled={!isValid || isLoading}
-              >
+              <Button type={"submit"} disabled={!isValid || isLoading}>
                 Add
               </Button>
             </div>

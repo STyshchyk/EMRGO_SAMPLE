@@ -1,0 +1,17 @@
+{
+  "Support": {
+    "Headers": {
+      "Name": "Name",
+      "Email": "Email",
+      "Entity": "Entity",
+      "Role": "Role",
+      "Type": "Type",
+      "Date": "Date",
+      "Status": "Status"
+    },
+    "Actions": {
+      "ApproveTicket": "Approve Ticket",
+      "DeleteTicket": "Delete Ticket"
+    }
+  }
+}

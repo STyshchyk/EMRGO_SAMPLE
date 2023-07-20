@@ -1,15 +1,15 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 export const createQuote = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/bulletinBoard`,
     data: payload,
   });
 
 export const readQuote = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/bulletinBoard`,
     data: payload,
   });
@@ -19,7 +19,7 @@ export const updateQuote = (payload) => {
   const { quoteId } = updatedPayload;
   delete updatedPayload.quoteId;
   return baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/bulletinBoard/${quoteId}`,
     data: payload,
   });
@@ -27,7 +27,7 @@ export const updateQuote = (payload) => {
 
 export const deleteQuote = (payload) =>
   baseAxiosInstance({
-    method: 'DELETE',
+    method: "DELETE",
     url: `/v1/bulletinBoard/${payload.quoteId}`,
   });
 

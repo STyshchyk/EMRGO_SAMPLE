@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { Span,Table, useToast } from "@emrgo-frontend/shared-ui";
+import { Span, Table, useToast } from "@emrgo-frontend/shared-ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
@@ -16,34 +16,29 @@ export const TradeInterestTable = ({ tradeInterest }: ITradeInterestTableProps) 
 
   const columns = [
     columnHelper.accessor("id", {
-      header: "Opportunity Id"
+      header: "Opportunity Id",
     }),
     columnHelper.accessor("firstName", {
       header: "Full Name",
       cell: ({ row }) => {
         return `${row.original.firstName} ${row.original.lastName}`;
-      }
+      },
     }),
     columnHelper.accessor("email", {
-      header: "User Id"
+      header: "User Id",
     }),
     columnHelper.accessor("detail", {
       header: "Details",
       maxSize: 200,
       cell: ({ cell }) => {
         return <Span $width={400}>{cell.getValue()}</Span>;
-      }
-    })
+      },
+    }),
   ];
   const table = useReactTable({
     columns,
     data: tradeInterest,
-    getCoreRowModel: getCoreRowModel()
-
+    getCoreRowModel: getCoreRowModel(),
   });
-  return (
-    <Table
-      table={table}
-    />
-  );
+  return <Table table={table} />;
 };

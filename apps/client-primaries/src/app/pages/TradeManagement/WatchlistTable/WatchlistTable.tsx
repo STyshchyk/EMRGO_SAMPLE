@@ -1,9 +1,8 @@
 import { FC } from "react";
 
-import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { Table, WatchlistSelectedIcon } from "@emrgo-frontend/shared-ui";
-
 import { ensureNotNull } from "@emrgo-frontend/utils";
+import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { DataRoomLink } from "../../../components/DataRoomLink";
 import { OpportunityStatusLabel } from "../../../components/OpportunityStatusLabel";

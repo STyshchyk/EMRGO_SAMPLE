@@ -1,22 +1,22 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getFxTransactions = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/fxTransactions`,
     params: payload,
   });
 
 const addFxTransaction = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/fxTransactions`,
   });
 
 const processFxTransaction = (data) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     data: data.requestPayload,
     url: `/v1/fxTransactions/${data.transactionId}`,
   });

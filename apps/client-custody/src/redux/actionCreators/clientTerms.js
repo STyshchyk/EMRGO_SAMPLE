@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/clientTerms';
+import * as actionTypes from "../actionTypes/clientTerms";
 
 export const doFetchTerms = createAction(actionTypes.FETCH_TERMS_REQUESTED);
 export const doFetchTermsSuccess = createAction(actionTypes.FETCH_TERMS_SUCCEEDED);
@@ -14,9 +14,15 @@ export const doFetchW8Ben = createAction(actionTypes.FETCH_W8BEN_REQUESTED);
 export const doFetchW8BenSuccess = createAction(actionTypes.FETCH_W8BEN_SUCCEEDED);
 export const doFetchW8BenFailure = createAction(actionTypes.FETCH_W8BEN_FAILED);
 
-export const doFetchBoardResolution = createAction(actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_REQUESTED);
-export const doFetchBoardResolutionSuccess = createAction(actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_SUCCEEDED);
-export const doFetchBoardResolutionFailure = createAction(actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_FAILED);
+export const doFetchBoardResolution = createAction(
+  actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_REQUESTED
+);
+export const doFetchBoardResolutionSuccess = createAction(
+  actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_SUCCEEDED
+);
+export const doFetchBoardResolutionFailure = createAction(
+  actionTypes.FETCH_BOARD_RESOLUTION_SAMPLE_FAILED
+);
 
 export const doSubmitTerms = createAction(actionTypes.SUBMIT_TERMS_REQUESTED);
 export const doSubmitTermsSuccess = createAction(actionTypes.SUBMIT_TERMS_SUCCEEDED);

@@ -7,7 +7,7 @@ import {
   Table,
   TooltipButtonActions,
   TooltipButtonBox,
-  useToast
+  useToast,
 } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -26,30 +26,31 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
   const client = useQueryClient();
   const { mutate: setShownIssuer } = useMutation(shownIssuer, {
     onSuccess: () => {
-      client.invalidateQueries([queryKeys.primaries.tradeOpportunities.issuers.fetch]).then(() => {
-      });
+      client
+        .invalidateQueries([queryKeys.primaries.tradeOpportunities.issuers.fetch])
+        .then(() => {});
     },
     onError: () => {
       showErrorToast("Error setting status for Issuer");
-    }
+    },
   });
   const columns = [
     columnHelper.accessor("id", {
-      header: "Entity ID"
+      header: "Entity ID",
     }),
     columnHelper.accessor("name", {
-      header: "Entity name"
+      header: "Entity name",
     }),
     columnHelper.accessor("jurisdiction", {
-      header: "Issuer Jurisdiction"
+      header: "Issuer Jurisdiction",
     }),
     columnHelper.accessor("industry", {
       header: "Industry",
-      cell: ({ cell }) => <span>{cell.getValue() ? cell.getValue() : "N/A"}</span>
+      cell: ({ cell }) => <span>{cell.getValue() ? cell.getValue() : "N/A"}</span>,
     }),
     columnHelper.accessor("description", {
       header: "Description",
-      cell: ({cell}) => <Span $width={200}>{cell.getValue()}</Span>
+      cell: ({ cell }) => <Span $width={200}>{cell.getValue()}</Span>,
     }),
     columnHelper.display({
       id: "Actions",
@@ -106,18 +107,20 @@ export const IssuerTable: FC<IIssuerTableProps> = ({ issuances }) => {
             }
           ></ActionTooltip>
         );
-      }
-    })
+      },
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: issuances ?? [],
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   });
 
-  return <Table
-    table={table}
-    // onRowClick={(row) => console.log(row)}
-  />;
+  return (
+    <Table
+      table={table}
+      // onRowClick={(row) => console.log(row)}
+    />
+  );
 };

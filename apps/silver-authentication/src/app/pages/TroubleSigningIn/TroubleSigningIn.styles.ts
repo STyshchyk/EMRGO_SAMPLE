@@ -1,5 +1,5 @@
-import {  TextBox as TextBoxBase } from "@emrgo-frontend/shared-ui";
-import { getTheme  } from "@emrgo-frontend/theme";
+import { TextBox as TextBoxBase } from "@emrgo-frontend/shared-ui";
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled from "styled-components";
 

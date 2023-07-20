@@ -6,7 +6,7 @@ import {
   Table,
   TooltipButtonActions,
   TooltipButtonBox,
-  useToast
+  useToast,
 } from "@emrgo-frontend/shared-ui";
 import { IOpportunityFetch } from "@emrgo-frontend/types";
 import { useQueryClient } from "@tanstack/react-query";
@@ -28,43 +28,43 @@ export const ExecutedTable = ({ opportunities }: IExecutedTableProps) => {
 
   const columns = [
     columnHelper.accessor("name", {
-      header: "Issuance name"
+      header: "Issuance name",
     }),
     columnHelper.accessor("issuer.name", {
-      header: "Issuer"
+      header: "Issuer",
     }),
     columnHelper.accessor("type.name", {
       header: "Type",
-      cell: ({ row }) => `${row.original.type?.name ?? "n/a"}`
+      cell: ({ row }) => `${row.original.type?.name ?? "n/a"}`,
     }),
     columnHelper.accessor("currency.name", {
       header: "Currency",
-      cell: (props) => `${props?.getValue() || "n/a"}`
+      cell: (props) => `${props?.getValue() || "n/a"}`,
     }),
     columnHelper.accessor("amount", {
       header: "Amount",
-      cell: (props) => `${currencyRenderer(props.getValue()) || "n/a"}`
+      cell: (props) => `${currencyRenderer(props.getValue()) || "n/a"}`,
     }),
     columnHelper.accessor("return", {
       header: "Return",
-      cell: (props) => `${props?.getValue() || 0}%`
+      cell: (props) => `${props?.getValue() || 0}%`,
     }),
     columnHelper.accessor("tenor", {
-      cell: (props) => (props.getValue() ? `${props?.getValue()} years` : "n/a")
+      cell: (props) => (props.getValue() ? `${props?.getValue()} years` : "n/a"),
     }),
     columnHelper.accessor("isin", {
-      header: "ISIN"
+      header: "ISIN",
     }),
     columnHelper.accessor("status", {
       header: "Status",
       cell: ({ row }) => {
         return `${getOpportunityStatusLabel(row.original?.statusId) ?? "N/A"}`;
-      }
+      },
     }),
     columnHelper.accessor("timeLeft", {
       header: "Time left",
       // TODO : Replace with countown time
-      cell: (props) => <CountdownTimer date={props.getValue()} />
+      cell: (props) => <CountdownTimer date={props.getValue()} />,
       // cell: (props) => `${props.getValue() || "n/a"}`
     }),
     columnHelper.display({
@@ -80,7 +80,7 @@ export const ExecutedTable = ({ opportunities }: IExecutedTableProps) => {
           //   }}
           // />
         );
-      }
+      },
     }),
     columnHelper.display({
       id: "Actions",
@@ -94,63 +94,31 @@ export const ExecutedTable = ({ opportunities }: IExecutedTableProps) => {
           <ActionTooltip
             title={
               <TooltipButtonBox>
-                <TooltipButtonActions
-                  onClick={() => {
-
-                  }}
-                >
+                <TooltipButtonActions onClick={() => {}}>
                   View Trade Notification
                 </TooltipButtonActions>
-                <TooltipButtonActions
-                  onClick={() => {
-
-                  }}
-                >
-                  Create Trade Ticket
-                </TooltipButtonActions>
-                <TooltipButtonActions
-                  onClick={() => {
-
-                  }}
-                >
+                <TooltipButtonActions onClick={() => {}}>Create Trade Ticket</TooltipButtonActions>
+                <TooltipButtonActions onClick={() => {}}>
                   Upload Sell-side Trade Evidence
                 </TooltipButtonActions>
-                <TooltipButtonActions
-                  onClick={() => {
-
-                  }}
-                >
+                <TooltipButtonActions onClick={() => {}}>
                   View Sell-side Trade Evidence
                 </TooltipButtonActions>
-                <TooltipButtonActions
-                  onClick={() => {
+                <TooltipButtonActions onClick={() => {}}>View Trade Ticket</TooltipButtonActions>
 
-                  }}
-                >
-                  View Trade Ticket
-                </TooltipButtonActions>
-
-                <TooltipButtonActions
-                  onClick={() => {
-
-                  }}
-                >
-                  Cancel Trade Ticket
-                </TooltipButtonActions>
-
+                <TooltipButtonActions onClick={() => {}}>Cancel Trade Ticket</TooltipButtonActions>
               </TooltipButtonBox>
             }
           ></ActionTooltip>
         );
-      }
-    })
+      },
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: opportunities,
-    getCoreRowModel: getCoreRowModel()
-
+    getCoreRowModel: getCoreRowModel(),
   });
 
   return (

@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/tnc';
+import * as actionTypes from "../actionTypes/tnc";
 
 export const doUpdateTermsData = createAction(actionTypes.TNC_DATA_UPDATE_REQUESTED);
 export const doUpdateTermsDataSuccess = createAction(actionTypes.TNC_DATA_UPDATE_SUCCEEDED);

@@ -1,13 +1,14 @@
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as documentActionCreators from '../actionCreators/documents';
-import * as kycActionCreators from '../actionCreators/kyc';
-import * as documentActionTypes from '../actionTypes/documents';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as s3Service from '../../services/s3Service';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as documentActionCreators from "../actionCreators/documents";
+import * as kycActionCreators from "../actionCreators/kyc";
+import * as documentActionTypes from "../actionTypes/documents";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchUsers({ payload }) {
   try {
@@ -44,7 +45,10 @@ function* uploadFile({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${fileUploadLinkPayload.originalFileName}`);
+    yield call(
+      toast.success,
+      `${i18n.t("messages:Uploaded")} ${fileUploadLinkPayload.originalFileName}`
+    );
     if (payload?.isRevision) {
       const revisionPayload = {
         documentId: fileUploadLinkPayload.existingDocumentId,
@@ -89,17 +93,17 @@ function* downloadFile({ payload }) {
     const response = yield call(wethaqAPIService.documentAPI.getDownloadLink, payload);
     const { data } = response;
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = data.link;
-    link.setAttribute('download', payload.fileName);
-    link.setAttribute('target', '_blank');
+    link.setAttribute("download", payload.fileName);
+    link.setAttribute("target", "_blank");
     document.body.appendChild(link);
     link.dispatchEvent(
-      new MouseEvent('click', {
+      new MouseEvent("click", {
         bubbles: true,
         cancelable: true,
         view: window,
-      }),
+      })
     );
     document.body.removeChild(link);
 
@@ -115,7 +119,9 @@ function* previewFile({ payload }) {
   try {
     const response = yield call(wethaqAPIService.documentAPI.getPreviewLink, payload);
     const { data } = response;
-    yield put(documentActionCreators.doPreviewFileSuccess({ data: { ...data, fileName: payload.fileName } }));
+    yield put(
+      documentActionCreators.doPreviewFileSuccess({ data: { ...data, fileName: payload.fileName } })
+    );
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -125,11 +131,14 @@ function* previewFile({ payload }) {
 
 function* fetchDocusignUrl({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.documentAPI.getDocusignURL, payload.requestPayload);
+    const response = yield call(
+      wethaqAPIService.documentAPI.getDocusignURL,
+      payload.requestPayload
+    );
     const { data } = response;
     yield put(documentActionCreators.doFetchDocusignURLSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -141,7 +150,10 @@ function* fetchDocusignUrl({ payload }) {
 
 function* updateDocumentPermissions({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.documentAPI.updateDocumentPermissions, payload.payload);
+    const response = yield call(
+      wethaqAPIService.documentAPI.updateDocumentPermissions,
+      payload.payload
+    );
     const { data } = response;
     yield call(toast.success, data.message);
     yield put(kycActionCreators.doFetchKYCData(payload.kycFetchPayload));
@@ -155,7 +167,10 @@ function* updateDocumentPermissions({ payload }) {
 
 function* documentUploadRequest({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.documentAPI.requestDocumentUpload, payload.payload);
+    const response = yield call(
+      wethaqAPIService.documentAPI.requestDocumentUpload,
+      payload.payload
+    );
     const { data } = response;
     yield call(toast.success, data.message);
     yield put(kycActionCreators.doFetchKYCData(payload.kycFetchPayload));

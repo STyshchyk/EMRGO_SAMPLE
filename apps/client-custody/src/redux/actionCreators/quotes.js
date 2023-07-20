@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/quotes';
+import * as actionTypes from "../actionTypes/quotes";
 
 export const doCreateQuoteRequest = createAction(actionTypes.CREATE_QUOTE_REQUESTED);
 export const doCreateQuoteSuccess = createAction(actionTypes.CREATE_QUOTE_SUCCEEDED);

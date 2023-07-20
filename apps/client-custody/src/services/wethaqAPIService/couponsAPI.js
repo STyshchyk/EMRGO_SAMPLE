@@ -1,55 +1,55 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const addCouponPaymentSchedule = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/coupons/schedules`,
     data: payload.requestPayload,
   });
 
 const editCouponPaymentScheduleById = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/coupons/schedules/${payload.couponScheduleId}`,
     data: payload.requestPayload,
   });
 
 const getAllCoupons = () =>
   baseAxiosInstance({
-    method: 'GET',
-    url: '/v1/coupons',
+    method: "GET",
+    url: "/v1/coupons",
   });
 
 const getCouponsById = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/coupons/${payload.couponId}`,
   });
 
 const publishCouponsById = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/coupons/${payload.couponId}/publish`,
     data: payload.requestPayload,
   });
 
 const getAllCouponEvents = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
-    url: '/v1/coupons/events',
+    method: "GET",
+    url: "/v1/coupons/events",
     params: payload?.params,
   });
 
 const addCouponAllocation = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/coupons/${payload.couponScheduleDateId}/allocation`,
     data: payload.requestPayload,
   });
 
 const approveCouponAllocation = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/coupons/${payload.couponScheduleDateId}/allocation/approve`,
     data: payload.requestPayload,
   });

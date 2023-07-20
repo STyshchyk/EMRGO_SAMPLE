@@ -1,10 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as actionCreators from '../actionCreators/billing';
-import * as actionTypes from '../actionTypes/billing';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as actionCreators from "../actionCreators/billing";
+import * as actionTypes from "../actionTypes/billing";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchRateCards({ payload }) {
   try {
@@ -50,7 +51,9 @@ function* updateRateCard({ payload }) {
     const { data } = response;
     yield call(toast.success, data.message, { autoClose: 5000 });
     yield put(actionCreators.doUpdateRatecardSuccess({ data }));
-    yield put(actionCreators.doReadRatecardRequest({ clientRateCardId: payload?.clientRateCardId }));
+    yield put(
+      actionCreators.doReadRatecardRequest({ clientRateCardId: payload?.clientRateCardId })
+    );
     yield put(actionCreators.doReadRatecardsRequest());
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
@@ -65,7 +68,9 @@ function* approveRateCard({ payload }) {
     const { data } = response;
     yield call(toast.success, data.message, { autoClose: 5000 });
     yield put(actionCreators.doApproveRatecardSuccess({ data }));
-    yield put(actionCreators.doReadRatecardRequest({ clientRateCardId: payload?.clientRateCardId }));
+    yield put(
+      actionCreators.doReadRatecardRequest({ clientRateCardId: payload?.clientRateCardId })
+    );
     yield put(actionCreators.doReadRatecardsRequest());
   } catch (error) {
     const errorMessage = extractErrorMessage(error);

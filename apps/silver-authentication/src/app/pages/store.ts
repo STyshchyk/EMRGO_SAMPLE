@@ -25,8 +25,8 @@ export interface IUser {
 
 export interface IUserData {
   user: IUser | null;
-  credentials: { login: string, password: string } | null;
-  mfa: IMFA | null,
+  credentials: { login: string; password: string } | null;
+  mfa: IMFA | null;
   updateUser: (user: IUser | null) => void;
   setCredentials: (credentials: any) => void;
   setVerifyMFA: (flag: boolean) => void;
@@ -71,5 +71,5 @@ export const useUserStore = create<IUserData>()((set) => ({
         state.user.verifyMFA = flag;
         store.set("user", state.user);
       })
-    )
+    ),
 }));

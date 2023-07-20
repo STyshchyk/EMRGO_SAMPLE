@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/form';
+import * as actionCreators from "../actionCreators/form";
 
 const defaultState = {
   errorMessage: null,
@@ -29,7 +29,7 @@ const formValuesReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default formValuesReducer;

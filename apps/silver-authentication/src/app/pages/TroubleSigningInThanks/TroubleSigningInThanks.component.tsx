@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import { Logo } from "@emrgo-frontend/shared-ui";
-import { Disclaimer } from "@emrgo-frontend/shared-ui";
+import { Disclaimer, Logo } from "@emrgo-frontend/shared-ui";
 
 import { SubHeading } from "../../components/Form";
 import * as Styles from "./TroubleSigningInThanks.styles";

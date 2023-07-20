@@ -1,42 +1,42 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getExternalSecurities = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/externalSecurities`,
   });
 
 // ADD FIXED INCOME SECURITY
 const addExternalSecurity = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/externalSecurities`,
   });
 
 const editExternalSecurity = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     data: payload.requestPayload,
     url: `/v1/externalSecurities/${payload.externalSecuritiesId}`,
   });
 
 const deleteExternalSecurity = (payload) =>
   baseAxiosInstance({
-    method: 'DELETE',
+    method: "DELETE",
     url: `/v1/externalSecurities/${payload.externalSecuritiesId}`,
   });
 
 const addEquityExternalSecurity = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/externalSecurities/equity`,
   });
 
 const searchExternalSecurities = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/externalSecurities/search/${payload.query}`,
   });
 

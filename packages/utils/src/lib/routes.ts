@@ -70,7 +70,7 @@ export const issuanceBreadcrumbRoutes = (
     const crumb = {
       title: "",
       path: path,
-      isCurrent: paths.length - 1 === index
+      isCurrent: paths.length - 1 === index,
     };
     switch (index) {
       case 0:

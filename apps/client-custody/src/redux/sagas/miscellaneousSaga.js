@@ -1,20 +1,21 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as miscellaneousActionCreators from '../actionCreators/miscellaneous';
-import * as actionTypes from '../actionTypes/miscellaneous';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as miscellaneousActionCreators from "../actionCreators/miscellaneous";
+import * as actionTypes from "../actionTypes/miscellaneous";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchDocumentLink({ payload }) {
   try {
-    yield call(toast.info, i18n.t('Document will be downloaded Please Wait'), { autoClose: 2000 });
+    yield call(toast.info, i18n.t("Document will be downloaded Please Wait"), { autoClose: 2000 });
     const response = yield call(wethaqAPIService.miscellaneousAPI.fetchDocumentLink, payload);
     if (response.data.link) {
       yield put(miscellaneousActionCreators.doFetchDocumentLinkSuccess(response));
     } else {
-      const errorMessage = i18n.t('File not found');
+      const errorMessage = i18n.t("File not found");
       yield call(toast.error, errorMessage);
       yield put(miscellaneousActionCreators.doFetchDocumentLinkFailure(errorMessage));
     }
@@ -27,12 +28,12 @@ function* fetchDocumentLink({ payload }) {
 
 function* fetchStaticFileLink({ payload }) {
   try {
-    yield call(toast.info, i18n.t('Document will be downloaded Please Wait'), { autoClose: 2000 });
+    yield call(toast.info, i18n.t("Document will be downloaded Please Wait"), { autoClose: 2000 });
     const response = yield call(wethaqAPIService.miscellaneousAPI.fetchStaticFileLink, payload);
     if (response.data.link) {
       yield put(miscellaneousActionCreators.doFetchStaticFileSuccess(response));
     } else {
-      const errorMessage = i18n.t('File not found');
+      const errorMessage = i18n.t("File not found");
       yield call(toast.error, errorMessage);
       yield put(miscellaneousActionCreators.doFetchStaticFileFailure(errorMessage));
     }

@@ -1,14 +1,14 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const fetchTNCData = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/tnc`,
   });
 
 const fetchTNCStatus = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/tnc/entity/status`,
     params: {
       entityId: payload.entityId,
@@ -17,7 +17,7 @@ const fetchTNCStatus = (payload) =>
 
 const acceptTNCVersion = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/tnc/${payload.versionNumber}/accept`,
   });
 

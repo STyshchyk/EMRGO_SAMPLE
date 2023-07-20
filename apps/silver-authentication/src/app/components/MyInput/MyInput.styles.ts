@@ -1,6 +1,6 @@
 import {
   CheckNotificationIcon as CheckNotificationIconBase,
-  ErrorIcon as ErrorIconBase
+  ErrorIcon as ErrorIconBase,
 } from "@emrgo-frontend/shared-ui";
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem, rgba } from "polished";
@@ -73,28 +73,34 @@ export const InputContainer = styled.div<{
       ${props.theme.mode === "light" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.100")};
+        background: linear-gradient(
+            0deg,
+            ${rgba(getTheme("colors.orange")(props), 0.05)},
+            ${rgba(getTheme("colors.orange")(props), 0.05)}
+          ),
+          ${getTheme("colors.white.100")};
       `}
 
       ${props.theme.mode === "dark" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.10")};
+        background: linear-gradient(
+            0deg,
+            ${rgba(getTheme("colors.orange")(props), 0.05)},
+            ${rgba(getTheme("colors.orange")(props), 0.05)}
+          ),
+          ${getTheme("colors.white.10")};
       `}
 
       ${props.variant === "signup" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.100")};
+        background: linear-gradient(
+            0deg,
+            ${rgba(getTheme("colors.orange")(props), 0.05)},
+            ${rgba(getTheme("colors.orange")(props), 0.05)}
+          ),
+          ${getTheme("colors.white.100")};
       `}
     `}
 

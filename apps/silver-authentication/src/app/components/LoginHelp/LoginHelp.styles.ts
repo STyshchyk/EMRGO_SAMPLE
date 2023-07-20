@@ -1,4 +1,4 @@
-import {rem} from "polished";
+import { rem } from "polished";
 import styled from "styled-components";
 
 export const HelpList = styled.ul`

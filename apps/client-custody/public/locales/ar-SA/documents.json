@@ -1,0 +1,107 @@
+{
+  "Rows per page": "عدد الصفوف في الصفحة",
+  "of": "من",
+  "Not Available": "غير متوفر",
+  "Categories": {
+    "Final Terms": "الشروط النهائية",
+    "Misc": "متفرقات "
+  },
+  "Buttons": {
+    "Upload Final Terms": "تحميل الشروط النهائية",
+    "Upload": "تحميل",
+    "Refresh": "تحديث"
+  },
+  "Placeholder": "",
+  "Review Modal": {
+    "Select Reviewer": "اختر مراجع",
+    "Send for Review": "إرسال للمراجعة",
+    "Select Users": "حدد المستخدمين"
+  },
+  "Signer Modal": {
+    "Select Users for Signature": "حدد المستخدمين للتوقيع",
+    "Send for Signature": "إرسال للتوقيع",
+    "Select Signers": "حدد الموقعين"
+  },
+  "Headers": {
+    "Document Name": "اسم الملف",
+    "Shared": "المشاركة",
+    "Version": "النسخة",
+    "Expiry": "انتهاء الصلاحية",
+    "Status": "الحالة",
+    "Issuance": "الإصدار",
+    "Category": "فئة",
+    "Uploaded By": "تم التحميل بواسطة",
+    "Date Uploaded": "تاريخ التحميل",
+    "Date Modified": "تاريخ التعديل",
+    "Actions": "الإجراءات"
+  },
+  "Expanded View": "عرض موسع",
+  "History Modal": {
+    "Document History": "سجل المستند",
+    "Review History": "مراجعة السجل",
+    "Headers": {
+      "Name": "الاسم",
+      "Status": "الحالة",
+      "Version": "النسخة",
+      "Date": "التاريخ"
+    },
+    "Reviewed": "تمت المراجعة",
+    "In Review": "قيد المراجعة",
+    "Signing History": "سجل التوقيع",
+    "Signed": "موقعة",
+    "Signing": "توقيع"
+  },
+  "Context Menu": {
+    "Preview": "معاينة",
+    "Download": "تنزيل",
+    "Rename": "إعادة التسمية",
+    "Upload Revised Document": "تحميل المستندات المنقحة",
+    "Upload Revised Version": "تحميل المستندات المنقحة",
+    "Request Revised Document": "طلب وثيقة منقحة",
+    "Send for Review": "إرسال للمراجعة",
+    "Mark as Execution Version": "التعليم كنسخة جاهزة للتنفيذ",
+    "Send for Signing": "إرسال للتوقيع",
+    "Sign Document": "توقيع المستند",
+    "Delete": "حذف"
+  },
+  "Rename Dialog": {
+    "Rename File": "تسمية الملف",
+    "Current Name": "الاسم الحالي",
+    "NA": "غير متوفر",
+    "New File Name": "اسم ملف جديد",
+    "Cancel": "الغاء",
+    "Submit": "ارسال"
+  },
+  "Users": {
+    "Arranger": "الجهة المنظمة",
+    "Co Arranger": "مرتب مشارك",
+    "Corporate": " مقدمي الخدمات المؤسسية",
+    "Fiduciary": "ائتمانية",
+    "Investor": "المستثمر",
+    "Issuer": "المُصدر",
+    "Legal Counsel": "المستشار القانوني ",
+    "Obligor": "الملتزم",
+    "Sharia": "الهيئة الشرعية",
+    "Emrgo Service": "خدمات وثاق",
+    "": ""
+  },
+  "Supporting Documents": "المستندات الداعمة",
+  "Please upload certified copies of the requested documents": "يرجى تحميل نسخ مصدقة من الوثائق المطلوبة",
+  "We accept documents in English and alternatively in Arabic": "نحن نقبل الوثائق باللغة الإنجليزية وبدلا من ذلك باللغة العربية",
+  "Document Templates": "قوالب المستندات",
+  "If Applicable, to be completed and uploaded above": "إن وجد، يتم إكماله وتحميله أعلاه",
+  "Documents": {
+    "HNWI KYC Form": "نموذج إعرف عميلك للأفراد من أصحاب الثروات الكبيرة",
+    "FATCA Form": "نموذج الفاتكا",
+    "Corporate Authorisation": "تفويض على الشركة"
+  },
+  "Upload Modal": {
+    "Upload KYC Supporting Document Form": "رفع المستندات الداعمة لنموذج إعرف عميلك",
+    "Your form submission is being processed": "تتم معالجة إرسال النموذج الخاص بك",
+    "Name": "الاسم",
+    "Upload Document": "رفع المستندات",
+    "Document Expiry (if applicable)": "انتهاء صلاحية المستند (إن وجد)",
+    "Cancel": "إلغاء",
+    "Submit": "إرسال"
+  }
+}

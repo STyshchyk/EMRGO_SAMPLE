@@ -14,5 +14,5 @@ def update_js_to_jsx(root_dir):
 
 if __name__ == "__main__":
     # Replace this with the path to your target directory
-    target_directory = "./src/components"
+    target_directory = "./src/layouts"
     update_js_to_jsx(target_directory)

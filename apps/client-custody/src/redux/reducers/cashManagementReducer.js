@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/cashManagement';
+import * as actionCreators from "../actionCreators/cashManagement";
 
 const defaultState = {
   transactions: null,
@@ -145,10 +145,12 @@ const billingAndPaymentsReducer = handleActions(
       draft.errorMessage = null;
       draft.isFetchingTransfers = true;
     }),
-    [actionCreators.doFetchUnallocatedTransactionsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetchingTransfers = false;
-      draft.unallocatedTransfers = data.data;
-    }),
+    [actionCreators.doFetchUnallocatedTransactionsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetchingTransfers = false;
+        draft.unallocatedTransfers = data.data;
+      }
+    ),
     [actionCreators.doFetchUnallocatedTransactionsFailure]: produce((draft, { payload }) => {
       draft.isFetchingTransfers = false;
       draft.errorMessage = payload;
@@ -191,11 +193,11 @@ const billingAndPaymentsReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetchingExternalPaymentsAuditData = false;
         draft.externalPaymentsAuditData = data;
-      },
+      }
     ),
     [actionCreators.doFetctExternalPaymentsAuditDataFailure]: produce((draft, { message }) => {
       draft.isFetchingExternalPaymentsAuditData = false;
@@ -207,7 +209,7 @@ const billingAndPaymentsReducer = handleActions(
       draft.errorMessage = null;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default billingAndPaymentsReducer;

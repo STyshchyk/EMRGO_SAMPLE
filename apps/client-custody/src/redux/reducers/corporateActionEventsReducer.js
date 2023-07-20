@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as CAEventsActionCreators from '../actionCreators/corporateActionEvents';
+import * as CAEventsActionCreators from "../actionCreators/corporateActionEvents";
 
 const defaultState = {
   corporateActionEventsData: [],
@@ -30,10 +30,12 @@ const corporateActionEventsReducer = handleActions(
       draft.isRequesting = true;
       draft.errorMessage = null;
     }),
-    [CAEventsActionCreators.doSubmitClientResponseSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
+    [CAEventsActionCreators.doSubmitClientResponseSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
     [CAEventsActionCreators.doSubmitClientResponseFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -57,7 +59,7 @@ const corporateActionEventsReducer = handleActions(
       draft.corporateActionEvent = {};
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default corporateActionEventsReducer;

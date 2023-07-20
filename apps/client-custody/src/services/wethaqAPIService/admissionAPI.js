@@ -1,39 +1,39 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getAdmissionTermsheetDetails = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/admission/terms/${payload.sukukId}`,
   });
 
 const getAdmissionTerms = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/admission/terms/form/${payload.sukukId}/generate`,
   });
 
 const submitAdmissionTerms = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/admission/finalize/${payload.sukukId}`,
   });
 
 const getSukukStatus = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/sukuk/status/${payload.sukukId}`,
   });
 
 const submitSukukByIDForAdmission = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/admission/submit/${payload.sukukId}`,
     data: payload.requestPayload,
   });
 
 const manageSukukByID = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/admission/manage/${payload.sukukId}`,
     data: payload.requestPayload,
   });

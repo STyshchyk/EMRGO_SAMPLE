@@ -1,7 +1,7 @@
 import { Input } from "../Input";
 import { IFormikInputProps } from "./FormikInput.types";
 
-export const FormikInput = <T, >({ form, id, disabled, ...rest }: IFormikInputProps<T>) => {
+export const FormikInput = <T,>({ form, id, disabled, ...rest }: IFormikInputProps<T>) => {
   let error: string | undefined;
 
   try {

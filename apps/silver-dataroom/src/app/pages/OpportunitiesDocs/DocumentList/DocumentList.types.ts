@@ -1,2 +1,1 @@
-export interface IDocumentListProps {
-}
+export interface IDocumentListProps {}

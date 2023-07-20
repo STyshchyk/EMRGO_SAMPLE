@@ -1,15 +1,15 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 export const fetchNotifications = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/notifications/getAll`,
     data: payload,
   });
 
 export const notificationSetRead = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: payload ? `/v1/notifications/setRead/${payload.id}` : `/v1/notifications/setRead/`,
   });
 

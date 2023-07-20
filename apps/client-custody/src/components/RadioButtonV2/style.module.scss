@@ -1,4 +1,4 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .radio-button-container {
   align-items: center;
@@ -36,21 +36,21 @@
     min-width: 22px;
     margin-right: 7px;
 
-  &--complete {
-    fill: $secondary-color;
+    &--complete {
+      fill: $secondary-color;
 
-    &:focus {
-      fill: $lightsecondary-color;
+      &:focus {
+        fill: $lightsecondary-color;
+      }
     }
-  }
 
-  &--incomplete {
-    fill: $primary-color;
+    &--incomplete {
+      fill: $primary-color;
 
-    &:focus {
-      fill: $lightprimary-color;
+      &:focus {
+        fill: $lightprimary-color;
+      }
     }
-  }
   }
 }
 

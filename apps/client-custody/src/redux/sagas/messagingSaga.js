@@ -1,11 +1,10 @@
-import { call, put, fork, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, takeLatest } from "redux-saga/effects";
 
-import * as messageActionCreators from '../actionCreators/messaging';
-import * as actionTypes from '../actionTypes/messaging';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as wethaqSocketService from '../../services/wethaqSocketService';
-
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as wethaqSocketService from "../../services/wethaqSocketService";
+import * as messageActionCreators from "../actionCreators/messaging";
+import * as actionTypes from "../actionTypes/messaging";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchMessages({ payload }) {
   try {
@@ -31,9 +30,13 @@ function* submitMessage({ payload }) {
 }
 
 function* openMessageSocket({ payload }) {
-  const messageSocket = yield call(wethaqSocketService.connect, 'socket/v1/message');
+  const messageSocket = yield call(wethaqSocketService.connect, "socket/v1/message");
   yield call(wethaqSocketService.subscribeToRoom, messageSocket, payload.roomId);
-  yield fork(wethaqSocketService.read, messageSocket, messageActionCreators.doOpenMessageSocketSuccess);
+  yield fork(
+    wethaqSocketService.read,
+    messageSocket,
+    messageActionCreators.doOpenMessageSocketSuccess
+  );
 }
 
 const messagingSaga = [

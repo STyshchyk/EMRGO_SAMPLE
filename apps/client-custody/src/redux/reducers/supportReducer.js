@@ -1,29 +1,40 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as supportActionCreators from '../actionCreators/support';
+import * as supportActionCreators from "../actionCreators/support";
 
 const defaultState = {
   dropDowns: {
     supportTicketType: [
-      { id: 'c02dc1ec-df47-45eb-84a2-7b28d5467111', name: 'MFA reset', type: 'supportTicketType', value: null, active: true, order: null, key: null, label: null, nameAr: '2FA reset', region: 'AE' },
       {
-        id: '947e8449-63ff-4879-afca-1e62889a80a4',
-        name: 'Password reset',
-        type: 'supportTicketType',
+        id: "c02dc1ec-df47-45eb-84a2-7b28d5467111",
+        name: "MFA reset",
+        type: "supportTicketType",
         value: null,
         active: true,
         order: null,
         key: null,
         label: null,
-        nameAr: 'Password reset',
-        region: 'AE',
+        nameAr: "2FA reset",
+        region: "AE",
+      },
+      {
+        id: "947e8449-63ff-4879-afca-1e62889a80a4",
+        name: "Password reset",
+        type: "supportTicketType",
+        value: null,
+        active: true,
+        order: null,
+        key: null,
+        label: null,
+        nameAr: "Password reset",
+        region: "AE",
       },
     ],
   },
   TFATickets: [],
   currentTFAVerificationDocument: {
-    title: '',
+    title: "",
   },
   isLoading: false,
   isFetching: false,
@@ -59,35 +70,37 @@ const supportReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.TFATickets = data;
-      },
+      }
     ),
     [supportActionCreators.doFetchTFATicketsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
     }),
-    [supportActionCreators.doUploadTFADocument]: produce((draft, { payload: { index, keyName } }) => {
-      draft.errorMessage = null;
-      if (!draft.uploadStatus) draft.uploadStatus = {};
-      const key = keyName;
-      if (index !== undefined) {
-        if (!draft.filesUploaded[key]) {
-          draft.filesUploaded[key] = [];
+    [supportActionCreators.doUploadTFADocument]: produce(
+      (draft, { payload: { index, keyName } }) => {
+        draft.errorMessage = null;
+        if (!draft.uploadStatus) draft.uploadStatus = {};
+        const key = keyName;
+        if (index !== undefined) {
+          if (!draft.filesUploaded[key]) {
+            draft.filesUploaded[key] = [];
+          }
+          draft.filesUploaded[key][index] = "";
+          if (!draft.uploadStatus[key]) {
+            draft.uploadStatus[key] = {};
+          }
+          draft.uploadStatus[key][index] = true;
+        } else {
+          draft.filesUploaded[key] = "";
+          draft.uploadStatus[key] = true;
         }
-        draft.filesUploaded[key][index] = '';
-        if (!draft.uploadStatus[key]) {
-          draft.uploadStatus[key] = {};
-        }
-        draft.uploadStatus[key][index] = true;
-      } else {
-        draft.filesUploaded[key] = '';
-        draft.uploadStatus[key] = true;
+        draft.uploadInProgress = true;
       }
-      draft.uploadInProgress = true;
-    }),
+    ),
     [supportActionCreators.doUploadTFADocumentSuccess]: produce((draft, { payload: { data } }) => {
       const key = data.keyName || data.name;
       if (data.index !== undefined) {
@@ -102,21 +115,25 @@ const supportReducer = handleActions(
       draft.errorMessage = null;
       draft.uploadInProgress = false;
     }),
-    [supportActionCreators.doUploadTFADocumentFailure]: produce((draft, { payload, key, index }) => {
-      draft.uploadInProgress = false;
-      draft.uploadStatus[key] = false;
-      draft.uploadStatus[key][index] = false;
-      draft.errorMessage = payload;
-    }),
+    [supportActionCreators.doUploadTFADocumentFailure]: produce(
+      (draft, { payload, key, index }) => {
+        draft.uploadInProgress = false;
+        draft.uploadStatus[key] = false;
+        draft.uploadStatus[key][index] = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [supportActionCreators.doFetchTFAVerificationDocument]: produce((draft) => {
       draft.message = null;
       draft.isLoading = true;
-      draft.currentTFAVerificationDocument = '';
+      draft.currentTFAVerificationDocument = "";
     }),
-    [supportActionCreators.doFetchTFAVerificationDocumentSuccess]: produce((draft, { payload: { data: link } }) => {
-      draft.currentTFAVerificationDocument = link.link;
-      draft.isLoading = false;
-    }),
+    [supportActionCreators.doFetchTFAVerificationDocumentSuccess]: produce(
+      (draft, { payload: { data: link } }) => {
+        draft.currentTFAVerificationDocument = link.link;
+        draft.isLoading = false;
+      }
+    ),
     [supportActionCreators.doFetchTFAVerificationDocumentFailure]: produce((draft, { payload }) => {
       draft.message = payload;
       draft.isLoading = false;
@@ -155,7 +172,7 @@ const supportReducer = handleActions(
       draft.errorMessage = message;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default supportReducer;

@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/entities';
+import * as actionCreators from "../actionCreators/entities";
 
 const defaultState = {
   entitiesList: [],
@@ -18,8 +18,16 @@ const defaultState = {
 const moduleReducer = handleActions(
   {
     [actionCreators.doFetchEntities]: (state) => ({ ...state, isLoading: true }),
-    [actionCreators.doFetchEntitiesSuccess]: (state, { payload: { data } }) => ({ ...state, isLoading: false, entitiesList: data.entities }),
-    [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({ ...state, isLoading: false, message }),
+    [actionCreators.doFetchEntitiesSuccess]: (state, { payload: { data } }) => ({
+      ...state,
+      isLoading: false,
+      entitiesList: data.entities,
+    }),
+    [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
+      ...state,
+      isLoading: false,
+      message,
+    }),
 
     /*
 
@@ -160,7 +168,7 @@ const moduleReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default moduleReducer;

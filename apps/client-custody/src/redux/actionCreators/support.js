@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/support';
+import * as actionTypes from "../actionTypes/support";
 
 export const doDropdownReadRequest = createAction(actionTypes.READ_DROPDOWN_REQUESTED);
 export const doDropdownReadSuccess = createAction(actionTypes.READ_DROPDOWN_SUCCEEDED);
@@ -10,13 +10,25 @@ export const doFetchTFATickets = createAction(actionTypes.FETCH_TFA_TICKETS_REQU
 export const doFetchTFATicketsSuccess = createAction(actionTypes.FETCH_TFA_TICKETS_SUCCEEDED);
 export const doFetchTFATicketsFailure = createAction(actionTypes.FETCH_TFA_TICKETS_FAILED);
 
-export const doUploadTFADocument = createAction(actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_REQUESTED);
-export const doUploadTFADocumentSuccess = createAction(actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_SUCCEEDED);
-export const doUploadTFADocumentFailure = createAction(actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_FAILED);
+export const doUploadTFADocument = createAction(
+  actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_REQUESTED
+);
+export const doUploadTFADocumentSuccess = createAction(
+  actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_SUCCEEDED
+);
+export const doUploadTFADocumentFailure = createAction(
+  actionTypes.UPLOAD_TFA_VERIFICATION_DOCUMENT_FAILED
+);
 
-export const doFetchTFAVerificationDocument = createAction(actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_REQUESTED);
-export const doFetchTFAVerificationDocumentSuccess = createAction(actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_SUCCEEDED);
-export const doFetchTFAVerificationDocumentFailure = createAction(actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_FAILED);
+export const doFetchTFAVerificationDocument = createAction(
+  actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_REQUESTED
+);
+export const doFetchTFAVerificationDocumentSuccess = createAction(
+  actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_SUCCEEDED
+);
+export const doFetchTFAVerificationDocumentFailure = createAction(
+  actionTypes.TFA_VERIFICATION_DOCUMENT_FETCH_FAILED
+);
 
 export const doCreateTFATicket = createAction(actionTypes.TFA_TICKET_CREATE_REQUESTED);
 export const doCreateTFATicketSuccess = createAction(actionTypes.TFA_TICKET_CREATE_SUCCEEDED);

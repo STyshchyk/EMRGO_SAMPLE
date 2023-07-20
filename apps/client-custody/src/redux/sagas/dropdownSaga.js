@@ -1,9 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import * as dropdownActionCreators from '../actionCreators/dropdown';
-import * as dropdownActionTypes from '../actionTypes/dropdown';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as dropdownActionCreators from "../actionCreators/dropdown";
+import * as dropdownActionTypes from "../actionTypes/dropdown";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchDropdownOptions({ payload }) {
   try {
@@ -18,6 +18,8 @@ function* fetchDropdownOptions({ payload }) {
   }
 }
 
-const dropdownSaga = [takeLatest(dropdownActionTypes.FETCH_DROPDOWN_OPTIONS_REQUESTED, fetchDropdownOptions)];
+const dropdownSaga = [
+  takeLatest(dropdownActionTypes.FETCH_DROPDOWN_OPTIONS_REQUESTED, fetchDropdownOptions),
+];
 
 export default dropdownSaga;

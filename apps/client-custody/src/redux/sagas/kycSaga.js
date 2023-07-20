@@ -1,16 +1,18 @@
 /* eslint-disable consistent-return */
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as kycActionCreators from '../actionCreators/kyc';
-import * as entitiesActionCreators from '../actionCreators/entities';
-import * as issuanceActionCreators from '../actionCreators/issuance';
-import * as kycActionTypes from '../actionTypes/kyc';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as s3Service from '../../services/s3Service';
-import * as authActionCreator from '../actionCreators/auth';
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { toast } from "react-toastify";
+
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as authActionCreator from "../actionCreators/auth";
+import * as entitiesActionCreators from "../actionCreators/entities";
+import * as issuanceActionCreators from "../actionCreators/issuance";
+import * as kycActionCreators from "../actionCreators/kyc";
+import * as kycActionTypes from "../actionTypes/kyc";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* sendEOIKit({ payload }) {
   try {
@@ -103,13 +105,22 @@ function* uploadKycFile({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.originalFileName}`);
+    yield call(
+      toast.success,
+      `${i18n.t("messages:Uploaded")} ${payload.requestPayload.originalFileName}`
+    );
     yield put(kycActionCreators.doUploadKycFileSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
 
-    yield put(kycActionCreators.doUploadKycFileFailure({ message: errorMessage, key: payload.keyName || payload.name, index: payload.index }));
+    yield put(
+      kycActionCreators.doUploadKycFileFailure({
+        message: errorMessage,
+        key: payload.keyName || payload.name,
+        index: payload.index,
+      })
+    );
   }
 }
 
@@ -142,8 +153,8 @@ function* updateSanctionsQuestionnaire({ payload }) {
           const { documents, question, id } = sanctionObject;
 
           documents.files.forEach((file) => {
-            formData.append('names', question);
-            formData.append('files', file.file);
+            formData.append("names", question);
+            formData.append("files", file.file);
             listOfAppendedSanctionQuestionDocuments.push({
               id,
               question,
@@ -152,22 +163,28 @@ function* updateSanctionsQuestionnaire({ payload }) {
           });
         }
       });
-      if (formData.getAll('names').length > 0) {
+      if (formData.getAll("names").length > 0) {
         // const fileUploadAPIResponse = yield call(wethaqAPIService.uploadKYCFileByEntityId, {
         //   requestPayload: formData,
         //   entityId,
         // });
 
-        const collectionOfResolvedSanctionDocumentObjects = formData.getAll('names').map((name, index) => ({
-          id: listOfAppendedSanctionQuestionDocuments[index].id,
-          question: listOfAppendedSanctionQuestionDocuments[index].question,
-          document: filesUploaded.documents[index].fileIdentifier,
-          position: listOfAppendedSanctionQuestionDocuments[index].position,
-        }));
-        const uniqueSanctionIds = [...new Set(collectionOfResolvedSanctionDocumentObjects.map((item) => item.id))];
+        const collectionOfResolvedSanctionDocumentObjects = formData
+          .getAll("names")
+          .map((name, index) => ({
+            id: listOfAppendedSanctionQuestionDocuments[index].id,
+            question: listOfAppendedSanctionQuestionDocuments[index].question,
+            document: filesUploaded.documents[index].fileIdentifier,
+            position: listOfAppendedSanctionQuestionDocuments[index].position,
+          }));
+        const uniqueSanctionIds = [
+          ...new Set(collectionOfResolvedSanctionDocumentObjects.map((item) => item.id)),
+        ];
 
         const normalizedSanctionDocuments = uniqueSanctionIds.map((sanctionID) => {
-          const sanctionObjectsWithTheSameID = collectionOfResolvedSanctionDocumentObjects.filter((x) => x.id === sanctionID);
+          const sanctionObjectsWithTheSameID = collectionOfResolvedSanctionDocumentObjects.filter(
+            (x) => x.id === sanctionID
+          );
 
           let position;
           let question;
@@ -312,13 +329,18 @@ function* uploadSupportingDocFileForPaymentAccount({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${fileName}`);
+    yield call(toast.success, `${i18n.t("messages:Uploaded")} ${fileName}`);
     yield put(kycActionCreators.doUploadSupportingDocumentForPaymentAccountSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
 
-    yield put(kycActionCreators.doUploadSupportingDocumentForPaymentAccountFailure({ message: errorMessage, key: payload.keyName }));
+    yield put(
+      kycActionCreators.doUploadSupportingDocumentForPaymentAccountFailure({
+        message: errorMessage,
+        key: payload.keyName,
+      })
+    );
   }
 }
 
@@ -329,7 +351,7 @@ function* addPaymentAccountSaga({ payload }) {
     yield put(kycActionCreators.doAddPaymentAccountSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -347,7 +369,7 @@ function* deletePaymentAccountSaga({ payload }) {
     yield put(kycActionCreators.doDeletePaymentAccountSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -365,7 +387,7 @@ function* editPaymentAccountSaga({ payload }) {
     yield put(kycActionCreators.doEditPaymentAccountSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -398,7 +420,7 @@ function* validatePaymentAccount({ payload }) {
     yield put(kycActionCreators.doValidatePaymentAccountSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -422,7 +444,9 @@ function* fetchUploadedSupportingDocumentFile({ payload }) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
 
-    yield put(kycActionCreators.doFetchUploadedSupportingDocumentFileFailure({ message: errorMessage, key }));
+    yield put(
+      kycActionCreators.doFetchUploadedSupportingDocumentFileFailure({ message: errorMessage, key })
+    );
   }
 }
 
@@ -451,14 +475,23 @@ const kycSaga = [
   takeLatest(kycActionTypes.KYC_CC_DATA_POST_REQUESTED, updateClientClassification),
   takeLatest(kycActionTypes.FETCH_DROPDOWNS, fetchDropdowns),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_FETCH_REQUESTED, fetchPaymentAccountsSaga),
-  takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_UPLOAD_SUPPORTING_DOC_FILE_REQUESTED, uploadSupportingDocFileForPaymentAccount),
+  takeLatest(
+    kycActionTypes.PAYMENT_ACCOUNTS_UPLOAD_SUPPORTING_DOC_FILE_REQUESTED,
+    uploadSupportingDocFileForPaymentAccount
+  ),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_ADD_REQUESTED, addPaymentAccountSaga),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED, deletePaymentAccountSaga),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED, editPaymentAccountSaga),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_SET_AS_DEFAULT_REQUESTED, setPaymentAccountAsDefault),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_VALIDATE_REQUESTED, validatePaymentAccount),
-  takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED, fetchUploadedSupportingDocumentFile),
-  takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_FETCH_BY_ENTITY_ID_REQUESTED, fetchPaymentAccountsByEntityIdSaga),
+  takeLatest(
+    kycActionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED,
+    fetchUploadedSupportingDocumentFile
+  ),
+  takeLatest(
+    kycActionTypes.PAYMENT_ACCOUNTS_FETCH_BY_ENTITY_ID_REQUESTED,
+    fetchPaymentAccountsByEntityIdSaga
+  ),
   takeLatest(kycActionTypes.ELM_USER_FETCH_REQUESTED, fetchElmUserSaga),
 ];
 

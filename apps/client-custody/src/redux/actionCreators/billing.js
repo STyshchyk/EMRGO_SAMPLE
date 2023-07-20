@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/billing';
+import * as actionTypes from "../actionTypes/billing";
 
 export const doReadRatecardsRequest = createAction(actionTypes.READ_RATECARDS_REQUESTED);
 export const doReadRatecardsSuccess = createAction(actionTypes.READ_RATECARDS_SUCCEEDED);

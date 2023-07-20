@@ -1,9 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import * as actionTypes from '../actionTypes/preferences';
-import * as preferencesActionCreators from '../actionCreators/preferences';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as preferencesActionCreators from "../actionCreators/preferences";
+import * as actionTypes from "../actionTypes/preferences";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchListOfValidPreferences() {
   try {
@@ -17,6 +17,8 @@ function* fetchListOfValidPreferences() {
   }
 }
 
-const preferencesSaga = [takeLatest(actionTypes.PREFERENCES_FETCH_REQUESTED, fetchListOfValidPreferences)];
+const preferencesSaga = [
+  takeLatest(actionTypes.PREFERENCES_FETCH_REQUESTED, fetchListOfValidPreferences),
+];
 
 export default preferencesSaga;

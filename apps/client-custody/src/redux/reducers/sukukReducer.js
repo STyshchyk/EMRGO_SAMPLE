@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/sukuk';
+import * as actionCreators from "../actionCreators/sukuk";
 
 const defaultState = {
   isLoading: false,
@@ -21,10 +21,12 @@ const sukukReducer = handleActions(
       draft.isLoading = false;
       draft.message = message;
     }),
-    [actionCreators.doFetchSukukOverviewDataSuccess]: produce((draft, { payload: { sukukOverview } }) => {
-      draft.isLoading = false;
-      draft.sukukOverviewData = sukukOverview;
-    }),
+    [actionCreators.doFetchSukukOverviewDataSuccess]: produce(
+      (draft, { payload: { sukukOverview } }) => {
+        draft.isLoading = false;
+        draft.sukukOverviewData = sukukOverview;
+      }
+    ),
     [actionCreators.doSetupProjectFailure]: produce((draft, { payload }) => {
       draft.isLoading = false;
       draft.message = payload;
@@ -37,7 +39,7 @@ const sukukReducer = handleActions(
       draft.sukukOverviewData = {};
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default sukukReducer;

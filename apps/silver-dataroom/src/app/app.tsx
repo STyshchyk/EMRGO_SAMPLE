@@ -11,11 +11,10 @@ import { OpportunitiesDocs } from "./pages/OpportunitiesDocs";
 import { ManageDocuments } from "./pages/OpportunitiesDocs/ManageDocuments";
 import { Platform } from "./pages/Platform";
 
-
 const router = createBrowserRouter([
   {
     path: routes.home,
-    element: <Navigate to={routes.dataRoom.platform} replace />
+    element: <Navigate to={routes.dataRoom.platform} replace />,
   },
   {
     path: routes.dataRoom.home,
@@ -23,20 +22,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.dataRoom.platform,
-        element: <Platform />
+        element: <Platform />,
       },
       {
         path: routes.dataRoom.manageDocuments,
-        element: <ManageDocuments />
+        element: <ManageDocuments />,
       },
       {
         path: routes.dataRoom.opportunities,
-        element: <OpportunitiesDocs />
-      }
-    ]
-  }
+        element: <OpportunitiesDocs />,
+      },
+    ],
+  },
 ]);
-
 
 export function App() {
   const { isDarkMode } = useDarkMode();

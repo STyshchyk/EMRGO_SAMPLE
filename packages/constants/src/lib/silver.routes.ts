@@ -10,16 +10,24 @@ interface IRouteObject {
 }
 
 export const silverModuleURLs: IMap = {
-  authentication: import.meta.env["VITE_INTERNAL_AUTH_URL"] || "https://internal-auth.exp-difc.wethaq.capital",
-  administration: import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"] || "https://internal-admin.exp-difc.wethaq.capital",
-  primaries: import.meta.env["VITE_INTERNAL_PRIMARIES_URL"] || "https://internal-prim.exp-difc.wethaq.capital",
-  onboarding: import.meta.env["VITE_INTERNAL_ONBOARDING_URL"] || "https://internal-onboarding.exp-difc.wethaq.capital",
-  dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"] || "https://internal-dataroom.exp-difc.wethaq.capital"
+  authentication:
+    import.meta.env["VITE_INTERNAL_AUTH_URL"] || "https://internal-auth.exp-difc.wethaq.capital",
+  administration:
+    import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"] ||
+    "https://internal-admin.exp-difc.wethaq.capital",
+  primaries:
+    import.meta.env["VITE_INTERNAL_PRIMARIES_URL"] ||
+    "https://internal-prim.exp-difc.wethaq.capital",
+  onboarding:
+    import.meta.env["VITE_INTERNAL_ONBOARDING_URL"] ||
+    "https://internal-onboarding.exp-difc.wethaq.capital",
+  dataroom:
+    import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"] ||
+    "https://internal-dataroom.exp-difc.wethaq.capital",
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
 console.debug("DEBUG silverModuleURLs: ", silverModuleURLs);
-
 
 export const silverAuthenticationRoutes = {
   home: "/",
@@ -36,7 +44,7 @@ export const silverAuthenticationRoutes = {
   verification: "verification",
   investorProfile: "investor-profile",
   troubleSigningIn: "trouble-signing-in",
-  troubleSigningInThanks: "trouble-signing-in-thanks"
+  troubleSigningInThanks: "trouble-signing-in-thanks",
 };
 
 export const silverPrimariesRoutes = {
@@ -49,34 +57,31 @@ export const silverPrimariesRoutes = {
       manageIssuers: "manage-issuers",
       details: include(":opportunityId", {
         home: "",
-
       }),
       tradeTickets: ":id/trade-tickets",
-      manageSellside: "manage-sellside"
+      manageSellside: "manage-sellside",
     }),
     tradeManagement: include("trade-management", {
       home: "",
-      tradeTickets: ":id/trade-tickets"
-    })
-
-  })
+      tradeTickets: ":id/trade-tickets",
+    }),
+  }),
 };
-
 
 export const silverAdministrationRoutes = {
   home: "/",
   administration: include("/administration", {
     home: "",
-    users: "users"
-  })
+    users: "users",
+  }),
 };
 
 export const silverOnboardingRoutes = {
   home: "/",
   onboarding: include("/onboarding", {
     home: "",
-    users: "users"
-  })
+    users: "users",
+  }),
 };
 
 export const silverDataRoomRoutes = {
@@ -85,8 +90,8 @@ export const silverDataRoomRoutes = {
     home: "",
     platform: "platform",
     opportunities: "opportunities",
-    manageDocuments: "opportunities/manage-documents/:id/"
-  })
+    manageDocuments: "opportunities/manage-documents/:id/",
+  }),
 };
 
 export const getAllSilverRoutes = (routesObj: IRouteObject, result: string[] = []): string[] => {

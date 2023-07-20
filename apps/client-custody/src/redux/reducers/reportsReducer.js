@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/reports';
+import * as actionCreators from "../actionCreators/reports";
 
 const defaultState = {
   errorMessage: null,
@@ -87,10 +87,12 @@ const reportsReducer = handleActions(
       draft.securitiesTransactions = null;
       draft.isFetching = true;
     }),
-    [actionCreators.doFetchSecuritiesTransactionsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetching = false;
-      draft.securitiesTransactions = data.data;
-    }),
+    [actionCreators.doFetchSecuritiesTransactionsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetching = false;
+        draft.securitiesTransactions = data.data;
+      }
+    ),
     [actionCreators.doFetchSecuritiesTransactionsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
@@ -119,10 +121,12 @@ const reportsReducer = handleActions(
       draft.tradeDatedSecuritiesHoldings = null;
       draft.isFetchingTradeDatedSecuritiesHoldings = true;
     }),
-    [actionCreators.doFetchTradeDatedSecuritiesHoldingsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetchingTradeDatedSecuritiesHoldings = false;
-      draft.tradeDatedSecuritiesHoldings = data.data;
-    }),
+    [actionCreators.doFetchTradeDatedSecuritiesHoldingsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetchingTradeDatedSecuritiesHoldings = false;
+        draft.tradeDatedSecuritiesHoldings = data.data;
+      }
+    ),
     [actionCreators.doFetchTradeDatedSecuritiesHoldingsFailure]: produce((draft, { payload }) => {
       draft.isFetchingTradeDatedSecuritiesHoldings = false;
       draft.errorMessage = payload;
@@ -145,7 +149,7 @@ const reportsReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default reportsReducer;

@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/auth';
+import * as actionTypes from "../actionTypes/auth";
 
 export const doResetAuthState = createAction(actionTypes.AUTH_RESET_LOGIN_STATE);
 
@@ -23,8 +23,12 @@ export const doRefreshTokenSuccess = createAction(actionTypes.AUTH_REFRESH_TOKEN
 export const doRefreshTokenFailure = createAction(actionTypes.AUTH_REFRESH_TOKEN_FAILED);
 
 export const doRequestPasswordReset = createAction(actionTypes.AUTH_PASSWORD_RESET_LINK_REQUESTED);
-export const doRequestPasswordResetSuccess = createAction(actionTypes.AUTH_PASSWORD_RESET_LINK_SUCCEEDED);
-export const doRequestPasswordResetFailure = createAction(actionTypes.AUTH_PASSWORD_RESET_LINK_FAILED);
+export const doRequestPasswordResetSuccess = createAction(
+  actionTypes.AUTH_PASSWORD_RESET_LINK_SUCCEEDED
+);
+export const doRequestPasswordResetFailure = createAction(
+  actionTypes.AUTH_PASSWORD_RESET_LINK_FAILED
+);
 
 export const doPasswordReset = createAction(actionTypes.AUTH_PASSWORD_RESET_REQUESTED);
 export const doPasswordResetSuccess = createAction(actionTypes.AUTH_PASSWORD_RESET_SUCCEEDED);
@@ -60,9 +64,15 @@ export const doMFAReset = createAction(actionTypes.AUTH_MFA_RESET_REQUESTED);
 export const doMFAResetSuccess = createAction(actionTypes.AUTH_MFA_RESET_SUCCEEDED);
 export const doMFAResetFailure = createAction(actionTypes.AUTH_MFA_RESET_FAILED);
 
-export const doPasswordAndMFAReset = createAction(actionTypes.AUTH_PASSWORD_AND_MFA_RESET_REQUESTED);
-export const doPasswordAndMFAResetSuccess = createAction(actionTypes.AUTH_PASSWORD_AND_MFA_RESET_SUCCEEDED);
-export const doPasswordAndMFAResetFailure = createAction(actionTypes.AUTH_PASSWORD_AND_MFA_RESET_FAILED);
+export const doPasswordAndMFAReset = createAction(
+  actionTypes.AUTH_PASSWORD_AND_MFA_RESET_REQUESTED
+);
+export const doPasswordAndMFAResetSuccess = createAction(
+  actionTypes.AUTH_PASSWORD_AND_MFA_RESET_SUCCEEDED
+);
+export const doPasswordAndMFAResetFailure = createAction(
+  actionTypes.AUTH_PASSWORD_AND_MFA_RESET_FAILED
+);
 
 export const doResetAuthCredsState = createAction(actionTypes.AUTH_CREDS_STATE_RESET_REQUESTED);
 

@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/miscellaneous';
+import * as actionCreators from "../actionCreators/miscellaneous";
 
 const defaultState = {
   isFetchingDocument: false,
-  documentName: '',
-  documentLink: '',
-  fileLink: '',
+  documentName: "",
+  documentLink: "",
+  fileLink: "",
   isLoading: false,
   tableConfig: [],
 };
@@ -16,7 +16,7 @@ const miscellaneousReducer = handleActions(
   {
     [actionCreators.doFetchDocumentLinkRequest]: produce((draft, { payload }) => {
       draft.isFetchingDocument = true;
-      draft.documentLink = '';
+      draft.documentLink = "";
       draft.documentName = payload.params.fileName;
     }),
     [actionCreators.doFetchDocumentLinkSuccess]: produce((draft, { payload: { data } }) => {
@@ -28,7 +28,7 @@ const miscellaneousReducer = handleActions(
     }),
     [actionCreators.doFetchStaticFileRequest]: produce((draft) => {
       draft.isFetchingDocument = true;
-      draft.fileLink = '';
+      draft.fileLink = "";
     }),
     [actionCreators.doFetchStaticFileSuccess]: produce((draft, { payload: { data } }) => {
       draft.isFetchingDocument = false;
@@ -47,11 +47,11 @@ const miscellaneousReducer = handleActions(
           payload: {
             data: { settings },
           },
-        },
+        }
       ) => {
         draft.isLoading = false;
         draft.tableConfig = settings;
-      },
+      }
     ),
 
     [actionCreators.doReadTableConfigFailure]: produce((draft) => {
@@ -67,7 +67,7 @@ const miscellaneousReducer = handleActions(
       draft.isLoading = false;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default miscellaneousReducer;

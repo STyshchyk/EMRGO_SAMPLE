@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useId,
   useRef,
-  useState
+  useState,
 } from "react";
 
 import { setComponentRefs } from "@emrgo-frontend/utils";
@@ -14,7 +14,8 @@ import { setComponentRefs } from "@emrgo-frontend/utils";
 import * as Styles from "./Input.styles";
 import { IInputFileProps } from "./InputFile.types";
 
-const InputComponent: ForwardRefRenderFunction<HTMLInputElement,
+const InputComponent: ForwardRefRenderFunction<
+  HTMLInputElement,
   IInputFileProps & HTMLProps<HTMLInputElement>
 > = (
   {
@@ -30,7 +31,7 @@ const InputComponent: ForwardRefRenderFunction<HTMLInputElement,
     valid,
     id,
     maxWidth,
-    type
+    type,
   },
   ref
 ) => {

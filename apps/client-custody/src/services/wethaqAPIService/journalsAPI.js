@@ -1,14 +1,14 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getInternalTransactions = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/journals/internal-transactions`,
   });
 
 const updateInternalTransactionByJournalId = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/journals/internal-transactions/${payload.journalId}`,
     data: payload.requestPayload,
   });

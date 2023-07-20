@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import { FormikInput, FormikInputCustom,useToast} from "@emrgo-frontend/shared-ui";
+import { postSellside } from "@emrgo-frontend/services";
+import { FormikInput, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
@@ -9,18 +10,16 @@ import { Field, Form, Formik } from "formik";
 // TODO: MOVE THIS TO CONSTANTS
 import { convertToBase64, formatBytes, MAX_FILE_SIZE } from "../../../../utils";
 import { useAddSellsideStore } from "../../../store";
-import { postSellside } from "@emrgo-frontend/services";
 import { SellSideSchema } from "./AddSellSideModal.schema";
 import * as Styles from "./AddSellsideModal.styles";
 import { IAddSellsideModalProps } from "./AddSellsideModal.types";
-
 
 const initialValues: {
   name: string;
   logo: File | null;
 } = {
   name: "",
-  logo: null
+  logo: null,
 };
 export const AddSellsideModal: FC<IAddSellsideModalProps> = () => {
   const { mutate: doPostSellside } = useMutation(postSellside);
@@ -51,16 +50,15 @@ export const AddSellsideModal: FC<IAddSellsideModalProps> = () => {
                   onSuccess: () => {
                     queryClient
                       .invalidateQueries({
-                        queryKey: [queryKeys.primaries.tradeOpportunities.sellSide.fetch]
+                        queryKey: [queryKeys.primaries.tradeOpportunities.sellSide.fetch],
                       })
-                      .then((r) => {
-                      });
+                      .then((r) => {});
                     showSuccessToast("Succesfully added new Sellside");
                     modalActions.setModalOpen(false);
                   },
                   onError: () => {
                     showErrorToast("Error while adding Sellside");
-                  }
+                  },
                 }
               );
               alert(JSON.stringify(values, null, 2));
@@ -70,7 +68,6 @@ export const AddSellsideModal: FC<IAddSellsideModalProps> = () => {
         >
           {({ values, setFieldValue, errors, touched, setFieldError }) => (
             <Form className={"invite-user"}>
-
               <Styles.TwoCol>
                 <label>Entity Name</label>
                 <Field

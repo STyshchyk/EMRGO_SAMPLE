@@ -1,0 +1,21 @@
+{
+  "Engagement Requests": "Engagement Requests",
+  "Headers": {
+    "Entity Group": "Entity Group",
+    "Security Title": "Security Title",
+    "Status": "Status"
+  },
+  "Status": {
+    "Engagement Requested": "Engagement Requested",
+    "Engagement Letter Uploaded": "Engagement Letter Uploaded",
+    "Generating Letter for Signature": "Generating Letter for Signature",
+    "Sent for Signature": "Sent for Signature",
+    "Signed": "Signed",
+    "Engaged": "Engaged"
+  },
+  "Buttons": {
+    "Send For Signature": "Send For Signature",
+    "Engagement Letter": "Engagement Letter",
+    "Upload Document": "Upload Document"
+  }
+}

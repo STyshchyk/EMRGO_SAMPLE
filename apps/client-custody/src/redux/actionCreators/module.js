@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/module';
+import * as actionTypes from "../actionTypes/module";
 
 // TODO - CLEANUP (ON EXPERIMENTAL)
 export const doFetchModuleData = createAction(actionTypes.MODULE_FETCH_DATA_REQUESTED);
@@ -20,5 +20,7 @@ export const doRevokeModuleAccessSuccess = createAction(actionTypes.REVOKE_MODUL
 export const doRevokeModuleAccessFailure = createAction(actionTypes.REVOKE_MODULE_ACCESS_FAILED);
 
 export const doRequestModuleAccess = createAction(actionTypes.REQUEST_MODULE_ACCESS_REQUESTED);
-export const doRequestModuleAccessSuccess = createAction(actionTypes.REQUEST_MODULE_ACCESS_SUCCEEDED);
+export const doRequestModuleAccessSuccess = createAction(
+  actionTypes.REQUEST_MODULE_ACCESS_SUCCEEDED
+);
 export const doRequestModuleAccessFailure = createAction(actionTypes.REQUEST_MODULE_ACCESS_FAILED);

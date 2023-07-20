@@ -13,9 +13,9 @@ const queryClient = new QueryClient({
       refetchOnMount: false,
       refetchOnReconnect: true,
       retry: 3,
-      staleTime: 5 * 1000
-    }
-  }
+      staleTime: 5 * 1000,
+    },
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);

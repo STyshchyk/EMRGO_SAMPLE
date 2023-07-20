@@ -1,14 +1,20 @@
-import { createSelector } from 'reselect';
-import produce from 'immer';
+import { produce } from "immer";
+import { createSelector } from "reselect";
 
-import { selectCurrentEntityGroup } from './auth';
-import kycOnboardingStatusEnum from '../../constants/wethaqAPI/kycOnboardingStatusEnum';
+import kycOnboardingStatusEnum from "../../constants/wethaqAPI/kycOnboardingStatusEnum";
+import { selectCurrentEntityGroup } from "./auth";
 
 export const selectEOIData = (state) => state.kyc.eoiData;
 
-export const selectEOIStatus = createSelector([selectEOIData], (eoiData) => eoiData?.status ?? null);
+export const selectEOIStatus = createSelector(
+  [selectEOIData],
+  (eoiData) => eoiData?.status ?? null
+);
 
-export const selectEntityName = createSelector([selectEOIData], (eoiData) => eoiData?.entityName ?? '');
+export const selectEntityName = createSelector(
+  [selectEOIData],
+  (eoiData) => eoiData?.entityName ?? ""
+);
 
 export const selectKYCData = (state) => state.kyc.kycData;
 
@@ -66,50 +72,77 @@ export const selectKYCRequirementData = createSelector([selectKYCData], (kycData
         .filter((key) => Object.keys(defaultValues).includes(key))
         .map((key) => ({
           [key]: kycData[key],
-        })),
+        }))
     );
 
     if (updatedKYCFieldObjects.hasBearerShares) {
-      updatedKYCFieldObjects.hasBearerShares = 'true';
+      updatedKYCFieldObjects.hasBearerShares = "true";
     } else if (updatedKYCFieldObjects.hasBearerShares === false) {
-      updatedKYCFieldObjects.hasBearerShares = 'false';
+      updatedKYCFieldObjects.hasBearerShares = "false";
     }
 
     if (updatedKYCFieldObjects.authorisedPersonCountry) {
-      updatedKYCFieldObjects.authorisedPersonCountry = { label: updatedKYCFieldObjects.authorisedPersonCountry.name, value: updatedKYCFieldObjects.authorisedPersonCountry.id };
+      updatedKYCFieldObjects.authorisedPersonCountry = {
+        label: updatedKYCFieldObjects.authorisedPersonCountry.name,
+        value: updatedKYCFieldObjects.authorisedPersonCountry.id,
+      };
     }
 
-    if (updatedKYCFieldObjects.operatingAddress && Object.keys(updatedKYCFieldObjects.operatingAddress).length) {
+    if (
+      updatedKYCFieldObjects.operatingAddress &&
+      Object.keys(updatedKYCFieldObjects.operatingAddress).length
+    ) {
       const address = { ...updatedKYCFieldObjects.operatingAddress };
       address.selected = true;
       if (updatedKYCFieldObjects.operatingAddress.countryId) {
-        address.country = { label: updatedKYCFieldObjects.operatingAddress.country.name, value: updatedKYCFieldObjects.operatingAddress.country.id };
+        address.country = {
+          label: updatedKYCFieldObjects.operatingAddress.country.name,
+          value: updatedKYCFieldObjects.operatingAddress.country.id,
+        };
       }
       updatedKYCFieldObjects.operatingAddress = address;
     }
-    if (updatedKYCFieldObjects.domicileAddress && Object.keys(updatedKYCFieldObjects.domicileAddress).length) {
+    if (
+      updatedKYCFieldObjects.domicileAddress &&
+      Object.keys(updatedKYCFieldObjects.domicileAddress).length
+    ) {
       const address = { ...updatedKYCFieldObjects.domicileAddress };
       address.selected = true;
       if (updatedKYCFieldObjects.domicileAddress.countryId) {
-        address.country = { label: updatedKYCFieldObjects.domicileAddress.country.name, value: updatedKYCFieldObjects.domicileAddress.country.id };
+        address.country = {
+          label: updatedKYCFieldObjects.domicileAddress.country.name,
+          value: updatedKYCFieldObjects.domicileAddress.country.id,
+        };
       }
       updatedKYCFieldObjects.domicileAddress = address;
     }
-    if (updatedKYCFieldObjects.mailingAddress && Object.keys(updatedKYCFieldObjects.mailingAddress).length) {
+    if (
+      updatedKYCFieldObjects.mailingAddress &&
+      Object.keys(updatedKYCFieldObjects.mailingAddress).length
+    ) {
       const address = { ...updatedKYCFieldObjects.mailingAddress };
       address.selected = true;
       if (updatedKYCFieldObjects.mailingAddress.countryId) {
-        address.country = { label: updatedKYCFieldObjects.mailingAddress.country.name, value: updatedKYCFieldObjects.mailingAddress.country.id };
+        address.country = {
+          label: updatedKYCFieldObjects.mailingAddress.country.name,
+          value: updatedKYCFieldObjects.mailingAddress.country.id,
+        };
       }
       updatedKYCFieldObjects.mailingAddress = address;
     }
-    if (updatedKYCFieldObjects.ultimateBeneficiaryOwners && updatedKYCFieldObjects.ultimateBeneficiaryOwners.length) {
+    if (
+      updatedKYCFieldObjects.ultimateBeneficiaryOwners &&
+      updatedKYCFieldObjects.ultimateBeneficiaryOwners.length
+    ) {
       const ubos = [];
       updatedKYCFieldObjects.ultimateBeneficiaryOwners.forEach((val) => {
         const modified = { ...val };
-        modified.isPoilticallyExposed = modified.isPoilticallyExposed === true ? 'true' : undefined;
+        modified.isPoilticallyExposed = modified.isPoilticallyExposed === true ? "true" : undefined;
         if (val.countryOfResidence) {
-          modified.countryOfResidence = { label: val.countryOfResidenceName.name, value: val.countryOfResidenceName.id };
+          modified.countryOfResidence = {
+            label: val.countryOfResidenceName.name,
+            value: val.countryOfResidenceName.id,
+          };
         }
         ubos.push(modified);
       });
@@ -149,13 +182,23 @@ export const selectSanctionsQuestionnaireData = createSelector([selectKYCData], 
         delete draft.status;
         delete draft.entityName;
 
-        draft.prospectOperatingFrom = kycData.prospectOperatingFrom.length > 0 ? kycData.prospectOperatingFrom : initialQuestionnaireValues.prospectOperatingFrom;
+        draft.prospectOperatingFrom =
+          kycData.prospectOperatingFrom.length > 0
+            ? kycData.prospectOperatingFrom
+            : initialQuestionnaireValues.prospectOperatingFrom;
 
-        draft.branchesOperatingFrom = kycData.branchesOperatingFrom.length > 0 ? kycData.branchesOperatingFrom : initialQuestionnaireValues.branchesOperatingFrom;
+        draft.branchesOperatingFrom =
+          kycData.branchesOperatingFrom.length > 0
+            ? kycData.branchesOperatingFrom
+            : initialQuestionnaireValues.branchesOperatingFrom;
 
-        draft.controlledResidingIn = kycData.controlledResidingIn.length > 0 ? kycData.controlledResidingIn : initialQuestionnaireValues.controlledResidingIn;
+        draft.controlledResidingIn =
+          kycData.controlledResidingIn.length > 0
+            ? kycData.controlledResidingIn
+            : initialQuestionnaireValues.controlledResidingIn;
 
-        draft.assetsIn = kycData.assetsIn.length > 0 ? kycData.assetsIn : initialQuestionnaireValues.assetsIn;
+        draft.assetsIn =
+          kycData.assetsIn.length > 0 ? kycData.assetsIn : initialQuestionnaireValues.assetsIn;
 
         draft.sanctionsUsedForChild = kycData.sanctionsUsedForChild;
       }),
@@ -221,9 +264,11 @@ export const selectIsSubmitting = (state) => state.kyc.isSubmitting;
 
 // TODO: DRY up kycSelectors code
 
-export const selectIsFetchingUpdatedKYCPartialData = (state) => state.kyc.isFetchingUpdatedKYCPartialData;
+export const selectIsFetchingUpdatedKYCPartialData = (state) =>
+  state.kyc.isFetchingUpdatedKYCPartialData;
 
-export const selectClientClassificationDropdownData = (state) => state.kyc.clientClassificationDropdownData || {};
+export const selectClientClassificationDropdownData = (state) =>
+  state.kyc.clientClassificationDropdownData || {};
 
 export const selectClientClassificationData = createSelector([selectKYCData], (kycData) => {
   const defaultValues = {
@@ -251,24 +296,25 @@ export const selectClientClassificationData = createSelector([selectKYCData], (k
         .filter((key) => Object.keys(defaultValues).includes(key))
         .map((key) => ({
           [key]: kycData[key],
-        })),
+        }))
     );
 
     if (kycData.deemedProfessionalClientSelections) {
-      ccData.deemedProfessionalClientSelections = kycData.deemedProfessionalClientSelections.questionId;
+      ccData.deemedProfessionalClientSelections =
+        kycData.deemedProfessionalClientSelections.questionId;
     }
     if (kycData.institutionalClientSelections) {
       ccData.institutionalClientSelections = kycData.institutionalClientSelections.questionId;
     }
 
     if (kycData.certifications && kycData.certifications.length) {
-      ccData.heldPosition = 'true';
+      ccData.heldPosition = "true";
     }
     if (kycData.hasAdviceForWethaqPlatform) {
-      ccData.hasAdviceForWethaqPlatform = 'true';
+      ccData.hasAdviceForWethaqPlatform = "true";
     }
     if (kycData.hasInvestmentPortfolio) {
-      ccData.hasInvestmentPortfolio = 'true';
+      ccData.hasInvestmentPortfolio = "true";
     }
     if (kycData.investmentFrequency && kycData.investmentFrequency.length) {
       const modifiedFreqs = [];
@@ -305,7 +351,9 @@ export const selectStatusData = createSelector([selectKYCData], (kycData) => {
 
     return {
       kycOfficerCurrentScreen: kycOfficerCurrentScreen ? parseInt(kycOfficerCurrentScreen, 10) : 0,
-      authorizedPersonCurrentScreen: authorizedPersonCurrentScreen ? parseInt(authorizedPersonCurrentScreen, 10) : 0,
+      authorizedPersonCurrentScreen: authorizedPersonCurrentScreen
+        ? parseInt(authorizedPersonCurrentScreen, 10)
+        : 0,
     };
   }
 
@@ -323,17 +371,24 @@ export const selectdropdownData = (state) => state.kyc.dropdownData;
 
 export const selectPaymentAccountsData = (state) => state.kyc.paymentAccountsData;
 
-export const selectPaymentAccounts = createSelector([selectPaymentAccountsData], (paymentAccountsData) => {
-  if (paymentAccountsData?.data) {
-    return paymentAccountsData.data;
-  }
+export const selectPaymentAccounts = createSelector(
+  [selectPaymentAccountsData],
+  (paymentAccountsData) => {
+    if (paymentAccountsData?.data) {
+      return paymentAccountsData.data;
+    }
 
-  return [];
-});
+    return [];
+  }
+);
 
 export const selectUploadStatus = (state) => state.kyc?.uploadStatus;
 export const selectUploadedFiles = (state) => state.kyc.filesUploaded;
 
-export const selectKYCApprovalStatus = createSelector([selectCurrentEntityGroup], (currentEntityGroup) => currentEntityGroup?.entity?.kyc?.status === kycOnboardingStatusEnum.APPROVED);
+export const selectKYCApprovalStatus = createSelector(
+  [selectCurrentEntityGroup],
+  (currentEntityGroup) =>
+    currentEntityGroup?.entity?.kyc?.status === kycOnboardingStatusEnum.APPROVED
+);
 
 export const selectElmUser = (state) => state.kyc.elmUser;

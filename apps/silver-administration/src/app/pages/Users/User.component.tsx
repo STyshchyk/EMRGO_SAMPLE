@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import { Button, IDropdownItem, Modal } from "@emrgo-frontend/shared-ui";
-import { DashboardContent } from "@emrgo-frontend/shared-ui";
+import { Button, DashboardContent, IDropdownItem, Modal } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { getInvitedUserStatusLabel, getInvitedUserTypeLabel } from "../helpers";

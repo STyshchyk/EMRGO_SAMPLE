@@ -1,0 +1,17 @@
+{
+  "Engage a Service Provider": "Engage a Service Provider",
+  "Categories": {
+    "Legal Counsel": "Legal Counsel",
+    "Corporate Service Provider": "Corporate Service Provider",
+    "Sharia Board": "Sharia Board",
+    "Rating Agency": "Rating Agency",
+    "SPE Trustee": "SPE Trustee",
+    "Capital Market Institution": "Capital Market Institution"
+  },
+  "Buttons": {
+    "Message": "Message",
+    "Send Engagement Request": "Send Engagement Request",
+    "View Engagement Letter": "View Engagement Letter"
+  },
+  "There are currently no service providers available for": "There are currently no service providers available for $t(Categories.{{category}}) Services"
+}

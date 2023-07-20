@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/quotes';
+import * as actionCreators from "../actionCreators/quotes";
 
 const defaultState = {
   quotes: [],
@@ -35,11 +35,11 @@ const quotesReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.quotes = data;
         draft.isLoading = false;
-      },
+      }
     ),
     [actionCreators.doReadQuoteFailure]: produce((draft, { message }) => {
       draft.message = message;
@@ -70,7 +70,7 @@ const quotesReducer = handleActions(
       draft.errorMessage = message;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default quotesReducer;

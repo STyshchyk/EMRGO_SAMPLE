@@ -1,22 +1,23 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
 
-import viteTsConfigPaths from 'vite-tsconfig-paths';
-import dts from 'vite-plugin-dts';
-import { join } from 'path';
+import { join } from "path";
+
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
+import viteTsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  cacheDir: '../../node_modules/.vite/theme',
+  cacheDir: "../../node_modules/.vite/theme",
 
   plugins: [
     dts({
-      entryRoot: 'src',
-      tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
+      entryRoot: "src",
+      tsConfigFilePath: join(__dirname, "tsconfig.lib.json"),
       skipDiagnostics: true,
     }),
 
     viteTsConfigPaths({
-      root: '../../',
+      root: "../../",
     }),
   ],
 
@@ -34,12 +35,12 @@ export default defineConfig({
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
-      name: 'theme',
-      fileName: 'index',
+      entry: "src/index.ts",
+      name: "theme",
+      fileName: "index",
       // Change this to the formats you want to support.
       // Don't forgot to update your package.json as well.
-      formats: ['es', 'cjs'],
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.

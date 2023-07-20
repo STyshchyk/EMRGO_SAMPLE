@@ -33,7 +33,6 @@ export const Title = styled.h2`
     `}
 `;
 
-
 export const Content = styled.div`
   /* Layout */
   display: flex;

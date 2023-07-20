@@ -1,10 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import * as admissionActionCreators from '../actionCreators/admission';
-import * as admissionActionTypes from '../actionTypes/admission';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as admissionActionCreators from "../actionCreators/admission";
+import * as admissionActionTypes from "../actionTypes/admission";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* submitIssuanceByIDForAdmission({ payload }) {
   try {
@@ -13,7 +12,7 @@ function* submitIssuanceByIDForAdmission({ payload }) {
 
     yield put(admissionActionCreators.doSubmitSukukForAdmissionSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -30,7 +29,7 @@ function* manageIssuanceByID({ payload }) {
 
     yield put(admissionActionCreators.doManageSukukForAdmissionSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -41,7 +40,10 @@ function* manageIssuanceByID({ payload }) {
 }
 
 const admissionSaga = [
-  takeLatest(admissionActionTypes.SUBMIT_ISSUANCE_FOR_ADMISSION_REQUESTED, submitIssuanceByIDForAdmission),
+  takeLatest(
+    admissionActionTypes.SUBMIT_ISSUANCE_FOR_ADMISSION_REQUESTED,
+    submitIssuanceByIDForAdmission
+  ),
   takeLatest(admissionActionTypes.MANAGE_ISSUANCE_REQUESTED, manageIssuanceByID),
 ];
 

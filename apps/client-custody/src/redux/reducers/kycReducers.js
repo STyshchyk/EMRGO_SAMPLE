@@ -1,7 +1,7 @@
-import { handleActions, combineActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { combineActions, handleActions } from "redux-actions";
 
-import * as kycActionCreators from '../actionCreators/kyc';
+import * as kycActionCreators from "../actionCreators/kyc";
 
 const defaultState = {
   clientClassificationTemplateFileURL: null,
@@ -67,11 +67,11 @@ const kycReducers = handleActions(
           payload: {
             data: { payload },
           },
-        },
+        }
       ) => {
         draft.kycData = payload;
         draft.isFetchingKycData = false;
-      },
+      }
     ),
     [kycActionCreators.doFetchKYCDataFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -99,7 +99,7 @@ const kycReducers = handleActions(
           payload: {
             data: { payload },
           },
-        },
+        }
       ) => {
         Object.keys(payload).forEach((key) => {
           draft.kycData[key] = payload[key];
@@ -107,7 +107,7 @@ const kycReducers = handleActions(
         draft.errorMessage = null;
         draft.isLoading = false;
         draft.isSubmitting = false;
-      },
+      }
     ),
     [kycActionCreators.doPostKYCDataFailure]: produce((draft, { payload }) => {
       draft.isSubmitting = false;
@@ -123,7 +123,7 @@ const kycReducers = handleActions(
             index,
             keyName,
           },
-        },
+        }
       ) => {
         draft.errorMessage = null;
         if (!draft.uploadStatus) draft.uploadStatus = {};
@@ -132,17 +132,17 @@ const kycReducers = handleActions(
           if (!draft.filesUploaded[key]) {
             draft.filesUploaded[key] = [];
           }
-          draft.filesUploaded[key][index] = '';
+          draft.filesUploaded[key][index] = "";
           if (!draft.uploadStatus[key]) {
             draft.uploadStatus[key] = {};
           }
           draft.uploadStatus[key][index] = true;
         } else {
-          draft.filesUploaded[key] = '';
+          draft.filesUploaded[key] = "";
           draft.uploadStatus[key] = true;
         }
         draft.uploadInProgress += 1;
-      },
+      }
     ),
     [kycActionCreators.doUploadKycFileSuccess]: produce((draft, { payload: { data } }) => {
       const key = data.keyName || data.name;
@@ -169,17 +169,21 @@ const kycReducers = handleActions(
       draft.isFetchingClientClassificationDropdownData = true;
       draft.isLoading = true;
     }),
-    [kycActionCreators.doFetchClientClassificationDropdownsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.clientClassificationDropdownData = { ...data };
-      draft.isFetchingClientClassificationDropdownData = false;
-      draft.isLoading = false;
-    }),
-    [kycActionCreators.doFetchClientClassificationDropdownsFailure]: produce((draft, { payload }) => {
-      draft.message = payload;
-      draft.isFetchingClientClassificationDropdownData = false;
-      draft.isLoading = false;
-      draft.errorMessage = payload;
-    }),
+    [kycActionCreators.doFetchClientClassificationDropdownsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.clientClassificationDropdownData = { ...data };
+        draft.isFetchingClientClassificationDropdownData = false;
+        draft.isLoading = false;
+      }
+    ),
+    [kycActionCreators.doFetchClientClassificationDropdownsFailure]: produce(
+      (draft, { payload }) => {
+        draft.message = payload;
+        draft.isFetchingClientClassificationDropdownData = false;
+        draft.isLoading = false;
+        draft.errorMessage = payload;
+      }
+    ),
 
     [kycActionCreators.doFetchDropdowns]: produce((draft) => {
       draft.errorMessage = null;
@@ -202,38 +206,53 @@ const kycReducers = handleActions(
       draft.filesUploaded = {};
       draft.uploadStatus = {};
     }),
-    [combineActions(kycActionCreators.doFetchPaymentAccounts, kycActionCreators.doFetchPaymentAccountsByEntityID)]: produce((draft) => {
+    [combineActions(
+      kycActionCreators.doFetchPaymentAccounts,
+      kycActionCreators.doFetchPaymentAccountsByEntityID
+    )]: produce((draft) => {
       draft.errorMessage = null;
       draft.isFetching = true;
     }),
-    [combineActions(kycActionCreators.doFetchPaymentAccountsSuccess, kycActionCreators.doFetchPaymentAccountsByEntityIDSuccess)]: produce((draft, { payload: { data } }) => {
+    [combineActions(
+      kycActionCreators.doFetchPaymentAccountsSuccess,
+      kycActionCreators.doFetchPaymentAccountsByEntityIDSuccess
+    )]: produce((draft, { payload: { data } }) => {
       draft.isFetching = false;
       draft.paymentAccountsData = data;
     }),
-    [combineActions(kycActionCreators.doFetchPaymentAccountsFailure, kycActionCreators.doFetchPaymentAccountsByEntityIDFailure)]: produce((draft, { payload }) => {
+    [combineActions(
+      kycActionCreators.doFetchPaymentAccountsFailure,
+      kycActionCreators.doFetchPaymentAccountsByEntityIDFailure
+    )]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
     }),
-    [kycActionCreators.doUploadSupportingDocumentForPaymentAccount]: produce((draft, { payload }) => {
-      draft.errorMessage = null;
-      const key = payload.keyName;
-      draft.filesUploaded[key] = '';
-      if (!draft.uploadStatus) draft.uploadStatus = {};
-      draft.uploadStatus[key] = true;
-      draft.uploadInProgress += 1;
-    }),
-    [kycActionCreators.doUploadSupportingDocumentForPaymentAccountSuccess]: produce((draft, { payload: { data } }) => {
-      const key = data.keyName || data.name;
-      draft.filesUploaded[key] = data;
-      draft.uploadStatus[key] = false;
-      draft.errorMessage = null;
-      draft.uploadInProgress -= 1;
-    }),
-    [kycActionCreators.doUploadSupportingDocumentForPaymentAccountFailure]: produce((draft, { payload, key }) => {
-      draft.uploadInProgress -= 1;
-      draft.uploadStatus[key] = false;
-      draft.errorMessage = payload;
-    }),
+    [kycActionCreators.doUploadSupportingDocumentForPaymentAccount]: produce(
+      (draft, { payload }) => {
+        draft.errorMessage = null;
+        const key = payload.keyName;
+        draft.filesUploaded[key] = "";
+        if (!draft.uploadStatus) draft.uploadStatus = {};
+        draft.uploadStatus[key] = true;
+        draft.uploadInProgress += 1;
+      }
+    ),
+    [kycActionCreators.doUploadSupportingDocumentForPaymentAccountSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        const key = data.keyName || data.name;
+        draft.filesUploaded[key] = data;
+        draft.uploadStatus[key] = false;
+        draft.errorMessage = null;
+        draft.uploadInProgress -= 1;
+      }
+    ),
+    [kycActionCreators.doUploadSupportingDocumentForPaymentAccountFailure]: produce(
+      (draft, { payload, key }) => {
+        draft.uploadInProgress -= 1;
+        draft.uploadStatus[key] = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [kycActionCreators.doAddPaymentAccount]: produce((draft) => {
       draft.message = null;
       draft.errorMessage = null;
@@ -260,30 +279,39 @@ const kycReducers = handleActions(
       draft.isRequesting = false;
       draft.errorMessage = payload;
     }),
-    [combineActions(kycActionCreators.doFetchElmUser, kycActionCreators.doFetchPaymentAccountsByEntityID)]: produce((draft) => {
+    [combineActions(
+      kycActionCreators.doFetchElmUser,
+      kycActionCreators.doFetchPaymentAccountsByEntityID
+    )]: produce((draft) => {
       draft.errorMessage = null;
       draft.isFetching = true;
     }),
-    [combineActions(kycActionCreators.doFetchElmUserSuccess, kycActionCreators.doFetchPaymentAccountsByEntityIDSuccess)]: produce(
+    [combineActions(
+      kycActionCreators.doFetchElmUserSuccess,
+      kycActionCreators.doFetchPaymentAccountsByEntityIDSuccess
+    )]: produce(
       (
         draft,
         {
           payload: {
             data: { elmUser },
           },
-        },
+        }
       ) => {
         const elmUserData = elmUser;
         draft.isFetching = false;
         draft.elmUser = elmUserData;
-      },
+      }
     ),
-    [combineActions(kycActionCreators.doFetchElmUserFailure, kycActionCreators.doFetchPaymentAccountsByEntityIDFailure)]: produce((draft, { payload }) => {
+    [combineActions(
+      kycActionCreators.doFetchElmUserFailure,
+      kycActionCreators.doFetchPaymentAccountsByEntityIDFailure
+    )]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default kycReducers;

@@ -1,16 +1,19 @@
 /* eslint-disable consistent-return */
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as s3Service from '../../services/s3Service';
-import i18n from '../../i18n';
-import * as authActionCreators from '../actionCreators/auth';
-import * as entitiesActionCreators from '../actionCreators/entities';
-import * as clientTermsActionCreators from '../actionCreators/clientTerms';
-import * as clientTermsActionTypes from '../actionTypes/clientTerms';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+
+import { toast } from "react-toastify";
+
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as authActionCreators from "../actionCreators/auth";
+import * as clientTermsActionCreators from "../actionCreators/clientTerms";
+import * as entitiesActionCreators from "../actionCreators/entities";
+import * as clientTermsActionTypes from "../actionTypes/clientTerms";
 // import * as s3Service from '../../services/s3Service';
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchTerms() {
   try {
@@ -71,7 +74,7 @@ function* submitTerms({ payload }) {
     yield put(clientTermsActionCreators.doSubmitTermsSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') payload.successCallback();
+    if (typeof payload?.successCallback === "function") payload.successCallback();
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -108,7 +111,7 @@ function* uploadFile({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.name}`);
+    yield call(toast.success, `${i18n.t("messages:Uploaded")} ${payload.requestPayload.name}`);
 
     yield put(clientTermsActionCreators.doUploadFileSuccess({ data }));
 
@@ -116,7 +119,9 @@ function* uploadFile({ payload }) {
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(clientTermsActionCreators.doUploadFileFailure({ message: errorMessage, key: payload.keyName }));
+    yield put(
+      clientTermsActionCreators.doUploadFileFailure({ message: errorMessage, key: payload.keyName })
+    );
   }
 }
 

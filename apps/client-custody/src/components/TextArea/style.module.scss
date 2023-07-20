@@ -1,7 +1,7 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .container {
-  font-family: 'D-DIN Exp';
+  font-family: "D-DIN Exp";
   margin-bottom: 1rem;
   position: relative;
 }
@@ -14,7 +14,7 @@
   align-items: start;
   display: grid;
   gap: 1em;
-  grid-template-areas: 'label field';
+  grid-template-areas: "label field";
   grid-template-columns: auto 1fr;
 
   &__label {
@@ -51,8 +51,8 @@
   .input-group {
     gap: 0.5em;
     grid-template-areas:
-      'label'
-      'field';
+      "label"
+      "field";
     grid-template-columns: 1fr;
     grid-template-rows:
       max-content /* header */

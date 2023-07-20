@@ -5,7 +5,6 @@ import axios from "axios";
 
 const BASE_API_URL = BASE_API;
 
-
 export const dashboardApi = sharedSilverDashboardApi;
 
 dashboardApi.defaults.headers.common["Content-Type"] = "application/json";
@@ -22,7 +21,7 @@ dashboardApi.interceptors.response.use(
       try {
         await dashboardApi({
           method: "post",
-          url: "v2/refreshTokens"
+          url: "v2/refreshTokens",
         });
 
         // Retry the original request with the updated token

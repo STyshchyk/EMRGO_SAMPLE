@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-import appConfig from '../../appConfig';
+import appConfig from "../../appConfig";
 
 const AWS_S3_REGEXP = /^(s3)\.([\wd-]+)\.(amazonaws)\.com$/i;
 const OCI_OBJ_STORAGE_REGEXP = /^(objectstorage)\.([\wd-]+)\.(oraclecloud)\.com$/i;
@@ -39,7 +39,7 @@ export const putFile = async ({ uploadURLData, file }) => {
 
     // Check if parsed preauthenticated URL's hostname is valid
     if (!(isValidAWSPresignedURL || isValidOCIPARURL)) {
-      throw new Error('Preauthenticated S3 Put URL is invalid');
+      throw new Error("Preauthenticated S3 Put URL is invalid");
     }
 
     const formData = new FormData();
@@ -52,7 +52,7 @@ export const putFile = async ({ uploadURLData, file }) => {
 
     if (isValidAWSPresignedURL) {
       if (!uploadURLData?.fields) {
-        throw new Error('AWS Fields are required');
+        throw new Error("AWS Fields are required");
       }
 
       const { fields } = uploadURLData;
@@ -61,17 +61,17 @@ export const putFile = async ({ uploadURLData, file }) => {
         formData.append(fieldKeyName, fields[fieldKeyName]);
       });
 
-      formData.append('file', file);
+      formData.append("file", file);
 
       const awsS3APIResponse = await axios({
         ...sharedAxiosRequestConfig,
-        headers: { 'Content-Type': 'multipart/form-data' },
-        method: 'POST',
+        headers: { "Content-Type": "multipart/form-data" },
+        method: "POST",
         data: formData,
       });
 
       if (awsS3APIResponse.status !== 204) {
-        throw new Error('AWS S3 Upload Failed');
+        throw new Error("AWS S3 Upload Failed");
       }
 
       s3PutAPIResponse = awsS3APIResponse;
@@ -82,13 +82,13 @@ export const putFile = async ({ uploadURLData, file }) => {
 
       const ociAPIResponse = await axios({
         ...sharedAxiosRequestConfig,
-        headers: { 'Content-Type': file.type },
-        method: 'PUT',
+        headers: { "Content-Type": file.type },
+        method: "PUT",
         data: fileBlob,
       });
 
       if (ociAPIResponse.status !== 200) {
-        throw new Error('OCI Object Storage Upload Failed');
+        throw new Error("OCI Object Storage Upload Failed");
       }
 
       s3PutAPIResponse = ociAPIResponse;
@@ -96,8 +96,8 @@ export const putFile = async ({ uploadURLData, file }) => {
 
     return s3PutAPIResponse;
   } catch (error) {
-    if (['staging', 'production'].includes(appConfig.appENV)) {
-      throw new Error('An error occurred in the upload. Please try again later.');
+    if (["staging", "production"].includes(appConfig.appENV)) {
+      throw new Error("An error occurred in the upload. Please try again later.");
     }
 
     throw error;

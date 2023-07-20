@@ -1,9 +1,8 @@
 import { BASE_API_URL as BASE_API, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
-import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { sharedSilverDashboardApi } from "@emrgo-frontend/services";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 
 const BASE_API_URL = BASE_API;
-
 
 export const dashboardApi = sharedSilverDashboardApi;
 
@@ -21,7 +20,7 @@ dashboardApi.interceptors.response.use(
       try {
         await dashboardApi({
           method: "post",
-          url: "v2/refreshTokens"
+          url: "v2/refreshTokens",
         });
 
         // Retry the original request with the updated token

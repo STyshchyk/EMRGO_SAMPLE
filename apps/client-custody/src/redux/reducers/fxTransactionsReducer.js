@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as fxTransactionsActionCreators from '../actionCreators/fxTransactions';
+import * as fxTransactionsActionCreators from "../actionCreators/fxTransactions";
 
 const defaultState = {
   fxTransactionsData: [],
@@ -19,10 +19,12 @@ const fxTransactionsReducer = handleActions(
       draft.isFetching = true;
       draft.errorMessage = null;
     }),
-    [fxTransactionsActionCreators.doFetchFxTransactionsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.fxTransactionsData = data;
-      draft.isFetching = false;
-    }),
+    [fxTransactionsActionCreators.doFetchFxTransactionsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.fxTransactionsData = data;
+        draft.isFetching = false;
+      }
+    ),
     [fxTransactionsActionCreators.doFetchFxTransactionsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
@@ -50,7 +52,7 @@ const fxTransactionsReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default fxTransactionsReducer;

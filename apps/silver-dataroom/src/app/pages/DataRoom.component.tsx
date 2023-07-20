@@ -15,19 +15,15 @@ const dataRoomTabs = [
     key: "/data-room/platform",
     paths: [routes.dataRoom.platform],
     path: routes.dataRoom.platform,
-    notification: 0
+    notification: 0,
   },
   {
     label: "Opportunities",
     key: "/data-room/opportunities",
-    paths:
-      [
-        routes.dataRoom.opportunities,
-        routes.dataRoom.manageDocuments
-      ],
+    paths: [routes.dataRoom.opportunities, routes.dataRoom.manageDocuments],
     path: routes.dataRoom.opportunities,
-    notification: 0
-  }
+    notification: 0,
+  },
 ];
 export const DataRoomComponent: FC<IDataRoomProps> = ({}: IDataRoomProps) => {
   const value: any = useInternalMatchedPathTabs(dataRoomTabs);

@@ -1,10 +1,10 @@
-import {BASE_API_URL, silverAuthenticationRoutes} from "@emrgo-frontend/constants";
-import {navigateSilverModule, silverModule} from "@emrgo-frontend/utils";
+import { BASE_API_URL, silverAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 
 export const sharedSilverDashboardApi = axios.create({
   baseURL: BASE_API_URL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 sharedSilverDashboardApi.defaults.headers.common["Content-Type"] = "application/json";
@@ -22,7 +22,7 @@ sharedSilverDashboardApi.interceptors.response.use(
       try {
         await sharedSilverDashboardApi({
           method: "post",
-          url: "v2/refreshTokens"
+          url: "v2/refreshTokens",
         });
 
         // Retry the original request with the updated token
@@ -32,9 +32,11 @@ sharedSilverDashboardApi.interceptors.response.use(
         // Handle refresh token request error
         console.error("Error refreshing access token:", refreshError);
         // Redirect to login or show an error message
-        if (refreshError.response.status === 403 ||
+        if (
+          refreshError.response.status === 403 ||
           refreshError.response.status === 500 ||
-          refreshError.response.status === 502) {
+          refreshError.response.status === 502
+        ) {
           navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
         }
       }

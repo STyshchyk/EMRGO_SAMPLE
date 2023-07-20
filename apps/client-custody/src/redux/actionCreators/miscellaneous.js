@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/miscellaneous';
+import * as actionTypes from "../actionTypes/miscellaneous";
 
 export const doFetchDocumentLinkRequest = createAction(actionTypes.DOCUMENT_LINK_FETCH_REQUESTED);
 export const doFetchDocumentLinkSuccess = createAction(actionTypes.DOCUMENT_LINK_FETCH_SUCCEEDED);

@@ -13,7 +13,7 @@ export const InvestmentProfileComponent: FC<IInvestmentProfileProps> = (
   props: IInvestmentProfileProps
 ) => {
   const { firstName, forms, onStartForm, onSubmit } = ensureNotNull(useInvestmentProfileContext());
-  
+
   const firstIncompleteForm = forms?.find((form) => form.hasCompleted === false);
 
   const areAllSectionsComplete = forms?.every((forms) => forms.hasCompleted);

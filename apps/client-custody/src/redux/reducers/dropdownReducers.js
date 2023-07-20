@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as dropdownActionCreators from '../actionCreators/dropdown';
+import * as dropdownActionCreators from "../actionCreators/dropdown";
 
 const defaultState = {
   errorMessage: null,
@@ -15,10 +15,12 @@ const dropdownReducer = handleActions(
       draft.errorMessage = null;
       draft.isFetching = true;
     }),
-    [dropdownActionCreators.doFetchDropdownOptionsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetching = false;
-      draft.options = { ...draft.options, ...data };
-    }),
+    [dropdownActionCreators.doFetchDropdownOptionsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetching = false;
+        draft.options = { ...draft.options, ...data };
+      }
+    ),
     [dropdownActionCreators.doFetchDropdownOptionsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
@@ -27,7 +29,7 @@ const dropdownReducer = handleActions(
       draft.options = null;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default dropdownReducer;

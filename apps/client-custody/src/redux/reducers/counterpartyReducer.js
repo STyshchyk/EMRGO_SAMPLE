@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as counterpartyActionCreators from '../actionCreators/counterparty';
+import * as counterpartyActionCreators from "../actionCreators/counterparty";
 
 const defaultState = {
   counterpartyList: [],
@@ -30,11 +30,11 @@ const counterpartyReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.counterpartyList = data;
-      },
+      }
     ),
     [counterpartyActionCreators.doFetchCounterpartyListFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
@@ -44,10 +44,12 @@ const counterpartyReducer = handleActions(
       draft.isRequesting = true;
       draft.errorMessage = null;
     }),
-    [counterpartyActionCreators.doAddCounterpartySuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
+    [counterpartyActionCreators.doAddCounterpartySuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
     [counterpartyActionCreators.doAddCounterpartyFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -57,10 +59,12 @@ const counterpartyReducer = handleActions(
       draft.errorMessage = null;
       draft.isRequesting = true;
     }),
-    [counterpartyActionCreators.doEditCounterpartySuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
+    [counterpartyActionCreators.doEditCounterpartySuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
     [counterpartyActionCreators.doEditCounterpartyFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -80,10 +84,12 @@ const counterpartyReducer = handleActions(
       draft.errorMessage = null;
       draft.isFetchingDropdown = true;
     }),
-    [counterpartyActionCreators.doFetchDropdownsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.dropdownData = { ...data };
-      draft.isFetchingDropdown = false;
-    }),
+    [counterpartyActionCreators.doFetchDropdownsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.dropdownData = { ...data };
+        draft.isFetchingDropdown = false;
+      }
+    ),
     [counterpartyActionCreators.doFetchDropdownsFailure]: produce((draft, { payload }) => {
       draft.message = payload;
       draft.isFetchingDropdown = false;
@@ -100,24 +106,28 @@ const counterpartyReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.counterpartySSIList = data;
-      },
+      }
     ),
-    [counterpartyActionCreators.doFetchCounterpartySSIListFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
+    [counterpartyActionCreators.doFetchCounterpartySSIListFailure]: produce(
+      (draft, { payload }) => {
+        draft.isFetching = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [counterpartyActionCreators.doAddCounterpartySSI]: produce((draft) => {
       draft.isRequesting = true;
       draft.errorMessage = null;
     }),
-    [counterpartyActionCreators.doAddCounterpartySSISuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
+    [counterpartyActionCreators.doAddCounterpartySSISuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
     [counterpartyActionCreators.doAddCounterpartySSIFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -127,10 +137,12 @@ const counterpartyReducer = handleActions(
       draft.errorMessage = null;
       draft.isRequesting = true;
     }),
-    [counterpartyActionCreators.doEditCounterpartySSISuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
+    [counterpartyActionCreators.doEditCounterpartySSISuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
     [counterpartyActionCreators.doEditCounterpartySSIFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -147,7 +159,7 @@ const counterpartyReducer = handleActions(
       draft.errorMessage = message;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default counterpartyReducer;

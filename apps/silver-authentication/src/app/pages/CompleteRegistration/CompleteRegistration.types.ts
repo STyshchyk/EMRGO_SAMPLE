@@ -1,4 +1,4 @@
-import { IMFA} from "../../services";
+import { IMFA } from "../../services";
 
 export interface ICompleteRegistrationProps {}
 

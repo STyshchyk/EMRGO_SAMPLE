@@ -1,0 +1,45 @@
+{
+  "PDFViewer": {
+    "Page": "الصفحة",
+    "Previous Page": "الصفحة السابقة",
+    "Next Page": "الصفحة القادمة"
+  },
+  "FileUploadField": {
+    "Default Placeholder": "اختر الملف"
+  },
+  "Document Viewer": {
+    "Error: Document File Type Not Supported": "خطأ: نوع ملف المستند غير مدعوم"
+  },
+  "Material Table": {
+    "pagination": {
+      "rows": "السجلات",
+      "First Page": "الصفحة الأولى",
+      "Previous Page": "الصفحة السابقة",
+      "Last Page": "الصفحة الأخيرة ",
+      "Next Page": "الصفحة التالية",
+      "Displayed Rows": "{from}-{to} من {count}"
+    },
+    "header": {
+      "actions": "الإجراءات"
+    },
+    "body": {
+      "No records to display": "لا سجلات لعرضها"
+    },
+    "toolbar": {
+      "Search": "البحث"
+    }
+  },
+  "Single Upload": {
+    "File": "ملف",
+    "Document Name": "اسم الملف",
+    "Category": "فئة",
+    "File Uploaded": "تم تحميل الملف"
+  },
+  "Select": {
+    "Select": "اختار..."
+  },
+  "UnsavedFormDataGuard": {
+    "title": "تأكيد التنقل",
+    "message": "لديك تغييرات غير محفوظة سيتم فقدها إذا قررت مغادرة هذه الصفحة. هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟?"
+  }
+}

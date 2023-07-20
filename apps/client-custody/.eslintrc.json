@@ -5,9 +5,17 @@
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "airbnb-base",
-    "../../.eslintrc.json"
+    "../../.eslintrc.json",
+    "plugin:react/jsx-runtime"
   ],
   "ignorePatterns": ["!**/*"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -20,7 +28,8 @@
     {
       "files": ["*.js", "*.jsx"],
       "rules": {
-        "react/prop-types": [0]
+        "react/prop-types": [0],
+        "no-param-reassign": "off"
       }
     }
   ]

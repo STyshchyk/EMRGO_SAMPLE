@@ -1,4 +1,4 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 /*
 TODO:
@@ -43,7 +43,7 @@ TODO:
       }
     }
 
-    &[value=''] {
+    &[value=""] {
       ~ label {
         font-size: 1.25rem;
         line-height: 16px;

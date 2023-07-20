@@ -7,8 +7,8 @@ import { ITradeOpportunitiesProps } from "./TradeOpportunities.types";
 
 export const TradeOpportunities: FC<ITradeOpportunitiesProps> = ({}: ITradeOpportunitiesProps) => {
   return (
-      <TradeOpportunitiesProvider>
-        <TradeOpportunitiesComponent />
-      </TradeOpportunitiesProvider>
+    <TradeOpportunitiesProvider>
+      <TradeOpportunitiesComponent />
+    </TradeOpportunitiesProvider>
   );
 };

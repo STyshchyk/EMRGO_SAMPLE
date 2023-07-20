@@ -1,14 +1,14 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/notification';
+import * as actionCreators from "../actionCreators/notification";
 
 const defaultState = {
   notificationData: [],
   isFetching: true,
   isSettingRead: false,
   isNotificationSocketOpen: false,
-  message: {}
+  message: {},
 };
 
 const notificationReducer = handleActions(
@@ -42,7 +42,7 @@ const notificationReducer = handleActions(
     }),
     [actionCreators.doOpenNotificationSocketFailure]: produce((draft) => {
       draft.isNotificationSocketOpen = false;
-    })
+    }),
   },
   defaultState
 );

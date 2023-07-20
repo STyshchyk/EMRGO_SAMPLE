@@ -1,14 +1,17 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as CAEventsActionCreators from '../actionCreators/corporateActionEvents';
-import * as CAEventsActionTypes from '../actionTypes/corporateActionEvents';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as CAEventsActionCreators from "../actionCreators/corporateActionEvents";
+import * as CAEventsActionTypes from "../actionTypes/corporateActionEvents";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchCorporateActionEventsList() {
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.getCorporateActionEventsList);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.getCorporateActionEventsList
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doFetchCAEventsSuccess({ data }));
   } catch (error) {
@@ -22,7 +25,10 @@ function* cancelCorporateActionEvent({ payload }) {
   const { requestPayload, successCallback } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.cancelCorporateActionEvent, requestPayload);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.cancelCorporateActionEvent,
+      requestPayload
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doCancelCAEventSuccess({ data }));
     if (successCallback) {
@@ -40,7 +46,10 @@ function* addCorporateActionEvent({ payload }) {
   const { requestPayload, successCallback } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.addCorporateActionEvent, requestPayload);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.addCorporateActionEvent,
+      requestPayload
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doAddCAEventSuccess({ data }));
     if (successCallback) {
@@ -58,7 +67,10 @@ function* editCorporateActionEvent({ payload }) {
   const { requestPayload, successCallback } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.editCorporateActionEvent, requestPayload);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.editCorporateActionEvent,
+      requestPayload
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doEditCAEventSuccess({ data }));
     if (successCallback) {
@@ -76,7 +88,10 @@ function* submitCAEventClientResponse({ payload }) {
   const { requestPayload, successCallback } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.submitCAEventClientResponse, requestPayload);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.submitCAEventClientResponse,
+      requestPayload
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doSubmitClientResponseSuccess({ data }));
     if (successCallback) {
@@ -94,7 +109,10 @@ function* fetchCorporateActionEventById({ payload }) {
   const { requestPayload } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.corporateActionEventsAPI.getCorporationActionEvent, requestPayload);
+    const response = yield call(
+      wethaqAPIService.corporateActionEventsAPI.getCorporationActionEvent,
+      requestPayload
+    );
     const { data } = response;
     yield put(CAEventsActionCreators.doFetchCAEventbyIdSuccess({ data }));
     yield call(toast.success, data.message);

@@ -1,10 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import * as actionCreators from '../actionCreators/reports';
-import * as actionTypes from '../actionTypes/reports';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as actionCreators from "../actionCreators/reports";
+import * as actionTypes from "../actionTypes/reports";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchCashAccounts({ payload }) {
   try {
@@ -80,7 +79,10 @@ function* fetchSecuritiesHoldings({ payload }) {
 
 function* fetchTradeDatedSecuritiesHoldings({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.reportsAPI.getTradeDateSecuritiesHoldings, payload);
+    const response = yield call(
+      wethaqAPIService.reportsAPI.getTradeDateSecuritiesHoldings,
+      payload
+    );
     const { data } = response;
     yield put(actionCreators.doFetchTradeDatedSecuritiesHoldingsSuccess({ data }));
   } catch (error) {
@@ -109,7 +111,10 @@ const reportsSaga = [
   takeLatest(actionTypes.FETCH_SECURITIES_ACCOUNTS_REQUESTED, fetchSecuritesAccounts),
   takeLatest(actionTypes.FETCH_SECURITIES_TRANSACTIONS_REQUESTED, fetchSecuritiesTransations),
   takeLatest(actionTypes.FETCH_SECURITIES_HOLDINGS_REQUESTED, fetchSecuritiesHoldings),
-  takeLatest(actionTypes.FETCH_TRADE_DATED_SECURITIES_HOLDINGS_REQUESTED, fetchTradeDatedSecuritiesHoldings),
+  takeLatest(
+    actionTypes.FETCH_TRADE_DATED_SECURITIES_HOLDINGS_REQUESTED,
+    fetchTradeDatedSecuritiesHoldings
+  ),
   takeLatest(actionTypes.FETCH_REFERENCE_DATA_REQUESTED, fetchReferenceData),
 ];
 

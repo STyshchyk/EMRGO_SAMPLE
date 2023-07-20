@@ -1,4 +1,4 @@
-const availableCurrencies = ['SAR', 'USD', 'AED'];
+const availableCurrencies = ["SAR", "USD", "AED"];
 
 export const BANK_RATE_DP = 4;
 export const MARKUP_RATE_DP = 4;

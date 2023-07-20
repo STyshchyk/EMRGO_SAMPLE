@@ -1,13 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
 
-import {
-  ITradeOpportunitiesContext,
-  TFilterStatus,
-  TFilterType
-} from "./TradeOpportunities.types";
+import { ITradeOpportunitiesContext, TFilterStatus, TFilterType } from "./TradeOpportunities.types";
 import { useWatchlist } from "./useWatchlist";
-
-
 
 const TradeOpportunitiesContext = createContext<ITradeOpportunitiesContext | null>(null);
 
@@ -30,8 +24,6 @@ export const TradeOpportunitiesProvider = ({ children }: PropsWithChildren) => {
   const downloadData = () => {
     console.log("Download data");
   };
-
-
 
   const state: ITradeOpportunitiesContext = {
     isAboutUsDisplayed,

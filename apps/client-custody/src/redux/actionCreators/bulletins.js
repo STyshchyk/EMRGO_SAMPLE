@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/bulletins';
+import * as actionTypes from "../actionTypes/bulletins";
 
 export const doDropdownReadRequest = createAction(actionTypes.READ_DROPDOWN_REQUESTED);
 export const doDropdownReadSuccess = createAction(actionTypes.READ_DROPDOWN_SUCCEEDED);
@@ -19,8 +19,12 @@ export const doUploadBulletinFileSuccess = createAction(actionTypes.BULLETIN_FIL
 export const doUploadBulletinFileFailure = createAction(actionTypes.BULLETIN_FILE_UPLOAD_FAILED);
 
 export const doFetchBulletinDocument = createAction(actionTypes.BULLETIN_DOCUMENT_FETCH_REQUESTED);
-export const doFetchBulletinDocumentSuccess = createAction(actionTypes.BULLETIN_DOCUMENT_FETCH_SUCCEEDED);
-export const doFetchBulletinDocumentFailure = createAction(actionTypes.BULLETIN_DOCUMENT_FETCH_FAILED);
+export const doFetchBulletinDocumentSuccess = createAction(
+  actionTypes.BULLETIN_DOCUMENT_FETCH_SUCCEEDED
+);
+export const doFetchBulletinDocumentFailure = createAction(
+  actionTypes.BULLETIN_DOCUMENT_FETCH_FAILED
+);
 
 export const doUpdateBulletin = createAction(actionTypes.BULLETIN_UPDATE_REQUESTED);
 export const doUpdateBulletinSuccess = createAction(actionTypes.BULLETIN_UPDATE_SUCCEEDED);

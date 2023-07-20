@@ -8,10 +8,10 @@ export default {
 };
 
 export const statusTextMap = {
-  Requested: 'Engagement Requested',
-  Uploaded: 'Engagement Letter Uploaded',
-  Generating: 'Generating Letter for Signature',
-  Sent: 'Sent for Signature',
-  Signed: 'Signed',
-  CounterSigned: 'Engaged',
+  Requested: "Engagement Requested",
+  Uploaded: "Engagement Letter Uploaded",
+  Generating: "Generating Letter for Signature",
+  Sent: "Sent for Signature",
+  Signed: "Signed",
+  CounterSigned: "Engaged",
 };

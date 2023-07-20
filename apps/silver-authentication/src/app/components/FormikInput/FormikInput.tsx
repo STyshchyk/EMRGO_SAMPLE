@@ -3,13 +3,13 @@ import { Input, MySelect } from "@emrgo-frontend/shared-ui";
 import { InputFile } from "../InputFile";
 import { IFormikInputProps } from "./FormikInput.types";
 
-export const FormikInputCustom = <T, >({
-                                         form,
-                                         id,
-                                         accept,
-                                         type,
-                                         ...rest
-                                       }: IFormikInputProps<T>) => {
+export const FormikInputCustom = <T,>({
+  form,
+  id,
+  accept,
+  type,
+  ...rest
+}: IFormikInputProps<T>) => {
   let error: string | undefined;
 
   try {
@@ -26,5 +26,4 @@ export const FormikInputCustom = <T, >({
     );
   else if (type === "select") return <MySelect id={id} error={error} {...fieldProps} {...rest} />;
   return <Input id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />;
-
 };

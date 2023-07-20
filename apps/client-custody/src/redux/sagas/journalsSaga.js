@@ -1,10 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as journalsActionCreators from '../actionCreators/journals';
-import * as journalsActionTypes from '../actionTypes/journals';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as journalsActionCreators from "../actionCreators/journals";
+import * as journalsActionTypes from "../actionTypes/journals";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchInternalTransactions({ payload }) {
   try {
@@ -21,11 +22,14 @@ function* fetchInternalTransactions({ payload }) {
 
 function* updateInternalTransactionByJournalId({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.journalsAPI.updateInternalTransactionByJournalId, payload);
+    const response = yield call(
+      wethaqAPIService.journalsAPI.updateInternalTransactionByJournalId,
+      payload
+    );
     const { data } = response;
     yield put(journalsActionCreators.doUpdateInternalTransactionsSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -36,8 +40,14 @@ function* updateInternalTransactionByJournalId({ payload }) {
 }
 
 const journalsSaga = [
-  takeLatest(journalsActionTypes.JOURNALS_GET_INTERNAL_TRANSACTIONS_REQUESTED, fetchInternalTransactions),
-  takeLatest(journalsActionTypes.JOURNALS_UPDATE_INTERNAL_TRANSACTION_BY_JOURNAL_ID_REQUESTED, updateInternalTransactionByJournalId),
+  takeLatest(
+    journalsActionTypes.JOURNALS_GET_INTERNAL_TRANSACTIONS_REQUESTED,
+    fetchInternalTransactions
+  ),
+  takeLatest(
+    journalsActionTypes.JOURNALS_UPDATE_INTERNAL_TRANSACTION_BY_JOURNAL_ID_REQUESTED,
+    updateInternalTransactionByJournalId
+  ),
 ];
 
 export default journalsSaga;

@@ -1,13 +1,13 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as moduleActionCreators from '../actionCreators/module';
-import * as authActionCreators from '../actionCreators/auth';
-import * as entityActionCreators from '../actionCreators/entities';
-import * as actionTypes from '../actionTypes/module';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as authActionCreators from "../actionCreators/auth";
+import * as entityActionCreators from "../actionCreators/entities";
+import * as moduleActionCreators from "../actionCreators/module";
+import * as actionTypes from "../actionTypes/module";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchModuleData() {
   try {

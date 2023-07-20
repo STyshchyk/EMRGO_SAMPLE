@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/auth';
+import * as actionCreators from "../actionCreators/auth";
 
 const defaultState = {
   authenticatedUserObject: {},
@@ -11,14 +11,14 @@ const defaultState = {
   isUserLoggingIn: false,
   isUserLoggingOut: false,
   hasSuccessfullyRequestedPassword: false,
-  resetEmailID: '',
+  resetEmailID: "",
   hasSuccessfullyResetPassword: false,
   isRequesting: false,
   hasSuccessfullyResetMFA: false,
   message: null,
   currentEntityGroupIndex: 0,
   errorMessage: null,
-  MFAPath: '',
+  MFAPath: "",
   isSessionTimeoutDialog: false,
   isAccessDeniedDialog: false,
   isEntityTypeAdmin: false,
@@ -34,7 +34,7 @@ const authReducer = handleActions(
       draft.isUserLoggingIn = false;
       draft.isUserLoggingOut = false;
       draft.hasSuccessfullyRequestedPassword = false;
-      draft.resetEmailID = '';
+      draft.resetEmailID = "";
       draft.hasSuccessfullyResetPassword = false;
       draft.isRequesting = false;
       draft.message = null;
@@ -124,7 +124,9 @@ const authReducer = handleActions(
       draft.errorMessage = payload;
     }),
     [actionCreators.doUpdateUserPermissions]: produce((draft, { payload }) => {
-      const permissions = payload.data.permissions.filter((data) => data.granted).map((data) => data.permission);
+      const permissions = payload.data.permissions
+        .filter((data) => data.granted)
+        .map((data) => data.permission);
       draft.authenticatedUserObject = { ...draft.authenticatedUserObject, permissions };
     }),
     [actionCreators.doInvitePlatformUser]: produce((draft) => {
@@ -213,7 +215,7 @@ const authReducer = handleActions(
     }),
     [actionCreators.doFetchMFAPath]: produce((draft) => {
       draft.isRequesting = true;
-      draft.MFAPath = '';
+      draft.MFAPath = "";
       draft.errorMessage = undefined;
     }),
     [actionCreators.doFetchMFAPathSuccess]: produce((draft, { payload }) => {
@@ -222,7 +224,7 @@ const authReducer = handleActions(
     }),
     [actionCreators.doFetchMFAPathFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
-      draft.MFAPath = '';
+      draft.MFAPath = "";
       draft.errorMessage = payload;
     }),
     [actionCreators.doSetupMFA]: produce((draft) => {
@@ -251,7 +253,7 @@ const authReducer = handleActions(
       draft.isAccessDeniedDialog = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default authReducer;

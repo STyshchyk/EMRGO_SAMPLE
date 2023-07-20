@@ -1,14 +1,14 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getClientTerms = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/clientTerms/`,
   });
 
 const submitClientTerms = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/clientTerms/submit`,
     data: payload.requestPayload,
   });
@@ -16,28 +16,28 @@ const submitClientTerms = (payload) =>
 // Depreciated
 const getInstructions = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/clientTerms/instructions`,
   });
 
 // Depreciated
 const getW8Ben = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/clientTerms/w-8ben`,
   });
 
 // Depreciated
 const getBoardResolutionSample = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/clientTerms/board-resolution`,
   });
 
 // Depreciated
 const verifyTerms = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/clientTerms/verify`,
   });

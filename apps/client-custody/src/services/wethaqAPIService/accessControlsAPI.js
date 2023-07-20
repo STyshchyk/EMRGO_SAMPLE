@@ -1,8 +1,8 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getListOfValidAccessControls = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/accessControls`,
     params: {
       type: payload.params.type,

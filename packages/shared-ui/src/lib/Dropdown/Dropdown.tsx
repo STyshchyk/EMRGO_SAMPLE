@@ -8,7 +8,7 @@ import { useSelect } from "./useSelect";
 
 export const Dropdown = <ValueType extends Key>(props: IDropdownProps<ValueType>) => {
   const { items } = props;
-  
+
   const {
     selectedItem,
     getToggleButtonProps,

@@ -7,10 +7,9 @@ import { ISilverDashboardTemporaryTooltipContentProps } from "./SilverDashboardT
 // TODO: This is a temporary component used purely for demo purposes in order to show
 // some content in application tooltips. When the real content available this component
 // should be replaced with appropriate implementations
-export const SilverDashboardTemporaryTooltipContent: FC<ISilverDashboardTemporaryTooltipContentProps> = ({
-  header,
-  children,
-}) => {
+export const SilverDashboardTemporaryTooltipContent: FC<
+  ISilverDashboardTemporaryTooltipContentProps
+> = ({ header, children }) => {
   return (
     <>
       {header && (

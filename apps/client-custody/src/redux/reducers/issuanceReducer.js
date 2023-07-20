@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/issuance';
+import * as actionCreators from "../actionCreators/issuance";
 
 const defaultState = {
   admissionTermsObjectURL: undefined,
@@ -14,7 +14,7 @@ const defaultState = {
   },
   capitalMarketAuthorityDocumentURLs: null,
   closingData: null,
-  docusignURL: '',
+  docusignURL: "",
   dropdowns: {},
   engagementObligorProposalSignedDocURL: undefined,
   errorMessage: null,
@@ -69,11 +69,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { issuances },
           },
-        },
+        }
       ) => {
         draft.issuances = issuances;
         draft.isFetchingIssuances = false;
-      },
+      }
     ),
     [actionCreators.doFetchIssuancesFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -102,11 +102,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { sukukOverview },
           },
-        },
+        }
       ) => {
         draft.issuanceOverview = sukukOverview;
         draft.isFetchingIssuanceOverview = false;
-      },
+      }
     ),
     [actionCreators.doFetchIssuanceOverviewFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -124,11 +124,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { clients },
           },
-        },
+        }
       ) => {
         draft.issuerClients = clients;
         draft.isFetchingIssuerClients = false;
-      },
+      }
     ),
     [actionCreators.doFetchIssuerClientsFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -146,11 +146,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { coArrangers },
           },
-        },
+        }
       ) => {
         draft.coArrangers = coArrangers;
         draft.isFetchingCoArrangers = false;
-      },
+      }
     ),
     [actionCreators.doFetchCoArrangersFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -182,11 +182,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { sukuk },
           },
-        },
+        }
       ) => {
         draft.termsheet = sukuk;
         draft.isFetchingTermsheet = false;
-      },
+      }
     ),
     [actionCreators.doFetchTermsheetFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -275,11 +275,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { investors },
           },
-        },
+        }
       ) => {
         draft.investors = investors;
         draft.isFetchingInvestors = false;
-      },
+      }
     ),
     [actionCreators.doFetchInvestorsFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -354,11 +354,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { providers },
           },
-        },
+        }
       ) => {
         draft.serviceProviders = providers;
         draft.isFetchingServiceProviders = false;
-      },
+      }
     ),
     [actionCreators.doFetchServiceProvidersFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -386,7 +386,7 @@ const issuanceReducers = handleActions(
           payload: {
             data: { engagements },
           },
-        },
+        }
       ) => {
         const documentsUploading = {};
         engagements.map((document) => {
@@ -397,7 +397,7 @@ const issuanceReducers = handleActions(
         draft.engagementRequests = engagements;
         draft.isFetchingEnagementRequests = false;
         draft.hasSubmittedBypassSignedEnagagement = false;
-      },
+      }
     ),
     [actionCreators.doFetchEngagementRequestsFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -415,11 +415,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.areEngagementDocumentsUploading[data.id] = false;
         draft.hasEngagementLetterUploaded = true;
-      },
+      }
     ),
     [actionCreators.doUploadEngagementLetterFailure]: produce((draft, { payload }) => {
       draft.errorMessage = payload.errorMessage;
@@ -469,10 +469,12 @@ const issuanceReducers = handleActions(
       draft.errorMessage = null;
       draft.isFetchingSigningAgenda = true;
     }),
-    [actionCreators.doSigningFetchCompleteAgendaSuccess]: produce((draft, { payload: { data } }) => {
-      draft.agenda = data;
-      draft.isFetchingSigningAgenda = false;
-    }),
+    [actionCreators.doSigningFetchCompleteAgendaSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.agenda = data;
+        draft.isFetchingSigningAgenda = false;
+      }
+    ),
     [actionCreators.doSigningFetchCompleteAgendaFailure]: produce((draft, { payload }) => {
       draft.message = payload;
       draft.isFetchingSigningAgenda = false;
@@ -497,7 +499,9 @@ const issuanceReducers = handleActions(
       draft.isUploadingExecDocument = true;
     }),
     [actionCreators.doUploadExecDocsSuccess]: produce((draft, { payload }) => {
-      const index = draft.agenda.agenda.findIndex((el) => el.documentName === payload.data.documentName);
+      const index = draft.agenda.agenda.findIndex(
+        (el) => el.documentName === payload.data.documentName
+      );
       draft.agenda.agenda[index].id = payload.data.documentRow.id;
       draft.agenda.agenda[index].isCompleted = payload.data.documentRow.isCompleted;
       draft.agenda.agenda[index].fileId = payload.data.documentRow.fileId;
@@ -593,11 +597,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { actions },
           },
-        },
+        }
       ) => {
         draft.postSigningActions = actions;
         draft.isFetchingPostSigning = false;
-      },
+      }
     ),
     [actionCreators.doFetchSigningPostActionFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -684,10 +688,12 @@ const issuanceReducers = handleActions(
       draft.isFetchingAdmissionTermsheetData = true;
       draft.termsheet = null;
     }),
-    [actionCreators.doFetchAdmissionTermsheetDataSuccess]: produce((draft, { payload: { data } }) => {
-      draft.admissionTermsheetData = data;
-      draft.isFetchingAdmissionTermsheetData = false;
-    }),
+    [actionCreators.doFetchAdmissionTermsheetDataSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.admissionTermsheetData = data;
+        draft.isFetchingAdmissionTermsheetData = false;
+      }
+    ),
     [actionCreators.doFetchAdmissionTermsheetDataFailure]: produce((draft, { payload }) => {
       draft.message = payload;
       draft.isFetchingAdmissionTermsheetData = false;
@@ -717,10 +723,12 @@ const issuanceReducers = handleActions(
       draft.isFetchingEngagementObligorProposalSignedDocURL = true;
       draft.errorMessage = undefined;
     }),
-    [actionCreators.doFetchEngagementObligorProposalSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetchingEngagementObligorProposalSignedDocURL = false;
-      draft.engagementObligorProposalSignedDocURL = data;
-    }),
+    [actionCreators.doFetchEngagementObligorProposalSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetchingEngagementObligorProposalSignedDocURL = false;
+        draft.engagementObligorProposalSignedDocURL = data;
+      }
+    ),
     [actionCreators.doFetchEngagementObligorProposalFailure]: produce((draft, { payload }) => {
       draft.isFetchingEngagementObligorProposalSignedDocURL = false;
       draft.errorMessage = payload;
@@ -776,11 +784,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { clients },
           },
-        },
+        }
       ) => {
         draft.issuers = clients;
         draft.isFetchingIssuers = false;
-      },
+      }
     ),
     [actionCreators.doFetchIssuersFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -798,11 +806,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.capitalMarketAuthorityData = { ...draft.capitalMarketAuthorityData, ...data };
         draft.isFetching = false;
-      },
+      }
     ),
     [actionCreators.doFetchCMAIssuanceApprovalStatusFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
@@ -819,24 +827,28 @@ const issuanceReducers = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.capitalMarketAuthorityData = { ...draft.capitalMarketAuthorityData, ...data };
         draft.isFetching = false;
-      },
+      }
     ),
-    [actionCreators.doFetchCMASPEIncorporationApprovalStatusFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
+    [actionCreators.doFetchCMASPEIncorporationApprovalStatusFailure]: produce(
+      (draft, { payload }) => {
+        draft.isFetching = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [actionCreators.doConfirmCMAIssuanceApprovalStatus]: produce((draft) => {
       draft.errorMessage = null;
       draft.isRequesting = true;
     }),
-    [actionCreators.doConfirmCMAIssuanceApprovalStatusSuccess]: produce((draft, { payload: { data } }) => {
-      draft.message = data;
-      draft.isRequesting = false;
-    }),
+    [actionCreators.doConfirmCMAIssuanceApprovalStatusSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.message = data;
+        draft.isRequesting = false;
+      }
+    ),
     [actionCreators.doConfirmCMAIssuanceApprovalStatusFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
@@ -845,14 +857,18 @@ const issuanceReducers = handleActions(
       draft.errorMessage = null;
       draft.isRequesting = true;
     }),
-    [actionCreators.doConfirmCMASPEIncorporationApprovalStatusSuccess]: produce((draft, { payload: { data } }) => {
-      draft.message = data;
-      draft.isRequesting = false;
-    }),
-    [actionCreators.doConfirmCMASPEIncorporationApprovalStatusFailure]: produce((draft, { payload }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = payload;
-    }),
+    [actionCreators.doConfirmCMASPEIncorporationApprovalStatusSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.message = data;
+        draft.isRequesting = false;
+      }
+    ),
+    [actionCreators.doConfirmCMASPEIncorporationApprovalStatusFailure]: produce(
+      (draft, { payload }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [actionCreators.doFetchCMADocs]: produce((draft) => {
       draft.errorMessage = null;
       draft.isRequesting = true;
@@ -864,11 +880,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { cmaRelatedDocumentURLS },
           },
-        },
+        }
       ) => {
         draft.capitalMarketAuthorityDocumentURLs = { ...cmaRelatedDocumentURLS };
         draft.isRequesting = false;
-      },
+      }
     ),
     [actionCreators.doFetchCMADocsFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
@@ -885,11 +901,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.allIssuances = data;
         draft.isFetchingIssuances = false;
-      },
+      }
     ),
     [actionCreators.doFetchAllIssuancesFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -922,11 +938,11 @@ const issuanceReducers = handleActions(
           payload: {
             data: { issuances },
           },
-        },
+        }
       ) => {
         draft.isRequesting = false;
         draft.allIssuances = issuances;
-      },
+      }
     ),
     [actionCreators.doFetchIssuancesByStatusFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
@@ -949,7 +965,7 @@ const issuanceReducers = handleActions(
     }),
   },
 
-  defaultState,
+  defaultState
 );
 
 export default issuanceReducers;

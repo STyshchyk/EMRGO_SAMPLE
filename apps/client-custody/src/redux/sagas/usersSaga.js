@@ -1,13 +1,13 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as usersActionCreators from '../actionCreators/users';
-import * as onboardingActionCreators from '../actionCreators/onboarding';
-import * as entitiesActionCreators from '../actionCreators/entities';
-import * as usersActionTypes from '../actionTypes/users';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as entitiesActionCreators from "../actionCreators/entities";
+import * as onboardingActionCreators from "../actionCreators/onboarding";
+import * as usersActionCreators from "../actionCreators/users";
+import * as usersActionTypes from "../actionTypes/users";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* updateUserAccountStatus({ payload }) {
   try {
@@ -17,14 +17,16 @@ function* updateUserAccountStatus({ payload }) {
     yield put(usersActionCreators.doUpdateUserAccountStatusSuccess({ data }));
     if (payload.refresh) {
       switch (payload?.refresh?.type) {
-        case 'entityUsers':
+        case "entityUsers":
           yield put(entitiesActionCreators.doFetchEntityUsers(payload?.refresh?.params));
           break;
         default:
           break;
       }
     } else {
-      yield put(onboardingActionCreators.doFetchRMVisitorsRequest({ verified: payload?.verified ?? false }));
+      yield put(
+        onboardingActionCreators.doFetchRMVisitorsRequest({ verified: payload?.verified ?? false })
+      );
     }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
@@ -33,6 +35,8 @@ function* updateUserAccountStatus({ payload }) {
   }
 }
 
-const usersSaga = [takeLatest(usersActionTypes.UPDATE_USER_ACCOUNT_STATUS_REQUESTED, updateUserAccountStatus)];
+const usersSaga = [
+  takeLatest(usersActionTypes.UPDATE_USER_ACCOUNT_STATUS_REQUESTED, updateUserAccountStatus),
+];
 
 export default usersSaga;

@@ -1,10 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as fxTransactionsActionCreators from '../actionCreators/fxTransactions';
-import * as fxTransactionsActionTypes from '../actionTypes/fxTransactions';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as fxTransactionsActionCreators from "../actionCreators/fxTransactions";
+import * as fxTransactionsActionTypes from "../actionTypes/fxTransactions";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchFxTransactionsList({ payload }) {
   try {
@@ -21,7 +22,10 @@ function* fetchFxTransactionsList({ payload }) {
 function* addFxTransactions({ payload }) {
   try {
     const { requestPayload, dateRange, successCallback } = payload;
-    const response = yield call(wethaqAPIService.fxTransactionsAPI.addFxTransaction, requestPayload);
+    const response = yield call(
+      wethaqAPIService.fxTransactionsAPI.addFxTransaction,
+      requestPayload
+    );
     const { data } = response;
     yield put(fxTransactionsActionCreators.doAddFxTransactionsSuccess({ data }));
     if (successCallback && data) {
@@ -39,7 +43,10 @@ function* addFxTransactions({ payload }) {
 function* processFxTransactions({ payload }) {
   try {
     const { transactionId, requestPayload, dateRange, successCallback } = payload;
-    const response = yield call(wethaqAPIService.fxTransactionsAPI.processFxTransaction, { transactionId, requestPayload });
+    const response = yield call(wethaqAPIService.fxTransactionsAPI.processFxTransaction, {
+      transactionId,
+      requestPayload,
+    });
     const { data } = response;
     yield put(fxTransactionsActionCreators.doProcessFxTransactionsSuccess({ data }));
     if (successCallback) {

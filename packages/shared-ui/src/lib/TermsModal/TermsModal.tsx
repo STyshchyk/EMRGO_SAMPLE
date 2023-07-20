@@ -55,7 +55,9 @@ export const TermsModal: FC<ITermsModalProps> = ({
   };
 
   const onShare = () => {
-    const text = `Hey, check out the ${isClientTerms?"client terms and conditions":"platform terms and conditions"} on the Emrgo platform. ${documentURL}`;
+    const text = `Hey, check out the ${
+      isClientTerms ? "client terms and conditions" : "platform terms and conditions"
+    } on the Emrgo platform. ${documentURL}`;
     copyToClipboard(text);
     if (copyState.error) {
       showErrorToast("An error occured when copying to clipboard");

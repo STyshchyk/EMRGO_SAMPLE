@@ -1,0 +1,127 @@
+@import "../../styles/config.scss";
+.issuanceListContainer {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.alignRight {
+  text-align: end;
+}
+
+.highlighted {
+  color: red;
+  background-color: yellow;
+}
+
+.marginRight {
+  margin-right: 1rem;
+}
+
+.container {
+  display: flex;
+}
+
+.rightAlign {
+  text-align: right !important;
+}
+
+.rotate180 {
+  transform: rotate(180deg);
+}
+
+.issuanceDataTable {
+  .tableHeader {
+    display: flex;
+    justify-content: space-between;
+    .tableHeading {
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+
+  .tableCol {
+    text-align: left;
+    flex: 1;
+    padding-left: 1rem;
+  }
+
+  .buttonLink {
+    // height: 2rem;
+    // margin-bottom: 0;
+    // margin-right: 1rem;
+    a {
+      text-decoration: none;
+    }
+    span {
+      color: #fff;
+    }
+  }
+
+  .flexSpread {
+    justify-content: space-between;
+  }
+  .dateLabel {
+    font-weight: bold;
+    margin: 0;
+    margin-right: 1rem;
+  }
+
+  .dateValue {
+    margin: 0;
+  }
+
+  .tableBody {
+    margin-top: 10px;
+    .highlightedRow {
+      background-color: rgba(72, 229, 194, 0.21);
+      margin-bottom: 2px;
+    }
+    .tableRow {
+      cursor: pointer;
+      .rowData {
+        display: flex;
+        justify-content: space-between;
+      }
+      .rowDetails {
+        padding: 1rem;
+        background-color: #f4f4f4;
+        width: 100%;
+        font-size: 14px;
+        .actionDivider {
+          margin: 1rem 0;
+          border: 1px solid #bbb;
+        }
+        .flexRow {
+          display: flex;
+          justify-content: flex-start;
+        }
+        .dataSection {
+          width: 100%;
+          padding-right: 3rem;
+          margin-bottom: 1rem;
+          .dataSectionHeading {
+            color: #888;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+          }
+          .sectionLabelContainer {
+            margin-right: 1rem;
+            width: 50%;
+            .sectionLabel {
+              margin-top: 0;
+              margin-bottom: 0;
+            }
+          }
+          .sectionValueContainer {
+            .sectionValue {
+              margin-top: 0;
+              margin-bottom: 0;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}

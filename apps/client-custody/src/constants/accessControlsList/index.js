@@ -2,292 +2,292 @@
 
 const ISSUANCE = {
   create: {
-    displayName: 'Create Issuance',
-    key: 'Issuance/Create',
+    displayName: "Create Issuance",
+    key: "Issuance/Create",
   },
   view: {
-    displayName: 'View Issuance',
-    key: 'Issuance/View',
+    displayName: "View Issuance",
+    key: "Issuance/View",
   },
 };
 
 const TERMSHEET = {
   edit: {
-    displayName: 'Edit Termsheet',
-    key: 'Termsheet/Edit',
+    displayName: "Edit Termsheet",
+    key: "Termsheet/Edit",
   },
   view: {
-    displayName: 'View Termsheet',
-    key: 'Termsheet/View',
+    displayName: "View Termsheet",
+    key: "Termsheet/View",
   },
 
   approve: {
-    displayName: 'Approve Termsheet',
-    key: 'Termsheet/Approve',
+    displayName: "Approve Termsheet",
+    key: "Termsheet/Approve",
   },
 };
 
 const BLOTTER = {
   settle: {
-    displayName: 'Settle Blotter',
-    key: 'Blotter/Settle',
+    displayName: "Settle Blotter",
+    key: "Blotter/Settle",
   },
   view: {
-    displayName: 'View Blotter',
-    key: 'Blotter/View',
+    displayName: "View Blotter",
+    key: "Blotter/View",
   },
 };
 
 const KYC = {
   view: {
-    displayName: 'View KYC',
-    key: 'KYC/View',
+    displayName: "View KYC",
+    key: "KYC/View",
   },
   edit: {
-    displayName: 'Edit KYC',
-    key: 'KYC/Edit',
+    displayName: "Edit KYC",
+    key: "KYC/Edit",
   },
   manage: {
-    displayName: 'Manage KYC',
-    key: 'KYC/Manage',
+    displayName: "Manage KYC",
+    key: "KYC/Manage",
   },
   invite: {
-    displayName: 'Invite Issuer/Originator to the platform',
-    key: 'KYC/Invite',
+    displayName: "Invite Issuer/Originator to the platform",
+    key: "KYC/Invite",
   },
 };
 
 const SUBSCRIPTION = {
   view: {
-    displayName: 'View Pre-Allocation',
-    key: 'Subscription/View',
+    displayName: "View Pre-Allocation",
+    key: "Subscription/View",
   },
   allocate: {
-    displayName: 'Allocate Pre-Allocation',
-    key: 'Subscription/Allocate',
+    displayName: "Allocate Pre-Allocation",
+    key: "Subscription/Allocate",
   },
   confirm: {
-    displayName: 'Confirm Pre-Allocation',
-    key: 'Subscription/Confirm',
+    displayName: "Confirm Pre-Allocation",
+    key: "Subscription/Confirm",
   },
 };
 
 const ENGAGEMENT = {
   view: {
-    displayName: 'View Engagement',
-    key: 'Engagement/View',
+    displayName: "View Engagement",
+    key: "Engagement/View",
   },
   engage: {
-    displayName: 'Allow Engagement',
-    key: 'Engagement/Engage',
+    displayName: "Allow Engagement",
+    key: "Engagement/Engage",
   },
   manage: {
-    displayName: 'Manage Engagement',
-    key: 'Engagement/Manage',
+    displayName: "Manage Engagement",
+    key: "Engagement/Manage",
   },
 };
 
 const ADMISSION = {
   view: {
-    displayName: 'View Admissions',
-    key: 'Admission/View',
+    displayName: "View Admissions",
+    key: "Admission/View",
   },
   approve: {
-    displayName: 'Approve Admission',
-    key: 'Admission/Approve',
+    displayName: "Approve Admission",
+    key: "Admission/Approve",
   },
   finalize: {
-    displayName: 'Finalize Admission',
-    key: 'Admission/Finalize',
+    displayName: "Finalize Admission",
+    key: "Admission/Finalize",
   },
 };
 
 const PARTICIPATION = {
   view: {
-    displayName: 'View Participation',
-    key: 'Participation/View',
+    displayName: "View Participation",
+    key: "Participation/View",
   },
   approve: {
-    displayName: 'Approve Participation',
-    key: 'Participation/Approve',
+    displayName: "Approve Participation",
+    key: "Participation/Approve",
   },
   finalize: {
-    displayName: 'Finalize Participation',
-    key: 'Participation/Finalize',
+    displayName: "Finalize Participation",
+    key: "Participation/Finalize",
   },
 };
 
 const GROUP_MANAGEMENT = {
   view: {
-    displayName: 'View Group Management',
-    key: 'GroupManagement/View',
+    displayName: "View Group Management",
+    key: "GroupManagement/View",
   },
   edit: {
-    displayName: 'Edit Group Management',
-    key: 'GroupManagement/Edit',
+    displayName: "Edit Group Management",
+    key: "GroupManagement/Edit",
   },
 };
 
 const SIGNING = {
   view: {
-    displayName: 'View Signing',
-    key: 'Signing/View',
+    displayName: "View Signing",
+    key: "Signing/View",
   },
   sign: {
-    displayName: 'Sign Signing',
-    key: 'Signing/Sign',
+    displayName: "Sign Signing",
+    key: "Signing/Sign",
   },
   edit: {
-    displayName: 'Signing flow management',
-    key: 'Signing/Edit',
+    displayName: "Signing flow management",
+    key: "Signing/Edit",
   },
 };
 
 const BULLETIN_MANAGEMENT = {
   manage: {
-    displayName: 'Manage bulletins',
-    key: 'Bulletins/Manage',
+    displayName: "Manage bulletins",
+    key: "Bulletins/Manage",
   },
 };
 
 const SUPPORT_TICKET_MANAGEMENT = {
   manage: {
-    displayName: 'Manage support tickets',
-    key: 'Support/Auth',
+    displayName: "Manage support tickets",
+    key: "Support/Auth",
   },
 };
 
 const ACCOUNT = {
   edit: {
-    displayName: 'Edit Accounts',
-    key: 'Account/Edit',
+    displayName: "Edit Accounts",
+    key: "Account/Edit",
   },
   validate: {
-    display: 'Validate Accounts',
-    key: 'Account/Validate',
+    display: "Validate Accounts",
+    key: "Account/Validate",
   },
   manage: {
-    display: 'Manage Accounts',
-    key: 'Account/Manage',
+    display: "Manage Accounts",
+    key: "Account/Manage",
   },
 };
 
 const PAYMENT = {
   administrate: {
-    displayName: 'Investor Payment Administration',
-    key: 'Payment/Admin',
+    displayName: "Investor Payment Administration",
+    key: "Payment/Admin",
   },
   approve: {
-    displayName: 'Admin Approve Incoming/Outgoing Payments',
-    key: 'Payment/Approve',
+    displayName: "Admin Approve Incoming/Outgoing Payments",
+    key: "Payment/Approve",
   },
 };
 
 const QUOTES = {
   manage: {
-    displayName: 'Manage Secondary Trade Quotes',
-    key: 'Quotes/Manage',
+    displayName: "Manage Secondary Trade Quotes",
+    key: "Quotes/Manage",
   },
   view: {
-    displayName: 'Manage Secondary Trade Quotes',
-    key: 'Quotes/View',
+    displayName: "Manage Secondary Trade Quotes",
+    key: "Quotes/View",
   },
 };
 
 const REPORTS = {
   manage: {
-    displayName: 'View Reports',
-    key: 'Reports/View',
+    displayName: "View Reports",
+    key: "Reports/View",
   },
   view: {
-    displayName: 'Generate Reports for Export',
-    key: 'Reports/View',
+    displayName: "Generate Reports for Export",
+    key: "Reports/View",
   },
 };
 
 const SECURITIES_SERVICES_OPS = {
   view: {
-    displayName: 'View Securities Services',
-    key: 'Services/Security/View',
+    displayName: "View Securities Services",
+    key: "Services/Security/View",
   },
   manage: {
-    displayName: 'Manage Securities Services',
-    key: 'Services/Security/Manage',
+    displayName: "Manage Securities Services",
+    key: "Services/Security/Manage",
   },
 };
 
 const SECURITIES_SERVICES_INVESTOR = {
   view: {
-    displayName: 'View Investor Services',
-    key: 'Services/Investor/View',
+    displayName: "View Investor Services",
+    key: "Services/Investor/View",
   },
   manage: {
-    displayName: 'Manage Securities Services',
-    key: 'Services/Investor/Manage',
+    displayName: "Manage Securities Services",
+    key: "Services/Investor/Manage",
   },
 };
 
 const SECURITIES_SERVICES_ISSUER = {
   view: {
-    displayName: 'View Issuer Services',
-    key: 'Services/Issuer/View',
+    displayName: "View Issuer Services",
+    key: "Services/Issuer/View",
   },
   manage: {
-    displayName: 'Manage Issuer Services',
-    key: 'Services/Issuer/Manage',
+    displayName: "Manage Issuer Services",
+    key: "Services/Issuer/Manage",
   },
 };
 
 const SECURITIES_CUSTODY_AND_CLEARING = {
   view: {
-    displayName: 'View Custody & Clearing',
-    key: 'Services/CustodyClearing/View',
+    displayName: "View Custody & Clearing",
+    key: "Services/CustodyClearing/View",
   },
 };
 
 const ACL_MANAGEMENT = {
   edit: {
-    displayName: 'Edit Access Control List',
-    key: 'ACLManagement/Edit',
+    displayName: "Edit Access Control List",
+    key: "ACLManagement/Edit",
   },
 };
 const SECURITIES_ADMIN = {
   view: {
-    displayName: 'View Custody & Clearing',
-    key: 'Services/CustodyClearing/View',
+    displayName: "View Custody & Clearing",
+    key: "Services/CustodyClearing/View",
   },
   manage: {
-    displayName: 'Manage Securities Services',
-    key: 'Services/Security/Manage',
+    displayName: "Manage Securities Services",
+    key: "Services/Security/Manage",
   },
 };
 
 const SETTLEMENT_ADMIN = {
   view: {
-    displayName: 'View Custody & Clearing',
-    key: 'Services/CustodyClearing/View',
+    displayName: "View Custody & Clearing",
+    key: "Services/CustodyClearing/View",
   },
   manage: {
-    displayName: 'Manage Securities Services',
-    key: 'Services/Security/Manage',
+    displayName: "Manage Securities Services",
+    key: "Services/Security/Manage",
   },
 };
 
 const ENTITIES_LISTING = {
   view: {
-    displayName: 'Entity Listing',
-    key: 'EntityListing/View',
+    displayName: "Entity Listing",
+    key: "EntityListing/View",
   },
 };
 
 const RELATIONSHIP = {
   manage: {
-    displayName: 'Manage Relationship',
-    key: 'Relationship/Manage',
+    displayName: "Manage Relationship",
+    key: "Relationship/Manage",
   },
   view: {
-    displayName: 'View Relationship',
-    key: 'Relationship/View',
+    displayName: "View Relationship",
+    key: "Relationship/View",
   },
 };
 

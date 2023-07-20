@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/entities';
+import * as actionTypes from "../actionTypes/entities";
 
 export const doFetchEntities = createAction(actionTypes.ENTITIES_REQUESTED);
 export const doFetchEntitiesSuccess = createAction(actionTypes.ENTITIES_SUCCEEDED);
@@ -11,7 +11,9 @@ export const doFetchEntityUsersSuccess = createAction(actionTypes.ENTITY_USERS_S
 export const doFetchEntityUsersFailure = createAction(actionTypes.ENTITY_USERS_FAILED);
 
 export const doFetchParentEntities = createAction(actionTypes.FETCH_PARENT_ENTITIES_REQUESTED);
-export const doFetchParentEntitiesSuccess = createAction(actionTypes.FETCH_PARENT_ENTITIES_SUCCEEDED);
+export const doFetchParentEntitiesSuccess = createAction(
+  actionTypes.FETCH_PARENT_ENTITIES_SUCCEEDED
+);
 export const doFetchParentEntitiesFailure = createAction(actionTypes.FETCH_PARENT_ENTITIES_FAILED);
 
 export const doAddParentEntity = createAction(actionTypes.ADD_PARENT_ENTITY_REQUESTED);
@@ -22,9 +24,15 @@ export const doUpdateParentEntity = createAction(actionTypes.UPDATE_PARENT_ENTIT
 export const doUpdateParentEntitySuccess = createAction(actionTypes.UPDATE_PARENT_ENTITY_SUCCEEDED);
 export const doUpdateParentEntityFailure = createAction(actionTypes.UPDATE_PARENT_ENTITY_FAILED);
 
-export const doDeactivateParentEntity = createAction(actionTypes.DEACTIVATE_PARENT_ENTITY_REQUESTED);
-export const doDeactivateParentEntitySuccess = createAction(actionTypes.DEACTIVATE_PARENT_ENTITY_SUCCEEDED);
-export const doDeactivateParentEntityFailure = createAction(actionTypes.DEACTIVATE_PARENT_ENTITY_FAILED);
+export const doDeactivateParentEntity = createAction(
+  actionTypes.DEACTIVATE_PARENT_ENTITY_REQUESTED
+);
+export const doDeactivateParentEntitySuccess = createAction(
+  actionTypes.DEACTIVATE_PARENT_ENTITY_SUCCEEDED
+);
+export const doDeactivateParentEntityFailure = createAction(
+  actionTypes.DEACTIVATE_PARENT_ENTITY_FAILED
+);
 
 export const doSetParentEntityId = createAction(actionTypes.SET_PARENT_ENTITY_ID_REQUESTED);
 export const doSetParentEntityIdSuccess = createAction(actionTypes.SET_PARENT_ENTITY_ID_SUCCEEDED);
@@ -46,6 +54,12 @@ export const doReactivateEntity = createAction(actionTypes.REACTIVATE_ENTITY_REQ
 export const doReactivateEntitySuccess = createAction(actionTypes.REACTIVATE_ENTITY_SUCCEEDED);
 export const doReactivateEntityFailure = createAction(actionTypes.REACTIVATE_ENTITY_FAILED);
 
-export const doEditEntityCustodySettings = createAction(actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_REQUESTED);
-export const doEditEntityCustodySettingsSuccess = createAction(actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_SUCCEEDED);
-export const doEditEntityCustodySettingsFailure = createAction(actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_FAILED);
+export const doEditEntityCustodySettings = createAction(
+  actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_REQUESTED
+);
+export const doEditEntityCustodySettingsSuccess = createAction(
+  actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_SUCCEEDED
+);
+export const doEditEntityCustodySettingsFailure = createAction(
+  actionTypes.ENTITY_EDIT_CUSTODY_SETTINGS_FAILED
+);

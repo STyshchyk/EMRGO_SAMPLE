@@ -1,8 +1,8 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getDropDownValues = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/dropdown`,
     params: {
       types: JSON.stringify(payload.options),
@@ -11,7 +11,7 @@ const getDropDownValues = (payload) =>
 
 const getPublicDropDownValues = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/dropdown/public`,
     params: {
       types: JSON.stringify(payload.options),

@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as clientTermsActionCreators from '../actionCreators/clientTerms';
+import * as clientTermsActionCreators from "../actionCreators/clientTerms";
 
 const defaultState = {
   filesUploaded: {},
@@ -40,10 +40,12 @@ const kycReducers = handleActions(
       draft.errorMessage = null;
       draft.isFetchingInstructions = true;
     }),
-    [clientTermsActionCreators.doFetchInstructionsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.instructionsFormTemplate = data;
-      draft.isFetchingInstructions = false;
-    }),
+    [clientTermsActionCreators.doFetchInstructionsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.instructionsFormTemplate = data;
+        draft.isFetchingInstructions = false;
+      }
+    ),
     [clientTermsActionCreators.doFetchInstructionsFailure]: produce((draft, { payload }) => {
       draft.isFetchingInstructions = false;
       draft.errorMessage = payload;
@@ -64,11 +66,13 @@ const kycReducers = handleActions(
       draft.errorMessage = null;
       draft.isFetchingBoardResolution = true;
     }),
-    [clientTermsActionCreators.doFetchBoardResolutionSuccess]: produce((draft, { payload: { data } }) => {
-      draft.boardResolutionFormTemplate = data;
-      draft.isFetchingBoardResolution = false;
-      draft.loading = false;
-    }),
+    [clientTermsActionCreators.doFetchBoardResolutionSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.boardResolutionFormTemplate = data;
+        draft.isFetchingBoardResolution = false;
+        draft.loading = false;
+      }
+    ),
     [clientTermsActionCreators.doFetchBoardResolutionFailure]: produce((draft, { payload }) => {
       draft.isFetchingBoardResolution = false;
       draft.errorMessage = payload;
@@ -76,7 +80,7 @@ const kycReducers = handleActions(
     [clientTermsActionCreators.doUploadFile]: produce((draft, { payload }) => {
       draft.errorMessage = null;
       const key = payload.keyName;
-      draft.filesUploaded[key] = '';
+      draft.filesUploaded[key] = "";
       if (!draft.uploadStatus) draft.uploadStatus = {};
       draft.uploadStatus[key] = true;
       draft.uploadInProgress += 1;
@@ -121,18 +125,20 @@ const kycReducers = handleActions(
       draft.downloadStatus[key] = true;
       draft.isDownloadingFile = true;
     }),
-    [clientTermsActionCreators.doFetchUploadedFileSuccess]: produce((draft, { payload: { data } }) => {
-      const key = data.fileName;
-      draft.isDownloadingFile = false;
-      draft.downloadStatus[key] = data.link;
-    }),
+    [clientTermsActionCreators.doFetchUploadedFileSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        const key = data.fileName;
+        draft.isDownloadingFile = false;
+        draft.downloadStatus[key] = data.link;
+      }
+    ),
     [clientTermsActionCreators.doFetchUploadedFileFailure]: produce((draft, { payload, key }) => {
       draft.isDownloadingFile = false;
       draft.errorMessage = payload;
       draft.downloadStatus[key] = false;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default kycReducers;

@@ -1,0 +1,28 @@
+{
+  "InstructionText": "The Capital Market Authority requires private placement offerings to be registered with an approved registrar. Please choose a Registrar from the list below and submit the forms required.",
+  "DialogTitle": "Securities Registration & Settlement",
+  "SubmitButtonText": "Proceed with Registration & Settlement",
+  "TableActions": {
+    "Admit": "Admit",
+    "Review Security Info": "Review Security Info",
+    "Submit for Securities Registration": "Submit for Securities Registration",
+    "View Securities Registration": "View Securities Registration",
+    "View Coupon Schedule": "View Coupon Schedule"
+  },
+  "PrimaryIssuanceDetails": {
+    "Sections": {
+      "Registrar & Depository Documents": {
+        "Title": "Registrar & Depository Documents"
+      },
+      "Issuance Terms": {
+        "Title": "Issuance Terms"
+      },
+      "Issuer Details": {
+        "Title": "Issuer Details"
+      },
+      "Securities Allocations": {
+        "Title": "Securities Allocations"
+      }
+    }
+  }
+}

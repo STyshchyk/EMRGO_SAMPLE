@@ -1,13 +1,14 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as actionTypes from '../actionTypes/entityGroups';
-import * as entityGroupsActionCreators from '../actionCreators/entityGroups';
-import * as authActionCreators from '../actionCreators/auth';
-import * as kycActionCreators from '../actionCreators/kyc';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as authActionCreators from "../actionCreators/auth";
+import * as entityGroupsActionCreators from "../actionCreators/entityGroups";
+import * as kycActionCreators from "../actionCreators/kyc";
+import * as actionTypes from "../actionTypes/entityGroups";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchEntityGroups({ payload }) {
   try {
@@ -23,7 +24,10 @@ function* fetchEntityGroups({ payload }) {
 
 function* fetchEntityGroupDetails({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.entityGroupsAPI.getEntityGroupDetailsByGroupID, payload);
+    const response = yield call(
+      wethaqAPIService.entityGroupsAPI.getEntityGroupDetailsByGroupID,
+      payload
+    );
     const { data } = response;
 
     yield put(entityGroupsActionCreators.doFetchEntityGroupDetailsSuccess({ data }));
@@ -36,9 +40,15 @@ function* fetchEntityGroupDetails({ payload }) {
 
 function* updateEntityGroupUserACL({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.entityGroupsAPI.updateEntityGroupUserACLByUserID, payload);
+    const response = yield call(
+      wethaqAPIService.entityGroupsAPI.updateEntityGroupUserACLByUserID,
+      payload
+    );
     const { data } = response;
-    yield call(toast.success, data?.message ?? i18n.t('messages:Success is not final failure is not fatal'));
+    yield call(
+      toast.success,
+      data?.message ?? i18n.t("messages:Success is not final failure is not fatal")
+    );
     yield put(entityGroupsActionCreators.doRequestEntityGroupUserEditSuccess({ data }));
     yield put(entityGroupsActionCreators.doFetchEntityGroupDetails({ id: payload.groupId }));
   } catch (error) {
@@ -55,7 +65,9 @@ function* addEntityGroup({ payload }) {
     yield call(toast.success, data.message);
 
     yield put(entityGroupsActionCreators.doAddEntityGroupSuccess({ data }));
-    yield put(entityGroupsActionCreators.doFetchEntityGroups({ entityId: payload.requestPayload.entityId }));
+    yield put(
+      entityGroupsActionCreators.doFetchEntityGroups({ entityId: payload.requestPayload.entityId })
+    );
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -65,7 +77,10 @@ function* addEntityGroup({ payload }) {
 
 function* attachEntityUserToEntityGroup({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.entityGroupsAPI.attachEntityUserToEntityGroup, payload);
+    const response = yield call(
+      wethaqAPIService.entityGroupsAPI.attachEntityUserToEntityGroup,
+      payload
+    );
     const { data } = response;
     yield call(toast.success, data.message);
 
@@ -89,7 +104,7 @@ function* requestAgreementSaga({ payload }) {
         requestPayload: {
           includeSignedUrl: false,
         },
-      }),
+      })
     );
     yield put(authActionCreators.doFetchCurrentUserData());
     yield put(entityGroupsActionCreators.doRequestAgreementSuccess({ data }));
@@ -105,7 +120,10 @@ const entitiesSaga = [
   takeLatest(actionTypes.ENTITY_GROUP_DETAILS_REQUESTED, fetchEntityGroupDetails),
   takeLatest(actionTypes.ENTITY_GROUP_USER_ACL_EDIT_REQUESTED, updateEntityGroupUserACL),
   takeLatest(actionTypes.ADD_ENTITY_GROUP_REQUESTED, addEntityGroup),
-  takeLatest(actionTypes.ATTACH_ENTITY_USER_TO_ENTITY_GROUP_REQUESTED, attachEntityUserToEntityGroup),
+  takeLatest(
+    actionTypes.ATTACH_ENTITY_USER_TO_ENTITY_GROUP_REQUESTED,
+    attachEntityUserToEntityGroup
+  ),
   takeLatest(actionTypes.REQUEST_AGREEMENT_REQUESTED, requestAgreementSaga),
 ];
 

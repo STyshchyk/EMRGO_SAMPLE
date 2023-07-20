@@ -1,18 +1,18 @@
 const locales = [
   {
-    name: 'English',
-    shortName: 'EN',
-    code: 'en-GB',
+    name: "English",
+    shortName: "EN",
+    code: "en-GB",
     rtl: false,
-    altLocale: 'en-gb',
+    altLocale: "en-gb",
     // altLocale: 'en', // misalignment of days with date (en doesn't exist in locales anymore)
   },
   {
-    name: 'عربى',
-    shortName: 'AR',
-    code: 'ar-SA',
+    name: "عربى",
+    shortName: "AR",
+    code: "ar-SA",
     rtl: true,
-    altLocale: 'ar-sa',
+    altLocale: "ar-sa",
   },
   // {
   //   name: 'русский',

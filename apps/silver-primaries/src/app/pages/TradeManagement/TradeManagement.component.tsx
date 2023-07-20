@@ -9,7 +9,9 @@ import { ExecutedTableComponent } from "./ExecutedTable";
 import * as Styles from "./TradeManagement.styles";
 import { ITradeManagementProps } from "./TradeManagement.types";
 
-export const TradeManagementComponent: FC<ITradeManagementProps> = ({ children }: ITradeManagementProps) => {
+export const TradeManagementComponent: FC<ITradeManagementProps> = ({
+  children,
+}: ITradeManagementProps) => {
   const { isModalOpen: isTradeOpen, modalActions: tradeActions } = useTradeInterestModal();
 
   return (

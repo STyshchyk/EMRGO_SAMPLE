@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/billing';
+import * as actionCreators from "../actionCreators/billing";
 
 const defaultState = {
   isLoading: false,
@@ -145,7 +145,7 @@ const billingReducer = handleActions(
       draft.errorMessage = message;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default billingReducer;

@@ -5,13 +5,13 @@ import { rem, rgba } from "polished";
 import styled, { css } from "styled-components";
 
 import {
-  CheckNotificationIcon as SharedNotificationIcon,
+  InputContainer as SharedContainer,
+  InputContainerWrapper as SharedContainerWrapper,
   Error as SharedError,
   ErrorIcon as SharedErrorIcon,
   Input as SharedInput,
-  InputContainer as SharedContainer,
-  InputContainerWrapper as SharedContainerWrapper,
   Label as SharedLabel,
+  CheckNotificationIcon as SharedNotificationIcon,
   Wrapper as SharedWrapper,
 } from "../Input/Input.styles";
 import { TInputVariants } from "../Input/Input.types";
@@ -68,7 +68,7 @@ export const InputContainer = styled(SharedContainer)<{
     props.$error &&
     css`
       ${props.theme.mode === "light" &&
-    css`
+      css`
         border: 1px solid ${getTheme("colors.red")};
         background: linear-gradient(
             0deg,
@@ -79,7 +79,7 @@ export const InputContainer = styled(SharedContainer)<{
       `}
 
       ${props.theme.mode === "dark" &&
-    css`
+      css`
         border: 1px solid ${getTheme("colors.orange")};
         background: linear-gradient(
             0deg,
@@ -90,7 +90,7 @@ export const InputContainer = styled(SharedContainer)<{
       `}
 
       ${props.variant === "signup" &&
-    css`
+      css`
         border: 1px solid ${getTheme("colors.orange")};
         background: linear-gradient(
             0deg,
@@ -117,7 +117,7 @@ export const InputContainerWrapper = styled(SharedContainerWrapper)`
 export const Label = styled(SharedLabel)<{
   $active: boolean;
   $hasFocus: boolean;
-  $error: boolean
+  $error: boolean;
 }>`
   /** Font Styles */
   font-weight: 500;
@@ -134,19 +134,14 @@ export const Label = styled(SharedLabel)<{
     !$active &&
     css`
       transform: translateY(${rem(5)}) scale(1.4);
-    `
-  }
+    `}
 
   ${({ $active }) =>
     $active &&
     css`
       position: relative;
       top: 5px;
-    `
-  }
-
-
-
+    `}
 `;
 
 export const Input = styled(SharedInput)<{ $active: boolean }>`
@@ -194,8 +189,6 @@ export const Span = styled.span`
   caret-color: ${getTheme("colors.green5")};
   position: relative;
   top: -11px;
-
-
 `;
 export const HelperText = styled.div`
   /* Layout */
@@ -209,7 +202,7 @@ export const HelperText = styled.div`
   color: ${getTheme("colors.white.80")};
 `;
 
-export const UploadIcon = styled(SlCloudUpload)<{ $error: boolean, $valid: boolean }>`
+export const UploadIcon = styled(SlCloudUpload)<{ $error: boolean; $valid: boolean }>`
   position: absolute;
   right: 0;
   ${({ $error }) => {
@@ -237,7 +230,6 @@ export const Error = styled(SharedError)`
   font-weight: 500;
   font-size: ${rem(12)};
   line-height: ${rem(24)};
-
 `;
 
 export const ErrorIcon = styled(SharedErrorIcon)`

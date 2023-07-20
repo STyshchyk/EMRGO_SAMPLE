@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as onboardingActionCreators from '../actionCreators/onboarding';
-import * as onboardingActionTypes from '../actionTypes/onboarding';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as onboardingActionCreators from "../actionCreators/onboarding";
+import * as onboardingActionTypes from "../actionTypes/onboarding";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchDropdown({ payload }) {
   try {
@@ -22,7 +22,10 @@ function* fetchDropdown({ payload }) {
 // TODO: TO BE DEPRECATED
 function* createOnboarding({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.onboardingAPI.createOnboardingForm, payload.requestPayload);
+    const response = yield call(
+      wethaqAPIService.onboardingAPI.createOnboardingForm,
+      payload.requestPayload
+    );
     const { data } = response;
     yield call(toast.success, data.message);
     yield put(onboardingActionCreators.doSignupSuccess({ data }));
@@ -43,7 +46,7 @@ function* inviteUserByEntityId({ payload }) {
     yield call(toast.success, data.message);
     yield put(onboardingActionCreators.doInviteUserSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') payload.successCallback();
+    if (typeof payload?.successCallback === "function") payload.successCallback();
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -163,7 +166,10 @@ const onboardingSaga = [
   takeLatest(onboardingActionTypes.ONBOARDING_FETCH_USER_INFO_REQUESTED, fetchUserInfo),
   takeLatest(onboardingActionTypes.ONBOARDING_APPROVE_USER_REQUESTED, approveUser),
   takeLatest(onboardingActionTypes.ONBOARDING_ASSIGN_ADMIN_REQUESTED, assignAdmin),
-  takeLatest(onboardingActionTypes.ONBOARDING_RESEND_ONBOARDING_EMAIL_REQUESTED, resendOnboardingEmail),
+  takeLatest(
+    onboardingActionTypes.ONBOARDING_RESEND_ONBOARDING_EMAIL_REQUESTED,
+    resendOnboardingEmail
+  ),
 ];
 
 export default onboardingSaga;

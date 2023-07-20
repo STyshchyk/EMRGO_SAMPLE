@@ -1,11 +1,10 @@
-import { call, put, fork, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, takeLatest } from "redux-saga/effects";
 
-import * as notificationActionCreators from '../actionCreators/notification';
-import * as actionTypes from '../actionTypes/notification';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as wethaqSocketService from '../../services/wethaqSocketService';
-
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as wethaqSocketService from "../../services/wethaqSocketService";
+import * as notificationActionCreators from "../actionCreators/notification";
+import * as actionTypes from "../actionTypes/notification";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchNotification({ payload }) {
   try {
@@ -31,9 +30,13 @@ function* notificationSetRead({ payload }) {
 }
 
 function* openNotificationSocket({ payload }) {
-  const notificationSocket = yield call(wethaqSocketService.connect, 'socket/v1/notification');
+  const notificationSocket = yield call(wethaqSocketService.connect, "socket/v1/notification");
   yield call(wethaqSocketService.subscribeToRoom, notificationSocket, payload.userId);
-  yield fork(wethaqSocketService.read, notificationSocket, notificationActionCreators.doOpenNotificationSocketSuccess);
+  yield fork(
+    wethaqSocketService.read,
+    notificationSocket,
+    notificationActionCreators.doOpenNotificationSocketSuccess
+  );
 }
 
 const notificationSaga = [

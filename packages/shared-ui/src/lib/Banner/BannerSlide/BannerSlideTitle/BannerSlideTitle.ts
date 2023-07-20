@@ -1,7 +1,6 @@
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled from "styled-components";
-
-import { getTheme } from "@emrgo-frontend/theme";
 
 export const BannerSlideTitle = styled.h2`
   margin: 0;

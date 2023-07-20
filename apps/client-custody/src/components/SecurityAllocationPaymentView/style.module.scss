@@ -1,5 +1,4 @@
-@import '../../styles/config.scss';
-
+@import "../../styles/config.scss";
 
 .table {
   &__wrapper {
@@ -11,7 +10,7 @@
   &__footer {
     text-align: center;
     font-weight: 700;
-    background-color: $lightgray-color!important;
+    background-color: $lightgray-color !important;
     color: $lightgray-color;
   }
   &__cell {
@@ -23,8 +22,8 @@
   }
 }
 
-.action-button{
-  &__wrapper{
+.action-button {
+  &__wrapper {
     margin-top: 5rem;
   }
 }

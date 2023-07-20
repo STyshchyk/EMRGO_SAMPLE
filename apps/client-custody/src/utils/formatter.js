@@ -1,9 +1,9 @@
-import * as moment from 'moment';
+import * as moment from "moment";
 
 const toMomentObject = (date) => moment(date);
 
 const dateFormatter = (date, format) => {
-  if (!date) return '';
+  if (!date) return "";
   return moment(date).format(format);
 };
 

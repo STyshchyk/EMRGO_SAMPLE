@@ -179,9 +179,7 @@ export const Label = styled.label<{
       css`
         color: ${getTheme("colors.orange")};
       `}
-    `
-
-}
+    `}
 `;
 
 export const Input = styled.input<{

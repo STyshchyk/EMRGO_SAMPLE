@@ -1,0 +1,15 @@
+{
+  "Clear": "Clear",
+  "Filters": {
+    "Filter": "Filter",
+    "Filters": "Filters",
+    "Search": "Search",
+    "Date": "Date",
+    "Manage Columns": "Manage Columns"
+  },
+  "Manage Columns Dialogue": {
+    "Manage Columns": "Manage Columns",
+    "Hidden Columns": "Hidden Columns",
+    "Move all Hidden Columns": "Move all Hidden Columns"
+  }
+}

@@ -1,14 +1,15 @@
 /* eslint-disable */
 
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as issuanceActionCreators from '../actionCreators/issuance';
-import * as issuanceActionTypes from '../actionTypes/issuance';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as s3Service from '../../services/s3Service';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as issuanceActionCreators from "../actionCreators/issuance";
+import * as issuanceActionTypes from "../actionTypes/issuance";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchIssuances() {
   try {
@@ -102,7 +103,7 @@ function* saveTermsheet({ payload }) {
     const response = yield call(wethaqAPIService.sukukAPI.saveIssuanceTermsheet, payload);
     const { data } = response;
     yield put(issuanceActionCreators.doSaveTermsheetSuccess({ data }));
-    yield call(toast.success, data.message || i18n.t('Termsheet updated successfully'));
+    yield call(toast.success, data.message || i18n.t("Termsheet updated successfully"));
     yield put(issuanceActionCreators.doUpdateSaveTermsheetState(true)); //has Saved termsheet boolean
     yield put(issuanceActionCreators.doFetchTermsheet({ sukukId: payload.sukukId }));
   } catch (error) {
@@ -117,7 +118,7 @@ function* publishTermsheet({ payload }) {
     const response = yield call(wethaqAPIService.sukukAPI.saveIssuanceTermsheet, payload);
     const { data } = response;
     yield put(issuanceActionCreators.doSaveTermsheetSuccess({ data }));
-    yield call(toast.success, i18n.t('Termsheet published successfully'));
+    yield call(toast.success, i18n.t("Termsheet published successfully"));
     yield put(issuanceActionCreators.doFetchTermsheet({ sukukId: payload.sukukId }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
@@ -132,7 +133,7 @@ function* reviewTermsheet({ payload }) {
     const response = yield call(wethaqAPIService.sukukAPI.reviewIssuanceTermsheet, payload);
     const { data } = response;
     yield put(issuanceActionCreators.doReviewTermsheetSuccess({ data }));
-    yield call(toast.success, data.message || i18n.t('Termsheet sent for review successfully'));
+    yield call(toast.success, data.message || i18n.t("Termsheet sent for review successfully"));
     yield put(issuanceActionCreators.doFetchTermsheet({ sukukId: payload.sukukId }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
@@ -147,7 +148,7 @@ function* finalizeTermsheet({ payload }) {
     const response = yield call(wethaqAPIService.sukukAPI.finalizeIssuanceTermsheet, payload);
     const { data } = response;
     yield put(issuanceActionCreators.doFinalizeTermsheetSuccess({ data }));
-    yield call(toast.success, data.message || i18n.t('Termsheet updated successfully'));
+    yield call(toast.success, data.message || i18n.t("Termsheet updated successfully"));
     yield put(issuanceActionCreators.doFetchTermsheet({ sukukId: payload.sukukId }));
     yield put(issuanceActionCreators.doFetchIssuanceOverview({ sukukId: payload.sukukId }));
   } catch (error) {
@@ -278,7 +279,10 @@ function* fetchServiceProvides({ payload }) {
 
 function* engageServiceProvider({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.engagementsAPI.requestServiceProviderEngagement, payload);
+    const response = yield call(
+      wethaqAPIService.engagementsAPI.requestServiceProviderEngagement,
+      payload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doEngageServiceProviderSuccess({ data }));
     yield put(issuanceActionCreators.doFetchServiceProviders({ id: payload.sukukId }));
@@ -354,11 +358,14 @@ function* requestEngagementLetterSigning({ payload }) {
 
 function* fetchEngagementLetterUrl({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.engagementsAPI.fetchEngagementLetterUrl, payload.requestPayload);
+    const response = yield call(
+      wethaqAPIService.engagementsAPI.fetchEngagementLetterUrl,
+      payload.requestPayload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doFetchEngagementLetterUrlSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -383,7 +390,10 @@ function* fetchEngagementStatus({ payload }) {
 function* submitBypassSignedEngagement({ payload }) {
   const { requestPayload, successCallback } = payload;
   try {
-    const response = yield call(wethaqAPIService.engagementsAPI.submitBypassSignedEngagement, requestPayload);
+    const response = yield call(
+      wethaqAPIService.engagementsAPI.submitBypassSignedEngagement,
+      requestPayload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doSubmitBypassSignedEngagementSuccess({ data }));
     if (successCallback) {
@@ -443,7 +453,10 @@ function* fetchCompleteAgenda({ payload }) {
 }
 
 function* uploadExecDocument({ payload }) {
-  yield call(toast.info, `${i18n.t('messages:Uploading')} ${payload.requestPayload.originalFileName}`);
+  yield call(
+    toast.info,
+    `${i18n.t("messages:Uploading")} ${payload.requestPayload.originalFileName}`
+  );
   try {
     const requestParams = {
       sukukId: payload.sukukId,
@@ -457,7 +470,10 @@ function* uploadExecDocument({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.originalFileName}`);
+    yield call(
+      toast.success,
+      `${i18n.t("messages:Uploaded")} ${payload.requestPayload.originalFileName}`
+    );
     yield put(issuanceActionCreators.doUploadExecDocsSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
@@ -507,10 +523,13 @@ function* sendReviewDocumentForSigning({ payload }) {
 
 // * Dev Comment: Request for a Pre-signed AWS S3 URL from wethaq API & Upload direct to S3 with Pre-signed POST request
 function* uploadReviewDocument({ payload }) {
-  yield call(toast.info, i18n.t('messages:Uploading Document Please wait'));
+  yield call(toast.info, i18n.t("messages:Uploading Document Please wait"));
 
   try {
-    const response = yield call(wethaqAPIService.signingAPI.uploadReviewDoc, payload.requestPayload);
+    const response = yield call(
+      wethaqAPIService.signingAPI.uploadReviewDoc,
+      payload.requestPayload
+    );
     const { data } = response;
 
     yield call(s3Service.putFile, {
@@ -518,8 +537,13 @@ function* uploadReviewDocument({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.originalFileName}`);
-    yield put(issuanceActionCreators.doSigningReviewDocs({ sukukId: payload.requestPayload.sukukId }));
+    yield call(
+      toast.success,
+      `${i18n.t("messages:Uploaded")} ${payload.requestPayload.originalFileName}`
+    );
+    yield put(
+      issuanceActionCreators.doSigningReviewDocs({ sukukId: payload.requestPayload.sukukId })
+    );
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -712,7 +736,10 @@ function* completeClosing({ payload }) {
 
 function* fetchAdmissionTermsheet({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.admissionAPI.getAdmissionTermsheetDetails, payload);
+    const response = yield call(
+      wethaqAPIService.admissionAPI.getAdmissionTermsheetDetails,
+      payload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doFetchAdmissionTermsheetDataSuccess({ data }));
   } catch (error) {
@@ -798,7 +825,10 @@ function* fetchCMAIssuanceApprovalStatus({ payload }) {
 
 function* fetchCMASPEIncorporationApprovalStatus({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.sukukAPI.getCMASPEIncorporationApprovalStatus, payload);
+    const response = yield call(
+      wethaqAPIService.sukukAPI.getCMASPEIncorporationApprovalStatus,
+      payload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doFetchCMASPEIncorporationApprovalStatusSuccess({ data }));
   } catch (error) {
@@ -810,10 +840,15 @@ function* fetchCMASPEIncorporationApprovalStatus({ payload }) {
 
 function* confirmCMAIssuanceApprovalStatus({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.sukukAPI.confirmCMAIssuanceApprovalStatus, payload);
+    const response = yield call(
+      wethaqAPIService.sukukAPI.confirmCMAIssuanceApprovalStatus,
+      payload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doConfirmCMAIssuanceApprovalStatusSuccess({ data }));
-    yield put(issuanceActionCreators.doFetchCMAIssuanceApprovalStatus({ sukukId: payload.sukukId }));
+    yield put(
+      issuanceActionCreators.doFetchCMAIssuanceApprovalStatus({ sukukId: payload.sukukId })
+    );
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
@@ -823,14 +858,21 @@ function* confirmCMAIssuanceApprovalStatus({ payload }) {
 
 function* confirmCMASPEIncorporationApprovalStatus({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.sukukAPI.confirmCMASPEIncorporationApprovalStatus, payload);
+    const response = yield call(
+      wethaqAPIService.sukukAPI.confirmCMASPEIncorporationApprovalStatus,
+      payload
+    );
     const { data } = response;
     yield put(issuanceActionCreators.doConfirmCMASPEIncorporationApprovalStatusSuccess({ data }));
-    yield put(issuanceActionCreators.doFetchCMASPEIncorporationApprovalStatus({ sukukId: payload.sukukId }));
+    yield put(
+      issuanceActionCreators.doFetchCMASPEIncorporationApprovalStatus({ sukukId: payload.sukukId })
+    );
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(issuanceActionCreators.doConfirmCMASPEIncorporationApprovalStatusFailure(errorMessage));
+    yield put(
+      issuanceActionCreators.doConfirmCMASPEIncorporationApprovalStatusFailure(errorMessage)
+    );
   }
 }
 
@@ -848,7 +890,10 @@ function* fetchCMARelatedDocumentURLS({ payload }) {
 
 function* uploadCMARelatedDocument({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.fileAPI.upload, { type: 'capitalMarketAuthority', ...payload.requestPayload });
+    const response = yield call(wethaqAPIService.fileAPI.upload, {
+      type: "capitalMarketAuthority",
+      ...payload.requestPayload,
+    });
     const { data } = response;
 
     data.name = payload.requestPayload.name;
@@ -859,13 +904,18 @@ function* uploadCMARelatedDocument({ payload }) {
       file: payload.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.fileName}`);
+    yield call(toast.success, `${i18n.t("messages:Uploaded")} ${payload.requestPayload.fileName}`);
 
     yield put(issuanceActionCreators.doUploadCMARelatedDocSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(issuanceActionCreators.doUploadCMARelatedDocFailure({ message: errorMessage, key: payload.keyName }));
+    yield put(
+      issuanceActionCreators.doUploadCMARelatedDocFailure({
+        message: errorMessage,
+        key: payload.keyName,
+      })
+    );
   }
 }
 
@@ -899,7 +949,7 @@ function* addCoArranger({ payload }) {
     const { data } = response;
     yield put(issuanceActionCreators.doAddCoArrangerSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       yield call(toast.success, data.message);
       payload.successCallback();
     }
@@ -934,10 +984,16 @@ const issuanceSaga = [
   takeLatest(issuanceActionTypes.SERVICE_PROVIDER_ENGAGEMENT_REQUESTED, engageServiceProvider),
   takeLatest(issuanceActionTypes.ENGAGEMENT_REQUESTS_FETCH_REQUESTED, fetchEngagementRequests),
   takeLatest(issuanceActionTypes.ENGAGEMENT_LETTER_UPLOAD_REQUESTED, uploadEngagementLetter),
-  takeLatest(issuanceActionTypes.ENGAGEMENT_LETTER_SIGNATURE_REQUESTED, requestEngagementLetterSigning),
+  takeLatest(
+    issuanceActionTypes.ENGAGEMENT_LETTER_SIGNATURE_REQUESTED,
+    requestEngagementLetterSigning
+  ),
   takeLatest(issuanceActionTypes.ENGAGEMENT_LETTER_URL_FETCH_REQUESTED, fetchEngagementLetterUrl),
   takeLatest(issuanceActionTypes.ENGAGEMENT_STATUS_FETCH_REQUESTED, fetchEngagementStatus),
-  takeLatest(issuanceActionTypes.SUBMIT_BYPASS_SIGNED_ENGAGEMENT_REQUESTED, submitBypassSignedEngagement),
+  takeLatest(
+    issuanceActionTypes.SUBMIT_BYPASS_SIGNED_ENGAGEMENT_REQUESTED,
+    submitBypassSignedEngagement
+  ),
   takeLatest(issuanceActionTypes.SIGNING_FETCH_PREACTION_REQUESTED, fetchPreActionSigning),
   takeLatest(issuanceActionTypes.SIGNING_PREACTION_REQUESTED, preActionSigning),
   takeLatest(issuanceActionTypes.SIGNING_COMPLETE_AGENDA_REQUESTED, fetchCompleteAgenda),
@@ -960,14 +1016,29 @@ const issuanceSaga = [
   takeLatest(issuanceActionTypes.SEND_REVIEW_DOC_REQUESTED, sendReviewDocumentForSigning),
   takeLatest(issuanceActionTypes.ADMISSION_TERMSHEET_DATA_REQUESTED, fetchAdmissionTermsheet),
   takeLatest(issuanceActionTypes.ADMISSION_TERMS_REQUESTED, fetchAdmissionTerms),
-  takeLatest(issuanceActionTypes.ENGAGEMENT_OBLIGOR_PROPOSAL_FETCH_REQUESTED, fetchEngagementObligorProposalSignedDoc),
+  takeLatest(
+    issuanceActionTypes.ENGAGEMENT_OBLIGOR_PROPOSAL_FETCH_REQUESTED,
+    fetchEngagementObligorProposalSignedDoc
+  ),
   takeLatest(issuanceActionTypes.SUBMIT_ADMISSION_TERMS_REQUESTED, submitAdmissionTerms),
   takeLatest(issuanceActionTypes.FETCH_ADMISSION_STATUS_REQUESTED, fetchAdmissionStatus),
   takeLatest(issuanceActionTypes.ISSUERS_FETCH_REQUESTED, fetchIssuers),
-  takeLatest(issuanceActionTypes.FETCH_CMA_ISSUANCE_APPROVAL_STATUS_REQUESTED, fetchCMAIssuanceApprovalStatus),
-  takeLatest(issuanceActionTypes.FETCH_CMA_SPE_INCORPORATION_APPROVAL_STATUS_REQUESTED, fetchCMASPEIncorporationApprovalStatus),
-  takeLatest(issuanceActionTypes.CONFIRM_CMA_ISSUANCE_APPROVAL_STATUS_REQUESTED, confirmCMAIssuanceApprovalStatus),
-  takeLatest(issuanceActionTypes.CONFIRM_CMA_SPE_INCORPORATION_APPROVAL_STATUS_REQUESTED, confirmCMASPEIncorporationApprovalStatus),
+  takeLatest(
+    issuanceActionTypes.FETCH_CMA_ISSUANCE_APPROVAL_STATUS_REQUESTED,
+    fetchCMAIssuanceApprovalStatus
+  ),
+  takeLatest(
+    issuanceActionTypes.FETCH_CMA_SPE_INCORPORATION_APPROVAL_STATUS_REQUESTED,
+    fetchCMASPEIncorporationApprovalStatus
+  ),
+  takeLatest(
+    issuanceActionTypes.CONFIRM_CMA_ISSUANCE_APPROVAL_STATUS_REQUESTED,
+    confirmCMAIssuanceApprovalStatus
+  ),
+  takeLatest(
+    issuanceActionTypes.CONFIRM_CMA_SPE_INCORPORATION_APPROVAL_STATUS_REQUESTED,
+    confirmCMASPEIncorporationApprovalStatus
+  ),
   takeLatest(issuanceActionTypes.FETCH_CMA_DOCS_REQUESTED, fetchCMARelatedDocumentURLS),
   takeEvery(issuanceActionTypes.UPLOAD_CMA_RELATED_DOC_REQUESTED, uploadCMARelatedDocument),
   takeEvery(issuanceActionTypes.ISSUANCES_FETCH_ALL_REQUESTED, fetchAllIssuances),

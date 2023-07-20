@@ -1,12 +1,13 @@
 /* eslint-disable consistent-return */
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
 
-import * as couponsActionCreators from '../actionCreators/coupons';
-import * as couponsActionTypes from '../actionTypes/coupons';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as couponsActionCreators from "../actionCreators/coupons";
+import * as couponsActionTypes from "../actionTypes/coupons";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* addCouponPaymentSchedule({ payload }) {
   try {
@@ -16,7 +17,7 @@ function* addCouponPaymentSchedule({ payload }) {
     yield put(couponsActionCreators.doAddCouponPaymentScheduleSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -34,7 +35,7 @@ function* editCouponPaymentSchedule({ payload }) {
     yield put(couponsActionCreators.doEditCouponPaymentScheduleSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -54,7 +55,9 @@ function* fetchCouponPaymentScheduleById({ payload }) {
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(couponsActionCreators.doFetchCouponPaymentScheduleByIdFailure({ message: errorMessage }));
+    yield put(
+      couponsActionCreators.doFetchCouponPaymentScheduleByIdFailure({ message: errorMessage })
+    );
   }
 }
 
@@ -68,7 +71,9 @@ function* fetchAllCouponPaymentSchedules({ payload }) {
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(couponsActionCreators.doFetchAllCouponPaymentSchedulesFailure({ message: errorMessage }));
+    yield put(
+      couponsActionCreators.doFetchAllCouponPaymentSchedulesFailure({ message: errorMessage })
+    );
   }
 }
 
@@ -80,13 +85,15 @@ function* publishCouponPaymentScheduleById({ payload }) {
     yield put(couponsActionCreators.doPublishCouponPaymentScheduleByIdSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(couponsActionCreators.doPublishCouponPaymentScheduleByIdFailure({ message: errorMessage }));
+    yield put(
+      couponsActionCreators.doPublishCouponPaymentScheduleByIdFailure({ message: errorMessage })
+    );
   }
 }
 
@@ -112,7 +119,7 @@ function* addCouponAllocation({ payload }) {
     yield put(couponsActionCreators.doAddCouponAllocationSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -130,7 +137,7 @@ function* approveCouponAllocation({ payload }) {
     yield put(couponsActionCreators.doApproveCouponAllocationSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -143,9 +150,18 @@ function* approveCouponAllocation({ payload }) {
 const couponsSaga = [
   takeLatest(couponsActionTypes.COUPONS_ADD_PAYMENT_SCHEDULE_REQUESTED, addCouponPaymentSchedule),
   takeLatest(couponsActionTypes.COUPONS_EDIT_PAYMENT_SCHEDULE_REQUESTED, editCouponPaymentSchedule),
-  takeLatest(couponsActionTypes.COUPONS_FETCH_ALL_PAYMENT_SCHEDULES_REQUESTED, fetchAllCouponPaymentSchedules),
-  takeLatest(couponsActionTypes.COUPONS_FETCH_PAYMENT_SCHEDULE_BY_ID_REQUESTED, fetchCouponPaymentScheduleById),
-  takeLatest(couponsActionTypes.COUPONS_PUBLISH_PAYMENT_SCHEDULE_BY_ID_REQUESTED, publishCouponPaymentScheduleById),
+  takeLatest(
+    couponsActionTypes.COUPONS_FETCH_ALL_PAYMENT_SCHEDULES_REQUESTED,
+    fetchAllCouponPaymentSchedules
+  ),
+  takeLatest(
+    couponsActionTypes.COUPONS_FETCH_PAYMENT_SCHEDULE_BY_ID_REQUESTED,
+    fetchCouponPaymentScheduleById
+  ),
+  takeLatest(
+    couponsActionTypes.COUPONS_PUBLISH_PAYMENT_SCHEDULE_BY_ID_REQUESTED,
+    publishCouponPaymentScheduleById
+  ),
   takeLatest(couponsActionTypes.COUPONS_FETCH_ALL_COUPON_EVENTS_REQUESTED, fetchAllCouponEvents),
   takeLatest(couponsActionTypes.COUPONS_ADD_ALLOCATION_REQUESTED, addCouponAllocation),
   takeLatest(couponsActionTypes.COUPONS_APPROVE_ALLOCATION_REQUESTED, approveCouponAllocation),

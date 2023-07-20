@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/bulletins';
+import * as actionCreators from "../actionCreators/bulletins";
 
 const defaultState = {
   dropDowns: {
@@ -10,7 +10,7 @@ const defaultState = {
   isFetchingDropdowns: true,
   bulletins: [],
   currentBulletinDocument: {
-    title: '',
+    title: "",
   },
   isLoading: false,
   filesUploaded: {},
@@ -45,11 +45,11 @@ const notificationReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.bulletins = data;
         draft.isLoading = false;
-      },
+      }
     ),
     [actionCreators.doFetchBulletinDataFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -63,13 +63,13 @@ const notificationReducer = handleActions(
         if (!draft.filesUploaded[key]) {
           draft.filesUploaded[key] = [];
         }
-        draft.filesUploaded[key][index] = '';
+        draft.filesUploaded[key][index] = "";
         if (!draft.uploadStatus[key]) {
           draft.uploadStatus[key] = {};
         }
         draft.uploadStatus[key][index] = true;
       } else {
-        draft.filesUploaded[key] = '';
+        draft.filesUploaded[key] = "";
         draft.uploadStatus[key] = true;
       }
       draft.uploadInProgress = true;
@@ -120,12 +120,14 @@ const notificationReducer = handleActions(
     [actionCreators.doFetchBulletinDocument]: produce((draft) => {
       draft.message = null;
       draft.isLoading = true;
-      draft.currentBulletinDocument = '';
+      draft.currentBulletinDocument = "";
     }),
-    [actionCreators.doFetchBulletinDocumentSuccess]: produce((draft, { payload: { data: link } }) => {
-      draft.currentBulletinDocument = link.link;
-      draft.isLoading = false;
-    }),
+    [actionCreators.doFetchBulletinDocumentSuccess]: produce(
+      (draft, { payload: { data: link } }) => {
+        draft.currentBulletinDocument = link.link;
+        draft.isLoading = false;
+      }
+    ),
     [actionCreators.doFetchBulletinDocumentFailure]: produce((draft, { payload }) => {
       draft.message = payload;
       draft.isLoading = false;
@@ -142,7 +144,7 @@ const notificationReducer = handleActions(
       draft.errorMessage = message;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default notificationReducer;

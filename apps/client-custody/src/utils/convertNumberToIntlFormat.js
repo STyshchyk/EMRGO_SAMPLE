@@ -6,7 +6,7 @@ const convertNumberToIntlFormat = (
   opts = {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
-  },
-) => new Intl.NumberFormat('en', opts).format(number);
+  }
+) => new Intl.NumberFormat("en", opts).format(number);
 
 export default convertNumberToIntlFormat;

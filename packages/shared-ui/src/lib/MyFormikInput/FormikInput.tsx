@@ -1,16 +1,16 @@
-import { Input } from '../Input';
-import { InputFile } from '../InputFile';
+import { Input } from "../Input";
+import { InputFile } from "../InputFile";
 import { MyTextArea } from "../MyInput";
-import { MySelect } from '../MySelect/';
+import { MySelect } from "../MySelect/";
 import { IFormikInputProps } from "./FormikInput.types";
 
-export const FormikInputCustom = <T, >({
-                                         form,
-                                         id,
-                                         accept,
-                                         type,
-                                         ...rest
-                                       }: IFormikInputProps<T>) => {
+export const FormikInputCustom = <T,>({
+  form,
+  id,
+  accept,
+  type,
+  ...rest
+}: IFormikInputProps<T>) => {
   let error: string | undefined;
 
   try {
@@ -26,7 +26,9 @@ export const FormikInputCustom = <T, >({
       <InputFile id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
     );
   else if (type === "select") return <MySelect id={id} error={error} {...fieldProps} {...rest} />;
-  else if (type === "textarea")   return <MyTextArea id={id} error={error} {...fieldProps} accept={accept} type={type}  {...rest} />;
+  else if (type === "textarea")
+    return (
+      <MyTextArea id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
+    );
   return <Input id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />;
-
 };

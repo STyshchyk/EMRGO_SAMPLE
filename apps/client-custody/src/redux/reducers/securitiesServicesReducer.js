@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as securitiesServicesActionCreators from '../actionCreators/securitiesServices';
+import * as securitiesServicesActionCreators from "../actionCreators/securitiesServices";
 
 const defaultState = {
   errorMessage: null,
@@ -18,9 +18,11 @@ const securitiesServicesReducer = handleActions(
       draft.isUploading = false;
     }),
 
-    [securitiesServicesActionCreators.doUploadFileSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isUploading = false;
-    }),
+    [securitiesServicesActionCreators.doUploadFileSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isUploading = false;
+      }
+    ),
 
     [securitiesServicesActionCreators.doUploadFileFailure]: produce((draft, { payload }) => {
       draft.errorMessage = payload;
@@ -32,11 +34,13 @@ const securitiesServicesReducer = handleActions(
       draft.isFetching = true;
     }),
 
-    [securitiesServicesActionCreators.doFetchFileSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetching = false;
-      const { link, key } = data;
-      draft.fileURLsFetched[key] = link;
-    }),
+    [securitiesServicesActionCreators.doFetchFileSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetching = false;
+        const { link, key } = data;
+        draft.fileURLsFetched[key] = link;
+      }
+    ),
 
     [securitiesServicesActionCreators.doFetchFileFailure]: produce((draft, { payload }) => {
       draft.errorMessage = payload;
@@ -47,7 +51,7 @@ const securitiesServicesReducer = handleActions(
       draft.fileURLsFetched = {};
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default securitiesServicesReducer;

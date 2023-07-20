@@ -1,5 +1,9 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
+import custody from "./data/custody";
+import paymentInstructionData from "./data/payment-instruction";
+import pendingSettlement from "./data/pending-settlement";
+import standardSettlementInstructionData from "./data/standard-settlement-instruction";
 import {
   IPaymentInstruction,
   IPostTradeContext,
@@ -7,10 +11,6 @@ import {
 } from "./PostTrade.types";
 
 const PostTradeContext = createContext<IPostTradeContext | null>(null);
-import custody from "./data/custody";
-import paymentInstructionData from "./data/payment-instruction";
-import pendingSettlement from "./data/pending-settlement";
-import standardSettlementInstructionData from "./data/standard-settlement-instruction";
 
 /**
  * @description

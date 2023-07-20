@@ -1,0 +1,45 @@
+{
+  "LC - Closing": "إتمام المعاملة - المستشار القانوني",
+  "Due Diligence": "إجراءات العناية الواجبة",
+  "Conditions Precedent": "لشروط الواجب توفرها",
+  "All Conditions Precedent have been met": "تم استيفاء جميع الشروط الواجب توفرها",
+  "Co-ordinate Signoffs": "توقيع النظراء",
+  "The Transaction Has Closed": "تم إتمام المعاملة ",
+  "Confirm to All Parties that Closing is complete": "تأكيد إتمام المعاملة لجميع الأطراف",
+  "Signoffs Pending": "بانتظار التوقيع ",
+  "Request Signoff from All Parties": "طلب التوقيع من جميع الأطراف",
+  "Initiate Closing of the Transaction": "الشروع في إتمام المعاملة",
+  "Headers": {
+    "Party": "الطرف",
+    "Role": "الدور",
+    "Signoff Status": "حالة التوقيع"
+  },
+  "Post Closing Messages": {
+    "Proceed to Admission & Settlement": "المتابعة إلى القبول والتسوية",
+    "Proceed to Custody & Settlement": "المتابعة إلى الحفظ والتسوية",
+    "The Transaction has Closed": "تم إتمام المعاملة "
+  },
+  "Closing Signoff Button": {
+    "Confirm Signoff to Proceed with Closing": "تأكيد التوقيع للمتابعة لإتمام المعاملة ",
+    "Pending Signoffs from other parties": "في انتظار توقيع الأطراف الأخرى",
+    "Pending Lead Arranger Counsel request to proceed with Closing": "في انتظار طلب المستشار القانوني للجهة المنظمة  الرئيسية للمتابعة لإتمام المعاملة "
+  },
+  "Signoff - Closing": "التوقيع - إتمام المعاملة ",
+  "Status": {
+    "Signoff Complete": "التوقيع مكتمل",
+    "Signoff Pending": "بانتظار التوقيع"
+  },
+  "Roles": {
+    "Arranger": "الجهة المنظمة",
+    "Co-Arranger": "مُرتب مشارك",
+    "Corporate": " مقدمي الخدمات المؤسسية",
+    "Fiduciary": "ائتمانية",
+    "Investor": "المستثمر",
+    "Issuer": "المُصدر",
+    "Legal Counsel": "المستشار القانوني ",
+    "Obligor": "الملتزم",
+    "Sharia": "الهيئة الشرعية",
+    "Emrgo Service": "خدمات وثاق",
+    "SPE Trustee": "وصي المنشأة ذات الأغراض الخاصة"
+  }
+}

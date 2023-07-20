@@ -1,13 +1,13 @@
-import React, {createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState } from "react";
 
-import {IUser} from "@emrgo-frontend/types";
+import { IUser } from "@emrgo-frontend/types";
 import store from "store";
 
-import {IUserData} from "./UserContext.types";
+import { IUserData } from "./UserContext.types";
 
 const UserContext = createContext<IUserData | undefined>(undefined);
 
-export function UserProvider({children}: { children: React.ReactNode }) {
+export function UserProvider({ children }: { children: React.ReactNode }) {
   const hydratedUser = store.get("user");
   const [user, setUser] = useState<IUser | null>(hydratedUser || null);
 
@@ -21,7 +21,7 @@ export function UserProvider({children}: { children: React.ReactNode }) {
     store.set("user", null);
   };
 
-  const userData: IUserData = {user, updateUser, removeUser};
+  const userData: IUserData = { user, updateUser, removeUser };
 
   return <UserContext.Provider value={userData}>{children}</UserContext.Provider>;
 }

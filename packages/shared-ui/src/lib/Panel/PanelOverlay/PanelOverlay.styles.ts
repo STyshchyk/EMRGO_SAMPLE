@@ -1,7 +1,6 @@
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem, rgba } from "polished";
 import styled, { css } from "styled-components";
-
-import { getTheme } from "@emrgo-frontend/theme";
 
 export const PanelOverlay = styled.div`
   display: flex;

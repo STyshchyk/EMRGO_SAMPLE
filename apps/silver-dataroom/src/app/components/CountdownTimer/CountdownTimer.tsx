@@ -33,7 +33,9 @@ export const CountdownTimer = ({ date }: { date: string }) => {
     } else if (minutes > 5) {
       setTimeLeft(`${minutes} minute${minutes > 1 ? "s" : ""}`);
     } else {
-      setTimeLeft(`${minutes} minute${minutes > 1 ? "s" : ""} ${seconds} second${seconds > 1 ? "s" : ""}`);
+      setTimeLeft(
+        `${minutes} minute${minutes > 1 ? "s" : ""} ${seconds} second${seconds > 1 ? "s" : ""}`
+      );
     }
   };
   useEffect(() => {

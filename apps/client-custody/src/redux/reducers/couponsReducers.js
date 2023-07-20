@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as couponsActionCreators from '../actionCreators/coupons';
+import * as couponsActionCreators from "../actionCreators/coupons";
 
 const defaultState = {
   couponPaymentSchedules: [],
@@ -25,11 +25,11 @@ const couponsReducer = handleActions(
           payload: {
             data: { coupons },
           },
-        },
+        }
       ) => {
         draft.isRequesting = false;
         draft.couponPaymentSchedule = coupons;
-      },
+      }
     ),
     [couponsActionCreators.doAddCouponPaymentScheduleFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
@@ -47,16 +47,18 @@ const couponsReducer = handleActions(
           payload: {
             data: { coupons },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.couponPaymentSchedules = coupons;
-      },
+      }
     ),
-    [couponsActionCreators.doFetchAllCouponPaymentSchedulesFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
+    [couponsActionCreators.doFetchAllCouponPaymentSchedulesFailure]: produce(
+      (draft, { payload }) => {
+        draft.isFetching = false;
+        draft.errorMessage = payload;
+      }
+    ),
 
     [couponsActionCreators.doFetchCouponPaymentScheduleById]: produce((draft) => {
       draft.isFetching = true;
@@ -69,16 +71,18 @@ const couponsReducer = handleActions(
           payload: {
             data: { coupons },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.couponPaymentSchedule = coupons;
-      },
+      }
     ),
-    [couponsActionCreators.doFetchCouponPaymentScheduleByIdFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
+    [couponsActionCreators.doFetchCouponPaymentScheduleByIdFailure]: produce(
+      (draft, { payload }) => {
+        draft.isFetching = false;
+        draft.errorMessage = payload;
+      }
+    ),
 
     [couponsActionCreators.doPublishCouponPaymentScheduleById]: produce((draft) => {
       draft.isRequesting = true;
@@ -91,16 +95,18 @@ const couponsReducer = handleActions(
           payload: {
             data: { coupons },
           },
-        },
+        }
       ) => {
         draft.isRequesting = false;
         draft.couponPaymentSchedule = coupons;
-      },
+      }
     ),
-    [couponsActionCreators.doPublishCouponPaymentScheduleByIdFailure]: produce((draft, { payload }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = payload;
-    }),
+    [couponsActionCreators.doPublishCouponPaymentScheduleByIdFailure]: produce(
+      (draft, { payload }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = payload;
+      }
+    ),
 
     [couponsActionCreators.doResetCouponsState]: produce((draft) => {
       draft.couponPaymentSchedule = {};
@@ -117,11 +123,11 @@ const couponsReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetching = false;
         draft.couponEvents = data;
-      },
+      }
     ),
     [couponsActionCreators.doFetchAllCouponEventsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
@@ -152,18 +158,18 @@ const couponsReducer = handleActions(
           payload: {
             data: { coupons },
           },
-        },
+        }
       ) => {
         draft.isRequesting = false;
         draft.couponPaymentSchedule = coupons;
-      },
+      }
     ),
     [couponsActionCreators.doEditCouponPaymentScheduleFailure]: produce((draft, { payload }) => {
       draft.isRequesting = false;
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default couponsReducer;

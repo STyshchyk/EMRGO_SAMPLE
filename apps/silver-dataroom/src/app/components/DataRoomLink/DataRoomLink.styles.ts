@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { rem } from "polished";
 
 import { getTheme } from "@emrgo-frontend/theme";
+import { rem } from "polished";
 import styled, { css } from "styled-components";
 
 export const DataRoomLinkLabel = styled.span`

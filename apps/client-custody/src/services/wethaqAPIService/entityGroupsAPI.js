@@ -1,14 +1,14 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getEntityGroupDetailsByGroupID = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/entityGroups/${payload.id}`,
   });
 
 const updateEntityGroupUserACLByUserID = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/entityGroups/${payload.groupId}/users/${payload.userId}/accessControls`,
 
     data: payload.requestPayload,
@@ -16,21 +16,21 @@ const updateEntityGroupUserACLByUserID = (payload) =>
 
 const addEntityGroup = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
-    url: '/v1/entityGroups',
+    method: "POST",
+    url: "/v1/entityGroups",
     data: payload.requestPayload,
   });
 
 const attachEntityUserToEntityGroup = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/entityGroups/${payload.entityGroupId}/users`,
     data: payload.requestPayload,
   });
 
 const requestAgreement = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/entityGroups/${payload.entityGroupId}/agreements`,
     data: payload.requestPayload,
   });

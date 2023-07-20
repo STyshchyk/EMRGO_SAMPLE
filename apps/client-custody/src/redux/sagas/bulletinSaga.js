@@ -1,12 +1,13 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import i18n from '../../i18n';
-import * as bulletinActionCreators from '../actionCreators/bulletins';
-import * as actionTypes from '../actionTypes/bulletins';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import * as s3Service from '../../services/s3Service';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as bulletinActionCreators from "../actionCreators/bulletins";
+import * as actionTypes from "../actionTypes/bulletins";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* readDropdownDetails({ payload }) {
   try {
@@ -46,12 +47,21 @@ function* uploadBulletinFile({ payload }) {
       file: payload?.file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${payload.requestPayload.originalFileName}`);
+    yield call(
+      toast.success,
+      `${i18n.t("messages:Uploaded")} ${payload.requestPayload.originalFileName}`
+    );
     yield put(bulletinActionCreators.doUploadBulletinFileSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(bulletinActionCreators.doUploadBulletinFileFailure({ message: errorMessage, key: payload.keyName || payload.name, index: payload.index }));
+    yield put(
+      bulletinActionCreators.doUploadBulletinFileFailure({
+        message: errorMessage,
+        key: payload.keyName || payload.name,
+        index: payload.index,
+      })
+    );
   }
 }
 

@@ -1,42 +1,42 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 export const fetchBulletins = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/homepage`,
   });
 
 const uploadBulletinFile = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload.requestPayload,
     url: `/v1/files/upload/link`,
   });
 
 const createBulletin = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/homepage`,
   });
 
 const deleteBulletin = (payload) =>
   baseAxiosInstance({
-    method: 'DELETE',
+    method: "DELETE",
     data: payload,
     url: `/v1/homepage/${payload.bulletinId}`,
   });
 
 const fetchBulletinDocument = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     data: payload,
     url: `/v1/files/view`,
   });
 
 const updateBulletin = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     data: payload,
     url: `/v1/homepage/${payload.bulletinId}`,
   });

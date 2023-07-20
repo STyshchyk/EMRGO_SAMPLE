@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as externalSecuritiesActionCreators from '../actionCreators/externalSecurities';
+import * as externalSecuritiesActionCreators from "../actionCreators/externalSecurities";
 
 const defaultState = {
   externalSecuritiesData: [],
@@ -27,40 +27,50 @@ const externalSecuritiesReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.externalSecuritiesData = data;
         draft.isFetching = false;
-      },
+      }
     ),
-    [externalSecuritiesActionCreators.doFetchExternalSecuritiesListFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
+    [externalSecuritiesActionCreators.doFetchExternalSecuritiesListFailure]: produce(
+      (draft, { payload }) => {
+        draft.isFetching = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [externalSecuritiesActionCreators.doAddExternalSecurities]: produce((draft) => {
       draft.isRequesting = true;
       draft.errorMessage = null;
     }),
-    [externalSecuritiesActionCreators.doAddExternalSecuritiesSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-    }),
-    [externalSecuritiesActionCreators.doAddExternalSecuritiesFailure]: produce((draft, { payload }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = payload;
-    }),
+    [externalSecuritiesActionCreators.doAddExternalSecuritiesSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+      }
+    ),
+    [externalSecuritiesActionCreators.doAddExternalSecuritiesFailure]: produce(
+      (draft, { payload }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [externalSecuritiesActionCreators.doEditExternalSecurities]: produce((draft) => {
       draft.message = null;
       draft.errorMessage = null;
       draft.isRequesting = true;
     }),
-    [externalSecuritiesActionCreators.doEditExternalSecuritiesSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isRequesting = false;
-      draft.message = data;
-    }),
-    [externalSecuritiesActionCreators.doEditExternalSecuritiesFailure]: produce((draft, { payload }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = payload;
-    }),
+    [externalSecuritiesActionCreators.doEditExternalSecuritiesSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isRequesting = false;
+        draft.message = data;
+      }
+    ),
+    [externalSecuritiesActionCreators.doEditExternalSecuritiesFailure]: produce(
+      (draft, { payload }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = payload;
+      }
+    ),
     [externalSecuritiesActionCreators.doDeleteExternalSecurities]: produce((draft) => {
       draft.isRequesting = true;
       draft.errorMessage = null;
@@ -68,10 +78,12 @@ const externalSecuritiesReducer = handleActions(
     [externalSecuritiesActionCreators.doDeleteExternalSecuritiesSuccess]: produce((draft) => {
       draft.isRequesting = false;
     }),
-    [externalSecuritiesActionCreators.doDeleteExternalSecuritiesFailure]: produce((draft, { message }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = message;
-    }),
+    [externalSecuritiesActionCreators.doDeleteExternalSecuritiesFailure]: produce(
+      (draft, { message }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = message;
+      }
+    ),
     [externalSecuritiesActionCreators.doSearchExternalSecurities]: produce((draft) => {
       draft.isRequesting = true;
       draft.errorMessage = null;
@@ -83,22 +95,24 @@ const externalSecuritiesReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.listOfExternalSecuritySearchResults = data;
         draft.isRequesting = false;
-      },
+      }
     ),
-    [externalSecuritiesActionCreators.doSearchExternalSecuritiesFailure]: produce((draft, { message }) => {
-      draft.isRequesting = false;
-      draft.errorMessage = message;
-    }),
+    [externalSecuritiesActionCreators.doSearchExternalSecuritiesFailure]: produce(
+      (draft, { message }) => {
+        draft.isRequesting = false;
+        draft.errorMessage = message;
+      }
+    ),
 
     [externalSecuritiesActionCreators.doResetExternalSecuritiesSearchResults]: produce((draft) => {
       draft.listOfExternalSecuritySearchResults = [];
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default externalSecuritiesReducer;

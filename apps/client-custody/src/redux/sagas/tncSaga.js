@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as tncActionCreators from '../actionCreators/tnc';
-import * as tncActionTypes from '../actionTypes/tnc';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as tncActionCreators from "../actionCreators/tnc";
+import * as tncActionTypes from "../actionTypes/tnc";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchLatestTNCData({ payload }) {
   try {

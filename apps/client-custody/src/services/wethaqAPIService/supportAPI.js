@@ -1,42 +1,42 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const fetchTFATickets = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/supportTicket`,
   });
 
 const upload2faVerificationFile = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload.requestPayload,
     url: `/v1/files/upload/supportTicket/link`,
   });
 
 const fetchTFAVerificationDocument = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     data: payload,
     url: `/v1/files/view`,
   });
 
 const createTFATicket = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload,
     url: `/v1/supportTicket`,
   });
 
 const deleteTFATicket = (payload) =>
   baseAxiosInstance({
-    method: 'DELETE',
+    method: "DELETE",
     data: payload,
     url: `/v1/supportTicket/${payload.supportTicketId}`,
   });
 
 const approveTFATicket = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     data: payload,
     url: `/v1/supportTicket/${payload.supportTicketId}`,
   });

@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
-import * as actionTypes from '../actionTypes/documents';
+import * as actionTypes from "../actionTypes/documents";
 
 export const doFetchUsers = createAction(actionTypes.FETCH_USERS_REQUESTED);
 export const doFetchUsersSuccess = createAction(actionTypes.FETCH_USERS_SUCCEEDED);
@@ -30,14 +30,28 @@ export const doFetchDocusignURL = createAction(actionTypes.FETCH_DOCUSIGN_URL_RE
 export const doFetchDocusignURLSuccess = createAction(actionTypes.FETCH_DOCUSIGN_URL_SUCCEEDED);
 export const doFetchDocusignURLFailure = createAction(actionTypes.FETCH_DOCUSIGN_URL_FAILED);
 
-export const doUpdateDocumentPermissions = createAction(actionTypes.UPDATE_DOCUMENT_PERMISSION_REQUESTED);
-export const doUpdateDocumentPermissionsSuccess = createAction(actionTypes.UPDATE_DOCUMENT_PERMISSION_SUCCEEDED);
-export const doUpdateDocumentPermissionsFailure = createAction(actionTypes.UPDATE_DOCUMENT_PERMISSION_FAILED);
+export const doUpdateDocumentPermissions = createAction(
+  actionTypes.UPDATE_DOCUMENT_PERMISSION_REQUESTED
+);
+export const doUpdateDocumentPermissionsSuccess = createAction(
+  actionTypes.UPDATE_DOCUMENT_PERMISSION_SUCCEEDED
+);
+export const doUpdateDocumentPermissionsFailure = createAction(
+  actionTypes.UPDATE_DOCUMENT_PERMISSION_FAILED
+);
 
 export const doDocumentUploadRequest = createAction(actionTypes.DOCUMENT_UPLOAD_REQUEST_REQUESTED);
-export const doDocumentUploadRequestSuccess = createAction(actionTypes.DOCUMENT_UPLOAD_REQUEST_SUCCEEDED);
-export const doDocumentUploadRequestFailure = createAction(actionTypes.DOCUMENT_UPLOAD_REQUEST_FAILED);
+export const doDocumentUploadRequestSuccess = createAction(
+  actionTypes.DOCUMENT_UPLOAD_REQUEST_SUCCEEDED
+);
+export const doDocumentUploadRequestFailure = createAction(
+  actionTypes.DOCUMENT_UPLOAD_REQUEST_FAILED
+);
 
 export const doDocumentMarkObtained = createAction(actionTypes.DOCUMENT_MARK_OBTAINED_REQUESTED);
-export const doDocumentMarkObtainedSuccess = createAction(actionTypes.DOCUMENT_MARK_OBTAINED_SUCCEEDED);
-export const doDocumentMarkObtainedFailure = createAction(actionTypes.DOCUMENT_MARK_OBTAINED_FAILED);
+export const doDocumentMarkObtainedSuccess = createAction(
+  actionTypes.DOCUMENT_MARK_OBTAINED_SUCCEEDED
+);
+export const doDocumentMarkObtainedFailure = createAction(
+  actionTypes.DOCUMENT_MARK_OBTAINED_FAILED
+);

@@ -1,6 +1,6 @@
-import appConfig from '../appConfig';
+import appConfig from "../appConfig";
 
-const RELEASE_ENVS = ['staging', 'production', 'local'];
+const RELEASE_ENVS = ["staging", "production", "local"];
 
 // () => boolean (true if app is in production)
 // !NOT A REACT HOOK

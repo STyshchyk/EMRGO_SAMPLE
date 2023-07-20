@@ -1,8 +1,11 @@
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { silverQueryKeys as queryKeys} from "@emrgo-frontend/constants";
-import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import {
+  silverQueryKeys as queryKeys,
+  silverPrimariesRoutes as routes,
+} from "@emrgo-frontend/constants";
+import { doGetAllSellside } from "@emrgo-frontend/services";
 import {
   BreadcrumbLink,
   Breadcrumbs,
@@ -12,7 +15,7 @@ import {
   Panel,
   PanelContent,
   PanelHeader,
-  useToast
+  useToast,
 } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,9 +23,7 @@ import { useAddSellsideStore, useSellSideStore } from "../../store/store";
 import { AddSellsideModal } from "./AddSellsideModal";
 import * as Styles from "./ManageSellside.styles";
 import { IManageSellsideProps } from "./ManageSellside.types";
-import { doGetAllSellside } from "@emrgo-frontend/services";
 import { SellsideTable } from "./SellsideTable";
-
 
 export const ManageSellsideComponent: FC<IManageSellsideProps> = ({}: IManageSellsideProps) => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const ManageSellsideComponent: FC<IManageSellsideProps> = ({}: IManageSel
   const {
     data: sellSideData,
     isError,
-    isFetched
+    isFetched,
   } = useQuery({
     queryFn: doGetAllSellside,
     queryKey: [queryKeys.primaries.tradeOpportunities.sellSide.fetch],
@@ -43,13 +44,12 @@ export const ManageSellsideComponent: FC<IManageSellsideProps> = ({}: IManageSel
     onSuccess: (data) => {
       // Update store data after alertering SellSide so it contrains up-to-date info
       sellSideActions.setSellSite(data);
-    }
+    },
   });
 
   return (
     <Styles.ManageSellside>
       <DashboardContent>
-
         <Breadcrumbs>
           <BreadcrumbLink as={Link} to={routes.primaries.tradeOpportunity.home}>
             Trade opportunities

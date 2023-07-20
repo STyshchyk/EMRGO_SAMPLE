@@ -1,15 +1,15 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 export const download = (payload) =>
   baseAxiosInstance({
-    method: 'PUT',
+    method: "PUT",
     url: `/v1/files`,
     data: payload,
   });
 
 export const upload = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/files`,
     data: payload,
   });

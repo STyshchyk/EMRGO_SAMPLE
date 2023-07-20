@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/users';
+import * as actionCreators from "../actionCreators/users";
 
 const defaultState = {
   errorMessage: {},
@@ -24,7 +24,7 @@ const usersReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default usersReducer;

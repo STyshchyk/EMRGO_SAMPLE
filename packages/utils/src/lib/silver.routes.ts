@@ -16,7 +16,6 @@ export const buildSilverModuleURL = (module: silverModule, path: string) => {
   return fullPath;
 };
 
-
 export const navigateSilverModule = (module: silverModule, path: string) => {
   const fullPath = buildSilverModuleURL(module, path);
   console.log(fullPath);
@@ -25,7 +24,7 @@ export const navigateSilverModule = (module: silverModule, path: string) => {
 
 export const useInternalMatchedPathDashboard = (tabs: { paths: string[]; key: string }) => {
   let matchedValue = false;
-  tabs.paths.forEach(pathname => {
+  tabs.paths.forEach((pathname) => {
     const match = useMatch({ path: pathname, end: true, caseSensitive: false });
     if (match) matchedValue = true;
   });
@@ -34,14 +33,11 @@ export const useInternalMatchedPathDashboard = (tabs: { paths: string[]; key: st
 
 export const useInternalMatchedPathTabs = (tabs: { paths: string[]; key: string }[]) => {
   let matchedValue: any = null;
-  tabs.forEach(tab => {
-    tab.paths.forEach(tabName => {
+  tabs.forEach((tab) => {
+    tab.paths.forEach((tabName) => {
       const match = useMatch(tabName);
-      if (match ) matchedValue = tab;
+      if (match) matchedValue = tab;
     });
   });
   return matchedValue.key ?? "";
 };
-
-
-

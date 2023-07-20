@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as entitiesActionCreators from '../actionCreators/entities';
-import * as actionTypes from '../actionTypes/entities';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as entitiesActionCreators from "../actionCreators/entities";
+import * as actionTypes from "../actionTypes/entities";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchEntitiesSaga({ payload }) {
   try {
@@ -162,7 +162,7 @@ function* editEntityCustodySetting({ payload }) {
     yield call(toast.success, data.message);
     yield put(entitiesActionCreators.doEditEntityCustodySettingsSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {

@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as actionCreators from '../actionCreators/cashManagement';
-import * as actionTypes from '../actionTypes/cashManagement';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as actionCreators from "../actionCreators/cashManagement";
+import * as actionTypes from "../actionTypes/cashManagement";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchTransations({ payload }) {
   try {
@@ -153,7 +153,10 @@ function* fetchUnallocatedTransactions({ payload }) {
 
 function* updateUnallocatedTransactions({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.accountsAPI.updateUnallocatedTransactions, payload);
+    const response = yield call(
+      wethaqAPIService.accountsAPI.updateUnallocatedTransactions,
+      payload
+    );
     const { data } = response;
     yield put(actionCreators.doUpdateUnallocatedTransactionsSuccess({ data }));
     yield put(actionCreators.doFetchUnallocatedTransactions());
@@ -167,12 +170,15 @@ function* updateUnallocatedTransactions({ payload }) {
 function* doMoneyTransferInternal({ payload }) {
   try {
     const { cb, ...otherKeys } = payload;
-    const response = yield call(wethaqAPIService.billingAndPaymentsAPI.transferMoneyInternal, payload);
+    const response = yield call(
+      wethaqAPIService.billingAndPaymentsAPI.transferMoneyInternal,
+      payload
+    );
     const { data } = response;
     yield call(toast.success, data.message, { autoClose: 5000 });
     yield put(actionCreators.doMoneyTransferInternalSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -184,12 +190,15 @@ function* doMoneyTransferInternal({ payload }) {
 
 function* fetchExternalPaymentsAuditData({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.billingAndPaymentsAPI.getExternalPaymentsAuditDataById, payload);
+    const response = yield call(
+      wethaqAPIService.billingAndPaymentsAPI.getExternalPaymentsAuditDataById,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doFetctExternalPaymentsAuditDataSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -211,9 +220,18 @@ const billingAndPaymentsSaga = [
   takeLatest(actionTypes.FETCH_DROPDOWN_VALUES_REQUESTED, fetchDropdowns),
   takeLatest(actionTypes.CREATE_ACCOUNT_REQUESTED, createAccount),
   takeLatest(actionTypes.EDIT_ACCOUNT_REQUESTED, editAccount),
-  takeLatest(actionTypes.FETCH_UNALLOCATED_INCOMING_TRANSACTIONS_REQUESTED, fetchUnallocatedTransactions),
-  takeLatest(actionTypes.UPDATE_UNALLOCATED_INCOMING_TRANSACTIONS_REQUESTED, updateUnallocatedTransactions),
-  takeLatest(actionTypes.FETCH_EXTERNAL_PAYMENTS_AUDIT_DATA_REQUESTED, fetchExternalPaymentsAuditData),
+  takeLatest(
+    actionTypes.FETCH_UNALLOCATED_INCOMING_TRANSACTIONS_REQUESTED,
+    fetchUnallocatedTransactions
+  ),
+  takeLatest(
+    actionTypes.UPDATE_UNALLOCATED_INCOMING_TRANSACTIONS_REQUESTED,
+    updateUnallocatedTransactions
+  ),
+  takeLatest(
+    actionTypes.FETCH_EXTERNAL_PAYMENTS_AUDIT_DATA_REQUESTED,
+    fetchExternalPaymentsAuditData
+  ),
 ];
 
 export default billingAndPaymentsSaga;

@@ -6,6 +6,7 @@ import { useToast } from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+
 import { useUserStore } from "../store";
 import { createPassword, ISetPassword } from "./CreatePassword.services";
 import { ICreatePasswordContext, ICreatePasswordFormValues } from "./CreatePassword.types";
@@ -49,7 +50,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
    */
   const initialValues: ICreatePasswordFormValues = {
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   };
   const { showErrorToast } = useToast();
 
@@ -72,7 +73,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     const password = values.password;
     const payload: ISetPassword = {
       password,
-      token: access_token
+      token: access_token,
     };
     doCreatePassword(payload, {
       onSuccess: (response) => {
@@ -83,7 +84,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         showErrorToast(`${error?.data.message ?? "Error during creating password"}`);
-      }
+      },
     });
   };
 
@@ -91,13 +92,13 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     initialValues,
     validateOnMount: true,
     validate,
-    onSubmit
+    onSubmit,
   });
 
   const state: ICreatePasswordContext = {
     form,
     showPassword,
-    setShowPassword
+    setShowPassword,
   };
 
   return <CreatePasswordContext.Provider value={state}>{children}</CreatePasswordContext.Provider>;

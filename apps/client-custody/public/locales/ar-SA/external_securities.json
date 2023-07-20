@@ -1,0 +1,61 @@
+{
+  "External Securities": {
+    "New Security": "New Fixed Income Security",
+    "Edit Security": "Edit Fixed Income Security",
+    "New Equity Security": "New Equity Security",
+    "Edit Equity Security": "Edit Equity Security",
+    "Headers": {
+      "Security": "الورقة المالية",
+      "ISIN": "ISIN",
+      "Issuance Name": "اسم الإصدار",
+      "Ticker": "رمز الاصدار",
+      "Rate": "المعدل",
+      "Frequency": "تردد التوزيعات",
+      "Country": "الدولة",
+      "Maturity Date": "تاريخ الاستحقاق",
+      "CCY": "CCY",
+      "Issuance Amount": "مبلغ الإصدار",
+      "Denomination": "فئة",
+      "Status": "الحالة",
+      "Security Type": "Type"
+    },
+    "Context Menu": {
+      "Amend": "تعديل",
+      "Set to Active": "تعيين إلى نشط",
+      "Set to Inactive": "تعيين إلى غير نشط",
+      "Delete": "حذف",
+      "Edit Coupon Payment Schedule": "تعديل جدول دفع القسيمة"
+    },
+    "Filters": {
+      "Date": "التاريخ"
+    },
+    "Buttons": {
+      "New Security": "Add Fixed Income Security",
+      "New Equity Security": "Add Equity Security"
+    },
+    "Add Security Form": {
+      "Security Name": "اسم الورقة المالية",
+      "Security Short Name": "الاسم المختصر للورقة المالية",
+      "Security Long Name": "الاسم الكامل للورقة المالية",
+      "ISIN": "ISIN",
+      "Ticker": "رمز الاصدار",
+      "Issuance Name": "اسم الإصدار",
+      "Rate": "Rate",
+      "Frequency": "تردد التوزيعات",
+      "Country": "الدولة",
+      "Issue Date": "تاريخ الإصدار",
+      "Maturity Date": "تاريخ الاستحقاق",
+      "Currency": "العملة",
+      "Issuance Amount": "مبلغ الإصدار",
+      "Denomination": "فئة",
+      "Status": "الحالة",
+      "Sedol": "Sedol",
+      "CUSIP": "CUSIP",
+      "Common": "Common"
+    },
+    "Status": {
+      "Active": "نشط",
+      "Inactive": "غير نشط"
+    }
+  }
+}

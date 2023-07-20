@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as accessControlsActionCreators from '../actionCreators/accessControls';
+import * as accessControlsActionCreators from "../actionCreators/accessControls";
 
 const defaultState = {
   data: {
@@ -17,10 +17,12 @@ const accessControlsReducer = handleActions(
       draft.isFetching = true;
       draft.errorMessage = null;
     }),
-    [accessControlsActionCreators.doFetchAccessControlsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetching = false;
-      draft.data = data;
-    }),
+    [accessControlsActionCreators.doFetchAccessControlsSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isFetching = false;
+        draft.data = data;
+      }
+    ),
     [accessControlsActionCreators.doFetchAccessControlsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
@@ -31,7 +33,7 @@ const accessControlsReducer = handleActions(
       };
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default accessControlsReducer;

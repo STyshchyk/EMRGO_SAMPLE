@@ -1,10 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as actionCreators from '../actionCreators/paymentAndSettlement';
-import * as actionTypes from '../actionTypes/paymentAndSettlement';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as actionCreators from "../actionCreators/paymentAndSettlement";
+import * as actionTypes from "../actionTypes/paymentAndSettlement";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchPaymentAndSettlementDetails({ payload }) {
   try {
@@ -85,7 +86,7 @@ function* settleTrade({ payload }) {
     const { data } = response;
     yield put(actionCreators.doDropdownReadSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -115,7 +116,7 @@ function* approveTrade({ payload }) {
     const { data } = response;
     yield put(actionCreators.doTradeApprovalSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -133,7 +134,7 @@ function* raiseSettlementInstruction({ payload }) {
     yield put(actionCreators.doRaiseSettlementInstructionSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -145,13 +146,16 @@ function* raiseSettlementInstruction({ payload }) {
 
 function* raiseBulkSettlementInstructions({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.raiseBulkSettlementInstructions, payload);
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.raiseBulkSettlementInstructions,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doRaiseBulkSettlementInstructionsSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -163,13 +167,16 @@ function* raiseBulkSettlementInstructions({ payload }) {
 
 function* updateSettlementInstruction({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateSettlementInstructionById, payload);
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.updateSettlementInstructionById,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doUpdateSettlementInstructionSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -181,13 +188,16 @@ function* updateSettlementInstruction({ payload }) {
 
 function* deleteSettlementInstruction({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.deleteSettlementInstructionById, payload);
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.deleteSettlementInstructionById,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doDeleteSettlementInstructionSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -199,18 +209,21 @@ function* deleteSettlementInstruction({ payload }) {
 
 function* settleSettlementInstruction({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateSettlementInstructionStatusById, {
-      ...payload,
-      requestPayload: {
-        status: 'Settled',
-      },
-    });
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.updateSettlementInstructionStatusById,
+      {
+        ...payload,
+        requestPayload: {
+          status: "Settled",
+        },
+      }
+    );
     const { data } = response;
 
     yield put(actionCreators.doSettleSettlementInstructionSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -227,7 +240,7 @@ function* fetchPaymentsList({ payload }) {
 
     yield put(actionCreators.doFetchPaymentsListSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -239,13 +252,16 @@ function* fetchPaymentsList({ payload }) {
 
 function* changeSettlementInstructionStatus({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateSettlementInstructionStatusById, payload);
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.updateSettlementInstructionStatusById,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doChangeSettlementInstructionChangeSuccess({ data }));
     yield call(toast.success, data.message);
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -257,12 +273,15 @@ function* changeSettlementInstructionStatus({ payload }) {
 
 function* fetchSettlementInstructionAuditData({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.getSettlementInstructionAuditDataById, payload);
+    const response = yield call(
+      wethaqAPIService.paymentsAPI.getSettlementInstructionAuditDataById,
+      payload
+    );
     const { data } = response;
 
     yield put(actionCreators.doFetchSettlementInstructionAuditDataSuccess({ data }));
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
@@ -283,13 +302,22 @@ const paymentAndSettlementSaga = [
   takeLatest(actionTypes.CLIENT_ACCOUNT_UPDATE_REQUESTED, updateClientAccountTrade),
   takeLatest(actionTypes.TRADE_APPROVAL_REQUESTED, approveTrade),
   takeLatest(actionTypes.RAISE_SETTLEMENT_INSTRUCTION_REQUESTED, raiseSettlementInstruction),
-  takeLatest(actionTypes.RAISE_BULK_SETTLEMENT_INSTRUCTIONS_REQUESTED, raiseBulkSettlementInstructions),
+  takeLatest(
+    actionTypes.RAISE_BULK_SETTLEMENT_INSTRUCTIONS_REQUESTED,
+    raiseBulkSettlementInstructions
+  ),
   takeLatest(actionTypes.UPDATE_SETTLEMENT_INSTRUCTION_REQUESTED, updateSettlementInstruction),
   takeLatest(actionTypes.DELETE_SETTLEMENT_INSTRUCTION_REQUESTED, deleteSettlementInstruction),
   takeLatest(actionTypes.SETTLE_SETTLEMENT_INSTRUCTION_REQUESTED, settleSettlementInstruction),
   takeLatest(actionTypes.FETCH_PAYMENTS_LIST_REQUESTED, fetchPaymentsList),
-  takeLatest(actionTypes.CHANGE_SETTLEMENT_INSTRUCTION_STATUS_REQUESTED, changeSettlementInstructionStatus),
-  takeLatest(actionTypes.FETCH_SETTLEMENT_INSTRUCTION_AUDIT_DATA_REQUESTED, fetchSettlementInstructionAuditData),
+  takeLatest(
+    actionTypes.CHANGE_SETTLEMENT_INSTRUCTION_STATUS_REQUESTED,
+    changeSettlementInstructionStatus
+  ),
+  takeLatest(
+    actionTypes.FETCH_SETTLEMENT_INSTRUCTION_AUDIT_DATA_REQUESTED,
+    fetchSettlementInstructionAuditData
+  ),
 ];
 
 export default paymentAndSettlementSaga;

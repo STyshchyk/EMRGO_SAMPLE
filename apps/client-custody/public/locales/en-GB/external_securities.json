@@ -1,0 +1,61 @@
+{
+  "External Securities": {
+    "New Security": "New Fixed Income Security",
+    "Edit Security": "Edit Fixed Income Security",
+    "New Equity Security": "New Equity Security",
+    "Edit Equity Security": "Edit Equity Security",
+    "Headers": {
+      "Security": "Security",
+      "ISIN": "ISIN",
+      "Ticker": "Ticker",
+      "Issuance Name": " Issuance Name",
+      "Rate": "Rate",
+      "Frequency": "Frequency",
+      "Country": "Country",
+      "Maturity Date": "Maturity Date",
+      "CCY": "CCY",
+      "Issuance Amount": "Issuance Amount",
+      "Denomination": "Denomination",
+      "Status": "Status",
+      "Security Type": "Type"
+    },
+    "Context Menu": {
+      "Amend": "Amend",
+      "Set to Active": "Set to Active",
+      "Set to Inactive": "Set to Inactive",
+      "Delete": "Delete",
+      "Edit Coupon Payment Schedule": "Edit Coupon Payment Schedule"
+    },
+    "Filters": {
+      "Date": "Date"
+    },
+    "Buttons": {
+      "New Security": "Add Fixed Income Security",
+      "New Equity Security": "Add Equity Security"
+    },
+    "Add Security Form": {
+      "Security Name": "Security Name",
+      "Security Short Name": "Security Short Name",
+      "Security Long Name": "Security Long Name",
+      "ISIN": "ISIN",
+      "Ticker": "Ticker",
+      "Issuance Name": " Issuance Name",
+      "Rate": "Rate",
+      "Frequency": "Frequency",
+      "Country": "Country",
+      "Issue Date": "Issue Date",
+      "Maturity Date": "Maturity Date",
+      "Currency": "Currency",
+      "Issuance Amount": "Issuance Amount",
+      "Denomination": "Denomination",
+      "Status": "Status",
+      "Sedol": "Sedol",
+      "CUSIP": "CUSIP",
+      "Common": "Common"
+    },
+    "Status": {
+      "Active": "Active",
+      "Inactive": "Inactive"
+    }
+  }
+}

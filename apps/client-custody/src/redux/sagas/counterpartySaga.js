@@ -1,10 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as counterpartyActionCreators from '../actionCreators/counterparty';
-import * as counterpartyActionTypes from '../actionTypes/counterparty';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as counterpartyActionCreators from "../actionCreators/counterparty";
+import * as counterpartyActionTypes from "../actionTypes/counterparty";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchCounterpartyList() {
   try {
@@ -56,7 +57,10 @@ function* deleteCounterparty({ payload }) {
   const { requestPayload, successCallback } = payload;
 
   try {
-    const response = yield call(wethaqAPIService.counterpartyAPI.deleteCounterparty, requestPayload);
+    const response = yield call(
+      wethaqAPIService.counterpartyAPI.deleteCounterparty,
+      requestPayload
+    );
     const { data } = response;
     yield put(counterpartyActionCreators.doDeleteCounterpartySuccess({ data }));
     if (successCallback) {
@@ -98,7 +102,10 @@ function* fetchCounterpartySSIList() {
 function* addCounterpartySSI({ payload }) {
   const { requestPayload, successCallback } = payload;
   try {
-    const response = yield call(wethaqAPIService.counterpartyAPI.addCounterpartySSI, requestPayload);
+    const response = yield call(
+      wethaqAPIService.counterpartyAPI.addCounterpartySSI,
+      requestPayload
+    );
     const { data } = response;
     yield put(counterpartyActionCreators.doAddCounterpartySSISuccess({ data }));
     if (successCallback) {
@@ -115,7 +122,10 @@ function* addCounterpartySSI({ payload }) {
 function* editCounterpartySSI({ payload }) {
   const { requestPayload, successCallback } = payload;
   try {
-    const response = yield call(wethaqAPIService.counterpartyAPI.editCounterpartySSI, requestPayload);
+    const response = yield call(
+      wethaqAPIService.counterpartyAPI.editCounterpartySSI,
+      requestPayload
+    );
     const { data } = response;
     yield put(counterpartyActionCreators.doEditCounterpartySSISuccess({ data }));
     if (successCallback) {
@@ -132,7 +142,10 @@ function* editCounterpartySSI({ payload }) {
 function* deleteCounterpartySSI({ payload }) {
   const { requestPayload, successCallback } = payload;
   try {
-    const response = yield call(wethaqAPIService.counterpartyAPI.deleteCounterpartySSI, requestPayload);
+    const response = yield call(
+      wethaqAPIService.counterpartyAPI.deleteCounterpartySSI,
+      requestPayload
+    );
     const { data } = response;
     yield put(counterpartyActionCreators.doDeleteCounterpartySSISuccess({ data }));
     if (successCallback) {
@@ -152,7 +165,10 @@ const counterpartySaga = [
   takeLatest(counterpartyActionTypes.COUNTERPARTY_EDIT_REQUESTED, editCounterparty),
   takeLatest(counterpartyActionTypes.COUNTERPARTY_DELETE_REQUESTED, deleteCounterparty),
   takeLatest(counterpartyActionTypes.FETCH_DROPDOWNS, fetchDropdowns),
-  takeLatest(counterpartyActionTypes.COUNTERPARTY_SSI_LIST_FETCH_REQUESTED, fetchCounterpartySSIList),
+  takeLatest(
+    counterpartyActionTypes.COUNTERPARTY_SSI_LIST_FETCH_REQUESTED,
+    fetchCounterpartySSIList
+  ),
   takeLatest(counterpartyActionTypes.COUNTERPARTY_SSI_ADD_REQUESTED, addCounterpartySSI),
   takeLatest(counterpartyActionTypes.COUNTERPARTY_SSI_EDIT_REQUESTED, editCounterpartySSI),
   takeLatest(counterpartyActionTypes.COUNTERPARTY_SSI_DELETE_REQUESTED, deleteCounterpartySSI),

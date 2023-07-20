@@ -1,7 +1,6 @@
 import { rem } from "polished";
 import styled from "styled-components";
 
-
 export const ManageSellside = styled.div`
   /* Layout */
   /* Element Styles */

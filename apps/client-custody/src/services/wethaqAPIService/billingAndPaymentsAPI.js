@@ -1,41 +1,41 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getTransactions = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/accounts/transactions?${payload.qs}`,
   });
 
 const getAccounts = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/accounts`,
     params: payload || null,
   });
 
 const getOwners = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/entities`,
   });
 
 const transferMoney = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     data: payload,
     url: `/v1/accounts/transfer`,
   });
 
 const transferMoneyInternal = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload?.requestPayload,
     url: `/v1/accounts/transfer/internal`,
   });
 
 const getExternalPaymentsAuditDataById = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/accounts/payments/outgoing/instruction/audit/${payload.externalPaymentId}`,
   });
 

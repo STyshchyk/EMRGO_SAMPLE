@@ -38,11 +38,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     console.log("Download data");
   };
 
-
   // TODO: For this example purposes the implementation relies on data with values
   // already formatted specifically for presentation. When integrating, make sure
   // to format the system data accordingly.
-
 
   const state: IUserContext = {
     isAboutUsDisplayed,

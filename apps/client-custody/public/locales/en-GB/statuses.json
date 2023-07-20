@@ -1,0 +1,110 @@
+{
+  "Issuance": {
+    "Sukuk Types": {
+      "Sukuk Al Ijarah": "Sukuk Al Ijarah",
+      "Sukuk Al Murabaha": "Sukuk Al Murabaha",
+      "Sukuk Al Musharaka": "Sukuk Al Musharaka",
+      "Sukuk Al Wakalah": "Sukuk Al Wakalah",
+      "Hybrid": "Hybrid",
+      "N/A": "N/A"
+    },
+    "Distribution Method": {
+      "Private Placement": "Private Placement"
+    },
+    "Pricing Name": {
+      "Issue To Order": "Issue To Order"
+    },
+    "Private Placement": {
+      "Term Sheet Generation": "Term Sheet Generation",
+      "Subscription": "Pre-Allocation",
+      "Subscription Confirmations": "Pre-Allocation Confirmations",
+      "Signing": "Signing",
+      "Closing": "Closing",
+      "Admission Settlement": "Admission Settlement",
+      "Certificate Allocation": "Certificate Allocation",
+      "BidPayments": "Bid Payments",
+      "Certificate Registry": "Certificate Registry",
+      "Coupon Payment": "Coupon Payment",
+      "Redemption Payment": "Redemption Payment"
+    },
+    "Engagement Settings": {
+      "Arranger Counsel Only": "Arranger Counsel Only",
+      "Obligor Engages Issuer": "Obligor Engages Issuer"
+    }
+  },
+  "Issuer": {
+    "Incorporated": "Incorporated",
+    "Pending Instructions": "Pending Instructions"
+  },
+  "Users": {
+    "Obligor": "Obligor",
+    "Issuer SPV": "Issuer SPV",
+    "Arranger": "Arranger",
+    "Co Arranger": "Co Arranger",
+    "Capital Market Institution": "Capital Market Institution",
+    "Arranger_plural": "Arrangers",
+    "Service Providers": "Service Providers",
+    "Legal Counsel": "Legal Counsel",
+    "Fiduciary": "Fiduciary",
+    "Investor": "Investor",
+    "Sharia Board": "Sharia Board",
+    "Corporate Service Provider": "Corporate Service Provider",
+    "Rating Agency": "Rating Agency",
+    "SPE Trustee": "SPE Trustee",
+    "Issuer": "Issuer",
+    "": ""
+  },
+  "Documents": {
+    "awaiting": "awaiting",
+    "review": "review",
+    "reviewed": "reviewed",
+    "execution": "execution",
+    "signing": "signing",
+    "signed": "signed"
+  },
+  "Profit Rate Terms": {
+    "Fixed": "Fixed"
+  },
+  "Frequency": {
+    "Annually": "Annually",
+    "Monthly": "Monthly",
+    "Quarterly": "Quarterly",
+    "Semi-Annually": "Semi-Annually"
+  },
+  "Settlement Status": {
+    "In Queue": "In Queue",
+    "Ready to Settle": "Ready to Settle",
+    "Settling": "Settling",
+    "Settled": "Settled",
+    "Approved": "Approved",
+    "Unallocated": "Unallocated"
+  },
+  "Settlement Type": {
+    "DVP": "DVP"
+  },
+  "Security Status": {
+    "Partially Filled": "Partially Filled",
+    "Finalized": "Finalized",
+    "Active": "Active",
+    "-": "-"
+  },
+  "Ready to Settle": {
+    "Yes": "Yes",
+    "No": "No"
+  },
+  "Trade Status": {
+    "Submitted": "Submitted",
+    "Confirmed": "Confirmed",
+    "Allocated": "Allocated",
+    "N/A": "N/A"
+  },
+  "Trade Type": {
+    "Subscription": "Subscription",
+    "N/A": "N/A"
+  },
+  "Direction": {
+    "Buy": "Buy",
+    "Sell": "Sell",
+    "N/A": "N/A"
+  }
+}

@@ -1,4 +1,4 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .flex {
   display: flex;
@@ -63,7 +63,7 @@
   &--100 {
     height: 100%;
   }
-  &--auto{
+  &--auto {
     height: 100%;
   }
 }

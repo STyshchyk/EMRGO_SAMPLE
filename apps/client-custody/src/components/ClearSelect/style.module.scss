@@ -1,19 +1,19 @@
-@import '../../styles/config.scss';
+@import "../../styles/config.scss";
 
 .container {
-  font-family: 'D-DIN Exp';
+  font-family: "D-DIN Exp";
   position: relative;
 }
 
 .fullWidth {
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .input-group {
   align-items: center;
   display: grid;
   gap: 1em;
-  grid-template-areas: 'label field';
+  grid-template-areas: "label field";
   grid-template-columns: auto 1fr;
 
   &__label {
@@ -47,8 +47,8 @@
   .input-group {
     gap: 0.5em;
     grid-template-areas:
-      'label'
-      'field';
+      "label"
+      "field";
     grid-template-columns: 1fr;
     grid-template-rows:
       max-content /* header */

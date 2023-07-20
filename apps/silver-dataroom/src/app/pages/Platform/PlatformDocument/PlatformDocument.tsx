@@ -11,7 +11,14 @@ import { updateDocument } from "../../DataRoom.service";
 import * as Styles from "./PlatformDocument.styles";
 import { IPlatformDocumentProps } from "./PlatformDocument.types";
 
-export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, type, id, path, version, name }) => {
+export const PlatformDocument: FC<IPlatformDocumentProps> = ({
+  lastUpdatedDate,
+  type,
+  id,
+  path,
+  version,
+  name,
+}) => {
   const [file, setFile] = useState<File>();
   const { showErrorToast, showSuccessToast } = useToast();
   const fileInputRef = useRef(null);
@@ -20,12 +27,11 @@ export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, 
   const { mutate: doUpdateDocument } = useMutation(updateDocument, {
     onSuccess: () => {
       showSuccessToast("Succesfully updated documents");
-      client.invalidateQueries([queryKeys.document.platform]).then(() => {
-      });
+      client.invalidateQueries([queryKeys.document.platform]).then(() => {});
     },
     onError: () => {
       showErrorToast("Error while trying to update documents");
-    }
+    },
   });
   const handleButtonClick = () => {
     // @ts-ignore
@@ -37,14 +43,17 @@ export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, 
     if (!file) return;
     const formData: any = new FormData();
     formData.append("file", file);
-    doUploadFile({ filename: `${name}.pdf`, formData }, {
-      onSuccess: (res) => {
-        doUpdateDocument({ id, name, path: res.path });
-      },
-      onError: () => {
-        showErrorToast("Error while creating/posting file to oracle");
+    doUploadFile(
+      { filename: `${name}.pdf`, formData },
+      {
+        onSuccess: (res) => {
+          doUpdateDocument({ id, name, path: res.path });
+        },
+        onError: () => {
+          showErrorToast("Error while creating/posting file to oracle");
+        },
       }
-    });
+    );
     // @ts-ignore
     event.target.value = null;
   };
@@ -58,13 +67,20 @@ export const PlatformDocument: FC<IPlatformDocumentProps> = ({ lastUpdatedDate, 
         style={{ display: "none" }}
         onChange={handleFileChange}
       />
-      <SubHeading>Last Updated: {trimDate(lastUpdatedDate)} | v{version}</SubHeading>
-      <Button variant={"secondary"} onClick={() => {
-        handleButtonClick();
-      }}>
+      <SubHeading>
+        Last Updated: {trimDate(lastUpdatedDate)} | v{version}
+      </SubHeading>
+      <Button
+        variant={"secondary"}
+        onClick={() => {
+          handleButtonClick();
+        }}
+      >
         Upload
       </Button>
-      <Button variant={"secondary"} disabled={true}>Notify Users</Button>
+      <Button variant={"secondary"} disabled={true}>
+        Notify Users
+      </Button>
     </Styles.PlatformTerms>
   );
 };

@@ -1,6 +1,6 @@
 import {
   CheckNotificationIcon as CheckNotificationIconBase,
-  ErrorIcon as ErrorIconBase
+  ErrorIcon as ErrorIconBase,
 } from "@emrgo-frontend/shared-ui";
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
@@ -11,7 +11,6 @@ export const AddDocument = styled.div`
   /* Layout */
   /* Element Styles */
   /* Text styles */
-
 `;
 export const Title = styled.h2`
   /* Layout */

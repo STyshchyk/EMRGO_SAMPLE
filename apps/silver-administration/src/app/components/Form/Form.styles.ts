@@ -68,14 +68,14 @@ export const SubHeading = styled.p<{ align?: string }>`
 export const HeadingCustom = styled.h1<{ align?: string }>`
   ${getTheme("typography.heading.01")}
   ${(props) =>
-  props.theme.mode === "light" &&
-  css`
+    props.theme.mode === "light" &&
+    css`
       color: ${getTheme("colors.black.100")};
     `}
 
   ${(props) =>
-  props.theme.mode === "dark" &&
-  css`
+    props.theme.mode === "dark" &&
+    css`
       color: ${getTheme("colors.white.100")};
     `}
   margin: 0;
@@ -85,14 +85,14 @@ export const HeadingCustom = styled.h1<{ align?: string }>`
 export const SubHeadingCustom = styled.p<{ align?: string }>`
   ${getTheme("typography.regular.02")}
   ${(props) =>
-  props.theme.mode === "light" &&
-  css`
+    props.theme.mode === "light" &&
+    css`
       color: ${getTheme("colors.black.100")};
     `}
 
   ${(props) =>
-  props.theme.mode === "dark" &&
-  css`
+    props.theme.mode === "dark" &&
+    css`
       color: ${getTheme("colors.white.100")};
     `}
   margin: 0;

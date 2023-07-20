@@ -1,6 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
-import * as actionCreators from '../actionCreators/onboarding';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
+
+import * as actionCreators from "../actionCreators/onboarding";
 
 const defaultState = {
   errorMessage: null,
@@ -139,7 +140,7 @@ const onboardingReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default onboardingReducer;

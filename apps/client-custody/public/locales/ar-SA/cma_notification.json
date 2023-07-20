@@ -1,0 +1,34 @@
+{
+  "CMANotification": {
+    "title": "إشعار هيئة السوق المالية",
+    "promptMessage": "يجب إشعار الهيئة وتقديم المعلومات الآتية قبل عشرة أيام على الأقل من التاريخ المقترح للطرح، وفق متطلبات قواعد طرح الأوراق المالية والالتزامات المستمرة.",
+    "CMADocumentsTable": {
+      "Users": {
+        "Arranger": "الجهة المنظمة",
+        "Obligor (Sponsor)": "الملتزم )الراعي("
+      },
+      "headers": {
+        "Documents": "المستندات",
+        "Related Parties": "لجهة ذات الصلة",
+        "Download": "تحميل"
+      },
+      "rows": {
+        "documents": {
+          "Offering Documents": "مستندات الطرح",
+          "Arranger's Notification": "إشعار مؤسسة السوق المالية",
+          "Offeror's Notification": "إشعار الطارح",
+          "Arranger's Declaration": "إشعار الطارح",
+          "Sponsor's Declaration": "إقرار الراعي",
+          "Application for Approval of a Financing Transaction": "طلب موافقة على صفقة تمويل",
+          "Application for Approval of a Financing Transaction (AR-SA)": "طلب موافقة على صفقة تمويل"
+        }
+      }
+    },
+    "ConfirmSuccessfulNotificationForm": {
+      "title": "حالة الاشعار",
+      "checkboxLabel": "أؤكد أنه تم إشعار هيئة السوق المالية بالإصدار وأن المستندات والإقرارات المذكورة أعلاه قد تم تقديمها على نحو يرضي الهيئة.",
+      "submitButtonText": "تأكيد جواز القيام بالطرح",
+      "infoAlert": "المتابعة لإتمام المعاملة "
+    }
+  }
+}

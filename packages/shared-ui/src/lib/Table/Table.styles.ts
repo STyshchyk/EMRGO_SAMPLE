@@ -65,16 +65,16 @@ export const Tr = styled.tr<ITrProps>`
   }
 
   ${({ $isRowShow }) =>
-          $isRowShow &&
-          css`
-            background-color: rgba(24, 104, 109, 0.1);
-          `}
+    $isRowShow &&
+    css`
+      background-color: rgba(24, 104, 109, 0.1);
+    `}
 
   ${({ $isClickable }) =>
-          $isClickable &&
-          css`
-            cursor: pointer;
-          `}
+    $isClickable &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 export const HeaderCell = styled.div<{ $canSort: boolean }>`

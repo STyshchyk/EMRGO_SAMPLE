@@ -1,11 +1,11 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import * as quotesActionCreators from '../actionCreators/quotes';
-import * as actionTypes from '../actionTypes/quotes';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as quotesActionCreators from "../actionCreators/quotes";
+import * as actionTypes from "../actionTypes/quotes";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* createQuotes({ payload }) {
   try {

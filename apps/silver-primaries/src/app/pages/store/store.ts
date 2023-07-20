@@ -1,11 +1,15 @@
+import { IIssuer, IOpportunityFetch, ISellside } from "@emrgo-frontend/types";
 import { produce } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { IOpportunityFetch } from "@emrgo-frontend/types";
-import { IIssuer } from "@emrgo-frontend/types";
-import { ISellside } from "@emrgo-frontend/types";
-import { ICurrencyStore, IIssuerStore, IModal, IOpportunityStore, ISellSideStore } from "./store.types";
+import {
+  ICurrencyStore,
+  IIssuerStore,
+  IModal,
+  IOpportunityStore,
+  ISellSideStore,
+} from "./store.types";
 
 export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
   immer((set) => ({
@@ -15,7 +19,7 @@ export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
       deleteModifyData: () =>
         set(
           produce((state) => ({
-            modifyData: null
+            modifyData: null,
           }))
         ),
       setModifyData: (data) =>
@@ -29,8 +33,8 @@ export const useTradeOpportunitiesStore = create<IModal<IOpportunityFetch>>()(
           produce((state) => {
             state.isModalOpen = flag;
           })
-        )
-    }
+        ),
+    },
   }))
 );
 
@@ -41,7 +45,7 @@ export const useAddIssuerStore = create<IModal<IIssuer>>()((set, getState) => ({
     deleteModifyData: () =>
       set(
         produce((state) => ({
-          modifyData: null
+          modifyData: null,
         }))
       ),
     setModifyData: (data) =>
@@ -55,8 +59,8 @@ export const useAddIssuerStore = create<IModal<IIssuer>>()((set, getState) => ({
         produce((state) => {
           state.isModalOpen = flag;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export const useMFAModal = create<IModal<any>>()((set, getState) => ({
@@ -67,8 +71,8 @@ export const useMFAModal = create<IModal<any>>()((set, getState) => ({
         produce((state) => {
           state.isModalOpen = flag;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
@@ -100,8 +104,8 @@ export const useTradeInterestModal = create<IModal<any>>()((set, getState) => ({
         produce((state) => {
           state.opportunityData = opp;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export const useAddSellsideStore = create<IModal<ISellside>>()((set) => ({
@@ -112,8 +116,8 @@ export const useAddSellsideStore = create<IModal<ISellside>>()((set) => ({
         produce((state) => {
           state.isModalOpen = flag;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export const useSellSideStore = create<ISellSideStore>()((set) => ({
@@ -124,8 +128,8 @@ export const useSellSideStore = create<ISellSideStore>()((set) => ({
         produce((state) => {
           state.sellSideData = data;
         })
-      )
-  }
+      ),
+  },
 }));
 export const useIssuerStore = create<IIssuerStore>()((set) => ({
   issuerData: [],
@@ -135,8 +139,8 @@ export const useIssuerStore = create<IIssuerStore>()((set) => ({
         produce((state) => {
           state.issuerData = data;
         })
-      )
-  }
+      ),
+  },
 }));
 export const useOpportunityStore = create<IOpportunityStore>()((set) => ({
   opportunityData: [],
@@ -153,8 +157,8 @@ export const useOpportunityStore = create<IOpportunityStore>()((set) => ({
         produce((state) => {
           state.opportunityDocs = data;
         })
-      )
-  }
+      ),
+  },
 }));
 
 export const useCurrencyStore = create<ICurrencyStore>()((set) => ({
@@ -186,6 +190,6 @@ export const useCurrencyStore = create<ICurrencyStore>()((set) => ({
         produce((state) => {
           state.industryData = data;
         })
-      )
-  }
+      ),
+  },
 }));

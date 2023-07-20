@@ -1,4 +1,4 @@
-@import '../../styles/config/colors';
+@import "../../styles/config/colors";
 
 .logo {
   width: 4em;
@@ -17,7 +17,7 @@
   padding: auto;
 }
 
-.emrgo-logo-svg-light path[fill-rule='evenodd'] {
+.emrgo-logo-svg-light path[fill-rule="evenodd"] {
   fill: #83abb9;
 }
 
@@ -26,6 +26,6 @@
   padding: auto;
 }
 
-.emrgo-logo-svg-dark path[fill-rule='evenodd'] {
+.emrgo-logo-svg-dark path[fill-rule="evenodd"] {
   fill: #446875;
 }

@@ -16,5 +16,5 @@ export const AddIssuersModalSchema = Yup.object().shape({
   industry: Yup.string()
     .min(2, "Industry is Too Short!")
     .max(50, "Industry is Too Long!")
-    .required("Issuer Jurisdiction is Required")
+    .required("Issuer Jurisdiction is Required"),
 });

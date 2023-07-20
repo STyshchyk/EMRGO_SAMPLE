@@ -1,17 +1,18 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
+import { silverOnboardingRoutes as routes } from "@emrgo-frontend/constants";
 import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import styled, { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
+
 import { Onboarding } from "./pages/Onboarding";
 import { OnboardingUser } from "./pages/Onboarding/OnboardingUser";
-import { silverOnboardingRoutes as routes } from "@emrgo-frontend/constants";
 
 const router = createBrowserRouter([
   {
     path: routes.home,
-    element: <Navigate to={routes.onboarding.users} replace />
+    element: <Navigate to={routes.onboarding.users} replace />,
   },
   {
     path: routes.onboarding.home,
@@ -19,12 +20,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.onboarding.users,
-        element: <OnboardingUser />
-      }
-    ]
-  }
+        element: <OnboardingUser />,
+      },
+    ],
+  },
 ]);
-
 
 export function App() {
   const { isDarkMode } = useDarkMode();

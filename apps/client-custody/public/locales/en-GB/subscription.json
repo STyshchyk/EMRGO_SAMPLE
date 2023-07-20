@@ -1,0 +1,46 @@
+{
+  "You do not have access to this module!": "You do not have access to this module!",
+  "Currency": "Currency",
+  "Size": "Size",
+  "Rate": "Rate",
+  "Denomination": "Denomination",
+  "Pre-Allocation Finalization": {
+    "Pre-Allocation Finalization": "Pre-Allocation Finalization",
+    "Finalize Pre-Allocations": "Finalize Pre-Allocations",
+    "Headers": {
+      "Investor": "Investor",
+      "Pre-Allocation Amount": "Pre-Allocation Amount",
+      "Certificates": "Certificates",
+      "Expression of Interest Status": "Expression of Interest Status"
+    }
+  },
+  "Pre-Allocation Allocation": {
+    "Pre-Allocation Allocation": "Pre-Allocation Allocation",
+    "Send for Confirmation": "Send for Confirmation",
+    "Total Pre-Allocation Amount must be equal to the given issuance size": "Total Pre-Allocation Amount must be equal to the given issuance size",
+    "Table": {
+      "Warnings": {
+        "Investor field cannot be empty": "Investor field cannot be empty",
+        "Pre-Allocation amount should be a multiple of": "Pre-Allocation amount should be a multiple of {{denomination}}"
+      },
+      "SUBSCRIPTION ENTRIES TO BE SENT FOR CONFIRMATION": "SUBSCRIPTION ENTRIES TO BE SENT FOR CONFIRMATION",
+      "Headers": {
+        "Entity Group ID": "Entity Group ID",
+        "Investor": "Investor",
+        "Pre-Allocation Amount": "Pre-Allocation Amount",
+        "Certificates (Auto-calculated)": "Certificates (Auto-calculated)"
+      },
+      "Total": "Total",
+      "Total Pre-Allocation Amount": "Total Pre-Allocation Amount",
+      "Total Number of Certificates": "Total Number of Certificates"
+    }
+  },
+  "Pre-Allocation Confirmation": {
+    "Pre-Allocation Confirmation": "Pre-Allocation Confirmation",
+    "Confirm Pre-Allocation": "Confirm Pre-Allocation"
+  },
+  "Status": {
+    "Confirmation Pending": "Confirmation Pending",
+    "Confirmed": "Confirmed"
+  }
+}

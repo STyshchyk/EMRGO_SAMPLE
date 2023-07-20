@@ -7,7 +7,7 @@ const convertToDateOnlyInISOFormat = (date) => {
     return date.toISOString();
   }
 
-  throw new Error('convertToDateOnlyInISOFormat: Invalid argument type, expected Date object');
+  throw new Error("convertToDateOnlyInISOFormat: Invalid argument type, expected Date object");
 };
 
 export default convertToDateOnlyInISOFormat;

@@ -1,13 +1,13 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/serviceProviders';
+import * as actionCreators from "../actionCreators/serviceProviders";
 
 const defaultState = {
   serviceProviderData: {},
   isFetching: false,
   isSubmitting: false,
-  message: {}
+  message: {},
 };
 
 const engagementReducer = handleActions(
@@ -26,14 +26,18 @@ const engagementReducer = handleActions(
       draft.isFetching = false;
       draft.serviceProviderData = data;
     }),
-    [actionCreators.doEngageServiceProviderLASuccess]: produce((draft, { payload: { message } }) => {
-      draft.isSubmitting = false;
-      draft.message = message;
-    }),
-    [actionCreators.doEngageServiceProviderSPSuccess]: produce((draft, { payload: { message } }) => {
-      draft.isSubmitting = false;
-      draft.message = message;
-    }),
+    [actionCreators.doEngageServiceProviderLASuccess]: produce(
+      (draft, { payload: { message } }) => {
+        draft.isSubmitting = false;
+        draft.message = message;
+      }
+    ),
+    [actionCreators.doEngageServiceProviderSPSuccess]: produce(
+      (draft, { payload: { message } }) => {
+        draft.isSubmitting = false;
+        draft.message = message;
+      }
+    ),
     [actionCreators.doFetchServiceProviderListFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.message = payload;
@@ -45,7 +49,7 @@ const engagementReducer = handleActions(
     [actionCreators.doEngageServiceProviderSPFailure]: produce((draft, { payload }) => {
       draft.isSubmitting = false;
       draft.message = payload;
-    })
+    }),
   },
   defaultState
 );

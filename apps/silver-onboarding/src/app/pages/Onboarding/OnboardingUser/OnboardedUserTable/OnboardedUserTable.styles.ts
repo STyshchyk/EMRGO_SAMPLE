@@ -1,9 +1,9 @@
 import { AriaAttributes } from "react";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 
 export const OnboardedUserTable = styled.div`
   /* Layout */
@@ -57,8 +57,6 @@ export const Button = styled.button<IActionProps>`
       `}
     `}
 `;
-
-
 
 export const PanelHeaderIconCustom = styled.span<{ margin?: string }>`
   display: inline-flex;

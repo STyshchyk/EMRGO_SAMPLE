@@ -1,18 +1,22 @@
 /* eslint-disable consistent-return */
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
 
-import * as securitiesServicesActionTypes from '../actionTypes/securitiesServices';
-import * as s3Service from '../../services/s3Service';
-import * as securitiesServicesActionCreators from '../actionCreators/securitiesServices';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import i18n from '../../i18n';
+import { toast } from "react-toastify";
 
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import { call, put, takeLatest } from "redux-saga/effects";
+
+import i18n from "../../i18n";
+import * as s3Service from "../../services/s3Service";
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as securitiesServicesActionCreators from "../actionCreators/securitiesServices";
+import * as securitiesServicesActionTypes from "../actionTypes/securitiesServices";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* uploadFile({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.fileAPI.upload, { type: 'custodyAndClearing', ...payload.requestPayload });
+    const response = yield call(wethaqAPIService.fileAPI.upload, {
+      type: "custodyAndClearing",
+      ...payload.requestPayload,
+    });
     const { data } = response;
     const { keyName, file } = payload;
 
@@ -21,7 +25,7 @@ function* uploadFile({ payload }) {
       file,
     });
 
-    yield call(toast.success, `${i18n.t('messages:Uploaded')} ${file?.name}`);
+    yield call(toast.success, `${i18n.t("messages:Uploaded")} ${file?.name}`);
     yield put(
       securitiesServicesActionCreators.doUploadFileSuccess({
         data: {
@@ -29,16 +33,21 @@ function* uploadFile({ payload }) {
           name: file?.name,
           keyName,
         },
-      }),
+      })
     );
 
-    if (typeof payload?.successCallback === 'function') {
+    if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
-    yield put(securitiesServicesActionCreators.doUploadFileFailure({ message: errorMessage, key: payload.keyName }));
+    yield put(
+      securitiesServicesActionCreators.doUploadFileFailure({
+        message: errorMessage,
+        key: payload.keyName,
+      })
+    );
   }
 }
 

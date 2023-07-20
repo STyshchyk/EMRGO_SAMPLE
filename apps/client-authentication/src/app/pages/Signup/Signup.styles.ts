@@ -16,4 +16,3 @@ export const TwoCol = styled.div`
   gap: ${rem(24)};
   max-width: ${rem(maxWidth)};
 `;
-

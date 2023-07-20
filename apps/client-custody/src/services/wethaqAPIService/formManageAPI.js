@@ -1,8 +1,8 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const fetchValues = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/users/profile/settings/tables-manage`,
     params: {
       keys: JSON.stringify(payload.keys),
@@ -11,7 +11,7 @@ const fetchValues = (payload) =>
 
 const postValues = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/users/profile/settings/tables-manage`,
     data: payload,
   });

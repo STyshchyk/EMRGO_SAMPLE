@@ -1,22 +1,20 @@
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import { persistStore } from 'redux-persist';
-import createSagaMiddleware from 'redux-saga';
-import { routerMiddleware } from 'connected-react-router';
-import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+import { createRouterMiddleware } from "@lagunovsky/redux-react-router";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension/logOnlyInProduction";
+import { createLogger } from "redux-logger";
+import { persistStore } from "redux-persist";
+import createSagaMiddleware from "redux-saga";
 
-import history from './configs/history';
-import persistedRootReducer from './reducers';
-
+import history from "./configs/history";
+import persistedRootReducer from "./reducers";
 // TODO: FIX THIS CIRCULAR DEPENDENCY
-
 // eslint-disable-next-line import/no-cycle
-import rootSaga from './sagas';
+import rootSaga from "./sagas";
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [routerMiddleware(history), sagaMiddleware];
+const middlewares = [createRouterMiddleware(history), sagaMiddleware];
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   const logger = createLogger();
   middlewares.push(logger);
 }

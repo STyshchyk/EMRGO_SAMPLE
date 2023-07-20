@@ -1,41 +1,41 @@
-import { baseAxiosInstance } from './helpers';
+import { baseAxiosInstance } from "./helpers";
 
 const getCorporateActionEventsList = () =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/externalSecurities/corporateEvents`,
   });
 
 const cancelCorporateActionEvent = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/externalSecurities/corporateEvents/${payload.corporateActionEventId}/cancel`,
   });
 
 const addCorporateActionEvent = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     url: `/v1/externalSecurities/corporateEvents`,
     data: payload.requestPayload,
   });
 
 const editCorporateActionEvent = (payload) =>
   baseAxiosInstance({
-    method: 'PATCH',
+    method: "PATCH",
     url: `/v1/externalSecurities/corporateEvents/${payload.corporateActionEventId}`,
     data: payload.requestPayload,
   });
 
 const submitCAEventClientResponse = (payload) =>
   baseAxiosInstance({
-    method: 'POST',
+    method: "POST",
     data: payload.requestPayload,
     url: `/v1/externalSecurities/corporateEvents/${payload.corporateActionEventId}/response`,
   });
 
 const getCorporationActionEvent = (payload) =>
   baseAxiosInstance({
-    method: 'GET',
+    method: "GET",
     url: `/v1/externalSecurities/corporateEvents/${payload.corporateActionEventId}`,
   });
 

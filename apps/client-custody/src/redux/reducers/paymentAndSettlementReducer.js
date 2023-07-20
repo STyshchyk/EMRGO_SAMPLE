@@ -1,8 +1,9 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
+
 // import { loadTest } from '../helpers';
 
-import * as actionCreators from '../actionCreators/paymentAndSettlement';
+import * as actionCreators from "../actionCreators/paymentAndSettlement";
 
 const defaultState = {
   blotterList: [],
@@ -41,8 +42,13 @@ const paymentAndSettlementReducer = handleActions(
         subscriptionAmount: investor.subscriptionAmount,
         sukuk: {
           ...investor.sukuk,
-          countryObject: investor.sukuk.countryObject !== '' ? investor.sukuk.countryObject : 'United Arab Emirates',
-          currencyName: investor.sukuk.currencyName ? investor.sukuk.currencyName : { name: 'AED', label: 'UAE Dhiram' },
+          countryObject:
+            investor.sukuk.countryObject !== ""
+              ? investor.sukuk.countryObject
+              : "United Arab Emirates",
+          currencyName: investor.sukuk.currencyName
+            ? investor.sukuk.currencyName
+            : { name: "AED", label: "UAE Dhiram" },
         },
         investorEntity: {
           ...investor.investorEntity,
@@ -235,11 +241,11 @@ const paymentAndSettlementReducer = handleActions(
           payload: {
             data: { data },
           },
-        },
+        }
       ) => {
         draft.isFetchingSettlementInstructionAuditData = false;
         draft.settlementInstructionData = data;
-      },
+      }
     ),
     [actionCreators.doFetchSettlementInstructionAuditDataFailure]: produce((draft, { message }) => {
       draft.isFetchingSettlementInstructionAuditData = false;
@@ -251,7 +257,7 @@ const paymentAndSettlementReducer = handleActions(
       draft.errorMessage = null;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default paymentAndSettlementReducer;

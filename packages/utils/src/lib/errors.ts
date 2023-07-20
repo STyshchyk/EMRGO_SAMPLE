@@ -5,7 +5,7 @@ export const processAPIErrors = (error: Error | AxiosError | unknown) => {
   if (axios.isAxiosError(error)) {
     return processAxiosError(error);
   }
-  
+
   return false;
 };
 

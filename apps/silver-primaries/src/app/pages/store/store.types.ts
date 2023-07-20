@@ -1,6 +1,10 @@
-import { ICurrency, IInvestmentBank, IOpportunityFetch } from "@emrgo-frontend/types";
-import {IIssuer } from "@emrgo-frontend/types";
-import {ISellside } from "@emrgo-frontend/types";
+import {
+  ICurrency,
+  IInvestmentBank,
+  IIssuer,
+  IOpportunityFetch,
+  ISellside,
+} from "@emrgo-frontend/types";
 
 export interface IIssuerStore {
   issuerData: IIssuer[] | [];
@@ -57,7 +61,7 @@ export interface ISellSideStore {
 
 export interface IModal<T> {
   isModalOpen: boolean;
-  opportunityData?: IOpportunityFetch | null,
+  opportunityData?: IOpportunityFetch | null;
   modifyData?: T | null;
   modalActions: {
     setModifyData?: (data: T) => void;

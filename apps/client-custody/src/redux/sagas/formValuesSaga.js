@@ -1,9 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import * as formActionCreators from '../actionCreators/form';
-import * as formActionTypes from '../actionTypes/form';
-import * as wethaqAPIService from '../../services/wethaqAPIService';
-import { extractErrorMessage, showToastErrorNotification } from '../helpers';
+import * as wethaqAPIService from "../../services/wethaqAPIService";
+import * as formActionCreators from "../actionCreators/form";
+import * as formActionTypes from "../actionTypes/form";
+import { extractErrorMessage, showToastErrorNotification } from "../helpers";
 
 function* fetchFormValues({ payload }) {
   try {
@@ -28,6 +28,9 @@ function* postFormValues({ payload }) {
   }
 }
 
-const formSaga = [takeLatest(formActionTypes.FETCH_FORM_REQUESTED, fetchFormValues), takeLatest(formActionTypes.POST_FORM_REQUESTED, postFormValues)];
+const formSaga = [
+  takeLatest(formActionTypes.FETCH_FORM_REQUESTED, fetchFormValues),
+  takeLatest(formActionTypes.POST_FORM_REQUESTED, postFormValues),
+];
 
 export default formSaga;

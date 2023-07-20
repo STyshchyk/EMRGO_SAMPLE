@@ -4,8 +4,7 @@ import { IInvestmentBank } from "./AddOpportunityModal/AddOpportunity.types";
 export type TFilterType = TIssuanceType | "all-types";
 export type TFilterStatus = TOpportunityStatus | "all-statuses";
 
-export interface ITradeOpportunitiesProps {
-}
+export interface ITradeOpportunitiesProps {}
 
 export interface ITradeOpportunitiesContext {
   isAboutUsDisplayed: boolean;
@@ -25,5 +24,3 @@ export interface IHeroSlide {
   title: string;
   description: string;
 }
-
-

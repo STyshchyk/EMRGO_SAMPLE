@@ -1,4 +1,3 @@
-
 import { rem } from "polished";
 import styled from "styled-components";
 
@@ -14,5 +13,3 @@ export const ChangeEmailVerification = styled.div`
 export const Spacer = styled.div`
   flex: 1;
 `;
-
-

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 export const selectCAEventsData = (state) => state.CAEvents.corporateActionEventsData;
 
@@ -16,7 +16,9 @@ export const selectCorporateActionEventsList = createSelector([selectCAEventsDat
       recordDate: item?.recordDate,
       paymentDate: item.paymentDate,
       securityId: item.externalSecurity?.isin,
-      securityName: item?.externalSecurity?.name ? { label: item.externalSecurity.longName, value: item.externalSecurity.id } : null,
+      securityName: item?.externalSecurity?.name
+        ? { label: item.externalSecurity.longName, value: item.externalSecurity.id }
+        : null,
       eventType: item?.eventType,
       eventId: item?.eventId,
       eventStatus: item?.statusDropdown,

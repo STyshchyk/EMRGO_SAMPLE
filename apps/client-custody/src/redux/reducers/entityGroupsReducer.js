@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/entityGroups';
+import * as actionCreators from "../actionCreators/entityGroups";
 
 const defaultState = {
   entityGroupDetails: null,
@@ -15,8 +15,16 @@ const defaultState = {
 const entityGroupsReducer = handleActions(
   {
     [actionCreators.doFetchEntityGroups]: (state) => ({ ...state, isLoading: true }),
-    [actionCreators.doFetchEntityGroupsSuccess]: (state, { payload: { data } }) => ({ ...state, isLoading: false, entityGroupsList: data.groups }),
-    [actionCreators.doFetchEntityGroupsFailure]: (state, { payload: { message } }) => ({ ...state, isLoading: false, message }),
+    [actionCreators.doFetchEntityGroupsSuccess]: (state, { payload: { data } }) => ({
+      ...state,
+      isLoading: false,
+      entityGroupsList: data.groups,
+    }),
+    [actionCreators.doFetchEntityGroupsFailure]: (state, { payload: { message } }) => ({
+      ...state,
+      isLoading: false,
+      message,
+    }),
     [actionCreators.doFetchEntityGroupDetails]: produce((draft) => {
       draft.isLoading = true;
     }),
@@ -24,21 +32,27 @@ const entityGroupsReducer = handleActions(
       draft.isLoading = false;
       draft.entityGroupDetails = data.group;
     }),
-    [actionCreators.doFetchEntityGroupDetailsFailure]: produce((draft, { payload: { message } }) => {
-      draft.isLoading = false;
-      draft.message = message;
-    }),
+    [actionCreators.doFetchEntityGroupDetailsFailure]: produce(
+      (draft, { payload: { message } }) => {
+        draft.isLoading = false;
+        draft.message = message;
+      }
+    ),
     [actionCreators.doRequestEntityGroupUserEdit]: produce((draft) => {
       draft.isLoading = true;
     }),
-    [actionCreators.doRequestEntityGroupUserEditSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isLoading = false;
-      draft.message = data?.message;
-    }),
-    [actionCreators.doRequestEntityGroupUserEditFailure]: produce((draft, { payload: { message } }) => {
-      draft.isLoading = false;
-      draft.message = message;
-    }),
+    [actionCreators.doRequestEntityGroupUserEditSuccess]: produce(
+      (draft, { payload: { data } }) => {
+        draft.isLoading = false;
+        draft.message = data?.message;
+      }
+    ),
+    [actionCreators.doRequestEntityGroupUserEditFailure]: produce(
+      (draft, { payload: { message } }) => {
+        draft.isLoading = false;
+        draft.message = message;
+      }
+    ),
 
     [actionCreators.doAddEntityGroup]: produce((draft) => {
       draft.isSubmitting = true;
@@ -66,7 +80,7 @@ const entityGroupsReducer = handleActions(
       draft.errorMessage = payload;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default entityGroupsReducer;

@@ -1,7 +1,7 @@
-import { handleActions } from 'redux-actions';
-import produce from 'immer';
+import { produce } from "immer";
+import { handleActions } from "redux-actions";
 
-import * as actionCreators from '../actionCreators/documents';
+import * as actionCreators from "../actionCreators/documents";
 
 const defaultState = {
   isFetchingUsers: false,
@@ -32,11 +32,11 @@ const documentsReducers = handleActions(
           payload: {
             data: { users },
           },
-        },
+        }
       ) => {
         draft.users = users;
         draft.isFetchingUsers = false;
-      },
+      }
     ),
     [actionCreators.doFetchUsersFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -54,12 +54,12 @@ const documentsReducers = handleActions(
           payload: {
             data: { documents, hasFinalTerms },
           },
-        },
+        }
       ) => {
         draft.documents = documents;
         draft.hasFinalTerms = hasFinalTerms;
         draft.isFetchingUserFiles = false;
-      },
+      }
     ),
     [actionCreators.doFetchUserFilesFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -135,11 +135,11 @@ const documentsReducers = handleActions(
           payload: {
             data: { url },
           },
-        },
+        }
       ) => {
         draft.docusignURL = url;
         draft.isFetchingDocusignURL = false;
-      },
+      }
     ),
     [actionCreators.doFetchDocusignURLFailure]: produce((draft, { payload }) => {
       draft.message = payload;
@@ -174,7 +174,7 @@ const documentsReducers = handleActions(
       draft.isLoading = false;
     }),
   },
-  defaultState,
+  defaultState
 );
 
 export default documentsReducers;

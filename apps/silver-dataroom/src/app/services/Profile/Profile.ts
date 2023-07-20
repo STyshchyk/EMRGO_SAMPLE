@@ -5,7 +5,7 @@ import { ISettings } from "./Profile.types";
 export const getProfile = async (): Promise<IUser> => {
   const promise = dashboardApi({
     url: "/profile",
-    method: "GET"
+    method: "GET",
   });
   const data = await (await promise).data;
   return data || {};
@@ -14,7 +14,7 @@ export const getProfile = async (): Promise<IUser> => {
 export const getProfileSettings = async (): Promise<ISettings> => {
   const promise = dashboardApi({
     url: "/profile/settings",
-    method: "GET"
+    method: "GET",
   });
   const data = await (await promise).data;
   return data || {};
@@ -24,17 +24,15 @@ export const setProfileSettings = (payload: ISettings) => {
   return dashboardApi({
     url: "/profile/settings",
     method: "POST",
-    data: payload
+    data: payload,
   });
 };
-
 
 export const acceptClientTerms = async (): Promise<IUser> => {
   const promise = dashboardApi({
     method: "put",
-    url: `/v2/internal/terms/accept`
+    url: `/v2/internal/terms/accept`,
   });
   const data = await (await promise).data?.user;
   return data || [];
 };
-

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import {  Button,FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
+import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import { IIssuer } from "@emrgo-frontend/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
@@ -18,7 +18,6 @@ const initialValues: IIssuer = {
   industry: "",
   jurisdiction: "",
 };
-
 
 export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
   const queryClient = useQueryClient();
@@ -41,15 +40,14 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 showSuccessToast("Succesfully added Issuer");
                 queryClient
                   .invalidateQueries({
-                    queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch]
+                    queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch],
                   })
-                  .then((r) => {
-                  });
+                  .then((r) => {});
                 modalActions.setModalOpen(false);
               },
               onError: () => {
                 showErrorToast("Error occured during adding Issuer");
-              }
+              },
             });
           } else {
             doUpdateIssuer(values, {
@@ -57,15 +55,14 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
                 showSuccessToast("Succesfully added Issuer");
                 queryClient
                   .invalidateQueries({
-                    queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch]
+                    queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch],
                   })
-                  .then((value) => {
-                  });
+                  .then((value) => {});
                 modalActions.setModalOpen(false);
               },
               onError: () => {
                 showErrorToast("Error occured during adding Issuer");
-              }
+              },
             });
           }
           formikHelpers.setSubmitting(false);
@@ -133,4 +130,3 @@ export const AddIssuersModal: FC<IAddIssuersModalProps> = () => {
     </Styles.AddIssuersModal>
   );
 };
-
