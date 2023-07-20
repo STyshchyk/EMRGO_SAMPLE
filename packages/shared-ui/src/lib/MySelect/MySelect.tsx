@@ -127,19 +127,9 @@ export const MySelect = <
             borderRadius: rem(4),
             padding: `${rem(2)} ${rem(4)}`,
             borderColor: isDarkMode
-<<<<<<< HEAD
-              ? state.menuIsOpen
-                ? colors.green3
-                : colors.strokes.dark
-              : state.menuIsOpen
-              ? colors.green3
-              : colors.strokes.light,
-            boxShadow: "none",
-=======
               ? state.menuIsOpen ? colors.green3 : colors.strokes.dark
               : state.menuIsOpen ? colors.green3 : colors.strokes.light,
             boxShadow: "none"
->>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
           }),
           singleValue: (styles, state) => ({
             ...styles,
@@ -147,18 +137,15 @@ export const MySelect = <
               ? isDarkMode ? colors.orange : colors.red
               : isDarkMode ? colors.white[60] : colors.black[60],
             ...ellipsis(),
-<<<<<<< HEAD
-            ...typography.regular["02Tight"],
-=======
             ...typography.regular["02Tight"]
->>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
           }),
           placeholder: (defaultStyles) => {
             return {
               ...defaultStyles,
               ...getOptionStyles("placeholderColor", null, error),
               ...ellipsis(),
-              ...typography.medium["02Tight"],
+              ...typography.medium["02Tight"]
+
             };
           },
           indicatorSeparator: (base) => ({
@@ -168,13 +155,18 @@ export const MySelect = <
           indicatorsContainer: (base, props) => ({
             ...base,
             transform: props.selectProps.menuIsOpen ? "rotate(182deg)" : "none",
-<<<<<<< HEAD
-            svg: error ? { fill: "red" } : "none",
-          }),
-=======
             svg: error ? { fill: isDarkMode ? `${colors.orange}` : `${colors.red}` } : "none"
+          }),
+          multiValue: (base) => ({
+            ...base,
+            backgroundColor: isDarkMode ? `${colors.strokes.light}` : `${colors.strokes.dark}`,
+            svg: { fill:`${colors.red}`}
+          }),
+          multiValueLabel:(base) =>({
+            ...base,
+            ...typography.medium["02Tight"],
+            color: isDarkMode ? `${colors.strokes.dark}` : `${colors.strokes.light}`
           })
->>>>>>> 393cdaa (feat: add light/dark theme styles mySelect)
         }}
       />
       {!!error && (

@@ -1,13 +1,14 @@
 import React from "react";
-import { FormikInput, FormikInputCustom, useToast, Button } from "@emrgo-frontend/shared-ui";
+
+import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
+import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
-import { IOnboardedUser } from "./OnboardUser.types";
 import { TwoCol } from "./OnboardUser.styles";
-import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
+import { IOnboardedUser } from "./OnboardUser.types";
 
 const initialValues: INewUser = {
   email: "",
@@ -81,16 +82,17 @@ export const OnboardUserComponent = ({}: IOnboardedUser) => {
                 name="role"
                 component={FormikInputCustom}
                 type={"select"}
+                hideSelectedOptions={false}
+                isClearable={false}
                 value={values.role}
                 id={"role"}
+                isMulti={true}
                 onChange={(selected: any) => {
                   setFieldValue("role", selected);
                 }}
                 options={[
-                  { label: "role1", value: "role1" },
-                  { label: "role2", value: "role2" },
-                  { label: "role3", value: "role3" },
-                  { label: "role4", value: "role4" }
+                  { label: "Investor", value: "invst_mgr" },
+                  { label: "Admin", value: "admin" },
                 ]
                 }
                 placeholder="Select role"
