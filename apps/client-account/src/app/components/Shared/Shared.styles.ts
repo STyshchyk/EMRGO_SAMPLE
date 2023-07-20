@@ -1,6 +1,6 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Content = styled.form`
   display: flex;
@@ -18,8 +18,10 @@ export const Heading = styled.h1`
 
 export const SubHeading = styled.p`
   ${getTheme("typography.regular.02")}
-  color: ${getTheme("colors.white.70")};
   margin: 0;
+
+  ${({theme}) =>     theme === "light" && css`color: ${getTheme("colors.dark.70")};` }
+  ${({theme}) =>     theme === "dark" && css`color: ${getTheme("colors.white.70")};` }
 `;
 
 export const Footer = styled.footer`

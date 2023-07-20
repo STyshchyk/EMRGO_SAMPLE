@@ -20,6 +20,13 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
       notification: 0
     },
     {
+      label: "Entity Management",
+      key: "onboard",
+      paths: [routes.account.onboardUser],
+      notification: 0,
+      roles: ["invst_mngr", "manager", "admin"]//List of allowed roles. Empty  == allow all
+    },
+    {
       label: "Account Security",
       key: "account-security",
       paths: [routes.account.accountSecurity],
@@ -37,13 +44,7 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
       paths: [routes.account.dataRoom],
       notification: 0
     },
-    {
-      label: "Onboard User",
-      key: "onboard",
-      paths: [routes.account.onboardUser],
-      notification: 0,
-      roles: ["invst_mngr", "manager", "admin"]//List of allowed roles. Empty  == allow all
-    }
+
   ];
   const value = useMatchedPath(primariesTabs);
   const { user } = useUser();

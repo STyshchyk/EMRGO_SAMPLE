@@ -1,3 +1,2 @@
-export type { IOnboardUserProps } from "./OnboardUser.types";
-
-export { OnboardUser } from "./OnboardUser";
+export { EntityManagement } from "./EntityManagement";
+export type { IOnboardUserProps } from "./EntityManagement.types";

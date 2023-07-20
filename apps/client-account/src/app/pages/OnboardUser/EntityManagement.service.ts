@@ -12,6 +12,7 @@ export const getOnboardedUsers = async (): Promise<INewUser[]> => {
 };
 
 export const setStatus = (user: { id: string, status: string }) => {
+  if (!user.id || user?.id === "") return Promise.reject();
   return dashboardApi({
     baseURL: `v1/onboarderUsers/${user.id}`,
     method: "PUT",

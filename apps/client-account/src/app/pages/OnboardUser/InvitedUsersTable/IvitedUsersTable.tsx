@@ -4,7 +4,7 @@ import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox, useToast 
 import { useMutation } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { setStatus } from "../OnboardUser.service";
+import { setStatus } from "../EntityManagement.service";
 import { IIvitedUsersTableProps, INewUser } from "./IvitedUsersTable.types";
 
 const columnHelper = createColumnHelper<INewUser>();
@@ -41,6 +41,7 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
       },
       cell: ({ row }) => {
         const { original } = row;
+        const id = original.id ?? "";
         return (
           <ActionTooltip
             title={
@@ -48,14 +49,14 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                 <TooltipButtonActions
                   $disabled={true}
                   onClick={() => {
-                    doSetStatus({ id: original.id, status: "inactive" });
+                    doSetStatus({ id: id, status: "inactive" });
                   }}
                 >
                   Deactivate User
                 </TooltipButtonActions>
                 <TooltipButtonActions
                   onClick={() => {
-                    doSetStatus({ id: original.id, status: "active" });
+                    doSetStatus({ id: id, status: "active" });
                   }}
                 >
                   Reactivate User

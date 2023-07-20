@@ -4,8 +4,8 @@ import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
+import { onboardUser } from "../EntityManagement.service";
 import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
-import { onboardUser } from "../OnboardUser.service";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
 import { TwoCol } from "./OnboardUser.styles";
