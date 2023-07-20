@@ -42,12 +42,11 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
       key: "onboard",
       paths: [routes.account.onboardUser],
       notification: 0,
-      roles: ["invst_mngr", "manager", "admin"]//List of allowed roles. Empry  == allow all
+      roles: ["invst_mngr", "manager", "admin"]//List of allowed roles. Empty  == allow all
     }
   ];
   const value = useMatchedPath(primariesTabs);
   const { user } = useUser();
-  console.log(user);
   const filteredTabs = primariesTabs.filter(tab => {
     if (!tab.roles || tab.roles.length === 0) return true;
     return !!tab.roles.includes(user?.role ?? "");
