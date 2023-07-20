@@ -6,7 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 import * as entityGroupsActionCreators from "../../../../redux/actionCreators/entityGroups";
@@ -22,14 +22,14 @@ const AddEntityGroupDialog = ({ entityId, open, handleClose }) => {
   const selectedEntity = entities.find((i) => i.id === entityId);
   const { validGroupTypes } = selectedEntity;
   // const validGroupTypeOptions = validGroupTypes.map((i) => ({
-  //   label: titleCase(i.entityType),
+  //   label: capitalCase(i.entityType),
   //   value: i.entityType,
   // }));
 
   const validGroupTypeOptions = validGroupTypes.map((i) =>
     i.entityType === "FIDUCIARY"
-      ? { label: titleCase("SPE Trustee"), value: "FIDUCIARY" }
-      : { label: titleCase(i.entityType), value: i.entityType }
+      ? { label: capitalCase("SPE Trustee"), value: "FIDUCIARY" }
+      : { label: capitalCase(i.entityType), value: i.entityType }
   );
 
   const handleSubmit = (values, actions) => {

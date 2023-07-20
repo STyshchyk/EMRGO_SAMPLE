@@ -13,7 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 
 import regionSwitcher from "../../helpers/regions";
 import { dateFormatter } from "../../utils/formatter";
@@ -35,9 +35,9 @@ const UserInfoModal = ({ open, onClose, selectedUserInfo }) => {
     createData(t("onboarding:Info.Entity Name"), user?.entityName),
     createData(t("onboarding:Info.Corporate Email"), user?.email),
     createData(t("onboarding:Info.Jurisdiction"), user?.jurisdiction),
-    createData(t("onboarding:Info.Entity Type"), titleCase(user?.entityUserType)),
-    createData(t("onboarding:Info.Assigned Role"), titleCase(user?.role)),
-    createData(t("onboarding:Info.Classification"), titleCase(user?.selfAssessment)),
+    createData(t("onboarding:Info.Entity Type"), capitalCase(user?.entityUserType)),
+    createData(t("onboarding:Info.Assigned Role"), capitalCase(user?.role)),
+    createData(t("onboarding:Info.Classification"), capitalCase(user?.selfAssessment)),
     createData(t("onboarding:Info.Capacity"), user?.individualKyc?.capacity?.name),
     createData(t("onboarding:Info.Designation"), user?.individualKyc?.designation),
     createData(

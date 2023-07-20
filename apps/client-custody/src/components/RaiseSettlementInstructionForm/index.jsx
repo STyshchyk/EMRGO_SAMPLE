@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -509,7 +509,7 @@ const RaiseSettlementInstructionForm = ({
 
               <InlineFormField label="Trade Date">
                 <Field
-                  component={KeyboardDatePicker}
+                  component={DatePicker}
                   onChange={(date) => {
                     setFieldValue("tradeDate", date.toDate());
                   }}
@@ -524,7 +524,7 @@ const RaiseSettlementInstructionForm = ({
 
               <InlineFormField label="Settlement Date">
                 <Field
-                  component={KeyboardDatePicker}
+                  component={DatePicker}
                   onChange={(date) => {
                     setFieldValue("settlementDate", date.toDate());
                   }}

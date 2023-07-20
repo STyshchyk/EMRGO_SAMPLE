@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import RouteLeavingGuard from "../RouteLeavingGuard";
 
 const UnsavedFormDataGuard = ({ dirty }) => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation(["components"]);
 
   return (
@@ -14,7 +14,7 @@ const UnsavedFormDataGuard = ({ dirty }) => {
       when={dirty}
       title={t("UnsavedFormDataGuard.title")}
       message={t("UnsavedFormDataGuard.message")}
-      navigate={(location) => history.push(location)}
+      navigate={(location) => navigate(location)}
       shouldBlockNavigation={() => true}
     />
   );

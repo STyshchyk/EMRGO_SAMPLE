@@ -31,7 +31,7 @@ import VisitorsTable from "./VisitorsTable";
 
 const VisitorManagement = () => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const [inviteUserModalOpen, setInviteUserModalOpen] = useState(false);
   const [assignRMModalOpen, setAssignRMModalOpen] = useState(false);
@@ -146,7 +146,7 @@ const VisitorManagement = () => {
 
   const handleViewUserKYCOpen = () => {
     const entityId = selectedRow?.entityId;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}`,
         { entityId }
@@ -156,7 +156,7 @@ const VisitorManagement = () => {
 
   const handleViewDocumentsOpen = () => {
     const entityId = selectedRow?.entityId;
-    history.push(
+    navigate(
       reverse(`${routes.dashboard.administration.entityDetails.kyc.entities.entity.documents}`, {
         entityId,
       })

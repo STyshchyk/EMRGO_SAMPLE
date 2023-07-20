@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import style from "./style.module.scss";
@@ -52,7 +52,7 @@ const MoveToSuspenseModal = ({
         <Box className={style.detailsWrapper}>
           <Typography variant="body1">
             Source Account : {selectedTransaction?.sourceAccount?.accountNo} ({" "}
-            {titleCase(selectedTransaction?.sourceAccount?.type)} )
+            {capitalCase(selectedTransaction?.sourceAccount?.type)} )
           </Typography>
           <Typography variant="body1">
             Source Balance : {selectedTransaction?.sourceAccount?.accountBalance}
@@ -61,7 +61,7 @@ const MoveToSuspenseModal = ({
           <Typography variant="body1">
             Destination Account :{" "}
             {suspenseAccount
-              ? `${suspenseAccount.accountNo} ( ${titleCase(suspenseAccount?.type)} ) `
+              ? `${suspenseAccount.accountNo} ( ${capitalCase(suspenseAccount?.type)} ) `
               : "N/A"}
           </Typography>
           <Typography variant="body1">Currency : {selectedTransaction?.currency}</Typography>

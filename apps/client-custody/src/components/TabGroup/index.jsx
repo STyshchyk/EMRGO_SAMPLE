@@ -15,11 +15,11 @@ function a11yProps(index) {
 }
 
 const TabGroup = ({ routes, primaryAction }) => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleClick = (route) => {
-    history.push(route.link);
+    navigate(route.link);
   };
 
   const paths = routes.map((route) => route.link);

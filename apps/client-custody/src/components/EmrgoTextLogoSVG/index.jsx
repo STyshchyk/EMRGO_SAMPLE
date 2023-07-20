@@ -31,26 +31,26 @@ const EmrgoTextLogoSVG = () => (
         fill="#1C1B1F"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0.000173468 0H7.74417V1.5H1.4993L1.49913 7.75H0L0.000173468 0Z"
         fill="#446875"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M37.5584 0H29.8144V1.5H36.0593L36.0595 7.75H37.5586L37.5584 0Z"
         fill="#446875"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 22.7598L1.19179e-07 15.01L1.49913 15.01L1.49913 21.2598L7.74417 21.26L7.74417 22.76L0 22.7598Z"
         fill="#446875"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M37.5586 22.7598L37.5586 15.01L36.0595 15.01L36.0595 21.2598L29.8144 21.26L29.8144 22.76L37.5586 22.7598Z"
         fill="#446875"
       />

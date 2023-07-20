@@ -1,25 +1,24 @@
 import { useTranslation } from "react-i18next";
 
-import { styled } from '@mui/material/styles';
-
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import changeCase from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 
-const PREFIX = 'SecurityAllocationPaymentView';
+const PREFIX = "SecurityAllocationPaymentView";
 
 const classes = {
   head: `${PREFIX}-head`,
   root: `${PREFIX}-root`,
-  table: `${PREFIX}-table`
+  table: `${PREFIX}-table`,
 };
 
 const StyledTableContainer = styled(TableContainer)({
@@ -35,7 +34,6 @@ const StyledTableCell = TableCell;
 const StyledTableRow = TableRow;
 
 const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
-
   const { t } = useTranslation(["admission"]);
   const { denominationName = {} } = sukukData;
 
@@ -53,26 +51,32 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
         <StyledTableRow
           key={el.id}
           classes={{
-            root: classes.root
-          }}>
+            root: classes.root,
+          }}
+        >
           <StyledTableCell
             classes={{
-              head: classes.head
-            }}>
-            {`${changeCase.titleCase(el?.entityGroup?.entity?.corporateEntityName ?? "")}` ?? "N/A"}
+              head: classes.head,
+            }}
+          >
+            {`${capitalCase(el?.entityGroup?.entity?.corporateEntityName ?? "")}` ?? "N/A"}
           </StyledTableCell>
           <StyledTableCell
             align="right"
             classes={{
-              head: classes.head
-            }}>
+              head: classes.head,
+            }}
+          >
             {convertNumberToIntlFormat(el.subscriptionAmount)}
           </StyledTableCell>
           <StyledTableCell
             align="right"
             classes={{
-              head: classes.head
-            }}>{convertNumberToIntlFormat(shares)}</StyledTableCell>
+              head: classes.head,
+            }}
+          >
+            {convertNumberToIntlFormat(shares)}
+          </StyledTableCell>
         </StyledTableRow>
       );
     });
@@ -81,24 +85,32 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
         <StyledTableRow
           key="total"
           classes={{
-            root: classes.root
-          }}>
+            root: classes.root,
+          }}
+        >
           <StyledTableCell
             classes={{
-              head: classes.head
-            }}>
+              head: classes.head,
+            }}
+          >
             {t("admission:Accordian.Securities Allocations & Payment Instructions.Headers.Total")}
           </StyledTableCell>
           <StyledTableCell
             align="right"
             classes={{
-              head: classes.head
-            }}>{convertNumberToIntlFormat(totalAmount)}</StyledTableCell>
+              head: classes.head,
+            }}
+          >
+            {convertNumberToIntlFormat(totalAmount)}
+          </StyledTableCell>
           <StyledTableCell
             align="right"
             classes={{
-              head: classes.head
-            }}>{convertNumberToIntlFormat(totalShares)}</StyledTableCell>
+              head: classes.head,
+            }}
+          >
+            {convertNumberToIntlFormat(totalShares)}
+          </StyledTableCell>
         </StyledTableRow>
       );
     }
@@ -111,8 +123,9 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
           <TableRow>
             <StyledTableCell
               classes={{
-                head: classes.head
-              }}>
+                head: classes.head,
+              }}
+            >
               {t(
                 "admission:Accordian.Securities Allocations & Payment Instructions.Headers.Client Account"
               )}
@@ -120,8 +133,9 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
             <StyledTableCell
               align="right"
               classes={{
-                head: classes.head
-              }}>
+                head: classes.head,
+              }}
+            >
               {t(
                 "admission:Accordian.Securities Allocations & Payment Instructions.Headers.Pre-Allocation Amounts"
               )}
@@ -129,8 +143,9 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
             <StyledTableCell
               align="right"
               classes={{
-                head: classes.head
-              }}>
+                head: classes.head,
+              }}
+            >
               {t(
                 "admission:Accordian.Securities Allocations & Payment Instructions.Headers.Certificates"
               )}

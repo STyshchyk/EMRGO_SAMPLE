@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
@@ -84,8 +84,8 @@ const AccountTransferPage = () => {
       currencyId: account.currency.id,
       currency: account.currency.name,
     },
-    label: `${account.accountNo} ${titleCase(account.type)}`,
-    customLabel: `${account.accountNo} ${titleCase(account.type)}`,
+    label: `${account.accountNo} ${capitalCase(account.type)}`,
+    customLabel: `${account.accountNo} ${capitalCase(account.type)}`,
   }));
 
   const destinationEntitiesDropdown = destinationOwners.map((entity) => ({
@@ -100,7 +100,7 @@ const AccountTransferPage = () => {
       currencyId: account.currency.id,
       currency: account.currency.name,
     },
-    label: `${account.accountNo} ${titleCase(account.type)}`,
+    label: `${account.accountNo} ${capitalCase(account.type)}`,
     customLabel: account.accountNo,
   }));
 
@@ -151,7 +151,7 @@ const AccountTransferPage = () => {
                   currencyId: account.currency.id,
                   currency: account.currency.name,
                 },
-                label: `${account.accountNo} ${titleCase(account.type)}`,
+                label: `${account.accountNo} ${capitalCase(account.type)}`,
                 customLabel: account.accountNo,
               }));
           };
@@ -188,7 +188,7 @@ const AccountTransferPage = () => {
                     currencyId: account.currency.id,
                     currency: account.currency.name,
                   },
-                  label: `${account.accountNo} ${titleCase(account.type)}`,
+                  label: `${account.accountNo} ${capitalCase(account.type)}`,
                   customLabel: account.accountNo,
                 }));
 
@@ -218,7 +218,7 @@ const AccountTransferPage = () => {
                   currencyId: account.currency.id,
                   currency: account.currency.name,
                 },
-                label: `${account.accountNo} ${titleCase(account.type)}`,
+                label: `${account.accountNo} ${capitalCase(account.type)}`,
                 customLabel: account.accountNo,
               }));
           };
@@ -249,7 +249,7 @@ const AccountTransferPage = () => {
                     currencyId: account.currency.id,
                     currency: account.currency.name,
                   },
-                  label: `${account.accountNo} ${titleCase(account.type)}`,
+                  label: `${account.accountNo} ${capitalCase(account.type)}`,
                   customLabel: account.accountNo,
                 }));
 

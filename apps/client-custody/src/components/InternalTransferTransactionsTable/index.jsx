@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import moment from "moment";
 import PropTypes from "prop-types";
 

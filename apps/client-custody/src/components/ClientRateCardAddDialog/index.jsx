@@ -19,7 +19,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import * as yup from "yup";
 
@@ -301,7 +301,7 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                               variant="dialog"
                               minDate={moment()}
                               placeholder="DD/MM/YYYY"
-                              component={KeyboardDatePicker}
+                              component={DatePicker}
                               name="startDate"
                               label={t("Client Rate Card.Add Dialog.Start Date")}
                             />
@@ -321,7 +321,7 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                               variant="dialog"
                               minDate={values.startDate}
                               placeholder="DD/MM/YYYY"
-                              component={KeyboardDatePicker}
+                              component={DatePicker}
                               name="endDate"
                               label={t("Client Rate Card.Add Dialog.End Date")}
                             />

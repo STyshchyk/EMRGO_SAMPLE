@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,9 +15,9 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -283,481 +281,471 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
       </DialogTitle>
       <DialogContent>
         <Box mb={2}>
-          <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-            <Formik
-              initialValues={generatedInitialValues}
-              enableReinitialize
-              onSubmit={handleSubmit}
-            >
-              {({ setFieldValue, values, disableSelectCurrencyField }) => (
-                <Form>
-                  <Grid container spacing={2}>
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Security Name"
-                      )}
-                    >
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        name="name"
-                        variant="filled"
-                        type="text"
-                        InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
-                        disabled
-                      />
-                    </InlineFormField>
+          <Formik initialValues={generatedInitialValues} enableReinitialize onSubmit={handleSubmit}>
+            {({ setFieldValue, values, disableSelectCurrencyField }) => (
+              <Form>
+                <Grid container spacing={2}>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Security Name"
+                    )}
+                  >
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      name="name"
+                      variant="filled"
+                      type="text"
+                      InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
+                      disabled
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Security Short Name"
-                      )}
-                    >
-                      <Field
-                        disabled
-                        fullWidth
-                        component={TextField}
-                        name="shortName"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Security Short Name"
+                    )}
+                  >
+                    <Field
+                      disabled
+                      fullWidth
+                      component={TextField}
+                      name="shortName"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Security Long Name"
-                      )}
-                    >
-                      <Field
-                        disabled
-                        fullWidth
-                        component={TextField}
-                        name="longName"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Security Long Name"
+                    )}
+                  >
+                    <Field
+                      disabled
+                      fullWidth
+                      component={TextField}
+                      name="longName"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Issuance Name"
-                      )}
-                    >
-                      <Field
-                        disabled
-                        fullWidth
-                        component={TextField}
-                        name="issuanceName"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Issuance Name"
+                    )}
+                  >
+                    <Field
+                      disabled
+                      fullWidth
+                      component={TextField}
+                      name="issuanceName"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t("external_securities:External Securities.Add Security Form.Ticker")}
-                    >
-                      <Field
-                        disabled
-                        fullWidth
-                        component={TextField}
-                        name="ticker"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.Ticker")}
+                  >
+                    <Field
+                      disabled
+                      fullWidth
+                      component={TextField}
+                      name="ticker"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t("external_securities:External Securities.Add Security Form.ISIN")}
-                    >
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        name="isin"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.ISIN")}
+                  >
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      name="isin"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Exchange Code">
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        name="exchangeCode"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Exchange Code">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      name="exchangeCode"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t("external_securities:External Securities.Add Security Form.Rate")}
-                    >
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        name="profitRate"
-                        variant="filled"
-                        value={values.profitRate}
-                        InputProps={{
-                          inputComponent: CustomNumberInputField,
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.Rate")}
+                  >
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      name="profitRate"
+                      variant="filled"
+                      value={values.profitRate}
+                      InputProps={{
+                        inputComponent: CustomNumberInputField,
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Frequency"
-                      )}
-                    >
-                      <Select
-                        closeMenuOnSelect
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        isSearchable
-                        styles={selectStyles}
-                        value={values.frequency}
-                        isClearable
-                        options={getDropdownValues(formOptions?.frequency, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("frequency", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.Frequency")}
+                  >
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.frequency}
+                      isClearable
+                      options={getDropdownValues(formOptions?.frequency, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("frequency", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Issue Date"
-                      )}
-                    >
-                      <Field
-                        fullWidth
-                        format="DD/MM/yyyy"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        component={KeyboardDatePicker}
-                        name="issueDate"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Issue Date"
+                    )}
+                  >
+                    <Field
+                      fullWidth
+                      format="DD/MM/yyyy"
+                      inputVariant="filled"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      component={DatePicker}
+                      name="issueDate"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Maturity Date"
-                      )}
-                    >
-                      <Field
-                        fullWidth
-                        format="DD/MM/yyyy"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        minDate={moment()}
-                        component={KeyboardDatePicker}
-                        name="maturityDate"
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Maturity Date"
+                    )}
+                  >
+                    <Field
+                      fullWidth
+                      format="DD/MM/yyyy"
+                      inputVariant="filled"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      minDate={moment()}
+                      component={DatePicker}
+                      name="maturityDate"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Currency"
-                      )}
-                    >
-                      <Select
-                        closeMenuOnSelect
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        isSearchable
-                        styles={selectStyles}
-                        menuPortalTarget={document.body}
-                        value={values.currency}
-                        isDisabled={disableSelectCurrencyField}
-                        isClearable
-                        options={getDropdownValues(formOptions?.currency, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("currency", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.Currency")}
+                  >
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      menuPortalTarget={document.body}
+                      value={values.currency}
+                      isDisabled={disableSelectCurrencyField}
+                      isClearable
+                      options={getDropdownValues(formOptions?.currency, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("currency", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Issuance Amount"
-                      )}
-                    >
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        name="issuanceAmount"
-                        variant="filled"
-                        type="text"
-                        InputProps={{
-                          inputComponent: CustomNumberInputField,
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Issuance Amount"
+                    )}
+                  >
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      name="issuanceAmount"
+                      variant="filled"
+                      type="text"
+                      InputProps={{
+                        inputComponent: CustomNumberInputField,
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t(
-                        "external_securities:External Securities.Add Security Form.Denomination"
-                      )}
-                    >
-                      <Select
-                        closeMenuOnSelect
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        menuPortalTarget={document.body}
-                        isSearchable
-                        styles={selectStyles}
-                        value={values.denomination}
-                        isClearable
-                        options={getDenominationOptions(formOptions?.denomination)}
-                        onChange={(selected) => {
-                          setFieldValue("denomination", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t(
+                      "external_securities:External Securities.Add Security Form.Denomination"
+                    )}
+                  >
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      menuPortalTarget={document.body}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.denomination}
+                      isClearable
+                      options={getDenominationOptions(formOptions?.denomination)}
+                      onChange={(selected) => {
+                        setFieldValue("denomination", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField
-                      label={t("external_securities:External Securities.Add Security Form.Status")}
-                    >
-                      <Select
-                        closeMenuOnSelect
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        menuPortalTarget={document.body}
-                        isSearchable
-                        styles={selectStyles}
-                        value={values.status}
-                        isClearable
-                        options={externalSecurityStatusOptionsList}
-                        onChange={(selected) => {
-                          setFieldValue("status", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField
+                    label={t("external_securities:External Securities.Add Security Form.Status")}
+                  >
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      menuPortalTarget={document.body}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.status}
+                      isClearable
+                      options={externalSecurityStatusOptionsList}
+                      onChange={(selected) => {
+                        setFieldValue("status", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Day Count Convention">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.dayCountConvention}
-                        options={getDropdownValues(formOptions?.dayCountConvention, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("dayCountConvention", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Day Count Convention">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.dayCountConvention}
+                      options={getDropdownValues(formOptions?.dayCountConvention, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("dayCountConvention", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Form of Offering">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.formOfOffering}
-                        options={getDropdownValues(formOptions?.formOfOffering, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("formOfOffering", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Form of Offering">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.formOfOffering}
+                      options={getDropdownValues(formOptions?.formOfOffering, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("formOfOffering", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Governing Law">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.governingLaw}
-                        options={getDropdownValues(formOptions?.governingLaw, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("governingLaw", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Governing Law">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.governingLaw}
+                      options={getDropdownValues(formOptions?.governingLaw, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("governingLaw", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Guarantor">
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        label="Guarantor"
-                        name="guarantor"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Guarantor">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label="Guarantor"
+                      name="guarantor"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Jurisdiction">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.jurisdiction}
-                        options={getDropdownValues(formOptions?.jurisdiction, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("jurisdiction", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Jurisdiction">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.jurisdiction}
+                      options={getDropdownValues(formOptions?.jurisdiction, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("jurisdiction", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Listing">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.listing}
-                        options={getDropdownValues(formOptions?.listing, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("listing", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Listing">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.listing}
+                      options={getDropdownValues(formOptions?.listing, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("listing", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Maturity Amount">
-                      <Field
-                        fullWidth
-                        InputProps={{ type: "number" }}
-                        component={TextField}
-                        name="maturityAmount"
-                        variant="filled"
-                        type="text"
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Maturity Amount">
+                    <Field
+                      fullWidth
+                      InputProps={{ type: "number" }}
+                      component={TextField}
+                      name="maturityAmount"
+                      variant="filled"
+                      type="text"
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Pricing Method">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.pricingMethod}
-                        options={getDropdownValues(formOptions?.pricingMethod, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("pricingMethod", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Pricing Method">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.pricingMethod}
+                      options={getDropdownValues(formOptions?.pricingMethod, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("pricingMethod", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Rate">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.profitRateTerms}
-                        options={getDropdownValues(formOptions?.profitRateTerms, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("profitRateTerms", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Rate">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.profitRateTerms}
+                      options={getDropdownValues(formOptions?.profitRateTerms, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("profitRateTerms", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Ranking">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.ranking}
-                        options={getDropdownValues(formOptions?.ranking, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("ranking", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Ranking">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.ranking}
+                      options={getDropdownValues(formOptions?.ranking, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("ranking", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Selling Restrictions">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.sellingRestrictions}
-                        options={getDropdownValues(formOptions?.sellingRestrictions, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("sellingRestrictions", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Selling Restrictions">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.sellingRestrictions}
+                      options={getDropdownValues(formOptions?.sellingRestrictions, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("sellingRestrictions", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <InlineFormField label="Shariah Compliance">
-                      <Select
-                        closeMenuOnSelect
-                        isSearchable
-                        placeholder="Select.."
-                        components={{
-                          ...animatedComponents,
-                        }}
-                        styles={selectStyles}
-                        value={values.shariaCompliance}
-                        options={getDropdownValues(formOptions?.shariaCompliance, locale)}
-                        onChange={(selected) => {
-                          setFieldValue("shariaCompliance", selected);
-                        }}
-                      />
-                    </InlineFormField>
+                  <InlineFormField label="Shariah Compliance">
+                    <Select
+                      closeMenuOnSelect
+                      isSearchable
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      styles={selectStyles}
+                      value={values.shariaCompliance}
+                      options={getDropdownValues(formOptions?.shariaCompliance, locale)}
+                      onChange={(selected) => {
+                        setFieldValue("shariaCompliance", selected);
+                      }}
+                    />
+                  </InlineFormField>
 
-                    <Grid item container spacing={2} justifyContent="flex-end">
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          onClick={() => {
-                            handleClose();
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </Grid>
-                      <Grid item>
-                        <Button color="primary" variant="contained" type="submit">
-                          {t("Miscellaneous.Submit")}{" "}
-                        </Button>
-                      </Grid>
+                  <Grid item container spacing={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => {
+                          handleClose();
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button color="primary" variant="contained" type="submit">
+                        {t("Miscellaneous.Submit")}{" "}
+                      </Button>
                     </Grid>
                   </Grid>
-                </Form>
-              )}
-            </Formik>
-          </MuiPickersUtilsProvider>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </DialogContent>
     </Dialog>

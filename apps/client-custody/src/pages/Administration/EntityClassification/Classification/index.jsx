@@ -25,7 +25,7 @@ const Classification = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation(["translation", "kyc", "components"]);
   const { theme } = useTheme();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { entityId } = useParams();
   const { locale } = theme;
 
@@ -127,7 +127,7 @@ const Classification = () => {
                     },
                   })
                 );
-                history.push(routes.dashboard.administration.entityManagement.entities.home);
+                navigate(routes.dashboard.administration.entityManagement.entities.home);
               },
             };
             dispatch(kycActionCreators.doPostKYCData(payload));

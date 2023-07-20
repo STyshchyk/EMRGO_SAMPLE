@@ -9,9 +9,7 @@ const defaultState = {
   },
   isFetchingDropdowns: true,
   bulletins: [],
-  currentBulletinDocument: {
-    title: "",
-  },
+  currentBulletinDocument: "",
   isLoading: false,
   filesUploaded: {},
   uploadStatus: {},

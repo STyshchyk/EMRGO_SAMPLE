@@ -307,4 +307,4 @@ const useRouterMapping = () => {
   return contextObject;
 };
 
-export { useRouterMapping, RouterMappingProvider };
+export { RouterMappingProvider, useRouterMapping };

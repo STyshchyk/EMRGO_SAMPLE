@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import MomentUtils from "@date-io/moment";
 import MaterialTable from "@material-table/core";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -74,21 +74,19 @@ const CouponEventsTableFiltering = () => {
           </Grid>
 
           <Box my={1} className="full-width">
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                placeholder="From"
-                fullWidth
-                inputVariant="filled"
-                format={DEFAULT_DATE_FORMAT}
-                value={couponEventFiltersState.fromDate}
-                onChange={(date) => {
-                  couponEventFiltersDispatcher({
-                    type: "SET_FROM_DATE",
-                    payload: date.toDate(),
-                  });
-                }}
-              />
-            </MuiPickersUtilsProvider>
+            <DatePicker
+              placeholder="From"
+              fullWidth
+              inputVariant="filled"
+              format={DEFAULT_DATE_FORMAT}
+              value={couponEventFiltersState.fromDate}
+              onChange={(date) => {
+                couponEventFiltersDispatcher({
+                  type: "SET_FROM_DATE",
+                  payload: date.toDate(),
+                });
+              }}
+            />
           </Box>
         </Grid>
         <Grid item lg={3} container>
@@ -100,7 +98,7 @@ const CouponEventsTableFiltering = () => {
 
           <Box my={1} className="full-width">
             <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
+              <DatePicker
                 placeholder="To"
                 fullWidth
                 inputVariant="filled"
@@ -267,109 +265,107 @@ const CouponEventsTable = ({
   ];
 
   return (
-    <Fragment>
-      <div
-        style={{
-          marginBottom: "1rem",
-        }}
-      >
-        <FilterProvider tableKey="coupon_administration">
-          <TableFiltersWrapper
-            tableRef={tableRef}
-            data={data}
-            columns={tableColumns}
-            open={true}
-            hideExportButtons
-          >
-            <CouponEventsTableFiltering
-              options={{
-                securityFilterOptionsList,
-                couponAllocStatusFilterOptionsList,
-              }}
-              tableRef={tableRef}
-            />
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
-                  name="security"
-                  label="Security"
-                  options={securityFilterOptionsList}
-                />
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
-                  name="status"
-                  label="Status"
-                  options={couponAllocStatusFilterOptionsList}
-                />
-              </Grid>
-            </Grid>
-          </TableFiltersWrapper>
-          <FilterConsumer>
-            {({ filters, filterColumns }) => {
-              const filteredData = data
-                ?.filter((row) => {
-                  // Security Filter
-                  if (filters?.security) {
-                    return row.security === filters?.security?.value?.value;
-                  }
-                  return true;
-                })
-                .filter((row) => {
-                  // Status Filter
-                  if (filters?.status) {
-                    return row.couponAllocationStatus === filters?.status?.value?.value;
-                  }
-                  return true;
-                });
-
-              return (
-                <div data-testid="coupon-events-table">
-                  <MaterialTable
-                    isLoading={isLoading}
-                    tableRef={tableRef}
-                    size="small"
-                    title=""
-                    style={{
-                      boxShadow: "none",
-                    }}
-                    columns={filterColumns.shownColumns}
-                    data={filteredData}
-                    actions={[
-                      {
-                        icon: "more_vert",
-                        onClick: (event, rowData) => {
-                          setAnchorEl(event.currentTarget);
-                          setCurrentlySelectedRowData(rowData);
-                        },
-                      },
-                    ]}
-                    options={{
-                      ...tableStyles,
-
-                      toolbar: false,
-                      pageSize: 10,
-                      search: false,
-                      fixedColumns: {
-                        left: 0,
-                      },
-                      actionsColumnIndex: -1,
-                      draggable: false,
-                    }}
-                    localization={mtableLocalization}
-                  />
-                  <TableActionMenu
-                    actions={actions}
-                    anchorEl={anchorEl}
-                    handleCloseMenu={handleCloseMenu}
-                  />
-                </div>
-              );
+    <div
+      style={{
+        marginBottom: "1rem",
+      }}
+    >
+      <FilterProvider tableKey="coupon_administration">
+        <TableFiltersWrapper
+          tableRef={tableRef}
+          data={data}
+          columns={tableColumns}
+          open={true}
+          hideExportButtons
+        >
+          <CouponEventsTableFiltering
+            options={{
+              securityFilterOptionsList,
+              couponAllocStatusFilterOptionsList,
             }}
-          </FilterConsumer>
-        </FilterProvider>
-      </div>
-    </Fragment>
+            tableRef={tableRef}
+          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} lg={3}>
+              <DropdownFilter
+                name="security"
+                label="Security"
+                options={securityFilterOptionsList}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <DropdownFilter
+                name="status"
+                label="Status"
+                options={couponAllocStatusFilterOptionsList}
+              />
+            </Grid>
+          </Grid>
+        </TableFiltersWrapper>
+        <FilterConsumer>
+          {({ filters, filterColumns }) => {
+            const filteredData = data
+              ?.filter((row) => {
+                // Security Filter
+                if (filters?.security) {
+                  return row.security === filters?.security?.value?.value;
+                }
+                return true;
+              })
+              .filter((row) => {
+                // Status Filter
+                if (filters?.status) {
+                  return row.couponAllocationStatus === filters?.status?.value?.value;
+                }
+                return true;
+              });
+
+            return (
+              <div data-testid="coupon-events-table">
+                <MaterialTable
+                  isLoading={isLoading}
+                  tableRef={tableRef}
+                  size="small"
+                  title=""
+                  style={{
+                    boxShadow: "none",
+                  }}
+                  columns={filterColumns.shownColumns}
+                  data={filteredData}
+                  actions={[
+                    {
+                      icon: "more_vert",
+                      onClick: (event, rowData) => {
+                        setAnchorEl(event.currentTarget);
+                        setCurrentlySelectedRowData(rowData);
+                      },
+                    },
+                  ]}
+                  options={{
+                    ...tableStyles,
+
+                    toolbar: false,
+                    pageSize: 10,
+                    search: false,
+                    fixedColumns: {
+                      left: 0,
+                    },
+                    actionsColumnIndex: -1,
+                    draggable: false,
+                  }}
+                  localization={mtableLocalization}
+                />
+                <TableActionMenu
+                  actions={actions}
+                  anchorEl={anchorEl}
+                  handleCloseMenu={handleCloseMenu}
+                />
+              </div>
+            );
+          }}
+        </FilterConsumer>
+      </FilterProvider>
+    </div>
   );
 };
 

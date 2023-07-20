@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { CsvBuilder } from "filefy";
 
 import CashStatementTable from "../../../components/BillingAndPayments/CashStatementTable";
@@ -33,7 +33,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 import style from "./style.module.scss";
 
-const getFormattedBalanceType = (accType) => titleCase(accType.split("_").join(" "));
+const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
   const entries = [];
@@ -158,7 +158,7 @@ const CashStatementPage = () => {
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${titleCase(acc.type)}`,
+          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });

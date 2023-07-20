@@ -8,7 +8,7 @@ import style from "./style.module.scss";
 
 const Pill = ({ route }) => {
   const { t } = useTranslation();
-  const isActive = useMatch(route.path);
+  const isActive = useMatch(route.link);
 
   return (
     <div className={style.pillContainer}>

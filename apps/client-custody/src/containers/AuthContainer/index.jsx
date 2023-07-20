@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import { connect } from "react-redux";
-import { useMatch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
@@ -22,7 +22,7 @@ import {
 import useIsProduction from "../../utils/useIsProduction";
 
 const AuthContainer = ({ requestPasswordReset, resetPasswordSuccess }) => {
-  const location = useMatch().path;
+  const location = useLocation().pathname;
   const inProd = useIsProduction();
 
   switch (location) {

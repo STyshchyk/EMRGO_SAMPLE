@@ -17,7 +17,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { reverse } from "named-urls";
 
 import routes from "../../constants/routes";
@@ -444,7 +444,7 @@ const ViewKYCModal = ({ entityId, rowData, open, onClose }) => {
         route = routes.dashboard.administration.entityDetails.kyc.entities.entity.classification;
         break;
     }
-    // history.push(reverse(`${route}`, { entityId: rowData.id }));
+    // navigate(reverse(`${route}`, { entityId: rowData.id }));
     const win = window.open(reverse(`${route}`, { entityId: rowData.id }), "_blank");
     win.focus();
   };

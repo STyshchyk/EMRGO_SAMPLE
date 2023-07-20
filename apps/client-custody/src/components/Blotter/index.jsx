@@ -51,7 +51,7 @@ import cx from "classnames";
 import { CsvBuilder } from "filefy";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import concat from "lodash.concat";
 import find from "lodash.find";
 import partition from "lodash.partition";
@@ -1007,7 +1007,7 @@ const Blotter = ({
                                   }}
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"
-                                  component={KeyboardDatePicker}
+                                  component={DatePicker}
                                   name="fromDate"
                                   label={t("blotter:Filters.Date Dropdown.From")}
                                   onBlur={() => {
@@ -1023,7 +1023,7 @@ const Blotter = ({
                                   inputVariant="filled"
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"
-                                  component={KeyboardDatePicker}
+                                  component={DatePicker}
                                   name="toDate"
                                   label={t("blotter:Filters.Date Dropdown.To")}
                                   onBlur={() => {
@@ -1134,7 +1134,7 @@ const Blotter = ({
                                   }}
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"
-                                  component={KeyboardDatePicker}
+                                  component={DatePicker}
                                   name="settlementFromDate"
                                   label={t("blotter:Filters.Date Dropdown.From")}
                                   onBlur={() => {
@@ -1150,7 +1150,7 @@ const Blotter = ({
                                   inputVariant="filled"
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"
-                                  component={KeyboardDatePicker}
+                                  component={DatePicker}
                                   name="settlementToDate"
                                   label={t("blotter:Filters.Date Dropdown.To")}
                                   onBlur={() => {

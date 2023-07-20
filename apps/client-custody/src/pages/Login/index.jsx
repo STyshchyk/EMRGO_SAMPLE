@@ -80,7 +80,7 @@ const LoginForm = () => {
 };
 
 const Login = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation(["auth"]);
   const isAuthenticated = useSelector(selectIsUserAuthenticated);
@@ -92,11 +92,11 @@ const Login = () => {
     if (isAuthenticated) {
       if (is2FAEnabled && userObject.MFAActive) {
         const { from } = location.state || { from: { pathname: routes.authentication.otp } };
-        history.push(from);
+        navigate(from);
       } else {
         const { from } = location.state || { from: { pathname: routes.dashboard.home } };
         // const { from } = location.state || { from: { pathname: routes.authentication.setupMFA } };
-        history.push(from);
+        navigate(from);
       }
     }
   }, [history, isAuthenticated, location.state, userObject, is2FAEnabled]);

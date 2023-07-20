@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import Typography from "@mui/material/Typography";
-import changeCase from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 import shortid from "shortid";
 
@@ -53,21 +53,21 @@ const DataTable = ({ headers, rows, sectionHeader }) => {
                     `statuses:Users.${
                       rowData.entityType === "FIDUCIARY"
                         ? "SPE Trustee"
-                        : changeCase.title(rowData.entityType)
+                        : capitalCase(rowData.entityType)
                     }`
                   )}
                 </p>
               )}
             </div>
             <div className={style.tableCol}>
-              {/* <p className={style.tableData}>{t(`statuses:Users.${rowData.entityType ? changeCase.title(rowData.entityType) : ''}`)}</p> */}
+              {/* <p className={style.tableData}>{t(`statuses:Users.${rowData.entityType ? capitalCase(rowData.entityType) : ''}`)}</p> */}
               {sectionHeader === "Service Providers" ? (
                 <p className={style.tableData}>
                   {t(
                     `statuses:Users.${
                       rowData.hiredByEntityType === "FIDUCIARY"
                         ? "SPE Trustee"
-                        : changeCase.title(rowData.hiredByEntityType)
+                        : capitalCase(rowData.hiredByEntityType)
                     }`
                   )}
                 </p>
@@ -77,7 +77,7 @@ const DataTable = ({ headers, rows, sectionHeader }) => {
                     `statuses:Users.${
                       rowData.entityType === "FIDUCIARY"
                         ? "SPE Trustee"
-                        : changeCase.title(rowData.entityType)
+                        : capitalCase(rowData.entityType)
                     }`
                   )}
                 </p>
@@ -85,7 +85,7 @@ const DataTable = ({ headers, rows, sectionHeader }) => {
             </div>
             <div className={style.tableCol}>
               <p className={style.tableData}>
-                <StatusText text={rowData.status ? changeCase.title(rowData.status) : ""} />
+                <StatusText text={rowData.status ? capitalCase(rowData.status) : ""} />
               </p>
             </div>
           </div>

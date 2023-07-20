@@ -12,7 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 
 import MaterialTableOverflowMenu from "../../../components/MaterialTableOverflowMenu";
 import PageTitle from "../../../components/PageTitle";
@@ -55,7 +55,7 @@ const EntityAccountManagement = () => {
     }) => ({
       id: clientSecuritiesAccount.id,
       accountNumber: clientSecuritiesAccount.accountNumber,
-      accountType: `${titleCase(clientSecuritiesAccount.type)} (Security)`,
+      accountType: `${capitalCase(clientSecuritiesAccount.type)} (Security)`,
       currency: "--",
       entityName: corporateEntityName,
       externalAccountNumber: "--",
@@ -76,7 +76,7 @@ const EntityAccountManagement = () => {
     })
   );
 
-  const getFormattedAccountType = (accType) => `${titleCase(accType.split("_").join(" "))} (Cash)`;
+  const getFormattedAccountType = (accType) => `${capitalCase(accType.split("_").join(" "))} (Cash)`;
 
   const handleAddAccount = (data, resetForm) => {
     const payload = {

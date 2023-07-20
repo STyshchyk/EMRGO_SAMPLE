@@ -13,7 +13,7 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import changeCase from "change-case";
+import { capitalCase } from "change-case";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import Moment from "moment";
@@ -252,248 +252,246 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
   };
 
   return (
-    <Fragment>
-      <Dialog
-        fullWidth
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        scroll="body"
-        maxWidth="lg"
+    <Dialog
+      fullWidth
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+      scroll="body"
+      maxWidth="lg"
+    >
+      <Formik
+        initialValues={{
+          client: invoice?.entity_name || "",
+          invoiceRef: invoice?.reference || "",
+          invoiceDate: invoice ? dateRenderer(invoice?.date) : null,
+          minimumCharge: roundNumber(Number(selectedRow?.minCharge), BANK_AMOUNT_DP) || 0,
+          invoiceAmount:
+            roundNumber(
+              Number(totalInvoiceAmount === null ? selectedRow?.amount : totalInvoiceAmount),
+              BANK_AMOUNT_DP
+            ) || 0,
+        }}
+        // validationSchema={addFXTransactionFormSchema}
+        enableReinitialize
+        onSubmit={(values, actions) => {
+          handleInvoiceSubmit(values);
+          actions.setSubmitting(false);
+        }}
       >
-        <Formik
-          initialValues={{
-            client: invoice?.entity_name || "",
-            invoiceRef: invoice?.reference || "",
-            invoiceDate: invoice ? dateRenderer(invoice?.date) : null,
-            minimumCharge: roundNumber(Number(selectedRow?.minCharge), BANK_AMOUNT_DP) || 0,
-            invoiceAmount:
+        {({ handleSubmit, values, setFieldValue }) => {
+          const handleInvoiceCalculation = () => {
+            const processedInvoiceItems = processInvoiceItems();
+
+            const requestPayload = {
+              min_charge: values.minimumCharge,
+              ...processedInvoiceItems,
+            };
+            console.log(
+              "🚀 ~ file: index.js:249 ~ handleInvoiceCalculation ~ requestPayload:",
+              JSON.stringify(requestPayload)
+            );
+
+            dispatch(
+              billingActionCreators.doCalculateInvoiceRequest({
+                requestPayload,
+                invoiceId: selectedRow?.id,
+              })
+            );
+            setFieldValue(
+              "invoiceAmount",
               roundNumber(
                 Number(totalInvoiceAmount === null ? selectedRow?.amount : totalInvoiceAmount),
                 BANK_AMOUNT_DP
-              ) || 0,
-          }}
-          // validationSchema={addFXTransactionFormSchema}
-          enableReinitialize
-          onSubmit={(values, actions) => {
-            handleInvoiceSubmit(values);
-            actions.setSubmitting(false);
-          }}
-        >
-          {({ handleSubmit, values, setFieldValue }) => {
-            const handleInvoiceCalculation = () => {
-              const processedInvoiceItems = processInvoiceItems();
+              ) || 0
+            );
+          };
 
-              const requestPayload = {
-                min_charge: values.minimumCharge,
-                ...processedInvoiceItems,
-              };
-              console.log(
-                "🚀 ~ file: index.js:249 ~ handleInvoiceCalculation ~ requestPayload:",
-                JSON.stringify(requestPayload)
-              );
+          return (
+            <form onSubmit={handleSubmit}>
+              <DialogTitle id="form-dialog-title">
+                {" "}
+                {t("Invoice Management.View Dialog.Invoice", {
+                  type: capitalCase(modalType),
+                })}
+              </DialogTitle>
 
-              dispatch(
-                billingActionCreators.doCalculateInvoiceRequest({
-                  requestPayload,
-                  invoiceId: selectedRow?.id,
-                })
-              );
-              setFieldValue(
-                "invoiceAmount",
-                roundNumber(
-                  Number(totalInvoiceAmount === null ? selectedRow?.amount : totalInvoiceAmount),
-                  BANK_AMOUNT_DP
-                ) || 0
-              );
-            };
-
-            return (
-              <form onSubmit={handleSubmit}>
-                <DialogTitle id="form-dialog-title">
-                  {" "}
-                  {t("Invoice Management.View Dialog.Invoice", {
-                    type: changeCase.titleCase(modalType),
-                  })}
-                </DialogTitle>
-
-                <DialogContent>
-                  <Box mb={2}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={12} lg={6} container>
-                        <Grid item xs={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t("Invoice Management.View Dialog.Client")}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} container alignContent="center" className="px-1">
-                          <Field
-                            fullWidth
-                            disabled
-                            component={TextField}
-                            name="client"
-                            variant="filled"
-                          />
-                        </Grid>
+              <DialogContent>
+                <Box mb={2}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={12} lg={6} container>
+                      <Grid item xs={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t("Invoice Management.View Dialog.Client")}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={12} md={12} lg={6} container>
-                        <Grid item xs={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t("Invoice Management.View Dialog.Invoice Reference")}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} container alignContent="center" className="px-1">
-                          <Field
-                            fullWidth
-                            disabled
-                            component={TextField}
-                            name="invoiceRef"
-                            variant="filled"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} md={12} lg={6} container>
-                        <Grid item xs={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t("Invoice Management.View Dialog.Invoice Date")}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} container alignContent="center" className="px-1">
-                          <Field
-                            fullWidth
-                            disabled
-                            component={TextField}
-                            name="invoiceDate"
-                            variant="filled"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} md={12} lg={6} container>
-                        <Grid item xs={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t("Invoice Management.View Dialog.Minimum Charge (USD)")}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} container alignContent="center" className="px-1">
-                          <Field
-                            disabled={modalType !== "amend"}
-                            fullWidth
-                            component={TextField}
-                            name="minimumCharge"
-                            variant="filled"
-                          />
-                        </Grid>
+                      <Grid item xs={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          disabled
+                          component={TextField}
+                          name="client"
+                          variant="filled"
+                        />
                       </Grid>
                     </Grid>
-                    <TransactionChargesSection
-                      modalType={modalType}
-                      selectedRow={selectedRow}
-                      transactionTypeOptions={transactionTypeOptions}
-                      securityTypeOptions={securityTypeOptions}
-                      countriesLookup={countriesLookup}
-                      localTransactionCharges={localTransactionCharges}
-                      setLocalTransactionCharges={setLocalTransactionCharges}
-                    />
-
-                    <SafekeepingChargesSection
-                      modalType={modalType}
-                      selectedRow={selectedRow}
-                      securityTypeOptions={securityTypeOptions}
-                      countriesLookup={countriesLookup}
-                      localSafekeepingCharges={localSafekeepingCharges}
-                      setLocalSafekeepingCharges={setLocalSafekeepingCharges}
-                    />
-
-                    <PaymentHolidaysSection
-                      modalType={modalType}
-                      selectedRow={selectedRow}
-                      localPaymentHolidays={localPaymentHolidays}
-                      setLocalPaymentHolidays={setLocalPaymentHolidays}
-                    />
-
-                    <OutOfPocketExpensesSections
-                      modalType={modalType}
-                      localOutOfPocketExpenses={localOutOfPocketExpenses}
-                      setLocalOutOfPocketExpenses={setLocalOutOfPocketExpenses}
-                    />
-
-                    <Grid container justifyContent="flex-end" alignContent="center">
-                      <Grid
-                        xs
-                        item
-                        container
-                        direction="column"
-                        justifyContent="center"
-                        alignContent="flex-end"
-                      >
-                        <Typography>Invoice Amount (USD)</Typography>
+                    <Grid item xs={12} md={12} lg={6} container>
+                      <Grid item xs={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t("Invoice Management.View Dialog.Invoice Reference")}
+                        </Typography>
                       </Grid>
-
-                      <Field
-                        disabled={modalType !== "amend"}
-                        component={TextField}
-                        name="invoiceAmount"
-                        variant="filled"
-                        className="w-[20rem] ml-6 mr-2 "
-                      />
-                      {modalType === "amend" && (
-                        <Tooltip title="Update" placement="top">
-                          <Fab
-                            aria-label="update"
-                            size="small"
-                            color="primary"
-                            onClick={() => handleInvoiceCalculation()}
-                          >
-                            <RefreshIcon />
-                          </Fab>
-                        </Tooltip>
-                      )}
+                      <Grid item xs={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          disabled
+                          component={TextField}
+                          name="invoiceRef"
+                          variant="filled"
+                        />
+                      </Grid>
                     </Grid>
-                  </Box>
-                </DialogContent>
-
-                <DialogActions>
-                  <Grid container justifyContent="flex-end" className="w-full">
-                    <Grid item lg={3}>
-                      <Button
-                        fullWidth
-                        onClick={() => {
-                          handleClose();
-                        }}
-                        color="primary"
-                      >
-                        {t("translation:Miscellaneous.Cancel")}
-                      </Button>
+                    <Grid item xs={12} md={12} lg={6} container>
+                      <Grid item xs={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t("Invoice Management.View Dialog.Invoice Date")}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          disabled
+                          component={TextField}
+                          name="invoiceDate"
+                          variant="filled"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={6} container>
+                      <Grid item xs={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t("Invoice Management.View Dialog.Minimum Charge (USD)")}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6} container alignContent="center" className="px-1">
+                        <Field
+                          disabled={modalType !== "amend"}
+                          fullWidth
+                          component={TextField}
+                          name="minimumCharge"
+                          variant="filled"
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
-                  {modalType === "amend" && (
-                    <Grid item lg={3}>
-                      <Button fullWidth type="submit" variant="contained" color="primary">
-                        {t("translation:Miscellaneous.Submit")}
-                      </Button>
+                  <TransactionChargesSection
+                    modalType={modalType}
+                    selectedRow={selectedRow}
+                    transactionTypeOptions={transactionTypeOptions}
+                    securityTypeOptions={securityTypeOptions}
+                    countriesLookup={countriesLookup}
+                    localTransactionCharges={localTransactionCharges}
+                    setLocalTransactionCharges={setLocalTransactionCharges}
+                  />
+
+                  <SafekeepingChargesSection
+                    modalType={modalType}
+                    selectedRow={selectedRow}
+                    securityTypeOptions={securityTypeOptions}
+                    countriesLookup={countriesLookup}
+                    localSafekeepingCharges={localSafekeepingCharges}
+                    setLocalSafekeepingCharges={setLocalSafekeepingCharges}
+                  />
+
+                  <PaymentHolidaysSection
+                    modalType={modalType}
+                    selectedRow={selectedRow}
+                    localPaymentHolidays={localPaymentHolidays}
+                    setLocalPaymentHolidays={setLocalPaymentHolidays}
+                  />
+
+                  <OutOfPocketExpensesSections
+                    modalType={modalType}
+                    localOutOfPocketExpenses={localOutOfPocketExpenses}
+                    setLocalOutOfPocketExpenses={setLocalOutOfPocketExpenses}
+                  />
+
+                  <Grid container justifyContent="flex-end" alignContent="center">
+                    <Grid
+                      xs
+                      item
+                      container
+                      direction="column"
+                      justifyContent="center"
+                      alignContent="flex-end"
+                    >
+                      <Typography>Invoice Amount (USD)</Typography>
                     </Grid>
-                  )}
-                  {modalType === "approve" && (
-                    <Grid item lg={3}>
-                      <Button
-                        fullWidth
-                        onClick={() => {
-                          handleApprove();
-                        }}
-                        variant="contained"
-                        color="primary"
-                      >
-                        {t("translation:Miscellaneous.Approve")}
-                      </Button>
-                    </Grid>
-                  )}
-                </DialogActions>
-              </form>
-            );
-          }}
-        </Formik>
-      </Dialog>
-    </Fragment>
+
+                    <Field
+                      disabled={modalType !== "amend"}
+                      component={TextField}
+                      name="invoiceAmount"
+                      variant="filled"
+                      className="w-[20rem] ml-6 mr-2 "
+                    />
+                    {modalType === "amend" && (
+                      <Tooltip title="Update" placement="top">
+                        <Fab
+                          aria-label="update"
+                          size="small"
+                          color="primary"
+                          onClick={() => handleInvoiceCalculation()}
+                        >
+                          <RefreshIcon />
+                        </Fab>
+                      </Tooltip>
+                    )}
+                  </Grid>
+                </Box>
+              </DialogContent>
+
+              <DialogActions>
+                <Grid container justifyContent="flex-end" className="w-full">
+                  <Grid item lg={3}>
+                    <Button
+                      fullWidth
+                      onClick={() => {
+                        handleClose();
+                      }}
+                      color="primary"
+                    >
+                      {t("translation:Miscellaneous.Cancel")}
+                    </Button>
+                  </Grid>
+                </Grid>
+                {modalType === "amend" && (
+                  <Grid item lg={3}>
+                    <Button fullWidth type="submit" variant="contained" color="primary">
+                      {t("translation:Miscellaneous.Submit")}
+                    </Button>
+                  </Grid>
+                )}
+                {modalType === "approve" && (
+                  <Grid item lg={3}>
+                    <Button
+                      fullWidth
+                      onClick={() => {
+                        handleApprove();
+                      }}
+                      variant="contained"
+                      color="primary"
+                    >
+                      {t("translation:Miscellaneous.Approve")}
+                    </Button>
+                  </Grid>
+                )}
+              </DialogActions>
+            </form>
+          );
+        }}
+      </Formik>
+    </Dialog>
   );
 };
 

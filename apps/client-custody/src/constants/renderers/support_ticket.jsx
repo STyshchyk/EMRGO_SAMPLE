@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
 import { amber, green, grey, red } from "@mui/material/colors";
-import changeCase from "change-case";
+import { capitalCase } from "change-case";
 
 const chipStyle = {
   borderRadius: "3px",
@@ -27,7 +27,7 @@ export const typeRenderer = (value) => {
   }
   const statusChip = (
     <Chip
-      label={changeCase.titleCase(value)}
+      label={capitalCase(value)}
       style={{ ...chipStyle, backgroundColor: bgColor, color: textColor }}
     />
   );
@@ -49,11 +49,11 @@ export const statusRenderer = (value) => {
   }
   const statusChip = (
     <Chip
-      label={changeCase.titleCase(text)}
+      label={capitalCase(text)}
       style={{ ...chipStyle, backgroundColor: bgColor, color: textColor }}
     />
   );
   return statusChip;
 };
 
-export const titleRenderer = (value) => changeCase.titleCase(value);
+export const titleRenderer = (value) => capitalCase(value);

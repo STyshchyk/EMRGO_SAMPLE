@@ -14,14 +14,14 @@
   <path
     d="M22.7969 4H27.8182L34.5426 21.3906H34.808L41.5325 4H46.5537V28H42.6164V11.5117H42.4062L36.1463 27.9297H33.2043L26.9444 11.4766H26.7343V28H22.7969V4Z"
     fill="currentColor" />
-  <path fill-rule="evenodd" clip-rule="evenodd"
+  <path fillRule="evenodd" clipRule="evenodd"
     d="M0.000231734 0H10.3454V2.06452H2.00291L2.00267 10.6667H0L0.000231734 0Z" fill="#446875" />
-  <path fill-rule="evenodd" clip-rule="evenodd"
+  <path fillRule="evenodd" clipRule="evenodd"
     d="M51.7263 0H41.3812V2.06452H49.7237L49.7239 10.6667H51.7266L51.7263 0Z" fill="#446875" />
-  <path fill-rule="evenodd" clip-rule="evenodd"
+  <path fillRule="evenodd" clipRule="evenodd"
     d="M0 31.9998L1.59118e-07 21.3333L2.00267 21.3333L2.00267 29.9352L10.3454 29.9355L10.3454 32L0 31.9998Z"
     fill="#446875" />
-  <path fill-rule="evenodd" clip-rule="evenodd"
+  <path fillRule="evenodd" clipRule="evenodd"
     d="M51.7266 31.9998L51.7266 21.3333L49.7239 21.3333L49.7239 29.9352L41.3812 29.9355L41.3812 32L51.7266 31.9998Z"
     fill="#446875" />
 </svg>

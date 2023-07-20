@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { reverse } from "named-urls";
 
 import AssignEntityModal from "../../../../components/AssignEntityModal";
@@ -28,7 +28,7 @@ const PlatformDashboard = () => {
   const { t } = useTranslation(["administration", "translation"]);
   const mtableLocalization = useMaterialTableLocalization();
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   // state
   const [modalOpen, setModalOpen] = useState(false);
@@ -95,7 +95,7 @@ const PlatformDashboard = () => {
       render: (rowData) => {
         const { groups } = rowData;
         const group = groups[0];
-        return titleCase(group ? `${t(`translation:EntityGroupType.${group.entityType}`)}` : "");
+        return capitalCase(group ? `${t(`translation:EntityGroupType.${group.entityType}`)}` : "");
       },
       width: 150,
     },
@@ -246,7 +246,7 @@ const PlatformDashboard = () => {
               icon: "open_in_new",
               tooltip: t("administration:KYC.KYCManage.PlatformDashboard.View KYC"),
               onClick: () => {
-                history.push(
+                navigate(
                   reverse(
                     `${routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}`,
                     { entityId: rowData.id }

@@ -24,7 +24,7 @@ import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
 import { ErrorMessage, Field, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 
 import ChangeRequest from "../../../../components/ChangeRequest";
@@ -860,7 +860,7 @@ const KeyIndividuals = () => {
                                   minDate={moment()}
                                   variant="dialog"
                                   placeholder="DD/MM/YYYY"
-                                  component={KeyboardDatePicker}
+                                  component={DatePicker}
                                   name="saudiIdExpiry"
                                   label={t("kyc:Individuals.Form Fields.Iqama/Saudi ID Expiry")}
                                 />
@@ -921,7 +921,7 @@ const KeyIndividuals = () => {
                             minDate={moment()}
                             variant="dialog"
                             placeholder="DD/MM/YYYY"
-                            component={KeyboardDatePicker}
+                            component={DatePicker}
                             name="passportExpiry"
                             label={t("kyc:Individuals.Form Fields.Passport Expiry")}
                           />

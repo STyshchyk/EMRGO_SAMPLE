@@ -27,7 +27,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { titleCase, upperCase } from "change-case";
+import { capitalCase, upperCase } from "change-case";
 import { reverse } from "named-urls";
 import PropTypes from "prop-types";
 
@@ -55,7 +55,7 @@ const EntitiesTable = ({ tableData }) => {
   const inProd = useIsProduction();
 
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const isFetching = useSelector(entitiesSelectors.selectIsFetching);
   const entitiesList = useSelector(entitiesSelectors.selectEntities);
   const userAuth = useSelector(authSelectors.selectAuthenticatedUserObject);
@@ -94,14 +94,14 @@ const EntitiesTable = ({ tableData }) => {
   const handleViewEntityClassification = () => {
     const entityId = selectedRow?.id;
     if (isKYCRequested) {
-      history.push(
+      navigate(
         reverse(
           `${routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}`,
           { entityId }
         )
       );
     } else {
-      history.push(
+      navigate(
         reverse(
           `${routes.dashboard.administration.entityDetails.kyc.entities.entity.entityClassification}`,
           { entityId }
@@ -124,7 +124,7 @@ const EntitiesTable = ({ tableData }) => {
 
   const handleViewKYCOpen = () => {
     const entityId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}`,
         { entityId }
@@ -134,7 +134,7 @@ const EntitiesTable = ({ tableData }) => {
 
   const handleViewDocumentsOpen = () => {
     const entityId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(`${routes.dashboard.administration.entityDetails.kyc.entities.entity.documents}`, {
         entityId,
       })
@@ -197,7 +197,7 @@ const EntitiesTable = ({ tableData }) => {
 
   const handleManageGroupsClick = () => {
     const entityId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityManagement.entities.entity.entityGroups.home}`,
         { entityId }
@@ -207,7 +207,7 @@ const EntitiesTable = ({ tableData }) => {
 
   const handleManageUsersClick = () => {
     const entityId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityManagement.entities.entity.entityUsers.home}`,
         { entityId }
@@ -217,7 +217,7 @@ const EntitiesTable = ({ tableData }) => {
 
   const handleEditPreferencesClick = () => {
     const entityId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityManagement.entities.entity.editEntityPrefs.home}`,
         { entityId }
@@ -351,7 +351,7 @@ const EntitiesTable = ({ tableData }) => {
                   <Chip
                     size="small"
                     key={i?.id}
-                    label={titleCase(i?.displayName)}
+                    label={capitalCase(i?.displayName)}
                     color="primary"
                   />
                 </Grid>
@@ -369,7 +369,7 @@ const EntitiesTable = ({ tableData }) => {
             <Grid container spacing={1}>
               {rowData?.validGroupTypes.map((i) => (
                 <Grid item key={i.id}>
-                  <Chip size="small" key={i.id} label={titleCase(i.entityType)} color="primary" />
+                  <Chip size="small" key={i.id} label={capitalCase(i.entityType)} color="primary" />
                 </Grid>
               ))}
             </Grid>
@@ -472,7 +472,7 @@ const EntitiesTable = ({ tableData }) => {
                           <TableCell>
                             {row.entityType === "FIDUCIARY"
                               ? "SPE Trustee"
-                              : titleCase(row.entityType)}
+                              : capitalCase(row.entityType)}
                           </TableCell>
                           <TableCell>{row.isActive ? "Yes" : "No"}</TableCell>
                         </TableRow>

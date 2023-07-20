@@ -126,7 +126,7 @@ const Classification = () => {
                     },
                   })
                 );
-                // history.push(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
+                // navigate(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
               },
             };
             dispatch(kycActionCreators.doPostKYCData(payload));

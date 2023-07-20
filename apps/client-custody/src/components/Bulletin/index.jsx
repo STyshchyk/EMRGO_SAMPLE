@@ -158,7 +158,7 @@ const Bulletin = ({
 
 Bulletin.propTypes = {
   bulletins: PropTypes.arrayOf(PropTypes.object).isRequired,
-  showCreateBulletinModal: PropTypes.func.isRequired,
+  showCreateBulletinModal: PropTypes.bool.isRequired,
   setCreateBulletinModal: PropTypes.func.isRequired,
   bulletinTypeDropdown: PropTypes.shape().isRequired,
   handleFileUpload: PropTypes.func.isRequired,
@@ -168,8 +168,8 @@ Bulletin.propTypes = {
   deleteBulletin: PropTypes.func.isRequired,
   fetchBulletinDocument: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  currentBulletinDocument: PropTypes.string.isRequired,
-  updateBulletin: PropTypes.string.isRequired,
+  // currentBulletinDocument: PropTypes.string.isRequired,
+  // updateBulletin: PropTypes.string.isRequired,
 };
 
 export default Bulletin;

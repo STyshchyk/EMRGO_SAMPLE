@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 // import cx from 'classnames';
 
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import { selectCurrentEntityGroup } from "../../redux/selectors/auth";
@@ -59,7 +59,7 @@ const ChangeRequest = ({ setFieldValue, changeRequests, fieldKey }) => {
         <Fragment>
           {changeRequest !== null && changeRequest !== undefined ? (
             <Typography align="right" className="text-yellow-500 mt-4">
-              {titleCase(changeRequest)}
+              {capitalCase(changeRequest)}
             </Typography>
           ) : (
             ""

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import moment from "moment";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -30,7 +30,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
-const getFormattedBalanceType = (accType) => titleCase(accType.split("_").join(" "));
+const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
   const entries = [];
@@ -53,7 +53,7 @@ const getTableData = (accs) => {
 const CashStatementReportPage = () => {
   const dispatch = useDispatch();
   const tableRef = useRef();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter"]);
   const defaultDateRangeFilter = "none";
@@ -145,7 +145,7 @@ const CashStatementReportPage = () => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${titleCase(acc.type)}`,
+          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -325,7 +325,7 @@ const CashStatementReportPage = () => {
         when={transactions?.length > 0}
         title={t("reports:Leave Guard.Title")}
         message={t("reports:Leave Guard.Message")}
-        navigate={(path) => history.push(path)}
+        navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       />
       <FilterProvider tableKey="cash_statement">

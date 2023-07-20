@@ -1,9 +1,8 @@
 // import "react-dates/initialize";
 
-import MomentUtils from "@date-io/moment";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { adaptV4Theme, createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { lightBlue } from "@mui/material/colors";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import cx from "classnames";
 import { useField } from "formik";
 import PropTypes from "prop-types";
@@ -108,39 +107,37 @@ const Datepicker = (props) => {
         )}
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={muiTheme}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <div
+            <div
+              style={{
+                background: "#e6e6e6",
+                width: fullWidth ? "100%" : "250px",
+                borderRadius: "13px",
+                padding: "0.5em",
+              }}
+            >
+              <DatePicker
+                disabled={disabled}
+                clearable
                 style={{
-                  background: "#e6e6e6",
-                  width: fullWidth ? "100%" : "250px",
-                  borderRadius: "13px",
-                  padding: "0.5em",
+                  width: fullWidth ? "100%" : "",
                 }}
-              >
-                <KeyboardDatePicker
-                  disabled={disabled}
-                  clearable
-                  style={{
-                    width: fullWidth ? "100%" : "",
-                  }}
-                  name={field.name}
-                  value={field.value || null}
-                  onChange={handleDateChange}
-                  format={format}
-                  animateYearScrolling={animateYearScrolling}
-                  minDate={minDate}
-                  minDateMessage={minDateMessage ?? "Date should not be before minimal date"}
-                  maxDate={maxDate}
-                  label={materialLabel ? label : ""}
-                  disablePast={disablePast}
-                  disableFuture={disableFuture}
-                  inputVariant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-            </MuiPickersUtilsProvider>
+                name={field.name}
+                value={field.value || null}
+                onChange={handleDateChange}
+                format={format}
+                animateYearScrolling={animateYearScrolling}
+                minDate={minDate}
+                minDateMessage={minDateMessage ?? "Date should not be before minimal date"}
+                maxDate={maxDate}
+                label={materialLabel ? label : ""}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                inputVariant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
           </ThemeProvider>
         </StyledEngineProvider>
       </div>

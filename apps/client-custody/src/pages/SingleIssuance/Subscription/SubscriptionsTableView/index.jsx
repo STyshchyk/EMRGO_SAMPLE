@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
-import changeCase from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import statusesList from "../../../../constants/wethaqAPI/statusesList";
@@ -39,15 +39,12 @@ const SubscriptionsTableView = ({ data }) => {
             };
 
             if (
-              rowData ===
-              changeCase.titleCase(statusesList.subscription.SUBSCRIPTION_CONFIRMATION_PENDING)
+              rowData === capitalCase(statusesList.subscription.SUBSCRIPTION_CONFIRMATION_PENDING)
             ) {
               return { ...baseStyles, color: "orange" };
             }
 
-            if (
-              rowData === changeCase.titleCase(statusesList.subscription.SUBSCRIPTION_CONFIRMED)
-            ) {
+            if (rowData === capitalCase(statusesList.subscription.SUBSCRIPTION_CONFIRMED)) {
               return { ...baseStyles, color: "green" };
             }
             return { ...baseStyles };

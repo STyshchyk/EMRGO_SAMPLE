@@ -11,7 +11,7 @@ import appConfig from "../appConfig";
 
 const useAbsherRedirectURLHandler = () => {
   const location = useLocation();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { pathname, search } = location;
   const [status, setStatus] = useState(null);
   const [queryParamsObject, setQueryParamsObject] = useState(null);

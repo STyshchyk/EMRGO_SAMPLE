@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
 
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import PropTypes from "prop-types";
 
 import { AuthProvider } from "../../context/auth-context";
@@ -15,7 +17,9 @@ const AppProviders = ({ children }) => (
       <UserProvider>
         <FeatureToggleProvider>
           <Suspense fallback={<h2>Loading theme...</h2>}>
-            <CustomThemeProvider>{children}</CustomThemeProvider>
+            <CustomThemeProvider>
+              <LocalizationProvider dateAdapter={AdapterMoment}>{children}</LocalizationProvider>
+            </CustomThemeProvider>
           </Suspense>
         </FeatureToggleProvider>
       </UserProvider>

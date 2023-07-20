@@ -1,12 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useLocation, useParams } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import Select from "react-select";
 
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { mdiAccountCheckOutline, mdiCancel, mdiLockOpenOutline } from "@mdi/js";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -20,9 +19,9 @@ import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
 import moment from "moment";
 import QRCode from "qrcode.react";
 
@@ -451,122 +450,71 @@ const Details = () => {
             <Grid container justifyContent="center">
               <Grid item xs={12} sm={12} md={10} lg={6}>
                 {kycData && formData && !isFetching ? (
-                  <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                    <Formik
-                      initialValues={initialValues}
-                      validateOnMount={false}
-                      validationSchema={validationSchema}
-                      enableReinitialize
-                      onSubmit={(values, { setSubmitting }) => {
-                        const updatedValues = { ...values, capacityId: values?.capacity?.value };
+                  <Formik
+                    initialValues={initialValues}
+                    validateOnMount={false}
+                    validationSchema={validationSchema}
+                    enableReinitialize
+                    onSubmit={(values, { setSubmitting }) => {
+                      const updatedValues = { ...values, capacityId: values?.capacity?.value };
 
-                        delete updatedValues.capacity;
+                      delete updatedValues.capacity;
 
-                        const payload = {
-                          entityId,
-                          requestPayload: { individualDetails: updatedValues },
-                          successCallback: () => {
-                            setSubmitting(false);
-                            setIndividualKYCState("MFASetup");
-                            dispatch(authActionCreators.doFetchCurrentUserData());
-                            // history.push(reverse(`${routes.dashboard.administration.entityDetails.kyc.entities.home}`));
-                          },
-                        };
-                        dispatch(kycActionCreators.doPostKYCData(payload));
-                      }}
-                    >
-                      {({ handleSubmit, values, setFieldValue }) => (
-                        <form onSubmit={handleSubmit} noValidate className="mb-4">
-                          <br></br>
-                          <Grid container spacing={2}>
-                            {regionSwitcher({
-                              ae: (
-                                <Grid item xs={12} lg={12} container>
-                                  <Grid item xs={12} md={4} lg={4} container alignContent="center">
-                                    <Typography>
-                                      {t(`kyc:Individuals Details.Form Fields.Capacity`)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    md={8}
-                                    lg={8}
-                                    container
-                                    alignContent="center"
-                                    className="px-1 py-2"
-                                  >
-                                    <FormControl className="w-full">
-                                      <Select
-                                        closeMenuOnSelect
-                                        placeholder={t(
-                                          "kyc:Individuals Details.Form Fields.Capacity"
-                                        )}
-                                        isSearchable
-                                        styles={selectStyles}
-                                        menuPortalTarget={document.body}
-                                        value={values.capacity}
-                                        isClearable
-                                        options={filteredCapacity}
-                                        onChange={(selected) => {
-                                          setFieldValue("capacity", selected);
-                                        }}
-                                      />
-                                    </FormControl>
-                                  </Grid>
+                      const payload = {
+                        entityId,
+                        requestPayload: { individualDetails: updatedValues },
+                        successCallback: () => {
+                          setSubmitting(false);
+                          setIndividualKYCState("MFASetup");
+                          dispatch(authActionCreators.doFetchCurrentUserData());
+                          // navigate(reverse(`${routes.dashboard.administration.entityDetails.kyc.entities.home}`));
+                        },
+                      };
+                      dispatch(kycActionCreators.doPostKYCData(payload));
+                    }}
+                  >
+                    {({ handleSubmit, values, setFieldValue }) => (
+                      <form onSubmit={handleSubmit} noValidate className="mb-4">
+                        <br></br>
+                        <Grid container spacing={2}>
+                          {regionSwitcher({
+                            ae: (
+                              <Grid item xs={12} lg={12} container>
+                                <Grid item xs={12} md={4} lg={4} container alignContent="center">
+                                  <Typography>
+                                    {t(`kyc:Individuals Details.Form Fields.Capacity`)}
+                                  </Typography>
                                 </Grid>
-                              ),
-                              sa: absherFields.map((field) => (
-                                <Grid key={field.fieldKey} item xs={12} lg={12} container>
-                                  <Grid item xs={12} md={4} lg={4} container alignContent="center">
-                                    <Typography>
-                                      {t(`kyc:Individuals Details.Form Fields.${field.fieldLabel}`)}
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    md={4}
-                                    lg={4}
-                                    container
-                                    alignContent="center"
-                                    className="px-1 py-2"
-                                  >
-                                    <Field
-                                      InputProps={{ readOnly: true }}
-                                      fullWidth
-                                      component={TextField}
-                                      label={t("kyc:Individuals Details.Form Fields.English")}
-                                      name={field.fieldName}
-                                      variant="filled"
-                                      type="text"
+                                <Grid
+                                  item
+                                  xs={12}
+                                  md={8}
+                                  lg={8}
+                                  container
+                                  alignContent="center"
+                                  className="px-1 py-2"
+                                >
+                                  <FormControl className="w-full">
+                                    <Select
+                                      closeMenuOnSelect
+                                      placeholder={t(
+                                        "kyc:Individuals Details.Form Fields.Capacity"
+                                      )}
+                                      isSearchable
+                                      styles={selectStyles}
+                                      menuPortalTarget={document.body}
+                                      value={values.capacity}
+                                      isClearable
+                                      options={filteredCapacity}
+                                      onChange={(selected) => {
+                                        setFieldValue("capacity", selected);
+                                      }}
                                     />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    md={4}
-                                    lg={4}
-                                    container
-                                    alignContent="center"
-                                    className="px-1 py-2"
-                                    style={{ paddingLeft: 20 }}
-                                  >
-                                    <Field
-                                      InputProps={{ readOnly: true }}
-                                      fullWidth
-                                      component={TextField}
-                                      label={t("kyc:Individuals Details.Form Fields.Arabic")}
-                                      name={field.fieldNameAr}
-                                      variant="filled"
-                                      type="text"
-                                    />
-                                  </Grid>
+                                  </FormControl>
                                 </Grid>
-                              )),
-                            })}
-
-                            {formFields.map((field) => (
+                              </Grid>
+                            ),
+                            sa: absherFields.map((field) => (
                               <Grid key={field.fieldKey} item xs={12} lg={12} container>
                                 <Grid item xs={12} md={4} lg={4} container alignContent="center">
                                   <Typography>
@@ -576,72 +524,121 @@ const Details = () => {
                                 <Grid
                                   item
                                   xs={12}
-                                  md={regionSwitcher({ sa: 4, ae: 8 })}
-                                  lg={regionSwitcher({ sa: 4, ae: 8 })}
+                                  md={4}
+                                  lg={4}
                                   container
                                   alignContent="center"
                                   className="px-1 py-2"
                                 >
-                                  {
-                                    {
-                                      text: (
-                                        <Field
-                                          InputProps={{ readOnly: field.readOnly || false }}
-                                          fullWidth
-                                          component={TextField}
-                                          label={t(
-                                            `kyc:Individuals Details.Form Fields.${field.fieldLabel}`
-                                          )}
-                                          name={field.fieldKey}
-                                          variant="filled"
-                                          type="text"
-                                        />
-                                      ),
-                                      date: (
-                                        <Field
-                                          fullWidth
-                                          format="DD/MM/yyyy"
-                                          inputVariant="filled"
-                                          inputProps={{
-                                            shrink: "true",
-                                          }}
-                                          minDate={field.minDate}
-                                          maxDate={field.maxDate}
-                                          variant="dialog"
-                                          placeholder="DD/MM/YYYY"
-                                          component={KeyboardDatePicker}
-                                          name={field.fieldKey}
-                                        />
-                                      ),
-                                    }[field.type]
-                                  }
+                                  <Field
+                                    InputProps={{ readOnly: true }}
+                                    fullWidth
+                                    component={TextField}
+                                    label={t("kyc:Individuals Details.Form Fields.English")}
+                                    name={field.fieldName}
+                                    variant="filled"
+                                    type="text"
+                                  />
+                                </Grid>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  md={4}
+                                  lg={4}
+                                  container
+                                  alignContent="center"
+                                  className="px-1 py-2"
+                                  style={{ paddingLeft: 20 }}
+                                >
+                                  <Field
+                                    InputProps={{ readOnly: true }}
+                                    fullWidth
+                                    component={TextField}
+                                    label={t("kyc:Individuals Details.Form Fields.Arabic")}
+                                    name={field.fieldNameAr}
+                                    variant="filled"
+                                    type="text"
+                                  />
                                 </Grid>
                               </Grid>
-                            ))}
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            lg={12}
-                            container
-                            justifyContent="flex-end"
-                            className="pt-4"
-                          >
-                            <Grid item xs={12} md={4} lg={3}>
-                              <Button
-                                onClick={handleSubmit}
-                                fullWidth
-                                variant="contained"
-                                color="primary"
+                            )),
+                          })}
+
+                          {formFields.map((field) => (
+                            <Grid key={field.fieldKey} item xs={12} lg={12} container>
+                              <Grid item xs={12} md={4} lg={4} container alignContent="center">
+                                <Typography>
+                                  {t(`kyc:Individuals Details.Form Fields.${field.fieldLabel}`)}
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                md={regionSwitcher({ sa: 4, ae: 8 })}
+                                lg={regionSwitcher({ sa: 4, ae: 8 })}
+                                container
+                                alignContent="center"
+                                className="px-1 py-2"
                               >
-                                {t("auth:Buttons.Next")}
-                              </Button>
+                                {
+                                  {
+                                    text: (
+                                      <Field
+                                        InputProps={{ readOnly: field.readOnly || false }}
+                                        fullWidth
+                                        component={TextField}
+                                        label={t(
+                                          `kyc:Individuals Details.Form Fields.${field.fieldLabel}`
+                                        )}
+                                        name={field.fieldKey}
+                                        variant="filled"
+                                        type="text"
+                                      />
+                                    ),
+                                    date: (
+                                      <Field
+                                        fullWidth
+                                        format="DD/MM/yyyy"
+                                        inputVariant="filled"
+                                        inputProps={{
+                                          shrink: "true",
+                                        }}
+                                        minDate={field.minDate}
+                                        maxDate={field.maxDate}
+                                        variant="dialog"
+                                        placeholder="DD/MM/YYYY"
+                                        component={DatePicker}
+                                        name={field.fieldKey}
+                                      />
+                                    ),
+                                  }[field.type]
+                                }
+                              </Grid>
                             </Grid>
+                          ))}
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          lg={12}
+                          container
+                          justifyContent="flex-end"
+                          className="pt-4"
+                        >
+                          <Grid item xs={12} md={4} lg={3}>
+                            <Button
+                              onClick={handleSubmit}
+                              fullWidth
+                              variant="contained"
+                              color="primary"
+                            >
+                              {t("auth:Buttons.Next")}
+                            </Button>
                           </Grid>
-                        </form>
-                      )}
-                    </Formik>
-                  </MuiPickersUtilsProvider>
+                        </Grid>
+                      </form>
+                    )}
+                  </Formik>
                 ) : (
                   <CircularProgress />
                 )}
@@ -759,10 +756,8 @@ const Details = () => {
                                 isInputNum
                                 numInputs={6}
                                 shouldAutoFocus
-                                // separator={<Box m={2} />}
-                                containerStyle={style.otp__container}
-                                inputStyle={style.otp__input}
-                                focusStyle={style["otp__input--focus"]}
+                                renderSeparator={<span>-</span>}
+                                renderInput={(props) => <input {...props} />}
                               />
                               <Box mb={2}>
                                 <Button

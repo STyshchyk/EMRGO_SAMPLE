@@ -25,7 +25,7 @@ PageTitle.propTypes = {
 const DashboardHome = () => {
   const { t } = useTranslation(["translation", "bulletin", "administration", "kyc"]);
   const dispatch = useDispatch();
-  // const history = useNavigate();
+  // const navigate = useNavigate();
 
   const [showCreateBulletinModal, setCreateBulletinModal] = useState(false);
 
@@ -40,6 +40,10 @@ const DashboardHome = () => {
   const filesUploadInProgress = useSelector(bulletinSelectors.selectFilesUploadInProgress);
   const isLoading = useSelector(bulletinSelectors.selectIsLoading);
   const currentBulletinDocument = useSelector(bulletinSelectors.selectCurrentBulletinDocument);
+  console.log(
+    "🚀 ~ file: index.jsx:43 ~ DashboardHome ~ currentBulletinDocument:",
+    currentBulletinDocument
+  );
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const hasBulletinsManageACL = currentListOfACLs.includes("Bulletins/Manage");

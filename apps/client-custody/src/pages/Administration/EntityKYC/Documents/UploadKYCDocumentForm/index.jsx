@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -129,7 +129,7 @@ const UploadKYCDocumentForm = ({ initialValues, handleSubmit, handleClose, entit
                     minDate={moment()}
                     variant="dialog"
                     placeholder="DD/MM/YYYY"
-                    component={KeyboardDatePicker}
+                    component={DatePicker}
                     name="expiry"
                   />
                 </Grid>

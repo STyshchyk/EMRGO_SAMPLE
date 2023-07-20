@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { v4 as uuidv4 } from "uuid";
 
@@ -539,12 +539,12 @@ const Documents = () => {
     const options = [];
     users.forEach((user) => {
       // if (user.id !== currentUserId && user.entityGroup.entityType !== 'INVESTOR') {
-      //   options.push({ value: user.id, label: `${user.firstName} ${user.lastName || ''}`, type: t(`Users.${titleCase(user.entityGroup.entityType)}`) });
+      //   options.push({ value: user.id, label: `${user.firstName} ${user.lastName || ''}`, type: t(`Users.${capitalCase(user.entityGroup.entityType)}`) });
       // }
       options.push({
         value: user.id,
         label: `${user.firstName} ${user.lastName || ""}`,
-        type: t(`Users.${titleCase(user.entityGroup.entityType)}`),
+        type: t(`Users.${capitalCase(user.entityGroup.entityType)}`),
       });
     });
 
@@ -558,7 +558,7 @@ const Documents = () => {
       options.push({
         value: user.id,
         label: `${user.firstName} ${user.lastName || ""}`,
-        type: t(`Users.${titleCase(user.entityGroup.entityType)}`),
+        type: t(`Users.${capitalCase(user.entityGroup.entityType)}`),
       });
       // }
     });

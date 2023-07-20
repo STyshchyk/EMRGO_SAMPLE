@@ -7,7 +7,7 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import MuiTextField from "@mui/material/TextField";
-import changeCase from "change-case";
+import { camelCase } from "change-case";
 import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
 
@@ -115,9 +115,9 @@ const SafekeepingChargesSection = ({
   ];
 
   const processedSafeKeepingData = localSafekeepingCharges.map((band) => {
-    const concatedKey = `${changeCase.camelCase(
-      band.asset_country_icsd_name
-    )}_${changeCase.camelCase(band.asset_type_name)}`;
+    const concatedKey = `${camelCase(band.asset_country_icsd_name)}_${camelCase(
+      band.asset_type_name
+    )}`;
     return {
       ...band,
       band_end: band.band_end === -1 ? Infinity : band.band_end,

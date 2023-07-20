@@ -26,7 +26,7 @@ import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
 import { ErrorMessage, Field, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 
 import ChangeRequest from "../../../../components/ChangeRequest";
@@ -495,7 +495,7 @@ const Shareholders = () => {
                           variant="dialog"
                           maxDate={moment()}
                           placeholder="DD/MM/YYYY"
-                          component={KeyboardDatePicker}
+                          component={DatePicker}
                           name="publiclyListedExchangeListedDate"
                           label={t("kyc:Shareholders.Form Fields.Date Listed")}
                         />
@@ -1119,7 +1119,7 @@ const Shareholders = () => {
                                     variant="dialog"
                                     placeholder="DD/MM/YYYY"
                                     minDate={moment()}
-                                    component={KeyboardDatePicker}
+                                    component={DatePicker}
                                     name="saudiIdExpiry"
                                     label={t("kyc:Shareholders.Form Fields.Iqama/Saudi ID Expiry")}
                                   />
@@ -1176,7 +1176,7 @@ const Shareholders = () => {
                               variant="dialog"
                               placeholder="DD/MM/YYYY"
                               minDate={moment()}
-                              component={KeyboardDatePicker}
+                              component={DatePicker}
                               name="passportExpiry"
                               label={t("kyc:Shareholders.Form Fields.Passport Expiry")}
                             />
@@ -1574,7 +1574,7 @@ const Shareholders = () => {
                               variant="dialog"
                               maxDate={moment()}
                               placeholder="DD/MM/YYYY"
-                              component={KeyboardDatePicker}
+                              component={DatePicker}
                               name="incorporationDate"
                               label={t("kyc:Shareholders.Form Fields.Date of Incorporation")}
                             />

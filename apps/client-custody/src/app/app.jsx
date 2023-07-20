@@ -99,7 +99,7 @@ baseAxiosInstance.interceptors.response.use(undefined, (error) => {
     // }
 
     if (axiosErrorResponse?.status === 403) {
-      history.push(`${routes.dashboard.home}`);
+      // navigate(`${routes.dashboard.home}`);
 
       store.dispatch(authActionCreators.doAccessDeniedDialog(true));
     }

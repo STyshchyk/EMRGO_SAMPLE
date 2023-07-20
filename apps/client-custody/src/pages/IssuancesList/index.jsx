@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import changeCase from "change-case";
+import { capitalCase, titleCase } from "change-case";
 import cx from "classnames";
 import { reverse } from "named-urls";
 
@@ -28,7 +28,7 @@ import style from "./style.module.scss";
 
 const IssuancesList = () => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { theme } = useTheme();
   const { t } = useTranslation(["translation", "issuances", "statuses"]);
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
@@ -90,9 +90,7 @@ const IssuancesList = () => {
   };
 
   const handleNav = (entry) => {
-    history.push(
-      reverse(`${routes.dashboard.issuances.issuance.overview}`, { issuanceID: entry.id })
-    );
+    navigate(reverse(`${routes.dashboard.issuances.issuance.overview}`, { issuanceID: entry.id }));
   };
 
   const getTableRows = (entries) => {
@@ -176,9 +174,7 @@ const IssuancesList = () => {
                     <div className={style.sectionValueContainer}>
                       <p className={cx(style.sectionValue, style.highlighted)}>
                         {t(
-                          `statuses:Issuer.${
-                            entry?.issuerSPV || changeCase.title(entry?.issuerSPVStatus)
-                          }`
+                          `statuses:Issuer.${entry?.issuerSPV || titleCase(entry?.issuerSPVStatus)}`
                         )}
                       </p>
                     </div>
@@ -191,7 +187,7 @@ const IssuancesList = () => {
                       <p className={style.sectionValue}>
                         {t(
                           `statuses:Issuance.Private Placement.${
-                            changeCase.titleCase(entry?.status) ?? "N/A"
+                            capitalCase(entry?.status) ?? "N/A"
                           }`
                         )}
                       </p>

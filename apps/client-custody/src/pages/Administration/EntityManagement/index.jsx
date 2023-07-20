@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 
 import routes from "../../../constants/routes";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
@@ -19,7 +19,7 @@ import EntityUserAccessManagement from "./EntityUserAccessManagement";
 import EntityUsersManagement from "./EntityUsersManagement";
 
 const GoBackButton = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Button
@@ -39,7 +39,7 @@ const createEntitiesTableData = (entity) => ({
   name: entity.corporateEntityName,
   legalIdentifier: entity.legalIdentifier,
   legalEntityIdentifier: entity.kyc?.legalEntityIdentifier,
-  clientTermsStatus: titleCase(entity.clientTerms?.status),
+  clientTermsStatus: capitalCase(entity.clientTerms?.status),
   tncStatus: entity.tncStatus,
   isActive: entity.isActive,
   validGroupTypes: entity?.validGroupTypes,

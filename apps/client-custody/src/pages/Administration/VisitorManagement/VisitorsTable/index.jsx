@@ -35,7 +35,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 // import { Link } from 'react-router-dom';
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 
@@ -191,8 +191,8 @@ const VisitorsTable = ({
   const visitorEntityType = visitors
     .filter((visitor) => visitor.entityUserType !== null)
     .map((visitor) => ({
-      value: titleCase(visitor.entityUserType),
-      label: titleCase(visitor.entityUserType),
+      value: capitalCase(visitor.entityUserType),
+      label: capitalCase(visitor.entityUserType),
     }));
 
   const entityTypeOptions = [
@@ -298,7 +298,7 @@ const VisitorsTable = ({
                 } else {
                   const keys = values.entityType.map((entityType) => entityType.label);
                   if (row.entityUserType) {
-                    isTrue = keys.includes(titleCase(row.entityUserType));
+                    isTrue = keys.includes(capitalCase(row.entityUserType));
                   } else {
                     isTrue = false;
                   }
@@ -829,7 +829,7 @@ const VisitorsTable = ({
                     {
                       title: "Entity type",
                       field: "entityUserType",
-                      render: (rowData) => titleCase(rowData.entityUserType),
+                      render: (rowData) => capitalCase(rowData.entityUserType),
                     },
                     {
                       title: "Classification",

@@ -18,9 +18,9 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -572,7 +572,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           inputVariant="filled"
                           variant="dialog"
                           placeholder="DD/MM/YYYY"
-                          component={KeyboardDatePicker}
+                          component={DatePicker}
                           name="issueDate"
                         />
                       </Grid>
@@ -594,7 +594,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           variant="dialog"
                           placeholder="DD/MM/YYYY"
                           minDate={moment()}
-                          component={KeyboardDatePicker}
+                          component={DatePicker}
                           name="maturityDate"
                         />
                       </Grid>

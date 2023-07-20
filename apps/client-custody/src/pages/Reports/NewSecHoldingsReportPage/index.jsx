@@ -17,7 +17,7 @@ import ReportingDisclaimer from "../ReportingDisclaimer";
 
 const NewSecuritiesHoldingsReportPage = () => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
 
   const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
@@ -65,7 +65,7 @@ const NewSecuritiesHoldingsReportPage = () => {
         when={securitiesHoldingsData?.length > 0}
         title={t("reports:Leave Guard.Title")}
         message={t("reports:Leave Guard.Message")}
-        navigate={(path) => history.push(path)}
+        navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       />
       <SecuritiesHoldingsTable

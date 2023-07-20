@@ -1,13 +1,13 @@
 import { amber, green, grey, red } from "@mui/material/colors";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import moment from "moment";
 
 import tableStyles from "../../styles/cssInJs/materialTable";
 
 export const titleRenderer = (value) => {
-  const titledValue = titleCase(value);
+  const titledValue = capitalCase(value);
   return titledValue;
 };
 

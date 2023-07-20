@@ -24,7 +24,7 @@ import UserTable from "./UserTable";
 
 const VisitorManagement = () => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const [inviteUserModalOpen, setInviteUserModalOpen] = useState(false);
   const [viewUserInfoModalOpen, setViewUserInfoModalOpen] = useState(false);
@@ -141,7 +141,7 @@ const VisitorManagement = () => {
 
   const handleIndividualKYCOpen = () => {
     const individualId = selectedRow?.id;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityDetails.kyc.entities.entity.individuals.individual.home}`,
         { entityId, individualId }

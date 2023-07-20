@@ -14,7 +14,7 @@ import ReportingDisclaimer from "../ReportingDisclaimer";
 
 const CashBalancesReportPage = () => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
 
   // selectors
@@ -48,7 +48,7 @@ const CashBalancesReportPage = () => {
         when={transactions?.length > 0}
         title={t("reports:Leave Guard.Title")}
         message={t("reports:Leave Guard.Message")}
-        navigate={(path) => history.push(path)}
+        navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       />
 

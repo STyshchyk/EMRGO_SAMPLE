@@ -61,7 +61,7 @@ const SecurityReportView = ({ data }) => (
 
 const ReferenceDataReportPage = () => {
   const { t } = useTranslation(["reports", "blotter", "termsheet"]);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [currentlySelectedSecurity, setCurrentlySelectedSecurity] = useState(null);
@@ -296,7 +296,7 @@ const ReferenceDataReportPage = () => {
         when={selectedExternalSecurity?.name !== undefined}
         title={t("reports:Leave Guard.Title")}
         message={t("reports:Leave Guard.Message")}
-        navigate={(path) => history.push(path)}
+        navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       />
       <Grid item container alignItems="center" justifyContent="space-between" md={12} spacing={2}>

@@ -4,7 +4,7 @@ import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 
-import { mdiEmailSendOutline } from "@mdi/js";
+import { mdiEmailFastOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -47,7 +47,7 @@ const ForgotPasswordEmailSuccess = () => {
       <div className={style.success__icon__wrapper}>
         <Icon
           className={style.success__icon}
-          path={mdiEmailSendOutline}
+          path={mdiEmailFastOutline}
           size={8}
           title={t("auth:Action Complete")}
         />

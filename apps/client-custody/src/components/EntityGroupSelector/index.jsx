@@ -20,7 +20,7 @@ const getEntityGroupOption = (entityGroupName, entityGroupOptions) =>
 const EntityGroupSelector = () => {
   const dispatch = useDispatch();
   const [entityGroupMenu, setEntityGroupMenu] = useState(null);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityGroupIndex = useSelector(authSelectors.selectCurrentEntityGroupIndex);
@@ -40,7 +40,7 @@ const EntityGroupSelector = () => {
     // !Dev note: Dashboard header is always rendered whenever user navigates to a different page (Unintended side-effect!)
     // !Dev note: This push call will be executed only if user actually switches to a different EG
     if (currentEntityGroupIndex !== entityGroupIndex) {
-      history.push(routes.dashboard.home);
+      navigate(routes.dashboard.home);
     }
   }, [currentEntityGroupIndex, dispatch, entityGroupIndex, history]);
 

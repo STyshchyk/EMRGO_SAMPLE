@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useFilters } from "context/filter-context";
 import moment from "moment";
+
+import { useFilters } from "../../../context/filter-context";
 
 const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
   const { t } = useTranslation(["reports", "blotter"]);
@@ -42,8 +42,7 @@ const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
       </Grid>
 
       <Box my={1} className="full-width">
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <KeyboardDatePicker
+          <DatePicker
             fullWidth
             format="DD/MM/yyyy"
             inputVariant="filled"
@@ -62,7 +61,6 @@ const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
               setFilterValue(selectedDate.startOf("day"), name, label, "date");
             }}
           />
-        </MuiPickersUtilsProvider>
       </Box>
     </>
   );

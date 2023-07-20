@@ -9,7 +9,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
 import SubjectIcon from "@mui/icons-material/Subject";
-import { title } from "change-case";
+import { capitalCase } from "change-case";
 import { reverse } from "named-urls";
 
 import MaterialTableOverflowMenu from "../../../../components/MaterialTableOverflowMenu";
@@ -37,10 +37,10 @@ const createEntitiesTableData = (entity, t) => {
   return {
     id: entity.id,
     corporateEntityName: entity.corporateEntityName,
-    entityUserType: title(entityUserType),
+    entityUserType: capitalCase(entityUserType),
     jurisdiction: onboardingRequest?.jurisdiction,
     relationshipManager: entity.relationshipManager,
-    kycStatus: title(kycStatus),
+    kycStatus: capitalCase(kycStatus),
     clientTermsStatus: hasUserAcceptedClientTerms ? "completed" : "pending",
     amlCheck: entity.amlCheck,
   };
@@ -48,7 +48,7 @@ const createEntitiesTableData = (entity, t) => {
 
 const KYCEntitiesList = () => {
   const { t } = useTranslation(["administration"]);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const kycData = useSelector(kycSelectors.selectKYCData);
@@ -78,7 +78,7 @@ const KYCEntitiesList = () => {
   const handleIndividualKYCClick = () => {
     // const redirectURL = `${appConfig.baseAPIURL}absher/validate`;
     // window.location.href = redirectURL;
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityDetails.kyc.entities.entity.individuals.individual.home}`,
         { entityId: selectedRow.id, individualId }
@@ -87,7 +87,7 @@ const KYCEntitiesList = () => {
   };
 
   const handleEntityClassificationClick = () => {
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityDetails.kyc.entities.entity.entityClassification}`,
         { entityId: selectedRow.id }
@@ -97,14 +97,14 @@ const KYCEntitiesList = () => {
 
   const handleEntityKYCClick = () => {
     if (isIssuer) {
-      history.push(
+      navigate(
         reverse(
           `${routes.dashboard.administration.entityDetails.kyc.entities.entity.identification}`,
           { entityId: selectedRow.id }
         )
       );
     } else {
-      history.push(
+      navigate(
         reverse(
           `${routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}`,
           { entityId: selectedRow.id }
@@ -114,7 +114,7 @@ const KYCEntitiesList = () => {
   };
 
   const handleViewDocumentsClick = () => {
-    history.push(
+    navigate(
       reverse(`${routes.dashboard.administration.entityDetails.kyc.entities.entity.documents}`, {
         entityId: selectedRow.id,
       })

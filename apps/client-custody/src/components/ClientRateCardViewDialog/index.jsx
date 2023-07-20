@@ -9,7 +9,6 @@ import MaterialTable from "@material-table/core";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import ExposureZeroIcon from "@mui/icons-material/ExposureZero";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import WrapTextIcon from "@mui/icons-material/WrapText";
 import Alert from "@mui/material/Alert";
@@ -32,7 +31,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Paper from "@mui/material/Paper";
 import MuiTextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import changeCase from "change-case";
+import { camelCase, capitalCase } from "change-case";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import groupBy from "lodash.groupby";
@@ -70,12 +69,12 @@ const ToastMessageRenderer = ({ groupedMessages }) => (
     <List dense>
       <Fragment>
         {groupedMessages.map((group, index) => (
-          <Fragment>
+          <Fragment key={index}>
             <ListSubheader disableSticky className="text-xs text-left text-gray-500 pt-4">
               {group.name}
             </ListSubheader>
             {group.messages.map((message) => (
-              <Fragment>
+              <Fragment key={message.text}>
                 <ListItem>
                   <ListItemIcon>{message.icon}</ListItemIcon>
                   <ListItemText
@@ -321,7 +320,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
   ];
 
   const processedSafeKeepingData = localSafekeepingCharges.map((band) => {
-    const concatedKey = `${band?.name?.String}_${changeCase.camelCase(band?.name_2?.String)}`;
+    const concatedKey = `${band?.name?.String}_${camelCase(band?.name_2?.String)}`;
     return {
       ...band,
       band_end: band?.band_end === -1 ? Infinity : band?.band_end,
@@ -437,7 +436,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       // Check if first band starts at 0
       const firstBand = sortedBands[0];
       if (firstBand.band_start !== 0) {
-        messages.push({ text: `Bands do not start from 0`, icon: <ExposureZeroIcon /> });
+        messages.push({ text: `Bands do not start from 0`, icon: <ErrorOutlineIcon /> });
       }
 
       // Check for gaps and overlaps
@@ -471,7 +470,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
 
       if (messages.length > 0) {
         groupedMessages.push({
-          name: `${changeCase.titleCase(firstBand.name.String)} ( ${firstBand.name_2.String} )`,
+          name: `${capitalCase(firstBand.name.String)} ( ${firstBand.name_2.String} )`,
           messages,
         });
       }
@@ -540,579 +539,573 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
   };
 
   return (
-    <Fragment>
-      <Dialog
-        fullWidth
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        scroll="body"
-        maxWidth="md"
+    <Dialog
+      fullWidth
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+      scroll="body"
+      maxWidth="md"
+    >
+      <Formik
+        initialValues={{
+          client: currentEntity?.corporateEntityName || "",
+          billingAccount: selectedAccount || null,
+          billingPeriod: selectedBillingPeriod || null,
+          minimumCharge: selectedRow?.minCharge || 0,
+        }}
+        // validationSchema={addFXTransactionFormSchema}
+        enableReinitialize
+        onSubmit={(values, actions) => {
+          handleRateCardSubmit(values);
+          actions.setSubmitting(false);
+        }}
       >
-        <Formik
-          initialValues={{
-            client: currentEntity?.corporateEntityName || "",
-            billingAccount: selectedAccount || null,
-            billingPeriod: selectedBillingPeriod || null,
-            minimumCharge: selectedRow?.minCharge || 0,
-          }}
-          // validationSchema={addFXTransactionFormSchema}
-          enableReinitialize
-          onSubmit={(values, actions) => {
-            handleRateCardSubmit(values);
-            actions.setSubmitting(false);
-          }}
-        >
-          {({ values, handleSubmit, setFieldValue }) => (
-            <form onSubmit={handleSubmit}>
-              <DialogTitle id="form-dialog-title">
-                {" "}
-                {t("Client Rate Card.View Dialog.Client Rate Card", {
-                  type: changeCase.titleCase(modalType),
-                })}
-              </DialogTitle>
+        {({ values, handleSubmit, setFieldValue }) => (
+          <form onSubmit={handleSubmit}>
+            <DialogTitle id="form-dialog-title">
+              {" "}
+              {t("Client Rate Card.View Dialog.Client Rate Card", {
+                type: capitalCase(modalType),
+              })}
+            </DialogTitle>
 
-              <DialogContent>
-                <Box mb={2}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={12} lg={6} container>
-                      <Grid item xs={6} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("Client Rate Card.View Dialog.Client")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6} container alignContent="center" className="px-1">
-                        <Field
-                          fullWidth
-                          disabled
-                          component={TextField}
-                          name="client"
-                          variant="filled"
-                        />
-                      </Grid>
+            <DialogContent>
+              <Box mb={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={12} lg={6} container>
+                    <Grid item xs={6} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t("Client Rate Card.View Dialog.Client")}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={12} md={12} lg={6} container>
-                      <Grid item xs={6} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("Client Rate Card.View Dialog.Billing Account")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6} container alignContent="center" className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            isDisabled={true}
-                            isSearchable
-                            styles={selectStyles}
-                            value={values.billingAccount}
-                            options={filteredAccounts}
-                            onChange={(selected) => {
-                              setFieldValue("billingAccount", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="entity"
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={6} container>
-                      <Grid item xs={6} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("Client Rate Card.View Dialog.Billing Period")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6} container alignContent="center" className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            isDisabled={modalType !== "amend"}
-                            isSearchable
-                            styles={selectStyles}
-                            value={values.billingPeriod}
-                            options={billingPeriodOptions}
-                            onChange={(selected) => {
-                              setFieldValue("billingPeriod", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="entity"
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={6} container>
-                      <Grid item xs={6} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("Client Rate Card.View Dialog.Minimum Charge (USD)")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6} container alignContent="center" className="px-1">
-                        <Field
-                          disabled={modalType !== "amend"}
-                          fullWidth
-                          component={TextField}
-                          name="minimumCharge"
-                          variant="filled"
-                        />
-                      </Grid>
+                    <Grid item xs={6} container alignContent="center" className="px-1">
+                      <Field
+                        fullWidth
+                        disabled
+                        component={TextField}
+                        name="client"
+                        variant="filled"
+                      />
                     </Grid>
                   </Grid>
-                  <Box my={4}>
-                    <MaterialTable
-                      title="Transaction Charges"
-                      columns={transactionTableColumns}
-                      tableRef={transactionTableRef}
-                      components={{
-                        Container: (props) => <Paper {...props} elevation={0} />,
-                        Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
-                      }}
-                      options={{
-                        // search: false,
-                        searchFieldVariant: "filled",
-                        selection: modalType === "amend",
-                        actionsColumnIndex: -1,
-                      }}
-                      data={localTransactionCharges}
-                      editable={
-                        modalType === "amend"
-                          ? {
-                              onRowAdd: (newData) =>
-                                new Promise((resolve, reject) => {
-                                  const schema = yup.object().shape({
-                                    transaction_type_id: yup
-                                      .string()
-                                      .required("Transaction type is required"),
-                                    asset_type_id: yup
-                                      .string()
-                                      .required("Security type is required"),
-                                    security_country_icsd_id: yup
-                                      .string()
-                                      .required("Country/ICSD is required"),
-                                    charge: yup
-                                      .number()
-                                      .required("Charge is required")
-                                      .positive("Charge must be a positive number"),
-                                  });
-
-                                  const requestObject = {
-                                    id: uuidv4(),
-                                    client_rate_card_id: selectedRow?.id,
-                                    transaction_type_id: newData?.transaction_type_id?.value,
-                                    asset_type_id: newData?.asset_type_id?.value,
-                                    security_country_icsd_id:
-                                      newData?.security_country_icsd_id?.value,
-                                    charge: Number(newData?.charge),
-                                  };
-
-                                  schema
-                                    .validate(requestObject)
-                                    .then((valid) => {
-                                      if (valid) {
-                                        handleAddTransaction(requestObject, resolve);
-                                      } else {
-                                        toast.warning(
-                                          "Transaction data inputted is incomplete/invalid.",
-                                          2000
-                                        );
-                                        reject();
-                                      }
-                                    })
-                                    .catch(({ errors }) => {
-                                      const groupedMessages = [
-                                        {
-                                          name: "Transaction Charge Errors",
-                                          messages: errors.map((error) => {
-                                            const errorIcon = <ErrorOutlineIcon />;
-                                            return {
-                                              text: error,
-                                              icon: errorIcon,
-                                            };
-                                          }),
-                                        },
-                                      ];
-                                      toast(
-                                        <ToastMessageRenderer groupedMessages={groupedMessages} />,
-                                        {
-                                          position: "bottom-left",
-                                          closeOnClick: true,
-                                          autoClose: 10000,
-                                          limit: 1,
-                                        }
-                                      );
-                                      reject();
-                                      return {};
-                                    });
-                                }),
-                              onRowDelete: (oldData) =>
-                                new Promise((resolve) => {
-                                  const requestObject = [oldData.id];
-                                  handleDeleteTransaction(requestObject, resolve);
-                                }),
-                            }
-                          : {}
-                      }
-                      actions={
-                        modalType === "amend"
-                          ? [
-                              {
-                                tooltip: "Bulk Delete",
-                                icon: "delete",
-                                onClick: (evt, rowData) =>
-                                  new Promise((resolve) => {
-                                    const requestObject = rowData.map((row) => row.id);
-                                    handleDeleteTransaction(requestObject, resolve);
-                                  }),
-                              },
-                            ]
-                          : []
-                      }
-                    />
-                  </Box>
-                  <Box my={4}>
-                    <MaterialTable
-                      title="Safekeeping Charges"
-                      columns={safekeepingTableColumns}
-                      tableRef={safekeepingTableRef}
-                      components={{
-                        Container: (props) => <Paper {...props} elevation={0} />,
-                        Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
-                      }}
-                      options={{
-                        // search: false,
-                        searchFieldVariant: "filled",
-                        selection: modalType === "amend",
-                        actionsColumnIndex: -1,
-                      }}
-                      data={processedSafeKeepingData}
-                      editable={
-                        modalType === "amend"
-                          ? {
-                              onRowAdd: (newData) =>
-                                new Promise((resolve, reject) => {
-                                  const schema = yup.object().shape({
-                                    asset_type_id: yup
-                                      .string()
-                                      .required("Security Type is required"),
-                                    security_country_icsd_id: yup
-                                      .string()
-                                      .required("Country/ICSD is required"),
-                                    band_start: yup
-                                      .number()
-                                      .integer("Band start amount must be an integer"),
-                                    band_end: yup
-                                      .number()
-                                      .integer("Band end amount must be an integer"),
-                                    charge_in_bps: yup
-                                      .number()
-                                      .required("Charge is required")
-                                      .positive("Charge must be a positive number"),
-                                  });
-
-                                  const requestObject = {
-                                    id: uuidv4(),
-                                    client_rate_card_id: selectedRow?.id,
-                                    asset_type_id: newData?.asset_type_id?.value,
-                                    security_country_icsd_id:
-                                      newData?.security_country_icsd_id?.value,
-                                    band_start: Number(newData.band_start || 0),
-                                    band_end: Number(newData.band_end || -1),
-                                    charge_in_bps: Number(newData?.charge_in_bps),
-                                    name: {
-                                      String: newData?.asset_type_id?.label,
-                                      valid: true,
-                                    },
-                                    name_2: {
-                                      String: newData?.security_country_icsd_id?.label,
-                                      valid: true,
-                                    },
-                                  };
-
-                                  schema
-                                    .validate(requestObject)
-                                    .then((valid) => {
-                                      if (valid) {
-                                        handleAddSafekeeping(requestObject, resolve);
-                                      } else {
-                                        toast.warning(
-                                          "Safekeeping data inputted is incomplete/invalid.",
-                                          2000
-                                        );
-                                        reject();
-                                      }
-                                    })
-                                    .catch(({ errors }) => {
-                                      const groupedMessages = [
-                                        {
-                                          name: "Safekeeping Charge Errors",
-                                          messages: errors?.map((error) => {
-                                            const errorIcon = <ErrorOutlineIcon />;
-                                            return {
-                                              text: error,
-                                              icon: errorIcon,
-                                            };
-                                          }),
-                                        },
-                                      ];
-                                      toast(
-                                        <ToastMessageRenderer groupedMessages={groupedMessages} />,
-                                        {
-                                          position: "bottom-left",
-                                          closeOnClick: true,
-                                          autoClose: 10000,
-                                          limit: 1,
-                                        }
-                                      );
-                                      reject();
-                                    });
-                                }),
-                              onRowDelete: (oldData) =>
-                                new Promise((resolve) => {
-                                  const requestObject = [oldData.id];
-                                  handleDeleteSafekeeping(requestObject, resolve);
-                                }),
-                            }
-                          : {}
-                      }
-                      actions={
-                        modalType === "amend"
-                          ? [
-                              {
-                                tooltip: "Bulk Delete",
-                                icon: "delete",
-                                onClick: (evt, rowData) =>
-                                  new Promise((resolve) => {
-                                    const requestObject = rowData.map((row) => row.id);
-                                    handleDeleteSafekeeping(requestObject, resolve);
-                                  }),
-                              },
-                            ]
-                          : []
-                      }
-                    />
-                  </Box>
-                  <Box my={4}>
-                    <MaterialTable
-                      title={
-                        <Typography
-                          variant="h6"
-                          className={paymentHolidayOverlaps.length > 0 ? "text-yellow-500" : ""}
-                        >
-                          Payment Holidays
-                          {paymentHolidayOverlaps.length > 0 ? (
-                            <IconButton
-                              aria-label="close"
-                              color="inherit"
-                              onClick={() => {
-                                setShowPaymentHolidayOverlapsError(true);
-                              }}
-                              size="large"
-                            >
-                              <ErrorOutlineIcon fontSize="inherit" />
-                            </IconButton>
-                          ) : (
-                            ""
-                          )}
-                        </Typography>
-                      }
-                      columns={holidayTableColumns}
-                      tableRef={holidayTableRef}
-                      components={{
-                        Container: (props) => <Paper {...props} elevation={0} />,
-                        Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
-                      }}
-                      options={{
-                        // search: false,
-                        searchFieldVariant: "filled",
-                        selection: modalType === "amend",
-                        actionsColumnIndex: -1,
-                      }}
-                      data={localPaymentHolidays}
-                      editable={
-                        modalType === "amend"
-                          ? {
-                              onRowAdd: (newData) =>
-                                new Promise((resolve, reject) => {
-                                  const schema = yup.object().shape({
-                                    start_date: yup.date().required("Start Date is required"),
-                                    end_date: yup.date().required("End Date is required"),
-                                    // end_date: yup.date().min(yup.ref('startDate'), "End date can't be before start date").required('End Date is required'),
-                                    // narrative: yup.string().required('Invoice Narrative is required'),
-                                  });
-
-                                  const requestObject = {
-                                    id: uuidv4(),
-                                    client_rate_card_id: selectedRow?.id,
-                                    start_date: newData?.start_date?.format(),
-                                    end_date: newData?.end_date?.format(),
-                                    narrative: newData?.narrative,
-                                  };
-
-                                  schema
-                                    .validate(requestObject)
-                                    .then((valid) => {
-                                      if (valid) {
-                                        handleAddHoliday(requestObject, resolve);
-                                      } else {
-                                        toast.warning(
-                                          "Safekeeping data inputted is incomplete/invalid.",
-                                          2000
-                                        );
-                                        reject();
-                                      }
-                                    })
-                                    .catch(({ errors }) => {
-                                      const groupedMessages = [
-                                        {
-                                          name: "Payment Holidays Errors",
-                                          messages: errors?.map((error) => {
-                                            const errorIcon = <ErrorOutlineIcon />;
-                                            return {
-                                              text: error,
-                                              icon: errorIcon,
-                                            };
-                                          }),
-                                        },
-                                      ];
-                                      toast(
-                                        <ToastMessageRenderer groupedMessages={groupedMessages} />,
-                                        {
-                                          position: "bottom-left",
-                                          closeOnClick: true,
-                                          autoClose: 10000,
-                                          limit: 1,
-                                        }
-                                      );
-                                      reject();
-                                    });
-                                }),
-                              onRowDelete: (oldData) =>
-                                new Promise((resolve) => {
-                                  const requestObject = [oldData.id];
-
-                                  handleDeleteHoliday(requestObject, resolve);
-                                }),
-                            }
-                          : {}
-                      }
-                      actions={
-                        modalType === "amend"
-                          ? [
-                              {
-                                tooltip: "Bulk Delete",
-                                icon: "delete",
-                                onClick: (evt, rowData) =>
-                                  new Promise((resolve) => {
-                                    const requestObject = rowData.map((row) => row.id);
-                                    handleDeleteHoliday(requestObject, resolve);
-                                  }),
-                              },
-                            ]
-                          : []
-                      }
-                    />
-                    {paymentHolidayOverlaps.length > 0 && showPaymentHolidayOverlapsError ? (
-                      <Fragment>
-                        <Alert
-                          severity="warning"
-                          action={
-                            <IconButton
-                              aria-label="close"
-                              color="inherit"
-                              size="small"
-                              onClick={() => {
-                                setShowPaymentHolidayOverlapsError(false);
-                              }}
-                            >
-                              <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                          }
-                        >
-                          <AlertTitle>
-                            {t("Client Rate Card.View Dialog.OverlappingPeriodMessageKey", {
-                              count: paymentHolidayOverlaps.length,
-                            })}
-                          </AlertTitle>
-                          <ul>
-                            {paymentHolidayOverlaps.map((overlap) => {
-                              const firstPeriod = overlap[0];
-                              const secondPeriod = overlap[1];
-                              return (
-                                <li className="list-disc">
-                                  <Typography>
-                                    Holiday Ref #{idRenderer(firstPeriod.id)} and #
-                                    {idRenderer(secondPeriod.id)}
-                                  </Typography>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </Alert>
-                      </Fragment>
-                    ) : (
-                      ""
-                    )}
-                  </Box>
-                </Box>
-              </DialogContent>
-
-              <DialogActions>
-                <Grid container justifyContent="flex-end" className="w-full">
-                  <Grid item lg={4}>
-                    <Button
-                      fullWidth
-                      onClick={() => {
-                        handleClose();
-                      }}
-                      color="primary"
-                    >
-                      {t("translation:Miscellaneous.Cancel")}
-                    </Button>
+                  <Grid item xs={12} md={12} lg={6} container>
+                    <Grid item xs={6} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t("Client Rate Card.View Dialog.Billing Account")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} container alignContent="center" className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          isDisabled={true}
+                          isSearchable
+                          styles={selectStyles}
+                          value={values.billingAccount}
+                          options={filteredAccounts}
+                          onChange={(selected) => {
+                            setFieldValue("billingAccount", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="entity"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={6} container>
+                    <Grid item xs={6} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t("Client Rate Card.View Dialog.Billing Period")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} container alignContent="center" className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          isDisabled={modalType !== "amend"}
+                          isSearchable
+                          styles={selectStyles}
+                          value={values.billingPeriod}
+                          options={billingPeriodOptions}
+                          onChange={(selected) => {
+                            setFieldValue("billingPeriod", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="entity"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={6} container>
+                    <Grid item xs={6} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t("Client Rate Card.View Dialog.Minimum Charge (USD)")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} container alignContent="center" className="px-1">
+                      <Field
+                        disabled={modalType !== "amend"}
+                        fullWidth
+                        component={TextField}
+                        name="minimumCharge"
+                        variant="filled"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-                {modalType === "amend" && (
-                  <Grid item lg={4}>
-                    <Button fullWidth type="submit" variant="contained" color="primary">
-                      {t("translation:Miscellaneous.Submit")}
-                    </Button>
-                  </Grid>
-                )}
-                {modalType === "approve" && (
-                  <Grid item lg={4}>
-                    <Button
-                      fullWidth
-                      onClick={() => {
-                        handleApprove();
-                      }}
-                      variant="contained"
-                      color="primary"
-                    >
-                      {t("translation:Miscellaneous.Approve")}
-                    </Button>
-                  </Grid>
-                )}
-              </DialogActions>
-            </form>
-          )}
-        </Formik>
-      </Dialog>
-    </Fragment>
+                <Box my={4}>
+                  <MaterialTable
+                    title="Transaction Charges"
+                    columns={transactionTableColumns}
+                    tableRef={transactionTableRef}
+                    components={{
+                      Container: (props) => <Paper {...props} elevation={0} />,
+                      Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
+                    }}
+                    options={{
+                      // search: false,
+                      searchFieldVariant: "filled",
+                      selection: modalType === "amend",
+                      actionsColumnIndex: -1,
+                    }}
+                    data={localTransactionCharges}
+                    editable={
+                      modalType === "amend"
+                        ? {
+                            onRowAdd: (newData) =>
+                              new Promise((resolve, reject) => {
+                                const schema = yup.object().shape({
+                                  transaction_type_id: yup
+                                    .string()
+                                    .required("Transaction type is required"),
+                                  asset_type_id: yup.string().required("Security type is required"),
+                                  security_country_icsd_id: yup
+                                    .string()
+                                    .required("Country/ICSD is required"),
+                                  charge: yup
+                                    .number()
+                                    .required("Charge is required")
+                                    .positive("Charge must be a positive number"),
+                                });
+
+                                const requestObject = {
+                                  id: uuidv4(),
+                                  client_rate_card_id: selectedRow?.id,
+                                  transaction_type_id: newData?.transaction_type_id?.value,
+                                  asset_type_id: newData?.asset_type_id?.value,
+                                  security_country_icsd_id:
+                                    newData?.security_country_icsd_id?.value,
+                                  charge: Number(newData?.charge),
+                                };
+
+                                schema
+                                  .validate(requestObject)
+                                  .then((valid) => {
+                                    if (valid) {
+                                      handleAddTransaction(requestObject, resolve);
+                                    } else {
+                                      toast.warning(
+                                        "Transaction data inputted is incomplete/invalid.",
+                                        2000
+                                      );
+                                      reject();
+                                    }
+                                  })
+                                  .catch(({ errors }) => {
+                                    const groupedMessages = [
+                                      {
+                                        name: "Transaction Charge Errors",
+                                        messages: errors.map((error) => {
+                                          const errorIcon = <ErrorOutlineIcon />;
+                                          return {
+                                            text: error,
+                                            icon: errorIcon,
+                                          };
+                                        }),
+                                      },
+                                    ];
+                                    toast(
+                                      <ToastMessageRenderer groupedMessages={groupedMessages} />,
+                                      {
+                                        position: "bottom-left",
+                                        closeOnClick: true,
+                                        autoClose: 10000,
+                                        limit: 1,
+                                      }
+                                    );
+                                    reject();
+                                    return {};
+                                  });
+                              }),
+                            onRowDelete: (oldData) =>
+                              new Promise((resolve) => {
+                                const requestObject = [oldData.id];
+                                handleDeleteTransaction(requestObject, resolve);
+                              }),
+                          }
+                        : {}
+                    }
+                    actions={
+                      modalType === "amend"
+                        ? [
+                            {
+                              tooltip: "Bulk Delete",
+                              icon: "delete",
+                              onClick: (evt, rowData) =>
+                                new Promise((resolve) => {
+                                  const requestObject = rowData.map((row) => row.id);
+                                  handleDeleteTransaction(requestObject, resolve);
+                                }),
+                            },
+                          ]
+                        : []
+                    }
+                  />
+                </Box>
+                <Box my={4}>
+                  <MaterialTable
+                    title="Safekeeping Charges"
+                    columns={safekeepingTableColumns}
+                    tableRef={safekeepingTableRef}
+                    components={{
+                      Container: (props) => <Paper {...props} elevation={0} />,
+                      Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
+                    }}
+                    options={{
+                      // search: false,
+                      searchFieldVariant: "filled",
+                      selection: modalType === "amend",
+                      actionsColumnIndex: -1,
+                    }}
+                    data={processedSafeKeepingData}
+                    editable={
+                      modalType === "amend"
+                        ? {
+                            onRowAdd: (newData) =>
+                              new Promise((resolve, reject) => {
+                                const schema = yup.object().shape({
+                                  asset_type_id: yup.string().required("Security Type is required"),
+                                  security_country_icsd_id: yup
+                                    .string()
+                                    .required("Country/ICSD is required"),
+                                  band_start: yup
+                                    .number()
+                                    .integer("Band start amount must be an integer"),
+                                  band_end: yup
+                                    .number()
+                                    .integer("Band end amount must be an integer"),
+                                  charge_in_bps: yup
+                                    .number()
+                                    .required("Charge is required")
+                                    .positive("Charge must be a positive number"),
+                                });
+
+                                const requestObject = {
+                                  id: uuidv4(),
+                                  client_rate_card_id: selectedRow?.id,
+                                  asset_type_id: newData?.asset_type_id?.value,
+                                  security_country_icsd_id:
+                                    newData?.security_country_icsd_id?.value,
+                                  band_start: Number(newData.band_start || 0),
+                                  band_end: Number(newData.band_end || -1),
+                                  charge_in_bps: Number(newData?.charge_in_bps),
+                                  name: {
+                                    String: newData?.asset_type_id?.label,
+                                    valid: true,
+                                  },
+                                  name_2: {
+                                    String: newData?.security_country_icsd_id?.label,
+                                    valid: true,
+                                  },
+                                };
+
+                                schema
+                                  .validate(requestObject)
+                                  .then((valid) => {
+                                    if (valid) {
+                                      handleAddSafekeeping(requestObject, resolve);
+                                    } else {
+                                      toast.warning(
+                                        "Safekeeping data inputted is incomplete/invalid.",
+                                        2000
+                                      );
+                                      reject();
+                                    }
+                                  })
+                                  .catch(({ errors }) => {
+                                    const groupedMessages = [
+                                      {
+                                        name: "Safekeeping Charge Errors",
+                                        messages: errors?.map((error) => {
+                                          const errorIcon = <ErrorOutlineIcon />;
+                                          return {
+                                            text: error,
+                                            icon: errorIcon,
+                                          };
+                                        }),
+                                      },
+                                    ];
+                                    toast(
+                                      <ToastMessageRenderer groupedMessages={groupedMessages} />,
+                                      {
+                                        position: "bottom-left",
+                                        closeOnClick: true,
+                                        autoClose: 10000,
+                                        limit: 1,
+                                      }
+                                    );
+                                    reject();
+                                  });
+                              }),
+                            onRowDelete: (oldData) =>
+                              new Promise((resolve) => {
+                                const requestObject = [oldData.id];
+                                handleDeleteSafekeeping(requestObject, resolve);
+                              }),
+                          }
+                        : {}
+                    }
+                    actions={
+                      modalType === "amend"
+                        ? [
+                            {
+                              tooltip: "Bulk Delete",
+                              icon: "delete",
+                              onClick: (evt, rowData) =>
+                                new Promise((resolve) => {
+                                  const requestObject = rowData.map((row) => row.id);
+                                  handleDeleteSafekeeping(requestObject, resolve);
+                                }),
+                            },
+                          ]
+                        : []
+                    }
+                  />
+                </Box>
+                <Box my={4}>
+                  <MaterialTable
+                    title={
+                      <Typography
+                        variant="h6"
+                        className={paymentHolidayOverlaps.length > 0 ? "text-yellow-500" : ""}
+                      >
+                        Payment Holidays
+                        {paymentHolidayOverlaps.length > 0 ? (
+                          <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            onClick={() => {
+                              setShowPaymentHolidayOverlapsError(true);
+                            }}
+                            size="large"
+                          >
+                            <ErrorOutlineIcon fontSize="inherit" />
+                          </IconButton>
+                        ) : (
+                          ""
+                        )}
+                      </Typography>
+                    }
+                    columns={holidayTableColumns}
+                    tableRef={holidayTableRef}
+                    components={{
+                      Container: (props) => <Paper {...props} elevation={0} />,
+                      Action: (props) => <MaterialTableCustomButtonRenderer {...props} />,
+                    }}
+                    options={{
+                      // search: false,
+                      searchFieldVariant: "filled",
+                      selection: modalType === "amend",
+                      actionsColumnIndex: -1,
+                    }}
+                    data={localPaymentHolidays}
+                    editable={
+                      modalType === "amend"
+                        ? {
+                            onRowAdd: (newData) =>
+                              new Promise((resolve, reject) => {
+                                const schema = yup.object().shape({
+                                  start_date: yup.date().required("Start Date is required"),
+                                  end_date: yup.date().required("End Date is required"),
+                                  // end_date: yup.date().min(yup.ref('startDate'), "End date can't be before start date").required('End Date is required'),
+                                  // narrative: yup.string().required('Invoice Narrative is required'),
+                                });
+
+                                const requestObject = {
+                                  id: uuidv4(),
+                                  client_rate_card_id: selectedRow?.id,
+                                  start_date: newData?.start_date?.format(),
+                                  end_date: newData?.end_date?.format(),
+                                  narrative: newData?.narrative,
+                                };
+
+                                schema
+                                  .validate(requestObject)
+                                  .then((valid) => {
+                                    if (valid) {
+                                      handleAddHoliday(requestObject, resolve);
+                                    } else {
+                                      toast.warning(
+                                        "Safekeeping data inputted is incomplete/invalid.",
+                                        2000
+                                      );
+                                      reject();
+                                    }
+                                  })
+                                  .catch(({ errors }) => {
+                                    const groupedMessages = [
+                                      {
+                                        name: "Payment Holidays Errors",
+                                        messages: errors?.map((error) => {
+                                          const errorIcon = <ErrorOutlineIcon />;
+                                          return {
+                                            text: error,
+                                            icon: errorIcon,
+                                          };
+                                        }),
+                                      },
+                                    ];
+                                    toast(
+                                      <ToastMessageRenderer groupedMessages={groupedMessages} />,
+                                      {
+                                        position: "bottom-left",
+                                        closeOnClick: true,
+                                        autoClose: 10000,
+                                        limit: 1,
+                                      }
+                                    );
+                                    reject();
+                                  });
+                              }),
+                            onRowDelete: (oldData) =>
+                              new Promise((resolve) => {
+                                const requestObject = [oldData.id];
+
+                                handleDeleteHoliday(requestObject, resolve);
+                              }),
+                          }
+                        : {}
+                    }
+                    actions={
+                      modalType === "amend"
+                        ? [
+                            {
+                              tooltip: "Bulk Delete",
+                              icon: "delete",
+                              onClick: (evt, rowData) =>
+                                new Promise((resolve) => {
+                                  const requestObject = rowData.map((row) => row.id);
+                                  handleDeleteHoliday(requestObject, resolve);
+                                }),
+                            },
+                          ]
+                        : []
+                    }
+                  />
+                  {paymentHolidayOverlaps.length > 0 && showPaymentHolidayOverlapsError ? (
+                    <Fragment>
+                      <Alert
+                        severity="warning"
+                        action={
+                          <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                              setShowPaymentHolidayOverlapsError(false);
+                            }}
+                          >
+                            <CloseIcon fontSize="inherit" />
+                          </IconButton>
+                        }
+                      >
+                        <AlertTitle>
+                          {t("Client Rate Card.View Dialog.OverlappingPeriodMessageKey", {
+                            count: paymentHolidayOverlaps.length,
+                          })}
+                        </AlertTitle>
+                        <ul>
+                          {paymentHolidayOverlaps.map((overlap) => {
+                            const firstPeriod = overlap[0];
+                            const secondPeriod = overlap[1];
+                            return (
+                              <li className="list-disc">
+                                <Typography>
+                                  Holiday Ref #{idRenderer(firstPeriod.id)} and #
+                                  {idRenderer(secondPeriod.id)}
+                                </Typography>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </Alert>
+                    </Fragment>
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              </Box>
+            </DialogContent>
+
+            <DialogActions>
+              <Grid container justifyContent="flex-end" className="w-full">
+                <Grid item lg={4}>
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      handleClose();
+                    }}
+                    color="primary"
+                  >
+                    {t("translation:Miscellaneous.Cancel")}
+                  </Button>
+                </Grid>
+              </Grid>
+              {modalType === "amend" && (
+                <Grid item lg={4}>
+                  <Button fullWidth type="submit" variant="contained" color="primary">
+                    {t("translation:Miscellaneous.Submit")}
+                  </Button>
+                </Grid>
+              )}
+              {modalType === "approve" && (
+                <Grid item lg={4}>
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      handleApprove();
+                    }}
+                    variant="contained"
+                    color="primary"
+                  >
+                    {t("translation:Miscellaneous.Approve")}
+                  </Button>
+                </Grid>
+              )}
+            </DialogActions>
+          </form>
+        )}
+      </Formik>
+    </Dialog>
   );
 };
 

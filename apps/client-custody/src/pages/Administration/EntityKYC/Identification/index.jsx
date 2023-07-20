@@ -18,7 +18,7 @@ import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
 import { ErrorMessage, Field, FieldArray, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { KeyboardDatePicker } from "formik-material-ui-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import sortby from "lodash.sortby";
 import moment from "moment";
 
@@ -278,7 +278,7 @@ const Identification = () => {
                 successCallback: () => {
                   setSubmitting(false);
                   fetchPageData();
-                  // history.push(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
+                  // navigate(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
                 },
               };
               dispatch(kycActionCreators.doPostKYCData(payload));
@@ -571,7 +571,7 @@ const Identification = () => {
                         maxDate={moment()}
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
-                        component={KeyboardDatePicker}
+                        component={DatePicker}
                         name="incorporationDate"
                         label={t("kyc:Identification.Form Fields.Date of Incorporation")}
                       />

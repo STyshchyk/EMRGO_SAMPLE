@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import style from "./style.module.scss";
@@ -44,7 +44,7 @@ const ReleaseFundsModal = ({ isModalOpen, setIsModalOpen, selectedTransaction, h
         <Box className={style.detailsWrapper}>
           <Typography variant="body1">
             Source Account : {selectedTransaction?.sourceAccount?.accountNo} ({" "}
-            {titleCase(selectedTransaction?.sourceAccount?.type)} )
+            {capitalCase(selectedTransaction?.sourceAccount?.type)} )
           </Typography>
           <Typography variant="body1">
             Source Balance : {selectedTransaction?.sourceAccount?.accountBalance}
@@ -53,7 +53,7 @@ const ReleaseFundsModal = ({ isModalOpen, setIsModalOpen, selectedTransaction, h
           <Typography variant="body1">
             Destination Account :{" "}
             {selectedTransaction.assignedAccount
-              ? `${selectedTransaction.assignedAccount.accountNo} ( ${titleCase(
+              ? `${selectedTransaction.assignedAccount.accountNo} ( ${capitalCase(
                   selectedTransaction?.assignedAccount?.type
                 )} ) `
               : "N/A"}

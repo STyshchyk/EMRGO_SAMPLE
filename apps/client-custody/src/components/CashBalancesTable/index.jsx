@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import moment from "moment";
 
 import { currencyRenderer, reportDateRenderer } from "../../constants/renderers";
@@ -89,7 +89,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${titleCase(acc.type)}`,
+          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -224,8 +224,8 @@ const CashBalancesTable = ({ data, accounts }) => {
       id: "accountType",
       title: t("reports:Cash Balances.Headers.Account Type"),
       field: "accountType",
-      render: (rowData) => titleCase(rowData.accountType),
-      exportConfig: { render: (rowData) => titleCase(rowData.accountType), width: 20 },
+      render: (rowData) => capitalCase(rowData.accountType),
+      exportConfig: { render: (rowData) => capitalCase(rowData.accountType), width: 20 },
     },
     {
       id: "lastMovement",
@@ -268,7 +268,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       accountType: {
         label: t("reports:Cash Balances.Headers.Account Type"),
 
-        value: titleCase(accountType) || "",
+        value: capitalCase(accountType) || "",
       },
       lastMovement: {
         label: t("reports:Cash Balances.Headers.Last Movement"),

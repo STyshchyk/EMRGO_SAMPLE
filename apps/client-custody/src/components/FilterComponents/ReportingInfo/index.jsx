@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 
 import formatAddress from "../../../utils/reports";
 
@@ -40,7 +40,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         <Typography className={classes.accountInfoValue}>{`${
           cashAccount ? cashAccount.data.original.accountNo : t("reports:Cash Balances.NA")
         } | ${
-          cashAccount ? titleCase(cashAccount.data.original.type) : t("reports:Cash Balances.NA")
+          cashAccount ? capitalCase(cashAccount.data.original.type) : t("reports:Cash Balances.NA")
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>

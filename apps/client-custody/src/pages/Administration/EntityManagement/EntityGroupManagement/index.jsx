@@ -15,7 +15,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import { reverse } from "named-urls";
 
 import LoadingPage from "../../../../components/LoadingPage";
@@ -37,7 +37,7 @@ import RequestAgreementDialog from "../RequestAgreementDialog";
 const EntityGroupManagement = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["administration"]);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [openAddEntityGroupDialog, setOpenAddEntityGroupDialog] = useState(false);
@@ -133,14 +133,14 @@ const EntityGroupManagement = () => {
       field: "name",
       cellStyle: { width: 200 },
     },
-    // { title: t('administration:ParentEntity.Entity Users.Table.Entity Type'), field: 'entityType', render: (rowData) => titleCase(rowData.entityType), cellStyle: { width: 200 } },
+    // { title: t('administration:ParentEntity.Entity Users.Table.Entity Type'), field: 'entityType', render: (rowData) => capitalCase(rowData.entityType), cellStyle: { width: 200 } },
     {
       title: t("administration:ParentEntity.Entity Users.Table.Entity Type"),
       field: "entityType",
       render: (rowData) =>
         rowData.entityType === "FIDUCIARY"
-          ? titleCase("SPE Trustee")
-          : titleCase(rowData.entityType),
+          ? capitalCase("SPE Trustee")
+          : capitalCase(rowData.entityType),
       cellStyle: { width: 200 },
     },
 
@@ -175,7 +175,7 @@ const EntityGroupManagement = () => {
   ];
 
   const handleManageUserAccessClick = () => {
-    history.push(
+    navigate(
       reverse(
         `${routes.dashboard.administration.entityManagement.entities.entity.entityGroups.entityGroup.entityUserAccessManagement}`,
         { groupId: selectedRow.id, entityId }
