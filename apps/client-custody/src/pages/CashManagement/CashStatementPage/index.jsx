@@ -2,9 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import MomentUtils from "@date-io/moment";
 import MaterialTable from "@material-table/core";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -12,7 +10,6 @@ import Grid from "@mui/material/Grid";
 import { capitalCase } from "change-case";
 import { CsvBuilder } from "filefy";
 
-import CashStatementTable from "../../../components/BillingAndPayments/CashStatementTable";
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import ExportButtons from "../../../components/FilterComponents/ExportButtons";
@@ -23,7 +20,6 @@ import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOp
 import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
-import { useTheme } from "../../../context/theme-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
@@ -31,7 +27,6 @@ import * as authSelectors from "../../../redux/selectors/auth";
 import * as billingAndPaymentsSelectors from "../../../redux/selectors/cashManagement";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
-import style from "./style.module.scss";
 
 const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
 
@@ -129,8 +124,6 @@ const CashStatementPage = () => {
     return boxes;
   };
 
-  const { theme } = useTheme();
-
   const getEntityAndAccounts = (accs) => {
     const entityOpts = [];
     const accountOpts = [];
@@ -201,7 +194,7 @@ const CashStatementPage = () => {
   const columns = [
     {
       id: "date",
-      title: t("reports:Cash Statement.Headers.Date"),
+      title: t("Cash Statement.Headers.Date"),
       field: "date",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
@@ -211,21 +204,21 @@ const CashStatementPage = () => {
     },
     {
       id: "transactionType",
-      title: t("reports:Cash Statement.Headers.Transaction Type"),
+      title: t("Cash Statement.Headers.Transaction Type"),
       field: "transactionType",
       exportConfig: { width: 15 },
     },
     { id: "refNo", title: "Reference no", field: "refNo" },
-    { id: "isin", title: t("reports:Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
     {
       id: "narrative",
-      title: t("reports:Cash Statement.Headers.Narrative"),
+      title: t("Cash Statement.Headers.Narrative"),
       field: "narrative",
       exportConfig: { width: 25 },
     },
     {
       id: "debit",
-      title: t("reports:Cash Statement.Headers.Debit"),
+      title: t("Cash Statement.Headers.Debit"),
       field: "debit",
       render: (rowData) => currencyRenderer(rowData.debit),
       exportConfig: {
@@ -236,7 +229,7 @@ const CashStatementPage = () => {
     },
     {
       id: "credit",
-      title: t("reports:Cash Statement.Headers.Credit"),
+      title: t("Cash Statement.Headers.Credit"),
       field: "credit",
       render: (rowData) => currencyRenderer(rowData.credit),
       exportConfig: {
@@ -247,7 +240,7 @@ const CashStatementPage = () => {
     },
     {
       id: "balance",
-      title: t("reports:Cash Statement.Headers.Balance"),
+      title: t("Cash Statement.Headers.Balance"),
       field: "balance",
       render: (rowData) => currencyRenderer(rowData.balance),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.balance), align: "right" },
@@ -268,34 +261,34 @@ const CashStatementPage = () => {
   const exportCSV = () => {
     new CsvBuilder("cash_statement.csv")
       .addRow([
-        t("cash_management:Cash Statement.Account"),
+        t("Cash Statement.Account"),
         `${
           currentlySelectedAccount
             ? currentlySelectedAccount.data.original.accountNo
-            : t("cash_management:Cash Statement.NA")
+            : t("Cash Statement.NA")
         } | ${
           currentlySelectedAccount
             ? currentlySelectedAccount.data.original.type
-            : t("cash_management:Cash Statement.NA")
+            : t("Cash Statement.NA")
         }`,
         "",
-        t("cash_management:Cash Statement.Currency"),
+        t("Cash Statement.Currency"),
         `${
           currentlySelectedAccount
             ? currentlySelectedAccount.data.original.currency.name
-            : t("cash_management:Cash Statement.NA")
+            : t("Cash Statement.NA")
         }`,
       ])
       .addRow([""])
       .addRow([
-        t("cash_management:Cash Statement.Headers.Date"),
-        t("cash_management:Cash Statement.Headers.Transaction_Balance Type"),
-        t("cash_management:Cash Statement.Headers.Reference No"),
-        t("cash_management:Cash Statement.Headers.Related ISIN"),
-        t("cash_management:Cash Statement.Headers.Narrative"),
-        t("cash_management:Cash Statement.Headers.Debit"),
-        t("cash_management:Cash Statement.Headers.Credit"),
-        t("cash_management:Cash Statement.Headers.Balance"),
+        t("Cash Statement.Headers.Date"),
+        t("Cash Statement.Headers.Transaction_Balance Type"),
+        t("Cash Statement.Headers.Reference No"),
+        t("Cash Statement.Headers.Related ISIN"),
+        t("Cash Statement.Headers.Narrative"),
+        t("Cash Statement.Headers.Debit"),
+        t("Cash Statement.Headers.Credit"),
+        t("Cash Statement.Headers.Balance"),
       ])
       .addRows(getRowsForCSV())
       .exportFile();
@@ -387,7 +380,7 @@ const CashStatementPage = () => {
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (
     <Fragment>
-      <PageTitle title={t("cash_management:Cash Statement.Cash Statement")} />
+      <PageTitle title={t("Cash Statement.Cash Statement")} />
 
       <FilterProvider tableKey="cash_management_statement">
         <TableFiltersWrapper
@@ -397,101 +390,100 @@ const CashStatementPage = () => {
           open={true}
           hideExportButtons
         >
-          <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
-                  name="entity"
-                  label="Entity"
-                  options={filteredEntity}
-                  currentlySelectedOption={currentlySelectedEntity}
-                  setCurrentlySelectedOption={setCurrentlySelectedEntity}
-                  customOnChange={(selectedEntity) => {
-                    entityChange(selectedEntity);
-                  }}
-                />
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} lg={3}>
+              <DropdownFilter
+                name="entity"
+                label="Entity"
+                options={filteredEntity}
+                currentlySelectedOption={currentlySelectedEntity}
+                setCurrentlySelectedOption={setCurrentlySelectedEntity}
+                customOnChange={(selectedEntity) => {
+                  entityChange(selectedEntity);
+                }}
+              />
+            </Grid>
 
-              <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
-                  name="securityAccount"
-                  label="Security Account"
-                  options={filteredSecurityAccounts}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
-                  setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
-                  customOnChange={(selectedAccount) => {
-                    securityAccountChange(selectedAccount);
-                  }}
-                />
-              </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <DropdownFilter
+                name="securityAccount"
+                label="Security Account"
+                options={filteredSecurityAccounts}
+                currentlySelectedOption={currentlySelectedSecurityAccount}
+                setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                customOnChange={(selectedAccount) => {
+                  securityAccountChange(selectedAccount);
+                }}
+              />
+            </Grid>
 
-              <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
-                  name="account"
-                  label=" Cash Account"
-                  options={filteredAccounts}
-                  currentlySelectedOption={currentlySelectedAccount}
-                  setCurrentlySelectedOption={setCurrentlySelectedAccount}
-                  customComponent={{
-                    Option: (props) =>
-                      ReactSelectCurrencyOption({
-                        ...props,
-                        currency: props?.data?.data.original.currency.name,
-                      }),
-                    ValueContainer: (props) =>
-                      ReactSelectCurrencySingleValueContainer({
-                        ...props,
-                        currency: props.getValue()[0]?.data?.original.currency.name,
-                      }),
-                  }}
-                  customOnChange={(selectedAccount) => {
-                    accountChange(selectedAccount);
-                  }}
-                />
-              </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <DropdownFilter
+                name="account"
+                label=" Cash Account"
+                options={filteredAccounts}
+                currentlySelectedOption={currentlySelectedAccount}
+                setCurrentlySelectedOption={setCurrentlySelectedAccount}
+                customComponent={{
+                  Option: (props) =>
+                    ReactSelectCurrencyOption({
+                      ...props,
+                      currency: props?.data?.data.original.currency.name,
+                    }),
+                  ValueContainer: (props) =>
+                    ReactSelectCurrencySingleValueContainer({
+                      ...props,
+                      currency: props.getValue()[0]?.data?.original.currency.name,
+                    }),
+                }}
+                customOnChange={(selectedAccount) => {
+                  accountChange(selectedAccount);
+                }}
+              />
+            </Grid>
 
-              <Grid item xs={12} md={12} lg={3} className="full-width">
-                <Box mt={4} mb={1}>
-                  <Button
-                    fullWidth
-                    size="large"
-                    disabled={accountFilterValue === null}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleFilter()}
-                  >
-                    {t("cash_management:Cash Statement.Filters.Apply")}
-                  </Button>
-                </Box>
-              </Grid>
+            <Grid item xs={12} md={12} lg={3} className="full-width">
+              <Box mt={4} mb={1}>
+                <Button
+                  fullWidth
+                  size="large"
+                  disabled={accountFilterValue === null}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleFilter()}
+                >
+                  {t("Cash Statement.Filters.Apply")}
+                </Button>
+              </Box>
+            </Grid>
 
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
 
-              <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter
-                  name="transactionType"
-                  label="Credit/Debit"
-                  options={transactionTypeOptionsList}
-                  currentlySelectedOption={currentlySelectedTransactionType}
-                  setCurrentlySelectedOption={setCurrentlySelectedTransactionType}
-                  customOnChange={(selectedType) => {
-                    transactionTypeChange(selectedType);
-                  }}
-                />
-              </Grid>
+            <Grid item xs={12} md={6} lg={3} container>
+              <DropdownFilter
+                name="transactionType"
+                label="Credit/Debit"
+                options={transactionTypeOptionsList}
+                currentlySelectedOption={currentlySelectedTransactionType}
+                setCurrentlySelectedOption={setCurrentlySelectedTransactionType}
+                customOnChange={(selectedType) => {
+                  transactionTypeChange(selectedType);
+                }}
+              />
+            </Grid>
 
-              <Grid item xs={12} md={12} lg={6}>
-                <DateRangePicker
-                  name="daterange"
-                  label="Entry Date"
-                  defaultFilter="none"
-                  setStartDateValue={setStartDateValue}
-                  setEndDateValue={setEndDateValue}
-                />
-              </Grid>
-              {/* 
+            <Grid item xs={12} md={12} lg={6}>
+              <DateRangePicker
+                name="daterange"
+                label="Entry Date"
+                defaultFilter="none"
+                setStartDateValue={setStartDateValue}
+                setEndDateValue={setEndDateValue}
+              />
+            </Grid>
+            {/* 
               <Grid item xs={12} md={6} lg={2} container>
                 <Grid container justify="space-between" alignItems="flex-start">
                   <Typography variant="body1" className="bold">
@@ -505,11 +497,11 @@ const CashStatementPage = () => {
                 </Box>
               </Grid> */}
 
-              <Grid item xs={12} md={6} lg={3}>
-                <ExportButtons tableRef={tableRef} name="Cash Statement Report" />
-              </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <ExportButtons tableRef={tableRef} name="Cash Statement Report" />
+            </Grid>
 
-              {/* <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Grid item xs={12} container>
                   <Typography className={style.accountInfo__label}>{t('cash_management:Cash Statement.Account')} : </Typography>
                   <Typography className={style.accountInfo__value}>{`${currentlySelectedAccount ? currentlySelectedAccount.data.original.accountNo : t('cash_management:Cash Statement.NA')} | ${
@@ -531,14 +523,13 @@ const CashStatementPage = () => {
                 </Grid>
               </Grid> */}
 
-              <Grid item xs={12}>
-                <ReportingInfo
-                  cashAccount={currentlySelectedAccount}
-                  securityAccount={currentlySelectedSecurityAccount}
-                />
-              </Grid>
+            <Grid item xs={12}>
+              <ReportingInfo
+                cashAccount={currentlySelectedAccount}
+                securityAccount={currentlySelectedSecurityAccount}
+              />
             </Grid>
-          </MuiPickersUtilsProvider>
+          </Grid>
         </TableFiltersWrapper>
 
         {/* <CashStatementTable data={rows} loading={false} /> */}
@@ -571,24 +562,22 @@ const CashStatementPage = () => {
             });
 
             return (
-              <Fragment>
-                <MaterialTable
-                  tableRef={tableRef}
-                  size="small"
-                  title=""
-                  style={{
-                    boxShadow: "none",
-                  }}
-                  columns={filterColumns.shownColumns}
-                  data={filteredData}
-                  options={{
-                    ...tableStyles,
-                    toolbar: false,
-                    pageSize: 10,
-                  }}
-                  localization={mtableLocalization}
-                />
-              </Fragment>
+              <MaterialTable
+                tableRef={tableRef}
+                size="small"
+                title=""
+                style={{
+                  boxShadow: "none",
+                }}
+                columns={filterColumns.shownColumns}
+                data={filteredData}
+                options={{
+                  ...tableStyles,
+                  toolbar: false,
+                  pageSize: 10,
+                }}
+                localization={mtableLocalization}
+              />
             );
           }}
         </FilterConsumer>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 import { Box } from "@mui/material";
 import cx from "classnames";
@@ -61,7 +62,7 @@ const DashboardLayout = ({ children }) => {
         >
           <div className={style.drawerHeader} />
           <Box sx={(muiTheme) => muiTheme.mixins.toolbar} />
-
+          <Outlet />
           {children}
         </main>
       </div>

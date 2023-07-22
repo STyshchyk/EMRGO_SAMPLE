@@ -166,21 +166,21 @@ const RouterMappingProvider = ({ children }) => {
         exact: true,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.home,
+        path: `${routes.dashboard.home}*`,
       },
       {
         component: Administration,
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.administration.home,
+        path: `${routes.dashboard.administration.home}*`,
       },
       {
         component: IssuancesList,
         exact: true,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.issuances.home,
+        path: `${routes.dashboard.issuances.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -188,7 +188,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.issuances.issuance.home,
+        path: `${routes.dashboard.issuances.issuance.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -196,7 +196,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: true,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.blotters.home,
+        path: `${routes.dashboard.blotters.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -204,7 +204,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.support.home,
+        path: `${routes.dashboard.support.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -212,7 +212,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.bulletins.home,
+        path: `${routes.dashboard.bulletins.home}*`,
         disabled: !kycApprovalStatus || !isBulletinBoardFeatureEnabled,
       },
       {
@@ -220,7 +220,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.cashManagement.home,
+        path: `${routes.dashboard.cashManagement.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -228,7 +228,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.reports.home,
+        path: `${routes.dashboard.reports.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -236,7 +236,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.issuerSecServices.home,
+        path: `${routes.dashboard.issuerSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -244,7 +244,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.investorSecServices.home,
+        path: `${routes.dashboard.investorSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -252,7 +252,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.opsSecServices.home,
+        path: `${routes.dashboard.opsSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -260,7 +260,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.securitiesAdmin.home,
+        path: `${routes.dashboard.securitiesAdmin.home}*`,
         disabled: !kycApprovalStatus || !isIntlSecTradeSettlementWorkflow,
       },
       {
@@ -268,7 +268,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.settlementAdmin.home,
+        path: `${routes.dashboard.settlementAdmin.home}*`,
         disabled: !kycApprovalStatus || !isIntlSecTradeSettlementWorkflow,
       },
       {
@@ -276,7 +276,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: true,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.reconciliation.home,
+        path: `${routes.dashboard.reconciliation.home}*`,
         disabled: !kycApprovalStatus || !isReconciliationFeatureEnabled,
       },
       {
@@ -284,7 +284,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: routes.dashboard.billing.home,
+        path: `${routes.dashboard.billing.home}*`,
         disabled: inProd || !kycApprovalStatus,
       },
     ],

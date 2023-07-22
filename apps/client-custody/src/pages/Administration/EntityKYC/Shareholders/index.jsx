@@ -487,7 +487,7 @@ const Shareholders = () => {
                       <div className="mt-4 w-full">
                         <Field
                           fullWidth
-                          format="DD/MM/yyyy"
+                          format="DD/MM/YYYY"
                           inputVariant="filled"
                           inputProps={{
                             shrink: "false",
@@ -1114,7 +1114,7 @@ const Shareholders = () => {
                                 >
                                   <Field
                                     fullWidth
-                                    format="DD/MM/yyyy"
+                                    format="DD/MM/YYYY"
                                     inputVariant="filled"
                                     variant="dialog"
                                     placeholder="DD/MM/YYYY"
@@ -1171,7 +1171,7 @@ const Shareholders = () => {
                           >
                             <Field
                               fullWidth
-                              format="DD/MM/yyyy"
+                              format="DD/MM/YYYY"
                               inputVariant="filled"
                               variant="dialog"
                               placeholder="DD/MM/YYYY"
@@ -1569,7 +1569,7 @@ const Shareholders = () => {
                           >
                             <Field
                               fullWidth
-                              format="DD/MM/yyyy"
+                              format="DD/MM/YYYY"
                               inputVariant="filled"
                               variant="dialog"
                               maxDate={moment()}

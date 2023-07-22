@@ -6,22 +6,22 @@ function useMaterialTableLocalization() {
 
   const localization = {
     pagination: {
-      labelDisplayedRows: t("components:Material Table.pagination.Displayed Rows"),
-      firstTooltip: t("components:Material Table.pagination.First Page"),
-      previousTooltip: t("components:Material Table.pagination.Previous Page"),
-      nextTooltip: t("components:Material Table.pagination.Next Page"),
-      lastTooltip: t("components:Material Table.pagination.Last Page"),
-      labelRowsSelect: t("components:Material Table.pagination.rows"),
+      labelDisplayedRows: t("Material Table.pagination.Displayed Rows"),
+      firstTooltip: t("Material Table.pagination.First Page"),
+      previousTooltip: t("Material Table.pagination.Previous Page"),
+      nextTooltip: t("Material Table.pagination.Next Page"),
+      lastTooltip: t("Material Table.pagination.Last Page"),
+      labelRowsSelect: t("Material Table.pagination.rows"),
     },
     header: {
-      actions: t("components:Material Table.header.actions"),
+      actions: t("Material Table.header.actions"),
     },
     body: {
-      emptyDataSourceMessage: t("components:Material Table.body.No records to display"),
+      emptyDataSourceMessage: t("Material Table.body.No records to display"),
     },
     toolbar: {
-      searchPlaceholder: t("components:Material Table.toolbar.Search"),
-      searchTooltip: t("components:Material Table.toolbar.Search"),
+      searchPlaceholder: t("Material Table.toolbar.Search"),
+      searchTooltip: t("Material Table.toolbar.Search"),
     },
   };
 

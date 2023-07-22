@@ -1,6 +1,6 @@
 import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import routes from "../../constants/routes";
@@ -44,7 +44,7 @@ const Billing = () => {
   return (
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-      <Switch>
+      <Routes>
         <Route exact path={routes.dashboard.billing.home}>
           <Navigate to={nextAccessibleRoutePath} />
         </Route>
@@ -64,7 +64,7 @@ const Billing = () => {
             <NoAccessPage />
           </Route>
             */}
-      </Switch>
+      </Routes>
     </Fragment>
   );
 };

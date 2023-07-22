@@ -1,7 +1,7 @@
 import { Fragment, lazy, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Switch, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 
 import { mdiBlockHelper } from "@mdi/js";
 import { reverse } from "named-urls";
@@ -298,7 +298,7 @@ const SingleIssuance = () => {
           ) : null}
         </Flex>
       </div>
-      <Switch>
+      <Routes>
         <Route exact path={routes.dashboard.issuances.issuance.home}>
           <Navigate to={reverse(routes.dashboard.issuances.issuance.overview, { issuanceID })} />
         </Route>
@@ -342,7 +342,7 @@ const SingleIssuance = () => {
             <SPEIncorporation />
           </Route>
         )}
-      </Switch>
+      </Routes>
     </Fragment>
   );
 };

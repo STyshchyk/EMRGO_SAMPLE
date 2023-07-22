@@ -1,6 +1,6 @@
 import { Fragment, lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavigation from "../../components/MinorNavigation";
 import PageTitle from "../../components/PageTitle";
@@ -27,14 +27,14 @@ const Support = () => {
           marginTop: "1rem",
         }}
       >
-        <Switch>
+        <Routes>
           <Route exact path={routes.dashboard.support.home}>
             <Navigate to={routes.dashboard.support.tfa} />
           </Route>
           <Route exact path={routes.dashboard.support.tfa}>
             <TFA />
           </Route>
-        </Switch>
+        </Routes>
       </div>
     </Fragment>
   );

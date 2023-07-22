@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { reverse } from "named-urls";
 
@@ -15,7 +15,7 @@ import * as authSelectors from "../../../redux/selectors/auth";
 import * as entitiesSelectors from "../../../redux/selectors/entities";
 import * as onboardingSelectors from "../../../redux/selectors/onboarding";
 import InviteUserModal from "../VisitorManagement/InviteUserModal";
-import ViewUserInfoModal from "../VisitorManagement/ViewUserInfoModal";
+// import ViewUserInfoModal from "../VisitorManagement/ViewUserInfoModal";
 // import ViewUserInfoModal from './ViewUserInfoModal';
 // import ViewUserKYCModal from './ViewUserKYCModal';
 import DeactivateUserModal from "./DeactivateUserModal";
@@ -152,56 +152,60 @@ const VisitorManagement = () => {
   const rowData = isAdmin ? users : entityUsers;
 
   return (
-    <Fragment>
-      <Switch>
-        <Route exact path={routes.dashboard.administration.entityManagement.users.home}>
-          <UserTable
-            currentUserId={currentUserId}
-            isMFAEnabled={isMFAEnabled}
-            isAdmin={isAdmin}
-            isRelationshipManager={isRelationshipManager}
-            tableData={rowData}
-            selectedRow={selectedRow}
-            setSelectedRow={setSelectedRow}
-            handleInviteUserOpen={handleInviteUserOpen}
-            handleViewUserInfoOpen={handleViewUserInfoOpen}
-            handleDeactivateUserOpen={handleDeactivateUserOpen}
-            handleReactivateUserOpen={handleReactivateUserOpen}
-            handleIndividualKYCOpen={handleIndividualKYCOpen}
-          />
-          {selectedUserInfo !== null ? (
-            <UserInfoModal
-              open={viewUserInfoModalOpen}
-              onClose={handleViewUserInfoClose}
-              selectedRow={selectedRow}
-              selectedUserInfo={selectedUserInfo}
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={
+          <Fragment>
+            <UserTable
+              currentUserId={currentUserId}
+              isMFAEnabled={isMFAEnabled}
               isAdmin={isAdmin}
+              isRelationshipManager={isRelationshipManager}
+              tableData={rowData}
+              selectedRow={selectedRow}
+              setSelectedRow={setSelectedRow}
+              handleInviteUserOpen={handleInviteUserOpen}
+              handleViewUserInfoOpen={handleViewUserInfoOpen}
+              handleDeactivateUserOpen={handleDeactivateUserOpen}
+              handleReactivateUserOpen={handleReactivateUserOpen}
+              handleIndividualKYCOpen={handleIndividualKYCOpen}
             />
-          ) : (
-            // <ViewUserInfoModal open={viewUserInfoModalOpen} onClose={handleViewUserInfoClose} selectedRow={selectedRow} selectedUserInfo={selectedUserInfo} isAdmin={isAdmin} />
-            ""
-          )}
-          <InviteUserModal
-            open={inviteUserModalOpen}
-            onClose={handleInviteUserClose}
-            selectedRow={selectedRow}
-            inviteUser={inviteUser}
-          />
-          <DeactivateUserModal
-            open={deactivateUserModalOpen}
-            onClose={handleDeactivateUserClose}
-            selectedRow={selectedRow}
-            deactivateEntity={deactivateEntity}
-          />
-          <ReactivateUserModal
-            open={reactivateUserModalOpen}
-            onClose={handleReactivateUserClose}
-            selectedRow={selectedRow}
-            reactivateEntity={reactivateEntity}
-          />
-        </Route>
-      </Switch>
-    </Fragment>
+            {selectedUserInfo !== null ? (
+              <UserInfoModal
+                open={viewUserInfoModalOpen}
+                onClose={handleViewUserInfoClose}
+                selectedRow={selectedRow}
+                selectedUserInfo={selectedUserInfo}
+                isAdmin={isAdmin}
+              />
+            ) : (
+              // <ViewUserInfoModal open={viewUserInfoModalOpen} onClose={handleViewUserInfoClose} selectedRow={selectedRow} selectedUserInfo={selectedUserInfo} isAdmin={isAdmin} />
+              ""
+            )}
+            <InviteUserModal
+              open={inviteUserModalOpen}
+              onClose={handleInviteUserClose}
+              selectedRow={selectedRow}
+              inviteUser={inviteUser}
+            />
+            <DeactivateUserModal
+              open={deactivateUserModalOpen}
+              onClose={handleDeactivateUserClose}
+              selectedRow={selectedRow}
+              deactivateEntity={deactivateEntity}
+            />
+            <ReactivateUserModal
+              open={reactivateUserModalOpen}
+              onClose={handleReactivateUserClose}
+              selectedRow={selectedRow}
+              reactivateEntity={reactivateEntity}
+            />
+          </Fragment>
+        }
+      ></Route>
+    </Routes>
   );
 };
 

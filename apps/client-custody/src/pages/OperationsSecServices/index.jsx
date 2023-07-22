@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -120,7 +120,7 @@ const OperationsSecServices = () => {
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
 
   return (
-    <Switch>
+    <Routes>
       <Route exact path={routes.dashboard.opsSecServices.home}>
         <Navigate to={nextAccessibleRoutePath} />
       </Route>
@@ -208,7 +208,7 @@ const OperationsSecServices = () => {
           <CounterpartySSIList />
         </PageWrapper>
       </Route>
-    </Switch>
+    </Routes>
   );
 };
 

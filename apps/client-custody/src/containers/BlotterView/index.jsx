@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
@@ -87,9 +87,9 @@ const BlotterView = () => {
           </Tooltip>
         }
       />
-      <Switch>
+      <Routes>
         <Route exact path={routes.dashboard.blotters.home} component={BlotterContainer} />
-      </Switch>
+      </Routes>
     </Fragment>
   );
 };

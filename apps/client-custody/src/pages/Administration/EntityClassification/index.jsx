@@ -1,7 +1,7 @@
 import { Fragment, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 
 import { reverse } from "named-urls";
 
@@ -80,25 +80,23 @@ const EntityKYC = () => {
   ];
 
   return (
-    <Fragment>
-      <Switch>
-        {/**
+    <Routes>
+      {/**
           <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.overview}>
           <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
           <KYCOverviewPage />
         </Route>
       */}
-        <Route
-          exact
-          path={
-            routes.dashboard.administration.entityDetails.kyc.entities.entity.entityClassification
-          }
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <ClassificationPage />
-        </Route>
-      </Switch>
-    </Fragment>
+      <Route
+        exact
+        path={
+          routes.dashboard.administration.entityDetails.kyc.entities.entity.entityClassification
+        }
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <ClassificationPage />
+      </Route>
+    </Routes>
   );
 };
 export default EntityKYC;

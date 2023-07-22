@@ -598,7 +598,7 @@ const Details = () => {
                                     date: (
                                       <Field
                                         fullWidth
-                                        format="DD/MM/yyyy"
+                                        format="DD/MM/YYYY"
                                         inputVariant="filled"
                                         inputProps={{
                                           shrink: "true",

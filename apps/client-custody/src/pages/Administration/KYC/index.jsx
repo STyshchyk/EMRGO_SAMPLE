@@ -1,6 +1,6 @@
 import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import routes from "../../../constants/routes";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -16,11 +16,11 @@ const KYC = () => {
   return (
     <Fragment>
       <div dir="ltr" className="rtl__disabled">
-        <Switch>
+        <Routes>
           <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.home}>
             <KYCEntitiesList />
           </Route>
-        </Switch>
+        </Routes>
       </div>
       <div
         style={{

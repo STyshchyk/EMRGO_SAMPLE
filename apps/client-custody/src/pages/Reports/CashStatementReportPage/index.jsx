@@ -265,7 +265,7 @@ const CashStatementReportPage = () => {
   const columns = [
     {
       id: "date",
-      title: t("reports:Cash Statement.Headers.Date"),
+      title: t("Cash Statement.Headers.Date"),
       field: "date",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
@@ -275,20 +275,20 @@ const CashStatementReportPage = () => {
     },
     {
       id: "transactionType",
-      title: t("reports:Cash Statement.Headers.Transaction Type"),
+      title: t("Cash Statement.Headers.Transaction Type"),
       field: "transactionType",
       exportConfig: { width: 15 },
     },
-    { id: "isin", title: t("reports:Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
     {
       id: "narrative",
-      title: t("reports:Cash Statement.Headers.Narrative"),
+      title: t("Cash Statement.Headers.Narrative"),
       field: "narrative",
       exportConfig: { width: 25 },
     },
     {
       id: "debit",
-      title: t("reports:Cash Statement.Headers.Debit"),
+      title: t("Cash Statement.Headers.Debit"),
       field: "debit",
       render: (rowData) => currencyRenderer(rowData.debit),
       exportConfig: {
@@ -299,7 +299,7 @@ const CashStatementReportPage = () => {
     },
     {
       id: "credit",
-      title: t("reports:Cash Statement.Headers.Credit"),
+      title: t("Cash Statement.Headers.Credit"),
       field: "credit",
       render: (rowData) => currencyRenderer(rowData.credit),
       exportConfig: {
@@ -310,7 +310,7 @@ const CashStatementReportPage = () => {
     },
     {
       id: "balance",
-      title: t("reports:Cash Statement.Headers.Balance"),
+      title: t("Cash Statement.Headers.Balance"),
       field: "balance",
       render: (rowData) => currencyRenderer(rowData.balance),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.balance), align: "right" },
@@ -320,11 +320,11 @@ const CashStatementReportPage = () => {
 
   return (
     <Fragment>
-      <PageTitle title={t("reports:Cash Statement.Cash Statement")} />
+      <PageTitle title={t("Cash Statement.Cash Statement")} />
       <RouteLeavingGuard
         when={transactions?.length > 0}
-        title={t("reports:Leave Guard.Title")}
-        message={t("reports:Leave Guard.Message")}
+        title={t("Leave Guard.Title")}
+        message={t("Leave Guard.Message")}
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       />

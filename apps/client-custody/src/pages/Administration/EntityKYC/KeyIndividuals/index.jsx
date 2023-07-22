@@ -852,7 +852,7 @@ const KeyIndividuals = () => {
                               >
                                 <Field
                                   fullWidth
-                                  format="DD/MM/yyyy"
+                                  format="DD/MM/YYYY"
                                   inputVariant="filled"
                                   inputProps={{
                                     shrink: "false",
@@ -913,7 +913,7 @@ const KeyIndividuals = () => {
                         >
                           <Field
                             fullWidth
-                            format="DD/MM/yyyy"
+                            format="DD/MM/YYYY"
                             inputVariant="filled"
                             inputProps={{
                               shrink: "false",

@@ -1,7 +1,6 @@
-import { lazy } from "react";
-import { useTranslation } from "react-i18next";
+import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -22,7 +21,6 @@ const UserManagement = lazy(() => import("./UserManagement"));
 const PageWrapper = ({ children }) => <div style={{ marginTop: "1rem" }}>{children}</div>;
 
 const Administration = () => {
-  const { t } = useTranslation(["translation"]);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
@@ -153,69 +151,100 @@ const Administration = () => {
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
 
   return (
-    <Switch>
-      <Route exact path={routes.dashboard.administration.home}>
-        <Navigate to={nextAccessibleRoutePath} />
-      </Route>
+    <Routes>
+      <Route path="/" element={<Navigate replace to={nextAccessibleRoutePath} />} />
 
       <Route
-        path={
-          routes.dashboard.administration.entityDetails.kyc.entities.entity.entityClassification
+        path="/entity-details/kyc/enitites/:entityId/entity-classification"
+        element={
+          <PageWrapper>
+            <EntityClassification />
+          </PageWrapper>
         }
-      >
-        <PageWrapper>
-          <EntityClassification />
-        </PageWrapper>
-      </Route>
+      />
 
-      <Route path={routes.dashboard.administration.entityDetails.kyc.entities.entity.home}>
-        <PageWrapper>
-          <EntityKYC />
-        </PageWrapper>
-      </Route>
+      <Route
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.home}
+        element={
+          <PageWrapper>
+            <EntityKYC />
+          </PageWrapper>
+        }
+      />
 
-      <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <KYC />
-        </PageWrapper>
-      </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.home}
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <KYC />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
 
-      <Route path={routes.dashboard.administration.entityManagement.entities.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <EntityManagement />
-        </PageWrapper>
-      </Route>
+      <Route
+        path="/entity-management/entities/"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <EntityManagement />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
 
-      <Route path={routes.dashboard.administration.entityManagement.visitors.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <VisitorManagement />
-        </PageWrapper>
-      </Route>
+      <Route
+        path={routes.dashboard.administration.entityManagement.visitors.home}
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <VisitorManagement />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
 
-      <Route path={routes.dashboard.administration.entityManagement.users.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <UserManagement />
-        </PageWrapper>
-      </Route>
+      <Route
+        path="/entity-management/users/"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <UserManagement />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
 
-      <Route path={routes.dashboard.administration.parentEntityManagement.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <ParentEntityManagement />
-        </PageWrapper>
-      </Route>
+      <Route
+        path={routes.dashboard.administration.parentEntityManagement.home}
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <ParentEntityManagement />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
 
-      <Route path={routes.dashboard.administration.entityAccountManagement.home}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-        <PageWrapper>
-          <EntityAccountManagement />
-        </PageWrapper>
-      </Route>
-    </Switch>
+      <Route
+        path={routes.dashboard.administration.entityAccountManagement.home}
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <EntityAccountManagement />
+            </PageWrapper>
+          </Fragment>
+        }
+      />
+    </Routes>
   );
 };
 

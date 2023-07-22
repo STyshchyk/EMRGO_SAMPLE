@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -30,7 +30,7 @@ const SecuritiesAdmin = () => {
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
 
   return (
-    <Switch>
+    <Routes>
       <Route exact path={routes.dashboard.securitiesAdmin.home}>
         <Navigate to={nextAccessibleRoutePath} />
       </Route>
@@ -42,7 +42,7 @@ const SecuritiesAdmin = () => {
           <ExternalSecuritiesList />
         </PageWrapper>
       </Route>
-    </Switch>
+    </Routes>
   );
 };
 

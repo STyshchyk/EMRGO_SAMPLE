@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -59,7 +59,7 @@ const IssuerServices = () => {
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
 
   return (
-    <Switch>
+    <Routes>
       <Route exact path={routes.dashboard.issuerSecServices.home}>
         <Navigate to={nextAccessibleRoutePath} />
       </Route>
@@ -93,7 +93,7 @@ const IssuerServices = () => {
           <Registrar />
         </PageWrapper>
       </Route>
-    </Switch>
+    </Routes>
   );
 };
 

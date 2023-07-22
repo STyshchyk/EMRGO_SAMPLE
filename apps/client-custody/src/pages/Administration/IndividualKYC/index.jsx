@@ -1,7 +1,7 @@
 import { Fragment, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 
 import { reverse } from "named-urls";
 
@@ -50,7 +50,7 @@ const IndividualKYC = () => {
     <Fragment>
       <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
       <div style={{ marginTop: "1rem" }}>
-        <Switch>
+        <Routes>
           <Route
             path={
               routes.dashboard.administration.entityDetails.kyc.entities.entity.individuals
@@ -59,7 +59,7 @@ const IndividualKYC = () => {
           >
             <Details />
           </Route>
-        </Switch>
+        </Routes>
       </div>
     </Fragment>
   );

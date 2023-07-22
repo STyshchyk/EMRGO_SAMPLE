@@ -5,7 +5,7 @@ const MaterialTableCustomDatepickerRenderer = (props) => (
   <DatePicker
     disableToolbar
     variant="inline"
-    format="DD/MM/yyyy"
+    format="DD/MM/YYYY"
     autoOk
     // minDate={moment()}
     // margin="normal"

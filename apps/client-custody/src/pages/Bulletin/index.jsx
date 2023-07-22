@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -39,7 +39,7 @@ const Bulletin = () => {
   return (
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-      <Switch>
+      <Routes>
         <Route exact path={routes.dashboard.bulletins.home}>
           <Navigate to={nextAccessibleRoutePath} />
         </Route>
@@ -49,7 +49,7 @@ const Bulletin = () => {
         <Route exact path={routes.dashboard.bulletins.manage}>
           <QuoteBoardBroker />
         </Route>
-      </Switch>
+      </Routes>
     </Fragment>
   );
 };

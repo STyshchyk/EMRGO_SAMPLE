@@ -1,8 +1,6 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -19,76 +17,72 @@ const DeactivateUserModal = ({ open, onClose, selectedRow, deactivateEntity }) =
   const { theme } = useTheme();
 
   return (
-    <Fragment>
-      <Formik
-        initialValues={{
-          reason: "",
-        }}
-        // validationSchema={}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false);
-          }, 2000);
+    <Formik
+      initialValues={{
+        reason: "",
+      }}
+      // validationSchema={}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          setSubmitting(false);
+        }, 2000);
 
-          const requestPayload = {
-            isActive: false,
-            reason: values?.reason,
-          };
-          deactivateEntity(requestPayload, selectedRow?.user?.id, selectedRow?.entityId);
-        }}
-      >
-        {({ handleSubmit }) => (
-          <Form>
-            <Dialog
-              fullWidth
-              open={open}
-              onClose={onClose}
-              aria-labelledby="form-dialog-title"
-              PaperProps={{ className: "overflow-y-visible" }}
-            >
-              <DialogTitle id="edit-group-types-form-dialog-title">
-                {t("onboarding:Forms.Deactivate User")}
-              </DialogTitle>
-              <DialogContent className="overflow-y-visible">
-                <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                  <Grid container>
-                    <Field
-                      fullWidth
-                      component={TextField}
-                      minRows={3}
-                      multiline
-                      label={t("onboarding:Forms.Reason")}
-                      name="reason"
-                      variant="filled"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
-              </DialogContent>
-              <DialogActions>
-                <Grid container justifyContent="flex-end" className="mx-4 mb-4">
-                  <Grid item xs={12} lg={4}>
-                    <Button type="submit" color="primary" fullWidth onClick={onClose}>
-                      {t("onboarding:Forms.Cancel")}
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} lg={4}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={handleSubmit}
-                    >
-                      {t("onboarding:Forms.Submit")}
-                    </Button>
-                  </Grid>
+        const requestPayload = {
+          isActive: false,
+          reason: values?.reason,
+        };
+        deactivateEntity(requestPayload, selectedRow?.user?.id, selectedRow?.entityId);
+      }}
+    >
+      {({ handleSubmit }) => (
+        <Form>
+          <Dialog
+            fullWidth
+            open={open}
+            onClose={onClose}
+            aria-labelledby="form-dialog-title"
+            PaperProps={{ className: "overflow-y-visible" }}
+          >
+            <DialogTitle id="edit-group-types-form-dialog-title">
+              {t("onboarding:Forms.Deactivate User")}
+            </DialogTitle>
+            <DialogContent className="overflow-y-visible">
+              <Grid container>
+                <Field
+                  fullWidth
+                  component={TextField}
+                  minRows={3}
+                  multiline
+                  label={t("onboarding:Forms.Reason")}
+                  name="reason"
+                  variant="filled"
+                />
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Grid container justifyContent="flex-end" className="mx-4 mb-4">
+                <Grid item xs={12} lg={4}>
+                  <Button type="submit" color="primary" fullWidth onClick={onClose}>
+                    {t("onboarding:Forms.Cancel")}
+                  </Button>
                 </Grid>
-              </DialogActions>
-            </Dialog>
-          </Form>
-        )}
-      </Formik>
-    </Fragment>
+                <Grid item xs={12} lg={4}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleSubmit}
+                  >
+                    {t("onboarding:Forms.Submit")}
+                  </Button>
+                </Grid>
+              </Grid>
+            </DialogActions>
+          </Dialog>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

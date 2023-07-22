@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { capitalCase } from "change-case";
@@ -136,58 +136,57 @@ const EntityManagement = () => {
   // }, [dispatch, isAdmin, currentEntityGroupID]);
 
   return (
-    <Fragment>
-      <Switch>
-        <Route exact path={routes.dashboard.administration.entityManagement.entities.home}>
-          <EntitiesTable tableData={entities.map((i) => createEntitiesTableData(i))} />
-        </Route>
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={<EntitiesTable tableData={entities.map((i) => createEntitiesTableData(i))} />}
+      ></Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityManagement.entities.entity.entityGroups.home}
-        >
+      <Route
+        exact
+        path="/:entityId/entity-groups"
+        element={
           <Fragment>
             <GoBackButton />
             <EntityGroupManagement />
           </Fragment>
-        </Route>
+        }
+      ></Route>
 
-        <Route
-          exact
-          path={
-            routes.dashboard.administration.entityManagement.entities.entity.entityGroups
-              .entityGroup.entityUserAccessManagement
-          }
-        >
+      <Route
+        exact
+        path="/:entityId/entity-groups/:groupId/entity-user-access-management"
+        element={
           <Fragment>
             <GoBackButton />
             <EntityUserAccessManagement />
           </Fragment>
-        </Route>
+        }
+      ></Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityManagement.entities.entity.entityUsers.home}
-        >
+      <Route
+        exact
+        path="/:entityId/entity-users/"
+        element={
           <Fragment>
             <GoBackButton />
             <EntityUsersManagement />
           </Fragment>
-        </Route>
+        }
+      ></Route>
 
-        <Route
-          exact
-          path={
-            routes.dashboard.administration.entityManagement.entities.entity.editEntityPrefs.home
-          }
-        >
+      <Route
+        exact
+        path={routes.dashboard.administration.entityManagement.entities.entity.editEntityPrefs.home}
+        element={
           <Fragment>
             <GoBackButton />
             <EditEntityPreferences />
           </Fragment>
-        </Route>
-      </Switch>
-    </Fragment>
+        }
+      ></Route>
+    </Routes>
   );
 };
 

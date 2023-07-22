@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { reverse } from "named-urls";
 
@@ -268,110 +268,108 @@ const VisitorManagement = () => {
   };
 
   return (
-    <Fragment>
-      <Switch>
-        <Route exact path={routes.dashboard.administration.entityManagement.visitors.home}>
-          <VisitorsTable
-            isRelationshipManager={isRelationshipManager}
-            tableData={visitors}
+    <Routes>
+      <Route exact path={routes.dashboard.administration.entityManagement.visitors.home}>
+        <VisitorsTable
+          isRelationshipManager={isRelationshipManager}
+          tableData={visitors}
+          selectedRow={selectedRow}
+          setSelectedRow={setSelectedRow}
+          handleInviteUserOpen={handleInviteUserOpen}
+          handleAssignRMOpen={handleAssignRMOpen}
+          handleRequestKYCOpen={handleRequestKYCOpen}
+          handleAssignEntityOpen={handleAssignEntityOpen}
+          handleViewUserInfoOpen={handleViewUserInfoOpen}
+          handleViewUserKYCOpen={handleViewUserKYCOpen}
+          handleViewDocumentsOpen={handleViewDocumentsOpen}
+          handleDeactivateUserOpen={handleDeactivateUserOpen}
+          handleReactivateUserOpen={handleReactivateUserOpen}
+          handleArchiveUserOpen={handleArchiveUserOpen}
+          handleApproveUserOpen={handleApproveUserOpen}
+          handleAssignUserAdminOpen={handleAssignUserAdminOpen}
+          handleDeassignUserAdminOpen={handleDeassignUserAdminOpen}
+        />
+        <InviteUserModal
+          open={inviteUserModalOpen}
+          onClose={handleInviteUserClose}
+          selectedRow={selectedRow}
+          inviteUser={inviteUser}
+        />
+        <AssignRMModal
+          open={assignRMModalOpen}
+          onClose={handleAssignRMClose}
+          selectedRow={selectedRow}
+          assignRM={assignRM}
+          relationshipManagers={relationshipManagers}
+        />
+        <RequestKYCModal
+          open={requestKYCModalOpen}
+          onClose={handleRequestKYCClose}
+          selectedRow={selectedRow}
+          requestKYC={requestKYC}
+        />
+        <AssignEntityModal
+          open={assignEntityModalOpen}
+          onClose={handleAssignEntityClose}
+          selectedRow={selectedRow}
+          assignEntity={assignEntity}
+          entitites={entitites}
+        />
+        {selectedUserInfo !== null ? (
+          <UserInfoModal
+            open={viewUserInfoModalOpen}
+            onClose={handleViewUserInfoClose}
             selectedRow={selectedRow}
-            setSelectedRow={setSelectedRow}
-            handleInviteUserOpen={handleInviteUserOpen}
-            handleAssignRMOpen={handleAssignRMOpen}
-            handleRequestKYCOpen={handleRequestKYCOpen}
-            handleAssignEntityOpen={handleAssignEntityOpen}
-            handleViewUserInfoOpen={handleViewUserInfoOpen}
-            handleViewUserKYCOpen={handleViewUserKYCOpen}
-            handleViewDocumentsOpen={handleViewDocumentsOpen}
-            handleDeactivateUserOpen={handleDeactivateUserOpen}
-            handleReactivateUserOpen={handleReactivateUserOpen}
-            handleArchiveUserOpen={handleArchiveUserOpen}
-            handleApproveUserOpen={handleApproveUserOpen}
-            handleAssignUserAdminOpen={handleAssignUserAdminOpen}
-            handleDeassignUserAdminOpen={handleDeassignUserAdminOpen}
+            selectedUserInfo={selectedUserInfo}
+            isAdmin={isAdmin}
           />
-          <InviteUserModal
-            open={inviteUserModalOpen}
-            onClose={handleInviteUserClose}
-            selectedRow={selectedRow}
-            inviteUser={inviteUser}
-          />
-          <AssignRMModal
-            open={assignRMModalOpen}
-            onClose={handleAssignRMClose}
-            selectedRow={selectedRow}
-            assignRM={assignRM}
-            relationshipManagers={relationshipManagers}
-          />
-          <RequestKYCModal
-            open={requestKYCModalOpen}
-            onClose={handleRequestKYCClose}
-            selectedRow={selectedRow}
-            requestKYC={requestKYC}
-          />
-          <AssignEntityModal
-            open={assignEntityModalOpen}
-            onClose={handleAssignEntityClose}
-            selectedRow={selectedRow}
-            assignEntity={assignEntity}
-            entitites={entitites}
-          />
-          {selectedUserInfo !== null ? (
-            <UserInfoModal
-              open={viewUserInfoModalOpen}
-              onClose={handleViewUserInfoClose}
-              selectedRow={selectedRow}
-              selectedUserInfo={selectedUserInfo}
-              isAdmin={isAdmin}
-            />
-          ) : (
-            // <ViewUserInfoModal open={viewUserInfoModalOpen} onClose={handleViewUserInfoClose} selectedRow={selectedRow} selectedUserInfo={selectedUserInfo} isAdmin={isAdmin} />
-            ""
-          )}
+        ) : (
+          // <ViewUserInfoModal open={viewUserInfoModalOpen} onClose={handleViewUserInfoClose} selectedRow={selectedRow} selectedUserInfo={selectedUserInfo} isAdmin={isAdmin} />
+          ""
+        )}
 
-          {/* <ViewUserKYCModal open={viewUserKYCModalOpen} onClose={handleViewUserKYCClose} selectedRow={selectedRow} kycData={kycData} /> */}
-          <DeactivateUserModal
-            open={deactivateUserModalOpen}
-            onClose={handleDeactivateUserClose}
-            selectedRow={selectedRow}
-            deactivateEntity={deactivateEntity}
-          />
-          <ReactivateUserModal
-            open={reactivateUserModalOpen}
-            onClose={handleReactivateUserClose}
-            selectedRow={selectedRow}
-            reactivateEntity={reactivateEntity}
-          />
-          <ArchiveUserModal
-            open={archiveUserModalOpen}
-            onClose={handleArchiveUserClose}
-            selectedRow={selectedRow}
-            archiveUser={archiveUser}
-          />
-          <AssignApproveModal
-            open={approveUserModalOpen}
-            onClose={handleApproveUserClose}
-            selectedRow={selectedRow}
-            approveEntity={approveEntity}
-            currentEntityGroupID={currentEntityGroupID}
-          />
-          <AssignAdminModal
-            open={assignUserAdminModalOpen}
-            onClose={handleAssignUserAdminClose}
-            selectedRow={selectedRow}
-            assignUserAdmin={assignUserAdmin}
-            currentEntityGroupID={currentEntityGroupID}
-          />
-          <DeassignAdminModal
-            open={deassignUserAdminModalOpen}
-            onClose={handleDeassignUserAdminClose}
-            selectedRow={selectedRow}
-            deassignUserAdmin={deassignUserAdmin}
-            currentEntityGroupID={currentEntityGroupID}
-          />
-        </Route>
-      </Switch>
-    </Fragment>
+        {/* <ViewUserKYCModal open={viewUserKYCModalOpen} onClose={handleViewUserKYCClose} selectedRow={selectedRow} kycData={kycData} /> */}
+        <DeactivateUserModal
+          open={deactivateUserModalOpen}
+          onClose={handleDeactivateUserClose}
+          selectedRow={selectedRow}
+          deactivateEntity={deactivateEntity}
+        />
+        <ReactivateUserModal
+          open={reactivateUserModalOpen}
+          onClose={handleReactivateUserClose}
+          selectedRow={selectedRow}
+          reactivateEntity={reactivateEntity}
+        />
+        <ArchiveUserModal
+          open={archiveUserModalOpen}
+          onClose={handleArchiveUserClose}
+          selectedRow={selectedRow}
+          archiveUser={archiveUser}
+        />
+        <AssignApproveModal
+          open={approveUserModalOpen}
+          onClose={handleApproveUserClose}
+          selectedRow={selectedRow}
+          approveEntity={approveEntity}
+          currentEntityGroupID={currentEntityGroupID}
+        />
+        <AssignAdminModal
+          open={assignUserAdminModalOpen}
+          onClose={handleAssignUserAdminClose}
+          selectedRow={selectedRow}
+          assignUserAdmin={assignUserAdmin}
+          currentEntityGroupID={currentEntityGroupID}
+        />
+        <DeassignAdminModal
+          open={deassignUserAdminModalOpen}
+          onClose={handleDeassignUserAdminClose}
+          selectedRow={selectedRow}
+          deassignUserAdmin={deassignUserAdmin}
+          currentEntityGroupID={currentEntityGroupID}
+        />
+      </Route>
+    </Routes>
   );
 };
 

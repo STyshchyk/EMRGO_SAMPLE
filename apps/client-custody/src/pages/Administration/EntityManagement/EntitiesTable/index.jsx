@@ -27,7 +27,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { capitalCase, upperCase } from "change-case";
+import { capitalCase } from "change-case";
 import { reverse } from "named-urls";
 import PropTypes from "prop-types";
 
@@ -396,7 +396,7 @@ const EntitiesTable = ({ tableData }) => {
           // render: (rowData) => rowData?.validGroupTypes[0]?.entityType,
           render: (rowData) =>
             rowData?.validGroupTypes[0]?.entityType === "FIDUCIARY"
-              ? upperCase("SPE Trustee")
+              ? capitalCase("SPE Trustee")
               : rowData?.validGroupTypes[0]?.entityType,
         },
 
@@ -437,51 +437,49 @@ const EntitiesTable = ({ tableData }) => {
               backgroundColor: "white",
             }}
           >
-            <Fragment>
-              <div>
-                <Typography variant="body1" color="primary">
-                  {t("administration:EntityManagement.EntityManagementTable.Entity Groups")}
-                  <Link
-                    to={reverse(
-                      `${routes.dashboard.administration.entityManagement.entities.entity.entityGroups.home}`,
-                      { entityId: rowData.id }
-                    )}
-                  >
-                    <Typography className="pl-1" variant="caption">
-                      Manage
-                    </Typography>
-                  </Link>
-                </Typography>
-              </div>
-              <Grid container>
-                <TableContainer>
-                  <Table size="small" aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Group Name</TableCell>
-                        <TableCell>Group Type</TableCell>
-                        <TableCell>Active</TableCell>
+            <div>
+              <Typography variant="body1" color="primary">
+                {t("administration:EntityManagement.EntityManagementTable.Entity Groups")}
+                <Link
+                  to={reverse(
+                    `${routes.dashboard.administration.entityManagement.entities.entity.entityGroups.home}`,
+                    { entityId: rowData.id }
+                  )}
+                >
+                  <Typography className="pl-1" variant="caption">
+                    Manage
+                  </Typography>
+                </Link>
+              </Typography>
+            </div>
+            <Grid container>
+              <TableContainer>
+                <Table size="small" aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Group Name</TableCell>
+                      <TableCell>Group Type</TableCell>
+                      <TableCell>Active</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rowData?.groups?.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell>
+                          {row.entityType === "FIDUCIARY"
+                            ? "SPE Trustee"
+                            : capitalCase(row.entityType)}
+                        </TableCell>
+                        <TableCell>{row.isActive ? "Yes" : "No"}</TableCell>
                       </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rowData?.groups?.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell component="th" scope="row">
-                            {row.name}
-                          </TableCell>
-                          <TableCell>
-                            {row.entityType === "FIDUCIARY"
-                              ? "SPE Trustee"
-                              : capitalCase(row.entityType)}
-                          </TableCell>
-                          <TableCell>{row.isActive ? "Yes" : "No"}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Grid>
-            </Fragment>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
           </div>
         )}
         options={{

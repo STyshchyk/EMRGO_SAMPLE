@@ -31,47 +31,47 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
         columns={[
           {
             id: "accountNo",
-            title: t("cash_management:Payment Instructions.Headers.Account No"),
+            title: t("Payment Instructions.Headers.Account No"),
             field: "accountNo",
           },
           {
             id: "clientBalance",
-            title: t("cash_management:Payment Instructions.Headers.Client Balance"),
+            title: t("Payment Instructions.Headers.Client Balance"),
             field: "clientBalance",
             render: (rowData) => currencyRenderer(rowData.clientBalance),
           },
           {
             id: "createdAt",
-            title: t("cash_management:Payment Instructions.Headers.Created At Date"),
+            title: t("Payment Instructions.Headers.Created At Date"),
             defaultSort: "asc",
             field: "createdAt",
             render: (rowData) => dateRenderer(rowData.createdAt),
           },
           {
             id: "valueDate",
-            title: t("cash_management:Payment Instructions.Headers.Value Date"),
+            title: t("Payment Instructions.Headers.Value Date"),
             field: "valueDate",
             render: (rowData) => dateRenderer(rowData.valueDate),
           },
           {
             id: "investor",
-            title: t("cash_management:Payment Instructions.Headers.Investor/Owner"),
+            title: t("Payment Instructions.Headers.Investor/Owner"),
             field: "investor",
           },
           {
             id: "payment",
-            title: t("cash_management:Payment Instructions.Headers.Payment Amount"),
+            title: t("Payment Instructions.Headers.Payment Amount"),
             field: "payment",
             render: (rowData) => currencyRenderer(rowData.payment),
           },
           {
             id: "currency",
-            title: t("cash_management:Payment Instructions.Headers.CCY"),
+            title: t("Payment Instructions.Headers.CCY"),
             field: "currency",
           },
           {
             id: "country",
-            title: t("cash_management:Payment Instructions.Headers.Country"),
+            title: t("Payment Instructions.Headers.Country"),
             field: "country",
           },
 
@@ -79,15 +79,15 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
 
           {
             id: "bank",
-            title: t("cash_management:Payment Instructions.Headers.Bank"),
+            title: t("Payment Instructions.Headers.Bank"),
             field: "bank",
           },
           {
             id: "iban",
-            title: t("cash_management:Payment Instructions.Headers.IBAN/Account"),
+            title: t("Payment Instructions.Headers.IBAN/Account"),
             field: "iban",
           },
-          { id: "bic", title: t("cash_management:Payment Instructions.Headers.BIC"), field: "bic" },
+          { id: "bic", title: t("Payment Instructions.Headers.BIC"), field: "bic" },
 
           {
             id: "intermediaryBankName",
@@ -107,17 +107,17 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
 
           {
             id: "status",
-            title: t("cash_management:Payment Instructions.Headers.Status"),
+            title: t("Payment Instructions.Headers.Status"),
             field: "status",
           },
           {
             id: "transferPurposeType",
-            title: t("cash_management:Payment Instructions.Headers.Transfer Purpose"),
+            title: t("Payment Instructions.Headers.Transfer Purpose"),
             field: "transferPurposeType",
           },
           {
             id: "referenceNo",
-            title: t("cash_management:Payment Instructions.Headers.Reference No"),
+            title: t("Payment Instructions.Headers.Reference No"),
             field: "referenceNo",
           },
         ]}

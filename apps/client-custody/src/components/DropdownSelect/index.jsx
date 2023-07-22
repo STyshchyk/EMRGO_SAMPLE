@@ -5,10 +5,10 @@ import Select, { components } from "react-select";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import Icon from "@mdi/react";
 import cx from "classnames";
-import Required from "components/Required";
 import { useField } from "formik";
 import PropTypes from "prop-types";
 
+import Required from "../Required";
 import style from "./style.module.scss";
 
 const customSelectStyles = {

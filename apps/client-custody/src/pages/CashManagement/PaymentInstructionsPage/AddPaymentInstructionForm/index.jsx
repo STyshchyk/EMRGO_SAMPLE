@@ -63,9 +63,7 @@ const AddPaymentInstructionForm = ({
                   <Select
                     name="sourceEntity"
                     closeMenuOnSelect
-                    placeholder={t(
-                      "cash_management:Payment Instructions.Modals.Placeholders.Select Source Entity"
-                    )}
+                    placeholder={t("Payment Instructions.Modals.Placeholders.Select Source Entity")}
                     isSearchable
                     styles={selectStyles}
                     menuPortalTarget={document.body}
@@ -94,7 +92,7 @@ const AddPaymentInstructionForm = ({
                   <Select
                     name="sourceAccount"
                     placeholder={t(
-                      "cash_management:Payment Instructions.Modals.Placeholders.Select Source Account"
+                      "Payment Instructions.Modals.Placeholders.Select Source Account"
                     )}
                     components={{ Option: ReactSelectCurrencyOption }}
                     closeMenuOnSelect
@@ -123,7 +121,7 @@ const AddPaymentInstructionForm = ({
                     name="beneficiaryEntityGroupUser"
                     closeMenuOnSelect
                     placeholder={t(
-                      "cash_management:Payment Instructions.Modals.Placeholders.Select Beneficiary User"
+                      "Payment Instructions.Modals.Placeholders.Select Beneficiary User"
                     )}
                     isSearchable
                     styles={selectStyles}
@@ -160,9 +158,7 @@ const AddPaymentInstructionForm = ({
                 name="paymentAccount"
                 components={{ Option: ReactSelectCurrencyOption }}
                 closeMenuOnSelect
-                placeholder={t(
-                  "cash_management:Payment Instructions.Modals.Fields.Payment Account"
-                )}
+                placeholder={t("Payment Instructions.Modals.Fields.Payment Account")}
                 isSearchable
                 styles={selectStyles}
                 menuPortalTarget={document.body}
@@ -185,7 +181,7 @@ const AddPaymentInstructionForm = ({
             <Box my={1} className="full-width">
               <Datepicker
                 minDate={Date()}
-                label={t("cash_management:Payment Instructions.Modals.Fields.Value Date")}
+                label={t("Payment Instructions.Modals.Fields.Value Date")}
                 name="valueDate"
                 materialLabel
                 fullWidth
@@ -196,7 +192,7 @@ const AddPaymentInstructionForm = ({
                 <Field
                   fullWidth
                   component={TextField}
-                  label={t("cash_management:Payment Instructions.Modals.Fields.Payment Amount")}
+                  label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                   name="paymentAmount"
                   variant="filled"
                   type="number"
@@ -219,7 +215,7 @@ const AddPaymentInstructionForm = ({
                 multiline
                 rows={4}
                 component={TextField}
-                label={t("cash_management:Payment Instructions.Modals.Fields.Payment Details")}
+                label={t("Payment Instructions.Modals.Fields.Payment Details")}
                 name="paymentDetails"
                 variant="filled"
               />
@@ -228,9 +224,7 @@ const AddPaymentInstructionForm = ({
               <Select
                 name="transferPurpose"
                 closeMenuOnSelect
-                placeholder={t(
-                  "cash_management:Payment Instructions.Modals.Placeholders.Transfer Purpose"
-                )}
+                placeholder={t("Payment Instructions.Modals.Placeholders.Transfer Purpose")}
                 isSearchable
                 styles={selectStyles}
                 menuPortalTarget={document.body}
@@ -252,10 +246,10 @@ const AddPaymentInstructionForm = ({
                   }}
                   color="primary"
                 >
-                  {t("cash_management:Entity Accounts.Cancel")}
+                  {t("Entity Accounts.Cancel")}
                 </Button>
                 <Button type="submit" variant="contained" color="primary">
-                  {t("cash_management:Entity Accounts.Submit")}
+                  {t("Entity Accounts.Submit")}
                 </Button>
               </Grid>
             </Box>

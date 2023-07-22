@@ -1000,7 +1000,7 @@ const Blotter = ({
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
-                                  format="DD/MM/yyyy"
+                                  format="DD/MM/YYYY"
                                   inputVariant="filled"
                                   inputProps={{
                                     shrink: "false",
@@ -1019,7 +1019,7 @@ const Blotter = ({
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
-                                  format="DD/MM/yyyy"
+                                  format="DD/MM/YYYY"
                                   inputVariant="filled"
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"
@@ -1127,7 +1127,7 @@ const Blotter = ({
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
-                                  format="DD/MM/yyyy"
+                                  format="DD/MM/YYYY"
                                   inputVariant="filled"
                                   inputProps={{
                                     shrink: "false",
@@ -1146,7 +1146,7 @@ const Blotter = ({
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
-                                  format="DD/MM/yyyy"
+                                  format="DD/MM/YYYY"
                                   inputVariant="filled"
                                   variant="inline"
                                   placeholder="DD/MM/YYYY"

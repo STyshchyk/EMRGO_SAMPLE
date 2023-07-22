@@ -5,6 +5,7 @@ import { lightBlue } from "@mui/material/colors";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import cx from "classnames";
 import { useField } from "formik";
+import moment from "moment";
 import PropTypes from "prop-types";
 
 import Required from "../Required";
@@ -118,15 +119,15 @@ const Datepicker = (props) => {
               <DatePicker
                 disabled={disabled}
                 clearable
-                style={{
+                sx={{
                   width: fullWidth ? "100%" : "",
                 }}
                 name={field.name}
-                value={field.value || null}
+                value={field?.value ? moment(field?.value) : undefined}
                 onChange={handleDateChange}
                 format={format}
                 animateYearScrolling={animateYearScrolling}
-                minDate={minDate}
+                minDate={minDate ? moment(minDate) : undefined}
                 minDateMessage={minDateMessage ?? "Date should not be before minimal date"}
                 maxDate={maxDate}
                 label={materialLabel ? label : ""}

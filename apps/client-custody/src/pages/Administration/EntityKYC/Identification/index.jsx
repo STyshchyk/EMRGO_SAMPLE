@@ -563,7 +563,7 @@ const Identification = () => {
                     <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
                       <Field
                         fullWidth
-                        format="DD/MM/yyyy"
+                        format="DD/MM/YYYY"
                         inputVariant="filled"
                         inputProps={{
                           shrink: "false",

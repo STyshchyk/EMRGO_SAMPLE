@@ -59,7 +59,7 @@ const DatePicker = ({ name, defaultFilter, label, ...props }) => {
       <Box my={1} className="full-width">
          <DatePicker
             fullWidth
-            format="DD/MM/yyyy"
+            format="DD/MM/YYYY"
             inputVariant="filled"
             inputProps={{
               shrink: "false",

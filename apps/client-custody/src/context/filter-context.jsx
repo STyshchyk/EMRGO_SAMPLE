@@ -1,15 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import useWethaqAPIParams from "../hooks/useWethaqAPIParams";
 import * as miscellaneousActionCreators from "../redux/actionCreators/miscellaneous";
 import * as authSelectors from "../redux/selectors/auth";
 import * as miscellaneousSelectors from "../redux/selectors/miscellaneous";
-import { useTheme } from "./theme-context";
 
 const FilterContext = createContext();
 
@@ -22,8 +19,6 @@ export const FilterProvider = ({ children, tableKey }) => {
 
   const [allColumns, setAllColumns] = useState([]);
   const [tableData, setTableData] = useState([]);
-
-  const { theme } = useTheme();
 
   const dispatch = useDispatch();
   const tableConfigData = useSelector((state) =>
@@ -142,13 +137,7 @@ export const FilterProvider = ({ children, tableKey }) => {
     setTableData,
   };
 
-  return (
-    <FilterContext.Provider value={providerValue}>
-      <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-        {children}
-      </MuiPickersUtilsProvider>
-    </FilterContext.Provider>
-  );
+  return <FilterContext.Provider value={providerValue}>{children}</FilterContext.Provider>;
 };
 
 export const FilterConsumer = ({ children }) => (

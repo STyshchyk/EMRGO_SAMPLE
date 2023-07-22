@@ -423,7 +423,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                   >
                     <Field
                       fullWidth
-                      format="DD/MM/yyyy"
+                      format="DD/MM/YYYY"
                       inputVariant="filled"
                       variant="dialog"
                       placeholder="DD/MM/YYYY"
@@ -439,7 +439,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                   >
                     <Field
                       fullWidth
-                      format="DD/MM/yyyy"
+                      format="DD/MM/YYYY"
                       inputVariant="filled"
                       variant="dialog"
                       placeholder="DD/MM/YYYY"

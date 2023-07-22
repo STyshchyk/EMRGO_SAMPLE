@@ -165,13 +165,13 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
         </Grid>
       </Grid>
 
-      <Box my={1} className="full-width">
+      <Box my={1} sx={{ width: "100%" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} lg={6}>
             <DatePicker
-              fullWidth
+              sx={{ width: "100%" }}
               //   className={style.input__datepicker}
-              format="DD/MM/yyyy"
+              format="DD/MM/YYYY"
               inputVariant="filled"
               inputProps={{
                 shrink: "false",
@@ -202,9 +202,9 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <DatePicker
-              fullWidth
+              sx={{ width: "100%" }}
               //   className={style.input__datepicker}
-              format="DD/MM/yyyy"
+              format="DD/MM/YYYY"
               inputVariant="filled"
               variant="dialog"
               showTodayButton

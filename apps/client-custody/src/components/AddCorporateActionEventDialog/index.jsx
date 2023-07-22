@@ -410,7 +410,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                       <Field
                         fullWidth
-                        format="DD/MM/yyyy"
+                        format="DD/MM/YYYY"
                         inputVariant="filled"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
@@ -427,7 +427,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                       <Field
                         fullWidth
-                        format="DD/MM/yyyy"
+                        format="DD/MM/YYYY"
                         inputVariant="filled"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
@@ -445,7 +445,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                       <Field
                         fullWidth
-                        format="DD/MM/yyyy"
+                        format="DD/MM/YYYY"
                         inputVariant="filled"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
@@ -571,7 +571,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                       <Field
                         fullWidth
-                        format="DD/MM/yyyy"
+                        format="DD/MM/YYYY"
                         inputVariant="filled"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"

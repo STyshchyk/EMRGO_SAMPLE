@@ -470,59 +470,59 @@ const PaymentInstructionsPage = () => {
 
     return {
       accountNo: {
-        label: t("cash_management:Payment Instructions.Headers.Account No"),
+        label: t("Payment Instructions.Headers.Account No"),
         value: accountNo,
       },
       clientBalance: {
-        label: t("cash_management:Payment Instructions.Headers.Client Balance"),
+        label: t("Payment Instructions.Headers.Client Balance"),
         value: clientBalance,
       },
       createdAt: {
-        label: t("cash_management:Payment Instructions.Headers.Created At Date"),
+        label: t("Payment Instructions.Headers.Created At Date"),
         value: dateRenderer(createdAt),
       },
       valueDate: {
-        label: t("cash_management:Payment Instructions.Headers.Value Date"),
+        label: t("Payment Instructions.Headers.Value Date"),
         value: dateRenderer(valueDate),
       },
       investor: {
-        label: t("cash_management:Payment Instructions.Headers.Investor/Owner"),
+        label: t("Payment Instructions.Headers.Investor/Owner"),
         value: investor,
       },
       payment: {
-        label: t("cash_management:Payment Instructions.Headers.Payment Amount"),
+        label: t("Payment Instructions.Headers.Payment Amount"),
         value: payment,
       },
       currency: {
-        label: t("cash_management:Payment Instructions.Headers.CCY"),
+        label: t("Payment Instructions.Headers.CCY"),
         value: currency,
       },
       country: {
-        label: t("cash_management:Payment Instructions.Headers.Country"),
+        label: t("Payment Instructions.Headers.Country"),
         value: country,
       },
       bank: {
-        label: t("cash_management:Payment Instructions.Headers.Bank"),
+        label: t("Payment Instructions.Headers.Bank"),
         value: bank,
       },
       iban: {
-        label: t("cash_management:Payment Instructions.Headers.IBAN/Account"),
+        label: t("Payment Instructions.Headers.IBAN/Account"),
         value: iban,
       },
       bic: {
-        label: t("cash_management:Payment Instructions.Headers.BIC"),
+        label: t("Payment Instructions.Headers.BIC"),
         value: bic,
       },
       status: {
-        label: t("cash_management:Payment Instructions.Headers.Status"),
+        label: t("Payment Instructions.Headers.Status"),
         value: status,
       },
       transferPurposeType: {
-        label: t("cash_management:Payment Instructions.Headers.Transfer Purpose"),
+        label: t("Payment Instructions.Headers.Transfer Purpose"),
         value: transferPurposeType,
       },
       referenceNo: {
-        label: t("cash_management:Payment Instructions.Headers.Reference No"),
+        label: t("Payment Instructions.Headers.Reference No"),
         value: referenceNo,
       },
     };
@@ -592,7 +592,7 @@ const PaymentInstructionsPage = () => {
                   setAddModalOpen(true);
                 }}
               >
-                {t("cash_management:Payment Instructions.New Payment Instructions")}
+                {t("Payment Instructions.New Payment Instructions")}
               </Button>
             </Grid>
           )}
@@ -637,8 +637,8 @@ const PaymentInstructionsPage = () => {
       )}
 
       <ValidatePaymentInstructionDialog
-        dialogTitle={t("cash_management:Payment Instructions.Context Menu.Approve")}
-        formLabel={t("cash_management:Payment Instructions.ApproveDialog.label", {
+        dialogTitle={t("Payment Instructions.Context Menu.Approve")}
+        formLabel={t("Payment Instructions.ApproveDialog.label", {
           currency: selectedRow?.currency,
           payment_amount: selectedRow?.payment,
         })}
@@ -651,8 +651,8 @@ const PaymentInstructionsPage = () => {
       />
 
       <ValidatePaymentInstructionDialog
-        dialogTitle={t("cash_management:Payment Instructions.Context Menu.Finalize")}
-        formLabel={t("cash_management:Payment Instructions.FinalizeDialog.label", {
+        dialogTitle={t("Payment Instructions.Context Menu.Finalize")}
+        formLabel={t("Payment Instructions.FinalizeDialog.label", {
           currency: selectedRow?.currency,
           payment_amount: selectedRow?.payment,
         })}
@@ -670,8 +670,8 @@ const PaymentInstructionsPage = () => {
       />
 
       <ValidatePaymentInstructionDialog
-        dialogTitle={t("cash_management:Payment Instructions.Context Menu.Reject")}
-        formLabel={t("cash_management:Payment Instructions.RejectDialog.label", {
+        dialogTitle={t("Payment Instructions.Context Menu.Reject")}
+        formLabel={t("Payment Instructions.RejectDialog.label", {
           currency: selectedRow?.currency,
           payment_amount: selectedRow?.payment,
         })}
@@ -685,8 +685,8 @@ const PaymentInstructionsPage = () => {
         }
       />
       <ValidatePaymentInstructionDialog
-        dialogTitle={t("cash_management:Payment Instructions.Context Menu.Cancel")}
-        formLabel={t("cash_management:Payment Instructions.CancelDialog.label", {
+        dialogTitle={t("Payment Instructions.Context Menu.Cancel")}
+        formLabel={t("Payment Instructions.CancelDialog.label", {
           currency: selectedRow?.currency,
           payment_amount: selectedRow?.payment,
         })}
@@ -703,7 +703,7 @@ const PaymentInstructionsPage = () => {
       />
       <ValidatePaymentInstructionDialog
         dialogTitle="Client-Approve"
-        formLabel={t("cash_management:Payment Instructions.ApproveDialog.label", {
+        formLabel={t("Payment Instructions.ApproveDialog.label", {
           currency: selectedRow?.currency,
           payment_amount: selectedRow?.payment,
         })}

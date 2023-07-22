@@ -121,7 +121,7 @@ const UploadKYCDocumentForm = ({ initialValues, handleSubmit, handleClose, entit
                 <Grid xs={8} container alignContent="center" className="px-1">
                   <Field
                     fullWidth
-                    format="DD/MM/yyyy"
+                    format="DD/MM/YYYY"
                     inputVariant="filled"
                     inputProps={{
                       shrink: "false",

@@ -1,7 +1,7 @@
 import { Fragment, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 
 import { reverse } from "named-urls";
 
@@ -9,7 +9,7 @@ import MinorNavigation from "../../../components/MinorNavigation";
 import PageTitle from "../../../components/PageTitle";
 import accessControlsList from "../../../constants/accessControlsList";
 import routes from "../../../constants/routes";
-import regionSwitcher from "../../../helpers/regions";
+import regionRouteser from "../../../helpers/regions";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as entitiesSelectors from "../../../redux/selectors/entities";
 
@@ -207,7 +207,7 @@ const EntityKYC = () => {
       link: reverse(routes.dashboard.administration.entityDetails.kyc.entities.entity.wealth, {
         entityId,
       }),
-      text: regionSwitcher({
+      text: regionRouteser({
         sa: "Minor Navigation.Administration.KYCEdit.Entity/Individual Wealth",
         ae: "Minor Navigation.Administration.KYCEdit.Entitys Wealth",
       }),
@@ -256,93 +256,85 @@ const EntityKYC = () => {
   ];
 
   return (
-    <Fragment>
-      <Switch>
-        {/**
+    <Routes>
+      {/**
           <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.overview}>
             <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
             <KYCOverviewPage />
           </Route>
       */}
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <ClassificationPage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.classification}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <ClassificationPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.identification}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <IdentificationPage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.identification}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <IdentificationPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.banking}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <BankingPage />
-        </Route>
+      <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.banking}>
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <BankingPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.shareholders}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <ShareholdersPage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.shareholders}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <ShareholdersPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.keyIndividuals}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <KeyIndividualPage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.keyIndividuals}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <KeyIndividualPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.wealth}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <WealthPage />
-        </Route>
+      <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.wealth}>
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <WealthPage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.experience}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <ExperiencePage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.experience}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <ExperiencePage />
+      </Route>
 
-        <Route
-          exact
-          path={routes.dashboard.administration.entityDetails.kyc.entities.entity.documents}
-        >
-          <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
-          <DocumentsPage />
-        </Route>
+      <Route
+        exact
+        path={routes.dashboard.administration.entityDetails.kyc.entities.entity.documents}
+      >
+        <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
+        <DocumentsPage />
+      </Route>
 
-        {/* <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.clientTerms}>
+      {/* <Route exact path={routes.dashboard.administration.entityDetails.kyc.entities.entity.clientTerms}>
           <MinorNavigation routes={ADMIN_MINOR_NAV_ROUTES} currentAccessList={accessControls} />
           <ClientTermsPage />
         </Route> */}
 
-        <Route
-          path={
-            routes.dashboard.administration.entityDetails.kyc.entities.entity.individuals.individual
-              .home
-          }
-        >
-          <IndividualKYCPage />
-        </Route>
-      </Switch>
-    </Fragment>
+      <Route
+        path={
+          routes.dashboard.administration.entityDetails.kyc.entities.entity.individuals.individual
+            .home
+        }
+      >
+        <IndividualKYCPage />
+      </Route>
+    </Routes>
   );
 };
 export default EntityKYC;

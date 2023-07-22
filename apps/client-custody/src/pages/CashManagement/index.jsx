@@ -1,6 +1,6 @@
 import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
@@ -73,36 +73,32 @@ const BillingAndPayments = () => {
   return (
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-      <Switch>
-        <Route exact path={routes.dashboard.cashManagement.home}>
-          <Navigate to={nextAccessibleRoutePath} />
-        </Route>
+      <Routes>
+        <Route exact path="/" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
 
-        <Route exact path={routes.dashboard.cashManagement.manageAccounts}>
-          <ManagePaymentAccountsPage />
-        </Route>
-        <Route exact path={routes.dashboard.cashManagement.cashStatement}>
-          <CashStatementPage />
-        </Route>
+        <Route exact path="/manage-accounts" element={<ManagePaymentAccountsPage />}></Route>
+        <Route exact path="/cash-statement" element={<CashStatementPage />}></Route>
 
-        <Route exact path={routes.dashboard.cashManagement.accountTransfer}>
-          {
-            // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
+        <Route
+          exact
+          path="/internal-transfer"
+          element={
+            <Fragment>
+              {
+                // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
+              }
+              {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
+            </Fragment>
           }
-          {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
-        </Route>
-        <Route exact path={routes.dashboard.cashManagement.paymentInstructions}>
-          <PaymentInstructionsPage />
-        </Route>
-        <Route exact path={routes.dashboard.cashManagement.incomingPayments}>
-          <IncomingPaymentsPage />
-        </Route>
+        ></Route>
+        <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
+        <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
         {/*
           <Route exact path={routes.dashboard.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}
-      </Switch>
+      </Routes>
     </Fragment>
   );
 };
