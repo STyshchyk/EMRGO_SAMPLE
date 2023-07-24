@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
@@ -12,9 +12,9 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import EditCouponPaymentScheduleDialog from "../../../components/EditCouponPaymentScheduleDialog";
+// import EditCouponPaymentScheduleDialog from "../../../components/EditCouponPaymentScheduleDialog";
 import PageTitle from "../../../components/PageTitle";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
+// import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import ViewCouponPaymentScheduleDialog from "../../../components/ViewCouponPaymentScheduleDialog";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
@@ -61,7 +61,7 @@ const SecurityReportView = ({ data }) => (
 
 const ReferenceDataReportPage = () => {
   const { t } = useTranslation(["reports", "blotter", "termsheet"]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [currentlySelectedSecurity, setCurrentlySelectedSecurity] = useState(null);
@@ -369,20 +369,18 @@ const ReferenceDataReportPage = () => {
             <Box my={1} className="full-width">
               <Grid container spacing={2} alignItems="center">
                 {isWethaqAdmin && (
-                  <Fragment>
-                    <Grid item>
-                      <Button
-                        disabled
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        size="large"
-                        onClick={() => {}}
-                      >
-                        {t("Update Reference Data")}
-                      </Button>
-                    </Grid>
-                  </Fragment>
+                  <Grid item>
+                    <Button
+                      disabled
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      // onClick={() => {}}
+                    >
+                      {t("Update Reference Data")}
+                    </Button>
+                  </Grid>
                 )}
                 <Grid item>
                   <Button
@@ -404,11 +402,9 @@ const ReferenceDataReportPage = () => {
         </Grid>
       </Grid>
       <Grid container direction="column" spacing={2} justifyContent="space-between">
-        <Fragment>
-          <Grid item xs={12} md={8} lg={8} container>
-            <SecurityReportView data={securityReportData} />
-          </Grid>
-        </Fragment>
+        <Grid item xs={12} md={8} lg={8} container>
+          <SecurityReportView data={securityReportData} />
+        </Grid>
       </Grid>
 
       {openViewCouponScheduleDialog && (

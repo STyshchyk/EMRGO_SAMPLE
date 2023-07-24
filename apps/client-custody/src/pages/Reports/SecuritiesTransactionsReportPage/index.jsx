@@ -1,11 +1,9 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-
-
 
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
@@ -21,15 +19,13 @@ import { CsvBuilder } from "filefy";
 import { Formik } from "formik";
 import moment from "moment";
 
-
-
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
 import ExportTableContent from "../../../components/PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../../../components/ReportingTablePDFExporter";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
+// import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
@@ -45,10 +41,6 @@ import formatAddress from "../../../utils/reports";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
 
-
-
-
-
 const ALL_ENTITIES_OPTION = {
   label: "All",
   value: "all",
@@ -59,7 +51,7 @@ const animatedComponents = makeAnimated();
 
 const SecuritiesTransactionsReportPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter", "filters"]);
@@ -182,7 +174,7 @@ const SecuritiesTransactionsReportPage = () => {
       maximumFractionDigits: 2,
     };
 
-    const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;
+    // const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;
 
     return {
       tradeDate: i?.settlementInsTradeDate,
@@ -906,7 +898,7 @@ const SecuritiesTransactionsReportPage = () => {
                                 filters?.settlementDateRange?.value?.startDate &&
                                 filters?.settlementDateRange?.value?.endDate
                               ) {
-                                const { startDate, endDate } = filters?.settlementDateRange.value;
+                                const { startDate, endDate } = filters?.settlementDateRange?.value;
                                 return row.settleDate
                                   ? moment(row.settleDate).isBetween(startDate, endDate)
                                   : null;
