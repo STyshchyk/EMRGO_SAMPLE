@@ -60,14 +60,14 @@ const NewSecuritiesHoldingsReportPage = () => {
 
   return (
     <Fragment>
-      <PageTitle title={t("reports:Securities Holdings.Securities Holdings")} />
-      <RouteLeavingGuard
+      <PageTitle title={t("Securities Holdings.Securities Holdings")} />
+      {/* <RouteLeavingGuard
         when={securitiesHoldingsData?.length > 0}
-        title={t("reports:Leave Guard.Title")}
-        message={t("reports:Leave Guard.Message")}
+        title={t("Leave Guard.Title")}
+        message={t("Leave Guard.Message")}
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
-      />
+      /> */}
       <SecuritiesHoldingsTable
         data={generatedTableData}
         securitiesAccounts={securitiesAccounts}

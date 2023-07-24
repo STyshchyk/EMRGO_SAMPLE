@@ -43,14 +43,14 @@ const CashBalancesReportPage = () => {
 
   return (
     <Fragment>
-      <PageTitle title={t("reports:Cash Balances.Cash Balances")} />
-      <RouteLeavingGuard
+      <PageTitle title={t("Cash Balances.Cash Balances")} />
+      {/* <RouteLeavingGuard
         when={transactions?.length > 0}
-        title={t("reports:Leave Guard.Title")}
-        message={t("reports:Leave Guard.Message")}
+        title={t("Leave Guard.Title")}
+        message={t("Leave Guard.Message")}
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
-      />
+      /> */}
 
       <CashBalancesTable
         data={generatedTableData}

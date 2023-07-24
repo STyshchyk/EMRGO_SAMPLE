@@ -209,7 +209,7 @@ const EntityWealth = () => {
 
             return (
               <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
-                <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} />
+                {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
                 <Grid container className="pb-8">
                   <Grid item xs={12}>
                     <Grid container justifyContent="flex-end">

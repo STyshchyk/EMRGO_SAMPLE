@@ -24,9 +24,9 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 
 import ChangeRequest from "../../../../components/ChangeRequest";
@@ -342,7 +342,7 @@ const Shareholders = () => {
 
               return (
                 <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
-                  <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} />
+                  {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
                   <Grid container>
                     <Grid item xs={12}>
                       <Grid container justifyContent="flex-end">

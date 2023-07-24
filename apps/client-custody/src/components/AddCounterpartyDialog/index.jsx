@@ -89,11 +89,11 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
 
   const counterpartyStatusOptionsList = [
     {
-      label: t("counterparty:Counterparty.Status.Active"),
+      label: t("Counterparty.Status.Active"),
       value: counterpartyStatusEnum.ACTIVE,
     },
     {
-      label: t("counterparty:Counterparty.Status.Inactive"),
+      label: t("Counterparty.Status.Inactive"),
       value: counterpartyStatusEnum.INACTIVE,
     },
   ];
@@ -239,9 +239,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
             />
             <DialogTitle id="form-dialog-title">
               {" "}
-              {isEdit
-                ? t("counterparty:Counterparty.Edit Counterparty")
-                : t("counterparty:Counterparty.New Counterparty")}
+              {isEdit ? t("Counterparty.Edit Counterparty") : t("Counterparty.New Counterparty")}
             </DialogTitle>
 
             <DialogContent>
@@ -250,7 +248,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                       <Typography className="mt-4">
-                        {t("counterparty:Counterparty.Add Counterparty Form.Entity")}
+                        {t("Counterparty.Add Counterparty Form.Entity")}
                       </Typography>
                     </Grid>
                     <Grid
@@ -294,7 +292,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                       <Typography className="mt-4">
-                        {t("counterparty:Counterparty.Add Counterparty Form.Counterparty ID")}
+                        {t("Counterparty.Add Counterparty Form.Counterparty ID")}
                       </Typography>
                     </Grid>
                     <Grid
@@ -309,7 +307,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t("counterparty:Counterparty.Add Counterparty Form.Counterparty ID")}
+                        label={t("Counterparty.Add Counterparty Form.Counterparty ID")}
                         name="counterpartyId"
                         variant="filled"
                         type="text"
@@ -321,7 +319,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                       <Typography className="mt-4">
-                        {t("counterparty:Counterparty.Add Counterparty Form.Short Name")}
+                        {t("Counterparty.Add Counterparty Form.Short Name")}
                       </Typography>
                     </Grid>
                     <Grid
@@ -336,7 +334,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t("counterparty:Counterparty.Add Counterparty Form.Short Name")}
+                        label={t("Counterparty.Add Counterparty Form.Short Name")}
                         name="shortName"
                         variant="filled"
                         type="text"
@@ -347,7 +345,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                       <Typography className="mt-4">
-                        {t("counterparty:Counterparty.Add Counterparty Form.Long Name")}
+                        {t("Counterparty.Add Counterparty Form.Long Name")}
                       </Typography>
                     </Grid>
                     <Grid
@@ -362,7 +360,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t("counterparty:Counterparty.Add Counterparty Form.Long Name")}
+                        label={t("Counterparty.Add Counterparty Form.Long Name")}
                         name="longName"
                         variant="filled"
                         type="text"
@@ -373,7 +371,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                       <Typography className="mt-4">
-                        {t("counterparty:Counterparty.Add Counterparty Form.Status")}
+                        {t("Counterparty.Add Counterparty Form.Status")}
                       </Typography>
                     </Grid>
                     <Grid

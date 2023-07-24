@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -44,7 +42,7 @@ const CustomNumberInputField = (props) => {
   const { inputRef, onChange, ...other } = props;
 
   return (
-    <NumberFormat
+    <NumericFormat
       {...other}
       getInputRef={inputRef}
       onValueChange={(values) => {
@@ -56,7 +54,6 @@ const CustomNumberInputField = (props) => {
         });
       }}
       thousandSeparator
-      isNumericString
       decimalScale={3}
     />
   );
@@ -125,7 +122,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
-  const { t } = useTranslation(["translation", "external_securties"]);
+  const { t } = useTranslation(["translation", "external_securities"]);
   const { theme } = useTheme();
   const { locale } = theme;
   const isEdit = selectedRow !== null;
@@ -183,11 +180,11 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
 
   const externalSecurityStatusOptionsList = [
     {
-      label: t("external_securities:External Securities.Status.Active"),
+      label: t("External Securities.Status.Active"),
       value: externalSecurityStatusEnum.ACTIVE,
     },
     {
-      label: t("external_securities:External Securities.Status.Inactive"),
+      label: t("External Securities.Status.Inactive"),
       value: externalSecurityStatusEnum.INACTIVE,
     },
   ];
@@ -257,156 +254,139 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
       scroll="body"
       maxWidth="sm"
     >
-      <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-        <Formik
-          initialValues={initialValues}
-          enableReinitialize
-          validationSchema={addSecurityFormSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            let requestPayload;
-            if (isEdit) {
-              const editObject = {
-                requestPayload: buildRequestPayload(values),
-                externalSecuritiesId: selectedRow?.id,
-              };
-              requestPayload = editObject;
-            } else {
-              requestPayload = buildRequestPayload(values);
-            }
-
-            const payload = {
-              requestPayload,
-              successCallback: () => {
-                setSubmitting(false);
-                fetchExternalSecuritiesList();
-                handleClose();
-                setSelectedRow(null);
-                saveFormValues(null);
-              },
+      <Formik
+        initialValues={initialValues}
+        enableReinitialize
+        validationSchema={addSecurityFormSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          let requestPayload;
+          if (isEdit) {
+            const editObject = {
+              requestPayload: buildRequestPayload(values),
+              externalSecuritiesId: selectedRow?.id,
             };
-            if (isEdit) {
-              dispatch(externalSecuritiesActionCreators.doEditExternalSecurities(payload));
-            } else {
-              dispatch(externalSecuritiesActionCreators.doAddExternalSecurities(payload));
-            }
-            setSubmitting(false);
-          }}
-        >
-          {({ handleSubmit, setFieldValue, values, disableSelectCurrencyField }) => (
-            <form onSubmit={handleSubmit} noValidate>
-              <AutoSaveFields
-                selectedRow={selectedRow}
-                formKey="AddSecurityDialogForm"
-                initial={initial}
-              />
-              <DialogTitle id="add-payment-account-form-dialog-title">
-                <Grid container justifyContent="space-between">
-                  <Grid item xs container alignContent="center">
-                    <strong>
-                      {isEdit
-                        ? t("external_securities:External Securities.Edit Security")
-                        : t("external_securities:External Securities.New Security")}
-                    </strong>
+            requestPayload = editObject;
+          } else {
+            requestPayload = buildRequestPayload(values);
+          }
+
+          const payload = {
+            requestPayload,
+            successCallback: () => {
+              setSubmitting(false);
+              fetchExternalSecuritiesList();
+              handleClose();
+              setSelectedRow(null);
+              saveFormValues(null);
+            },
+          };
+          if (isEdit) {
+            dispatch(externalSecuritiesActionCreators.doEditExternalSecurities(payload));
+          } else {
+            dispatch(externalSecuritiesActionCreators.doAddExternalSecurities(payload));
+          }
+          setSubmitting(false);
+        }}
+      >
+        {({ handleSubmit, setFieldValue, values, disableSelectCurrencyField }) => (
+          <form onSubmit={handleSubmit} noValidate>
+            <AutoSaveFields
+              selectedRow={selectedRow}
+              formKey="AddSecurityDialogForm"
+              initial={initial}
+            />
+            <DialogTitle id="add-payment-account-form-dialog-title">
+              <Grid container justifyContent="space-between">
+                <Grid item xs container alignContent="center">
+                  <strong>
+                    {isEdit
+                      ? t("External Securities.Edit Security")
+                      : t("External Securities.New Security")}
+                  </strong>
+                </Grid>
+
+                <IconButton aria-label="close" onClick={handleClose} size="large">
+                  <CloseIcon />
+                </IconButton>
+              </Grid>
+            </DialogTitle>
+
+            <DialogContent>
+              <Box mb={2}>
+                <Grid container>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Security Name")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Security Name")}
+                        name="name"
+                        variant="filled"
+                        type="text"
+                        InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
+                      />
+                    </Grid>
                   </Grid>
 
-                  <IconButton aria-label="close" onClick={handleClose} size="large">
-                    <CloseIcon />
-                  </IconButton>
-                </Grid>
-              </DialogTitle>
-
-              <DialogContent>
-                <Box mb={2}>
-                  <Grid container>
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Security Name"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Security Name"
-                          )}
-                          name="name"
-                          variant="filled"
-                          type="text"
-                          InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
-                        />
-                      </Grid>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Security Short Name")}
+                      </Typography>
                     </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Security Short Name"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Security Short Name"
-                          )}
-                          name="shortName"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Security Short Name")}
+                        name="shortName"
+                        variant="filled"
+                        type="text"
+                      />
                     </Grid>
+                  </Grid>
 
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Security Long Name"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Security Long Name"
-                          )}
-                          name="longName"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Security Long Name")}
+                      </Typography>
                     </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Security Long Name")}
+                        name="longName"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                  </Grid>
 
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Issuance Name"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Issuance Name"
-                          )}
-                          name="issuanceName"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Issuance Name")}
+                      </Typography>
                     </Grid>
-                    {/* <Grid  container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Issuance Name")}
+                        name="issuanceName"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                  </Grid>
+                  {/* <Grid  container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} >
                         <Typography className="mt-4">WSN</Typography>
                       </Grid>
@@ -414,54 +394,50 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Field fullWidth component={TextField} label="WSN" name="wsn" variant="filled" type="text" />
                       </Grid>
                     </Grid>{' '} */}
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.ISIN")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.ISIN"
-                          )}
-                          name="isin"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.ISIN")}
+                      </Typography>
                     </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Ticker")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Ticker"
-                          )}
-                          name="ticker"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.ISIN")}
+                        name="isin"
+                        variant="filled"
+                        type="text"
+                      />
                     </Grid>
+                  </Grid>
 
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Rate")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        {/* <Field
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Ticker")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Ticker")}
+                        name="ticker"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Rate")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      {/* <Field
                           fullWidth
                           InputProps={{ type: 'number' }}
                           component={TextField}
@@ -471,294 +447,281 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           type="text"
                         />
                         /> */}
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Rate"
-                          )}
-                          name="profitRate"
-                          variant="filled"
-                          value={values.profitRate}
-                          InputProps={{
-                            inputComponent: CustomNumberInputField,
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Rate")}
+                        name="profitRate"
+                        variant="filled"
+                        value={values.profitRate}
+                        InputProps={{
+                          inputComponent: CustomNumberInputField,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Frequency")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          isSearchable
+                          styles={selectStyles}
+                          value={values.frequency}
+                          isClearable
+                          options={getDropdownValues(formOptions?.frequency, locale)}
+                          onChange={(selected) => {
+                            setFieldValue("frequency", selected);
                           }}
                         />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Frequency")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            isSearchable
-                            styles={selectStyles}
-                            value={values.frequency}
-                            isClearable
-                            options={getDropdownValues(formOptions?.frequency, locale)}
-                            onChange={(selected) => {
-                              setFieldValue("frequency", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="frequency"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Country")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            isSearchable
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            styles={selectStyles}
-                            value={values.country}
-                            options={getDropdownValues(
-                              normalisedCountries(formOptions?.country),
-                              locale
-                            )}
-                            onChange={(selected) => {
-                              setFieldValue("country", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="country"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Issue Date"
-                          )}{" "}
-                        </Typography>
-                      </Grid>
-                      <Grid xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          format="DD/MM/YYYY"
-                          inputVariant="filled"
-                          variant="dialog"
-                          placeholder="DD/MM/YYYY"
-                          component={DatePicker}
-                          name="issueDate"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Maturity Date"
-                          )}{" "}
-                        </Typography>
-                      </Grid>
-                      <Grid xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          format="DD/MM/YYYY"
-                          inputVariant="filled"
-                          variant="dialog"
-                          placeholder="DD/MM/YYYY"
-                          minDate={moment()}
-                          component={DatePicker}
-                          name="maturityDate"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Currency")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            isSearchable
-                            styles={selectStyles}
-                            menuPortalTarget={document.body}
-                            value={values.currency}
-                            isDisabled={disableSelectCurrencyField}
-                            isClearable
-                            options={getDropdownValues(formOptions?.currency, locale)}
-                            onChange={(selected) => {
-                              setFieldValue("currency", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="currency"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Issuance Amount"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(
-                            "external_securities:External Securities.Add Security Form.Issuance Amount"
-                          )}
-                          name="issuanceAmount"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t(
-                            "external_securities:External Securities.Add Security Form.Denomination"
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            menuPortalTarget={document.body}
-                            isSearchable
-                            styles={selectStyles}
-                            value={values.denomination}
-                            isClearable
-                            options={getDenominationOptions(formOptions?.denomination)}
-                            onChange={(selected) => {
-                              setFieldValue("denomination", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="denomination"
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid container className="mt-4">
-                      <Grid item xs={12} md={6} lg={6}>
-                        <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Status")}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={6} className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            menuPortalTarget={document.body}
-                            isSearchable
-                            styles={selectStyles}
-                            value={values.status}
-                            isClearable
-                            options={externalSecurityStatusOptionsList}
-                            onChange={(selected) => {
-                              setFieldValue("status", selected);
-                            }}
-                          />
-                        </FormControl>
-                        <ErrorMessage
-                          component={Typography}
-                          variant="caption"
-                          color="error"
-                          className="ml-4"
-                          name="status"
-                        />
-                      </Grid>
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="frequency"
+                      />
                     </Grid>
                   </Grid>
-                </Box>
-              </DialogContent>
 
-              <DialogActions>
-                <Grid container justifyContent="flex-end" className="w-full">
-                  <Grid item lg={4}>
-                    <Button
-                      fullWidth
-                      onClick={() => {
-                        saveFormValues(null);
-                        setInitialValues(initial);
-                        handleClose();
-                      }}
-                      color="primary"
-                    >
-                      {t("Miscellaneous.Cancel")}
-                    </Button>
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Country")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          isSearchable
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          styles={selectStyles}
+                          value={values.country}
+                          options={getDropdownValues(
+                            normalisedCountries(formOptions?.country),
+                            locale
+                          )}
+                          onChange={(selected) => {
+                            setFieldValue("country", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="country"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Issue Date")}{" "}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        format="DD/MM/YYYY"
+                        inputVariant="filled"
+                        variant="dialog"
+                        placeholder="DD/MM/YYYY"
+                        component={DatePicker}
+                        name="issueDate"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Maturity Date")}{" "}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        format="DD/MM/YYYY"
+                        inputVariant="filled"
+                        variant="dialog"
+                        placeholder="DD/MM/YYYY"
+                        minDate={moment()}
+                        component={DatePicker}
+                        name="maturityDate"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Currency")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          isSearchable
+                          styles={selectStyles}
+                          menuPortalTarget={document.body}
+                          value={values.currency}
+                          isDisabled={disableSelectCurrencyField}
+                          isClearable
+                          options={getDropdownValues(formOptions?.currency, locale)}
+                          onChange={(selected) => {
+                            setFieldValue("currency", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="currency"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Issuance Amount")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t("External Securities.Add Security Form.Issuance Amount")}
+                        name="issuanceAmount"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Denomination")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          menuPortalTarget={document.body}
+                          isSearchable
+                          styles={selectStyles}
+                          value={values.denomination}
+                          isClearable
+                          options={getDenominationOptions(formOptions?.denomination)}
+                          onChange={(selected) => {
+                            setFieldValue("denomination", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="denomination"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6}>
+                      <Typography className="mt-4">
+                        {t("External Securities.Add Security Form.Status")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          placeholder="Select.."
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          menuPortalTarget={document.body}
+                          isSearchable
+                          styles={selectStyles}
+                          value={values.status}
+                          isClearable
+                          options={externalSecurityStatusOptionsList}
+                          onChange={(selected) => {
+                            setFieldValue("status", selected);
+                          }}
+                        />
+                      </FormControl>
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="status"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
+              </Box>
+            </DialogContent>
+
+            <DialogActions>
+              <Grid container justifyContent="flex-end" className="w-full">
                 <Grid item lg={4}>
-                  <Button fullWidth type="submit" variant="contained" color="primary">
-                    {t("Miscellaneous.Submit")}
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      saveFormValues(null);
+                      setInitialValues(initial);
+                      handleClose();
+                    }}
+                    color="primary"
+                  >
+                    {t("Miscellaneous.Cancel")}
                   </Button>
                 </Grid>
-              </DialogActions>
-            </form>
-          )}
-        </Formik>
-      </MuiPickersUtilsProvider>
+              </Grid>
+              <Grid item lg={4}>
+                <Button fullWidth type="submit" variant="contained" color="primary">
+                  {t("Miscellaneous.Submit")}
+                </Button>
+              </Grid>
+            </DialogActions>
+          </form>
+        )}
+      </Formik>
     </Dialog>
   );
 };

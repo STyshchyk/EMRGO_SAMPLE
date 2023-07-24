@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
@@ -19,7 +19,6 @@ import * as billingAndPaymentsActionCreators from "../../redux/actionCreators/ca
 import * as authSelectors from "../../redux/selectors/auth";
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
 // import { addAccountSchema } from '../../validationSchemas';
-
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
 import style from "./style.module.scss";
@@ -211,7 +210,7 @@ const AssignAccountModal = ({
 AssignAccountModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  // onSubmit: PropTypes.func.isRequired,
 };
 
 export default AssignAccountModal;

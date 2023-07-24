@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 import { Box, Button, Grid } from "@mui/material";
-import { useFilters } from "context/filter-context";
+
+import { useFilters } from "../../../context/filter-context";
 
 const FilterButton = ({ onClick, label, disabled }) => {
   const { t } = useTranslation(["miscellaneous"]);

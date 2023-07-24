@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useFilters } from "../../../context/filter-context";
 
@@ -57,24 +57,24 @@ const DatePicker = ({ name, defaultFilter, label, ...props }) => {
       </Grid>
 
       <Box my={1} className="full-width">
-         <DatePicker
-            fullWidth
-            format="DD/MM/YYYY"
-            inputVariant="filled"
-            inputProps={{
-              shrink: "false",
-            }}
-            {...props}
-            variant="dialog"
-            showTodayButton
-            placeholder="DD/MM/YYYY"
-            value={pickerValue}
-            name="date"
-            label={t("miscellaneous:Filters.Date")}
-            onChange={(selectedDate) => {
-              updateDatePickerValues(selectedDate.endOf("day"));
-            }}
-          />
+        <MuiDatePicker
+          fullWidth
+          format="DD/MM/YYYY"
+          inputVariant="filled"
+          inputProps={{
+            shrink: "false",
+          }}
+          {...props}
+          variant="dialog"
+          showTodayButton
+          placeholder="DD/MM/YYYY"
+          value={pickerValue}
+          name="date"
+          label={t("miscellaneous:Filters.Date")}
+          onChange={(selectedDate) => {
+            updateDatePickerValues(selectedDate.endOf("day"));
+          }}
+        />
       </Box>
     </>
   );

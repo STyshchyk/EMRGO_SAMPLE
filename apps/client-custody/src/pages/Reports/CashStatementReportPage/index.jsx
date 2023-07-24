@@ -321,13 +321,13 @@ const CashStatementReportPage = () => {
   return (
     <Fragment>
       <PageTitle title={t("Cash Statement.Cash Statement")} />
-      <RouteLeavingGuard
+      {/* <RouteLeavingGuard
         when={transactions?.length > 0}
         title={t("Leave Guard.Title")}
         message={t("Leave Guard.Message")}
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
-      />
+      /> */}
       <FilterProvider tableKey="cash_statement">
         <div
           style={{

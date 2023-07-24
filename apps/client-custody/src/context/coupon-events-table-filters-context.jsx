@@ -53,4 +53,4 @@ const useCouponEventsTableFilters = () => {
   return contextObject;
 };
 
-export { useCouponEventsTableFilters, CouponEventsTableFiltersProvider };
+export { CouponEventsTableFiltersProvider, useCouponEventsTableFilters };

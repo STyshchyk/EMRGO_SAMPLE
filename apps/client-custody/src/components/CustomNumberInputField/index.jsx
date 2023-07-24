@@ -1,9 +1,9 @@
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 
 import PropTypes from "prop-types";
 
 const CustomNumberInputField = ({ name, inputRef, onChange, ...rest }) => (
-  <NumberFormat
+  <NumericFormat
     {...rest}
     getInputRef={inputRef}
     onValueChange={(values) => {

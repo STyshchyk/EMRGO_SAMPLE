@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
@@ -121,59 +121,87 @@ const OperationsSecServices = () => {
 
   return (
     <Routes>
-      <Route exact path={routes.dashboard.opsSecServices.home}>
-        <Navigate to={nextAccessibleRoutePath} />
-      </Route>
+      <Route exact path="" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
 
-      <Route path={routes.dashboard.opsSecServices.securitiesRegistration}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="securities-registration"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <SecuritiesRegistration />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <SecuritiesRegistration />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.custodyAndSettlement}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="custody-and-settlement"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CustodyAndSettlement />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CustodyAndSettlement />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.corporateActionEvents}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="corporate-action-events"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CorporateActionEvents />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CorporateActionEvents />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.couponAdministration}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="coupon-administration"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CouponEventsTableFiltersProvider>
-            <CouponAdministration />
-          </CouponEventsTableFiltersProvider>
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CouponEventsTableFiltersProvider>
+                <CouponAdministration />
+              </CouponEventsTableFiltersProvider>
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.agencyServices}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="agency-services"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <AgencyServices />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <AgencyServices />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.registrar}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="registrar"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <Registrar />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <Registrar />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
       {/*
       <Route path={routes.dashboard.opsSecServices.trusteeServices}>
@@ -185,29 +213,44 @@ const OperationsSecServices = () => {
       </Route>
     */}
 
-      <Route path={routes.dashboard.opsSecServices.fxTransactionList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="fx-transaction-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <FXTransactionList />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <FXTransactionList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.counterpartyList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="counterparty-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CounterpartyList />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CounterpartyList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.opsSecServices.counterpartySSIList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="counterparty-ssi-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CounterpartySSIList />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CounterpartySSIList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
     </Routes>
   );
 };

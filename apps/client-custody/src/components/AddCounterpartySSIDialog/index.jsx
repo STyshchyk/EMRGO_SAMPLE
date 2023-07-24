@@ -350,8 +350,8 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
               <DialogTitle id="form-dialog-title">
                 {" "}
                 {isEdit
-                  ? t("counterparty:Counterparty SSI.Edit Counterparty SSI")
-                  : t("counterparty:Counterparty SSI.New Counterparty SSI")}
+                  ? t("Counterparty SSI.Edit Counterparty SSI")
+                  : t("Counterparty SSI.New Counterparty SSI")}
               </DialogTitle>
               <DialogContent>
                 <Box mb={2}>
@@ -359,7 +359,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                     <Grid item xs={12} lg={12} container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
-                          {t("counterparty:Counterparty SSI.Add Counterparty SSI Form.Entity")}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.Entity")}
                         </Typography>
                       </Grid>
 
@@ -405,9 +405,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                     <Grid item xs={12} lg={12} container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
-                          {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.Counterparty"
-                          )}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.Counterparty")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -451,7 +449,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                     <Grid item xs={12} lg={12} container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
-                          {t("counterparty:Counterparty SSI.Add Counterparty SSI Form.SSI Label")}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.SSI Label")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -477,9 +475,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                     <Grid item xs={12} lg={12} container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
-                          {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.Settlement Location"
-                          )}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.Settlement Location")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -533,7 +529,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
                           {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent ID Type"
+                            "Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent ID Type"
                           )}
                         </Typography>
                       </Grid>
@@ -579,7 +575,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                       <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                         <Typography className="mt-4">
                           {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
+                            "Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
                           )}
                         </Typography>
                       </Grid>
@@ -596,7 +592,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           fullWidth
                           component={TextField}
                           label={t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
+                            "Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
                           )}
                           name="deliveryOrReceiveIdentifier"
                           variant="filled"
@@ -610,9 +606,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                         <Typography
                           className={`mt-4 ${settlementLocationIsSix && classes.disabledText}`}
                         >
-                          {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer ID Type"
-                          )}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer ID Type")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -659,9 +653,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                         <Typography
                           className={`mt-4 ${settlementLocationIsSix && classes.disabledText}`}
                         >
-                          {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier"
-                          )}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -677,7 +669,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           fullWidth
                           component={TextField}
                           label={t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier"
+                            "Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier"
                           )}
                           name="sellerOrBuyerIdentifier"
                           variant="filled"
@@ -692,9 +684,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                         <Typography
                           className={`mt-4 ${settlementLocationIsSix && classes.disabledText}`}
                         >
-                          {t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account"
-                          )}
+                          {t("Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account")}
                         </Typography>
                       </Grid>
                       <Grid
@@ -710,7 +700,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           fullWidth
                           component={TextField}
                           label={t(
-                            "counterparty:Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account"
+                            "Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account"
                           )}
                           name="safekeepingAccount"
                           variant="filled"

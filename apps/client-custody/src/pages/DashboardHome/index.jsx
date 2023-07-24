@@ -112,7 +112,7 @@ const DashboardHome = () => {
               size="small"
               onClick={() => setCreateBulletinModal(true)}
             >
-              {t(`bulletin:New Bulletin +`)}
+              {t(`New Bulletin +`)}
             </Button>
           </div>
         ) : null}

@@ -314,19 +314,14 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
           return (
             <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
               <AutoSaveFields formKey="NewFxTransactionForm" initial={initial} />
-              <DialogTitle id="form-dialog-title">
-                {" "}
-                {t("fx_transactions:Fx Modal.New Fx Transaction")}
-              </DialogTitle>
+              <DialogTitle id="form-dialog-title">{t("Fx Modal.New Fx Transaction")}</DialogTitle>
 
               <DialogContent>
                 <Box mb={2}>
                   <Grid container>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.Entity")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.Entity")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -361,9 +356,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.From Amount")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.From Amount")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <Field
@@ -382,9 +375,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.From Currency")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.From Currency")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -417,9 +408,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.Debit Account")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.Debit Account")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -441,7 +430,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Bank FX Rate %")}
+                      fieldLabel={t("Fx Table.Bank FX Rate %")}
                       fieldKey="bankRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -449,7 +438,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       handleFieldReset={resetFieldValue}
                     />
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Markup Rate %")}
+                      fieldLabel={t("Fx Table.Markup Rate %")}
                       fieldKey="markupRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -457,7 +446,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       handleFieldReset={resetFieldValue}
                     />
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Client FX Rate %")}
+                      fieldLabel={t("Fx Table.Client FX Rate %")}
                       fieldKey="clientRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -465,7 +454,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       handleFieldReset={resetFieldValue}
                     />
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Bank Amount")}
+                      fieldLabel={t("Fx Table.Bank Amount")}
                       fieldKey="bankAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -473,7 +462,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       handleFieldReset={resetFieldValue}
                     />
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Markup Amount")}
+                      fieldLabel={t("Fx Table.Markup Amount")}
                       fieldKey="markupAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -481,7 +470,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       handleFieldReset={resetFieldValue}
                     />
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Client Amount")}
+                      fieldLabel={t("Fx Table.Client Amount")}
                       fieldKey="clientAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -499,17 +488,15 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                               values,
                               setFieldValue,
                               touched,
-                              incompleteText: t(
-                                "fx_transactions:Fx Modal.Insufficient information given"
-                              ),
+                              incompleteText: t("Fx Modal.Insufficient information given"),
                             });
                           }}
                         >
-                          {t("fx_transactions:Fx Modal.Buttons.Calculate")}
+                          {t("Fx Modal.Buttons.Calculate")}
                         </Button>
                       </Grid>
                       <Grid item container xs={1} className="px-1" alignContent="center">
-                        <Tooltip title={t("fx_transactions:Fx Modal.Buttons.Reset")}>
+                        <Tooltip title={t("Fx Modal.Buttons.Reset")}>
                           <IconButton
                             size="small"
                             aria-label="reset"
@@ -523,9 +510,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.To Currency")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.To Currency")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -558,9 +543,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.Credit Account")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.Credit Account")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -583,7 +566,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     {/* calculated value of exchange rate - From Amount / To Amount, can be overridden by user
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">{t('fx_transactions:Fx Table.Rate')}</Typography>
+                        <Typography className="mt-4">{t('Fx Table.Rate')}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <DependentInputField name="rate" />
@@ -591,9 +574,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                     </Grid> */}
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.Narrative")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.Narrative")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <Field

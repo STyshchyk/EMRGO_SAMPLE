@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
@@ -31,17 +31,20 @@ const SecuritiesAdmin = () => {
 
   return (
     <Routes>
-      <Route exact path={routes.dashboard.securitiesAdmin.home}>
-        <Navigate to={nextAccessibleRoutePath} />
-      </Route>
+      <Route exact path="" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
 
-      <Route path={routes.dashboard.securitiesAdmin.securitiesList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="securities-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <ExternalSecuritiesList />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <ExternalSecuritiesList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
     </Routes>
   );
 };

@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
@@ -25,77 +24,75 @@ const FXTransactionActionModal = ({
   const isApprove = action === "approve";
 
   return (
-    <Fragment>
-      <Formik
-        initialValues={{}}
-        // validationSchema={}
-        onSubmit={(values, { setSubmitting }) => {
-          const payload = {
-            transactionId: selectedRow.id,
-            requestPayload: {
-              action,
-            },
-            dateRange: currentlySelectedDateRange,
-            successCallback: () => {
-              setSubmitting(false);
-              onClose();
-            },
-          };
+    <Formik
+      initialValues={{}}
+      // validationSchema={}
+      onSubmit={(values, { setSubmitting }) => {
+        const payload = {
+          transactionId: selectedRow.id,
+          requestPayload: {
+            action,
+          },
+          dateRange: currentlySelectedDateRange,
+          successCallback: () => {
+            setSubmitting(false);
+            onClose();
+          },
+        };
 
-          dispatch(fxTransactionsActionCreators.doProcessFxTransactions(payload));
-        }}
-      >
-        {({ handleSubmit }) => (
-          <Form>
-            <Dialog
-              fullWidth
-              open={open}
-              onClose={onClose}
-              aria-labelledby="form-dialog-title"
-              PaperProps={{ className: "overflow-y-visible" }}
-            >
-              <DialogTitle>
-                {isApprove
-                  ? t("fx_transactions:Fx Action Modal.Approve Transaction")
-                  : t("fx_transactions:Fx Action Modal.Cancel Transaction")}
-                ?
-              </DialogTitle>
-              <DialogContent>
-                {isApprove
-                  ? t(
-                      "fx_transactions:Fx Action Modal.Are you sure you want to approve this transaction? This action is non reversible"
-                    )
-                  : t(
-                      "fx_transactions:Fx Action Modal.Are you sure you want to cancel this transaction? This action is non reversible"
-                    )}
-              </DialogContent>
-              <DialogActions>
-                <Grid container justifyContent="flex-end" className="mx-4 mb-4">
-                  <Grid item xs={12} lg={4}>
-                    <Button type="submit" color="primary" fullWidth onClick={onClose}>
-                      {t("fx_transactions:Fx Action Modal.Buttons.Cancel")}
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} lg={5}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={handleSubmit}
-                    >
-                      {isApprove
-                        ? t("fx_transactions:Fx Action Modal.Approve Transaction")
-                        : t("fx_transactions:Fx Action Modal.Cancel Transaction")}
-                    </Button>
-                  </Grid>
+        dispatch(fxTransactionsActionCreators.doProcessFxTransactions(payload));
+      }}
+    >
+      {({ handleSubmit }) => (
+        <Form>
+          <Dialog
+            fullWidth
+            open={open}
+            onClose={onClose}
+            aria-labelledby="form-dialog-title"
+            PaperProps={{ className: "overflow-y-visible" }}
+          >
+            <DialogTitle>
+              {isApprove
+                ? t("Fx Action Modal.Approve Transaction")
+                : t("Fx Action Modal.Cancel Transaction")}
+              ?
+            </DialogTitle>
+            <DialogContent>
+              {isApprove
+                ? t(
+                    "Fx Action Modal.Are you sure you want to approve this transaction? This action is non reversible"
+                  )
+                : t(
+                    "Fx Action Modal.Are you sure you want to cancel this transaction? This action is non reversible"
+                  )}
+            </DialogContent>
+            <DialogActions>
+              <Grid container justifyContent="flex-end" className="mx-4 mb-4">
+                <Grid item xs={12} lg={4}>
+                  <Button type="submit" color="primary" fullWidth onClick={onClose}>
+                    {t("Fx Action Modal.Buttons.Cancel")}
+                  </Button>
                 </Grid>
-              </DialogActions>
-            </Dialog>
-          </Form>
-        )}
-      </Formik>
-    </Fragment>
+                <Grid item xs={12} lg={5}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleSubmit}
+                  >
+                    {isApprove
+                      ? t("Fx Action Modal.Approve Transaction")
+                      : t("Fx Action Modal.Cancel Transaction")}
+                  </Button>
+                </Grid>
+              </Grid>
+            </DialogActions>
+          </Dialog>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

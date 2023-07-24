@@ -61,7 +61,7 @@ const FXTransactionList = () => {
 
   const actions = [
     {
-      label: t("fx_transactions:Fx Table.Overflow Menu.Amend"),
+      label: t("Fx Table.Overflow Menu.Amend"),
       callback: () => {
         setOpenEditFXTransactionDialog(true);
         handleCloseMenu();
@@ -71,7 +71,7 @@ const FXTransactionList = () => {
     },
     {
       id: 3,
-      label: t("fx_transactions:Fx Table.Overflow Menu.Approve"),
+      label: t("Fx Table.Overflow Menu.Approve"),
       callback: () => {
         setOpenFXTransactionActionDialog("approve");
       },
@@ -80,7 +80,7 @@ const FXTransactionList = () => {
     },
     {
       id: 1,
-      label: t("fx_transactions:Fx Table.Overflow Menu.Cancel"),
+      label: t("Fx Table.Overflow Menu.Cancel"),
       callback: () => {
         setOpenFXTransactionActionDialog("cancel");
       },

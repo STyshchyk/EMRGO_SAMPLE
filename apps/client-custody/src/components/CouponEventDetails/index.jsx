@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { title } from "change-case";
+import { capitalCase } from "change-case";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
@@ -235,7 +235,7 @@ const CouponEventDetails = ({ couponEventData }) => {
               >{`Account Name`}</Typography>
             </Grid>
             <Grid item>
-              <Typography>{title(csdSourceAccountType)}</Typography>
+              <Typography>{capitalCase(csdSourceAccountType)}</Typography>
             </Grid>
           </Grid>
 

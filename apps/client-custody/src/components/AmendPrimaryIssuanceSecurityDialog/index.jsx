@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import NumberFormat from "react-number-format";
+import {NumericFormat} from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -55,7 +55,7 @@ const CustomNumberInputField = (props) => {
   const { inputRef, onChange, ...other } = props;
 
   return (
-    <NumberFormat
+    <NumericFormat
       {...other}
       getInputRef={inputRef}
       onValueChange={(values) => {
@@ -67,7 +67,6 @@ const CustomNumberInputField = (props) => {
         });
       }}
       thousandSeparator
-      isNumericString
       decimalScale={3}
     />
   );

@@ -191,14 +191,14 @@ const CashBalancesTable = ({ data, accounts }) => {
   const columns = [
     {
       id: "date",
-      title: t("reports:Cash Balances.Headers.Date"),
+      title: t("Cash Balances.Headers.Date"),
       field: "date",
       exportConfig: { width: 8 },
     },
-    { id: "entity", title: t("reports:Cash Balances.Headers.Entity"), field: "entity" },
+    { id: "entity", title: t("Cash Balances.Headers.Entity"), field: "entity" },
     {
       id: "account",
-      title: t("reports:Cash Balances.Headers.Account"),
+      title: t("Cash Balances.Headers.Account"),
       field: "account",
       exportConfig: { width: 7 },
       defaultFilter: currentlySelectedSecurityAccount,
@@ -206,7 +206,7 @@ const CashBalancesTable = ({ data, accounts }) => {
     },
     {
       id: "currency",
-      title: t("reports:Cash Balances.Headers.Currency"),
+      title: t("Cash Balances.Headers.Currency"),
       field: "currency",
       exportConfig: { width: 6 },
       defaultFilter: currentlySelectedCurrency,
@@ -214,7 +214,7 @@ const CashBalancesTable = ({ data, accounts }) => {
     },
     {
       id: "balance",
-      title: t("reports:Cash Balances.Headers.Balance"),
+      title: t("Cash Balances.Headers.Balance"),
       field: "balance",
       render: (rowData) => rowData.balance,
       exportConfig: { render: (rowData) => currencyRenderer(rowData.balance), align: "right" },
@@ -222,14 +222,14 @@ const CashBalancesTable = ({ data, accounts }) => {
     },
     {
       id: "accountType",
-      title: t("reports:Cash Balances.Headers.Account Type"),
+      title: t("Cash Balances.Headers.Account Type"),
       field: "accountType",
       render: (rowData) => capitalCase(rowData.accountType),
       exportConfig: { render: (rowData) => capitalCase(rowData.accountType), width: 20 },
     },
     {
       id: "lastMovement",
-      title: t("reports:Cash Balances.Headers.Last Movement"),
+      title: t("Cash Balances.Headers.Last Movement"),
       field: "lastMovement",
       render: (rowData) => reportDateRenderer(rowData.lastMovement),
       exportConfig: { render: (rowData) => reportDateRenderer(rowData.lastMovement) },
@@ -243,35 +243,35 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     return {
       date: {
-        label: t("reports:Cash Balances.Headers.Date"),
+        label: t("Cash Balances.Headers.Date"),
         value: date || "",
       },
       entity: {
-        label: t("reports:Cash Balances.Headers.Entity"),
+        label: t("Cash Balances.Headers.Entity"),
         value: entity || "",
       },
       account: {
-        label: t("reports:Cash Balances.Headers.Account"),
+        label: t("Cash Balances.Headers.Account"),
 
         value: account || "",
       },
       currency: {
-        label: t("reports:Cash Balances.Headers.Currency"),
+        label: t("Cash Balances.Headers.Currency"),
 
         value: currency || "",
       },
       balance: {
-        label: t("reports:Cash Balances.Headers.Balance"),
+        label: t("Cash Balances.Headers.Balance"),
 
         value: balance || "",
       },
       accountType: {
-        label: t("reports:Cash Balances.Headers.Account Type"),
+        label: t("Cash Balances.Headers.Account Type"),
 
         value: capitalCase(accountType) || "",
       },
       lastMovement: {
-        label: t("reports:Cash Balances.Headers.Last Movement"),
+        label: t("Cash Balances.Headers.Last Movement"),
 
         value: reportDateRenderer(lastMovement) || "",
       },

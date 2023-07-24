@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
@@ -8,7 +7,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
 import style from "./style.module.scss";
@@ -52,7 +50,7 @@ const MoveToSuspenseModal = ({
         <Box className={style.detailsWrapper}>
           <Typography variant="body1">
             Source Account : {selectedTransaction?.sourceAccount?.accountNo} ({" "}
-            {capitalCase(selectedTransaction?.sourceAccount?.type)} )
+            {selectedTransaction?.sourceAccount?.type} )
           </Typography>
           <Typography variant="body1">
             Source Balance : {selectedTransaction?.sourceAccount?.accountBalance}
@@ -60,9 +58,7 @@ const MoveToSuspenseModal = ({
           <br />
           <Typography variant="body1">
             Destination Account :{" "}
-            {suspenseAccount
-              ? `${suspenseAccount.accountNo} ( ${capitalCase(suspenseAccount?.type)} ) `
-              : "N/A"}
+            {suspenseAccount ? `${suspenseAccount.accountNo} ( ${suspenseAccount?.type} ) ` : "N/A"}
           </Typography>
           <Typography variant="body1">Currency : {selectedTransaction?.currency}</Typography>
           <Typography variant="body1">Amount : {selectedTransaction?.amount}</Typography>
@@ -97,7 +93,7 @@ const MoveToSuspenseModal = ({
 MoveToSuspenseModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  // onSubmit: PropTypes.func.isRequired,
 };
 
 export default MoveToSuspenseModal;

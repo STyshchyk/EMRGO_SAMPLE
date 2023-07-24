@@ -1,11 +1,10 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
 import MaterialTable, { MTableAction } from "@material-table/core";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CsvBuilder } from "filefy";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -204,7 +203,7 @@ const CouponPaymentScheduleTable = ({
             validate: validateDateField,
             render: (rowData) => dateFormatter(rowData?.calenderDate, DEFAULT_DATE_FORMAT),
             editComponent: (props) => (
-              <MuiPickersUtilsProvider utils={MomentUtils}>
+              <Fragment>
                 <DatePicker
                   format={DEFAULT_DATE_FORMAT}
                   value={props.value ?? null}
@@ -220,7 +219,7 @@ const CouponPaymentScheduleTable = ({
                 {props.error && (
                   <div className="MuiFormHelperText-root Mui-error">{props.helperText}</div>
                 )}
-              </MuiPickersUtilsProvider>
+              </Fragment>
             ),
           },
           {

@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import { parse } from "papaparse";
 import PropTypes from "prop-types";
-import XLSX from "xlsx";
+import * as XLSX from "xlsx";
 
 import { DEFAULT_DATE_FORMAT } from "../../../constants/datetime";
 
@@ -168,7 +168,6 @@ const ImportCouponPaymentScheduleDataDialog = ({ open, handleClose, setTableData
         handleClose();
       }}
       aria-labelledby="form-dialog-title"
-      sty
     >
       <DialogTitle>
         <Grid container justifyContent="space-between">

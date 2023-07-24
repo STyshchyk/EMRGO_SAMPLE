@@ -48,7 +48,7 @@ const BulletinSection = ({
     ? [
         {
           icon: "edit",
-          tooltip: t("bulletin:Edit Bulletin"),
+          tooltip: t("Edit Bulletin"),
           onClick: (event, rowData) => {
             setCurrentBulletin(rowData);
             setShowUpdateBulletinModal(true);
@@ -56,7 +56,7 @@ const BulletinSection = ({
         },
         () => ({
           icon: "delete",
-          tooltip: t("bulletin:Delete Bulletin"),
+          tooltip: t("Delete Bulletin"),
           onClick: (event, rowData) => {
             setCurrentBulletin(rowData);
             setDeleteBulletinConfirmationModal(true);
@@ -67,7 +67,7 @@ const BulletinSection = ({
 
   const columns = [
     {
-      title: t("bulletin:Date"),
+      title: t("Date"),
       field: "itemDate",
       type: "date",
       width: "10%",
@@ -77,7 +77,7 @@ const BulletinSection = ({
 
   if (hasEditBulletinEdit) {
     columns.push({
-      title: t("bulletin:Title"),
+      title: t("Title"),
       field: "title",
       width: "70%",
       cellStyle: {
@@ -89,13 +89,13 @@ const BulletinSection = ({
       },
     });
     columns.push({
-      title: t("bulletin:Author"),
+      title: t("Author"),
       field: "user.firstName",
       cellStyle: { ...cellStyle },
     });
   } else {
     columns.push({
-      title: t("bulletin:Title"),
+      title: t("Title"),
       field: "title",
       width: "90%",
       cellStyle: {

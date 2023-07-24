@@ -54,7 +54,7 @@ const ReportingButtons = ({ handleClear, handleFilter, disableApplyBtn, data }) 
               onClick={() => handleFilter()}
               size="large"
             >
-              {t("reports:Cash Balances.Filters.Apply")}
+              {t("Cash Balances.Filters.Apply")}
             </Button>
           </Grid>
 
@@ -67,7 +67,7 @@ const ReportingButtons = ({ handleClear, handleFilter, disableApplyBtn, data }) 
               onClick={() => handleClear()}
               size="large"
             >
-              {t("reports:Cash Balances.Filters.Clear")}
+              {t("Cash Balances.Filters.Clear")}
             </Button>
           </Grid>
         </Grid>

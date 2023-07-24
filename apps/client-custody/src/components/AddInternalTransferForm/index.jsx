@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { useTranslation } from "react-i18next";
-import NumberFormat from "react-number-format";
+import {NumericFormat} from "react-number-format";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
@@ -50,7 +50,7 @@ const CustomNumberInputField = (props) => {
   const { inputRef, onChange, ...other } = props;
   const { setFieldTouched } = useFormikContext();
   return (
-    <NumberFormat
+    <NumericFormat
       {...other}
       getInputRef={inputRef}
       onValueChange={(values) => {
@@ -63,8 +63,7 @@ const CustomNumberInputField = (props) => {
         setFieldTouched(props.name);
       }}
       thousandSeparator
-      decimalScale={20} // !Intentional
-      isNumericString
+      decimalScale={20}
       allowNegative={false}
     />
   );

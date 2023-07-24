@@ -59,25 +59,16 @@ const Reports = () => {
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
       <Routes>
-        <Route exact path={routes.dashboard.reports.home}>
-          <Navigate to={firstAccessibleRoutePath} />
-        </Route>
+        <Route exact path="" element={<Navigate to={firstAccessibleRoutePath} />}></Route>
 
-        <Route exact path={routes.dashboard.reports.securities.holdings}>
-          <NewSecHoldingsReportPage />
-        </Route>
-        <Route path={routes.dashboard.reports.securities.transactions}>
-          <SecuritiesTransactionsReportPage />
-        </Route>
-        <Route path={routes.dashboard.reports.cash.balances}>
-          <CashBalancesReportPage />
-        </Route>
-        <Route path={routes.dashboard.reports.cash.statement}>
-          <CashStatementReportPage />
-        </Route>
-        <Route path={routes.dashboard.reports.securities.referenceData}>
-          <ReferenceDataReportPage />
-        </Route>
+        <Route exact path="securities/holdings" element={<NewSecHoldingsReportPage />}></Route>
+        <Route
+          path="securities/transactions"
+          element={<SecuritiesTransactionsReportPage />}
+        ></Route>
+        <Route path="cash/balances" element={<CashBalancesReportPage />}></Route>
+        <Route path="cash/statement" element={<CashStatementReportPage />}></Route>
+        <Route path="securities/reference-data" element={<ReferenceDataReportPage />}></Route>
 
         {/*
           <Route exact path={routes.dashboard.cashManagement.noAccess}>

@@ -1,7 +1,6 @@
 import { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -12,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -79,7 +79,11 @@ const CouponEventsTableFiltering = () => {
               fullWidth
               inputVariant="filled"
               format={DEFAULT_DATE_FORMAT}
-              value={couponEventFiltersState.fromDate}
+              value={
+                couponEventFiltersState.fromDate
+                  ? moment(couponEventFiltersState.fromDate)
+                  : undefined
+              }
               onChange={(date) => {
                 couponEventFiltersDispatcher({
                   type: "SET_FROM_DATE",
@@ -97,22 +101,26 @@ const CouponEventsTableFiltering = () => {
           </Grid>
 
           <Box my={1} className="full-width">
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <DatePicker
-                placeholder="To"
-                fullWidth
-                inputVariant="filled"
-                format={DEFAULT_DATE_FORMAT}
-                value={couponEventFiltersState.toDate}
-                minDate={couponEventFiltersState.fromDate}
-                onChange={(date) => {
-                  couponEventFiltersDispatcher({
-                    type: "SET_TO_DATE",
-                    payload: date.toDate(),
-                  });
-                }}
-              />
-            </MuiPickersUtilsProvider>
+            <DatePicker
+              placeholder="To"
+              fullWidth
+              inputVariant="filled"
+              format={DEFAULT_DATE_FORMAT}
+              value={
+                couponEventFiltersState.toDate ? moment(couponEventFiltersState.toDate) : undefined
+              }
+              minDate={
+                couponEventFiltersState?.fromDate
+                  ? moment(couponEventFiltersState.fromDate)
+                  : undefined
+              }
+              onChange={(date) => {
+                couponEventFiltersDispatcher({
+                  type: "SET_TO_DATE",
+                  payload: date.toDate(),
+                });
+              }}
+            />
           </Box>
         </Grid>
         <Grid item lg={3} container alignItems="center">

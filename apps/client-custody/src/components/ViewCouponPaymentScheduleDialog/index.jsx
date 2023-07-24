@@ -61,91 +61,89 @@ const ViewCouponPaymentScheduleDialog = ({ couponId, securityData, open, handleC
   }, [couponId, couponPaymentSchedule?.couponScheduleDates]);
 
   return (
-    <Fragment>
-      <Dialog
-        scroll="body"
-        disableEscapeKeyDown
-        fullWidth
-        maxWidth="md"
-        open={open}
-        onClose={(event, reason) => {
-          if (reason && reason === "backdropClick") return;
+    <Dialog
+      scroll="body"
+      disableEscapeKeyDown
+      fullWidth
+      maxWidth="md"
+      open={open}
+      onClose={(event, reason) => {
+        if (reason && reason === "backdropClick") return;
 
-          handleClose();
-        }}
-        aria-labelledby="form-dialog-title"
-      >
-        <StyledDialogHeader
-          title={t("Coupon Payment Schedule.Coupon Payment Schedule")}
-          handleClose={handleClose}
-        />
-        <DialogContent>
-          <div
+        handleClose();
+      }}
+      aria-labelledby="form-dialog-title"
+    >
+      <StyledDialogHeader
+        title={t("Coupon Payment Schedule.Coupon Payment Schedule")}
+        handleClose={handleClose}
+      />
+      <DialogContent>
+        <div
+          style={{
+            marginBottom: "1rem",
+          }}
+        >
+          <Grid container>
+            <SecurityOverview data={securityData} />
+          </Grid>
+          <hr
             style={{
+              width: "100%",
+              border: "1px solid lightgrey",
               marginBottom: "1rem",
             }}
-          >
-            <Grid container>
-              <SecurityOverview data={securityData} />
+          />
+          <Grid container spacing={2}>
+            <Grid item>
+              <div>
+                <strong>{`${t(
+                  "Coupon Payment Schedule.Status"
+                )}: ${couponPaymentScheduleStatus}`}</strong>
+              </div>
+              <div>
+                <strong>{`${t(
+                  "Coupon Payment Schedule.Last Updated"
+                )}: ${couponPaymentScheduleUpdatedAt}`}</strong>
+              </div>
             </Grid>
-            <hr
+
+            <Grid item md={12}>
+              <CouponPaymentScheduleTable
+                editable={false}
+                hardcodedCouponRate={securityData?.profitRate ?? 0.0}
+                tableData={couponPaymentTableData}
+                setTableData={setCouponPaymentTableData}
+                isLoading={isLoading}
+              />
+            </Grid>
+
+            <Grid
+              container
+              spacing={2}
               style={{
-                width: "100%",
-                border: "1px solid lightgrey",
-                marginBottom: "1rem",
+                marginTop: "1rem",
               }}
-            />
-            <Grid container spacing={2}>
-              <Grid item>
-                <div>
-                  <strong>{`${t(
-                    "Coupon Payment Schedule.Status"
-                  )}: ${couponPaymentScheduleStatus}`}</strong>
-                </div>
-                <div>
-                  <strong>{`${t(
-                    "Coupon Payment Schedule.Last Updated"
-                  )}: ${couponPaymentScheduleUpdatedAt}`}</strong>
-                </div>
-              </Grid>
-
-              <Grid item md={12}>
-                <CouponPaymentScheduleTable
-                  editable={false}
-                  hardcodedCouponRate={securityData?.profitRate ?? 0.0}
-                  tableData={couponPaymentTableData}
-                  setTableData={setCouponPaymentTableData}
-                  isLoading={isLoading}
-                />
-              </Grid>
-
-              <Grid
-                container
-                spacing={2}
-                style={{
-                  marginTop: "1rem",
-                }}
-              >
-                <Grid item container md={12} spacing={2} justifyContent="flex-end">
-                  <Grid item>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        handleClose();
-                      }}
-                      color="primary"
-                    >
-                      <strong>Close</strong>
-                    </Button>
-                  </Grid>
+            >
+              <Grid item container md={12} spacing={2} justifyContent="flex-end">
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      handleClose();
+                    }}
+                    color="primary"
+                  >
+                    <strong>Close</strong>
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </div>
-        </DialogContent>
-        <DialogActions />
-      </Dialog>
-    </Fragment>
+          </Grid>
+        </div>
+      </DialogContent>
+      <DialogActions />
+    </Dialog>
   );
 };
 

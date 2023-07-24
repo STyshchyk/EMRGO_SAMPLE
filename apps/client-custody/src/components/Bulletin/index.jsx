@@ -52,8 +52,8 @@ const Bulletin = ({
     <Box>
       {bulletins.length === 0 ? (
         <ErrorBanner
-          title={t("bulletin:Empty List.You're all caught up")}
-          description={t("bulletin:Empty List.Please check back later for new updates")}
+          title={t("Empty List.You're all caught up")}
+          description={t("Empty List.Please check back later for new updates")}
           icon={mdiBellCheck}
         />
       ) : (
@@ -123,12 +123,12 @@ const Bulletin = ({
         fullWidth
       >
         <DialogTitle id="alert-dialog-title">
-          {t("bulletin:Delete Bulletin Modal.Delete Bulletin?")}
+          {t("Delete Bulletin Modal.Delete Bulletin?")}
         </DialogTitle>
         <DialogContent dir={locale.rtl ? "rtl" : "ltr"}>
           <DialogContentText id="alert-dialog-description">
             {t(
-              "bulletin:Delete Bulletin Modal.This action is non reversible! It will permanently delete the bulletin titled",
+              "Delete Bulletin Modal.This action is non reversible! It will permanently delete the bulletin titled",
               { title: currentBulletin.title }
             )}
           </DialogContentText>
@@ -140,7 +140,7 @@ const Bulletin = ({
             }}
             color="primary"
           >
-            {t("bulletin:New Bulletin Modal.Cancel")}
+            {t("New Bulletin Modal.Cancel")}
           </Button>
           <Button
             onClick={deleteBulletinHandler}
@@ -148,7 +148,7 @@ const Bulletin = ({
             color="primary"
             data-testid="delete-bullein-btn"
           >
-            {t("bulletin:Delete Bulletin Modal.Yes, Delete it")}
+            {t("Delete Bulletin Modal.Yes, Delete it")}
           </Button>
         </DialogActions>
       </Dialog>

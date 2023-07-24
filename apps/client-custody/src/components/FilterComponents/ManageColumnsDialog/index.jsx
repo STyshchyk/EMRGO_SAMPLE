@@ -120,203 +120,195 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
   };
 
   return (
-    <Fragment>
-      <Dialog
-        fullWidth
-        maxWidth="md"
-        open={open}
-        onClose={() => closeDialog()}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {t("miscellaneous:Manage Columns Dialogue.Manage Columns")}
-        </DialogTitle>
-        <DialogContent>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Grid container justifyContent="space-between">
-              <Grid item xs={5}>
-                <Grid container justifyContent="space-between" alignContent="center">
-                  <Grid item xs={6} container justifyContent="flex-start" alignContent="center">
-                    <Typography variant="body1" align="left">
-                      {t("miscellaneous:Manage Columns Dialogue.Hidden Columns")}
-                    </Typography>
-                  </Grid>
-                  <Tooltip
-                    title={t("miscellaneous:Manage Columns Dialogue.Move all Hidden Columns")}
-                    placement="top"
-                    aria-label="move hidden"
-                  >
-                    <IconButton
-                      aria-label="move columns"
-                      onClick={() => {
-                        moveHiddenColumns();
-                      }}
-                      size="large"
-                    >
-                      <ArrowForwardIcon color="secondary" fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+    <Dialog
+      fullWidth
+      maxWidth="md"
+      open={open}
+      onClose={() => closeDialog()}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {t("Manage Columns Dialogue.Manage Columns")}
+      </DialogTitle>
+      <DialogContent>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Grid container justifyContent="space-between">
+            <Grid item xs={5}>
+              <Grid container justifyContent="space-between" alignContent="center">
+                <Grid item xs={6} container justifyContent="flex-start" alignContent="center">
+                  <Typography variant="body1" align="left">
+                    {t("Manage Columns Dialogue.Hidden Columns")}
+                  </Typography>
                 </Grid>
-                <Droppable droppableId="hidden">
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      className={cx(
-                        style.columnManager__list,
-                        getListStyle(snapshot.isDraggingOver)
-                      )}
-                    >
-                      {currentHiddenColumns
-                        //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
-                        .map((item, index) => (
-                          <Draggable
-                            key={`${item.field}-${item.title}}`}
-                            draggableId={`${item.field}-${item.title}}`}
-                            index={index}
-                          >
-                            {(currentProvided, currentSnapshot) => (
-                              <div
-                                ref={currentProvided.innerRef}
-                                {...currentProvided.draggableProps}
-                                {...currentProvided.dragHandleProps}
-                                style={{ ...currentProvided.draggableProps.style }}
-                                className={cx(
-                                  style.columnManager__column,
-                                  style["columnManager__column--hidden"],
-                                  getItemStyle(currentSnapshot.isDragging)
-                                )}
-                              >
-                                {item.title}
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </Grid>
-              <Grid item xs={2} container justifyContent="center" alignContent="flex-start">
-                <div className={style.columnManager__swap__wrapper}>
+                <Tooltip
+                  title={t("Manage Columns Dialogue.Move all Hidden Columns")}
+                  placement="top"
+                  aria-label="move hidden"
+                >
                   <IconButton
-                    aria-label="swap column selection"
-                    disableRipple
-                    disableFocusRipple
+                    aria-label="move columns"
                     onClick={() => {
-                      swapColumns();
+                      moveHiddenColumns();
                     }}
                     size="large"
                   >
-                    <Tooltip
-                      title={t("miscellaneous:Manage Columns Dialogue.Swap all Columns")}
-                      placement="top"
-                      aria-label="swap columns"
-                    >
-                      <SwapHorizontalCircleIcon
-                        color="primary"
-                        fontSize="large"
-                        className={style.columnManager__swap__icon}
-                      />
-                    </Tooltip>
+                    <ArrowForwardIcon color="secondary" fontSize="small" />
                   </IconButton>
-                </div>
+                </Tooltip>
               </Grid>
-              <Grid item xs={5}>
-                <Grid container justifyContent="space-between" alignContent="center">
-                  <Tooltip
-                    title={t("miscellaneous:Manage Columns Dialogue.Move all Shown Columns")}
-                    placement="top"
-                    aria-label="move shown"
+              <Droppable droppableId="hidden">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    className={cx(style.columnManager__list, getListStyle(snapshot.isDraggingOver))}
                   >
-                    <IconButton
-                      aria-label="move columns"
-                      onClick={() => {
-                        moveShownColumns();
-                      }}
-                      size="large"
-                    >
-                      <ArrowBackIcon color="secondary" fontSize="small" />
-                    </IconButton>
+                    {currentHiddenColumns
+                      //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
+                      .map((item, index) => (
+                        <Draggable
+                          key={`${item.field}-${item.title}}`}
+                          draggableId={`${item.field}-${item.title}}`}
+                          index={index}
+                        >
+                          {(currentProvided, currentSnapshot) => (
+                            <div
+                              ref={currentProvided.innerRef}
+                              {...currentProvided.draggableProps}
+                              {...currentProvided.dragHandleProps}
+                              style={{ ...currentProvided.draggableProps.style }}
+                              className={cx(
+                                style.columnManager__column,
+                                style["columnManager__column--hidden"],
+                                getItemStyle(currentSnapshot.isDragging)
+                              )}
+                            >
+                              {item.title}
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </Grid>
+            <Grid item xs={2} container justifyContent="center" alignContent="flex-start">
+              <div className={style.columnManager__swap__wrapper}>
+                <IconButton
+                  aria-label="swap column selection"
+                  disableRipple
+                  disableFocusRipple
+                  onClick={() => {
+                    swapColumns();
+                  }}
+                  size="large"
+                >
+                  <Tooltip
+                    title={t("Manage Columns Dialogue.Swap all Columns")}
+                    placement="top"
+                    aria-label="swap columns"
+                  >
+                    <SwapHorizontalCircleIcon
+                      color="primary"
+                      fontSize="large"
+                      className={style.columnManager__swap__icon}
+                    />
                   </Tooltip>
-                  <Grid item xs={6} container justifyContent="flex-end" alignContent="center">
-                    <Typography variant="body1" align="right">
-                      {t("miscellaneous:Manage Columns Dialogue.Displayed Columns")}
-                    </Typography>
-                  </Grid>
+                </IconButton>
+              </div>
+            </Grid>
+            <Grid item xs={5}>
+              <Grid container justifyContent="space-between" alignContent="center">
+                <Tooltip
+                  title={t("Manage Columns Dialogue.Move all Shown Columns")}
+                  placement="top"
+                  aria-label="move shown"
+                >
+                  <IconButton
+                    aria-label="move columns"
+                    onClick={() => {
+                      moveShownColumns();
+                    }}
+                    size="large"
+                  >
+                    <ArrowBackIcon color="secondary" fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+                <Grid item xs={6} container justifyContent="flex-end" alignContent="center">
+                  <Typography variant="body1" align="right">
+                    {t("Manage Columns Dialogue.Displayed Columns")}
+                  </Typography>
                 </Grid>
-                <Droppable droppableId="shown">
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      className={cx(
-                        style.columnManager__list,
-                        getListStyle(snapshot.isDraggingOver)
-                      )}
-                    >
-                      {currentShownColumns
-                        //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
-                        .map((item, index) => (
-                          <Draggable
-                            key={`${item.field}-${item.title}}`}
-                            draggableId={`${item.field}-${item.title}}`}
-                            index={index}
-                          >
-                            {(currentProvided, currentSnapshot) => (
-                              <div
-                                ref={currentProvided.innerRef}
-                                {...currentProvided.draggableProps}
-                                {...currentProvided.dragHandleProps}
-                                style={{ ...currentProvided.draggableProps.style }}
-                                className={cx(
-                                  style.columnManager__column,
-                                  style["columnManager__column--shown"],
-                                  getItemStyle(currentSnapshot.isDragging)
-                                )}
-                              >
-                                {item.title}
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
               </Grid>
-            </Grid>
-          </DragDropContext>
-        </DialogContent>
-        <DialogActions>
-          <Grid container justifyContent="space-between" className="px-4 py-2">
-            <Grid item>
-              <Button
-                onClick={() => handleResetConfirmClick()}
-                variant="outlined"
-                className="border-red-500 text-red-500"
-              >
-                {t("miscellaneous:Manage Columns Dialogue.Reset Columns")}
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button onClick={() => closeDialog()} color="primary">
-                {t("miscellaneous:Manage Columns Dialogue.Cancel")}
-              </Button>
-              <Button
-                onClick={() => {
-                  confirmColumns();
-                  closeDialog();
-                }}
-                variant="contained"
-                color="primary"
-              >
-                {t("miscellaneous:Manage Columns Dialogue.Confirm Columns")}
-              </Button>
+              <Droppable droppableId="shown">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    className={cx(style.columnManager__list, getListStyle(snapshot.isDraggingOver))}
+                  >
+                    {currentShownColumns
+                      //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
+                      .map((item, index) => (
+                        <Draggable
+                          key={`${item.field}-${item.title}}`}
+                          draggableId={`${item.field}-${item.title}}`}
+                          index={index}
+                        >
+                          {(currentProvided, currentSnapshot) => (
+                            <div
+                              ref={currentProvided.innerRef}
+                              {...currentProvided.draggableProps}
+                              {...currentProvided.dragHandleProps}
+                              style={{ ...currentProvided.draggableProps.style }}
+                              className={cx(
+                                style.columnManager__column,
+                                style["columnManager__column--shown"],
+                                getItemStyle(currentSnapshot.isDragging)
+                              )}
+                            >
+                              {item.title}
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
             </Grid>
           </Grid>
-        </DialogActions>
-      </Dialog>
-    </Fragment>
+        </DragDropContext>
+      </DialogContent>
+      <DialogActions>
+        <Grid container justifyContent="space-between" className="px-4 py-2">
+          <Grid item>
+            <Button
+              onClick={() => handleResetConfirmClick()}
+              variant="outlined"
+              className="border-red-500 text-red-500"
+            >
+              {t("Manage Columns Dialogue.Reset Columns")}
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button onClick={() => closeDialog()} color="primary">
+              {t("Manage Columns Dialogue.Cancel")}
+            </Button>
+            <Button
+              onClick={() => {
+                confirmColumns();
+                closeDialog();
+              }}
+              variant="contained"
+              color="primary"
+            >
+              {t("Manage Columns Dialogue.Confirm Columns")}
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogActions>
+    </Dialog>
   );
 };
 

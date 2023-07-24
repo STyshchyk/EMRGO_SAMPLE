@@ -72,17 +72,17 @@ const UpdateBulletinForm = ({
             fullWidth
           >
             <DialogTitle id="form-dialog-title">
-              {t("bulletin:Update Bulletin Modal.Update Bulletin")}
+              {t("Update Bulletin Modal.Update Bulletin")}
             </DialogTitle>
             <DialogContent dir={locale.rtl ? "rtl" : "ltr"}>
               <Box mb={2}>
                 <DialogContentText>
-                  {t("bulletin:Update Bulletin Modal.Bulletin Information")}
+                  {t("Update Bulletin Modal.Bulletin Information")}
                 </DialogContentText>
                 <Box my={1} className="full-width">
                   <Field
                     component={TextField}
-                    label={t("bulletin:Update Bulletin Modal.Bulletin Title")}
+                    label={t("Update Bulletin Modal.Bulletin Title")}
                     name="title"
                     variant="filled"
                     fullWidth
@@ -90,7 +90,7 @@ const UpdateBulletinForm = ({
                 </Box>
                 <Box my={1} className="full-width">
                   <Datepicker
-                    label={t("bulletin:Update Bulletin Modal.Bulletin Date")}
+                    label={t("Update Bulletin Modal.Bulletin Date")}
                     name="itemDate"
                     materialLabel
                     fullWidth
@@ -127,7 +127,7 @@ const UpdateBulletinForm = ({
                 }}
                 color="primary"
               >
-                {t("bulletin:Update Bulletin Modal.Cancel")}
+                {t("Update Bulletin Modal.Cancel")}
               </Button>
               <Button
                 disabled={filesUploadInProgress}
@@ -136,7 +136,7 @@ const UpdateBulletinForm = ({
                 color="primary"
                 type="submit"
               >
-                {t("bulletin:Update Bulletin Modal.Update")}
+                {t("Update Bulletin Modal.Update")}
               </Button>
             </DialogActions>
           </Dialog>

@@ -128,21 +128,21 @@ const ReferenceDataReportPage = () => {
   // TODO: TRANSLATE THE LABELS
   const filters = [
     {
-      label: t("termsheet:Security Type"),
+      label: t("Security Type"),
       value:
         selectedExternalSecurity &&
         (selectedExternalSecurity?.isPrimaryIssuance ? "Primary Issuance" : "External Security"),
     },
     {
-      label: t("termsheet:Status"),
+      label: t("Status"),
       value: selectedExternalSecurity?.status,
     },
     {
-      label: t("termsheet:Denomination"),
+      label: t("Denomination"),
       value: selectedExternalSecurity?.denominationName?.name,
     },
     {
-      label: t("termsheet:Profit Rate"),
+      label: t("Profit Rate"),
       value:
         selectedExternalSecurity &&
         convertNumberToIntlFormat(selectedExternalSecurity?.profitRate, {
@@ -151,7 +151,7 @@ const ReferenceDataReportPage = () => {
         }),
     },
     {
-      label: t("termsheet:Frequency"),
+      label: t("Frequency"),
       value: selectedExternalSecurity?.frequencyName?.name,
     },
     {
@@ -159,41 +159,41 @@ const ReferenceDataReportPage = () => {
       value: selectedExternalSecurity?.isin,
     },
     {
-      label: t("termsheet:Ticker"),
+      label: t("Ticker"),
       value: selectedExternalSecurity?.ticker,
     },
     {
-      label: t("termsheet:Country of Risk"),
+      label: t("Country of Risk"),
       value: selectedExternalSecurity?.countryOfRisk?.name,
     },
     {
-      label: t("termsheet:Issuance Name"),
+      label: t("Issuance Name"),
       value: selectedExternalSecurity?.name,
     },
     {
-      label: t("termsheet:Security Long Name"),
+      label: t("Security Long Name"),
       value: selectedExternalSecurity?.longName,
     },
     {
-      label: t("termsheet:Security Short Name"),
+      label: t("Security Short Name"),
       value: selectedExternalSecurity?.securityShortName,
     },
     {
-      label: t("termsheet:Issuance Amount"),
+      label: t("Issuance Amount"),
       value:
         currentlySelectedSecurity && currencyRenderer(selectedExternalSecurity?.issuanceAmount),
     },
     {
-      label: t("termsheet:Currency"),
+      label: t("Currency"),
       value: selectedExternalSecurity?.currencyName?.name,
     },
     {
-      label: t("termsheet:Maturity Date"),
+      label: t("Maturity Date"),
       value:
         currentlySelectedSecurity && reportDateRenderer(selectedExternalSecurity?.maturityDate),
     },
     {
-      label: t("termsheet:Issue Date"),
+      label: t("Issue Date"),
       value: currentlySelectedSecurity && reportDateRenderer(selectedExternalSecurity?.issueDate),
     },
   ];
@@ -206,81 +206,81 @@ const ReferenceDataReportPage = () => {
       value: selectedExternalSecurity?.wsn,
     },
     {
-      label: t("termsheet:Registrar"),
+      label: t("Registrar"),
       value: selectedExternalSecurity?.csdName?.name,
     },
 
     {
-      label: t("termsheet:Exchange Code"),
+      label: t("Exchange Code"),
       value: selectedExternalSecurity?.exchangeCode,
     },
 
     {
-      label: t("termsheet:Day Count Convention"),
+      label: t("Day Count Convention"),
       value: selectedExternalSecurity?.dayCountConventionName?.name,
     },
     {
-      label: t("termsheet:Distribution Method"),
+      label: t("Distribution Method"),
       value: selectedExternalSecurity?.distributionMethodName?.name,
     },
     {
-      label: t("termsheet:Form of Offering"),
+      label: t("Form of Offering"),
       value: selectedExternalSecurity?.formOfOfferingName?.name,
     },
     {
-      label: t("termsheet:Governing Law"),
+      label: t("Governing Law"),
       value: selectedExternalSecurity?.governingLawName?.name,
     },
     {
-      label: t("termsheet:Jurisdiction"),
+      label: t("Jurisdiction"),
       value: selectedExternalSecurity?.jurisdictionName?.name,
     },
 
     {
-      label: t("termsheet:Listing"),
+      label: t("Listing"),
       value: selectedExternalSecurity?.listingName?.name,
     },
 
     {
-      label: t("termsheet:Pricing"),
+      label: t("Pricing"),
       value: selectedExternalSecurity?.pricingName?.name,
     },
     {
-      label: t("termsheet:Profit Rate"),
+      label: t("Profit Rate"),
       value: currentlySelectedSecurity && currencyRenderer(selectedExternalSecurity?.profitRate),
     },
     {
-      label: t("termsheet:Profit Rate Terms"),
+      label: t("Profit Rate Terms"),
       value: selectedExternalSecurity?.profitRateTermsName?.name,
     },
 
     {
-      label: t("termsheet:Ranking"),
+      label: t("Ranking"),
       value: selectedExternalSecurity?.rankingName?.name,
     },
 
     {
-      label: t("termsheet:Shariah Compliance"),
+      label: t("Shariah Compliance"),
       value: selectedExternalSecurity?.shariahComplianceName?.name,
     },
 
     {
-      label: t("termsheet:Sukuk Type Name"),
+      label: t("Sukuk Type Name"),
       value: selectedExternalSecurity?.sukukTypeName?.name,
     },
 
     {
-      label: t("termsheet:Use of Proceeds"),
+      label: t("Use of Proceeds"),
       value: selectedExternalSecurity?.useOfProceedsName?.name,
     },
 
     {
-      label: t("termsheet:Guarantor"),
+      label: t("Guarantor"),
       value: selectedExternalSecurity?.guarantor,
     },
 
     {
-      label: t("termsheet:Underlying Assets"),
+      label: t("Underlying Assets"),
       value: selectedExternalSecurity?.underlyingAssets,
     },
   ];
@@ -291,22 +291,22 @@ const ReferenceDataReportPage = () => {
 
   return (
     <Fragment>
-      <PageTitle title={t("reports:Reference Data.Reference Data")} />
-      <RouteLeavingGuard
+      <PageTitle title={t("Reference Data.Reference Data")} />
+      {/* <RouteLeavingGuard
         when={selectedExternalSecurity?.name !== undefined}
-        title={t("reports:Leave Guard.Title")}
-        message={t("reports:Leave Guard.Message")}
+        title={t("Leave Guard.Title")}
+        message={t("Leave Guard.Message")}
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
-      />
+      /> */}
       <Grid item container alignItems="center" justifyContent="space-between" md={12} spacing={2}>
         <Grid item lg={3} container>
           <Grid container justifyContent="space-between" alignItems="flex-start">
             <Typography variant="body1" className="bold">
-              {t("reports:Reference Data.Filters.Security")}
+              {t("Reference Data.Filters.Security")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="full-width">
@@ -314,7 +314,7 @@ const ReferenceDataReportPage = () => {
               <Select
                 closeMenuOnSelect
                 isSearchable
-                placeholder={`${t("reports:Reference Data.Filters.Security")}...`}
+                placeholder={`${t("Reference Data.Filters.Security")}...`}
                 components={{
                   ...animatedComponents,
                 }}
@@ -331,10 +331,10 @@ const ReferenceDataReportPage = () => {
         <Grid item lg={3} container>
           <Grid container justifyContent="space-between" alignItems="flex-start">
             <Typography variant="body1" className="bold">
-              {t("reports:Reference Data.Filters.ISIN")}
+              {t("Reference Data.Filters.ISIN")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="full-width">
@@ -342,7 +342,7 @@ const ReferenceDataReportPage = () => {
               <Select
                 closeMenuOnSelect
                 isSearchable
-                placeholder={`${t("reports:Reference Data.Filters.ISIN")}...`}
+                placeholder={`${t("Reference Data.Filters.ISIN")}...`}
                 components={{
                   ...animatedComponents,
                 }}
@@ -379,7 +379,7 @@ const ReferenceDataReportPage = () => {
                         size="large"
                         onClick={() => {}}
                       >
-                        {t("reports:Update Reference Data")}
+                        {t("Update Reference Data")}
                       </Button>
                     </Grid>
                   </Fragment>
@@ -395,7 +395,7 @@ const ReferenceDataReportPage = () => {
                       setOpenViewCouponScheduleDialog(true);
                     }}
                   >
-                    {t("reports:View Coupon Schedule")}
+                    {t("View Coupon Schedule")}
                   </Button>
                 </Grid>
               </Grid>

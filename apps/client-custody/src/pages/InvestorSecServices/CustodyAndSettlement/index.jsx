@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { settlementInstructionStatusEnum } from "constants/wethaqAPI/securitiesServices";
 
 import AmendSettlementInstructionDialog from "../../../components/AmendSettlementInstructionDialog";
 import CancelSettlementInstructionDialog from "../../../components/CancelSettlementInstructionDialog";
@@ -22,6 +21,7 @@ import ViewCounterpartySSIDialog from "../../../components/ViewCounterpartySSIDi
 import ViewSettlementInstructionAuditHistoryDialog from "../../../components/ViewSettlementInstructionAuditHistoryDialog";
 import ViewSSIDialog from "../../../components/ViewSSIDialog";
 import featureFlags from "../../../constants/featureFlags";
+import { settlementInstructionStatusEnum } from "../../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../../context/feature-toggle-context";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";

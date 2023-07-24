@@ -27,13 +27,13 @@ const CustomCounterpartyTableHeader = (props) => {
     if (field === "deliveryOrReceiveAgentIdType") {
       if (map.has("deliveryOrReceiveIdentifier")) {
         return (
-          <TableCell className={style.tableCell} colSpan={2}>
+          <TableCell key={field} className={style.tableCell} colSpan={2}>
             {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
           </TableCell>
         );
       }
       return (
-        <TableCell className={style.tableCell} colSpan={1}>
+        <TableCell key={field} className={style.tableCell} colSpan={1}>
           {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
         </TableCell>
       );
@@ -44,7 +44,7 @@ const CustomCounterpartyTableHeader = (props) => {
         return null;
       }
       return (
-        <TableCell className={style.tableCell} colSpan={1}>
+        <TableCell key={field} className={style.tableCell} colSpan={1}>
           {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
         </TableCell>
       );
@@ -53,14 +53,14 @@ const CustomCounterpartyTableHeader = (props) => {
     if (field === "sellerOrBuyerIdType") {
       if (map.has("sellerOrBuyerIdentifier")) {
         return (
-          <TableCell className={style.tableCell} colSpan={2}>
+          <TableCell key={field} className={style.tableCell} colSpan={2}>
             {t("Counterparty SSI.Headers.SellerOrBuyer")}
           </TableCell>
         );
       }
 
       return (
-        <TableCell className={style.tableCell} colSpan={1}>
+        <TableCell key={field} className={style.tableCell} colSpan={1}>
           {t("Counterparty SSI.Headers.SellerOrBuyer")}
         </TableCell>
       );
@@ -72,13 +72,13 @@ const CustomCounterpartyTableHeader = (props) => {
       }
 
       return (
-        <TableCell className={style.tableCell} colSpan={1}>
+        <TableCell key={field} className={style.tableCell} colSpan={1}>
           {t("Counterparty SSI.Headers.SellerOrBuyer")}
         </TableCell>
       );
     }
 
-    return <TableCell />;
+    return <TableCell key={field} />;
   });
 
   return (

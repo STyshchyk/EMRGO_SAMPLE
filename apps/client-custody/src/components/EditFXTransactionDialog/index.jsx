@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -51,7 +51,7 @@ const NumberFormatCustom = (props) => {
   const { inputRef, onChange, ...other } = props;
 
   return (
-    <NumberFormat
+    <NumericFormat
       {...other}
       getInputRef={inputRef}
       onValueChange={(values) => {
@@ -63,7 +63,6 @@ const NumberFormatCustom = (props) => {
         });
       }}
       thousandSeparator
-      isNumericString
       decimalScale={5}
     />
   );
@@ -411,19 +410,14 @@ const EditFXTransactionDialog = ({
 
           return (
             <form onSubmit={handleSubmit}>
-              <DialogTitle id="form-dialog-title">
-                {" "}
-                {t("fx_transactions:Fx Modal.Edit Fx Transaction")}
-              </DialogTitle>
+              <DialogTitle id="form-dialog-title"> {t("Fx Modal.Edit Fx Transaction")}</DialogTitle>
 
               <DialogContent>
                 <Box mb={2}>
                   <Grid container>
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t("fx_transactions:Fx Table.Entity")}
-                        </Typography>
+                        <Typography className="mt-4">{t("Fx Table.Entity")}</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                         <FormControl className="w-full">
@@ -536,7 +530,7 @@ const EditFXTransactionDialog = ({
                     </Grid>
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Bank FX Rate %")}
+                      fieldLabel={t("Fx Table.Bank FX Rate %")}
                       fieldKey="bankRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -545,7 +539,7 @@ const EditFXTransactionDialog = ({
                     />
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Markup Rate %")}
+                      fieldLabel={t("Fx Table.Markup Rate %")}
                       fieldKey="markupRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -554,7 +548,7 @@ const EditFXTransactionDialog = ({
                     />
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Client FX Rate %")}
+                      fieldLabel={t("Fx Table.Client FX Rate %")}
                       fieldKey="clientRate"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -563,7 +557,7 @@ const EditFXTransactionDialog = ({
                     />
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Bank Amount")}
+                      fieldLabel={t("Fx Table.Bank Amount")}
                       fieldKey="bankAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -572,7 +566,7 @@ const EditFXTransactionDialog = ({
                     />
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Markup Amount")}
+                      fieldLabel={t("Fx Table.Markup Amount")}
                       fieldKey="markupAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -581,7 +575,7 @@ const EditFXTransactionDialog = ({
                     />
 
                     <CalculationField
-                      fieldLabel={t("fx_transactions:Fx Table.Client Amount")}
+                      fieldLabel={t("Fx Table.Client Amount")}
                       fieldKey="clientAmount"
                       handleOnBlur={handleOnBlur}
                       touched={touched}
@@ -600,17 +594,15 @@ const EditFXTransactionDialog = ({
                               values,
                               setFieldValue,
                               touched,
-                              incompleteText: t(
-                                "fx_transactions:Fx Modal.Insufficient information given"
-                              ),
+                              incompleteText: t("Fx Modal.Insufficient information given"),
                             });
                           }}
                         >
-                          {t("fx_transactions:Fx Modal.Buttons.Calculate")}
+                          {t("Fx Modal.Buttons.Calculate")}
                         </Button>
                       </Grid>
                       <Grid item container xs={1} className="px-1" alignContent="center">
-                        <Tooltip title={t("fx_transactions:Fx Modal.Buttons.Reset")}>
+                        <Tooltip title={t("Fx Modal.Buttons.Reset")}>
                           <IconButton
                             size="small"
                             aria-label="reset"

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { useFilters } from "context/filter-context";
+
+import { useFilters } from "../../../context/filter-context";
 
 const FilterCheckbox = ({ label, name, checked, onChange, handleFetch }) => {
   const filterContext = useFilters();

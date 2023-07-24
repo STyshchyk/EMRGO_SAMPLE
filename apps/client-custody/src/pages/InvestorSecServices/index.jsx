@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Fragment, lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -84,33 +84,46 @@ const InvestorServices = () => {
 
   return (
     <Routes>
-      <Route exact path={routes.dashboard.investorSecServices.home}>
-        <Navigate to={nextAccessibleRoutePath} />
-      </Route>
+      <Route exact path="/" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
 
-      <Route path={routes.dashboard.investorSecServices.custodyAndSettlement}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="/custody-and-settlement"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CustodyAndSettlement />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CustodyAndSettlement />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.investorSecServices.corporateActionEvents}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="/corporate-action-events"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-        <PageWrapper>
-          <CorporateActionEvents />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CorporateActionEvents />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-      <Route path={routes.dashboard.investorSecServices.holdings}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-
-        <PageWrapper>
-          <Holdings />
-        </PageWrapper>
-      </Route>
+      <Route
+        path="/holdings"
+        element={
+          <Fragment>
+            {" "}
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <Holdings />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
       {/*
       <Route path={routes.dashboard.investorSecServices.trusteeServices}>
         <MinorNavigation routes={PILL_ROUTE_CONFIGS} currentAccessList={accessControls} />
@@ -122,21 +135,30 @@ const InvestorServices = () => {
 
         */}
 
-      <Route path={routes.dashboard.investorSecServices.counterpartyList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+      <Route
+        path="/counterparty-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+            <PageWrapper>
+              <CounterpartyList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
 
-        <PageWrapper>
-          <CounterpartyList />
-        </PageWrapper>
-      </Route>
+      <Route
+        path="/counterparty-ssi-list"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-      <Route path={routes.dashboard.investorSecServices.counterpartySSIList}>
-        <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-
-        <PageWrapper>
-          <CounterpartySSIList />
-        </PageWrapper>
-      </Route>
+            <PageWrapper>
+              <CounterpartySSIList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
     </Routes>
   );
 };

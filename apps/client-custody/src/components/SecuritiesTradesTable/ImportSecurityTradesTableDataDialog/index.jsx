@@ -175,7 +175,6 @@ const ImportSecurityTradesTableDataDialog = ({
         handleClose();
       }}
       aria-labelledby="form-dialog-title"
-      sty
     >
       <DialogTitle>
         <Grid container justifyContent="space-between">

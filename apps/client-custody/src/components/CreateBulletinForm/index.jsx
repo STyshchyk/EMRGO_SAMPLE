@@ -74,18 +74,16 @@ const CreateBulletinForm = ({
             maxWidth="sm"
             fullWidth
           >
-            <DialogTitle id="form-dialog-title">
-              {t("bulletin:New Bulletin Modal.New Bulletin")}
-            </DialogTitle>
+            <DialogTitle id="form-dialog-title">{t("New Bulletin Modal.New Bulletin")}</DialogTitle>
             <DialogContent dir={locale.rtl ? "rtl" : "ltr"}>
               <Box mb={2}>
                 <DialogContentText>
-                  {t("bulletin:New Bulletin Modal.Bulletin Information")}
+                  {t("New Bulletin Modal.Bulletin Information")}
                 </DialogContentText>
                 <Box my={1} className="full-width">
                   <Field
                     component={TextField}
-                    label={t("bulletin:New Bulletin Modal.Bulletin Title")}
+                    label={t("New Bulletin Modal.Bulletin Title")}
                     name="title"
                     variant="filled"
                     fullWidth
@@ -93,7 +91,7 @@ const CreateBulletinForm = ({
                 </Box>
                 <Box my={1} className="full-width">
                   <Datepicker
-                    label={t("bulletin:New Bulletin Modal.Bulletin Date")}
+                    label={t("New Bulletin Modal.Bulletin Date")}
                     name="itemDate"
                     materialLabel
                     fullWidth
@@ -103,7 +101,7 @@ const CreateBulletinForm = ({
                   <FormControl className={style.input__form_control}>
                     <Select
                       closeMenuOnSelect
-                      placeholder={t("bulletin:New Bulletin Modal.Bulletin Type")}
+                      placeholder={t("New Bulletin Modal.Bulletin Type")}
                       isSearchable
                       styles={{
                         menu: (styles) => ({
@@ -151,7 +149,7 @@ const CreateBulletinForm = ({
                 }}
                 color="primary"
               >
-                {t("bulletin:New Bulletin Modal.Cancel")}
+                {t("New Bulletin Modal.Cancel")}
               </Button>
               <Button
                 disabled={filesUploadInProgress}
@@ -160,7 +158,7 @@ const CreateBulletinForm = ({
                 color="primary"
                 type="submit"
               >
-                {t("bulletin:New Bulletin Modal.Create")}
+                {t("New Bulletin Modal.Create")}
               </Button>
             </DialogActions>
           </Dialog>

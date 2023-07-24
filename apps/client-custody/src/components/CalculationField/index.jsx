@@ -49,10 +49,7 @@ const CalculationField = ({
           InputProps={{
             endAdornment: isTouched && (
               <InputAdornment position="end">
-                <Tooltip
-                  placement="left"
-                  title={t("fx_transactions:Fx Modal.Buttons.Reset User Input")}
-                >
+                <Tooltip placement="left" title={t("Fx Modal.Buttons.Reset User Input")}>
                   <IconButton
                     aria-label="reset"
                     size="small"
@@ -72,9 +69,7 @@ const CalculationField = ({
             ),
           }}
           helperText={
-            isTouched
-              ? t("fx_transactions:Fx Modal.Value has been edited, changes are locked")
-              : undefined
+            isTouched ? t("Fx Modal.Value has been edited, changes are locked") : undefined
           }
         />
       </Grid>

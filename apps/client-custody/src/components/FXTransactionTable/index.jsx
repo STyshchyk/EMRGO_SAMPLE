@@ -63,90 +63,90 @@ const FXTransactionTable = ({
   const columns = [
     {
       id: "reference",
-      title: t("fx_transactions:Fx Table.Reference"),
+      title: t("Fx Table.Reference"),
       field: "reference",
     },
     {
       id: "status",
-      title: t("fx_transactions:Fx Table.Status"),
+      title: t("Fx Table.Status"),
       field: "status",
     },
     {
       id: "entity",
-      title: t("fx_transactions:Fx Table.Entity"),
+      title: t("Fx Table.Entity"),
       field: "entity",
     },
     {
       id: "fromAmount",
-      title: t("fx_transactions:Fx Table.From Amount"),
+      title: t("Fx Table.From Amount"),
       field: "fromAmount",
     },
     {
       id: "fromCurrency",
-      title: t("fx_transactions:Fx Table.From Currency"),
+      title: t("Fx Table.From Currency"),
       field: "fromCurrency",
     },
     {
       id: "fromAccount",
-      title: t("fx_transactions:Fx Table.Debit Account"),
+      title: t("Fx Table.Debit Account"),
       field: "fromAccount",
     },
     {
       id: "bankRate",
-      title: t("fx_transactions:Fx Table.Bank FX Rate %"),
+      title: t("Fx Table.Bank FX Rate %"),
       field: "bankRate",
       render: (rowData) => roundNumber(rowData.bankRate, BANK_RATE_DP),
     },
     {
       id: "markupRate",
-      title: t("fx_transactions:Fx Table.Markup Rate %"),
+      title: t("Fx Table.Markup Rate %"),
       field: "markupRate",
       render: (rowData) => roundNumber(rowData.markupRate, MARKUP_RATE_DP),
     },
     {
       id: "clientRate",
-      title: t("fx_transactions:Fx Table.Client FX Rate %"),
+      title: t("Fx Table.Client FX Rate %"),
       field: "clientRate",
       render: (rowData) => roundNumber(rowData.clientRate, CLIENT_RATE_DP),
     },
     {
       id: "bankAmount",
-      title: t("fx_transactions:Fx Table.Bank Amount"),
+      title: t("Fx Table.Bank Amount"),
       field: "bankAmount",
       render: (rowData) => roundNumber(rowData.bankAmount, BANK_AMOUNT_DP),
     },
     {
       id: "markupAmount",
-      title: t("fx_transactions:Fx Table.Markup Amount"),
+      title: t("Fx Table.Markup Amount"),
       field: "markupAmount",
       render: (rowData) => roundNumber(rowData.markupAmount, MARKUP_AMOUNT_DP),
     },
     {
       id: "clientAmount",
-      title: t("fx_transactions:Fx Table.Client Amount"),
+      title: t("Fx Table.Client Amount"),
       field: "clientAmount",
       render: (rowData) => roundNumber(rowData.clientAmount, CLIENT_AMOUNT_DP),
     },
     {
       id: "toCurrency",
-      title: t("fx_transactions:Fx Table.To Currency"),
+      title: t("Fx Table.To Currency"),
       field: "toCurrency",
     },
     {
       id: "toAccount",
-      title: t("fx_transactions:Fx Table.Credit Account"),
+      title: t("Fx Table.Credit Account"),
       field: "toAccount",
     },
 
     {
       id: "date",
-      title: t("fx_transactions:Fx Table.Date"),
+      title: t("Fx Table.Date"),
       field: "createdAt",
       render: (rowData) => dateRenderer(rowData.createdAt),
     },
     {
       id: "narrative",
-      title: t("fx_transactions:Fx Table.Narrative"),
+      title: t("Fx Table.Narrative"),
       field: "narrative",
     },
   ];
@@ -184,7 +184,7 @@ const FXTransactionTable = ({
                 setOpenAddFXTransactionDialog(true);
               }}
             >
-              {t("fx_transactions:New Fx Transaction")}
+              {t("New Fx Transaction")}
             </Button>
           </Grid>
         </Grid>
@@ -205,7 +205,7 @@ const FXTransactionTable = ({
               <Grid item xs={12} md={12} lg={6}>
                 <DateRangePicker
                   name="transactionDateRange"
-                  label={t("reports:Security Transactions.Filters.Date")}
+                  label={t("Security Transactions.Filters.Date")}
                   defaultFilter={defaultFilter}
                 />
               </Grid>
@@ -289,7 +289,7 @@ FXTransactionTable.propTypes = {
     })
   ).isRequired,
   setCurrentlySelectedRowData: PropTypes.func.isRequired,
-  showAllFilters: PropTypes.bool.isRequired,
+  showAllFilters: PropTypes.bool,
   setAnchorEl: PropTypes.func.isRequired,
-  setOpenDialog: PropTypes.func.isRequired,
+  setOpenDialog: PropTypes.func,
 };

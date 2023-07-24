@@ -299,12 +299,12 @@ const SecuritiesHoldingsTable = ({
 
               <Grid item xs={12} container>
                 <Typography variant="subtitle1">
-                  <Box fontWeight="bold">{t("reports:Cash Balances.Address")} : </Box>{" "}
+                  <Box fontWeight="bold">{t("Cash Balances.Address")} : </Box>{" "}
                 </Typography>
                 <Typography variant="subtitle1">{` ${
                   entityAddress?.group?.addresses && !allEntitiesOptionSelected
                     ? formatAddress(entityAddress?.group?.addresses)
-                    : t("reports:Cash Balances.NA")
+                    : t("Cash Balances.NA")
                 }`}</Typography>
               </Grid>
             </Grid>

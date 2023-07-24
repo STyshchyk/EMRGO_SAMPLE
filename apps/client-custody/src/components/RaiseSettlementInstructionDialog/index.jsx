@@ -9,10 +9,10 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import * as paymentAndSettlementActionCreators from "redux/actionCreators/paymentAndSettlement";
-import * as entitiesSelectors from "redux/selectors/entities";
-import * as paymentAndSettlementSelectors from "redux/selectors/paymentAndSettlement";
 
+import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
+import * as entitiesSelectors from "../../redux/selectors/entities";
+import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
 import RaiseSettlementInstructionForm, {
   buildRaiseSIRequestPayload,
 } from "../RaiseSettlementInstructionForm";

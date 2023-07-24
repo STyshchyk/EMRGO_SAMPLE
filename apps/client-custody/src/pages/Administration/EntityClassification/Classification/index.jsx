@@ -135,7 +135,7 @@ const Classification = () => {
         >
           {({ handleSubmit, values, setFieldValue, dirty }) => (
             <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
-              <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} />
+              {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
               <div style={{ display: "flex" }}>
                 <div style={{ flex: 1 }}>
                   {ENTITY_TYPE_OPTIONS.map((entry) => (

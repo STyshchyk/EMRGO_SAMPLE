@@ -54,7 +54,7 @@ const ViewTransactionDetailsModal = ({ isModalOpen, setIsModalOpen, selectedTran
 ViewTransactionDetailsModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  // onSubmit: PropTypes.func.isRequired,
 };
 
 export default ViewTransactionDetailsModal;
