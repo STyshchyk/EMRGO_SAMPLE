@@ -26,20 +26,19 @@ export const IssuancesProvider = ({ children }: PropsWithChildren) => {
   const {
     data: opportunitiesData,
     isError,
-    isFetched
+    isFetched,
   } = useQuery({
     queryFn: getOppotunities,
     queryKey: [queryKeys.primaries.tradeOpportunities.fetch],
     onSuccess: () => {
-      setLoading(prevState => prevState = !prevState);
-    }
+      setLoading((prevState) => (prevState = !prevState));
+    },
   });
   const data = useMemo(() => {
     if (!opportunitiesData) return null;
     const bank = opportunitiesData.find((bank: any) => {
-        return String(bank.bankId) === id;
-      }
-    );
+      return String(bank.bankId) === id;
+    });
     if (!bank) {
       return;
     }
@@ -50,12 +49,12 @@ export const IssuancesProvider = ({ children }: PropsWithChildren) => {
     });
     return {
       ...bank,
-      opportunities: bankOpportunities
+      opportunities: bankOpportunities,
     };
   }, [id, loading]);
   const state: IIssuancesContext = {
     data,
-    toggleIssuanceOnWatchlist: toggleOnWatchlist
+    toggleIssuanceOnWatchlist: toggleOnWatchlist,
   };
 
   return <IssuancesContext.Provider value={state}>{children}</IssuancesContext.Provider>;

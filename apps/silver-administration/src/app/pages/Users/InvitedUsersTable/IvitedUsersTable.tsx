@@ -1,11 +1,10 @@
 import { FC } from "react";
 
-import { Table, useToast } from "@emrgo-frontend/shared-ui";
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { ActionTooltip, Table, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { ActionTooltip } from "@emrgo-frontend/shared-ui";
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { getInvitedUserTypeLabel } from "../../helpers";
 import { cancelInvitation, removeUser, resendInfo, reset2FA } from "../InviteUser.services";
 import { IUserNew } from "../User.types";
@@ -23,23 +22,23 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
   const { showErrorToast, showSuccessToast } = useToast();
   const columns = [
     columnHelper.accessor("firstName", {
-      header: "First Name"
+      header: "First Name",
     }),
     columnHelper.accessor("lastName", {
-      header: "Second name"
+      header: "Second name",
     }),
     columnHelper.accessor("email", {
-      header: "Email ID"
+      header: "Email ID",
     }),
     columnHelper.accessor("role", {
       header: "Role",
       cell: (info) => {
         // @ts-ignore
         return getInvitedUserTypeLabel(info.getValue());
-      }
+      },
     }),
     columnHelper.accessor("invitationStatus", {
-      header: "Status"
+      header: "Status",
     }),
     columnHelper.display({
       id: "Actions",
@@ -57,13 +56,11 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                     doCancelInvitation(id, {
                       onSuccess: () => {
                         showSuccessToast("Invitation is successfully canceled");
-                        client.invalidateQueries([queryKeys.administration.users]).then(() => {
-                        });
-
+                        client.invalidateQueries([queryKeys.administration.users]).then(() => {});
                       },
                       onError: () => {
                         showErrorToast("Error canceling invitation");
-                      }
+                      },
                     });
                   }}
                 >
@@ -75,12 +72,11 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                     doRemoveUser(id, {
                       onSuccess: () => {
                         showSuccessToast("User is successfully removed");
-                        client.invalidateQueries([queryKeys.administration.users]).then(() => {
-                        });
+                        client.invalidateQueries([queryKeys.administration.users]).then(() => {});
                       },
                       onError: () => {
                         showErrorToast("Error while trying to remove user");
-                      }
+                      },
                     });
                   }}
                 >
@@ -92,12 +88,11 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                     doReset2FA(id, {
                       onSuccess: () => {
                         showSuccessToast("2FA is successfully reset ");
-                        client.invalidateQueries([queryKeys.administration.users]).then(() => {
-                        });
+                        client.invalidateQueries([queryKeys.administration.users]).then(() => {});
                       },
                       onError: () => {
                         showErrorToast("Error while trying to Reset 2FA ");
-                      }
+                      },
                     });
                   }}
                 >
@@ -109,12 +104,11 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
                     doResendInfo(id, {
                       onSuccess: () => {
                         showSuccessToast("Successfully resent invitation info");
-                        client.invalidateQueries([queryKeys.administration.users]).then(() => {
-                        });
+                        client.invalidateQueries([queryKeys.administration.users]).then(() => {});
                       },
                       onError: () => {
                         showErrorToast("Error while trying to Resend info");
-                      }
+                      },
                     });
                   }}
                 >
@@ -124,14 +118,14 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
             }
           />
         );
-      }
-    })
+      },
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: users,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   });
 
   return <Table table={table} />;

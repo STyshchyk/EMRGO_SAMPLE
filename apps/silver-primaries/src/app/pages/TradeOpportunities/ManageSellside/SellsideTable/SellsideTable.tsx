@@ -1,12 +1,12 @@
 import { FC } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { shownSellside } from "@emrgo-frontend/services";
 import { Table, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useTradeOpportunitiesStore } from "../../../store/store";
-import { shownSellside } from "@emrgo-frontend/services";
 import * as Styles from "./SellsideTable.styles";
 import { ISellsideTableProps } from "./SellsideTable.types";
 
@@ -18,35 +18,32 @@ export const SellsideTable: FC<ISellsideTableProps> = ({ sellSide }) => {
   const client = useQueryClient();
   const { mutate: setShownSellside } = useMutation(shownSellside, {
     onSuccess: () => {
-      client.invalidateQueries([queryKeys.primaries.tradeOpportunities.sellSide.fetch]).then(() => {
-      });
+      client
+        .invalidateQueries([queryKeys.primaries.tradeOpportunities.sellSide.fetch])
+        .then(() => {});
     },
     onError: () => {
       showErrorToast("Error setting status for Issuer");
-    }
+    },
   });
   const columns = [
     columnHelper.accessor("id", {
-      header: "Entity ID"
+      header: "Entity ID",
     }),
     columnHelper.accessor("name", {
-      header: "Entity name"
+      header: "Entity name",
     }),
     columnHelper.accessor("logo", {
       header: "Entity Logo",
-      cell: (props) => <Styles.TableImg src={`${props.getValue()}`} alt={"Logo img"} />
-    })
-
+      cell: (props) => <Styles.TableImg src={`${props.getValue()}`} alt={"Logo img"} />,
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: sellSide,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   });
 
-  return <Table
-    table={table}
-
-  />;
+  return <Table table={table} />;
 };

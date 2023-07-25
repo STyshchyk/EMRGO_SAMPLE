@@ -18,7 +18,7 @@ export const CompleteRegistrationProvider = ({ children }: PropsWithChildren) =>
   const { mfa } = useUserStore();
   const state: ICompleteRegistrationContext = {
     secret: mfa?.secret ?? "",
-    otpauth_url: mfa?.otpauth_url ?? ""
+    otpauth_url: mfa?.otpauth_url ?? "",
   };
 
   return (

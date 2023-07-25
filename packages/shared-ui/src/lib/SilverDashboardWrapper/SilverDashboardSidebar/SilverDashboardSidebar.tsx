@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
 
 import {
+  getAllSilverRoutes,
+  silverAdministrationRoutes,
+  silverAuthenticationRoutes,
+  silverDataRoomRoutes,
+  silverOnboardingRoutes,
+  silverPrimariesRoutes,
+} from "@emrgo-frontend/constants";
+import { logoutUser } from "@emrgo-frontend/services";
+import {
   AccountIcon,
   HelpIcon,
   Logo,
@@ -12,26 +21,18 @@ import {
   SidebarListItem,
   SidebarListItemIcon,
   SidebarListItemLink,
-  SidebarListItemSecondaryLink
+  SidebarListItemSecondaryLink,
 } from "@emrgo-frontend/shared-ui";
 import {
   ensureNotNull,
   navigateSilverModule,
   silverModule,
-  useInternalMatchedPathDashboard
+  useInternalMatchedPathDashboard,
 } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 
 import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.provider";
 import * as Styles from "./SilverDashboardSidebar.styles";
-import {
-  getAllSilverRoutes,
-  silverAdministrationRoutes, silverAuthenticationRoutes,
-  silverDataRoomRoutes,
-  silverOnboardingRoutes,
-  silverPrimariesRoutes
-} from "@emrgo-frontend/constants";
-import { logoutUser } from "@emrgo-frontend/services";
 
 const mainRoutes = [
   {
@@ -39,29 +40,29 @@ const mainRoutes = [
     icon: <PrimariesIcon />,
     key: "administration",
     path: silverAdministrationRoutes.home,
-    paths: getAllSilverRoutes(silverAdministrationRoutes)
+    paths: getAllSilverRoutes(silverAdministrationRoutes),
   },
   {
     label: "Primaries",
     icon: <PrimariesIcon />,
     key: "primaries",
     path: silverPrimariesRoutes.home,
-    paths: getAllSilverRoutes(silverPrimariesRoutes)
+    paths: getAllSilverRoutes(silverPrimariesRoutes),
   },
   {
     label: "Onboarding",
     icon: <PrimariesIcon />,
     key: "onboarding",
     path: silverOnboardingRoutes.home,
-    paths: getAllSilverRoutes(silverOnboardingRoutes)
+    paths: getAllSilverRoutes(silverOnboardingRoutes),
   },
   {
     label: "Data Room",
     icon: <PrimariesIcon />,
     key: "dataroom",
     path: silverDataRoomRoutes.home,
-    paths: getAllSilverRoutes(silverDataRoomRoutes)
-  }
+    paths: getAllSilverRoutes(silverDataRoomRoutes),
+  },
 ];
 
 export const SilverDashboardSidebar = () => {
@@ -82,7 +83,8 @@ export const SilverDashboardSidebar = () => {
                 onClick={() => {
                   navigateSilverModule(module.key, module.path);
                 }}
-                className={useInternalMatchedPathDashboard(module) ? "active" : ""}>
+                className={useInternalMatchedPathDashboard(module) ? "active" : ""}
+              >
                 <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
                 {module.label}
               </SidebarListItemLink>

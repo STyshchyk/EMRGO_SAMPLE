@@ -1,0 +1,16 @@
+@import "../../../styles/config.scss";
+
+.sectionBreak {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #979797;
+  width: 100%;
+}
+
+.input {
+  &__form_control {
+    width: 100%;
+  }
+}

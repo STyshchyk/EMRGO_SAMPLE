@@ -1,10 +1,9 @@
 import { FC } from "react";
 
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { Panel, PanelContent, PanelHeader } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 
-
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { OnboardedUserTable } from "../OnboardedUserTable";
 import { IOnboarderUser } from "../OnboardedUserTable/OnboardedUserTable.types";
 import * as Styles from "./OnboardedUsers.styles";
@@ -19,7 +18,7 @@ const testData: IOnboarderUser[] = [
     kyc: "Pending",
     emailID: "jogndoe@wethaq.com",
     clientProfileTS: "n/a",
-    entityName: "client"
+    entityName: "client",
   },
   {
     firstName: "Johh",
@@ -28,7 +27,7 @@ const testData: IOnboarderUser[] = [
     kyc: "Pending",
     emailID: "jogndoe2@wethaq.com",
     clientProfileTS: "n/a",
-    entityName: "client"
+    entityName: "client",
   },
   {
     firstName: "Johh",
@@ -37,11 +36,14 @@ const testData: IOnboarderUser[] = [
     kyc: "Approved",
     emailID: "jogndoe3@wethaq.com",
     clientProfileTS: "n/a",
-    entityName: "client"
-  }
+    entityName: "client",
+  },
 ];
 export const OnboardedUsers: FC<IOnboarderUsersProps> = ({}) => {
-  const { data, isError, isFetching } = useQuery({ queryFn: getEntities, queryKey: [queryKeys.onboarding.fetch] });
+  const { data, isError, isFetching } = useQuery({
+    queryFn: getEntities,
+    queryKey: [queryKeys.onboarding.fetch],
+  });
 
   return (
     <Styles.OnboarderUsers>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 /* eslint-disable-next-line */
 export interface SharedUiProps {}

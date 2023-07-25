@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import { Logo } from "@emrgo-frontend/shared-ui";
-import { Disclaimer } from "@emrgo-frontend/shared-ui";
+import { Disclaimer, Logo } from "@emrgo-frontend/shared-ui";
 
 import { Heading, SubHeading } from "../../components/Form";
 import * as Styles from "./ResetPasswordEmailConfirmation.styles";

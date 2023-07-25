@@ -4,7 +4,7 @@ export interface IDataRoomProps {}
 
 export interface IDataRoomContext {
   user: IUser | null;
-  
+
   onViewPlatformTermsAndConditions: () => void;
   onViewClientTermsAndConditions: () => void;
   onAcceptPlatformTerms: () => void;

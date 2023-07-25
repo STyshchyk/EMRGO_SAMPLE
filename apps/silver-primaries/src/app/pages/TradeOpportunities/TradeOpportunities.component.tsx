@@ -2,15 +2,15 @@ import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { queryKeys, silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import { getOppotunities } from "@emrgo-frontend/services";
 import { Button, DashboardContent, Modal } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
+import { TradeInterest } from "../components/TradeInterestModal";
 import { useTradeInterestModal, useTradeOpportunitiesStore } from "../store/store";
 import { AddOpportunity } from "./AddOpportunityModal";
 import { BankPanel } from "./BankPanel";
-import { TradeInterest } from "../components/TradeInterestModal";
-import { getOppotunities } from "@emrgo-frontend/services";
 import * as Styles from "./TradeOpportunities.styles";
 import { ITradeOpportunitiesProps } from "./TradeOpportunities.types";
 
@@ -29,17 +29,16 @@ export const FileInput = styled.input`
 export const TradeOpportunitiesComponent: FC<
   ITradeOpportunitiesProps
 > = ({}: ITradeOpportunitiesProps) => {
-
   const { isModalOpen, modalActions } = useTradeOpportunitiesStore();
   const { isModalOpen: isTradeOpen, modalActions: tradeActions } = useTradeInterestModal();
   const navigate = useNavigate();
   const {
     data: opportunitiesData,
     isError,
-    isFetched
+    isFetched,
   } = useQuery({
     queryFn: getOppotunities,
-    queryKey: [queryKeys.primaries.tradeOpportunities.fetch]
+    queryKey: [queryKeys.primaries.tradeOpportunities.fetch],
   });
   return (
     <DashboardContent>
@@ -97,9 +96,9 @@ export const TradeOpportunitiesComponent: FC<
         <TradeInterest />
       </Modal>
 
-      {!isError && opportunitiesData &&
+      {!isError &&
+        opportunitiesData &&
         opportunitiesData.map((bank) => <BankPanel key={bank.bankId} bank={bank} />)}
-
     </DashboardContent>
   );
 };

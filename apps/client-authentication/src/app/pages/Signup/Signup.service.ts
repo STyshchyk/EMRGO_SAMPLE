@@ -1,8 +1,5 @@
 import { authApi } from "../../services/APIService";
-import {
-  ISignupEntityExistsValues,
-  ISignupFormValues,
-} from "./Signup.types";
+import { ISignupEntityExistsValues, ISignupFormValues } from "./Signup.types";
 
 export const verifyEntityExists = (requestObject: ISignupEntityExistsValues) => {
   const promise = authApi({

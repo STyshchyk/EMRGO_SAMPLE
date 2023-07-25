@@ -6,5 +6,5 @@ export const tradeInterestSchema = Yup.object().shape({
     .max(50, "First Name is Too Long!")
     .required("First Name is Required"),
   buyside: Yup.object().required("Buyside is required"),
-  detail: Yup.string().required("Details is required")
+  detail: Yup.string().required("Details is required"),
 });

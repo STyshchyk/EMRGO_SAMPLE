@@ -1,8 +1,10 @@
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import {
+  silverQueryKeys as queryKeys,
+  silverPrimariesRoutes as routes,
+} from "@emrgo-frontend/constants";
 import {
   BreadcrumbLink,
   Breadcrumbs,
@@ -11,7 +13,7 @@ import {
   Modal,
   Panel,
   PanelContent,
-  PanelHeader
+  PanelHeader,
 } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 
@@ -29,14 +31,14 @@ export const ManageIssuersComponent: FC<IManageIssuersProps> = ({}: IManageIssue
   const {
     data: issuerData,
     isError,
-    isFetched
+    isFetched,
   } = useQuery({
     queryFn: getIssuers,
     queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch],
     onSuccess: (data) => {
       // Update store data after alertering Issuer so it contrains up-to-date info
       issuerAction.setIsssuer(data);
-    }
+    },
   });
   return (
     <Styles.ManageIssuers>

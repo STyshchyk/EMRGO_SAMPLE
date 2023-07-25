@@ -18,67 +18,63 @@ import { TroubleSigningInThanks } from "./pages/TroubleSigningInThanks";
 const router = createBrowserRouter([
   {
     path: routes.auth.home,
-    element: <Login />
+    element: <Login />,
   },
   {
     path: routes.auth.login,
-    element: <Login />
+    element: <Login />,
   },
   {
     path: routes.auth.createPassword,
-    element: <CreatePassword />
+    element: <CreatePassword />,
   },
   {
     path: routes.auth.resetPassword,
-    element: <ResetPassword />
+    element: <ResetPassword />,
   },
   {
     path: routes.auth.resetPasswordOptions,
-    element: <ResetPasswordOptions />
+    element: <ResetPasswordOptions />,
   },
   {
     path: routes.auth.completeRegistration,
-    element: <CompleteRegistration />
+    element: <CompleteRegistration />,
   },
   {
     path: routes.auth.resetPasswordEmailConfirmation,
-    element: <ResetPasswordEmailConfirmation />
+    element: <ResetPasswordEmailConfirmation />,
   },
   {
     path: routes.auth.troubleSigningIn,
-    element: <TroubleSigningIn />
+    element: <TroubleSigningIn />,
   },
   {
     path: routes.auth.troubleSigningInThanks,
-    element: <TroubleSigningInThanks />
+    element: <TroubleSigningInThanks />,
   },
   {
     path: "/*",
-    element: <p>Error element</p>
+    element: <p>Error element</p>,
   },
   {
     index: true,
-    element: <Navigate to={`${routes.auth.login}`} replace />
-  }
-
+    element: <Navigate to={`${routes.auth.login}`} replace />,
+  },
 ]);
-
 
 function App() {
   const { isDarkMode } = useDarkMode();
 
   return (
     // eslint-disable-next-line react/jsx-no-undef
-    <ThemeProvider theme={darkTheme  }>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <UserProvider>
         <RouterProvider router={router} />
       </UserProvider>
       <ToastProvider />
     </ThemeProvider>
-
   );
 }
 
 export default App;
-

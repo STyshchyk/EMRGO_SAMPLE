@@ -1,0 +1,78 @@
+@import "../../styles/config.scss";
+
+.container {
+  font-family: "D-DIN Exp";
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.fullWidth {
+  width: 100% !important;
+}
+
+.input-group {
+  align-items: center;
+  display: grid;
+  gap: 1em;
+  grid-template-areas: "label field";
+  grid-template-columns: auto 1fr;
+
+  &__label {
+    grid-area: label;
+    width: 250px;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__field {
+    background-color: $lightgray-color;
+    border-radius: 13px;
+    border: none;
+    box-shadow: none;
+    color: $primary-color;
+    grid-area: field;
+    height: 36px;
+    outline: none;
+    padding: 0.5em;
+    width: 250px;
+  }
+
+  &__error {
+    color: $red-color;
+    font-size: 0.75rem;
+    font-weight: bold;
+    position: absolute;
+    text-transform: uppercase;
+  }
+}
+
+@media only screen and (max-width: $viewport-lg) {
+  .input-group {
+    gap: 0.5em;
+    grid-template-areas:
+      "label"
+      "field";
+    grid-template-columns: 1fr;
+    grid-template-rows:
+      max-content /* header */
+      max-content; /* content */
+  }
+}
+
+// .label-left {
+//   .input-group {
+//     &__field {
+//       // text-align: left;
+//     }
+//   }
+// }
+
+.label-center {
+  .input-group {
+    &__field {
+      text-align: center;
+    }
+  }
+}

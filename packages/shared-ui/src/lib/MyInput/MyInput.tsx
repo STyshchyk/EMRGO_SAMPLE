@@ -1,4 +1,12 @@
-import { forwardRef, ForwardRefRenderFunction, HTMLProps, useEffect, useId, useRef, useState } from "react";
+import {
+  forwardRef,
+  ForwardRefRenderFunction,
+  HTMLProps,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
 import * as Styles from "./MyInput.styles";
 import { IMyInputProps } from "./MyInput.types";
@@ -23,7 +31,7 @@ const InputComponent: ForwardRefRenderFunction<
     maxHeight,
     type,
     disabled,
-    variant
+    variant,
   },
   ref
 ) => {

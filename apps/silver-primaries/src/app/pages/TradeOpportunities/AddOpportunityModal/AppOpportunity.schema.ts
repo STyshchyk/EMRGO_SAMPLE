@@ -34,7 +34,7 @@ export const OpportunitySchema = Yup.object().shape({
     .max(20, "ISIN is Too Long!")
     .required("ISIN is Required"),
   issueDate: Yup.date()
-    .test("is-next-day", "Field must be greater than today", function(value) {
+    .test("is-next-day", "Field must be greater than today", function (value) {
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValudDate = dayjs(MIN_DATE).startOf("day");
@@ -44,7 +44,7 @@ export const OpportunitySchema = Yup.object().shape({
     })
     .required("Issue date is Required"),
   preOfferPeriodEnd: Yup.date()
-    .test("is-next-day", "Field must be greater than today", function(value) {
+    .test("is-next-day", "Field must be greater than today", function (value) {
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValudDate = dayjs(MIN_DATE).startOf("day");
@@ -53,7 +53,7 @@ export const OpportunitySchema = Yup.object().shape({
     })
     .required("Pre-Offer date is Required"),
   offerPeriodEnd: Yup.date()
-    .test("is-next-day", "Field must be greater than today", function(value) {
+    .test("is-next-day", "Field must be greater than today", function (value) {
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValudDate = dayjs(MIN_DATE).startOf("day");
@@ -62,7 +62,7 @@ export const OpportunitySchema = Yup.object().shape({
     })
     .required("Offer date is Required"),
   redemptionDate: Yup.date()
-    .test("is-next-day", "Field must be greater than today", function(value) {
+    .test("is-next-day", "Field must be greater than today", function (value) {
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValudDate = dayjs(MIN_DATE).startOf("day");
@@ -72,42 +72,41 @@ export const OpportunitySchema = Yup.object().shape({
     .required("Redemption date is Required"),
   ideaEnd: Yup.date()
     .required("Start date is required")
-    .test("is-status-idea, is-next-day", "Field must be greater than today", function(value) {
+    .test("is-status-idea, is-next-day", "Field must be greater than today", function (value) {
       //Test when statusId is not set = new opportunity, skip testing when status is open & closed
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValidDate = dayjs(MIN_DATE).startOf("day");
-      if (statusId === opStatus.idea || statusId == null)
-        return openEndDate >= minValidDate;
+      if (statusId === opStatus.idea || statusId == null) return openEndDate >= minValidDate;
       else return true;
-    })
+    }),
 
-  ,
   openEnd: Yup.date()
     .required("End date is required")
-    .test("is-status-idea, is-next-day-after-idea, is-status-open", "Field must be greater than Idea End", function(value) {
-      const { ideaEnd } = this.parent;
-      const { statusId } = this.parent;
-      const openEndDate = dayjs(value);
-      const minValidDate = dayjs(ideaEnd).add(1, `day`);
+    .test(
+      "is-status-idea, is-next-day-after-idea, is-status-open",
+      "Field must be greater than Idea End",
+      function (value) {
+        const { ideaEnd } = this.parent;
+        const { statusId } = this.parent;
+        const openEndDate = dayjs(value);
+        const minValidDate = dayjs(ideaEnd).add(1, `day`);
 
-
-      if ((statusId === opStatus.idea && statusId) || statusId == null)
-        return openEndDate >= minValidDate;
-
-      else return true;
-    })
-    .test("is-status-open", "Field must be greater than tomorrow", function(value) {
+        if ((statusId === opStatus.idea && statusId) || statusId == null)
+          return openEndDate >= minValidDate;
+        else return true;
+      }
+    )
+    .test("is-status-open", "Field must be greater than tomorrow", function (value) {
       const { statusId } = this.parent;
       const openEndDate = dayjs(value);
       const minValidDateTommorow = dayjs(MIN_DATE).startOf("day");
-      if (statusId == null) return true;//TODO : To delete this
+      if (statusId == null) return true; //TODO : To delete this
 
-      if (statusId === opStatus.open)
-        return openEndDate >= minValidDateTommorow;
+      if (statusId === opStatus.open) return openEndDate >= minValidDateTommorow;
       else return true;
     }),
   issuer: Yup.object().required("required"),
   sellSide: Yup.object().required("required"),
-  csd: Yup.object().required("required")
+  csd: Yup.object().required("required"),
 });

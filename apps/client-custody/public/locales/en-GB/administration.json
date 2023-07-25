@@ -1,0 +1,526 @@
+{
+  "Administration": "Administration",
+  "Rows per page": "Rows per page",
+  "of": "of",
+  "No records to display": "No records to display",
+  "EntityManagement": {
+    "EntitiesList": {
+      "ID": "ID",
+      "Entity Name": "Entity Name",
+      "TNC Status": "TNC Status",
+      "Active": "Active",
+      "Go to Entity Groups list": "Go to Entity Groups list",
+      "True": "True"
+    },
+    "EntityGroupsList": {
+      "Entity groups list": "Entity groups list",
+      "Group ID": "Group ID",
+      "Group name": "Group name",
+      "View Group Users": "View Group Users"
+    },
+    "SingleEntityGroup": {
+      "Issuance Workflow": "Issuance Workflow",
+      "Termsheet Workflow": "Termsheet Workflow",
+      "Blotter Workflow": "Blotter Workflow",
+      "KYC Workflow": "KYC Workflow",
+      "Pre-Allocation Workflow": "Pre-Allocation Workflow",
+      "Engagement Workflow": "Engagement Workflow",
+      "Admission Workflow": "Admission Workflow",
+      "Group Management Workflow": "Group Management Workflow",
+      "Signing Workflow": "Signing Workflow",
+      "Bulletin Management Workflow": "Bulletin Management Workflow",
+      "Support Ticket Management Workflow": "Support Ticket Management Workflow",
+      "Save": "Save",
+      "UsersList": {
+        "Users list": "Users list",
+        "User Workflow ACLs": "User Workflow ACLs",
+        "Email": "Email",
+        "Full Name": "Full Name"
+      }
+    },
+    "EntityManagementTable": {
+      "Entities": "Entities",
+      "Entity Groups": "Entity Groups",
+      "Services Access": "Services Access",
+      "Primary Issuance": "Primary Issuance",
+      "Securities Services": "Securities Services",
+      "ENABLED": "ENABLED",
+      "ENABLE": "ENABLE",
+      "REQUESTED": "REQUESTED",
+      "ContextMenu": {
+        "Edit group types": "Edit group types",
+        "Set parent entity": "Set parent entity",
+        "Review KYC": "Review KYC"
+      },
+      "Agreement": {
+        "Accept Agreement": "Accept Agreement",
+        "Request Agreement": "Request Agreement",
+        "Client Terms": "Client Terms",
+        "Client Terms_OBLIGOR": "Obligor Client Terms",
+        "Client Terms_ISSUER": "Issuer Client Terms",
+        "Investor Client Terms": "Investor Client Terms",
+        "Custody Agreement": "Custody Agreement",
+        "Admission Agreement": "Admission Agreement",
+        "Issuance Module": "Issuance Module",
+        "Securities Services": "Securities Services",
+        "Cancel": "Cancel",
+        "Send Request": "Send Request"
+      },
+      "Headers": {
+        "EntityName": "Entity Name",
+        "ParentEntity": "Parent Entity",
+        "LegalIdentifier": "Legal Identifier",
+        "LegalEntityIdentifier": "Legal Entity Identifier",
+        "ClientTermStatus": "Client Term Status",
+        "Active": "Active",
+        "EntityPreferences": "Entity Preferences",
+        "ValidGroupType": "Valid Group Type",
+        "Actions": "Actions"
+      },
+      "Buttons": {
+        "Manage Entity Groups": "Manage Entity Groups",
+        "Manage Entity Users": "Manage Entity Users",
+        "Edit Entity Preferences": "Edit Entity Preferences",
+        "Cancel": "Cancel",
+        "Accept": "Accept"
+      },
+      "ActiveStatus": {
+        "true": "true",
+        "false": "false"
+      }
+    }
+  },
+  "KYC": {
+    "KYCManage": {
+      "Send Onboarding Information": "Send Onboarding Information",
+      "SendOnboardingKitModal": {
+        "Contact Information": "Contact Information",
+        "Entity Information": "Entity Information",
+        "Send Onboarding Invitation": "Send Onboarding Invitation",
+        "First Name": "First Name",
+        "Middle Name": "Middle Name",
+        "Last Name": "Last Name",
+        "Email ID": "Email ID",
+        "Display Role": "Display Role",
+        "Entity Name": "Entity Name",
+        "Entity Type": "Entity Type",
+        "Cancel": "Cancel",
+        "Send": "Send"
+      },
+      "AssignEntityModal": {
+        "Assign & Approve": "Assign & Approve",
+        "First Name": "First Name",
+        "Middle Name": "Middle Name",
+        "Last Name": "Last Name",
+        "Entity Type": "Entity Type",
+        "Classification": "Classification",
+        "Role": "Role",
+        "Entity Name": "Entity Name",
+        "Cancel": "Cancel"
+      },
+      "PlatformDashboard": {
+        "N/A": "N/A",
+        "Entities": "Entities",
+        "View KYC": "View KYC",
+        "Reject Entity KYC": "Reject Entity KYC",
+        "Approve Entity KYC": "Approve Entity KYC",
+        "Entity Name": "Entity Name",
+        "Entity Status": "Entity Status",
+        "Role": "Role",
+        "Client Term Status": "Client Term Status",
+        "Contact Person Name": "Contact Person Name",
+        "Contact Person Email": "Contact Person Email",
+        "Date Modified": "Date Modified",
+        "Modified By": "Modified By",
+        "Date Added": "Date Added",
+        "Added By": "Added By",
+        "T&C Status": "T&C Status",
+        "Accepted": "Accepted",
+        "Pending": "Pending"
+      },
+      "EntityKYCStatusEnum": {
+        "--": "--",
+        "Requested": "Requested",
+        "Ongoing": "Ongoing",
+        "Submitted": "Submitted",
+        "Approved": "Approved",
+        "Declined": "Declined"
+      },
+      "ClientTermsStatusEnum": {
+        "pending": "Pending",
+        "review": "Review",
+        "completed": "Completed",
+        "rejected": "Rejected"
+      },
+      "EntityUserType": {
+        "CLIENT": "Client",
+        "SERVICE_PROVIDER": "Service Provider"
+      }
+    },
+    "KycKsaEntityEdit": {
+      "Go Back": "Go Back",
+      "Next": "Next",
+      "Back": "Back",
+      "Reject": "Reject",
+      "Accept": "Accept",
+      "SECTION_1": "Section 1: Client Classification",
+      "SECTION_2": "Section 2: KYC Requirements",
+      "SECTION_3": "Section 3: Sanctions Questionnaire",
+      "SECTION_4": "Section 4: Terms of Use, Declaration & Submission",
+      "Thank you for your submission": "Thank you for your submission.",
+      "NO_RETIAL_CLIENT": "Unfortunately we don’t accept Retail Clients at the moment.",
+      "RECLASSIFY_RETAIL": "Reclassify your client status",
+      "GO_HOME": "Go to wethaq.capital",
+      "Your Classification": "Your Classification",
+      "NOTICE_QUALIFIED": "Notice of Classification as a Qualified Client for all business with Emrgo Capital Platform JSC (the “Firm”)",
+      "QUALIFIED_TREAT": "We hereby inform you that we will treat you as a Qualified Client (as per Article 36 of Capital Market Institutions Regulations and CMA’s Glossary of Defined Terms) for all business with the Firm.",
+      "QUALIFIED_RESPONSIBLE": "You are responsible for notifying us without delay of any change that could affect this classification.",
+      "QUALIFIED_ACKNOWLEDGE": "Acknowledge & Proceed as Qualified Client",
+      "NOTICE_INSTITUTIONAL": "Notice of Classification as a Institutional Client for all business with Emrgo Capital Platform JSC (the “Firm”)",
+      "INSTITUTIONAL_TREAT": "We hereby inform you that we will treat you as an Institutional Client (as per Article 36 of Capital Market Institutions Regulations and CMA’s Glossary of Defined Terms) for all business with the Firm.",
+      "INSTITUTIONAL_RESPONSIBLE": "You are responsible for notifying us without delay of any change that could affect this classification.",
+      "INSTITUTIONAL_ACKNOWLEDGE": "Acknowledge & Proceed as Institutional Client"
+    },
+    "KYCWelcomSection": {
+      "Welcome to Wethaq": "Welcome to Emrgo",
+      "KYC_NOTICE_SA": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of Article 36 of Capital Market Institutions Regulations and CMA's Glossary of Defined Term",
+      "KYC_NOTICE_AE": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of the Dubai Financial Services Authority (DFSA) as shown below.",
+      "Your KYC Process": "Your KYC Process",
+      "CONTACT_US": "If you have any questions during your KYC process, please write to us at",
+      "Proceed": "Proceed",
+      "Complete KYC": "Complete KYC",
+      "KYC_CUSTOMER_NOTICE_SA": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of Article 36 of Capital Market Institutions Regulations and CMA's Glossary of Defined Term",
+      "KYC_CUSTOMER_NOTICE_AE": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of the Dubai Financial Services Authority (DFSA) as shown below."
+    },
+    "KsaKycClientClassificationForm": {
+      "Not Classified": "Not Classified",
+      "Qualified Client": "Qualified Client",
+      "Retail Client": "Retail Client",
+      "Institutional Client": "Institutional Client",
+      "FORM_NOTICE": "Please note that only clients who are classified as a Qualified Client or an Institutional Client (as defined in CMA’s Capital Market Institutions Regulations) may be onboarded onto the Emrgo Platform. If you do not fall under either of the categories listed below or you do not wish to be treated as a Qualified Client or an Institutional Client, you will not be granted access to the Emrgo Platform and the services provided through it.",
+      "Current Classification": "Current Classification",
+      "RETAIL_CLIENT_LABEL": "Type A: Retail Client",
+      "QUALIFIED_CLIENT_LABEL": "Type B: Qualified Client",
+      "INSTITUTIONAL_CLIENT_LABEL": "Type C: Institutional Client",
+      "Proceed": "Proceed",
+      "RETAIL_CLIENT_INFO": "Should you wish to be treated as a Retail Client, please inform us by clicking the button to the right. Nonetheless, kindly note that if you select to be treated as a Retail Client, we will not be able to render you our services as we only provide financial services to Qualified Clients and Institutional Clients.",
+      "ACKNOWLEDGE_RETAIL": "Acknowledge & Proceed as Retail Client",
+      "Kindly tick the relevant box if your entity is": "Kindly tick the relevant box if your entity is"
+    },
+    "KsaKYCRequirementsForm": {
+      "UPLOAD_NOTICE": "Each of the documents to be uploaded below should be (a) in Arabic or English language or accompanied by an official translation into either of them; and (b) certified as a \"true copy of the original\" document by a registered lawyer, chartered accountant, bank manager, police officer, embassy or consulate employer.",
+      "KYC Requirements": "I. KYC Requirements",
+      "Proceed": "Proceed",
+      "Ultimate Beneficial Owner": "Ultimate Beneficial Owner",
+      "Directors": "Directors",
+      "Authorised Signatories": "Authorised Signatories (If other from Director)",
+      "Business Operations and Tax Details": "II. Business Operations and Tax Details",
+      "Building Number": "Building Number",
+      "City": "City",
+      "Street Name": "Street Name",
+      "Postal Code": "Postal Code",
+      "District": "District",
+      "Additional Number": "Additional Number",
+      "Country": "Country",
+      "Business Phone": "Business Phone",
+      "Name": "Name",
+      "Commercial Registration": "Commercial Registration No. or its Equivalent",
+      "Date of Incorporation": "Date of Incorporation or Start of Business",
+      "Articles of Association": "Articles of Association",
+      "Ownership Structure Chart": "Ownership Structure Chart",
+      "Legal Entity Identifier": "Legal Entity Identifier (LEI) If Available",
+      "Qualified Client Supporting Docs": "If Type B: Qualified Client Supporting Docs",
+      "Institutional Client Supporting Docs": "If Type C: Institutional Client Supporting Docs",
+      "First Name": "First Name",
+      "Last Name": "Last Name",
+      "Passport Copy": "Passport Copy",
+      "Country of Residence": "Country of Residence",
+      "Yes": "Yes",
+      "No": "No",
+      "Remove": "Remove",
+      "Is this UBO a Politically Exposed person?": "Is this UBO a Politically Exposed person?",
+      "Add UBO": "Add UBO",
+      "Director Email Address": "Director Email Address",
+      "Utility Bill": "Utility Bill",
+      "Address Line 1": "Address Line 1",
+      "Address Line 2": "Address Line 2",
+      "Add Director": "Add Director",
+      "Authorised Signatory Email Address": "Authorised Signatory Email Address",
+      "Add Authorised Signatory": "Add Authorised Signatory",
+      "Tax Identification Number": "Tax Identification Number",
+      "Main Business": "Main Business",
+      "Proof of any professional authorisations": "Proof of any professional authorisations or licences from competent Authorities",
+      "Country of Practicing Business": "Country of Practicing Business",
+      "Number of Employees": "Number of Employees",
+      "Paidup Capital": "Paid-Up Capital",
+      "Annual Turnover": "Annual Turnover",
+      "BEARER_SHARES": "Are there any Client's shares issued to the bearer?",
+      "please provide details": "If Yes, please provide details",
+      "Moblie Number": "Moblie Number",
+      "Email address": "Email address",
+      "OPERATING_ADDRESS": "Any other Operating or Mailing Address Applicable",
+      "FINANCIAL_INFORMATION": "Any Other Financial Information on the Client’s Financial Situation",
+      "Entity Registered Address": "Entity Registered Address",
+      "Your Contact Details": "Your Contact Details (Required)",
+      "Any other Operating or Mailing Address Applicable": "Any other Operating or Mailing Address Applicable",
+      "Operating Address": "Operating Address"
+    },
+    "KYCSanctionsQuestionnaireForm": {
+      "QUESTION_ONE": "Is the prospect/client registered in or organised under the laws of, and/or operating from any of the following countries?",
+      "QUESTION_TWO": "Does the prospect/client have any branches or subsidiaries registered in or organised under the laws of, and/or operating from any of the following countries?",
+      "QUESTION_THREE": "Is the prospect/client owned or controlled by persons located, domiciled or registered in or organised under the laws of any of the following countries?",
+      "QUESTION_FOUR": "Does the prospect/client conduct business (turnover of sales or purchases), generate revenue or hold assets from any of the following countries?",
+      "QUESTION_FIVE": "Where the Sanction Questionnaire is completed at Parent Level, has the client confirmed this can also be used for its branches and subsidiaries?",
+      "Yes": "Yes",
+      "No": "No",
+      "Proceed": "Proceed",
+      "Add": "Add",
+      "To be removed": "To be removed",
+      "Remove": "Remove",
+      "Sanctioned Country": "Sanctioned Country",
+      "Address Line 1": "Address Line 1",
+      "Address Line 2": "Address Line 2",
+      "Postal Code": "Postal Code",
+      "City": "City",
+      "Upload any relevant documents": "Upload any relevant documents"
+    },
+    "KYCDeclarationForm": {
+      "DECLARATION": "I declare I am a person authorised by the Client to request access to the Emrgo Platform and provide the above responses, declaration and documentation and confirm these are true and accurate on the Client's behalf",
+      "I agree to the Terms of Use": "I agree to the Terms of Use",
+      "Finalise & Submit": "Finalise & Submit"
+    },
+    "KYCSubmittedSection": {
+      "THANKS_MESSAGE": "Thank you for your submission.",
+      "CONTACT_MESSAGE": "We will contact you within 24 hours with an update on the status of your onboarding."
+    },
+    "KYCEntitiesList": {
+      "Entity ID": "Entity ID",
+      "Entity": "Entity",
+      "Entity Type": "Entity Type",
+      "Classification": "Classification",
+      "Jurisdiction": "Jurisdiction",
+      "Relationship Manager": "Relationship Manager",
+      "Invitation Status": "Invitation Status",
+      "KYC Status": "KYC Status",
+      "Client Terms Status": "Client Terms Status",
+      "AML Check": "AML Check",
+      "Context Menu": {
+        "User KYC": "User KYC",
+        "Entity Classification": "Entity Classification",
+        "Entity/Individual Classification": "Entity/Individual Classification",
+        "Review Entity KYC": "Review Entity KYC",
+        "Entity KYC": "Entity KYC",
+        "View Documents": "View Documents"
+      }
+    }
+  },
+  "ClientTerms": {
+    "ObligorClientTerms": "Obligor Client Terms",
+    "InvestorClientTerms": "Investor Client Terms",
+    "IssuerClientTerms": "Issuer Client Terms",
+    "ClientTermsInfoBox": {
+      "Entity name": "Entity Name",
+      "Status": "Status",
+      "ClientTermsStatusEnum": {
+        "N/A": "N/A",
+        "pending": "Pending",
+        "Pending": "Pending",
+        "review": "Review",
+        "Review": "Review",
+        "completed": "Completed",
+        "Completed": "Completed",
+        "rejected": "Rejected",
+        "Rejected": "Rejected",
+        "": ""
+      }
+    },
+    "ClientTermsEdit": {
+      "Go Back": "Go Back",
+      "PromptMessage": "Before you proceed to review and participate in issuances, please review and agree to our client agreement and rate card, and provide proof of corporate authorisation.",
+      "Title": {
+        "OBLIGOR": "Obligor Client Terms",
+        "ISSUER": "Issuer Client Terms",
+        "INVESTOR": "Investor Client Terms"
+      }
+    },
+    "ClientTermsEditForm": {
+      "USFATCA": {
+        "Title": "US FATCA",
+        "Title_Safari": "US FATCA",
+        "Title_Chrome": "US FATCA",
+        "Title_Firefox": "US FATCA",
+        "USIRSNotice": "This form is a US IRS requirement",
+        "InstructionsForFormW8BenE": {
+          "Label": "Instructions for Form W-8BEN-E",
+          "DownloadLink": "View/Download Instructions"
+        },
+        "W8BenE": {
+          "FormW8BenELabelLine1": "Certificate of Status of Beneficial Owner for United States",
+          "FormW8BenELabelLine2": "Tax Withholding and Reporting (Entities) (Form W-8BEN-E)",
+          "FormW8BenELabelLine2_Safari": "Tax Withholding and Reporting (Entities) (Form W-8BEN-E)",
+          "FormW8BenELabelLine2_Chrome": "Tax Withholding and Reporting (Entities) (Form W-8BEN-E)",
+          "FormW8BenELabelLine2_Firefox": "Tax Withholding and Reporting (Entities) (Form W-8BEN-E)",
+          "FormTemplateDownloadLink": "View/Download W-8BEN-E Form Template",
+          "W8enFileDownloadLink": "View/Download Uploaded W-8BEN-E File",
+          "FileUploadFieldPlaceholder": "Upload W-8BEN-E File"
+        }
+      },
+      "CorporateAuthorisation": {
+        "Title": "Corporate Authorisation",
+        "Label": "We require you to provide evidence of your Corporate Authorisation to proceed with this section of the platform. You may find a template here.",
+        "BoardResolution": {
+          "FormTemplateDownloadLink": "View/Download Board Resolution Form Template",
+          "UploadedFileDownloadLink": "View/Download Uploaded Board Resolution File",
+          "FileUploadFieldPlaceholder": "Upload Board Resolution form"
+        }
+      },
+      "AcceptTermsCheckboxField": {
+        "Label": "By clicking this button you, as the Authorised Person of the {{corporateEntityName}}, agree to the Client Terms and confirm the validity and accuracy of the US FATCA Form and the Board Resolution submitted.",
+        "Label_Safari": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة (نموذج فاكتا) الأمريكي وقرار مجلس الإدارة المقدم .",
+        "Label_Chrome": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة )نموذج فاكتا( الأمريكي وقرار مجلس الإدارة المقدم .",
+        "Label_Firefox": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة )نموذج فاكتا( الأمريكي وقرار مجلس الإدارة المقدم ."
+      },
+      "FileValidationErrorMessage": "W8-Ben-E and Board Resolution Files are required",
+      "FileNotUploadedNotice": "File not Uploaded",
+      "SubmitButtonText": "Submit"
+    },
+    "ClientTermsReview": {
+      "Go Back": "Go Back",
+      "Accept": "Accept",
+      "Reject": "Reject"
+    },
+    "EntitiesList": {
+      "NA": "N.A",
+      "ID": "ID",
+      "Entity Name": "Entity Name",
+      "Legal Identifier": "Legal Identifier",
+      "Client Terms Status": "Client Terms Status",
+      "Active": "Active",
+      "True": "True",
+      "False": "False",
+      "Edit Client Terms": "Edit Client Terms",
+      "Review Client Terms": "Review Client Terms"
+    }
+  },
+  "EntityAccountManagement": {
+    "Entity Accounts": "Entity Accounts",
+    "Add Account": "Add Account",
+    "IBAN Number": "IBAN Number",
+    "Entity Name": "Entity Name",
+    "Account Type": "Account Type",
+    "Currency": "Currency",
+    "Cancel": "Cancel",
+    "Submit": "Submit",
+    "Release": "Release",
+    "Virtual IBAN": "Virtual IBAN",
+    "External Account Number": "External Account Number - Optional",
+    "External Account": "External Account Number",
+    "EntityAccountsTable": {
+      "Yes": "Yes",
+      "No": "No",
+      "Context Menu": {
+        "Edit": "Assign IBAN",
+        "Delete": "Delete"
+      },
+      "Headers": {
+        "Entity ID": "Entity ID",
+        "Entity Name": "Entity Name",
+        "Account Type": "Account Type",
+        "Currency": "Currency",
+        "Account Number": "Account Number",
+        "IBAN": "IBAN",
+        "Virtual IBAN": "Virtual IBAN",
+        "Actions": "Actions",
+        "SSI": "SSI"
+      }
+    }
+  },
+  "Visitors": {
+    "Filters": {
+      "Filters": "Filters",
+      "Clear": "Clear",
+      "Jurisdiction": "Jurisdiction",
+      "Entity Type": "Entity Type",
+      "Classification": "Classification",
+      "Relationship Manager": "Relationship Manager",
+      "Onboarding Status": "Onboarding Status",
+      "KYC Status": "KYC Status",
+      "Country": "Country",
+      "Currency": "Currency"
+    },
+    "Search": "Search"
+  },
+  "ParentEntity": {
+    "ParentEntities": "Parent Entities",
+    "ContextMenu": {
+      "Amend": "Amend",
+      "Deactivate": "Deactivate"
+    },
+    "Buttons": {
+      "New Parent Entity": "New Parent Entity"
+    },
+    "ParentEntityTable": {
+      "Headers": {
+        "ParentEntity": "Parent Entity",
+        "Description": "Description",
+        "Actions": "Actions"
+      }
+    },
+    "Search": "Search",
+    "Onboard User Form": {
+      "Set as Admin": "Set as Admin",
+      "Email": "Email",
+      "First Name": "First Name",
+      "Middle Name (Optional)": "Middle Name (Optional)",
+      "Last Name": "Last Name",
+      "Cancel": "Cancel",
+      "Submit": "Submit"
+    },
+    "Entity Users": {
+      "Table": {
+        "Entity Name": "Entity Name",
+        "Entity ID": "Entity ID",
+        "Entity": "Entity",
+        "Parent Entity": "Parent Entity",
+        "Legal Identifier": "Legal Identifier",
+        "Legal Entity Identifier": "Legal Entity Identifier",
+        "Client Terms Status": "Client Terms Status",
+        "Active": "Active",
+        "Entity Preferences": "Entity Preferences",
+        "Entity Type": "Entity Type",
+        "Classification": "Classification",
+        "Jurisdiction": "Jurisdiction",
+        "Relationship Manager": "Relationship Manager",
+        "KYC Status": "KYC Status",
+        "Manage Entity Groups": "Manage Entity Groups",
+        "# of Users": "# of Users",
+        "Agreements": "Agreements"
+      },
+      "Actions": {
+        "Edit Group Types": "Edit Group Types",
+        "Set Parent Entity": "Set Parent Entity",
+        "View KYC": "View KYC",
+        "Review KYC": "Review KYC",
+        "View Documents": "View Documents",
+        "Request Agreement": "Request Agreement",
+        "Deactivate Entity": "Deactivate Entity",
+        "Reactivate Entity": "Reactivate Entity",
+        "Approve KYC": "Approve KYC",
+        "Reject KYC": "Reject KYC",
+        "Entity Classification": "Entity Classification",
+        "User Access & Permissions": "User Access & Permissions",
+        "Custody Settings": "Edit Custody Settings"
+      }
+    }
+  },
+  "Onboard User Form": {
+    "Onboard User Form": "Onboard User Form",
+    "Set as Admin": "Set as Admin",
+    "Email": "Email",
+    "First Name": "First Name",
+    "Middle Name (Optional)": "Middle Name (Optional)",
+    "Last Name": "Last Name",
+    "Cancel": "Cancel",
+    "Submit": "Submit"
+  }
+}

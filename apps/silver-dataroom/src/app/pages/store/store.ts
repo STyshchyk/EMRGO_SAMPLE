@@ -28,8 +28,8 @@ export const useOpportunityStore = create<IOpportunityStore>()((set) => ({
         produce((state) => {
           state.opportunityDocs = data;
         })
-      )
-  }
+      ),
+  },
 }));
 export const useAddDocumentsModal = create<IModal<any>>()((setState) => ({
   isModalOpen: false,
@@ -39,6 +39,6 @@ export const useAddDocumentsModal = create<IModal<any>>()((setState) => ({
         produce((state) => {
           state.isModalOpen = flag;
         })
-      )
-  }
+      ),
+  },
 }));

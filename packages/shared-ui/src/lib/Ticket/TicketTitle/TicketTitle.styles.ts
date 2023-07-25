@@ -1,6 +1,5 @@
-import styled, { css } from "styled-components";
-
 import { getTheme } from "@emrgo-frontend/theme";
+import styled, { css } from "styled-components";
 
 export const TicketTitle = styled.h2`
   margin: 0;

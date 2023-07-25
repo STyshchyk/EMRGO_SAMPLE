@@ -5,19 +5,17 @@ const issuanceTypeLabels: Record<TIssuanceType, string> = {
   bonds: "Bonds",
   certificates: "Certificates",
   "structured-products": "Structured Products",
-  sukuk: "Sukuk"
+  sukuk: "Sukuk",
 };
 
 const opportunityStatusLabels: Record<TOpportunityStatus, string> = {
   [opStatus.open]: "Open",
   [opStatus.idea]: "Idea",
-  [opStatus.closed]: "Closed"
+  [opStatus.closed]: "Closed",
 };
 
-
-
 export type TExecutedStatus =
-  "trade_notification"
+  | "trade_notification"
   | "pending_sellside"
   | "pending_buyside"
   | "pending_buyside"
@@ -29,7 +27,7 @@ const executedStatusLabels: Record<TExecutedStatus, string> = {
   pending_sellside: "Pending Sell-side",
   pending_buyside: "Pending Buy-Side",
   rejected: "Rejected",
-  executed: "Executed"
+  executed: "Executed",
 };
 
 export const getOpportunityStatusLabel = (status: string | undefined) => {

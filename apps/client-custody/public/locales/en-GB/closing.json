@@ -1,0 +1,45 @@
+{
+  "LC - Closing": "LC - Closing",
+  "Due Diligence": "Due Diligence",
+  "Conditions Precedent": "Conditions Precedent",
+  "All Conditions Precedent have been met": "All Conditions Precedent have been met",
+  "Co-ordinate Signoffs": "Co-ordinate Signoffs",
+  "The Transaction Has Closed": "The Transaction Has Closed",
+  "Confirm to All Parties that Closing is complete": "Confirm to All Parties that Closing is complete",
+  "Signoffs Pending": "Signoffs Pending",
+  "Request Signoff from All Parties": "Request Signoff from All Parties",
+  "Initiate Closing of the Transaction": "Initiate Closing of the Transaction",
+  "Headers": {
+    "Party": "Party",
+    "Role": "Role",
+    "Signoff Status": "Signoff Status"
+  },
+  "Post Closing Messages": {
+    "Proceed to Admission & Settlement": "Proceed to Admission & Settlement",
+    "Proceed to Custody & Settlement": "Proceed to Custody & Settlement",
+    "The Transaction has Closed": "The Transaction has Closed"
+  },
+  "Closing Signoff Button": {
+    "Confirm Signoff to Proceed with Closing": "Confirm Signoff to Proceed with Closing",
+    "Pending Signoffs from other parties": "Pending Signoffs from other parties",
+    "Pending Lead Arranger Counsel request to proceed with Closing": "Pending Lead Arranger Counsel request to proceed with Closing"
+  },
+  "Signoff - Closing": "Signoff - Closing",
+  "Status": {
+    "Signoff Complete": "Signoff Complete",
+    "Signoff Pending": "Signoff Pending"
+  },
+  "Roles": {
+    "Arranger": "Arranger",
+    "Co-Arranger": "Co-Arranger",
+    "Corporate": "Corporate",
+    "Fiduciary": "Fiduciary",
+    "Investor": "Investor",
+    "Issuer": "Issuer",
+    "Legal Counsel": "Legal Counsel",
+    "Obligor": "Obligor",
+    "Sharia": "Sharia",
+    "Emrgo Service": "Emrgo Service",
+    "SPE Trustee": "SPE Trustee"
+  }
+}

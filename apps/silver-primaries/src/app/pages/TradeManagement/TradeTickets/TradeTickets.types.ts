@@ -1,1 +1,1 @@
-export interface ITradeTicketsProps {};
+export interface ITradeTicketsProps {}

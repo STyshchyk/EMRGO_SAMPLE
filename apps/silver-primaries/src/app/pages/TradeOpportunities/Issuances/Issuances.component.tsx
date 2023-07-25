@@ -8,7 +8,7 @@ import {
   Panel,
   PanelContent,
   PanelHeader,
-  PanelHeaderImage
+  PanelHeaderImage,
 } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
@@ -39,9 +39,7 @@ export const IssuancesComponent: FC<IIssuancesProps> = ({}: IIssuancesProps) => 
               <PanelHeaderImage src={isDarkMode ? data.logo : data.logo} />
             </PanelHeader>
             <PanelContent>
-              <IssuanceTable
-                opportunities={data.opportunities}
-              />
+              <IssuanceTable opportunities={data.opportunities} />
             </PanelContent>
           </Panel>
         )}

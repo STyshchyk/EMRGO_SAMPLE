@@ -1,0 +1,69 @@
+{
+  "Indicative Offers": "عروض تأشيرية",
+  "Message Broker": "دعم سير عمل إدارة الاشعارات",
+  "Add Quote": "إضافة تسعيرة",
+  "Headers": {
+    "Broker ID": "رقم تعريف الوسيط",
+    "Security": "الورقة المالية",
+    "Issuer": "المصدر",
+    "WSN": "WSN",
+    "Bid Sz (M)": "حجم الطلب (مليون)",
+    "Bid Yld": "عائد الطلب",
+    "Bid Px": "سعر الطلب ",
+    "Ask Px": "سعر العرض",
+    "Ask Yld": "عائد العرض",
+    "Ask Sz (M)": "حجم العرض (مليون)",
+    "Issuance Amt (M)": "مبلغ الإصدار (مليون)",
+    "DV01": "DV01",
+    "Time": "الوقت",
+    "Notification": "الإشعارات"
+  },
+  "Context Menu": {
+    "Edit Quote": "تعديل التسعير",
+    "Delete Quote": "إلغاء التسعير"
+  },
+  "Disclaimer": {
+    "You acting as broker are responsible for the services you offer to clients engaged through the Bulletin Board": "أنت تعمل كوسيط مسؤول عن الخدمات التي تقدمها للعملاء المشتركين من خلال لوحة البيانات",
+    "Your relationship with Emrgo is governed by the broker Onboarding Terms which you have accepted": "علاقتك مع وثاق محكومة بشروط الالتحاق كوسيط التي قبلتها",
+    "Upon confirming indications of interest frim clients, you undertake to execute trades outside Emrgo and generate on Emrgo Post Trade Instructions for Emrgo to process according to its custody rulebook": "عند تأكيد مؤشرات الاهتمام من العملاء، فإنك تتعهد بتنفيذ الصفقات خارج وثاق وإنشاء تعليمات ما بعد التداول ليتم تطبيقها وفقًا لكتيب قواعد الحفظ الخاص بوثاق."
+  },
+  "Modals": {
+    "Add Quote Modal": {
+      "Add Quote": "أضف تسعير",
+      "Search Securities": "البحث عن أوراق مالية",
+      "Security": "الورقة المالية",
+      "Currency": "العملة",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Maturity": "تاريخ الاستحقاق",
+      "Add Optional Pricing Information": "أضف معلومات التسعير الاختيارية",
+      "Price": "السعر",
+      "Quantity(M)": "الكمية (مليون)",
+      "Indicative Offer": "عرض تأشيري",
+      "Indicative Bid": "طلب تأشيري",
+      "Cancel": "إلغاء",
+      "Publish": "نشر"
+    },
+    "Edit Quote Modal": {
+      "Edit Quote": "تعديل التسعير",
+      "Security": "الورقة المالية",
+      "Currency": "العملة",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Maturity": "تاريخ الاستحقاق",
+      "Edit Optional Pricing Information": "تعديل معلومات التسعير الاختيارية",
+      "Price": "السعر",
+      "Quantity(M)": "الكمية (مليون)",
+      "Indicative Offer": "عرض تأشيري",
+      "Indicative Bid": "طلب تأشيري",
+      "Cancel": "إلغاء",
+      "Update": "تحديث"
+    },
+    "Delete Quote Modal": {
+      "Delete Quote": "إلغاء التسعير",
+      "This action is non reversible! It will permanently delete the quote": "هذا الإجراء لا يمكن الرجوع فيه! سيتم حذف التسعير بشكل دائم",
+      "Cancel": "إلغاء",
+      "Delete": "حذف"
+    }
+  }
+}

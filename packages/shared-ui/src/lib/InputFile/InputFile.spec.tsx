@@ -4,7 +4,7 @@ import { InputFile } from "./InputFile";
 
 describe("Input", () => {
   it("should render successfully", () => {
-    const { baseElement } = render(<InputFile label=""  accept={""}/>);
+    const { baseElement } = render(<InputFile label="" accept={""} />);
     expect(baseElement).toBeTruthy();
   });
 });

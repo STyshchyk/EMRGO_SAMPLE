@@ -1,9 +1,5 @@
 import { include } from "named-urls";
 
-
-
-
-
 export const queryKeys = {
   auth: include("/auth", {}),
   primaries: include("/primaries", {
@@ -40,5 +36,3 @@ export const queryKeys = {
     }),
   }),
 };
-
-

@@ -1,4 +1,4 @@
-import { dashboardApi} from "../services/APIService";
+import { dashboardApi } from "../services/APIService";
 import { IUserNew } from "./Users/User.types";
 
 export const doGetRoles = () => {

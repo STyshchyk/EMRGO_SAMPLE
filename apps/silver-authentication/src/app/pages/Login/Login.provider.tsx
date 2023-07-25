@@ -14,7 +14,6 @@ const LoginContext = createContext<ILoginContext | null>(null);
  * TODO: Implement this code.
  */
 export const LoginProvider = ({ children }: PropsWithChildren) => {
-
   /**
    *
    * @param values an object containing current form values
@@ -27,7 +26,6 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
    * Initial values for the form.
    */
 
-
   /**
    * @param values an object containing current form values
    * @returns void
@@ -39,9 +37,9 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
    * You can also use this function to navigate to the next page.
    *
    */
-    // function sign(req, res) {
-    //   res.cookie("access", signed, { maxAge: new JWTService().jwtExpirySeconds * 1000 });
-    // }
+  // function sign(req, res) {
+  //   res.cookie("access", signed, { maxAge: new JWTService().jwtExpirySeconds * 1000 });
+  // }
 
   const state: ILoginContext = {};
 

@@ -1,7 +1,7 @@
 export interface ISettingsDocument {
-  id: string,
-  key: string,
-  value: string
+  id: string;
+  key: string;
+  value: string;
 }
 
 export interface ISettings {

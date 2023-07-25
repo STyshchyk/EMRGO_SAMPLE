@@ -1,9 +1,19 @@
 import React, { FC, useEffect } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import { doGetAllSellside, doGetCurrencies } from "@emrgo-frontend/services";
-import { postOpportunity, updateOpportunity } from "@emrgo-frontend/services";
-import { Button, FormikInput, FormikInputCustom,MySelect, useToast} from "@emrgo-frontend/shared-ui";
+import {
+  doGetAllSellside,
+  doGetCurrencies,
+  postOpportunity,
+  updateOpportunity,
+} from "@emrgo-frontend/services";
+import {
+  Button,
+  FormikInput,
+  FormikInputCustom,
+  MySelect,
+  useToast,
+} from "@emrgo-frontend/shared-ui";
 import { Grid } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Field, Formik } from "formik";
@@ -11,12 +21,16 @@ import { v4 as uuidv4 } from "uuid";
 
 import { HeadingCustom } from "../../../components/Form";
 import { compareDates, convertDate, convertDateModify } from "../../../utils";
-import { useCurrencyStore, useIssuerStore, useSellSideStore, useTradeOpportunitiesStore } from "../../store";
+import {
+  useCurrencyStore,
+  useIssuerStore,
+  useSellSideStore,
+  useTradeOpportunitiesStore,
+} from "../../store";
 import { getIssuers } from "../ManageIssuers/Issuer.services";
 import * as Styles from "./AddOpportunity.styles";
 import { IAddOpportunityProps, IOpportunityPayload } from "./AddOpportunity.types";
 import { OpportunitySchema } from "./AppOpportunity.schema";
-
 
 export const AddOpportunity: FC<IAddOpportunityProps> = () => {
   const { modifyData } = useTradeOpportunitiesStore();
@@ -37,7 +51,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
     queryKey: [queryKeys.primaries.tradeOpportunities.dropdown.currency],
     onSuccess: (curData) => {
       currencyAction.setCurrency(curData);
-    }
+    },
   });
   useQuery({
     queryFn: () => doGetCurrencies("CSDOptions"),
@@ -47,7 +61,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
     queryKey: [queryKeys.primaries.tradeOpportunities.dropdown.csd],
     onSuccess: (curData) => {
       currencyAction.setCDS(curData);
-    }
+    },
   });
 
   useQuery({
@@ -56,9 +70,8 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
     onSuccess: (data) => {
-
       sellSideActions.setSellSite(data);
-    }
+    },
   });
   useQuery({
     queryFn: getIssuers,
@@ -68,7 +81,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
     queryKey: [queryKeys.primaries.tradeOpportunities.issuers.fetch],
     onSuccess: (data) => {
       issuerAction.setIsssuer(data);
-    }
+    },
   });
 
   useEffect(() => {
@@ -79,20 +92,27 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
       <Styles.Wrapper>
         <Formik
           enableReinitialize={!!modifyData}
-
           // In case if modify mode is selected populate values automatically
           initialValues={{
             statusId: modifyData?.statusId ?? null,
-            sellSide: modifyData ? sellSideData.find(elem => elem.id === modifyData.sellSideOrganisation) : null,
-            issuer: modifyData ? issuerData.find(elem => elem.id === modifyData.issuerId) : null,
-            issuerJurisdiction: modifyData ? issuerData.find(elem => elem.id === modifyData.issuerId)?.jurisdiction ?? null : null,
-            industry: modifyData ? issuerData.find(elem => elem.id === modifyData.issuerId)?.description ?? null : null,
-            currencyDropDownData: modifyData ? currencyData.find(elem => elem.id === modifyData.currencyId) ?? null : null,
+            sellSide: modifyData
+              ? sellSideData.find((elem) => elem.id === modifyData.sellSideOrganisation)
+              : null,
+            issuer: modifyData ? issuerData.find((elem) => elem.id === modifyData.issuerId) : null,
+            issuerJurisdiction: modifyData
+              ? issuerData.find((elem) => elem.id === modifyData.issuerId)?.jurisdiction ?? null
+              : null,
+            industry: modifyData
+              ? issuerData.find((elem) => elem.id === modifyData.issuerId)?.description ?? null
+              : null,
+            currencyDropDownData: modifyData
+              ? currencyData.find((elem) => elem.id === modifyData.currencyId) ?? null
+              : null,
             productType: modifyData?.productType || "Sukuk",
             productDetails: modifyData?.productDetails || "Sukuk",
             name: modifyData?.name ?? "John Doe",
             isin: modifyData?.isin ?? `MX ${Math.floor(Math.random() * 90000) + 10000}`,
-            csd: modifyData ? csdData.find(elem => elem.id === modifyData.csd) ?? null : null,
+            csd: modifyData ? csdData.find((elem) => elem.id === modifyData.csd) ?? null : null,
             tenor: modifyData?.tenor ?? 100000,
             return: modifyData?.return ?? 10,
             amount: modifyData?.amount ?? 10000,
@@ -101,7 +121,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
             offerPeriodEnd: convertDateModify(modifyData?.offerPeriodEnd),
             redemptionDate: convertDateModify(modifyData?.redemptionDate),
             ideaEnd: convertDateModify(modifyData?.ideaEnd),
-            openEnd: convertDateModify(modifyData?.openEnd)
+            openEnd: convertDateModify(modifyData?.openEnd),
           }}
           validationSchema={OpportunitySchema}
           onSubmit={(values, formikHelpers) => {
@@ -125,7 +145,7 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
               redemptionDate: convertDate(values.redemptionDate),
               issueDate: convertDate(values.issueDate),
               ideaEnd: convertDate(values.ideaEnd),
-              openEnd: convertDate(values.openEnd)
+              openEnd: convertDate(values.openEnd),
             };
             if (!modifyData) {
               doPostOpportunity(payload, {
@@ -133,12 +153,11 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                   modalActions.setModalOpen(false);
                   queryClient
                     .invalidateQueries([queryKeys.primaries.tradeOpportunities.fetch])
-                    .then((r) => {
-                    });
+                    .then((r) => {});
                 },
                 onError: () => {
                   showErrorToast("Error posting new Opportunity");
-                }
+                },
               });
             } else {
               doUpdateOpportunity(
@@ -148,12 +167,11 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                     modalActions.setModalOpen(false);
                     queryClient
                       .invalidateQueries([queryKeys.primaries.tradeOpportunities.fetch])
-                      .then((r) => {
-                      });
+                      .then((r) => {});
                   },
                   onError: () => {
                     showErrorToast("Error updating new Opportunity");
-                  }
+                  },
                 }
               );
             }
@@ -218,7 +236,10 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                           console.log(selected);
                           await setFieldValue("issuer", selected);
                           await setFieldValue("issuerJurisdiction", selected.jurisdiction);
-                          await setFieldValue("industry", selected.industry  ? selected.industry : "N/A");
+                          await setFieldValue(
+                            "industry",
+                            selected.industry ? selected.industry : "N/A"
+                          );
                         }}
                       />
                     </Styles.TwoCol>
@@ -338,7 +359,6 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                             console.log(selected);
                             setFieldValue("csd", selected);
                           }}
-
                           label={"CSD"}
                           component={FormikInputCustom}
                         />
@@ -435,7 +455,9 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                       />
                     </Styles.TwoCol>
 
-                    <HeadingCustom style={{ marginBottom: "20px", marginTop: "50px" }}>Stages</HeadingCustom>
+                    <HeadingCustom style={{ marginBottom: "20px", marginTop: "50px" }}>
+                      Stages
+                    </HeadingCustom>
                     <Styles.TwoCol>
                       <label htmlFor="ideaEnd">Idea period end</label>
                       <Field
@@ -467,14 +489,11 @@ export const AddOpportunity: FC<IAddOpportunityProps> = () => {
                       />
                     </Styles.TwoCol>
                   </Grid>
-
                 </Grid>
               </Styles.Wrapper>
               <Styles.TwoCol>
                 {/*TODO: FIX BUTTON*/}
-                <Button type="submit">
-                  Submit
-                </Button>
+                <Button type="submit">Submit</Button>
               </Styles.TwoCol>
             </form>
           )}

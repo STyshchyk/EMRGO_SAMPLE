@@ -1,9 +1,10 @@
 import { FC } from "react";
 
+import { SilverDashboardWrapper } from "@emrgo-frontend/shared-ui";
+
 import { DataRoomComponent } from "./DataRoom.component";
 import { DataRoomProvider } from "./DataRoom.provider";
 import { IDataRoomProps } from "./DataRoom.types";
-import { SilverDashboardWrapper } from "@emrgo-frontend/shared-ui";
 
 export const DataRoom: FC<IDataRoomProps> = ({}: IDataRoomProps) => {
   return (

@@ -32,9 +32,11 @@ sharedDashboardApi.interceptors.response.use(
         // Handle refresh token request error
         console.error("Error refreshing access token:", refreshError);
         // Redirect to login or show an error message
-        if (refreshError.response.status === 403 ||
+        if (
+          refreshError.response.status === 403 ||
           refreshError.response.status === 500 ||
-          refreshError.response.status === 502) {
+          refreshError.response.status === 502
+        ) {
           navigateModule("authentication", clientAuthenticationRoutes.home);
         }
       }

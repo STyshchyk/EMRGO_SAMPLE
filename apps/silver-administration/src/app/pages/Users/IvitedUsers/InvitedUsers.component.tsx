@@ -19,7 +19,7 @@ export const InvitedUsersComponent: FC<IInvitedUsersProps> = ({}: IInvitedUsersP
       enabled: true,
       onError: () => {
         if (isError && isFetched) showErrorToast("Error while fetching invited users");
-      }
+      },
     }
   );
   return (

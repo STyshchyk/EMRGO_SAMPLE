@@ -11,7 +11,7 @@ import { ILoginFormValues, ILoginProps } from "./Login.types";
 
 export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
   const { form, showPassword, setShowPassword, isError, error } = ensureNotNull(useLoginContext());
-  
+
   return (
     <Styles.LoginForm onSubmit={form.handleSubmit}>
       <Logo />

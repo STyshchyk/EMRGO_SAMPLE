@@ -2,10 +2,6 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-
-
-
-
 export const Container = styled.div`
   display: grid;
   grid-template-columns: minmax(auto, ${rem(200)}) 1fr;

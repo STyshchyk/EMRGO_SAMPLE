@@ -2,7 +2,7 @@ import { SlCloudUpload } from "react-icons/sl";
 
 import {
   CheckNotificationIcon as CheckNotificationIconBase,
-  ErrorIcon as ErrorIconBase
+  ErrorIcon as ErrorIconBase,
 } from "@emrgo-frontend/shared-ui";
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem, rgba } from "polished";
@@ -48,10 +48,12 @@ export const InputContainer = styled.div<{ $active: boolean; $hasFocus: boolean;
     if (props.$error) {
       return css`
         border: 1px solid ${getTheme("colors.orange")};
-        background: linear-gradient(0deg,
-        ${rgba(getTheme("colors.orange")(props), 0.05)},
-        ${rgba(getTheme("colors.orange")(props), 0.05)}),
-        ${getTheme("colors.white.100")};
+        background: linear-gradient(
+            0deg,
+            ${rgba(getTheme("colors.orange")(props), 0.05)},
+            ${rgba(getTheme("colors.orange")(props), 0.05)}
+          ),
+          ${getTheme("colors.white.100")};
       `;
     }
   }}
@@ -154,7 +156,7 @@ export const HelperText = styled.div`
   color: ${getTheme("colors.white.80")};
 `;
 
-export const UploadIcon = styled(SlCloudUpload)<{ $error: boolean, $valid: boolean }>`
+export const UploadIcon = styled(SlCloudUpload)<{ $error: boolean; $valid: boolean }>`
   position: absolute;
   right: 0;
   ${({ $error }) => {

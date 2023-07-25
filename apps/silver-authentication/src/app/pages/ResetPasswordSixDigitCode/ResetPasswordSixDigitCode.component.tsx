@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Button,  Logo } from "@emrgo-frontend/shared-ui";
+import { Button, Logo } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { Heading, OneCol, SubHeading } from "../../components/Form";
@@ -29,7 +29,12 @@ export const ResetPasswordSixDigitCodeComponent: FC<IResetPasswordSixDigitCodePr
       </div>
 
       <OneCol>
-        <SixDigitCodeInput value="" onChange={() => {console.log(""); }}   />
+        <SixDigitCodeInput
+          value=""
+          onChange={() => {
+            console.log("");
+          }}
+        />
       </OneCol>
 
       <OneCol>

@@ -16,14 +16,14 @@ const routes = {
     verification: "verification",
     investorProfile: "investor-profile",
     troubleSigningIn: "trouble-signing-in",
-    troubleSigningInThanks: "trouble-signing-in-thanks"
-  })
+    troubleSigningInThanks: "trouble-signing-in-thanks",
+  }),
 };
 
 const dash = include("/", {
   administration: include("administration", {
     home: "",
-    users: "users"
+    users: "users",
   }),
   primaries: include("primaries", {
     home: "",
@@ -31,24 +31,24 @@ const dash = include("/", {
     tradeOpportunity: include("trade-opportunities", {
       issuances: ":id/issuances",
       manageIssuers: "manage-issuers",
-      manageSellside: "manage-sellside"
+      manageSellside: "manage-sellside",
     }),
     tradeManagement: "trade-management",
-    postTrade: "post-trade"
+    postTrade: "post-trade",
   }),
   onboarding: include("onboarding", {
     home: "",
-    users: "users"
+    users: "users",
   }),
   dataRoom: include("data-room", {
     home: "",
     platform: "platform",
     opportunities: "opportunities",
-    manageDocuments: "opportunities/manage-documents/:id"
-  })
+    manageDocuments: "opportunities/manage-documents/:id",
+  }),
 });
 
 export default {
   auth: routes.auth,
-  dash: dash
+  dash: dash,
 };

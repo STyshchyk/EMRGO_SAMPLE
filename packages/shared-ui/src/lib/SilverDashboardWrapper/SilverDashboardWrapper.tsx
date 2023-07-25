@@ -4,7 +4,9 @@ import { SilverDashboardWrapperComponent } from "./SilverDashboardWrapper.compon
 import { SilverDashboardWrapperProvider } from "./SilverDashboardWrapper.provider";
 import { ISilverDashboardWrapperProps } from "./SilverDashboardWrapper.types";
 
-export const SilverDashboardWrapper: FC<ISilverDashboardWrapperProps> = ({children}: ISilverDashboardWrapperProps) => {
+export const SilverDashboardWrapper: FC<ISilverDashboardWrapperProps> = ({
+  children,
+}: ISilverDashboardWrapperProps) => {
   return (
     <SilverDashboardWrapperProvider>
       <SilverDashboardWrapperComponent>{children}</SilverDashboardWrapperComponent>

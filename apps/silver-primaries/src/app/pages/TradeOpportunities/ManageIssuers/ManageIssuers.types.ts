@@ -1,8 +1,6 @@
-export interface IManageIssuersProps {
-}
+export interface IManageIssuersProps {}
 
-export interface IManageIssuersContext {
-}
+export interface IManageIssuersContext {}
 
 export interface ILifecycle {
   preOfferPeriod: string;

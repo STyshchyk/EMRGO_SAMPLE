@@ -1,0 +1,113 @@
+@import "../../../../styles/config.scss";
+
+.pageTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+  margin-top: 0 !important;
+  border-bottom: 2px solid $secondary-color;
+}
+
+.pageSubTitle {
+  font-size: 14px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  color: #555555;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.headerTitle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.headerAction {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.formTitleLabel {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.buttonSubtext {
+  color: #9b9b9b;
+  margin: 0 !important;
+  margin-top: 5px !important;
+  font-size: 12px;
+}
+
+.pageContainer {
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.pageContent {
+  flex: 1;
+  // height: calc(100vh - 280px);
+  // max-height: calc(100vh - 280px);
+  // overflow-y: auto;
+}
+
+.pageFooter {
+  height: 40px;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  padding-bottom: 30px;
+}
+
+.popoverText {
+  color: #143673;
+}
+
+.optionRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.optionRowLabel {
+  margin: 5px 10px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  padding: 20px 0;
+}
+
+.labelContainer {
+  width: 350px;
+}
+
+.fieldContainer {
+  flex: 1;
+}
+
+.formLabel {
+  margin-top: 0 !important;
+}
+
+.iframePdf {
+  flex-grow: 1;
+  border: none;
+  margin: 0;
+  padding: 0;
+}

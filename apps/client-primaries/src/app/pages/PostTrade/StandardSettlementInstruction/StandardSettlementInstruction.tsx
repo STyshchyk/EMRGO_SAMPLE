@@ -17,7 +17,6 @@ import {
   TicketText,
   TicketTitle,
 } from "@emrgo-frontend/shared-ui";
-
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { usePostTradeContext } from "../PostTrade.provider";

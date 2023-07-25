@@ -16,7 +16,9 @@ const OpportunitiesDocsContext = createContext<IOpportunitiesDocsContext | null>
 export const OpportunitiesDocsProvider = ({ children }: PropsWithChildren) => {
   const state: IOpportunitiesDocsContext = {};
 
-  return <OpportunitiesDocsContext.Provider value={state}>{children}</OpportunitiesDocsContext.Provider>;
+  return (
+    <OpportunitiesDocsContext.Provider value={state}>{children}</OpportunitiesDocsContext.Provider>
+  );
 };
 
 export const useOpportunitiesDocsContext = () => useContext(OpportunitiesDocsContext);

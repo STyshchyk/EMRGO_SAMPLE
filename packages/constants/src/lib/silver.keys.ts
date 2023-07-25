@@ -1,43 +1,44 @@
 import { include } from "named-urls";
+
 export const silverQueryKeys = {
   auth: include("/auth", {}),
   administration: include("/administration", {
     users: "users",
-    roles: "roles"
+    roles: "roles",
   }),
   primaries: include("/primaries", {
     tradeOpportunities: include("trade-opportunities", {
       fetch: "fetch",
       documents: "documents",
       tradeInterest: include(":tradeInterests", {
-        fetch: "tradeInterests"
+        fetch: "tradeInterests",
       }),
       dropdown: include("dropdonwn", {
         currency: "currency",
         csd: "csd",
         custody: "custody",
-        industry: "industry"
+        industry: "industry",
       }),
       bank: include("bank", {
         issuances: include("issuances", {
           fetch: "fetch",
-          details: "details"
-        })
+          details: "details",
+        }),
       }),
       sellSide: include("sellside", {
-        fetch: "fetch"
+        fetch: "fetch",
       }),
       issuers: include("issuers", {
-        fetch: "fetch"
-      })
-    })
+        fetch: "fetch",
+      }),
+    }),
   }),
   onboarding: include("onboarding", {
-    fetch: ""
+    fetch: "",
   }),
   document: include("/document", {
     fetch: "",
     client: "client",
-    platform: "platform"
-  })
+    platform: "platform",
+  }),
 };

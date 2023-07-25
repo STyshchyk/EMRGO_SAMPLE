@@ -1,0 +1,36 @@
+{
+  "mixed": {
+    "oneOf": {
+      "confirmPassword": "يجب أن تتطابق كلمات المرور"
+    },
+    "required": {
+      "confirmPassword": "يرجى التأكد من صحة كلمة المرور الخاصة بك",
+      "email": "يرجى إدخال عنوان البريد الإلكتروني",
+      "password": "يرجى إدخال كلمة المرور ",
+      "firstName": "يرجى إدخال الاسم الأول",
+      "lastName": "يرجى إدخال الاسم الأخير",
+      "entityName": "يرجى إدخال اسم الكيان القانوني",
+      "entityEmail": "يرجى إدخال عنوان البريد الإلكتروني للكيان القانوني",
+      "counterparty": "Counterparty is required",
+      "counterpartySSI": "Counterparty SSI is required",
+      "price": "Price is required",
+      "quantity": "Quantity is required",
+      "settlementAmount": "Settlement amount is required",
+      "settlementType": "Settlement type is required",
+      "csdSelectOption": "Please select a Registrar before submitting",
+      "baseCurrency": "Base Currency is required",
+      "portfolioCurrency": "Portfolio Currency is required",
+      "registrationRequirement": "Registration requirement is required",
+      "reportingCycle": "Reporting cycle is required",
+      "reportingMode": "Reporting mode is required"
+    }
+  },
+  "string": {
+    "email": "يرجى إدخال عنوان البريد الإلكتروني بشكل صحيح",
+    "maxLength": "يجب ألا يتجاوز عدد الأحرف {{عدد}}",
+    "minLength": "يجب ألا يقل عدد الأحرف عن {{عدد}}",
+    "matches": {
+      "password": "يجب أن يحتوي على واحد على الأقل مما يلي: أحرف كبيرة وأحرف صغيرة وأرقام ورموز"
+    }
+  }
+}

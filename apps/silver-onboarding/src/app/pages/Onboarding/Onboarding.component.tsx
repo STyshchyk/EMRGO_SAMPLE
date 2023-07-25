@@ -2,13 +2,13 @@ import * as React from "react";
 import { FC } from "react";
 import { Link, Outlet } from "react-router-dom";
 
+import { getAllSilverRoutes, silverOnboardingRoutes } from "@emrgo-frontend/constants";
 import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
 import { useInternalMatchedPathTabs } from "@emrgo-frontend/utils";
 
 import routes from "../../constants/routes";
 import * as Styles from "./Onboarding.styles";
 import { IOnboardingProps } from "./Onboarding.types";
-import { getAllSilverRoutes, silverOnboardingRoutes } from "@emrgo-frontend/constants";
 
 const onboardingTabs = [
   {
@@ -16,9 +16,8 @@ const onboardingTabs = [
     key: "users",
     paths: getAllSilverRoutes(silverOnboardingRoutes),
     path: silverOnboardingRoutes.onboarding.users,
-    notification: 0
+    notification: 0,
   },
-
 ];
 export const OnboardingComponent: FC<IOnboardingProps> = ({}: IOnboardingProps) => {
   const value = useInternalMatchedPathTabs(onboardingTabs);

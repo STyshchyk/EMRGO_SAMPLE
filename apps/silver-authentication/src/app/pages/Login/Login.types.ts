@@ -1,8 +1,6 @@
-export interface ILoginProps {
-}
+export interface ILoginProps {}
 
-export interface ILoginContext {
-}
+export interface ILoginContext {}
 
 export interface ILoginFormValues {
   email: string;

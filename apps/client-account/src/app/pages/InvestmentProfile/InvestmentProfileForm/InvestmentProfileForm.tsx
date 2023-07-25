@@ -4,9 +4,9 @@ import { InvestmentProfileFormComponent } from "./InvestmentProfileForm.componen
 import { InvestmentProfileFormProvider } from "./InvestmentProfileForm.provider";
 import { IInvestmentProfileFormProps } from "./InvestmentProfileForm.types";
 
-export const InvestmentProfileForm: FC<
-  IInvestmentProfileFormProps
-> = (props: IInvestmentProfileFormProps) => {
+export const InvestmentProfileForm: FC<IInvestmentProfileFormProps> = (
+  props: IInvestmentProfileFormProps
+) => {
   return (
     <InvestmentProfileFormProvider>
       <InvestmentProfileFormComponent />

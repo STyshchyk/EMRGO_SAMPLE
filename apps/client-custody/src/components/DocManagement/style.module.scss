@@ -1,0 +1,55 @@
+.uploadStateContainer {
+  padding: 10px;
+  padding-bottom: 0;
+  // margin-bottom: 30px;
+  // border: 1px solid;
+  // border-radius: 4px;
+}
+
+.singleUploadContainer {
+  border: 1px dashed grey;
+  border-radius: 4px;
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.previewIconContainer {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+}
+
+.fileNameProgressContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 20px;
+}
+
+.actionContainer {
+  min-width: 45px;
+  height: 55px;
+}
+
+.react-select-container {
+  border: none;
+}
+
+.inlineText {
+  border: none;
+  border-bottom: 2px dotted #ccc;
+  outline: none;
+  padding: 2px 5px;
+  width: 200px;
+  height: 30px;
+}
+
+.selectContainer {
+  &:hover {
+    cursor: pointer;
+  }
+}

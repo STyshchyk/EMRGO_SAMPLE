@@ -1,15 +1,15 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import {ActionTooltip, currencyRenderer, Table, useToast} from "@emrgo-frontend/shared-ui";
-import {IOpportunityFetch } from "@emrgo-frontend/types";
-import {useQueryClient} from "@tanstack/react-query";
-import {createColumnHelper, getCoreRowModel, useReactTable} from "@tanstack/react-table";
+import { ActionTooltip, currencyRenderer, Table, useToast } from "@emrgo-frontend/shared-ui";
+import { IOpportunityFetch } from "@emrgo-frontend/types";
+import { useQueryClient } from "@tanstack/react-query";
+import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import {CountdownTimer } from "../../../components/CountdownTimer";
-import {DataRoomLink } from "../../../components/DataRoomLink";
-import {useOpportunityStore } from "../../store/store";
+import { CountdownTimer } from "../../../components/CountdownTimer";
+import { DataRoomLink } from "../../../components/DataRoomLink";
+import { useOpportunityStore } from "../../store/store";
 import * as Styles from "./IssuanceTable.styles";
-import {IIssuanceTableProps} from "./IssuanceTable.types";
+import { IIssuanceTableProps } from "./IssuanceTable.types";
 
 const columnHelper = createColumnHelper<IOpportunityFetch>();
 

@@ -21,7 +21,7 @@ export const TwoCol = styled.div`
   & > div > div:has(input[type="text"]) {
     width: 292px;
   }
-  button{
+  button {
     margin-left: auto;
   }
 `;

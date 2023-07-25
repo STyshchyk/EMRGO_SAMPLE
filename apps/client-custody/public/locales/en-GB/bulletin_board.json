@@ -1,0 +1,69 @@
+{
+  "Indicative Offers": "Indicative Offers",
+  "Message Broker": "Message Broker",
+  "Add Quote": "Add Quote",
+  "Headers": {
+    "Broker ID": "Broker ID",
+    "Security": "Security",
+    "Issuer": "Issuer",
+    "WSN": "WSN",
+    "Bid Sz (M)": "Bid Sz (M)",
+    "Bid Yld": "Bid Yld",
+    "Bid Px": "Bid Px",
+    "Ask Px": "Ask Px",
+    "Ask Yld": "Ask Yld",
+    "Ask Sz (M)": "Ask Sz (M)",
+    "Issuance Amt (M)": "Issuance Amt (M)",
+    "DV01": "DV01",
+    "Time": "Time",
+    "Notification": "Notification"
+  },
+  "Context Menu": {
+    "Edit Quote": "Edit Quote",
+    "Delete Quote": "Delete Quote"
+  },
+  "Disclaimer": {
+    "You acting as broker are responsible for the services you offer to clients engaged through the Bulletin Board": "You acting as broker are responsible for the services you offer to clients engaged through the Bulletin Board",
+    "Your relationship with Emrgo is governed by the broker Onboarding Terms which you have accepted": "Your relationship with Emrgo is governed by the broker Onboarding Terms which you have accepted",
+    "Upon confirming indications of interest frim clients, you undertake to execute trades outside Emrgo and generate on Emrgo Post Trade Instructions for Emrgo to process according to its custody rulebook": "Upon confirming indications of interest frim clients, you undertake to execute trades outside Emrgo and generate on Emrgo Post Trade Instructions for Emrgo to process according to its custody rulebook"
+  },
+  "Modals": {
+    "Add Quote Modal": {
+      "Add Quote": "Add Quote",
+      "Search Securities": "Search Securities",
+      "Security": "Security",
+      "Currency": "Currency",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Maturity": "Maturity",
+      "Add Optional Pricing Information": "Add Optional Pricing Information",
+      "Price": "Price",
+      "Quantity(M)": "Quantity (M)",
+      "Indicative Offer": "Indicative Offer",
+      "Indicative Bid": "Indicative Bid",
+      "Cancel": "Cancel",
+      "Publish": "Publish"
+    },
+    "Edit Quote Modal": {
+      "Edit Quote": "Edit Quote",
+      "Security": "Security",
+      "Currency": "Currency",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Maturity": "Maturity",
+      "Edit Optional Pricing Information": "Edit Optional Pricing Information",
+      "Price": "Price",
+      "Quantity(M)": "Quantity (M)",
+      "Indicative Offer": "Indicative Offer",
+      "Indicative Bid": "Indicative Bid",
+      "Cancel": "Cancel",
+      "Update": "Update"
+    },
+    "Delete Quote Modal": {
+      "Delete Quote": "Delete Quote",
+      "This action is non reversible! It will permanently delete the quote": "This action is non reversible! It will permanently delete the quote",
+      "Cancel": "Cancel",
+      "Delete": "Delete"
+    }
+  }
+}

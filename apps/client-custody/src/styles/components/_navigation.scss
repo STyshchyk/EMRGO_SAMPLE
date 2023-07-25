@@ -1,0 +1,85 @@
+.nav-menu {
+  display: flex;
+
+  &__item {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @media only screen and (max-width: 767.98px) {
+    flex-direction: column;
+    &__item {
+      margin-right: 0;
+    }
+  }
+}
+
+.nav-link {
+  font-family: 'D-DIN Exp';
+  font-weight: bold;
+  padding: 0.3rem 1.75rem;
+  text-decoration: none;
+  border:none;
+  cursor: pointer;
+
+  &:active {
+    border-radius: 20px;
+  }
+
+  &--primary {
+    color: $primary-color;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  &--secondary {
+    color: $secondary-color;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  &--left-arrow {
+    &:before {
+      content: '< ';
+    }
+  }
+
+  &--right-arrow {
+    &:after {
+      content: ' >';
+    }
+  }
+
+  &--selected {
+    background-color: #3a5194;
+    color: #fff;
+    border-radius: 20px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  &--sm {
+    font-size: 0.5rem;
+  }
+
+  &--lg {
+    font-size: 1rem;
+  }
+
+  &--2x {
+    font-size: 1.8rem;
+  }
+
+  &--no-padding {
+    padding: 0;
+  }
+}

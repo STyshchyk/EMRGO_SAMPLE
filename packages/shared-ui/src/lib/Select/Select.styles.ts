@@ -11,9 +11,7 @@ export const MySelect = styled.div`
   /* Element Styles */
   /* Text styles */
 `;
-const ReactSelectElement = styled(Select)`
-
-`;
+const ReactSelectElement = styled(Select)``;
 export const Error = styled.div`
   /* Layout */
   display: flex;

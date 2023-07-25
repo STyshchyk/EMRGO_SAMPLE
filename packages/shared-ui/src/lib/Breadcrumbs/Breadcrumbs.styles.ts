@@ -1,7 +1,6 @@
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
-
-import { getTheme } from "@emrgo-frontend/theme";
 
 export const Breadcrumbs = styled.ol`
   display: flex;

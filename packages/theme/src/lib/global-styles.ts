@@ -74,18 +74,18 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ${({ theme }: { theme: TTheme }) =>
-          // TODO: Confirm light mode anchor colours
-          theme.mode === "light" &&
-          css`
-            a {
-              color: ${theme.colors.green3};
-            }
-          `}
+    // TODO: Confirm light mode anchor colours
+    theme.mode === "light" &&
+    css`
+      a {
+        color: ${theme.colors.green3};
+      }
+    `}
   ${({ theme }: { theme: TTheme }) =>
-          theme.mode === "dark" &&
-          css`
-            a {
-              color: ${theme.colors.green5};
-            }
-          `}
+    theme.mode === "dark" &&
+    css`
+      a {
+        color: ${theme.colors.green5};
+      }
+    `}
 `;

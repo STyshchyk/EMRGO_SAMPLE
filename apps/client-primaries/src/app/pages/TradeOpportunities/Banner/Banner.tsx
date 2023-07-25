@@ -6,7 +6,6 @@ import {
   BannerSlideDescription,
   BannerSlideTitle,
 } from "@emrgo-frontend/shared-ui";
-
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { useTradeOpportunitiesContext } from "../TradeOpportunities.provider";

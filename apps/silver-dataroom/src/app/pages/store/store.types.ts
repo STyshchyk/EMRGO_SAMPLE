@@ -1,6 +1,4 @@
-import { IInvestmentBank, IOpportunityFetch } from "@emrgo-frontend/types";
-import { IIssuer } from "@emrgo-frontend/types";
-import { ISellside } from "@emrgo-frontend/types";
+import { IInvestmentBank, IIssuer, IOpportunityFetch, ISellside } from "@emrgo-frontend/types";
 
 export interface IIssuerStore {
   issuerData: IIssuer[] | [];

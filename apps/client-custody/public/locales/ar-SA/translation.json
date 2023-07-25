@@ -1,0 +1,226 @@
+{
+  "Home": {
+    "Welcome to Emrgo": "مرحبا بكم في وثاق"
+  },
+  "PublicHome": {
+    "Welcome to Emrgo Portal": "اهلا في بوابة وثاق"
+  },
+  "Header": {
+    "Entity Groups": "مجموعات الجهة",
+    "Notifications": "إشعارات",
+    "Dark Mode": "الوضع المظلم",
+    "Language": "اللغة",
+    "Settings": "الإعدادات",
+    "Profile": " الملف الشخصي",
+    "Help Desk": "الدعم الفني",
+    "Logout": "تسجيل الخروج"
+  },
+  "Sidebar": {
+    "Home": "الصفحة الرئيسية",
+    "Administration": "الإدارة",
+    "Issuance": "الإصدار",
+    "Blotter": "سجل المعاملات",
+    "Support": "الدعم",
+    "Securities Services": "خدمات الأوراق المالية",
+    "Securities Admin": "مسؤول الأوراق المالية",
+    "Settlement Admin": "مسؤول التسوية",
+    "Billing and Payments": "الفواتير والمدفوعات",
+    "Bulletin Board": "لوحة البيانات",
+    "Cash Management": " إدارة النقد ",
+    "Help Desk": "الدعم الفني",
+    "Help Desk Modal": {
+      "Connect with Emrgo?": "تواصل مع وثاق",
+      "Please contact": "برجاء التواصل",
+      "for any support related queries": "  لأي استفسارات متعلقة بالدعم الفني",
+      "Get in Touch": "ابقى على تواصل",
+      "Cancel": "الغاء"
+    },
+    "Reporting": "التقارير",
+    "Reconciliation": "التسوية",
+    "Billing": "Billing"
+  },
+  "Minor Navigation": {
+    "Home": {
+      "Home": "الرئيسية"
+    },
+    "Administration": {
+      "KYC": "إجراء معرفة العميل",
+      "Entity Details": "تفاصيل الكيان القانوني",
+      "Entity Administration": "ادارة الجهات",
+      "KYCEdit": {
+        "Overview": "نظرة عامة",
+        "Classification": "تصنيف الكيان القانوني",
+        "Identification": "هوية الكيان القانوني",
+        "Banking": "الخدمات المصرفية",
+        "Shareholders/UBO": "المساهمين / المسفيد الحقيقي",
+        "Key Individuals": "الأفراد الرئيسيون",
+        "Entitys Wealth": "ثروة الكيان القانوني",
+        "Entity/Individual Wealth": "ثروة الفرد/الكيان القانوني",
+        "Experience": "خبرة",
+        "Documents": "المستندات",
+        "Client Terms": "شروط العميل",
+        "Individuals Details": "تفاصيل الأفراد",
+        "Multi-Factor Authentication": "مصادقة متعددة العوامل"
+      },
+      "Entity": "الجهة",
+      "2FA Tickets": "إشعارات المصادقة الثنائية ",
+      "Client Terms": "شروط العميل",
+      "Entity Account Management": "ادارة حساب الجهة",
+      "Visitors": "الزوار",
+      "Parent Entity": "الكيان القابض",
+      "Users": "Users"
+    },
+    "Blotter": {
+      "Overview": "نظرة عامة"
+    },
+    "Support": {
+      "2FA Tickets": "إشعارات المصادقة الثنائية "
+    },
+    "Bulletin Board": {
+      "Bulletin Board": "لوحة البيانات"
+    },
+    "Issuance": {
+      "Ongoing Issuances": "الإصدارات الجارية",
+      "Overview": "نظرة عامة",
+      "Emrgo Engagement": "تعاقد وثاق",
+      "Engagements": "التعاقد",
+      "Investors": "المستثمرون",
+      "Issuer": "المُصدر",
+      "Termsheet": "مذكرة الشروط ",
+      "Pre-Allocation": "التخصيص المسبق",
+      "Doc Management": "ادارة الملفات",
+      "Closing": "إتمام المعاملة ",
+      "Signing": "التوقيع",
+      "Admission & Settlement": "القبول والتسوية",
+      "Custody & Settlement": "الحفظ والتسوية",
+      "Add Account": "اضافة حساب",
+      "Manage Accounts": "ادارة الحسابات ",
+      "Payment Administration": "إدارة المدفوعات",
+      "CMA Notification": "إشعار هيئة السوق المالية",
+      "SPE Incorporation": "تأسيس منشأة ذات أغراض خاصة"
+    },
+    "Cash Management": {
+      "Accounts": "الحسابات",
+      "Cash Statement": "حساب النقد",
+      "Entity Accounts": "حسابات الجهة",
+      "Internal Transfer": " تحويل داخلي",
+      "External Payments": "المدفوعات الخارجية",
+      "Incoming Payments": "المدفوعات الواردة"
+    },
+    "Reports": {
+      "Securities Holdings": "محفظة الأوراق المالية",
+      "Securities Transactions": "معاملات الأوراق المالية",
+      "Cash Balances": "الأرصدة النقدية",
+      "Cash Statement": "كشف الحساب النقدي",
+      "Reference Data": "البيانات المرجعية"
+    },
+    "Issuer Services": {
+      "Securities Registration": "تسجيل الأوراق المالية",
+      "Custody & Settlement": "الحفظ والتسوية",
+      "Agency Services": "خدمات الوكالة",
+      "Registrar": "المسجل"
+    },
+    "Investor Services": {
+      "Custody & Settlement": "الحفظ والتسوية",
+      "Trustee Services": "خدمات الوصي",
+      "Holdings": "الأرصدة"
+    },
+    "Securities Services": {
+      "Securities Registration": "تسجيل الأوراق المالية",
+      "Custody & Settlement": "الحفظ والتسوية",
+      "Agency Services": "خدمات الوكالة",
+      "Registrar": "المسجل",
+      "Trustee Services": "خدمات الوصي",
+      "FX Transaction List": "FX Transaction List",
+      "Securities List": "قائمة الأوراق المالية",
+      "Payment Administration": "إدارة الدفع"
+    },
+    "Securities Admin": {
+      "Securities List": "قائمة الأوراق المالية"
+    },
+    "Settlement Admin": {
+      "Counterparty List": "قائمة الطرف النظير",
+      "Counterparty SSI List": "قائمة الـ SSI للطرف النظير"
+    },
+    "Billing": {
+      "Invoices": "Invoices",
+      "Client Rate Card": "Client Rate Card"
+    }
+  },
+  "Public Layout": {
+    "Header": {
+      "Log In": "تسجيل الدخول",
+      "Dashboard": "لوحة المعلومات"
+    },
+    "Footer": {
+      "Home": "الصفحة الرئيسية",
+      "About Us": "من نحن",
+      "Contact": "التواصل",
+      "Terms of Use": "شروط الاستخدام",
+      "Privacy Policy": "سياسة الخصوصية",
+      "Onboarding": "برنامج الالتحاق",
+      "Emrgo (DIFC) Ltd | All rights reserved": "{{code}} {{year}} وثاق (الاسواق المالية) Ltd | جميع الحقوق محفوظة",
+      "Emrgo Capital Platform JSC | All rights reserved": "{{code}} {{year}} شركة منصة وثاق المالية | جميع الحقوق محفوظة"
+    }
+  },
+  "Access Denied": {
+    "Access Denied": "الوصول مرفوض",
+    "You dont have permission to view this page at": "ليس لديك صلاحية لعرض هذه الصفحة على {{- referrer}} الرابط",
+    "Back to Dashboard": "ارجع الى لوحة المعلومات"
+  },
+  "Roles": {
+    "Arranger": "الجهة المنظمة",
+    "Corporate": " مقدمي الخدمات المؤسسية",
+    "Fiduciary": "ائتمانية",
+    "Investor": "المستثمر",
+    "Issuer": "المُصدر",
+    "Legal Counsel": "المستشار القانوني ",
+    "Obligor": "الملتزم",
+    "Sharia": "الهيئة الشرعية",
+    "Emrgo Service": "خدمات وثاق"
+  },
+  "Miscellaneous": {
+    "Page is under construction": "الصفحة تحت الانشاء.",
+    "Description": "{{- page Name}} قيد التطوير الفعال. من فضلك تحقق مره اخرى لاحقا من اجل تحديثات في الصفحة",
+    "Cancel": "إلغاء",
+    "Submit": "تسليم",
+    "Save": "حفظ",
+    "Save Form": "حفظ النموذج",
+    "Approve": "Approve",
+    "Last Saved": "تاريخ آخر حفظ {{- تاريخ}}",
+    "Update Details": "تحديث التفاصيل",
+    "Required": "مطلوب",
+    "Provide Supporting Docs": "رجاء تزويدنا بالمستندات الداعمة",
+    "Yes, Delete it": "نعم ، احذفها",
+    "Loading Page": "...تحميل الصفحة",
+    "Date cannot be before todays date": "لا يمكن أن يكون التاريخ المدخل قبل تاريخ اليوم"
+  },
+  "EntityGroupName": {
+    "ARRANGER": "الجهة المنظمة",
+    "FIDUCIARY": "ائتمانية",
+    "INVESTOR": "المستثمر",
+    "ISSUER": "المُصدر",
+    "LEGAL_COUNSEL": "المستشار القانوني ",
+    "OBLIGOR": "الملتزم",
+    "VISITOR": "الزائر",
+    "Emrgo Admin Group": "مجموعة وثاق الإدارية",
+    "ADMINISTRATOR": "الإداري",
+    "CO_ARRANGER": "الجهة المشاركة في ترتيب الطرح",
+    "BROKER": "الوسيط",
+    "Default Group": "المجموعة الافتراضية",
+    "Default Entity Group": "مجموعة الكيان القانوني الافتراضي"
+  },
+  "EntityGroupType": {
+    "ARRANGER": "الجهة المنظمة",
+    "FIDUCIARY": "ائتمانية",
+    "INVESTOR": "المستثمر",
+    "ISSUER": "المُصدر",
+    "LEGAL_COUNSEL": "المستشار القانوني ",
+    "OBLIGOR": "الملتزم",
+    "VISITOR": "الزائر",
+    "EMRGO_SERVICES": "خدمات وثاق",
+    "ADMINISTRATOR": "الإداري",
+    "CO_ARRANGER": "الجهة المشاركة في ترتيب الطرح",
+    "BROKER": "الوسيط"
+  }
+}

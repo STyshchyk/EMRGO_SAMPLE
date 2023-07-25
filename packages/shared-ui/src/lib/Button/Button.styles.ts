@@ -13,7 +13,7 @@ export const Button = styled.button<{
 }>`
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  
+
   /* Variants */
   ${({ $variant = "primary", theme }) => {
     if (theme.mode === "light") {

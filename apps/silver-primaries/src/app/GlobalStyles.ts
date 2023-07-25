@@ -2,6 +2,7 @@ import { Simulate } from "react-dom/test-utils";
 
 import { TTheme } from "@emrgo-frontend/theme";
 import { createGlobalStyle, css } from "styled-components";
+
 import input = Simulate.input;
 
 export const GlobalStyles = createGlobalStyle`

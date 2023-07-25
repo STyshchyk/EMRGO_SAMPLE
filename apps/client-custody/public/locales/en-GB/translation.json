@@ -1,0 +1,226 @@
+{
+  "Home": {
+    "Welcome to Emrgo": "Welcome to Emrgo"
+  },
+  "PublicHome": {
+    "Welcome to Emrgo Portal": "Welcome to Emrgo Portal"
+  },
+  "Header": {
+    "Entity Groups": "Entity Groups",
+    "Notifications": "Notifications",
+    "Dark Mode": "Dark Mode",
+    "Language": "Language",
+    "Settings": "Settings",
+    "Profile": "Profile",
+    "Help Desk": "Help Desk",
+    "Logout": "Logout"
+  },
+  "Sidebar": {
+    "Home": "Home",
+    "Administration": "Administration",
+    "Issuance": "Issuance",
+    "Blotter": "Blotter",
+    "Support": "Support",
+    "Securities Services": "Securities Services",
+    "Securities Admin": "Securities Admin",
+    "Settlement Admin": "Settlement Admin",
+    "Billing and Payments": "Billing and Payments",
+    "Bulletin Board": "Bulletin Board",
+    "Cash Management": "Cash Management",
+    "Help Desk": "Help Desk",
+    "Help Desk Modal": {
+      "Connect with Emrgo?": "Connect with Emrgo?",
+      "Please contact": "Please contact",
+      "for any support related queries": "for any support related queries",
+      "Get in Touch": "Get in Touch",
+      "Cancel": "Cancel"
+    },
+    "Reporting": "Reporting",
+    "Reconciliation": "Reconciliation",
+    "Billing": "Billing"
+  },
+  "Minor Navigation": {
+    "Home": {
+      "Home": "Home"
+    },
+    "Administration": {
+      "KYC": "KYC",
+      "Entity Details": "Entity Details",
+      "Entity Administration": "Entity Administration",
+      "KYCEdit": {
+        "Overview": "Overview",
+        "Classification": "Classification",
+        "Identification": "Identification",
+        "Banking": "Banking",
+        "Shareholders/UBO": "Shareholders/UBO",
+        "Key Individuals": "Key Individuals",
+        "Entitys Wealth": "Entity's Wealth",
+        "Entity/Individual Wealth": "Entity/Individual Wealth",
+        "Experience": "Experience",
+        "Documents": "Documents",
+        "Client Terms": "Client Terms",
+        "Individuals Details": "Individuals Details",
+        "Multi-Factor Authentication": "Multi-Factor Authentication"
+      },
+      "Entity": "Entity",
+      "2FA Tickets": "2FA Tickets",
+      "Client Terms": "Client Terms",
+      "Entity Account Management": "Entity Account Management",
+      "Visitors": "Visitors",
+      "Parent Entity": "Parent Entity",
+      "Users": "Users"
+    },
+    "Blotter": {
+      "Overview": "Overview"
+    },
+    "Support": {
+      "2FA Tickets": "2FA Tickets"
+    },
+    "Bulletin Board": {
+      "Bulletin Board": "Bulletin Board"
+    },
+    "Issuance": {
+      "Ongoing Issuances": "Ongoing Issuances",
+      "Overview": "Overview",
+      "Emrgo Engagement": "Emrgo Engagement",
+      "Engagements": "Engagements",
+      "Investors": "Investors",
+      "Issuer": "Issuer",
+      "Termsheet": "Termsheet",
+      "Pre-Allocation": "Pre-Allocation",
+      "Doc Management": "Doc Management",
+      "Closing": "Closing",
+      "Signing": "Signing",
+      "Admission & Settlement": "Admission & Settlement",
+      "Custody & Settlement": "Custody & Settlement",
+      "Add Account": "Add Account",
+      "Manage Accounts": "Manage Accounts",
+      "Payment Administration": "Payment Administration",
+      "CMA Notification": "CMA Notification",
+      "SPE Incorporation": "SPE Incorporation"
+    },
+    "Cash Management": {
+      "Accounts": "Accounts",
+      "Cash Statement": "Cash Statement",
+      "Entity Accounts": "Entity Accounts",
+      "Internal Transfer": "Internal Transfer",
+      "External Payments": "External Payments",
+      "Incoming Payments": "Incoming Payments"
+    },
+    "Reports": {
+      "Securities Holdings": "Securities Holdings",
+      "Securities Transactions": "Securities Transactions",
+      "Cash Balances": "Cash Balances",
+      "Cash Statement": "Cash Statement",
+      "Reference Data": "Reference Data"
+    },
+    "Issuer Services": {
+      "Securities Registration": "Securities Registration",
+      "Custody & Settlement": "Custody & Settlement",
+      "Agency Services": "Agency Services",
+      "Registrar": "Registrar"
+    },
+    "Investor Services": {
+      "Custody & Settlement": "Custody & Settlement",
+      "Trustee Services": "Trustee Services",
+      "Holdings": "Holdings"
+    },
+    "Securities Services": {
+      "Securities Registration": "Securities Registration",
+      "Custody & Settlement": "Custody & Settlement",
+      "Agency Services": "Agency Services",
+      "Registrar": "Registrar",
+      "Trustee Services": "Trustee Services",
+      "Securities List": "Securities List",
+      "Payment Administration": "Payment Administration",
+      "FX Transaction List": "FX Transaction List"
+    },
+    "Securities Admin": {
+      "Securities List": "Securities List"
+    },
+    "Settlement Admin": {
+      "Counterparty List": "Counterparty List",
+      "Counterparty SSI List": "Counterparty SSI List"
+    },
+    "Billing": {
+      "Invoices": "Invoices",
+      "Client Rate Card": "Client Rate Card"
+    }
+  },
+  "Public Layout": {
+    "Header": {
+      "Log In": "Log In",
+      "Dashboard": "Dashboard"
+    },
+    "Footer": {
+      "Home": "Home",
+      "About Us": "About Us",
+      "Contact": "Contact",
+      "Terms of Use": "Terms of Use",
+      "Privacy Policy": "Privacy Policy",
+      "Onboarding": "Onboarding",
+      "Emrgo (DIFC) Ltd | All rights reserved": "{{code}} {{year}} EMRGO (DIFC) Ltd | All rights reserved",
+      "Emrgo Capital Platform JSC | All rights reserved": "{{code}} {{year}} Emrgo Capital Platform JSC | All rights reserved"
+    }
+  },
+  "Access Denied": {
+    "Access Denied": "Access Denied",
+    "You dont have permission to view this page at": "You don't have permission to view this page at {{- referrer}}",
+    "Back to Dashboard": "Back to Dashboard"
+  },
+  "Roles": {
+    "Arranger": "Arranger",
+    "Corporate": " Corporate ",
+    "Fiduciary": "Fiduciary",
+    "Investor": "Investor",
+    "Issuer": "Issuer",
+    "Legal Counsel": " Legal Counsel",
+    "Obligor": "Obligor",
+    "Sharia": "Sharia",
+    "Emrgo Service": "Emrgo Service"
+  },
+  "Miscellaneous": {
+    "Page is under construction": "Page is under construction.",
+    "Description": "{{- pageName}} is under active development. Please check back later for updates",
+    "Cancel": "Cancel",
+    "Submit": "Submit",
+    "Approve": "Approve",
+    "Save": "Save",
+    "Save Form": "Save Form",
+    "Last Saved": "Last Saved {{- date}}",
+    "Update Details": "Update Details",
+    "Required": "Required",
+    "Provide Supporting Docs": "Provide Supporting Docs",
+    "Yes, Delete it": "Yes, Delete it",
+    "Loading Page": "Loading Page...",
+    "Date cannot be before todays date": "Date cannot be before today's date"
+  },
+  "EntityGroupName": {
+    "ARRANGER": "ARRANGER",
+    "FIDUCIARY": "FIDUCIARY",
+    "INVESTOR": "INVESTOR",
+    "ISSUER": "ISSUER",
+    "LEGAL_COUNSEL": "LEGAL_COUNSEL",
+    "OBLIGOR": "OBLIGOR",
+    "VISITOR": "VISITOR",
+    "Emrgo Admin Group": "Emrgo Admin Group",
+    "ADMINISTRATOR": "ADMINISTRATOR",
+    "CO_ARRANGER": "CO_ARRANGER",
+    "BROKER": "BROKER",
+    "Default Group": "Default Group",
+    "Default Entity Group": "Default Entity Group"
+  },
+  "EntityGroupType": {
+    "ARRANGER": "ARRANGER",
+    "FIDUCIARY": "FIDUCIARY",
+    "INVESTOR": "INVESTOR",
+    "ISSUER": "ISSUER",
+    "LEGAL_COUNSEL": "LEGAL_COUNSEL",
+    "OBLIGOR": "OBLIGOR",
+    "VISITOR": "VISITOR",
+    "EMRGO_SERVICES": "EMRGO_SERVICES",
+    "ADMINISTRATOR": "ADMINISTRATOR",
+    "CO_ARRANGER": "CO_ARRANGER",
+    "BROKER": "BROKER"
+  }
+}

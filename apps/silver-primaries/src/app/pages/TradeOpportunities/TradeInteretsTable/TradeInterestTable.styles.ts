@@ -1,6 +1,7 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
+
 import * as Invited from "../../components/Buttons/Button.styles";
 
 interface IActionProps {

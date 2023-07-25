@@ -17,20 +17,20 @@ import { IInviteUserProps, UserRoles } from "./InviteUser.types";
 const filterTypes2: IDropdownItem<TFilterType2>[] = [
   {
     value: UserRoles.operationsPlatformSolutions,
-    label: "Operations (Platform Solutions)"
+    label: "Operations (Platform Solutions)",
   },
   {
     value: UserRoles.finance,
-    label: "Finance"
+    label: "Finance",
   },
   {
     value: UserRoles.compliance,
-    label: "Compliance"
+    label: "Compliance",
   },
   {
     value: UserRoles.relationshipManagerSales,
-    label: "Relationship Manager (Sales)"
-  }
+    label: "Relationship Manager (Sales)",
+  },
 ];
 export const InviteUserComponent = ({}: IInviteUserProps) => {
   const { form, validationSchema } = ensureNotNull(inviteUserContext());
@@ -48,7 +48,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
           const role = values.role.value;
           const payload = {
             ...values,
-            role: role
+            role: role,
           };
           doInviteUser(payload, {
             onSuccess: (response) => {
@@ -62,7 +62,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
             },
             onError: () => {
               showErrorToast("Error occured during inviting new user");
-            }
+            },
           });
           // alert(JSON.stringify(payload, null, 2));
           formikHelpers.setSubmitting(false);

@@ -7,11 +7,10 @@ import {
   PanelContent,
   PanelHeader,
   PanelHeaderImage,
-  PanelHeaderRight
+  PanelHeaderRight,
 } from "@emrgo-frontend/shared-ui";
-import { useDarkMode } from "usehooks-ts";
-
 import { ensureNotNull } from "@emrgo-frontend/utils";
+import { useDarkMode } from "usehooks-ts";
 
 import { IssuanceTable } from "../IssuanceTable/IssuanceTable";
 import { useTradeOpportunitiesContext } from "../TradeOpportunities.provider";
@@ -34,9 +33,7 @@ export const BankPanel: FC<IBankPanelProps> = ({ bank }) => {
         </PanelHeaderRight>
       </PanelHeader>
       <PanelContent>
-        <IssuanceTable
-          opportunities={opportunities}
-        />
+        <IssuanceTable opportunities={opportunities} />
       </PanelContent>
     </Panel>
   );

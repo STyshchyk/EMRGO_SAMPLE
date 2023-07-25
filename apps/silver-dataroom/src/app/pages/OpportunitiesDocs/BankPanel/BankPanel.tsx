@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-import { Panel, PanelContent, PanelHeader, PanelHeaderImage, PanelHeaderRight } from "@emrgo-frontend/shared-ui";
+import {
+  Panel,
+  PanelContent,
+  PanelHeader,
+  PanelHeaderImage,
+  PanelHeaderRight,
+} from "@emrgo-frontend/shared-ui";
 import { useDarkMode } from "usehooks-ts";
 
 import { IssuanceTable } from "../IssuanceTable/IssuanceTable";
@@ -22,9 +28,7 @@ export const BankPanel: FC<IBankPanelProps> = ({ bank }) => {
         </PanelHeaderRight>
       </PanelHeader>
       <PanelContent>
-        <IssuanceTable
-          opportunities={opportunities}
-        />
+        <IssuanceTable opportunities={opportunities} />
       </PanelContent>
     </Panel>
   );

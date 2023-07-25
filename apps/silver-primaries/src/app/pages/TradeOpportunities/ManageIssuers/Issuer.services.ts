@@ -1,8 +1,6 @@
-import { IIssuer } from "@emrgo-frontend/types";
+import { IIssuer, IShownStatus } from "@emrgo-frontend/types";
 
 import { dashboardApi } from "../../../services/APIService";
-import { IShownStatus } from "@emrgo-frontend/types";
-
 
 export const postIssuer = (requestData: IIssuer) => {
   return dashboardApi({
@@ -36,10 +34,9 @@ export const updateIssuer = (payload: IIssuer) => {
   });
 };
 
-
 export const shownIssuer = (payload: IShownStatus) => {
   return dashboardApi({
     method: "PATCH",
-    url: `/v1/internal/issuer/${payload.id}/${payload.status}`
+    url: `/v1/internal/issuer/${payload.id}/${payload.status}`,
   });
 };

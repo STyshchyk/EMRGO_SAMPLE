@@ -1,8 +1,7 @@
 import React, { FC, useState } from "react";
 
 import { silverQueryKeys } from "@emrgo-frontend/constants";
-import { getEntities, getTradeInterests } from "@emrgo-frontend/services";
-import { postTradeInterest } from "@emrgo-frontend/services";
+import { getEntities, getTradeInterests, postTradeInterest } from "@emrgo-frontend/services";
 import { Button, FormikInput, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
 import { ITradeInterestPayload } from "@emrgo-frontend/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,12 +14,11 @@ import { tradeInterestSchema } from "./TradeInterest.schema";
 import * as Styles from "./TradeInterest.styles";
 import { ITradeInterestModal } from "./TradeInterest.types";
 
-
 const initialValues: ITradeInterestPayload = {
   opportunityId: "",
   status: "assigned",
   detail: "",
-  userId: ""
+  userId: "",
 };
 export const TradeInterest: FC<ITradeInterestModal> = () => {
   const [file, setFile] = useState<File>();
@@ -30,13 +28,12 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
   const { opportunityData } = useTradeInterestModal();
   const { modifyData } = useTradeInterestModal();
 
-  const { data: entityData } = useQuery(
-    {
-      queryFn: getEntities,
-      queryKey: [silverQueryKeys.onboarding.fetch],
-      select: (data) => data.filter(entity => entity.entityKycStatus === 3 && entity.userKycStatus === 3)
-    }
-  );
+  const { data: entityData } = useQuery({
+    queryFn: getEntities,
+    queryKey: [silverQueryKeys.onboarding.fetch],
+    select: (data) =>
+      data.filter((entity) => entity.entityKycStatus === 3 && entity.userKycStatus === 3),
+  });
   const { mutate: doPostTradeInterest } = useMutation(postTradeInterest);
   return (
     <Styles.AddSellsideModal>
@@ -46,33 +43,37 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
           initialValues={{
             name: modifyData ? modifyData.name : opportunityData?.issuer.name ?? "N/A",
             buyside: modifyData ? modifyData.buyside : null,
-            detail: modifyData ? modifyData.detail : ""
-          }
-          }
+            detail: modifyData ? modifyData.detail : "",
+          }}
           validationSchema={tradeInterestSchema}
           onSubmit={async (values, formikHelpers) => {
             const payload: ITradeInterestPayload = {
               opportunityId: opportunityData?.id ?? "",
               userId: values.buyside.userId ?? "",
               detail: values.detail,
-              status: "assigned"
+              status: "assigned",
             };
             doPostTradeInterest(payload, {
               onSuccess: () => {
                 modalActions.setModalOpen(false);
-                queryClient.invalidateQueries([reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` })]).then(() => {
-                  console.log("success");
-                });
+                queryClient
+                  .invalidateQueries([
+                    reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, {
+                      tradeInterests: `${opportunityData?.id}`,
+                    }),
+                  ])
+                  .then(() => {
+                    console.log("success");
+                  });
                 showSuccessToast("Successfully created trade interest");
               },
               onError: () => {
                 showErrorToast("Error posting trade interest");
-              }
+              },
             });
             // alert(JSON.stringify(payload, null, 2));
             // formikHelpers.setSubmitting(false);
-          }
-          }
+          }}
         >
           {({ values, setFieldValue, errors, touched, setFieldError }) => (
             <Form className={"invite-user"}>
@@ -128,11 +129,7 @@ export const TradeInterest: FC<ITradeInterestModal> = () => {
 
               <div style={{ display: "flex", marginTop: "25px" }}>
                 <Styles.Spacer />
-                <Button
-                  type={"submit"}
-                >
-                  {modifyData ? "Close" : "Notify"}
-                </Button>
+                <Button type={"submit"}>{modifyData ? "Close" : "Notify"}</Button>
               </div>
             </Form>
           )}

@@ -57,20 +57,18 @@ export const TooltipButtonActions = styled.button<{ $disabled?: boolean }>`
   border: none;
   font-size: ${rem(12)};
 
-
-
   ${(props) =>
-  props.theme.mode === "light" &&
-  css`
-      color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.black.100")} ;
+    props.theme.mode === "light" &&
+    css`
+      color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.black.100")};
       &:hover {
-        color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.green5")} ;
+        color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.green5")};
       }
     `}
 
   ${(props) =>
-  props.theme.mode === "dark" &&
-  css`
+    props.theme.mode === "dark" &&
+    css`
       color: ${getTheme("colors.white.100")};
     `}
 `;

@@ -1,6 +1,5 @@
-import { BASE_API_URL  as  BASE_URL} from "@emrgo-frontend/constants";
+import { BASE_API_URL as BASE_URL } from "@emrgo-frontend/constants";
 import axios from "axios";
-
 
 const BASE_API_URL = BASE_URL;
 export const authApi = axios.create({
@@ -8,11 +7,10 @@ export const authApi = axios.create({
   headers: { "Content-Type": "application/json" },
   //Skip running auth refresh for this instance
   validateStatus: null,
-  withCredentials: true
+  withCredentials: true,
 });
 
 authApi.defaults.headers.common["Content-Type"] = "application/json";
-
 
 // dashboardApi.interceptors.response.use(
 //   (response) => response,
@@ -35,7 +33,7 @@ authApi.defaults.headers.common["Content-Type"] = "application/json";
 //       } catch (refreshError: any) {
 //         // Handle refresh token request error
 //         console.error("Error refreshing access token:", refreshError);
-//         // Redirect to login or show an error message
+//         // Navigate to login or show an error message
 //         if (
 //           refreshError.response.status === 403 ||
 //           refreshError.response.status === 500 ||

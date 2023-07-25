@@ -2,8 +2,8 @@
 
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import viteTsConfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
+import viteTsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   cacheDir: "../../node_modules/.vite/silver-dataroom",

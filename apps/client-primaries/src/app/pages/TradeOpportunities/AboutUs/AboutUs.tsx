@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-import { ChatIcon, CloseIcon, CustodyIcon, EyeIcon, HandshakeIcon } from "@emrgo-frontend/shared-ui";
+import {
+  ChatIcon,
+  CloseIcon,
+  CustodyIcon,
+  EyeIcon,
+  HandshakeIcon,
+} from "@emrgo-frontend/shared-ui";
 
 import * as Styles from "./AboutUs.styles";
 import { IAboutUsProps } from "./AboutUs.types";

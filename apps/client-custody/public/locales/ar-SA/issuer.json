@@ -1,0 +1,20 @@
+{
+  "Entity Representative": "معلومات الاتصال",
+  "Entity Details": "معلومات الجهة ",
+  "Form": {
+    "First Name": "الاسم الاول",
+    "Middle Name": "الاسم الأوسط",
+    "Last Name": "الاسم الأخير",
+    "Email ID": "عنوان البريد الإلكتروني ",
+    "Entity Type": "نوع الجهة...",
+    "Display Role": "الدور",
+    "Entity Name": "اسم الجهة",
+    "Buttons": {
+      "Invite Issuer": "دعوة المُصدر",
+      "Existing Issuer": "المُصدر الحالي",
+      "New Issuer": "مُصدر جديد"
+    },
+    "Issuer": "مُصدر..."
+  },
+  "Existing Issuer": "المُصدر الحالي"
+}

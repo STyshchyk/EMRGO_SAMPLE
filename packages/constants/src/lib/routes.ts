@@ -13,10 +13,9 @@ export const clientModuleURLs: IMap = {
   authentication: import.meta.env["VITE_CLIENT_AUTH_URL"],
   primaries: import.meta.env["VITE_CLIENT_PRIMARIES_URL"],
   secondaries: import.meta.env["VITE_CLIENT_SECONDARIES_URL"],
+  custody: import.meta.env["VITE_CLIENT_CUSTODY_URL"],
   account: import.meta.env["VITE_CLIENT_ACCOUNT_URL"],
 };
-
-console.debug("DEBUG clientModuleURLs: ", clientModuleURLs);
 
 export const clientAuthenticationRoutes = {
   home: "",
@@ -80,6 +79,10 @@ export const clientAccountRoutes = {
     platformAccess: "platform-access",
     dataRoom: "data-room",
   }),
+};
+
+export const clientCustodyRoutes = {
+  home: "/",
 };
 
 export const BASE_API_URL = import.meta.env["VITE_API_URL"];

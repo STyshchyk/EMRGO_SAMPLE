@@ -20,7 +20,7 @@ dashboardApi.interceptors.response.use(
       try {
         await dashboardApi({
           method: "post",
-          url: "v2/refreshTokens"
+          url: "v2/refreshTokens",
         });
 
         // Retry the original request with the updated token
@@ -29,7 +29,7 @@ dashboardApi.interceptors.response.use(
       } catch (refreshError: any) {
         // Handle refresh token request error
         console.error("Error refreshing access token:", refreshError);
-        // Redirect to login or show an error message
+        // Navigate to login or show an error message
         if (
           refreshError.response.status === 403 ||
           refreshError.response.status === 500 ||

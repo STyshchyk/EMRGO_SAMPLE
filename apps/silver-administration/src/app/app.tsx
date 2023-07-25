@@ -5,14 +5,14 @@ import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
+
 import { Administration } from "./pages";
 import { User } from "./pages/Users";
-
 
 const router = createBrowserRouter([
   {
     path: routes.home,
-    element: <Navigate to={routes.administration.users} replace={true} />
+    element: <Navigate to={routes.administration.users} replace={true} />,
   },
   {
     path: routes.administration.users,
@@ -20,15 +20,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <User />
+        element: <User />,
       },
       {
         index: true,
-        element: <Navigate to={routes.administration.users} replace />
-      }
-    ]
-  }
-
+        element: <Navigate to={routes.administration.users} replace />,
+      },
+    ],
+  },
 ]);
 
 export function App() {

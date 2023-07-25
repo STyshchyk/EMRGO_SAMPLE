@@ -1,4 +1,11 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useLayoutEffect, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useCopyToClipboard } from "react-use";
 
 import { useToast } from "@emrgo-frontend/shared-ui";
@@ -29,12 +36,9 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     disable();
   }, []);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
   const onAcceptTerms = () => {
     setShowClientTermsModal(false);
-
   };
 
   const onDownloadTerms = () => {
@@ -49,7 +53,11 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
 
   const onPrintTerms = () => {
     // TODO: Implement this code.
-    window.open(clientTermsDocumentURL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=768,height=920");
+    window.open(
+      clientTermsDocumentURL,
+      "_blank",
+      "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=768,height=920"
+    );
     const newWindow = window.open(clientTermsDocumentURL, "");
     if (newWindow) {
       newWindow.onload = () => {
@@ -71,7 +79,6 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
 
   const onRejectTerms = () => {
     // TODO: Implement this code.
-
   };
 
   const state: ISilverDashboardWrapperContext = {
@@ -81,7 +88,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     onPrintTerms,
     onShareTerms,
     onRejectTerms,
-    numberOfNotifications: 1
+    numberOfNotifications: 1,
   };
 
   return (

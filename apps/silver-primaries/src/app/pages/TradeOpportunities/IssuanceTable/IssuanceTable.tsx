@@ -1,24 +1,27 @@
 import { useNavigate } from "react-router-dom";
 
-import { silverPrimariesRoutes, silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { silverQueryKeys as queryKeys, silverPrimariesRoutes } from "@emrgo-frontend/constants";
+import { showOpportunity } from "@emrgo-frontend/services";
 import {
   ActionTooltip,
   currencyRenderer,
   Table,
   TooltipButtonActions,
   TooltipButtonBox,
-  useToast
+  useToast,
 } from "@emrgo-frontend/shared-ui";
-import { IOpportunityFetch } from "@emrgo-frontend/types";
+import { IOpportunityFetch, TShown } from "@emrgo-frontend/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { reverse } from "named-urls";
 
 import { CountdownTimer } from "../../components/CountdownTimer";
 import { getOpportunityStatusLabel } from "../../helpers";
-import { useOpportunityStore, useTradeInterestModal, useTradeOpportunitiesStore } from "../../store";
-import { TShown } from "@emrgo-frontend/types";
-import { showOpportunity } from "@emrgo-frontend/services";
+import {
+  useOpportunityStore,
+  useTradeInterestModal,
+  useTradeOpportunitiesStore,
+} from "../../store";
 import { IIssuanceTableProps } from "./IssuanceTable.types";
 
 const columnHelper = createColumnHelper<IOpportunityFetch>();
@@ -32,53 +35,52 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
   const setOportunityInfo = useOpportunityStore((state) => state.opportunityAction);
   const { mutate: setShownOpportunity } = useMutation(showOpportunity, {
     onSuccess: () => {
-      client.invalidateQueries([queryKeys.primaries.tradeOpportunities.fetch]).then(() => {
-      });
+      client.invalidateQueries([queryKeys.primaries.tradeOpportunities.fetch]).then(() => {});
     },
     onError: () => {
       showErrorToast("Error setting status for Opportunity");
-    }
+    },
   });
 
   const columns = [
     columnHelper.accessor("name", {
-      header: "Issuance name"
+      header: "Issuance name",
     }),
     columnHelper.accessor("issuer.name", {
-      header: "Issuer"
+      header: "Issuer",
     }),
     columnHelper.accessor("type.name", {
       header: "Type",
-      cell: ({ row }) => `${row.original.type?.name ?? "n/a"}`
+      cell: ({ row }) => `${row.original.type?.name ?? "n/a"}`,
     }),
     columnHelper.accessor("currency.name", {
       header: "Currency",
-      cell: (props) => `${props?.getValue() || "n/a"}`
+      cell: (props) => `${props?.getValue() || "n/a"}`,
     }),
     columnHelper.accessor("amount", {
       header: "Amount",
-      cell: (props) => `${currencyRenderer(props.getValue()) || "n/a"}`
+      cell: (props) => `${currencyRenderer(props.getValue()) || "n/a"}`,
     }),
     columnHelper.accessor("return", {
       header: "Return",
-      cell: (props) => `${props?.getValue() || 0}%`
+      cell: (props) => `${props?.getValue() || 0}%`,
     }),
     columnHelper.accessor("tenor", {
-      cell: (props) => (props.getValue() ? `${props?.getValue()} years` : "n/a")
+      cell: (props) => (props.getValue() ? `${props?.getValue()} years` : "n/a"),
     }),
     columnHelper.accessor("isin", {
-      header: "ISIN"
+      header: "ISIN",
     }),
     columnHelper.accessor("status", {
       header: "Status",
       cell: ({ row }) => {
         return `${getOpportunityStatusLabel(row.original?.statusId) ?? "N/A"}`;
-      }
+      },
     }),
     columnHelper.accessor("timeLeft", {
       header: "Time left",
       // TODO : Replace with countown time
-      cell: (props) => <CountdownTimer date={props.getValue()} />
+      cell: (props) => <CountdownTimer date={props.getValue()} />,
       // cell: (props) => `${props.getValue() || "n/a"}`
     }),
     columnHelper.display({
@@ -94,7 +96,7 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
           //   }}
           // />
         );
-      }
+      },
     }),
     columnHelper.display({
       id: "Actions",
@@ -119,26 +121,24 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                   Modify Opportunity
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={!rowData.isShown
-                  }
+                  $disabled={!rowData.isShown}
                   onClick={() => {
                     if (!rowData.isShown) return;
                     setShownOpportunity({
                       id: rowData.id,
-                      status: TShown.hide
+                      status: TShown.hide,
                     });
                   }}
                 >
                   Deactivate Opportunity
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={rowData.isShown
-                  }
+                  $disabled={rowData.isShown}
                   onClick={() => {
                     if (rowData.isShown) return;
                     setShownOpportunity({
                       id: rowData.id,
-                      status: TShown.show
+                      status: TShown.show,
                     });
                   }}
                 >
@@ -146,8 +146,7 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                 </TooltipButtonActions>
                 <TooltipButtonActions
                   onClick={() => {
-                    if (tradeActions.setOpportunityData)
-                      tradeActions.setOpportunityData(rowData);
+                    if (tradeActions.setOpportunityData) tradeActions.setOpportunityData(rowData);
 
                     tradeActions.setModalOpen(true);
                   }}
@@ -158,7 +157,12 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
                   onClick={() => {
                     if (tradeActions.setOpportunityData) {
                       tradeActions.setOpportunityData(rowData);
-                      navigate(reverse(`${silverPrimariesRoutes.primaries.tradeOpportunity.details.home}`, { opportunityId: `${rowData.id}` }));
+                      navigate(
+                        reverse(
+                          `${silverPrimariesRoutes.primaries.tradeOpportunity.details.home}`,
+                          { opportunityId: `${rowData.id}` }
+                        )
+                      );
                     }
                   }}
                 >
@@ -174,15 +178,14 @@ export const IssuanceTable = ({ opportunities }: IIssuanceTableProps) => {
             }
           ></ActionTooltip>
         );
-      }
-    })
+      },
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: opportunities,
-    getCoreRowModel: getCoreRowModel()
-
+    getCoreRowModel: getCoreRowModel(),
   });
 
   return (

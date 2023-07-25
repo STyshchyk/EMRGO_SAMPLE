@@ -1,0 +1,91 @@
+@import "../../../styles/config.scss";
+
+.issuanceOverview {
+  .tableHeader {
+    display: flex;
+    justify-content: space-between;
+    .tableHeading {
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .success {
+    color: lightgreen;
+  }
+
+  .titleText {
+    margin-bottom: 0.5rem;
+  }
+
+  .placementType {
+    margin-bottom: 2rem;
+    margin-top: 0;
+  }
+
+  .sectionHeading {
+    color: #979797;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .tableCol {
+    // text-align: left;
+    flex: 1;
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .tableBody {
+    .tableRow {
+      cursor: pointer;
+      .rowData {
+        display: flex;
+        justify-content: space-between;
+      }
+      .rowDetails {
+        padding: 1rem;
+        background-color: #e5e5e5;
+        width: 100%;
+        font-size: 1rem;
+        .actionDivider {
+          margin: 1rem 0;
+          border: 1px solid #bbb;
+        }
+        .flexRow {
+          display: flex;
+          justify-content: flex-start;
+        }
+        .dataSection {
+          width: 100%;
+          padding-right: 3rem;
+          margin-bottom: 1rem;
+          .dataSectionHeading {
+            color: #888;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+          }
+          .sectionLabelContainer {
+            margin-right: 1rem;
+            width: 50%;
+            .sectionLabel {
+              margin-top: 0;
+              margin-bottom: 0;
+            }
+          }
+          .sectionValueContainer {
+            .sectionValue {
+              margin-top: 0;
+              margin-bottom: 0;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}

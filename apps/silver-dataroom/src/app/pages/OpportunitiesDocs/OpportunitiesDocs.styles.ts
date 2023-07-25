@@ -1,7 +1,6 @@
 import { rem } from "polished";
 import styled from "styled-components";
 
-
 export const DashboardContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,5 +14,4 @@ export const OpportunitiesDocs = styled.div`
   /* Layout */
   /* Element Styles */
   /* Text styles */
-
 `;

@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export interface ISilverDashboardWrapperProps extends PropsWithChildren{
-}
+export interface ISilverDashboardWrapperProps extends PropsWithChildren {}
 
 export interface ISilverDashboardWrapperContext {
   numberOfNotifications: number;

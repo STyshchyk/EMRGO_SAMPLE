@@ -1,0 +1,46 @@
+{
+  "You do not have access to this module!": "ليس لديك حق الوصول إلى هذه الوحدة!",
+  "Currency": "العملة",
+  "Size": "الحجم",
+  "Rate": "المعدل",
+  "Denomination": "فئة",
+  "Pre-Allocation Finalization": {
+    "Pre-Allocation Finalization": "إتمام التخصيص المبدئي",
+    "Finalize Pre-Allocations": "إتمام التخصيصات المسبقة",
+    "Headers": {
+      "Investor": "المستثمر",
+      "Pre-Allocation Amount": "مبلغ التخصيص المبدئي",
+      "Certificates": "الشهادات",
+      "Expression of Interest Status": "حالة إبداء الاهتمام"
+    }
+  },
+  "Pre-Allocation Allocation": {
+    "Pre-Allocation Allocation": "التخصيص المسبق",
+    "Send for Confirmation": "إرسال للتأكيد",
+    "Total Pre-Allocation Amount must be equal to the given issuance size": "يجب أن يكون إجمالي مبلغ التخصيص المبدئي مساوياً لحجم الإصدار المحدد",
+    "Table": {
+      "Warnings": {
+        "Investor field cannot be empty": "لا يمكن ترك حقل المستثمر فارغًا",
+        "Pre-Allocation amount should be a multiple of": "يجب أن يكون مبلغ التخصيص المبدئي من مضاعفات {{denomination}}"
+      },
+      "SUBSCRIPTION ENTRIES TO BE SENT FOR CONFIRMATION": "يتم إرسال إدخالات الاكتتاب للتأكيد",
+      "Headers": {
+        "Entity Group ID": "معرف مجموعة الجهة",
+        "Investor": "المستثمر",
+        "Pre-Allocation Amount": "مبلغ التخصيص المبدئي",
+        "Certificates (Auto-calculated)": "الشهادة (حساب تلقائي)"
+      },
+      "Total": "الاجمالي",
+      "Total Pre-Allocation Amount": "إجمالي مبلغ التخصيص المبدئي",
+      "Total Number of Certificates": "العدد الإجمالي للشهادات"
+    }
+  },
+  "Pre-Allocation Confirmation": {
+    "Pre-Allocation Confirmation": "تأكيد التخصيص المبدئي",
+    "Confirm Pre-Allocation": "تأكيد التخصيص المبدئي"
+  },
+  "Status": {
+    "Confirmation Pending": "بانتظار التأكيد",
+    "Confirmed": "مؤكد"
+  }
+}

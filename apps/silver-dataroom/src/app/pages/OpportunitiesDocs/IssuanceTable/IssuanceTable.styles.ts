@@ -14,8 +14,8 @@ export const Button = styled.button<IActionProps>`
   position: relative;
 
   ${({ theme, $isToggled }) =>
-  theme.mode === "light" &&
-  css`
+    theme.mode === "light" &&
+    css`
       color: ${getTheme("colors.black.60")};
 
       &:hover {
@@ -23,14 +23,14 @@ export const Button = styled.button<IActionProps>`
       }
 
       ${$isToggled &&
-  css`
+      css`
         color: ${getTheme("colors.black.100")};
       `}
     `}
 
   ${({ theme, $isToggled }) =>
-  theme.mode === "dark" &&
-  css`
+    theme.mode === "dark" &&
+    css`
       color: ${getTheme("colors.white.60")};
 
       &:hover {
@@ -38,7 +38,7 @@ export const Button = styled.button<IActionProps>`
       }
 
       ${$isToggled &&
-  css`
+      css`
         color: ${getTheme("colors.white.100")};
       `}
     `}
@@ -71,14 +71,14 @@ export const ButtonActions = styled.button`
     color: #11e4d9;
   }
   ${(props) =>
-  props.theme.mode === "light" &&
-  css`
+    props.theme.mode === "light" &&
+    css`
       color: ${getTheme("colors.black.100")};
     `}
 
   ${(props) =>
-  props.theme.mode === "dark" &&
-  css`
+    props.theme.mode === "dark" &&
+    css`
       color: ${getTheme("colors.white.100")};
     `}
 `;
@@ -127,4 +127,3 @@ export const Action = styled.button<IActionProps>`
       `}
     `}
 `;
-

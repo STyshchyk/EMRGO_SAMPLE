@@ -7,6 +7,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 import * as Styles from "./ActionTooltip.styles";
 import { IActionTooltipProps } from "./ActionTooltip.types";
+
 export const ActionTooltip: FC<IActionTooltipProps> = ({ children, title }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -47,7 +48,7 @@ export const ActionTooltip: FC<IActionTooltipProps> = ({ children, title }) => {
         >
           <Button sx={{ padding: "5px 10px", minWidth: "40px" }} onClick={handleOpen}>
             <Styles.PanelHeaderIconCustom>
-              <Styles.TableActionButton/>
+              <Styles.TableActionButton />
             </Styles.PanelHeaderIconCustom>
           </Button>
         </Tooltip>

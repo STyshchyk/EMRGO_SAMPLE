@@ -1,8 +1,11 @@
 import { FC } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { silverQueryKeys as queryKeys, silverQueryKeys } from "@emrgo-frontend/constants";
-import { silverPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import {
+  silverQueryKeys as queryKeys,
+  silverPrimariesRoutes as routes,
+  silverQueryKeys,
+} from "@emrgo-frontend/constants";
 import { getTradeInterests } from "@emrgo-frontend/services";
 import {
   BreadcrumbLink,
@@ -13,17 +16,18 @@ import {
   Panel,
   PanelContent,
   PanelHeader,
-  useToast
+  useToast,
 } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
+import { reverse } from "named-urls";
 
 import { useAddSellsideStore, useSellSideStore, useTradeInterestModal } from "../../store/store";
 import { TradeInterestTable } from "./TradeInterestTable";
 import { ITradeInterestComponent } from "./TradeInterestTable.types";
-import { reverse } from "named-urls";
 
-
-export const TradeInterestComponent: FC<ITradeInterestComponent> = ({}: ITradeInterestComponent) => {
+export const TradeInterestComponent: FC<
+  ITradeInterestComponent
+> = ({}: ITradeInterestComponent) => {
   const navigate = useNavigate();
   const { isModalOpen, modalActions } = useAddSellsideStore();
   const { showErrorToast } = useToast();
@@ -34,11 +38,21 @@ export const TradeInterestComponent: FC<ITradeInterestComponent> = ({}: ITradeIn
     cacheTime: 0,
     queryFn: async () => {
       const data = await getTradeInterests(opportunityData?.id ?? opportunityId);
-      return await (await data).data.data;
+      return await (
+        await data
+      ).data.data;
     },
-    queryKey: [reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` })]
+    queryKey: [
+      reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, {
+        tradeInterests: `${opportunityData?.id}`,
+      }),
+    ],
   });
-  console.log(reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, { tradeInterests: `${opportunityData?.id}` }))
+  console.log(
+    reverse(silverQueryKeys.primaries.tradeOpportunities.tradeInterest.fetch, {
+      tradeInterests: `${opportunityData?.id}`,
+    })
+  );
   return (
     <DashboardContent>
       <Breadcrumbs>
@@ -49,9 +63,7 @@ export const TradeInterestComponent: FC<ITradeInterestComponent> = ({}: ITradeIn
       </Breadcrumbs>
       <Panel>
         <PanelHeader>Trade interests</PanelHeader>
-        <PanelContent>
-          {data && <TradeInterestTable tradeInterest={data} />}
-        </PanelContent>
+        <PanelContent>{data && <TradeInterestTable tradeInterest={data} />}</PanelContent>
       </Panel>
     </DashboardContent>
   );

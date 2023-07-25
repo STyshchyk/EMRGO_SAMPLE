@@ -10,7 +10,9 @@ import { ITradeManagementProps } from "./TradeManagement.types";
 import { SellsideEvidence } from "./SellsideEvidenceModal";
 import { TradeTicket } from "./TradeTicketModal";
 
-export const TradeManagementComponent: FC<ITradeManagementProps> = ({ children }: ITradeManagementProps) => {
+export const TradeManagementComponent: FC<ITradeManagementProps> = ({
+  children,
+}: ITradeManagementProps) => {
   const { isModalOpen: isTradeOpen, modalActions: tradeActions } = useTradeInterestModal();
   const { isModalOpen: isTicketOpen, modalActions: ticketActions } = useTradeTicketStore();
   const [sellSide, setSellSide] = useState(false);

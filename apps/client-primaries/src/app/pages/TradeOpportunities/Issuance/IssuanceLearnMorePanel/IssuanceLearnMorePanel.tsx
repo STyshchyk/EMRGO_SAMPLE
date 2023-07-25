@@ -8,7 +8,6 @@ import {
   PanelHeader,
   PanelHeaderTitle,
 } from "@emrgo-frontend/shared-ui";
-
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { useIssuanceContext } from "../Issuance.provider";

@@ -14,12 +14,10 @@ import { ManageIssuers } from "./pages/TradeOpportunities/ManageIssuers";
 import { ManageSellside } from "./pages/TradeOpportunities/ManageSellside";
 import { TradeInterestComponent } from "./pages/TradeOpportunities/TradeInteretsTable";
 
-
-
 const router = createBrowserRouter([
   {
     path: routes.home,
-    element: <Navigate to={routes.primaries.tradeOpportunity.home} replace={true} />
+    element: <Navigate to={routes.primaries.tradeOpportunity.home} replace={true} />,
   },
   {
     path: routes.primaries.home,
@@ -27,43 +25,41 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.primaries.tradeOpportunity.home,
-        element: <TradeOpportunities />
+        element: <TradeOpportunities />,
       },
       {
         path: routes.primaries.tradeOpportunity.tradeTickets,
-        element: <p>asdasd</p>
+        element: <p>asdasd</p>,
       },
       {
         path: routes.primaries.tradeOpportunity.issuances,
-        element: <Issuances />
+        element: <Issuances />,
       },
       {
         path: routes.primaries.tradeOpportunity.manageIssuers,
-        element: <ManageIssuers />
+        element: <ManageIssuers />,
       },
       {
         path: routes.primaries.tradeOpportunity.details.home,
-        element: <TradeInterestComponent />
+        element: <TradeInterestComponent />,
       },
       {
         path: routes.primaries.tradeOpportunity.manageSellside,
-        element: <ManageSellside />
+        element: <ManageSellside />,
       },
       {
         path: routes.primaries.tradeManagement.home,
-        element: <TradeManagement/>
+        element: <TradeManagement />,
       },
-    ]
-  }
-
-
+    ],
+  },
 ]);
 
 export function App() {
   const { isDarkMode } = useDarkMode();
 
   return (
-    <ThemeProvider theme={ lightTheme}>
+    <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <UserProvider>
         <RouterProvider router={router} />
