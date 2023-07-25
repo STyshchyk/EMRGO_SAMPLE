@@ -1,9 +1,9 @@
 import * as React from "react";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { silverAdministrationRoutes } from "@emrgo-frontend/constants";
-import { ArrowBackwardIcon, Button, FormikInput, Logo, useToast } from "@emrgo-frontend/shared-ui";
+import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo, useToast } from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
@@ -28,7 +28,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
   const { enable, disable } = useDarkMode();
   const { updateUser, removeUser, setMFA, mfa } = useUserStore();
   const { mutate: doLoginUser } = useMutation(loginUser);
-
+  const [isPassShown, setPassShown] = useState(false);
   const onSubmit = (values: ILoginFormValues) => {
     doLoginUser(values, {
       onSuccess: (response) => {
@@ -72,6 +72,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
     <Styles.LoginForm>
       <Logo />
       <Formik
+        validateOnMount={true}
         enableReinitialize={true}
         initialValues={{
           email: "",
@@ -83,11 +84,11 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
           onSubmit(values);
         }}
       >
-        {({ values, setFieldValue, isValid }) => (
+        {({ values, setFieldValue, isValid, errors }) => (
           <Form>
             <React.Fragment>
               {activeStep === 0 && (
-                <Styles.LoginForm $isAligned={false}>
+                <Styles.Form $isAligned={false}>
                   <div>
                     <Heading>Login</Heading>
                     <SubHeading>You&apos;re now ready to access Emrgo.</SubHeading>
@@ -99,7 +100,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                       name="email"
                       component={FormikInput}
                       as={"email"}
-                      label={"Enter Email"}
+                      label={"Email Address"}
                     />
                   </OneCol>
 
@@ -109,21 +110,41 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                       name="password"
                       component={FormikInput}
                       as={"password"}
-                      type={"password"}
-                      label={"Enter Password"}
+                      type={!isPassShown ? "password" : "text"}
+                      label={"Password"}
                     />
                   </OneCol>
-
                   <OneCol>
-                    <Field size="large" type={"submit"} component={Button} onClick={handleNext}>
+                    <Checkbox
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassShown(e.target.checked)}
+                    >
+                      Show password
+                    </Checkbox>
+                  </OneCol>
+                  <OneCol>
+                    <Field
+                      size="large"
+                      type={"submit"}
+                      component={Button}
+                      disabled={errors.password || errors.email}
+                      onClick={() => {
+                        if (errors.password || errors.email)return;
+                        handleNext();
+                      }}
+                    >
                       Submit
                     </Field>
                   </OneCol>
-                </Styles.LoginForm>
+                  <OneCol>
+
+                  </OneCol>
+
+
+                </Styles.Form>
               )}
 
               {activeStep === 1 && (
-                <Styles.LoginForm $isAligned={true}>
+                <Styles.Form $isAligned={true}>
                   <Styles.BackButton onClick={handleBack} type={"button"}>
                     <ArrowBackwardIcon />
                   </Styles.BackButton>
@@ -151,14 +172,16 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                   <Styles.HelpListItem>
                     <Link to={routes.dash.administration.home}>Raise support ticket</Link>
                   </Styles.HelpListItem>
-                </Styles.LoginForm>
+                </Styles.Form>
               )}
             </React.Fragment>
-            <Styles.Spacer />
-            <LoginHelp />
+
+
           </Form>
         )}
       </Formik>
+      <Styles.Spacer />
+      <LoginHelp />
     </Styles.LoginForm>
   );
 };

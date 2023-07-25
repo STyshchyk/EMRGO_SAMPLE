@@ -9,17 +9,37 @@ export const LoginForm = styled.div<{ $isAligned?: boolean }>`
   gap: ${rem(24)};
   max-width: ${rem(500)};
   padding: ${rem(92)} 0;
-  min-height: 100vh;
+  min-height: calc(100vh);
+
   ${({ $isAligned }) =>
     $isAligned &&
     css`
       justify-content: center;
       align-items: center;
     `}
-`;
 
+`;
+export const Form = styled.div<{ $isAligned?: boolean }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: ${rem(24)};
+  max-width: ${rem(500)};
+
+
+  ${({ $isAligned }) => {
+    if ($isAligned) return (css`
+      justify-content: center;
+      align-items: center;
+    `);
+
+  }
+  }
+
+`;
 export const Spacer = styled.div`
   flex: 1;
+
 `;
 export const HelpListItem = styled.li`
   margin: 0;
