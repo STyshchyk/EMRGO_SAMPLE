@@ -23,32 +23,32 @@ const IssuerServices = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.issuerSecServices.securitiesRegistration,
-      link: routes.dashboard.issuerSecServices.securitiesRegistration,
+      path: routes.dashboard.custody.issuerSecServices.securitiesRegistration,
+      link: routes.dashboard.custody.issuerSecServices.securitiesRegistration,
       text: "Minor Navigation.Issuer Services.Securities Registration",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_ISSUER.view.key,
       ]),
     },
     {
-      path: routes.dashboard.issuerSecServices.custodyAndSettlement,
-      link: routes.dashboard.issuerSecServices.custodyAndSettlement,
+      path: routes.dashboard.custody.issuerSecServices.custodyAndSettlement,
+      link: routes.dashboard.custody.issuerSecServices.custodyAndSettlement,
       text: "Minor Navigation.Issuer Services.Custody & Settlement",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key,
       ]),
     },
     {
-      path: routes.dashboard.issuerSecServices.agencyServices,
-      link: routes.dashboard.issuerSecServices.agencyServices,
+      path: routes.dashboard.custody.issuerSecServices.agencyServices,
+      link: routes.dashboard.custody.issuerSecServices.agencyServices,
       text: "Minor Navigation.Securities Services.Payment Administration",
       acls: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_ISSUER.view.key,
       ]),
     },
     {
-      path: routes.dashboard.issuerSecServices.registrar,
-      link: routes.dashboard.issuerSecServices.registrar,
+      path: routes.dashboard.custody.issuerSecServices.registrar,
+      link: routes.dashboard.custody.issuerSecServices.registrar,
       text: "Minor Navigation.Issuer Services.Registrar",
       acls: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_ISSUER.view.key,
@@ -60,11 +60,11 @@ const IssuerServices = () => {
 
   return (
     <Routes>
-      <Route exact path={routes.dashboard.issuerSecServices.home}>
+      <Route exact path={routes.dashboard.custody.issuerSecServices.home}>
         <Navigate to={nextAccessibleRoutePath} />
       </Route>
 
-      <Route path={routes.dashboard.issuerSecServices.securitiesRegistration}>
+      <Route path={routes.dashboard.custody.issuerSecServices.securitiesRegistration}>
         <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
         <PageWrapper>
@@ -72,21 +72,21 @@ const IssuerServices = () => {
         </PageWrapper>
       </Route>
 
-      <Route path={routes.dashboard.issuerSecServices.custodyAndSettlement}>
+      <Route path={routes.dashboard.custody.issuerSecServices.custodyAndSettlement}>
         <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
         <PageWrapper>
           <CustodyAndSettlement />
         </PageWrapper>
       </Route>
-      <Route path={routes.dashboard.issuerSecServices.agencyServices}>
+      <Route path={routes.dashboard.custody.issuerSecServices.agencyServices}>
         <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
         <PageWrapper>
           <AgencyServices />
         </PageWrapper>
       </Route>
-      <Route path={routes.dashboard.issuerSecServices.registrar}>
+      <Route path={routes.dashboard.custody.issuerSecServices.registrar}>
         <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
         <PageWrapper>

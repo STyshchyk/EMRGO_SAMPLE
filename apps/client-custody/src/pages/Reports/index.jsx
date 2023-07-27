@@ -22,32 +22,32 @@ const Reports = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.reports.securities.holdings,
-      link: routes.dashboard.reports.securities.holdings,
+      path: routes.dashboard.custody.reports.securities.holdings,
+      link: routes.dashboard.custody.reports.securities.holdings,
       text: "Minor Navigation.Reports.Securities Holdings",
       disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.REPORTS.view.key]),
     },
     {
-      path: routes.dashboard.reports.securities.transactions,
-      link: routes.dashboard.reports.securities.transactions,
+      path: routes.dashboard.custody.reports.securities.transactions,
+      link: routes.dashboard.custody.reports.securities.transactions,
       text: "Minor Navigation.Reports.Securities Transactions",
       disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.REPORTS.view.key]),
     },
     {
-      path: routes.dashboard.reports.cash.balances,
-      link: routes.dashboard.reports.cash.balances,
+      path: routes.dashboard.custody.reports.cash.balances,
+      link: routes.dashboard.custody.reports.cash.balances,
       text: "Minor Navigation.Reports.Cash Balances",
       disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.REPORTS.view.key]),
     },
     {
-      path: routes.dashboard.reports.cash.statement,
-      link: routes.dashboard.reports.cash.statement,
+      path: routes.dashboard.custody.reports.cash.statement,
+      link: routes.dashboard.custody.reports.cash.statement,
       text: "Minor Navigation.Reports.Cash Statement",
       disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.REPORTS.view.key]),
     },
     {
-      path: routes.dashboard.reports.securities.referenceData,
-      link: routes.dashboard.reports.securities.referenceData,
+      path: routes.dashboard.custody.reports.securities.referenceData,
+      link: routes.dashboard.custody.reports.securities.referenceData,
       text: "Minor Navigation.Reports.Reference Data",
       disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.REPORTS.view.key]),
     },
@@ -71,7 +71,7 @@ const Reports = () => {
         <Route path="securities/reference-data" element={<ReferenceDataReportPage />}></Route>
 
         {/*
-          <Route exact path={routes.dashboard.cashManagement.noAccess}>
+          <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}

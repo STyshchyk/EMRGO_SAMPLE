@@ -20,8 +20,8 @@ const SecuritiesAdmin = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.securitiesAdmin.securitiesList,
-      link: routes.dashboard.securitiesAdmin.securitiesList,
+      path: routes.dashboard.custody.securitiesAdmin.securitiesList,
+      link: routes.dashboard.custody.securitiesAdmin.securitiesList,
       text: "Minor Navigation.Securities Admin.Securities List",
       disabled: false,
     },

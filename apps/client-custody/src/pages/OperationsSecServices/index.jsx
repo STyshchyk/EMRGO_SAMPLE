@@ -36,44 +36,44 @@ const OperationsSecServices = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.opsSecServices.securitiesRegistration,
-      link: routes.dashboard.opsSecServices.securitiesRegistration,
+      path: routes.dashboard.custody.opsSecServices.securitiesRegistration,
+      link: routes.dashboard.custody.opsSecServices.securitiesRegistration,
       text: "Minor Navigation.Issuer Services.Securities Registration",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_OPS.view.key,
       ]),
     },
     {
-      path: routes.dashboard.opsSecServices.custodyAndSettlement,
-      link: routes.dashboard.opsSecServices.custodyAndSettlement,
+      path: routes.dashboard.custody.opsSecServices.custodyAndSettlement,
+      link: routes.dashboard.custody.opsSecServices.custodyAndSettlement,
       text: "Minor Navigation.Securities Services.Custody & Settlement",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key,
       ]),
     },
     {
-      path: routes.dashboard.opsSecServices.corporateActionEvents,
-      link: routes.dashboard.opsSecServices.corporateActionEvents,
+      path: routes.dashboard.custody.opsSecServices.corporateActionEvents,
+      link: routes.dashboard.custody.opsSecServices.corporateActionEvents,
       text: "Corporate Action Diary",
       // disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key]),
     },
     {
-      path: routes.dashboard.opsSecServices.couponAdministration,
-      link: routes.dashboard.opsSecServices.couponAdministration,
+      path: routes.dashboard.custody.opsSecServices.couponAdministration,
+      link: routes.dashboard.custody.opsSecServices.couponAdministration,
       text: "Coupon Administration",
       // disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key]),
     },
     {
-      path: routes.dashboard.opsSecServices.agencyServices,
-      link: routes.dashboard.opsSecServices.agencyServices,
+      path: routes.dashboard.custody.opsSecServices.agencyServices,
+      link: routes.dashboard.custody.opsSecServices.agencyServices,
       text: "Minor Navigation.Securities Services.Payment Administration",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key,
       ]),
     },
     {
-      path: routes.dashboard.opsSecServices.registrar,
-      link: routes.dashboard.opsSecServices.registrar,
+      path: routes.dashboard.custody.opsSecServices.registrar,
+      link: routes.dashboard.custody.opsSecServices.registrar,
       text: "Minor Navigation.Securities Services.Registrar",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_OPS.view.key,
@@ -81,16 +81,16 @@ const OperationsSecServices = () => {
     },
     /*
     {
-      path: routes.dashboard.opsSecServices.trusteeServices,
-      link: routes.dashboard.opsSecServices.trusteeServices,
+      path: routes.dashboard.custody.opsSecServices.trusteeServices,
+      link: routes.dashboard.custody.opsSecServices.trusteeServices,
       text: 'Minor Navigation.Securities Services.Trustee Services',
       acls: [accessControlsList.SECURITIES_SERVICES_OPS.view.key],
     },
 
     */
     {
-      path: routes.dashboard.opsSecServices.fxTransactionList,
-      link: routes.dashboard.opsSecServices.fxTransactionList,
+      path: routes.dashboard.custody.opsSecServices.fxTransactionList,
+      link: routes.dashboard.custody.opsSecServices.fxTransactionList,
       text: "Minor Navigation.Securities Services.FX Transaction List",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.ENTITIES_LISTING.view.key,
@@ -98,8 +98,8 @@ const OperationsSecServices = () => {
     },
 
     {
-      path: routes.dashboard.opsSecServices.counterpartyList,
-      link: routes.dashboard.opsSecServices.counterpartyList,
+      path: routes.dashboard.custody.opsSecServices.counterpartyList,
+      link: routes.dashboard.custody.opsSecServices.counterpartyList,
       text: "Minor Navigation.Settlement Admin.Counterparty List",
       disabled:
         !authorizeRouteAccess(currentListOfAcls, [
@@ -107,8 +107,8 @@ const OperationsSecServices = () => {
         ]) || !isIntlSecTradeSettlementWorkflowEnabled,
     },
     {
-      path: routes.dashboard.opsSecServices.counterpartySSIList,
-      link: routes.dashboard.opsSecServices.counterpartySSIList,
+      path: routes.dashboard.custody.opsSecServices.counterpartySSIList,
+      link: routes.dashboard.custody.opsSecServices.counterpartySSIList,
       text: "Minor Navigation.Settlement Admin.Counterparty SSI List",
       disabled:
         !authorizeRouteAccess(currentListOfAcls, [
@@ -204,7 +204,7 @@ const OperationsSecServices = () => {
       ></Route>
 
       {/*
-      <Route path={routes.dashboard.opsSecServices.trusteeServices}>
+      <Route path={routes.dashboard.custody.opsSecServices.trusteeServices}>
         <MinorNavigation routes={PILL_ROUTE_CONFIGS} currentAccessList={accessControls} />
 
         <PageWrapper>

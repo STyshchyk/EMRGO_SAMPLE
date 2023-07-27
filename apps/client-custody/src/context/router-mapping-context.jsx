@@ -220,7 +220,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.cashManagement.home}*`,
+        path: `${routes.dashboard.custody.cashManagement.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -228,7 +228,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.reports.home}*`,
+        path: `${routes.dashboard.custody.reports.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -236,7 +236,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.issuerSecServices.home}*`,
+        path: `${routes.dashboard.custody.issuerSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -244,7 +244,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.investorSecServices.home}*`,
+        path: `${routes.dashboard.custody.investorSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -252,7 +252,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.opsSecServices.home}*`,
+        path: `${routes.dashboard.custody.opsSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -260,7 +260,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.securitiesAdmin.home}*`,
+        path: `${routes.dashboard.custody.securitiesAdmin.home}*`,
         disabled: !kycApprovalStatus || !isIntlSecTradeSettlementWorkflow,
       },
       {

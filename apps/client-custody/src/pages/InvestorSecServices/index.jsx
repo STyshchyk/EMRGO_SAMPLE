@@ -32,21 +32,21 @@ const InvestorServices = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.investorSecServices.custodyAndSettlement,
-      link: routes.dashboard.investorSecServices.custodyAndSettlement,
+      path: routes.dashboard.custody.investorSecServices.custodyAndSettlement,
+      link: routes.dashboard.custody.investorSecServices.custodyAndSettlement,
       text: "Minor Navigation.Investor Services.Custody & Settlement",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key,
       ]),
     },
     {
-      path: routes.dashboard.investorSecServices.corporateActionEvents,
-      link: routes.dashboard.investorSecServices.corporateActionEvents,
+      path: routes.dashboard.custody.investorSecServices.corporateActionEvents,
+      link: routes.dashboard.custody.investorSecServices.corporateActionEvents,
       text: "Corporate Action Diary",
     },
     {
-      path: routes.dashboard.investorSecServices.holdings,
-      link: routes.dashboard.investorSecServices.holdings,
+      path: routes.dashboard.custody.investorSecServices.holdings,
+      link: routes.dashboard.custody.investorSecServices.holdings,
       text: "Minor Navigation.Investor Services.Holdings",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.SECURITIES_SERVICES_INVESTOR.view.key,
@@ -54,15 +54,15 @@ const InvestorServices = () => {
     },
     /*
     {
-      path: routes.dashboard.investorSecServices.trusteeServices,
-      link: routes.dashboard.investorSecServices.trusteeServices,
+      path: routes.dashboard.custody.investorSecServices.trusteeServices,
+      link: routes.dashboard.custody.investorSecServices.trusteeServices,
       text: 'Minor Navigation.Investor Services.Trustee Services',
       acls: [accessControlsList.SECURITIES_SERVICES_INVESTOR.view.key],
     },
     */
     {
-      path: routes.dashboard.investorSecServices.counterpartyList,
-      link: routes.dashboard.investorSecServices.counterpartyList,
+      path: routes.dashboard.custody.investorSecServices.counterpartyList,
+      link: routes.dashboard.custody.investorSecServices.counterpartyList,
       text: "Minor Navigation.Settlement Admin.Counterparty List",
       disabled:
         !authorizeRouteAccess(currentListOfAcls, [
@@ -70,8 +70,8 @@ const InvestorServices = () => {
         ]) || !isIntlSecTradeSettlementWorkflowEnabled,
     },
     {
-      path: routes.dashboard.investorSecServices.counterpartySSIList,
-      link: routes.dashboard.investorSecServices.counterpartySSIList,
+      path: routes.dashboard.custody.investorSecServices.counterpartySSIList,
+      link: routes.dashboard.custody.investorSecServices.counterpartySSIList,
       text: "Minor Navigation.Settlement Admin.Counterparty SSI List",
       disabled:
         !authorizeRouteAccess(currentListOfAcls, [
@@ -125,7 +125,7 @@ const InvestorServices = () => {
         }
       ></Route>
       {/*
-      <Route path={routes.dashboard.investorSecServices.trusteeServices}>
+      <Route path={routes.dashboard.custody.investorSecServices.trusteeServices}>
         <MinorNavigation routes={PILL_ROUTE_CONFIGS} currentAccessList={accessControls} />
 
         <PageWrapper>

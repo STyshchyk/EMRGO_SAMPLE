@@ -23,8 +23,8 @@ const BillingAndPayments = () => {
 
   const PILL_ROUTE_CONFIGS = [
     {
-      path: routes.dashboard.cashManagement.manageAccounts,
-      link: routes.dashboard.cashManagement.manageAccounts,
+      path: routes.dashboard.custody.cashManagement.manageAccounts,
+      link: routes.dashboard.custody.cashManagement.manageAccounts,
       text: "Minor Navigation.Cash Management.Accounts",
       disabled: !authorizeRouteAccess(currentListOfAcls, [
         accessControlsList.ACCOUNT.manage.key,
@@ -33,8 +33,8 @@ const BillingAndPayments = () => {
       ]),
     },
     {
-      path: routes.dashboard.cashManagement.cashStatement,
-      link: routes.dashboard.cashManagement.cashStatement,
+      path: routes.dashboard.custody.cashManagement.cashStatement,
+      link: routes.dashboard.custody.cashManagement.cashStatement,
       text: "Minor Navigation.Cash Management.Cash Statement",
       // disabled: !['EMRGO_SERVICES', 'INVESTOR', 'ISSUER'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [
@@ -43,15 +43,15 @@ const BillingAndPayments = () => {
       ]),
     },
     {
-      path: routes.dashboard.cashManagement.accountTransfer,
-      link: routes.dashboard.cashManagement.accountTransfer,
+      path: routes.dashboard.custody.cashManagement.accountTransfer,
+      link: routes.dashboard.custody.cashManagement.accountTransfer,
       text: "Minor Navigation.Cash Management.Internal Transfer",
       // disabled: !['EMRGO_SERVICES'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
     },
     {
-      path: routes.dashboard.cashManagement.paymentInstructions,
-      link: routes.dashboard.cashManagement.paymentInstructions,
+      path: routes.dashboard.custody.cashManagement.paymentInstructions,
+      link: routes.dashboard.custody.cashManagement.paymentInstructions,
       text: "Minor Navigation.Cash Management.External Payments",
       // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [
@@ -60,8 +60,8 @@ const BillingAndPayments = () => {
       ]),
     },
     {
-      path: routes.dashboard.cashManagement.incomingPayments,
-      link: routes.dashboard.cashManagement.incomingPayments,
+      path: routes.dashboard.custody.cashManagement.incomingPayments,
+      link: routes.dashboard.custody.cashManagement.incomingPayments,
       text: "Minor Navigation.Cash Management.Incoming Payments",
       // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
@@ -94,7 +94,7 @@ const BillingAndPayments = () => {
         <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
         <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
         {/*
-          <Route exact path={routes.dashboard.cashManagement.noAccess}>
+          <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}

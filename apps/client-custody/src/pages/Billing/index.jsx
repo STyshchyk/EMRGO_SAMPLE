@@ -60,7 +60,7 @@ const Billing = () => {
         </Route>
 
         {/*
-          <Route exact path={routes.dashboard.cashManagement.noAccess}>
+          <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}
