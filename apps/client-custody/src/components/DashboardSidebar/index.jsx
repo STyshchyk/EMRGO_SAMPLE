@@ -105,9 +105,9 @@ const bulletinBoard = {
 
 const custody = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
-  baseURLPattern: /(?:\/dashboard\/(?:securities-services|reports|cash-management)\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/)(?:[\w-/]*)/,
   displayName: "Custody",
-  homeUrl: routes.dashboard.cashManagement.home,
+  homeUrl: routes.dashboard.custody.cashManagement.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
 };
 
@@ -138,7 +138,7 @@ const issuerServices = {
   acls: ["Services/Issuer/View"],
   baseURLPattern: /(?:\/dashboard\/issuer-securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
-  homeUrl: routes.dashboard.issuerSecServices.home,
+  homeUrl: routes.dashboard.custody.issuerSecServices.home,
   requiredEntityTypes: ["ISSUER"],
 };
 

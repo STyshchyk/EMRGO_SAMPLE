@@ -28,13 +28,61 @@ const authenticationUrls = include("/authentication", {
 const dashboardUrls = include("/dashboard", {
   home: "",
   research: "research",
-  cashManagement: include("cash-management", {
+  custody: include("custody", {
     home: "",
-    manageAccounts: "manage-accounts",
-    cashStatement: "cash-statement",
-    accountTransfer: "internal-transfer",
-    paymentInstructions: "payment-instructions",
-    incomingPayments: "incoming-payments",
+    cashManagement: include("cash-management", {
+      home: "",
+      manageAccounts: "manage-accounts",
+      cashStatement: "cash-statement",
+      accountTransfer: "internal-transfer",
+      paymentInstructions: "payment-instructions",
+      incomingPayments: "incoming-payments",
+    }),
+    reports: include("reports", {
+      home: "",
+      securities: include("securities", {
+        holdings: "holdings",
+        transactions: "transactions",
+        referenceData: "reference-data",
+      }),
+      cash: include("cash", {
+        balances: "balances",
+        statement: "statement",
+      }),
+    }),
+    issuerSecServices: include("issuer-securities-services", {
+      home: "",
+      securitiesRegistration: "securities-registration",
+      custodyAndSettlement: "custody-and-settlement",
+      agencyServices: "agency-services",
+      registrar: "registrar",
+    }),
+    investorSecServices: include("investor-securities-services", {
+      home: "",
+      custodyAndSettlement: "custody-and-settlement",
+      trusteeServices: "trustee-services",
+      holdings: "holdings",
+      counterpartyList: "counterparty-list",
+      counterpartySSIList: "counterparty-ssi-list",
+      corporateActionEvents: "corporate-action-events",
+    }),
+    opsSecServices: include("securities-services", {
+      home: "",
+      securitiesRegistration: "securities-registration",
+      custodyAndSettlement: "custody-and-settlement",
+      trusteeServices: "trustee-services",
+      agencyServices: "agency-services",
+      registrar: "registrar",
+      fxTransactionList: "fx-transaction-list",
+      counterpartyList: "counterparty-list",
+      counterpartySSIList: "counterparty-ssi-list",
+      couponAdministration: "coupon-administration",
+      corporateActionEvents: "corporate-action-events",
+    }),
+    securitiesAdmin: include("securities-admin", {
+      home: "",
+      securitiesList: "securities-list",
+    }),
   }),
 
   administration: include("administration", {
@@ -141,51 +189,7 @@ const dashboardUrls = include("/dashboard", {
     view: "view",
     manage: "manage",
   }),
-  reports: include("reports", {
-    home: "",
-    securities: include("securities", {
-      holdings: "holdings",
-      transactions: "transactions",
-      referenceData: "reference-data",
-    }),
-    cash: include("cash", {
-      balances: "balances",
-      statement: "statement",
-    }),
-  }),
-  issuerSecServices: include("issuer-securities-services", {
-    home: "",
-    securitiesRegistration: "securities-registration",
-    custodyAndSettlement: "custody-and-settlement",
-    agencyServices: "agency-services",
-    registrar: "registrar",
-  }),
-  investorSecServices: include("investor-securities-services", {
-    home: "",
-    custodyAndSettlement: "custody-and-settlement",
-    trusteeServices: "trustee-services",
-    holdings: "holdings",
-    counterpartyList: "counterparty-list",
-    counterpartySSIList: "counterparty-ssi-list",
-    corporateActionEvents: "corporate-action-events",
-  }),
-  opsSecServices: include("securities-services", {
-    home: "",
-    securitiesRegistration: "securities-registration",
-    custodyAndSettlement: "custody-and-settlement",
-    trusteeServices: "trustee-services",
-    agencyServices: "agency-services",
-    registrar: "registrar",
-    fxTransactionList: "fx-transaction-list",
-    counterpartyList: "counterparty-list",
-    counterpartySSIList: "counterparty-ssi-list",
-    couponAdministration: "coupon-administration",
-    corporateActionEvents: "corporate-action-events",
-  }),
-  securitiesAdmin: include("securities-admin", {
-    home: "",
-    securitiesList: "securities-list",
-  }),
+
   settlementAdmin: include("settlement-admin", {
     home: "",
     counterpartyList: "counterparty-list",

@@ -14,48 +14,48 @@ import style from "./style.module.scss";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
-  baseURLPattern: /(?:\/dashboard\/cash-management\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/cash-management\/)(?:[\w-/]*)/,
   displayName: "Cash Management",
-  homeUrl: routes.dashboard.cashManagement.home,
+  homeUrl: routes.dashboard.custody.cashManagement.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
 };
 
 const reports = {
   acls: ["Reports/View"],
-  baseURLPattern: /(?:\/dashboard\/reports\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/reports\/)(?:[\w-/]*)/,
   displayName: "Reporting",
-  homeUrl: routes.dashboard.reports.home,
+  homeUrl: routes.dashboard.custody.reports.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
 const issuerServices = {
   acls: ["Services/Issuer/View"],
-  baseURLPattern: /(?:\/dashboard\/issuer-securities-services\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/issuer-securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
-  homeUrl: routes.dashboard.issuerSecServices.home,
+  homeUrl: routes.dashboard.custody.issuerSecServices.home,
   requiredEntityTypes: ["ISSUER"],
 };
 
 const investorServices = {
   acls: ["Services/Investor/View"],
-  baseURLPattern: /(?:\/dashboard\/investor-securities-services\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/investor-securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
-  homeUrl: routes.dashboard.investorSecServices.home,
+  homeUrl: routes.dashboard.custody.investorSecServices.home,
   requiredEntityTypes: ["INVESTOR"],
 };
 
 const securitiesServices = {
   acls: ["Services/Security/View", "Services/CustodyClearing/View"],
-  baseURLPattern: /(?:\/dashboard\/securities-services\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
-  homeUrl: routes.dashboard.opsSecServices.home,
+  homeUrl: routes.dashboard.custody.opsSecServices.home,
   requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
 const securitiesAdmin = {
   acls: ["Services/Security/View", "Services/CustodyClearing/View"],
-  baseURLPattern: /(?:\/dashboard\/securities-admin\/)(?:[\w-/]*)/,
+  baseURLPattern: /(?:\/dashboard\/custody\/securities-admin\/)(?:[\w-/]*)/,
   displayName: "Securities Admin",
-  homeUrl: routes.dashboard.securitiesAdmin.home,
+  homeUrl: routes.dashboard.custody.securitiesAdmin.home,
   requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
