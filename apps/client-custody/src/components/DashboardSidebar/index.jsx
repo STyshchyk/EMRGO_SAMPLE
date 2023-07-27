@@ -103,10 +103,10 @@ const bulletinBoard = {
   requiredEntityTypes: ["EMRGO_SERVICES", "BROKER", "INVESTOR"],
 };
 
-const cashManagement = {
+const custody = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
-  baseURLPattern: /(?:\/dashboard\/cash-management\/)(?:[\w-/]*)/,
-  displayName: "Cash Management",
+  baseURLPattern: /(?:\/dashboard\/(?:securities-services|reports|cash-management)\/)(?:[\w-/]*)/,
+  displayName: "Custody",
   homeUrl: routes.dashboard.cashManagement.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
 };
@@ -117,14 +117,6 @@ const billing = {
   displayName: "Billing",
   homeUrl: routes.dashboard.billing.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR"],
-};
-
-const reports = {
-  acls: ["Reports/View"],
-  baseURLPattern: /(?:\/dashboard\/reports\/)(?:[\w-/]*)/,
-  displayName: "Reporting",
-  homeUrl: routes.dashboard.reports.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
 
 const blotter = {
@@ -148,30 +140,6 @@ const issuerServices = {
   displayName: "Securities Services",
   homeUrl: routes.dashboard.issuerSecServices.home,
   requiredEntityTypes: ["ISSUER"],
-};
-
-const investorServices = {
-  acls: ["Services/Investor/View"],
-  baseURLPattern: /(?:\/dashboard\/investor-securities-services\/)(?:[\w-/]*)/,
-  displayName: "Securities Services",
-  homeUrl: routes.dashboard.investorSecServices.home,
-  requiredEntityTypes: ["INVESTOR"],
-};
-
-const securitiesServices = {
-  acls: ["Services/Security/View", "Services/CustodyClearing/View"],
-  baseURLPattern: /(?:\/dashboard\/securities-services\/)(?:[\w-/]*)/,
-  displayName: "Securities Services",
-  homeUrl: routes.dashboard.opsSecServices.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
-};
-
-const securitiesAdmin = {
-  acls: ["Services/Security/View", "Services/CustodyClearing/View"],
-  baseURLPattern: /(?:\/dashboard\/securities-admin\/)(?:[\w-/]*)/,
-  displayName: "Securities Admin",
-  homeUrl: routes.dashboard.securitiesAdmin.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
 // const settlementAdmin = {
@@ -279,14 +247,9 @@ const DashboardSidebar = ({ open }) => {
     billing: inProd ? undefined : billing,
     issuance,
     support,
+    custody,
     bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
-    cashManagement,
-    issuerServices: isIntlSecTradeSettlementWorkflow ? issuerServices : undefined,
-    investorServices: isIntlSecTradeSettlementWorkflow ? investorServices : undefined,
-    securitiesServices: isIntlSecTradeSettlementWorkflow ? securitiesServices : undefined,
-    securitiesAdmin: isIntlSecTradeSettlementWorkflow ? securitiesAdmin : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,
-    reports,
     blotter,
     reconciliation: isReconciliationFeatureEnabled ? reconciliation : undefined,
   };

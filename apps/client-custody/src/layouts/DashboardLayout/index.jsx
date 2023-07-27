@@ -6,6 +6,7 @@ import cx from "classnames";
 import PropTypes from "prop-types";
 
 import DashboardHeader from "../../components/DashboardHeader";
+import DashboardNavHeader from "../../components/DashboardNavHeader";
 import DashboardSidebar from "../../components/DashboardSidebar";
 import { useTheme } from "../../context/theme-context";
 import style from "./style.module.scss";
@@ -60,6 +61,7 @@ const DashboardLayout = ({ children }) => {
             }
           )}
         >
+          <DashboardNavHeader />
           <div className={style.drawerHeader} />
           <Box sx={(muiTheme) => muiTheme.mixins.toolbar} />
           <Outlet />
