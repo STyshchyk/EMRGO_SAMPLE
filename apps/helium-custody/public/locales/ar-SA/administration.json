@@ -1,0 +1,526 @@
+{
+  "Administration": "الإدارة",
+  "Rows per page": "عدد الصفوف في الصفحة",
+  "of": "من",
+  "No records to display": "لا توجد سجلات للعرض",
+  "EntityManagement": {
+    "EntitiesList": {
+      "ID": "المُعرِّف ",
+      "Entity Name": "اسم الجهة",
+      "TNC Status": " الشروط والأحكام ",
+      "Active": "نشط ",
+      "Go to Entity Groups list": "الانتقال إلى قائمة مجموعة الجهات ",
+      "True": "صح"
+    },
+    "EntityGroupsList": {
+      "Entity groups list": " قائمة مجموعة الجهات",
+      "Group ID": "مُعرِّف المجموعة",
+      "Group name": "اسم المجموعة",
+      "View Group Users": "عرض مجموعة المستخدمين"
+    },
+    "SingleEntityGroup": {
+      "Issuance Workflow": "سير الإصدار",
+      "Termsheet Workflow": "سير مذكرة الشروط",
+      "Blotter Workflow": "سير سجل المعاملات",
+      "KYC Workflow": "سير إجراء معرفة العميل",
+      "Pre-Allocation Workflow": "سير عمل التخصيص المسبق",
+      "Engagement Workflow": "سير التعاقد",
+      "Admission Workflow": "سير القبول",
+      "Group Management Workflow": "سير إدارة المجموعات",
+      "Signing Workflow": "سير التوقيع",
+      "Bulletin Management Workflow": "سير عمل إدارة النشرات",
+      "Support Ticket Management Workflow": "دعم سير عمل إدارة الاشعارات",
+      "Save": "حفظ",
+      "UsersList": {
+        "Users list": "قائمة المستخدمين",
+        "User Workflow ACLs": "مهام سير عمل المستخدم",
+        "Email": "البريد الإلكتروني",
+        "Full Name": "الاسم الكامل"
+      }
+    },
+    "EntityManagementTable": {
+      "Entities": "الكيانات",
+      "Entity Groups": "مجموعات الكيانات",
+      "Services Access": "Services Access",
+      "Primary Issuance": "Primary Issuance",
+      "Securities Services": "Securities Services",
+      "ENABLED": "ENABLED",
+      "ENABLE": "ENABLE",
+      "REQUESTED": "REQUESTED",
+      "ContextMenu": {
+        "Edit group types": "تحرير أنواع المجموعة",
+        "Set parent entity": "تعيين الكيان القابض",
+        "Review KYC": "مراجعة معلومات اعرف عميلك"
+      },
+      "Agreement": {
+        "Accept Agreement": "Accept Agreement",
+        "Request Agreement": "Request Agreement",
+        "Client Terms": "Client Terms",
+        "Client Terms_OBLIGOR": "Obligor Client Terms",
+        "Client Terms_ISSUER": "Issuer Client Terms",
+        "Investor Client Terms": "Investor Client Terms",
+        "Custody Agreement": "Custody Agreement",
+        "Admission Agreement": "Admission Agreement",
+        "Issuance Module": "Issuance Module",
+        "Securities Services": "Securities Services",
+        "Cancel": "إلغاء",
+        "Send Request": "Send Request"
+      },
+      "Headers": {
+        "EntityName": "اسم الكيان",
+        "ParentEntity": "الكيان القابض",
+        "LegalIdentifier": "المُعرِّف القانوني",
+        "LegalEntityIdentifier": "معرف الكيان القانوني",
+        "ClientTermStatus": "حالة شروط العميل",
+        "Active": "نشط",
+        "EntityPreferences": "تفضيلات الكيان",
+        "ValidGroupType": "نوع مجموعة صحيح",
+        "Actions": "الإجراءات"
+      },
+      "Buttons": {
+        "Manage Entity Groups": "إدارة مجموعات الكيانات",
+        "Manage Entity Users": "إدارة مستخدمي الكيانات",
+        "Edit Entity Preferences": "تحرير تفضيلات الكيان",
+        "Cancel": "إلغاء",
+        "Accept": "قبول"
+      },
+      "ActiveStatus": {
+        "true": "صحيح",
+        "false": "غير صحيح"
+      }
+    }
+  },
+  "KYC": {
+    "KYCManage": {
+      "Send Onboarding Information": "إرسال معلومات للإنضمام الى المنصة",
+      "SendOnboardingKitModal": {
+        "Contact Information": "معلومات الاتصال",
+        "Entity Information": "معلومات الجهة ",
+        "Send Onboarding Invitation": "إرسال دعوة للإنضمام إلى المنصة",
+        "First Name": "الاسم الاول",
+        "Middle Name": "الاسم الأوسط",
+        "Last Name": "الاسم الأخير",
+        "Email ID": "البريد الإلكتروني",
+        "Display Role": "الدور",
+        "Entity Name": "اسم الجهة",
+        "Entity Type": "نوع الجهة",
+        "Cancel": "إلغاء",
+        "Send": "إرسال"
+      },
+      "AssignEntityModal": {
+        "Assign & Approve": "التعيين والموافقة",
+        "First Name": "الاسم الأول",
+        "Middle Name": "الاسم الأوسط",
+        "Last Name": "الاسم الأخير",
+        "Entity Type": "نوع الكيان القانوني",
+        "Classification": "التصنيف",
+        "Role": "المنصب",
+        "Entity Name": "اسم الكيان القانوني",
+        "Cancel": "إلغاء"
+      },
+      "PlatformDashboard": {
+        "N/A": "غير متوفر",
+        "Entities": "الجهات",
+        "View KYC": "عرض إجراء معرفة العميل",
+        "Reject Entity KYC": "رفض إجراء معرفة العميل",
+        "Approve Entity KYC": "إعتماد اجراء معرفة العميل",
+        "Entity Name": "اسم الجهة",
+        "Entity Status": "حالة الجهة",
+        "Role": "الدور",
+        "Client Term Status": "حالة شروط العميل",
+        "Contact Person Name": "اسم جهة الاتصال ",
+        "Contact Person Email": "البريد الإلكتروني لجهة الاتصال ",
+        "Date Modified": "تاريخ التعديل",
+        "Modified By": "تم التعديل بواسطة",
+        "Date Added": "تاريخ الإضافة",
+        "Added By": "تم الإضافة بواسطة",
+        "T&C Status": " الشروط والأحكام ",
+        "Accepted": "مقبول",
+        "Pending": "معلق"
+      },
+      "EntityKYCStatusEnum": {
+        "--": "--",
+        "Requested": "مطلوب",
+        "Ongoing": "بشكل مستمر",
+        "Submitted": "تم إرسالة",
+        "Approved": "تمت الموافقة عليه",
+        "Declined": "مرفوضة"
+      },
+      "ClientTermsStatusEnum": {
+        "pending": "قيد الانتظار",
+        "review": "المراجعة",
+        "completed": "تام ",
+        "rejected": "مرفوض"
+      },
+      "EntityUserType": {
+        "CLIENT": "عميل",
+        "SERVICE_PROVIDER": "مقدمي خدمات"
+      }
+    },
+    "KycKsaEntityEdit": {
+      "Go Back": "اذهب إلى الخلف",
+      "Next": "التالي",
+      "Back": "الخلف",
+      "Reject": "رفض",
+      "Accept": "قبول",
+      "SECTION_1": "القسم 1: تصنيف العملاء ",
+      "SECTION_2": "القسم 2: متطلبات معرفة العميل",
+      "SECTION_3": "القسم 3: استبيان العقوبات",
+      "SECTION_4": "القسم 4: شروط الاستخدام والإقرار والتقديم",
+      "Thank you for your submission": "شكراً على تقديم المستندات",
+      "NO_RETIAL_CLIENT": "عذراً، لا نقبل عملاء التجزئة في الوقت الحالي.",
+      "RECLASSIFY_RETAIL": "أعد تصنيف فئة العميل الخاصة بك",
+      "GO_HOME": "الذهاب إلى wethaq.capital",
+      "Your Classification": "التصنيف الخاص بك",
+      "NOTICE_QUALIFIED": " (الشركة )إشعار التصنيف كعميل مؤهلا لجميع أنشطة الأعمال مع شركة منصة وثاق المالية     ",
+      "QUALIFIED_TREAT": "نحيطكم علماً بأنه بموجب هذا الإشعار، سوف نعاملكم كعميل مؤهل )وفق تعريف هذا المصطلح في المادة 36 من لائحة مؤسسات السوق المالية وقائمة المصطلحات المستخدمة في لوائح هيئة السوق المالية وقواعدها( لجميع أنشطة الأعمال مع الشركة",
+      "QUALIFIED_RESPONSIBLE": "إنكم مسؤولون عن إخطارنا دون تأخير بأي تغيير من شأنه أن يؤثر على هذا التصنيف.",
+      "QUALIFIED_ACKNOWLEDGE": "الإقرار والمتابعة كعميل مؤهلا",
+      "NOTICE_INSTITUTIONAL": "(الشركة )إشعار التصنيف كعميل مؤسسي لجميع أنشطة الأعمال مع شركة منصة وثاق المالية",
+      "INSTITUTIONAL_TREAT": "نحيطكم علماً بأنه بموجب هذا الإشعار، سوف نعاملكم كعميل مؤسسي )وفق تعريف هذا المصطلح في المادة 36 من لائحة مؤسسات السوق المالية وقائمة المصطلحات المستخدمة في لوائح هيئة السوق المالية وقواعدها( لجميع أنشطة الأعمال مع الشركة",
+      "INSTITUTIONAL_RESPONSIBLE": "إنكم مسؤولون عن إخطارنا دون تأخير بأي تغيير من شأنه أن يؤثر على هذا التصنيف.",
+      "INSTITUTIONAL_ACKNOWLEDGE": "الإقرار والمتابعة كعميل مؤسسي"
+    },
+    "KYCWelcomSection": {
+      "Welcome to Wethaq": "مرحباً بكم في وثاق",
+      "KYC_NOTICE_SA": "قبل أن نمنحك حق الوصول إلى المنصة، نحن ملزمون بالامتثال لإجراءات معرفة العميل وفق المادة 36 من لائحة مؤسسات السوق المالية وقائمة المصطلحات المستخدمة في لوائح هيئة السوق المالية وقواعدها",
+      "KYC_NOTICE_AE": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of the Dubai Financial Services Authority (DFSA) as shown below.",
+      "Your KYC Process": "عملية معرفة العميل الخاصة بك",
+      "CONTACT_US": "إذا كانت لديك أي أسئلة أثناء عملية معرفة العميل، يرجى مراسلتنا على ",
+      "Proceed": "المتابعة",
+      "Complete KYC": "اكمل اجراءات معرفة العميل",
+      "KYC_CUSTOMER_NOTICE_SA": "قبل أن نمنحك حق الوصول إلى المنصة، نحن ملزمون بالامتثال لإجراءات معرفة العميل وفق المادة 36 من لائحة مؤسسات السوق المالية وقائمة المصطلحات المستخدمة في لوائح هيئة السوق المالية وقواعدها",
+      "KYC_CUSTOMER_NOTICE_AE": "Before we grant you access to the Platform, we are required to conduct Know Your Customer (KYC) checks according to the regulations of the Dubai Financial Services Authority (DFSA) as shown below."
+    },
+    "KsaKycClientClassificationForm": {
+      "Not Classified": "غير مصنف",
+      "Qualified Client": "عميل مؤهل",
+      "Retail Client": "عميل تجزئة",
+      "Institutional Client": "عميل مؤسسي",
+      "FORM_NOTICE": "يرجى ملاحظة أن العملاء المصنفين على فئة عميل مؤهل أو فئة عميل مؤسسي (كما هو محدد في لوائح هيئة السوق المالية) قد يتم قبولهم في منصة وثاق فقط. إذا كنت لا تندرج تحت أي من الفئات المدرجة أدناه أو إذا كنت لا ترغب في أن يتم معاملتك كعميل مؤهل أو عميل مؤسسي، فلن تُمنح حق النفاذ إلى منصة وثاق والاستفادة من الخدمات المقدمة فيها.",
+      "Current Classification": "التصنيف الحالي",
+      "RETAIL_CLIENT_LABEL": "فئة أ‌: عميل تجزئة",
+      "QUALIFIED_CLIENT_LABEL": "فئة ب: عميل مؤهل",
+      "INSTITUTIONAL_CLIENT_LABEL": "فئة ج: عميل مؤسسي",
+      "Proceed": "المتابعة",
+      "RETAIL_CLIENT_INFO": "ذا كنت ترغب في أن يتم معاملتك كعميل تجزئة، يرجى إبلاغنا عن طريق النقر فوق الزر الموجود على اليمين. ولكن  يرجى ملاحظة أنه إذا اخترت ذلك، فلن نتمكن من تقديم خدماتنا لك لأننا نقدم فقط الخدمات المالية للعملاء المؤهلين و العملاء المؤسسيين",
+      "ACKNOWLEDGE_RETAIL": "الإقرار والمتابعة كعميل تجزئة",
+      "Kindly tick the relevant box if your entity is": "يرجى تحديد المربع ذي الصلة إذا كان الكيان الخاص بك واحدًا مما يلي"
+    },
+    "KsaKYCRequirementsForm": {
+      "UPLOAD_NOTICE": "يجب أن تكون كل المستندات المراد تحميلها أدناه )أ( باللغة العربية أو الإنجليزية أو مصحوبة بترجمة رسمية إلى أيٍّ منهما؛ و )ب( مصدقة على أنها نسخة طبق الأصل من المستند الأصلي من قبل محامٍ مسجل أو محاسب قانوني أو مدير بنك أو ضابط شرطة أو موظف سفارة أو قنصلية.",
+      "KYC Requirements": "متطلبات معرفة العميل",
+      "Proceed": "المتابعة",
+      "Ultimate Beneficial Owner": "الأشخاص الطبيعيين المالكين أو المسيطرين على 25 % أو أكثر من الحصص",
+      "Directors": "المديرين وكبار الإداريين",
+      "Authorised Signatories": "الأشخاص المفوضين بالتوقيع",
+      "Business Operations and Tax Details": "نشاط الأعمال والتفاصيل الضريبية",
+      "Building Number": "رقم المبنى",
+      "City": "المدينة",
+      "Street Name": "إسم الشارع",
+      "Postal Code": "الرمز البريدي",
+      "District": "الحي",
+      "Additional Number": "الرقم الاضافي",
+      "Country": "بلد التسجيل",
+      "Business Phone": "الهاتف",
+      "Name": "الاسم",
+      "Commercial Registration": "رقم السجل التجاري أو ما يماثله",
+      "Date of Incorporation": "تاريخ التأسيس أو بدء ممارسة النشاط",
+      "Articles of Association": "النظام الأساسي",
+      "Ownership Structure Chart": "مخطط هيكل الملكية",
+      "Legal Entity Identifier": "معرّف الكيان القانوني )LEI( إذا كان موجوداً",
+      "Qualified Client Supporting Docs": "الوثائق الداعمة للنوع ب: عميل مؤهل ",
+      "Institutional Client Supporting Docs": "الوثائق الداعمة للنوع ج: عميل مؤسسي",
+      "First Name": "الاسم الأول",
+      "Last Name": "الأسم الأحير",
+      "Passport Copy": "نسخة جواز السفر",
+      "Country of Residence": "بلد الإقامة",
+      "Yes": "نعم",
+      "No": "لا",
+      "Remove": "حذف",
+      "Is this UBO a Politically Exposed person?": "هل هذا الشخص شخصية ﺒﺎﺭﺯﺓ ﺳﻴﺎﺳﻴﺎً؟",
+      "Add UBO": " أضف شخص طبيعي مالك أو مسيطرعلى 25 % أو أكثر من الحصص ",
+      "Director Email Address": "عنوان البريد الإلكتروني",
+      "Utility Bill": "فاتورة الكهرباء",
+      "Address Line 1": "سطر العنوان 1",
+      "Address Line 2": "سطر العنوان 2",
+      "Add Director": " أضف مدير أو كبير الإداريين",
+      "Authorised Signatory Email Address": "عنوان البريد الإلكتروني ",
+      "Add Authorised Signatory": " أضف شخص مفوض بالتوقيع",
+      "Tax Identification Number": "رقم التعريف الضريبي ",
+      "Main Business": "النشاط الرئيس",
+      "Proof of any professional authorisations": "أي تصاريح أو تراخيص مهنية من السلطات المختصة",
+      "Country of Practicing Business": "دولة ممارسة النشاط",
+      "Number of Employees": "عدد الموظفين العاملين لدى العميل",
+      "Paidup Capital": "رأس المال المدفوع",
+      "Annual Turnover": "حجم الأعمال السنوية",
+      "BEARER_SHARES": "هل أصدر العميل أي أسهم لحاملها؟",
+      "please provide details": "إذا نعم الرجاء تزويدنا بالتفاصيل ",
+      "Moblie Number": "الهاتف الجوال",
+      "Email address": "البريد الاكتروني",
+      "OPERATING_ADDRESS": " عنوان تشغيلي",
+      "FINANCIAL_INFORMATION": "أي معلومات مالية أخرى عن الوضع المالي للعميل",
+      "Entity Registered Address": "العنوان المسجل",
+      "Your Contact Details": "بيانات ممثل العميل (مطلوب)",
+      "Any other Operating or Mailing Address Applicable": "أي عنوان تشغيلي أو بريدي آخر",
+      "Operating Address": "عنوان تشغيلي"
+    },
+    "KYCSanctionsQuestionnaireForm": {
+      "QUESTION_ONE": "هل العميل المحتمل / العميل مسجل أو منظم بموجب قوانين و / أو يعمل في أي من البلدان التالية؟",
+      "QUESTION_TWO": "هل لدى العميل المحتمل / العميل أي فروع أو شركات تابعة مسجلة أو منظمة بموجب قوانين و/ أو تعمل من أي من البلدان التالية؟",
+      "QUESTION_THREE": "هل العميل المحتمل / العميل مملوك أو مسيطر عليه من قبل أشخاص موجودين أو مقيمين أو مسجلين أو منظمين بموجب قوانين أي من البلدان التالية؟",
+      "QUESTION_FOUR": "هل يقوم العميل المحتمل / العميل بإجراء أعمال / معاملات (بما في ذلك المبيعات أو المشتريات) ، أو يحقق إيرادات أو يحتفظ بأصول في أي من البلدان التالية؟",
+      "QUESTION_FIVE": "عند استكمال استبيان العقوبات على مستوى الشركة الأم، هل أكد العميل أن هذا ينطبق على الفروع والشركات التابعة له أيضاً؟",
+      "Yes": "نعم",
+      "No": "لا",
+      "Proceed": "المتابعة",
+      "Add": "أضف",
+      "To be removed": "ليتم إزالتها",
+      "Remove": "حذف",
+      "Sanctioned Country": "البلد الخاضع للعقوبات",
+      "Address Line 1": "سطر العنوان 1",
+      "Address Line 2": "سطر العنوان 2",
+      "Postal Code": "الرمز البريدي",
+      "City": "المدينة",
+      "Upload any relevant documents": "تحميل المستندات ذات الصلة "
+    },
+    "KYCDeclarationForm": {
+      "DECLARATION": "أقر بأنني مخول من قبل العميل لطلب الوصول إلى منصة وثاق وتقديم الردود والوثائق والإقرار أعلاه كما أؤكد أنها صحيحة ودقيقة نيابة عن العميل",
+      "I agree to the Terms of Use": "أوافق على شروط الاستخدام",
+      "Finalise & Submit": "استكمال وتقديم"
+    },
+    "KYCSubmittedSection": {
+      "THANKS_MESSAGE": "شكراً على تقديم المستندات",
+      "CONTACT_MESSAGE": "سنتواصل معك خلال 24 ساعة لإبلاغك عن حالة انضمامك"
+    },
+    "KYCEntitiesList": {
+      "Entity ID": "رقم تعريف الكيان القانوني",
+      "Entity": "الكيان القانوني",
+      "Entity Type": "نوع كيان القانوني",
+      "Classification": "التصنيف",
+      "Jurisdiction": "الجنسية",
+      "Relationship Manager": "مدير العلاقة",
+      "Invitation Status": "حالة الدعوة",
+      "KYC Status": "حالة إجراءات معرفة العميل",
+      "Client Terms Status": "حالة شروط العميل",
+      "AML Check": "فحص مكافحة غسل الأموال",
+      "Context Menu": {
+        "User KYC": "إجراءات معرفة العميل للأفراد",
+        "Entity Classification": "تصنيف الكيان القانوني",
+        "Entity/Individual Classification": "تصنيف الفرد/الكيان القانوني",
+        "Review Entity KYC": "مراجعة معلومات اعرف عميلك",
+        "Entity KYC": "إجراءات معرفة العميل للكيان القانوني",
+        "View Documents": "عرض المستندات"
+      }
+    }
+  },
+  "ClientTerms": {
+    "ObligorClientTerms": "شروط العميل -  الملتزم",
+    "InvestorClientTerms": "شروط العميل - المستثمر",
+    "IssuerClientTerms": "شروط العميل المُصدر",
+    "ClientTermsInfoBox": {
+      "Entity name": "اسم الجهة",
+      "Status": "حالة",
+      "ClientTermsStatusEnum": {
+        "N/A": "غير متوفر",
+        "pending": "قيد الانتظار",
+        "Pending": "قيد الانتظار",
+        "review": "المراجعة",
+        "Review": "المراجعة",
+        "completed": "تام ",
+        "Completed": "تام",
+        "rejected": "مرفوض",
+        "Rejected": "مرفوض",
+        "": ""
+      }
+    },
+    "ClientTermsEdit": {
+      "Go Back": "الرجوع",
+      "PromptMessage": "قبل الشروع في استعراض الإصدارات والمشاركة فيها، يرجى مراجعة اتفاقية العميل وقائمة الأسعار والموافقة عليها، وتقديم دليل على تفويض الشركة.",
+      "Title": {
+        "OBLIGOR": "شروط العميل -  الملتزم",
+        "ISSUER": "شروط العميل المُصدر",
+        "INVESTOR": "شروط العميل - المستثمر"
+      }
+    },
+    "ClientTermsEditForm": {
+      "USFATCA": {
+        "Title": "قانون الامتثال الضريبي للحسابات الخارجية الأمريكي )فاتكا(",
+        "Title_Safari": "قانون الامتثال الضريبي للحسابات الخارجية الأمريكي (فاتكا)",
+        "Title_Chrome": "قانون الامتثال الضريبي للحسابات الخارجية الأمريكي )فاتكا(",
+        "Title_Firefox": "قانون الامتثال الضريبي للحسابات الخارجية الأمريكي )فاتكا(",
+        "USIRSNotice": "هذه الإستمارة هي إحدى متطلبات مصلحة الضرائب الأمريكية",
+        "InstructionsForFormW8BenE": {
+          "Label": "تعليمات استمارة W-8BEN-E",
+          "DownloadLink": "عرض / تنزيل التعليمات"
+        },
+        "W8BenE": {
+          "FormW8BenELabelLine1": "شهادة حالة المالك المستفيد للولايات المتحدة",
+          "FormW8BenELabelLine2": "استمارة الامتثال الضريبي ل )للكيانات()W-8BEN-E(",
+          "FormW8BenELabelLine2_Safari": "استمارة الامتثال الضريبي ل (للكيانات)(W-8BEN-E)",
+          "FormW8BenELabelLine2_Chrome": "استمارة الامتثال الضريبي ل )للكيانات()W-8BEN-E(",
+          "FormW8BenELabelLine2_Firefox": "استمارة الامتثال الضريبي ل )للكيانات()W-8BEN-E)",
+          "FormTemplateDownloadLink": "عرض / تنزيل نموذج استمارة W-8BEN-E",
+          "W8enFileDownloadLink": "عرض / تنزيل استمارة W-8BEN-E التي تم تحميلها",
+          "FileUploadFieldPlaceholder": "قم بتحميل ملف W-8BEN-E"
+        }
+      },
+      "CorporateAuthorisation": {
+        "Title": "التفويض المؤسسي ",
+        "Label": "يرجى منك تقديم دليل على التفويض المؤسسي الخاص بك للمضي قدمًا في هذا القسم من المنصة. يمكنك الحصول على نموذج هنا..",
+        "BoardResolution": {
+          "FormTemplateDownloadLink": "عرض / تنزيل نموذج قرار مجلس الإدارة",
+          "UploadedFileDownloadLink": "عرض / تنزيل ملف قرار مجلس الإدارة الذي تم تحميله",
+          "FileUploadFieldPlaceholder": "تحميل استمارة قرار مجلس الإدارة"
+        }
+      },
+      "AcceptTermsCheckboxField": {
+        "Label": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة )نموذج فاكتا( الأمريكي وقرار مجلس الإدارة المقدم .",
+        "Label_Safari": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة (نموذج فاكتا) الأمريكي وقرار مجلس الإدارة المقدم .",
+        "Label_Chrome": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة )نموذج فاكتا( الأمريكي وقرار مجلس الإدارة المقدم .",
+        "Label_Firefox": "بالنقر فوق هذا الزر ، فإنك بصفتك الشخص المخول لـ {{corporateEntityName}},  الموافقة على شروط العميل وتأكيد صحة ودقة )نموذج فاكتا( الأمريكي وقرار مجلس الإدارة المقدم ."
+      },
+      "FileValidationErrorMessage": "W8-Ben-E ملفات وقرار مجلس الإدارة مطلوبة",
+      "FileNotUploadedNotice": "لم يتم تحميل الملف",
+      "SubmitButtonText": "إرسال"
+    },
+    "ClientTermsReview": {
+      "Go Back": "الرجوع",
+      "Accept": "قبول",
+      "Reject": "رفض"
+    },
+    "EntitiesList": {
+      "NA": "غير متوفر",
+      "ID": "المُعرِّف ",
+      "Entity Name": "اسم الجهة",
+      "Legal Identifier": "المُعرِّف القانوني",
+      "Client Terms Status": " شروط العميل",
+      "Active": "نشط",
+      "True": "صحيح",
+      "False": "غير صحيح",
+      "Edit Client Terms": "تعديل شروط العميل",
+      "Review Client Terms": "مراجعة شروط العميل"
+    }
+  },
+  "EntityAccountManagement": {
+    "Entity Accounts": "حسابات الجهة",
+    "Add Account": "إضافة حساب",
+    "IBAN Number": "IBAN رقم",
+    "Entity Name": "اسم الجهة",
+    "Account Type": "نوع الحساب",
+    "Currency": "العملة",
+    "Cancel": "الغاء",
+    "Submit": "ارسال",
+    "Release": "صرف",
+    "Virtual IBAN": "الافتراضي IBAN",
+    "External Account Number": "رقم الحساب الخارجي - اختياري",
+    "External Account": "External Account Number",
+    "EntityAccountsTable": {
+      "Yes": "نعم",
+      "No": "لا",
+      "Context Menu": {
+        "Edit": "تحرير",
+        "Delete": "حذف"
+      },
+      "Headers": {
+        "Entity ID": "معرف الكيان",
+        "Entity Name": "اسم الجهة ",
+        "Account Type": "نوع الحساب",
+        "Currency": "العملة",
+        "Account Number": "رقم الحساب",
+        "IBAN": "IBAN",
+        "Virtual IBAN": "IBAN افتراضي",
+        "Actions": "الإجراءات",
+        "SSI": "SSI"
+      }
+    }
+  },
+  "Visitors": {
+    "Filters": {
+      "Filters": "انتقاء معلومات محددة",
+      "Clear": "مسح",
+      "Jurisdiction": "الاختصاص القضائي",
+      "Entity Type": "نوع الكيان",
+      "Classification": "التصنيف",
+      "Relationship Manager": "مدير العلاقات",
+      "Onboarding Status": "حالة الالتحاق بالمنصة",
+      "KYC Status": "حالة اعرف عميلك",
+      "Country": "البلد",
+      "Currency": "العملة"
+    },
+    "Search": "بحث"
+  },
+  "ParentEntity": {
+    "ParentEntities": "الكيانات القابضة",
+    "ContextMenu": {
+      "Amend": "تعديل",
+      "Deactivate": "إلغاء"
+    },
+    "Buttons": {
+      "New Parent Entity": "كيان قابض جديد"
+    },
+    "ParentEntityTable": {
+      "Headers": {
+        "ParentEntity": "الكيان القابض",
+        "Description": "الوصف",
+        "Actions": "الإجراءات"
+      }
+    },
+    "Search": "بحث",
+    "Onboard User Form": {
+      "Set as Admin": "Set as Admin",
+      "Email": "Email",
+      "First Name": "First Name",
+      "Middle Name (Optional)": "Middle Name (Optional)",
+      "Last Name": "Last Name",
+      "Cancel": "Cancel",
+      "Submit": "Submit"
+    },
+    "Entity Users": {
+      "Table": {
+        "Entity Name": "Entity Name",
+        "Entity ID": "Entity ID",
+        "Entity": "Entity",
+        "Parent Entity": "Parent Entity",
+        "Legal Identifier": "Legal Identifier",
+        "Legal Entity Identifier": "Legal Entity Identifier",
+        "Client Terms Status": "Client Terms Status",
+        "Active": "Active",
+        "Entity Preferences": "Entity Preferences",
+        "Entity Type": "Entity Type",
+        "Classification": "Classification",
+        "Jurisdiction": "Jurisdiction",
+        "Relationship Manager": "Relationship Manager",
+        "KYC Status": "KYC Status",
+        "Manage Entity Groups": "Manage Entity Groups",
+        "# of Users": "# of Users",
+        "Agreements": "Agreements"
+      },
+      "Actions": {
+        "Edit Group Types": "Edit Group Types",
+        "Set Parent Entity": "Set Parent Entity",
+        "View KYC": "View KYC",
+        "Review KYC": "Review KYC",
+        "View Documents": "View Documents",
+        "Request Agreement": "Request Agreement",
+        "Deactivate Entity": "Deactivate Entity",
+        "Reactivate Entity": "Reactivate Entity",
+        "Approve KYC": "Approve KYC",
+        "Reject KYC": "Reject KYC",
+        "Entity Classification": "Entity Classification",
+        "User Access & Permissions": "User Access & Permissions",
+        "Custody Settings": "Edit Custody Settings"
+      }
+    }
+  },
+  "Onboard User Form": {
+    "Onboard User Form": "إلحاق نموذج المستخدم",
+    "Set as Admin": "تعيين كمسؤول",
+    "Email": "البريد الإلكتروني",
+    "First Name": "الاسم الأول",
+    "Middle Name (Optional)": "الاسم الأوسط (اختياري)",
+    "Last Name": "الاسم الأخير",
+    "Cancel": "إلغاء",
+    "Submit": "إرسال"
+  }
+}

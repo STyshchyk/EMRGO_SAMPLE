@@ -1,0 +1,74 @@
+$modal-height: 72vh;
+$modal-width: 50vw;
+$header-height: 6vh;
+$footer-height: 6vh;
+
+.ReactModal__Content {
+  display: flex;
+  flex-direction: column;
+  min-height: 30vh;
+  height: auto;
+  // width: $modal-width;
+  top: 14vh !important;
+  left: 25vw !important;
+  right: auto !important;
+  bottom: auto !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 10px 10px 8px #888888;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(49, 49, 49, 0.5) !important;
+  z-index: 200;
+}
+
+.modal {
+  height: 100%;
+  width: 520px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    height: $header-height;
+    width: 100%;
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+
+    &__text {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin: 0 0;
+      color: $gray-color;
+    }
+
+    &__icon {
+      fill: $gray-color;
+      cursor: pointer;
+    }
+  }
+
+  &__body {
+    padding: 0.5rem 0;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    padding: 1.5rem 0 0.3rem 0;
+    width: 100%;
+    // height: $footer-height;
+    align-self: flex-end;
+
+    &__buttons {
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+@import '../config.scss';
+
+.link {
+  font-family: 'D-DIN Exp';
+  font-weight: bold;
+  cursor: pointer;
+
+  &:link {
+    text-decoration: none;
+  }
+
+  &--primary {
+    color: $primary-color;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  &--secondary {
+    color: $secondary-color;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  &--left-arrow {
+    &:before {
+      content: '< ';
+    }
+  }
+
+  &--right-arrow {
+    &:after {
+      content: ' >';
+    }
+  }
+
+  &--expanded {
+    &:after {
+      content: 'v';
+    }
+  }
+}

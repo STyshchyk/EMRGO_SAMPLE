@@ -1,0 +1,20 @@
+{
+  "Entity Representative": "Entity Representative",
+  "Entity Details": "Entity Details",
+  "Form": {
+    "First Name": "First Name",
+    "Middle Name": "Middle Name",
+    "Last Name": "Last Name",
+    "Email ID": "Email ID",
+    "Entity Type": "Entity Type...",
+    "Display Role": "Display Role",
+    "Entity Name": "Entity Name",
+    "Buttons": {
+      "Invite Issuer": "Invite Issuer",
+      "Existing Issuer": "Existing Issuer",
+      "New Issuer": "New Issuer"
+    },
+    "Issuer": "Issuer..."
+  },
+  "Existing Issuer": "Existing Issuer"
+}

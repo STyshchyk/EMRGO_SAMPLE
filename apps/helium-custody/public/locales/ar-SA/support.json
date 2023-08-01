@@ -1,0 +1,17 @@
+{
+  "Support": {
+    "Headers": {
+      "Name": "الاسم",
+      "Email": "البريد الإلكتروني",
+      "Entity": "الكيان القانوني",
+      "Role": "الدور",
+      "Type": "النوع",
+      "Date": "التاريخ",
+      "Status": "الحالة"
+    },
+    "Actions": {
+      "ApproveTicket": "اعتماد الأمر",
+      "DeleteTicket": "حذف الأمر"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "Rows per page": "Rows per page",
+  "of": "of",
+  "Not Available": "N/A",
+  "Categories": {
+    "Final Terms": "Final Terms",
+    "Misc": "Misc"
+  },
+  "Buttons": {
+    "Upload Final Terms": "Upload Final Terms",
+    "Upload": "Upload",
+    "Refresh": "Refresh"
+  },
+  "Placeholder": "",
+  "Review Modal": {
+    "Select Reviewer": "Select Reviewer",
+    "Send for Review": "Send for Review",
+    "Select Users": "Select Users"
+  },
+  "Signer Modal": {
+    "Select Users for Signature": "Select Users for Signature",
+    "Send for Signature": "Send for Signature",
+    "Select Signers": "Select Signers"
+  },
+  "Headers": {
+    "Document Name": "Document Name",
+    "Shared": "Shared",
+    "Version": "Version",
+    "Expiry": "Expiry",
+    "Status": "Status",
+    "Issuance": "Issuance",
+    "Category": "Category",
+    "Uploaded By": "Uploaded By",
+    "Date Uploaded": "Date Uploaded",
+    "Date Modified": "Date Modified",
+    "Actions": "Actions"
+  },
+  "Expanded View": "Expanded View",
+  "History Modal": {
+    "Document History": "Document History",
+    "Review History": "Review History",
+    "Headers": {
+      "Name": "Name",
+      "Status": "Status",
+      "Version": "Version",
+      "Date": "Date"
+    },
+    "Reviewed": "Reviewed",
+    "In Review": "In Review",
+    "Signing History": "Signing History",
+    "Signed": "Signed",
+    "Signing": "Signing"
+  },
+  "Context Menu": {
+    "Preview": "Preview",
+    "Download": "Download",
+    "Rename": "Rename",
+    "Upload Revised Document": "Upload Revised Document",
+    "Upload Revised Version": "Upload Revised Version",
+    "Request Revised Document": "Request Revised Document",
+    "Send for Review": "Send for Review",
+    "Mark as Execution Version": "Mark as Execution Version",
+    "Send for Signing": "Send for Signing",
+    "Sign Document": "Sign Document",
+    "Delete": "Delete",
+    "Document Information": "Document Information",
+    "Document Settings": "Document Settings",
+    "Mark obtained/verified": "Mark obtained/verified"
+  },
+  "Rename Dialog": {
+    "Rename File": "Rename File",
+    "Current Name": "Current Name",
+    "NA": "N/A",
+    "New File Name": "New File Name",
+    "Cancel": "Cancel",
+    "Submit": "Submit"
+  },
+  "Users": {
+    "Arranger": "Arranger",
+    "Co Arranger": "Co Arranger",
+    "Corporate": "Corporate Service Provider",
+    "Fiduciary": "Fiduciary",
+    "Investor": "Investor",
+    "Issuer": "Issuer",
+    "Legal Counsel": "Legal Counsel",
+    "Obligor": "Obligor",
+    "Sharia": "Sharia Board",
+    "Emrgo Service": "Emrgo Services",
+    "": ""
+  },
+  "Supporting Documents": "Supporting Documents",
+  "Please upload certified copies of the requested documents": "Please upload certified copies of the requested documents",
+  "We accept documents in English and alternatively in Arabic": "We accept documents in English and alternatively in Arabic",
+  "Document Templates": "Document Templates",
+  "If Applicable, to be completed and uploaded above": "If Applicable, to be completed and uploaded above",
+  "Documents": {
+    "HNWI KYC Form": "HNWI KYC Form",
+    "FATCA Form": "FATCA Form",
+    "Wolfsberg Form": "Wolfsberg Form",
+    "CRS Self-Assessmemt": "CRS Self-Assessmemt",
+    "Corporate Authorisation": "Corporate Authorisation"
+  },
+  "Upload Modal": {
+    "Upload KYC Supporting Document Form": "Upload KYC Supporting Document Form",
+    "Your form submission is being processed": "Your form submission is being processed",
+    "Name": "Name",
+    "Upload Document": "Upload Document",
+    "Document Expiry (if applicable)": "Document Expiry (if applicable)",
+    "Cancel": "Cancel",
+    "Submit": "Submit"
+  },
+  "Settings Modal": {
+    "Cancel": "Cancel",
+    "Update Permissions": "Update Permissions",
+    "Document Settings": "Document Settings",
+    "View Settings": "View Settings",
+    "Compliance Officer": "Compliance Officer",
+    "Relationship Manager": "Relationship Manager",
+    "Client": "Client",
+    "Compliance Only": "Compliance Only",
+    "Compliance and Relationship Manager": "Compliance and Relationship Manager",
+    "Compliance, Relationship Manager and Clients": "Compliance, Relationship Manager and Clients"
+  },
+  "Request Dialog": {
+    "Request Revised Document?": "Request Revised Document?",
+    "A notification will be sent to the uploader requesting for an updated file": "A notification will be sent to the uploader requesting for an updated file",
+    "Cancel": "Cancel",
+    "Request": "Request"
+  },
+  "Mark Dialog": {
+    "Mark File as Verified/Obtained?": "Mark File as Verified/Obtained?",
+    "A notification will be sent to the uploader requesting for an updated file": "A notification will be sent to the uploader requesting for an updated file",
+    "Cancel": "Cancel",
+    "Request": "Request"
+  }
+}

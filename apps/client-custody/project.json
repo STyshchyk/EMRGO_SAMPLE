@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/client-custody",
-        "postcssConfig": "apps/{your app here}/postcss.config.js"
+        "postcssConfig": "apps/client-custody/postcss.config.js"
       },
       "configurations": {
         "development": {

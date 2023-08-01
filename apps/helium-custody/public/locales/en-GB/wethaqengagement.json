@@ -1,0 +1,16 @@
+{
+  "Engagement Letter": "Engagement Letter",
+  "Please review and agree to this Engagement Letter if you wish to proceed to this stage of the platform": "Please review and agree to this Engagement Letter if you wish to proceed to this stage of the platform",
+  "Rate Card": "Rate Card",
+  "These are the rates corresponding to the services you are engaging us for pursuant to the Engagement Letter": "These are the rates corresponding to the services you are engaging us for pursuant to the Engagement Letter",
+  "Table": {
+    "Service": "Service",
+    "Service Description": "Service Description",
+    "Fee Details": "Fee Details",
+    "Fees": "Fees"
+  },
+  "By clicking this button you, as the Authorised Person of the": "By clicking this button you, as the Authorised Person of the {{corporateEntityName}}, agree to the Engagement Letter",
+  "The form was submitted successfully": "The form was submitted successfully",
+  "Please wait": "Please wait...",
+  "Engage": "Engage"
+}

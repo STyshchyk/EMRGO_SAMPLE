@@ -1,0 +1,217 @@
+{
+  "Cash Statement": {
+    "Cash Statement": "Cash Statement",
+    "Currency": "Currency",
+    "Account": "Account",
+    "Address": "Address",
+    "NA": "N.A",
+    "Rows per page": "Rows per page",
+    "of": "of",
+    "Headers": {
+      "Date": "Date",
+      "Transaction_Balance Type": "Transaction/Balance Type",
+      "Reference No": "Reference No.",
+      "Related ISIN": "Related ISIN",
+      "Narrative": "Narrative",
+      "Debit": "Debit",
+      "Credit": "Credit",
+      "Balance": "Balance",
+      "Actions": "Actions"
+    },
+    "Filters": {
+      "Date": "Date",
+      "Entity": "Entity",
+      "Account": "Account",
+      "Export Report": "[CSV] Export Report",
+      "Filter": "Filter",
+      "Apply": "Apply",
+      "Export": "Export"
+    }
+  },
+  "Internal Transfer": {
+    "Internal Transfer": "Internal Transfer",
+    "Date": "Date",
+    "Source Account Owner": "Source Account Owner",
+    "Source Account": "Source Account",
+    "Destination Account Owner": "Destination Account Owner",
+    "Destination Account": "Destination Account",
+    "Transfer Amount": "Transfer Amount",
+    "Description": "Description",
+    "Initiate Transfer": "Initiate Transfer"
+  },
+  "Entity Accounts": {
+    "Entity Accounts": "Entity Accounts",
+    "Add Account": "Add Account",
+    "IBAN Number": "IBAN Number",
+    "Entity Name": "Entity Name",
+    "Account Type": "Account Type",
+    "Currency": "Currency",
+    "Cancel": "Cancel",
+    "Submit": "Submit",
+    "Release": "Release",
+    "Move to suspense": "Move to suspense",
+    "Virtual IBAN": "Virtual IBAN"
+  },
+  "PaymentAccountManagement": {
+    "ManagePaymentAccountsPage": {
+      "PageTitle": "Manage Payment Accounts",
+      "AddPaymentAccountButtonText": "+ Add Payment Account"
+    },
+    "PaymentAccountsTable": {
+      "Name": "Name",
+      "Account ID": "Account ID",
+      "Default": "Default",
+      "Validated": "Validated",
+      "Label": "Label",
+      "IBAN": "IBAN",
+      "SWIFT/BIC": "SWIFT/BIC",
+      "Address": "Address",
+      "City": "City",
+      "Country": "Country",
+      "Post Code": "Post Code",
+      "Bank Name": "Bank Name",
+      "Account No": "Account No.",
+      "Routing No": "Routing No.",
+      "Sort Code": "Sort Code",
+      "IFSC Code": "IFSC Code",
+      "BSB Code": "BSB Code",
+      "Currency": "Currency",
+      "Balance": "Balance",
+      "Actions": "Actions"
+    },
+    "AddPaymentAccountForm": {
+      "Currency": "Currency",
+      "Entity": "Entity",
+      "SubmitButtonText": "Submit",
+      "Full Name": "Full Name",
+      "Label": "Label",
+      "Bank Name": "Bank Name",
+      "IBAN": "IBAN",
+      "SWIFT/BIC": "SWIFT/BIC",
+      "Account Number": "Account Number",
+      "Routing Number": "Routing Number",
+      "Sort Code": "Sort Code",
+      "IFSC Code": "IFSC Code",
+      "BSB Code": "BSB Code",
+      "Address": "Address",
+      "City": "City",
+      "Country": "Country",
+      "Post Code": "Post Code",
+      "Supporting Document": "Supporting Document"
+    },
+    "PaymentAccountsTableActionMenu": {
+      "SetAsDefault": "Set as Default",
+      "Amend": "Amend",
+      "Delete": "Delete",
+      "ViewSupportingDocument": "View Supporting Document",
+      "Validate": "Validate"
+    },
+    "AddPaymentAccountFormDialog": {
+      "DialogTitle": "Add Payment Account Form",
+      "CloseDialogButtonText": "Close",
+      "Your form submission is being processed": "Your form submission is being processed"
+    },
+    "EditPaymentAccountFormDialog": {
+      "DialogTitle": "Edit Payment Account Form",
+      "CloseDialogButtonText": "Close"
+    },
+    "DeleteAccountDialog": {
+      "DialogTitle": "Delete Payment Account",
+      "DialogContent": "Please confirm that you wish to delete this account. Please note that this action cannot be reversed!",
+      "ConfirmDeletionButtonText": "Confirm",
+      "CloseDialogButtonText": "Cancel"
+    }
+  },
+  "Payment Instructions": {
+    "External Payments": "External Payments",
+    "New Payment Instructions": "New Payment Instructions",
+    "Headers": {
+      "Created At Date": "Created At",
+      "Client Balance": "Client Balance",
+      "Value Date": "Value Date",
+      "Investor/Owner": "Investor/Owner",
+      "Payment Amount": "Payment Amount",
+      "CCY": "CCY",
+      "Account No": "Account No",
+      "Country": "Country",
+      "Bank": "Bank",
+      "IBAN/Account": "IBAN/Account",
+      "BIC": "BIC",
+      "Status": "Status",
+      "Reference No": "Reference No",
+      "Actions": "Actions",
+      "Transfer Purpose": "Transfer Purpose"
+    },
+    "Context Menu": {
+      "Modify": "Modify",
+      "Cancel": "Cancel",
+      "Submit": "Submit",
+      "Approve": "Approve",
+      "Finalize": "Finalize",
+      "Reject": "Reject",
+      "Confirm": "Confirm",
+      "View Audit History": "View Audit History"
+    },
+    "Modals": {
+      "New Payment Instruction": "New Payment Instruction",
+      "Fields": {
+        "Payment Account": "Payment Account",
+        "Value Date": "Value Date",
+        "Payment Amount": "Payment Amount",
+        "Payment Details": "Payment Details"
+      },
+      "Placeholders": {
+        "Select Source Entity": "Select Source Entity",
+        "Select Source Account": "Select Source Account",
+        "Select Beneficiary User": "Select Beneficiary User",
+        "Transfer Purpose": "Transfer Purpose"
+      }
+    },
+    "ApproveDialog": {
+      "label": "Approve Outgoing Payment Instruction for {{currency}} {{payment_amount}}"
+    },
+    "FinalizeDialog": {
+      "label": "Finalize Outgoing Payment Instruction for {{currency}} {{payment_amount}}"
+    },
+    "RejectDialog": {
+      "label": "Reject Outgoing Payment Instruction for {{currency}} {{payment_amount}}"
+    },
+    "CancelDialog": {
+      "label": "Cancel Outgoing Payment Instruction for {{currency}} {{payment_amount}}"
+    }
+  },
+  "Incoming Payments": {
+    "Incoming Payments": "Incoming Payments",
+    "Headers": {
+      "Value Date": "Value Date",
+      "Entry Date": "Entry Date",
+      "Account No": "Account No",
+      "Currency": "Currency",
+      "Amount": "Amount",
+      "Transaction Type": "Transaction Type",
+      "Customer Ref": "Customer Ref",
+      "Bank Ref": "Bank Ref",
+      "Supplementary": "Supplementary",
+      "Assigned Client": "Assigned Client",
+      "Assigned Account": "Assigned Account",
+      "Actions": "Actions"
+    },
+    "Context Menu": {
+      "Payment Details": "Payment Details",
+      "Release": "Release",
+      "Assign Account": "Assign Account",
+      "View Evidence": "View Evidence",
+      "Move to Suspense": "Move to Suspense"
+    },
+    "Modals": {
+      "Assign Account": "Assign Account",
+      "Payment Details": "Payment Details",
+      "Release Payment": "Release Payment",
+      "Move to Suspense": "Move to Suspense",
+      "Fields": {
+        "Client Account": "Client Account",
+        "Client": "Client"
+      }
+    }
+  }
+}

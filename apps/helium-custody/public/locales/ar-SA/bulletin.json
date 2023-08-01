@@ -1,0 +1,35 @@
+{
+  "New Bulletin +": "نشرة جديدة +",
+  "Edit Bulletin": "تحرير النشرة",
+  "Delete Bulletin": "حذف النشرة",
+  "Title": "العنوان",
+  "Author": "المؤلف",
+  "Date": "التاريخ",
+  "Empty List": {
+    "You're all caught up": "لقد انتهيت",
+    "Please check back later for new updates": "يرجى التحقق مرة أخرى لاحقاً للحصول على تحديثات جديدة"
+  },
+  "New Bulletin Modal": {
+    "New Bulletin": "نشرة جديدة",
+    "Bulletin Information": "معلومات النشرة",
+    "Bulletin Title": "عنوان النشرة",
+    "Bulletin Date": "تاريخ النشرة",
+    "Bulletin Type": "نوع النشرة",
+    "Cancel": "إلغاء",
+    "Create": " إنشاء"
+  },
+  "Delete Bulletin Modal": {
+    "Yes, Delete it": "نعم ، احذفها",
+    "Delete Bulletin?": "حذف النشرة؟",
+    "This action is non reversible! It will permanently delete the bulletin titled": "هذا الإجراء نهائي. سيحذف النشرة المعنونة ... نهائياً '{{title}}'"
+  },
+  "Update Bulletin Modal": {
+    "Update Bulletin": "تحديث النشرة ",
+    "Bulletin Information": "معلومات النشرة",
+    "Bulletin Title": "عنوان النشرة ",
+    "Bulletin Date": "تاريخ النشرة",
+    "Bulletin Type": "نوع النشرة",
+    "Cancel": "إلغاء",
+    "Update": "تحديث"
+  }
+}

@@ -1,0 +1,53 @@
+@import "../../styles/config.scss";
+
+.pillMenuWrapper {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pillMenuContainer {
+  display: flex;
+}
+
+.pillContainer {
+  margin-right: 10px;
+  cursor: pointer;
+
+  .pillTextWrapper {
+    margin-bottom: 6px;
+  }
+
+  .pillText {
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #979797;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: #143673;
+    }
+  }
+
+  .pillIndicator {
+    height: 2px;
+    width: calc(100% - 10px);
+    margin: 0 auto;
+    background-color: #dddddd;
+  }
+}
+
+.selected {
+  color: #143673 !important;
+  background-color: #eeeeee;
+}
+
+.selectedLine {
+  background-color: $secondary-color !important;
+}

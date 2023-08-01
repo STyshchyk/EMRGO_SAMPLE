@@ -1,0 +1,32 @@
+@import "../../styles/config.scss";
+
+.sectionBreak {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #979797;
+  width: 100%;
+}
+
+.input {
+  &__form_control {
+    width: 100%;
+  }
+}
+
+.orContainer {
+  display: flex;
+  width: 95%;
+}
+
+.orRow {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.orLabel {
+  margin: 0;
+  margin-bottom: 15px;
+}

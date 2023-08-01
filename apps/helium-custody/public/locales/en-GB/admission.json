@@ -1,0 +1,45 @@
+{
+  "Accordian": {
+    "Issuance Terms": {
+      "Further to Clause [] (Procedure for admission of Securities) of the Issuer Securities Admission Terms entered into between us as Issuer , the Obligor and you on [insert date] (the “Issuer Terms”), we request that you admit the Securities relating to the Issuance identified below to the EMrgo System": "Further to Clause [ {{clause}} ] (Procedure for admission of Securities) of the Issuer Securities Admission Terms entered into between us as Issuer , the Obligor and you on [insert date] (the “Issuer Terms”), we request that you admit the Securities relating to the Issuance identified below to the Emrgo System",
+      "Capitalised terms used but not defined herein shall have the meanings given to them in the Issuer Terms": "Capitalised terms used but not defined herein shall have the meanings given to them in the Issuer Terms",
+      "The terms below have been confirmed by the Legal Counsel": "The terms below have been confirmed by the Legal Counsel",
+      "If you believe any of them are not accurate click to notify your Legal Counsel": "If you believe any of them are not accurate click to notify your Legal Counsel",
+      "Buttons": {
+        "Notify Legal Counsel": "Notify Legal Counsel",
+        "Download as CSV": "Download as CSV"
+      }
+    },
+    "Issuance Details": {
+      "Registered Address": "Registered Address",
+      "Directors": "Directors",
+      "Authorised Representative(s) (if different from Director(s))": "Authorised Representative(s) (if different from Director(s))",
+      "N/A": "N/A",
+      "Form Fields": {
+        "First Name": "First Name",
+        "Last Name": "Last Name",
+        "Director Email Address": "Director Email Address",
+        "Address Line 1": "Address Line 1",
+        "Address Line 2": "Address Line 2",
+        "Postal Code": "Postal Code",
+        "Post Code": "Post Code",
+        "City": "City",
+        "Country": "Country",
+        "Email Address": "Email Address",
+        "Full legal name of Issuer": "Full legal name of Issuer"
+      }
+    },
+    "Securities Allocations & Payment Instructions": {
+      "Please review the details below and submit to Issuer for approval & instructions to proceed with securities allocation and payment instructions": "Please review the details below and submit to Issuer for approval & instructions to proceed with securities allocation and payment instructions",
+      "Headers": {
+        "Client Account": "Client Account",
+        "Pre-Allocation Amounts": "Pre-Allocation Amounts",
+        "Certificates": "Certificates",
+        "Total": "Total"
+      },
+      "Buttons": {
+        "Submit for Instructions": "Submit for Instructions"
+      }
+    }
+  }
+}

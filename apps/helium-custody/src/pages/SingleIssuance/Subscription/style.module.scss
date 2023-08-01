@@ -1,0 +1,10 @@
+.details {
+  &__wrapper {
+    padding: 1rem 0;
+    width: 40%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+    grid-row-gap: 0.2rem;
+  }
+}

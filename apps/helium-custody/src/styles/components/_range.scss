@@ -1,0 +1,140 @@
+@import '../config.scss';
+.range {
+  &__wrapper {
+    width: 100%;
+  }
+
+  &__error {
+    width: 100%;
+    text-align: left;
+    font-size: 0.75rem;
+    color: $red-color;
+    position: absolute;
+    margin-top: 50px;
+  }
+
+
+  &__input {
+    height: 22px;
+    -webkit-appearance: none;
+    margin: 10px 0 0 0;
+    width: 250px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 0px 0px 0px 28ccbf;
+      background: $secondary-color;
+      border-radius: 14px;
+      border: 0px solid $secondary-color;
+    }
+
+    &::-webkit-slider-thumb {
+      box-shadow: 0px 0px 0px #000000;
+      border: 1px solid $primary-color;
+      height: 15px;
+      width: 15px;
+      border-radius: 25px;
+      background: $primary-color;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -5.5px;
+    }
+
+    &:focus::-webkit-slider-runnable-track {
+      background: $secondary-color;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 0px 0px 0px 28ccbf;
+      background: $secondary-color;
+      border-radius: 1px;
+      border: 0px solid $secondary-color;
+    }
+
+    &::-moz-range-thumb {
+      box-shadow: 0px 0px 0px #000000;
+      border: 1px solid $primary-color;
+      height: 15px;
+      width: 15px;
+      border-radius: 25px;
+      background: $primary-color;
+      cursor: pointer;
+    }
+
+    &::-ms-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      animate: 0.2s;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+
+    &::-ms-fill-lower {
+      background: $secondary-color;
+      border: 0px solid $secondary-color;
+      border-radius: 2px;
+      box-shadow: 0px 0px 0px 28ccbf;
+    }
+
+    &::-ms-fill-upper {
+      background: $secondary-color;
+      border: 0px solid $secondary-color;
+      border-radius: 2px;
+      box-shadow: 0px 0px 0px 28ccbf;
+    }
+
+    &::-ms-thumb {
+      margin-top: 1px;
+      box-shadow: 0px 0px 0px #000000;
+      border: 1px solid $primary-color;
+      height: 15px;
+      width: 15px;
+      border-radius: 25px;
+      background: $primary-color;
+      cursor: pointer;
+    }
+
+    &:focus::-ms-fill-lower {
+      background: $secondary-color;
+    }
+
+    &:focus::-ms-fill-upper {
+      background: $secondary-color;
+    }
+  }
+
+  &__label{
+    &__wrapper{
+      margin-top:-0.5rem;
+      display:flex;
+      justify-content: space-between;
+    }
+    &--start{
+      font-size: 1rem;
+    }
+    &--current{
+      font-size: 1rem;
+      font-weight: 900;
+    }
+    &--end{
+      font-size: 1rem;
+    }
+  }
+}
+
+
+
+

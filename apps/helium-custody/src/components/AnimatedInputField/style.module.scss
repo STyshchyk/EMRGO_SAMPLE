@@ -1,0 +1,71 @@
+@import "../../styles/config.scss";
+
+/*
+TODO:
+
+* Replace label tag selector with a proper class name without breaking floating label CSS logic
+*/
+
+.input-group {
+  display: block;
+  padding-top: 1.5rem;
+  position: relative;
+
+  &__floating-label {
+    display: block;
+    color: $lightselection-color;
+    cursor: text;
+    text-align: center;
+    font-size: 1.25rem;
+    transform: translateY(-34px);
+    transition: all 0.3s;
+    line-height: 16px;
+  }
+
+  &__field {
+    background-color: $lightgray-color;
+    border-radius: 13px;
+    border: 0;
+    box-shadow: none;
+    color: $primary-color;
+    font-size: 1.25em;
+    height: 52px;
+    max-width: 560px;
+    outline: 0;
+    text-align: center;
+    transition: all 0.3s;
+    width: 100%;
+
+    &:valid {
+      ~ label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+
+    &[value=""] {
+      ~ label {
+        font-size: 1.25rem;
+        line-height: 16px;
+        transform: translateY(-34px);
+        transition: all 0.3s;
+      }
+    }
+
+    &:focus {
+      ~ label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+  }
+
+  &__error {
+    color: $red-color;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: -1em;
+    position: absolute;
+    text-transform: uppercase;
+  }
+}

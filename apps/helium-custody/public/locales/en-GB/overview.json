@@ -1,0 +1,29 @@
+{
+  "Sukuk details are not available right now!": "Sukuk details are not available right now!",
+  "Obligor": "Obligor",
+  "Issuer SPV": "Issuer SPV",
+  "Arranger": "Arranger",
+  "Arranger_plural": "Arrangers",
+  "Service Providers": "Service Providers",
+  "Incorporated": "Incorporated",
+  "Details Pending": "Details Pending",
+  "Headers": {
+    "Entity Name": "Entity Name",
+    "Contact Person": "Contact Person",
+    "Position": "Position",
+    "Status": "Status",
+    "Service Type": "Service Type"
+  },
+  "Statuses": {
+    "Counter Signed": "Counter Signed",
+    "Engaged": "Engaged",
+    "Requested": "Requested",
+    "Sent": "Sent",
+    "Signed": "Signed",
+    "Uploaded": "Uploaded",
+    "Incorporated": "Incorporated",
+    "LEAVE THE NEXT EMPTY KEY AS IT IS": "IT IS NEEDED TO SHOW A BLANK ROW WHEN NO STATUS AVAILABLE",
+    "": "",
+    "Generating": "Generating"
+  }
+}

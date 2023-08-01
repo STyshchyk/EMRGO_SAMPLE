@@ -1,0 +1,34 @@
+{
+  "CMANotification": {
+    "title": "Capital Market Authority Notification",
+    "promptMessage": "You must notify the CMA of the issuance and submit the following documents and declarations at least ten days prior to the proposed date of issuance, in accordance with the Rules on the Offer of Securities and Continuing Obligations.",
+    "CMADocumentsTable": {
+      "Users": {
+        "Arranger": "Arranger",
+        "Obligor (Sponsor)": "Obligor (Sponsor)"
+      },
+      "headers": {
+        "Documents": "Documents",
+        "Related Parties": "Related Parties",
+        "Download": "Download"
+      },
+      "rows": {
+        "documents": {
+          "Offering Documents": "Offering Documents",
+          "Arranger's Notification": "Arranger's Notification",
+          "Offeror's Notification": "Offeror's Notification",
+          "Arranger's Declaration": "Arranger's Declaration",
+          "Sponsor's Declaration": "Sponsor's Declaration",
+          "Application for Approval of a Financing Transaction": "Application for Approval of a Financing Transaction",
+          "Application for Approval of a Financing Transaction (AR-SA)": "Application for Approval of a Financing Transaction (AR-SA)"
+        }
+      }
+    },
+    "ConfirmSuccessfulNotificationForm": {
+      "title": "Notification Status",
+      "checkboxLabel": "I confirm that the CMA has been notified of the Issuance and that the above documents and declarations have been submitted to the satisfaction of the CMA.",
+      "submitButtonText": "Confirm Successful Notification",
+      "infoAlert": "Proceed to Closing"
+    }
+  }
+}

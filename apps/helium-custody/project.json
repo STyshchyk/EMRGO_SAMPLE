@@ -1,0 +1,80 @@
+{
+  "name": "helium-custody",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/helium-custody/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/helium-custody",
+        "postcssConfig": "apps/helium-custody/postcss.config.js"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "helium-custody:build",
+        "port": 3015
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "helium-custody:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "helium-custody:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "helium-custody:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "helium-custody:build:development"
+        },
+        "production": {
+          "buildTarget": "helium-custody:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/helium-custody"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/helium-custody"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/helium-custody/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "helium-custody:build"
+      }
+    }
+  },
+  "tags": []
+}

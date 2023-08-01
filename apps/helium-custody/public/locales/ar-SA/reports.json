@@ -1,0 +1,199 @@
+{
+  "Cash Statement": {
+    "Cash Statement": "كشف الحساب النقدي",
+    "Currency": "العملة",
+    "Account": "الحساب",
+    "Address": "العنوان",
+    "NA": "لا ينطبق",
+    "Rows per page": "عدد الصفوف في الصفحة",
+    "of": "of",
+    "Headers": {
+      "Date": "التاريخ",
+      "Transaction Type": "نوع المعاملة",
+      "Reference No": "الرقم المرجعي",
+      "WSN": "WSN",
+      "Narrative": "السرد",
+      "Debit": "رصيد مدين",
+      "Credit": "رصيد دائن",
+      "Balance": "الرصيد",
+      "Actions": "أجراءات"
+    },
+    "Filters": {
+      "All": "الجميع",
+      "Date": "التاريخ",
+      "Entity": "الكيان",
+      "Securities Account": "حساب الأوراق المالية",
+      "Cash Account": "الحساب النقدي",
+      "Credit/Debit": "دائن/مدين",
+      "Account": "الحساب",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] تصدير التقرير بصيغة",
+      "Filter": "فلتر",
+      "Update": "تحديث",
+      "Clear": "امسح",
+      "Apply": "تطبيق",
+      "Search": "بحث",
+      "Export": "تصدير"
+    }
+  },
+  "Cash Balances": {
+    "Cash Balances": "الأرصدة النقدية",
+    "Account": "الحساب",
+    "Address": "العنوان",
+    "NA": "لا ينطبق",
+    "Headers": {
+      "Date": "التاريخ",
+      "Entity": "الكيان القانوني",
+      "Account": "الحساب",
+      "Currency": "العملة",
+      "Balance": "الرصيد",
+      "Account Type": "نوع الحساب",
+      "Last Movement": "آخر حركة"
+    },
+    "Filters": {
+      "All": "الجميع",
+      "Date": "التاريخ",
+      "Entity": "الكيان",
+      "Securities Account": "حساب الأوراق المالية",
+      "Cash Account": "الحساب النقدي",
+      "Currency": "العملة",
+      "Credit/Debit": "دائن/مدين",
+      "Account": "الحساب",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] تصدير التقرير بصيغة",
+      "Filter": "فلتر",
+      "Update": "تحديث",
+      "Clear": "امسح",
+      "Apply": "تطبيق",
+      "Search": "بحث",
+      "Export": "تصدير"
+    }
+  },
+  "Security Transactions": {
+    "Security Transactions": "معاملات الأوراق المالية",
+    "Currency": "العملة",
+    "Account": "الحساب",
+    "Address": "العنوان",
+    "NA": "لا ينطبق",
+    "Headers": {
+      "Trade Date": "تاريخ التداول",
+      "Entity": "Entity",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Issuer Name": "اسم الطارح",
+      "From Sec Acct": "من حساب الأوراق المالية",
+      "Investor Name": "اسم المستثمر",
+      "To Sec Acct": "إلى حساب الأوراق المالية",
+      "Net Settle Amt": "صافي مبلغ التسوية",
+      "Inst Description": "وصف التعليمات",
+      "Price": "السعر",
+      "Settle Date": "تاريخ التسوية",
+      "Settlement Type": "Settlement Type"
+    },
+    "Filters": {
+      "All": "الجميع",
+      "Date": "التاريخ",
+      "Entity": "الكيان",
+      "Securities Account": "حساب الأوراق المالية",
+      "Security": "الورقة المالية",
+      "Currency": "العملة",
+      "Account": "الحساب",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] تصدير التقرير بصيغة",
+      "Filter": "فلتر",
+      "Update": "تحديث",
+      "Clear": "مسح",
+      "Apply": "تطبيق",
+      "Search": "بحث",
+      "Export": "تصدير"
+    }
+  },
+  "Disclaimer DIFC": "Disclaimer: This is a computer generated notice and therefore does not require an authorized signature from First Abu Dhabi Bank PSJC (the 'Custodian'). The Custodian is providing this notice as custodian and not as agent or other fiduciary of any party, including any issuer of securities or the recipient of this notice. The content of this notice may include information produced by a third party and the accuracy of such information has not been separately verified by the Custodian. The information in this notice is private and confidential and addressed solely to the recipient. This notice has been sent by electronic communication, which is not a secure or error free means of communication and which may be delayed and may contain viruses. The Custodian shall not be liable for any losses resulting, directly or indirectly, from any such events. In case of any discrepancy, please advise FAB Custody via email (<1>CustodyOperations-ClientReporting@bankfab.com</1>) within 24 hours of receipt of this notice. The recipient should seek such independent financial or other advice as it deems necessary in order to make an informed decision in respect of any information in this notice. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided by the recipient to the Custodian in connection with this notice.",
+  "Disclaimer DIFC Report": "Disclaimer: This is a computer generated notice and therefore does not require an authorized signature from First Abu Dhabi Bank PSJC (the 'Custodian'). The Custodian is providing this notice as custodian and not as agent or other fiduciary of any party, including any issuer of securities or the recipient of this notice. The content of this notice may include information produced by a third party and the accuracy of such information has not been separately verified by the Custodian. The information in this notice is private and confidential and addressed solely to the recipient. This notice has been sent by electronic communication, which is not a secure or error free means of communication and which may be delayed and may contain viruses. The Custodian shall not be liable for any losses resulting, directly or indirectly, from any such events. In case of any discrepancy, please advise FAB Custody via email (CustodyOperations-ClientReporting@bankfab.com) within 24 hours of receipt of this notice. The recipient should seek such independent financial or other advice as it deems necessary in order to make an informed decision in respect of any information in this notice. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided by the recipient to the Custodian in connection with this notice.",
+  "Disclaimer KSA": "إخلاء المسؤولية إخلاء المسؤولية: هذا تقرير تم إنشاؤه بواسطة الكمبيوتر وبالتالي لا يتطلب توقيعًا معتمدًا من شركة منصة وثاق المالية (' الوصي '). المعلومات الواردة في هذا التقرير خاصة وسرية وموجهة إلى عنوان صاحب الحساب فقط. في حالة وجود أي تعارض ، يرجى إبلاغ الوصي عبر البريد الإلكتروني التالي: Operations@wethaq.capital في غضون 30 يومًا من استلام هذا التقرير، ويشكل عدم إبلاغنا قبولك لهذا التقرير. لن يكون أمين الحفظ مسؤولاً عن أي خسائر تنشأ ، بشكل مباشر أو غير مباشر ، نتيجة أي تعليمات مقدمة إلى أمين الحفظ  فيما يتعلق بهذا التقرير. ",
+  "Disclaimer KSA Report": "إخلاء المسؤولية إخلاء المسؤولية: هذا تقرير تم إنشاؤه بواسطة الكمبيوتر وبالتالي لا يتطلب توقيعًا معتمدًا من شركة منصة وثاق المالية (' الوصي '). المعلومات الواردة في هذا التقرير خاصة وسرية وموجهة إلى عنوان صاحب الحساب فقط. في حالة وجود أي تعارض ، يرجى إبلاغ الوصي عبر البريد الإلكتروني التالي: Operations@wethaq.capital في غضون 30 يومًا من استلام هذا التقرير، ويشكل عدم إبلاغنا قبولك لهذا التقرير. لن يكون أمين الحفظ مسؤولاً عن أي خسائر تنشأ ، بشكل مباشر أو غير مباشر ، نتيجة أي تعليمات مقدمة إلى أمين الحفظ  فيما يتعلق بهذا التقرير. ",
+  "Securities Holdings": {
+    "Securities Holdings": "Securities Holdings",
+    "Headers": {
+      "Date": "Date",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Security": "Security",
+      "Currency": "العملة",
+      "Registrar": "Registrar",
+      "Quantity": "Quantity",
+      "Num Cert": "Num Cert",
+      "Position Type": "Position Type",
+      "Broker": "Broker",
+      "Portfolio ID": "Portfolio ID",
+      "Inst Description": "Inst. Description",
+      "Last Movement": "Last Movement"
+    },
+    "Filters": {
+      "All": "الجميع",
+      "Date": "التاريخ",
+      "Entity": "الكيان",
+      "Securities Account": "حساب الأوراق المالية",
+      "Security": "الورقة المالية",
+      "Currency": "العملة",
+      "Position Type": "نوع المركز",
+      "Credit/Debit": "دائن/مدين",
+      "Account": "الحساب",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] تصدير التقرير بصيغة",
+      "Filter": "فلتر",
+      "Update": "تحديث",
+      "Clear": "مسح",
+      "Apply": "تطبيق",
+      "Search": "بحث",
+      "Export": "تصدير"
+    }
+  },
+  "Reference Data": {
+    "Reference Data": "التاريخ المرجعي",
+    "Filters": {
+      "Security": "الورقة المالية",
+      "ISIN": "ISIN",
+      "Clear": "مسح"
+    },
+    "Buttons": {
+      "Update Reference Data": "Update Reference Data",
+      "View Coupon Schedule": "View Coupon Schedule"
+    }
+  },
+  "Coupon Payment Schedule": {
+    "Coupon Payment Schedule": "Coupon Payment Schedule",
+    "Name": "Name",
+    "Security Short Name": "الاسم المختصر للورقة المالية",
+    "Total Issuance Amount": "Total Issuance Amount",
+    "Profit Rate": "معدل الربح",
+    "Frequency": "تردد التوزيعات",
+    "Currency": "العملة",
+    "Status": "الحالة",
+    "WSN": "WSN",
+    "ISIN": "ISIN",
+    "Last Updated": "Last Updated",
+    "Maturity Date": "Maturity Date",
+    "Headers": {
+      "Date": "التاريخ",
+      "Notional": "Notional",
+      "Coupon": "Coupon Rate"
+    }
+  },
+  "Empty List": {
+    "No Security Selected": "لم يتم تحديد ورقة مالية",
+    "Please select a security to view its reference data": "الرجاء تحديد ورقة مالية لعرض البيانات المرجعية الخاصة بها"
+  },
+  "Leave Guard": {
+    "Title": "التنقل بعيدًا؟",
+    "Message": "أنت على وشك الانتقال بعيدًا عن هذه الصفحة. وهذا سيفقد بيانات تقريرك"
+  },
+  "TemplateDisclaimerTextKSA": "إخلاء المسؤولية: هذا تقرير تم إنشاؤه بواسطة الكمبيوتر وبالتالي لا يتطلب توقيعًا معتمدًا من شركة منصة وثاق المالية ('الوصي'). المعلومات الواردة في هذا التقرير خاصة وسرية وموجهة إلى عنوان صاحب الحساب فقط. في حالة وجود أي تعارض ، يرجى إبلاغ الوصي عبر البريد الإلكتروني التالي: securitiesservices@wethaqcapital.sa في غضون 30 يومًا من استلام هذا التقرير، ويشكل عدم إبلاغنا قبولك لهذا التقرير. لن يكون أمين الحفظ مسؤولاً عن أي خسائر تنشأ ، بشكل مباشر أو غير مباشر ، نتيجة أي تعليمات مقدمة إلى أمين الحفظ  فيما يتعلق بهذا التقرير.",
+  "TemplateDisclaimerTextDIFC": "",
+  "PlainDisclaimerTextKSA": "EMRGO  (DIFC)  Ltd  Disclaimer:  This  is  a  computer-generated  report  and,  therefore,  does  not  require  an authorized  signature.  The  information  in  this  report  is  private  and  confidential  and  addressed  solely  to  the  Account holder. In case of any discrepancy, please advise us via email (rm@difc.emrgo.com) within seven (7) days of receipt of this report. Failure to notify us constitutes your acceptance of this report. We shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to us in connection with this report.",
+  "PlainDisclaimerTextDIFC": "EMRGO  (DIFC)  Ltd  Disclaimer:  This  is  a  computer-generated  report  and,  therefore,  does  not  require  an authorized  signature.  The  information  in  this  report  is  private  and  confidential  and  addressed  solely  to  the  Account holder. In case of any discrepancy, please advise us via email (rm@difc.emrgo.com) within seven (7) days of receipt of this report. Failure to notify us constitutes your acceptance of this report. We shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to us in connection with this report."
+}
