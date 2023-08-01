@@ -4,9 +4,7 @@ import { useTranslation } from "react-i18next";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
 import MaterialTable from "@material-table/core";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -44,7 +42,6 @@ import MaterialTableOverflowMenu from "../../../../components/MaterialTableOverf
 // import * as entitiesActionCreators from '../../../../redux/actionCreators/entities';
 // import * as entitiesSelectors from '../../../../redux/selectors/entities';
 // import * as authSelectors from '../../../../redux/selectors/auth';
-
 import { useTheme } from "../../../../context/theme-context";
 import { dateRenderer } from "../../../../helpers/renderers";
 import useMaterialTableLocalization from "../../../../hooks/useMTableLocalization";
@@ -253,666 +250,649 @@ const VisitorsTable = ({
   ];
 
   return (
-    <Fragment>
-      <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-        <Formik
-          initialValues={{
-            jurisdiction: [],
-            entityType: [],
-            classification: [],
-            relationshipManager: [],
-            onboardingStatus: [],
-            kycStatus: [],
-          }}
-        >
-          {({ values, setFieldValue }) => {
-            const onSearchChange = (searchText) => {
-              toolbarProps.dataManager.changeSearchText(searchText);
-              toolbarProps.onSearchChanged(searchText);
-              setFieldValue("searchText", searchText, false);
-            };
+    <Formik
+      initialValues={{
+        jurisdiction: [],
+        entityType: [],
+        classification: [],
+        relationshipManager: [],
+        onboardingStatus: [],
+        kycStatus: [],
+      }}
+    >
+      {({ values, setFieldValue }) => {
+        const onSearchChange = (searchText) => {
+          toolbarProps.dataManager.changeSearchText(searchText);
+          toolbarProps.onSearchChanged(searchText);
+          setFieldValue("searchText", searchText, false);
+        };
 
-            const filteredData = visitors
-              .filter((row) => {
-                // Jurisdiction
-                let isTrue = true;
-                if (values.jurisdiction.length === 0) {
-                  isTrue = true;
-                } else {
-                  const jurisdictionKeys = values.jurisdiction.map(
-                    (jurisdiction) => jurisdiction.label
-                  );
-                  if (row.jurisdiction) {
-                    isTrue = jurisdictionKeys.includes(row.jurisdiction);
-                  } else {
-                    isTrue = false;
+        const filteredData = visitors
+          .filter((row) => {
+            // Jurisdiction
+            let isTrue = true;
+            if (values.jurisdiction.length === 0) {
+              isTrue = true;
+            } else {
+              const jurisdictionKeys = values.jurisdiction.map(
+                (jurisdiction) => jurisdiction.label
+              );
+              if (row.jurisdiction) {
+                isTrue = jurisdictionKeys.includes(row.jurisdiction);
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          })
+          .filter((row) => {
+            // Entity Type
+            let isTrue = true;
+            if (values.entityType.length === 0) {
+              isTrue = true;
+            } else {
+              const keys = values.entityType.map((entityType) => entityType.label);
+              if (row.entityUserType) {
+                isTrue = keys.includes(capitalCase(row.entityUserType));
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          })
+          .filter((row) => {
+            // Classification
+            let isTrue = true;
+            if (values.classification.length === 0) {
+              isTrue = true;
+            } else {
+              const keys = values.classification.map((classification) => classification.label);
+              if (row.selfAssessment) {
+                isTrue = keys.includes(row.selfAssessment);
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          })
+          .filter((row) => {
+            // Relationship Manager
+            let isTrue = true;
+            if (values.relationshipManager.length === 0) {
+              isTrue = true;
+            } else {
+              const keys = values.relationshipManager.map(
+                (relationshipManager) => relationshipManager.label
+              );
+              if (row.relationshipManagers) {
+                const rms = row.relationshipManagers;
+                isTrue = false;
+                rms.forEach((rm) => {
+                  const name = `${rm?.firstName || ""} ${rm?.middleName || ""} ${
+                    rm.lastName || ""
+                  }`;
+                  if (keys.includes(name)) {
+                    isTrue = true;
                   }
-                }
-                return isTrue;
-              })
-              .filter((row) => {
-                // Entity Type
-                let isTrue = true;
-                if (values.entityType.length === 0) {
-                  isTrue = true;
-                } else {
-                  const keys = values.entityType.map((entityType) => entityType.label);
-                  if (row.entityUserType) {
-                    isTrue = keys.includes(capitalCase(row.entityUserType));
-                  } else {
-                    isTrue = false;
-                  }
-                }
-                return isTrue;
-              })
-              .filter((row) => {
-                // Classification
-                let isTrue = true;
-                if (values.classification.length === 0) {
-                  isTrue = true;
-                } else {
-                  const keys = values.classification.map((classification) => classification.label);
-                  if (row.selfAssessment) {
-                    isTrue = keys.includes(row.selfAssessment);
-                  } else {
-                    isTrue = false;
-                  }
-                }
-                return isTrue;
-              })
-              .filter((row) => {
-                // Relationship Manager
-                let isTrue = true;
-                if (values.relationshipManager.length === 0) {
-                  isTrue = true;
-                } else {
-                  const keys = values.relationshipManager.map(
-                    (relationshipManager) => relationshipManager.label
-                  );
-                  if (row.relationshipManagers) {
-                    const rms = row.relationshipManagers;
-                    isTrue = false;
-                    rms.forEach((rm) => {
-                      const name = `${rm?.firstName || ""} ${rm?.middleName || ""} ${
-                        rm.lastName || ""
-                      }`;
-                      if (keys.includes(name)) {
-                        isTrue = true;
-                      }
-                    });
-                  } else {
-                    isTrue = false;
-                  }
-                }
-                return isTrue;
-              })
-              .filter((row) => {
-                // Onboarding Status
-                let isTrue = true;
-                if (values.onboardingStatus.length === 0) {
-                  isTrue = true;
-                } else {
-                  const keys = values.onboardingStatus.map(
-                    (onboardingStatus) => onboardingStatus.label
-                  );
-                  if (row.onboardingStatus) {
-                    isTrue = keys.includes(row.onboardingStatus);
-                  } else {
-                    isTrue = false;
-                  }
-                }
-                return isTrue;
-              })
-              .filter((row) => {
-                // Onboarding Status
-                let isTrue = true;
-                if (values.kycStatus.length === 0) {
-                  isTrue = true;
-                } else {
-                  const keys = values.kycStatus.map((kycStatus) => kycStatus.label);
-                  if (row.kycStatus) {
-                    isTrue = keys.includes(row.kycStatus);
-                  } else {
-                    isTrue = false;
-                  }
-                }
-                return isTrue;
-              });
+                });
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          })
+          .filter((row) => {
+            // Onboarding Status
+            let isTrue = true;
+            if (values.onboardingStatus.length === 0) {
+              isTrue = true;
+            } else {
+              const keys = values.onboardingStatus.map(
+                (onboardingStatus) => onboardingStatus.label
+              );
+              if (row.onboardingStatus) {
+                isTrue = keys.includes(row.onboardingStatus);
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          })
+          .filter((row) => {
+            // Onboarding Status
+            let isTrue = true;
+            if (values.kycStatus.length === 0) {
+              isTrue = true;
+            } else {
+              const keys = values.kycStatus.map((kycStatus) => kycStatus.label);
+              if (row.kycStatus) {
+                isTrue = keys.includes(row.kycStatus);
+              } else {
+                isTrue = false;
+              }
+            }
+            return isTrue;
+          });
 
-            const clearFilter = (key) => {
-              switch (key) {
-                case "jurisdiction":
-                  setFieldValue("jurisdiction", [], false);
-                  break;
-                case "entityType":
-                  setFieldValue("entityType", [], false);
-                  break;
-                case "classification":
-                  setFieldValue("classification", [], false);
-                  break;
-                case "relationshipManager":
-                  setFieldValue("relationshipManager", [], false);
-                  break;
-                case "onboardingStatus":
-                  setFieldValue("onboardingStatus", [], false);
-                  break;
-                case "kycStatus":
-                  setFieldValue("kycStatus", [], false);
-                  break;
-                default:
-                // code block
-              }
-            };
+        const clearFilter = (key) => {
+          switch (key) {
+            case "jurisdiction":
+              setFieldValue("jurisdiction", [], false);
+              break;
+            case "entityType":
+              setFieldValue("entityType", [], false);
+              break;
+            case "classification":
+              setFieldValue("classification", [], false);
+              break;
+            case "relationshipManager":
+              setFieldValue("relationshipManager", [], false);
+              break;
+            case "onboardingStatus":
+              setFieldValue("onboardingStatus", [], false);
+              break;
+            case "kycStatus":
+              setFieldValue("kycStatus", [], false);
+              break;
+            default:
+            // code block
+          }
+        };
 
-            const calculateFilterCount = () => {
-              let count = 0;
-              if (values.jurisdiction.length !== 0) {
-                count += 1;
-              }
-              if (values.entityType.length !== 0) {
-                count += 1;
-              }
-              if (values.classification.length !== 0) {
-                count += 1;
-              }
-              if (values.relationshipManager.length !== 0) {
-                count += 1;
-              }
-              if (values.onboardingStatus.length !== 0) {
-                count += 1;
-              }
-              if (values.kycStatus.length !== 0) {
-                count += 1;
-              }
-              return count;
-            };
+        const calculateFilterCount = () => {
+          let count = 0;
+          if (values.jurisdiction.length !== 0) {
+            count += 1;
+          }
+          if (values.entityType.length !== 0) {
+            count += 1;
+          }
+          if (values.classification.length !== 0) {
+            count += 1;
+          }
+          if (values.relationshipManager.length !== 0) {
+            count += 1;
+          }
+          if (values.onboardingStatus.length !== 0) {
+            count += 1;
+          }
+          if (values.kycStatus.length !== 0) {
+            count += 1;
+          }
+          return count;
+        };
 
-            return (
-              <Form>
-                <Accordion defaultExpanded={false} className="shadow-none" elevation={0}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+        return (
+          <Form>
+            <Accordion defaultExpanded={false} className="shadow-none" elevation={0}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Grid container spacing={2} justifyContent="space-between" alignContent="center">
+                  <Grid item container xs={4} sm={4} md={4} lg={6} alignContent="center">
+                    <FilterListIcon />
+                    <Badge badgeContent={calculateFilterCount()} color="primary">
+                      <Typography variant="body1" className="pr-4">
+                        {t("administration:Visitors.Filters.Filters")}
+                      </Typography>
+                    </Badge>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
+                    sm={4}
+                    md={4}
+                    lg={2}
+                    container
+                    direction="column"
+                    justifyContent="center"
                   >
-                    <Grid
-                      container
-                      spacing={2}
-                      justifyContent="space-between"
-                      alignContent="center"
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      fullWidth
+                      size="large"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleInviteUserOpen();
+                      }}
                     >
-                      <Grid item container xs={4} sm={4} md={4} lg={6} alignContent="center">
-                        <FilterListIcon />
-                        <Badge badgeContent={calculateFilterCount()} color="primary">
-                          <Typography variant="body1" className="pr-4">
-                            {t("administration:Visitors.Filters.Filters")}
+                      Invite User
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4} sm={4} md={4} lg={4}>
+                    <Field
+                      fullWidth
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      component={TextField}
+                      onChange={(e) => {
+                        onSearchChange(e.target.value);
+                      }}
+                      label={t("administration:Visitors.Search")}
+                      name="searchText"
+                      value={values.searchText}
+                      variant="filled"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="clear search"
+                              size="small"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                // clearFilter('search');
+                              }}
+                            >
+                              <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box p={1} className="w-full">
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.Jurisdiction")}
+                        </Typography>
+                        <ButtonBase onClick={() => clearFilter("jurisdiction")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
                           </Typography>
-                        </Badge>
+                        </ButtonBase>
                       </Grid>
-                      <Grid
-                        item
-                        xs={4}
-                        sm={4}
-                        md={4}
-                        lg={2}
-                        container
-                        direction="column"
-                        justifyContent="center"
-                      >
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          fullWidth
-                          size="large"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleInviteUserOpen();
-                          }}
-                        >
-                          Invite User
-                        </Button>
-                      </Grid>
-                      <Grid item xs={4} sm={4} md={4} lg={4}>
-                        <Field
-                          fullWidth
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          component={TextField}
-                          onChange={(e) => {
-                            onSearchChange(e.target.value);
-                          }}
-                          label={t("administration:Visitors.Search")}
-                          name="searchText"
-                          value={values.searchText}
-                          variant="filled"
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="clear search"
-                                  size="small"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    // clearFilter('search');
-                                  }}
-                                >
-                                  <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </Grid>
+                      <Box my={1} className="w-full">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            placeholder={`${t("administration:Visitors.Filters.Jurisdiction")}...`}
+                            // isDisabled={filteredCountry.length===0}
+                            isSearchable
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.jurisdiction}
+                            isMulti
+                            options={jurisdictionOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("jurisdiction", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
                     </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Box p={1} className="w-full">
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.Jurisdiction")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("jurisdiction")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="w-full">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.Jurisdiction"
-                                )}...`}
-                                // isDisabled={filteredCountry.length===0}
-                                isSearchable
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.jurisdiction}
-                                isMulti
-                                options={jurisdictionOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("jurisdiction", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.Entity Type")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("entityType")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="full-width">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.Entity Type"
-                                )}...`}
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.entityType}
-                                isMulti
-                                options={entityTypeOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("entityType", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.Classification")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("classification")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="full-width">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.Classification"
-                                )}...`}
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.classification}
-                                isMulti
-                                options={classificationOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("classification", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.Relationship Manager")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("relationshipManager")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="full-width">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.Relationship Manager"
-                                )}...`}
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.relationshipManager}
-                                isMulti
-                                options={relationshipManagerOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("relationshipManager", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.Onboarding Status")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("onboardingStatus")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="full-width">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.Onboarding Status"
-                                )}...`}
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.onboardingStatus}
-                                isMulti
-                                options={onboardingStatusOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("onboardingStatus", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={4} container>
-                          <Grid container justifyContent="space-between">
-                            <Typography variant="body1" className="bold">
-                              {t("administration:Visitors.Filters.KYC Status")}
-                            </Typography>
-                            <ButtonBase onClick={() => clearFilter("kycStatus")}>
-                              <Typography variant="caption">
-                                {t("administration:Visitors.Filters.Clear")}
-                              </Typography>
-                            </ButtonBase>
-                          </Grid>
-                          <Box my={1} className="full-width">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t(
-                                  "administration:Visitors.Filters.KYC Status"
-                                )}...`}
-                                components={{
-                                  ...animatedComponents,
-                                  // eslint-disable-next-line react/prop-types
-                                  MultiValueContainer: ({ data }) => (
-                                    <Chip
-                                      // eslint-disable-next-line react/prop-types
-                                      key={data.value}
-                                      // eslint-disable-next-line react/prop-types
-                                      label={data.value}
-                                      className="my-2"
-                                      // eslint-disable-next-line react/prop-types
-                                      // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
-                                      color="secondary"
-                                    />
-                                  ),
-                                }}
-                                styles={dropdownStyles}
-                                value={values.kycStatus}
-                                isMulti
-                                options={KYCStatusOptions}
-                                onChange={(selectedValue) => {
-                                  setFieldValue("kycStatus", selectedValue, false);
-                                }}
-                              />
-                            </FormControl>
-                          </Box>
-                        </Grid>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.Entity Type")}
+                        </Typography>
+                        <ButtonBase onClick={() => clearFilter("entityType")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
+                          </Typography>
+                        </ButtonBase>
                       </Grid>
-                    </Box>
-                  </AccordionDetails>
-                </Accordion>
-                <MaterialTable
-                  size="small"
-                  // components={{
-                  //   Container: (props) => <Paper {...props} elevation={0} />,
-                  // }}
-                  components={{
-                    Toolbar: (props) => {
-                      toolbarProps = props;
-                      return <Fragment />;
-                    },
-                  }}
-                  columns={[
-                    {
-                      title: "First Name",
-                      field: "user.firstName",
-                    },
-                    {
-                      title: "Middle Name",
-                      field: "user.middleName",
-                    },
-                    {
-                      title: "Last Name",
-                      field: "user.lastName",
-                    },
-                    {
-                      title: "Entity Name",
-                      field: "entityName",
-                    },
-                    {
-                      title: "Corporate Email",
-                      field: "user.email",
-                    },
-                    {
-                      title: "Jurisdiction",
-                      field: "jurisdiction",
-                    },
-                    {
-                      title: "Entity type",
-                      field: "entityUserType",
-                      render: (rowData) => capitalCase(rowData.entityUserType),
-                    },
-                    {
-                      title: "Classification",
-                      field: "selfAssessment",
-                    },
-                    {
-                      title: "Relationship Manager",
-                      field: "relationshipManagers",
-                      render: (rowData) => (
-                        <Typography variant="body2">
-                          {rowData?.relationshipManagers.map(
-                            (manager, index) =>
-                              `${index !== 0 ? "," : ""}${manager.firstName || ""} ${
-                                manager.middleName || ""
-                              } ${manager.lastName || ""}`
-                          )}
+                      <Box my={1} className="full-width">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t("administration:Visitors.Filters.Entity Type")}...`}
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.entityType}
+                            isMulti
+                            options={entityTypeOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("entityType", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.Classification")}
                         </Typography>
-                      ),
-                    },
-                    {
-                      title: "Onboarding Status",
-                      field: "onboardingStatus",
-                    },
-                    {
-                      title: "User KYC",
-                      field: "user.hasCompletedIndividualKyc",
-                      render: (rowData) => (
-                        <Typography variant="body2">
-                          {rowData?.user?.hasCompletedIndividualKyc ? "Complete" : "Pending"}
+                        <ButtonBase onClick={() => clearFilter("classification")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
+                          </Typography>
+                        </ButtonBase>
+                      </Grid>
+                      <Box my={1} className="full-width">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t(
+                              "administration:Visitors.Filters.Classification"
+                            )}...`}
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.classification}
+                            isMulti
+                            options={classificationOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("classification", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.Relationship Manager")}
                         </Typography>
-                      ),
-                    },
-                    {
-                      title: "User Status",
-                      field: "user.isActive",
-                      render: (rowData) => (
-                        <Typography variant="body2">
-                          {rowData?.user?.isActive ? "Active" : "Inactive"}
+                        <ButtonBase onClick={() => clearFilter("relationshipManager")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
+                          </Typography>
+                        </ButtonBase>
+                      </Grid>
+                      <Box my={1} className="full-width">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t(
+                              "administration:Visitors.Filters.Relationship Manager"
+                            )}...`}
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.relationshipManager}
+                            isMulti
+                            options={relationshipManagerOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("relationshipManager", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.Onboarding Status")}
                         </Typography>
-                      ),
-                    },
-                    {
-                      title: "Join Date",
-                      field: "onboardingDate",
-                      defaultSort: "desc",
-                      render: (rowData) => (
-                        <Typography variant="body2">
-                          {dateRenderer(rowData?.onboardingDate)}
+                        <ButtonBase onClick={() => clearFilter("onboardingStatus")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
+                          </Typography>
+                        </ButtonBase>
+                      </Grid>
+                      <Box my={1} className="full-width">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t(
+                              "administration:Visitors.Filters.Onboarding Status"
+                            )}...`}
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.onboardingStatus}
+                            isMulti
+                            options={onboardingStatusOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("onboardingStatus", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={4} container>
+                      <Grid container justifyContent="space-between">
+                        <Typography variant="body1" className="bold">
+                          {t("administration:Visitors.Filters.KYC Status")}
                         </Typography>
-                      ),
-                    },
-                  ]}
-                  data={filteredData}
-                  options={{
-                    ...tableStyles,
-                    pageSize: 20,
-                    // toolbar: false,
-                    // actionsColumnIndex: -1,
-                    actionsColumnIndex: -1,
-                  }}
-                  actions={[
-                    {
-                      icon: "more_vert",
-                      onClick: (event, rowData) => {
-                        setMenuAnchorEl(event.currentTarget);
-                        setSelectedRow(rowData);
-                      },
-                    },
-                  ]}
-                  localization={mtableLocalization}
-                />
-                <MaterialTableOverflowMenu
-                  actions={actions}
-                  anchorEl={menuAnchorEl}
-                  setAnchorEl={setMenuAnchorEl}
-                  selectedRow={selectedRow}
-                />
-              </Form>
-            );
-          }}
-        </Formik>
-      </MuiPickersUtilsProvider>
-    </Fragment>
+                        <ButtonBase onClick={() => clearFilter("kycStatus")}>
+                          <Typography variant="caption">
+                            {t("administration:Visitors.Filters.Clear")}
+                          </Typography>
+                        </ButtonBase>
+                      </Grid>
+                      <Box my={1} className="full-width">
+                        <FormControl className="w-full">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t("administration:Visitors.Filters.KYC Status")}...`}
+                            components={{
+                              ...animatedComponents,
+                              // eslint-disable-next-line react/prop-types
+                              MultiValueContainer: ({ data }) => (
+                                <Chip
+                                  // eslint-disable-next-line react/prop-types
+                                  key={data.value}
+                                  // eslint-disable-next-line react/prop-types
+                                  label={data.value}
+                                  className="my-2"
+                                  // eslint-disable-next-line react/prop-types
+                                  // onDelete={(e) => handleRemoveCurrencySelection(e, data.value)}
+                                  color="secondary"
+                                />
+                              ),
+                            }}
+                            styles={dropdownStyles}
+                            value={values.kycStatus}
+                            isMulti
+                            options={KYCStatusOptions}
+                            onChange={(selectedValue) => {
+                              setFieldValue("kycStatus", selectedValue, false);
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <MaterialTable
+              size="small"
+              // components={{
+              //   Container: (props) => <Paper {...props} elevation={0} />,
+              // }}
+              components={{
+                Toolbar: (props) => {
+                  toolbarProps = props;
+                  return <Fragment />;
+                },
+              }}
+              columns={[
+                {
+                  title: "First Name",
+                  field: "user.firstName",
+                },
+                {
+                  title: "Middle Name",
+                  field: "user.middleName",
+                },
+                {
+                  title: "Last Name",
+                  field: "user.lastName",
+                },
+                {
+                  title: "Entity Name",
+                  field: "entityName",
+                },
+                {
+                  title: "Corporate Email",
+                  field: "user.email",
+                },
+                {
+                  title: "Jurisdiction",
+                  field: "jurisdiction",
+                },
+                {
+                  title: "Entity type",
+                  field: "entityUserType",
+                  render: (rowData) => capitalCase(rowData.entityUserType),
+                },
+                {
+                  title: "Classification",
+                  field: "selfAssessment",
+                },
+                {
+                  title: "Relationship Manager",
+                  field: "relationshipManagers",
+                  render: (rowData) => (
+                    <Typography variant="body2">
+                      {rowData?.relationshipManagers.map(
+                        (manager, index) =>
+                          `${index !== 0 ? "," : ""}${manager.firstName || ""} ${
+                            manager.middleName || ""
+                          } ${manager.lastName || ""}`
+                      )}
+                    </Typography>
+                  ),
+                },
+                {
+                  title: "Onboarding Status",
+                  field: "onboardingStatus",
+                },
+                {
+                  title: "User KYC",
+                  field: "user.hasCompletedIndividualKyc",
+                  render: (rowData) => (
+                    <Typography variant="body2">
+                      {rowData?.user?.hasCompletedIndividualKyc ? "Complete" : "Pending"}
+                    </Typography>
+                  ),
+                },
+                {
+                  title: "User Status",
+                  field: "user.isActive",
+                  render: (rowData) => (
+                    <Typography variant="body2">
+                      {rowData?.user?.isActive ? "Active" : "Inactive"}
+                    </Typography>
+                  ),
+                },
+                {
+                  title: "Join Date",
+                  field: "onboardingDate",
+                  defaultSort: "desc",
+                  render: (rowData) => (
+                    <Typography variant="body2">{dateRenderer(rowData?.onboardingDate)}</Typography>
+                  ),
+                },
+              ]}
+              data={filteredData}
+              options={{
+                ...tableStyles,
+                pageSize: 20,
+                // toolbar: false,
+                // actionsColumnIndex: -1,
+                actionsColumnIndex: -1,
+              }}
+              actions={[
+                {
+                  icon: "more_vert",
+                  onClick: (event, rowData) => {
+                    setMenuAnchorEl(event.currentTarget);
+                    setSelectedRow(rowData);
+                  },
+                },
+              ]}
+              localization={mtableLocalization}
+            />
+            <MaterialTableOverflowMenu
+              actions={actions}
+              anchorEl={menuAnchorEl}
+              setAnchorEl={setMenuAnchorEl}
+              selectedRow={selectedRow}
+            />
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
