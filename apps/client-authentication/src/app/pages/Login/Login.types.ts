@@ -9,6 +9,9 @@ export interface ILoginContext {
   setShowPassword: (showPassword: boolean) => void;
   isError: boolean;
   error: Error | AxiosError | unknown;
+  activeStep:number;
+  handleNext:() => void;
+  handleBack:() => void;
 }
 
 export interface ILoginFormValues {
