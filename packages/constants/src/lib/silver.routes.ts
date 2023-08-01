@@ -11,19 +11,20 @@ interface IRouteObject {
 
 export const silverModuleURLs: IMap = {
   authentication:
-    import.meta.env["VITE_INTERNAL_AUTH_URL"] || "https://internal-auth.exp-difc.wethaq.capital",
+    import.meta.env["VITE_INTERNAL_AUTH_URL"] ||
+    "https://internal-silver-auth.exp-difc.emrgo.com/",
   administration:
     import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"] ||
-    "https://internal-admin.exp-difc.wethaq.capital",
+    "https://internal-silver-admin.exp-difc.emrgo.com/",
   primaries:
     import.meta.env["VITE_INTERNAL_PRIMARIES_URL"] ||
-    "https://internal-prim.exp-difc.wethaq.capital",
+    "https://internal-silver-prim.exp-difc.emrgo.com/",
   onboarding:
     import.meta.env["VITE_INTERNAL_ONBOARDING_URL"] ||
-    "https://internal-onboarding.exp-difc.wethaq.capital",
+    "https://internal-silver-onboarding.exp-difc.emrgo.com/",
   dataroom:
     import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"] ||
-    "https://internal-dataroom.exp-difc.wethaq.capital",
+    "https://internal-silver-dataroom.exp-difc.emrgo.com/",
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
