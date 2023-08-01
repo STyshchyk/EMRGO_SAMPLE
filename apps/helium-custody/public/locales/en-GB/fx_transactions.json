@@ -1,0 +1,52 @@
+{
+  "New Fx Transaction": "New Fx Transaction",
+  "Fx Table": {
+    "Reference": "Reference",
+    "Status": "Status",
+    "Entity": "Entity",
+    "From Amount": "From Amount",
+    "From Currency": "From Currency",
+    "From Account": "From Account",
+    "Debit Account": "Debit Account",
+    "Bank FX Rate %": "Bank FX Rate %",
+    "Markup Rate %": "Markup Rate %",
+    "Client FX Rate %": "Client FX Rate %",
+    "Bank Amount": "Bank Amount",
+    "Markup Amount": "Markup Amount",
+    "Client Amount": "Client Amount",
+    "To Currency": "To Currency",
+    "To Account": "To Account",
+    "Credit Account": "Credit Account",
+    "Rate": "Rate",
+    "Date": "Date",
+    "Narrative": "Narrative",
+    "Overflow Menu": {
+      "Approve": "Approve",
+      "Amend": "Amend",
+      "Cancel": "Cancel"
+    }
+  },
+  "Fx Modal": {
+    "New Fx Transaction": "New Fx Transaction",
+    "Edit Fx Transaction": "Edit Fx Transaction",
+    "Insufficient information given": "Insufficient information given",
+    "Value has been edited, changes are locked": "Value has been edited, changes are locked",
+    "Buttons": {
+      "Cancel": "Cancel",
+      "Submit": "Submit",
+      "Calculate": "Calculate",
+      "Reset User Input": "Reset User Input",
+      "Reset": "Reset"
+    }
+  },
+  "Fx Action Modal": {
+    "Approve Transaction": "Approve Transaction",
+    "Cancel Transaction": "Cancel Transaction",
+    "Buttons": {
+      "Cancel": "Cancel",
+      "Submit": "Submit"
+    },
+    "Are you sure you want to cancel this transaction? This action is non reversible": "Are you sure you want to cancel this transaction? This action is non reversible",
+    "Are you sure you want to approve this transaction? This action is non reversible": "Are you sure you want to approve this transaction? This action is non reversible"
+  }
+}

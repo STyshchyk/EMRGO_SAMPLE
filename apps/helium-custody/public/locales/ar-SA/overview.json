@@ -1,0 +1,29 @@
+{
+  "Sukuk details are not available right now!": "بيانات الصكوك غير متوفرة الان",
+  "Obligor": "الملتزم",
+  "Issuer SPV": "المنشأة ذات الأغراض الخاصة التابعة للمُصدر",
+  "Arranger": "الجهة المنظمة",
+  "Arranger_plural": "الجهة المنظمة",
+  "Service Providers": "مقدمي الخدمات",
+  "Incorporated": "مندمج",
+  "Details Pending": "التفاصيل معلقة",
+  "Headers": {
+    "Entity Name": "اسم الجهة",
+    "Contact Person": "جهة الاتصال",
+    "Position": "مركز",
+    "Status": "الحالة",
+    "Service Type": "نوع الخدمة"
+  },
+  "Statuses": {
+    "Counter Signed": "تمت المصادقة على التوقيع",
+    "Engaged": "متعاقد",
+    "Requested": "تم الطلب",
+    "Sent": "مرسلة",
+    "Signed": "موقعة",
+    "Uploaded": "Uploaded",
+    "Incorporated": "تم الإدماج",
+    "LEAVE THE NEXT EMPTY KEY AS IT IS": "هناك حاجة لإظهار صف فارغ في حالة عدم توفر الحالة",
+    "": "",
+    "Generating": "انشاء"
+  }
+}

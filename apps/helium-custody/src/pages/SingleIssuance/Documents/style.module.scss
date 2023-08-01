@@ -1,0 +1,98 @@
+@import "../../../styles/config.scss";
+
+.container {
+  height: 100%;
+}
+
+.documentContainer {
+  margin-top: 30px;
+}
+
+.documentDropContainer {
+  min-height: 60px;
+  border: 2px dashed;
+  margin-bottom: 30px;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.uploadStateContainer {
+  padding: 10px;
+  padding-bottom: 0;
+  // margin-bottom: 30px;
+  // border: 1px solid;
+  // border-radius: 4px;
+}
+
+.singleUploadContainer {
+  border: 1px dashed grey;
+  border-radius: 4px;
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.previewIconContainer {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+}
+
+.fileNameProgressContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 20px;
+}
+
+.actionContainer {
+  min-width: 45px;
+  height: 100%;
+}
+
+.inlineText {
+  border: none;
+  border-bottom: 2px dotted #ccc;
+  outline: none;
+  padding: 2px 5px;
+  width: 200px;
+}
+
+.actionBar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.docusign {
+  &__modal {
+    height: 85vh;
+  }
+
+  &__iframe {
+    width: 100%;
+    height: 98%;
+  }
+}
+
+.document_dialogue {
+  &__content {
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  &__viewer {
+    height: 100vh;
+  }
+}

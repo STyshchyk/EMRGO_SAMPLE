@@ -1,0 +1,199 @@
+{
+  "Cash Statement": {
+    "Cash Statement": "Cash Statement",
+    "Currency": "Currency",
+    "Account": "Account",
+    "Address": "Address",
+    "NA": "N.A",
+    "Rows per page": "Rows per page",
+    "of": "of",
+    "Headers": {
+      "Date": "Date",
+      "Transaction Type": "Transaction Type",
+      "Reference No": "Reference No.",
+      "WSN": "WSN",
+      "Narrative": "Narrative",
+      "Debit": "Debit",
+      "Credit": "Credit",
+      "Balance": "Balance",
+      "Actions": "Actions"
+    },
+    "Filters": {
+      "All": "All",
+      "Date": "Date",
+      "Entity": "Entity",
+      "Securities Account": "Securities Account",
+      "Cash Account": "Cash Account",
+      "Credit/Debit": "Credit/Debit",
+      "Account": "Account",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] Export Report",
+      "Filter": "Filter",
+      "Update": "Update",
+      "Clear": "Clear",
+      "Apply": "Apply",
+      "Search": "Search",
+      "Export": "Export"
+    }
+  },
+  "Cash Balances": {
+    "Cash Balances": "Cash Balances",
+    "Account": "Account",
+    "Address": "Address",
+    "NA": "N.A",
+    "Headers": {
+      "Date": "Date",
+      "Entity": "Entity",
+      "Account": "Account",
+      "Currency": "Currency",
+      "Balance": "Balance",
+      "Account Type": "Account Type",
+      "Last Movement": "Last Movement"
+    },
+    "Filters": {
+      "All": "All",
+      "Date": "Date",
+      "Entity": "Entity",
+      "Securities Account": "Securities Account",
+      "Cash Account": "Cash Account",
+      "Currency": "Currency",
+      "Credit/Debit": "Credit/Debit",
+      "Account": "Account",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] Export Report",
+      "Filter": "Filter",
+      "Update": "Update",
+      "Clear": "Clear",
+      "Apply": "Apply",
+      "Search": "Search",
+      "Export": "Export"
+    }
+  },
+  "Security Transactions": {
+    "Security Transactions": "Security Transactions",
+    "Currency": "Currency",
+    "Account": "Account",
+    "Address": "Address",
+    "NA": "N.A",
+    "Headers": {
+      "Trade Date": "Trade Date",
+      "Entity": "Entity",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Issuer Name": "Issuer Name",
+      "From Sec Acct": "From Sec Acct",
+      "Investor Name": "Investor Name",
+      "To Sec Acct": "To Sec Acct",
+      "Net Settle Amt": "Net Settle Amt",
+      "Inst Description": "Inst Description",
+      "Price": "Price",
+      "Settle Date": "Settle Date",
+      "Settlement Type": "Settlement Type"
+    },
+    "Filters": {
+      "All": "All",
+      "Date": "Date",
+      "Entity": "Entity",
+      "Securities Account": "Securities Account",
+      "Security": "Security",
+      "Currency": "Currency",
+      "Account": "Account",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] Export Report",
+      "Filter": "Filter",
+      "Update": "Update",
+      "Clear": "Clear",
+      "Apply": "Apply",
+      "Search": "Search",
+      "Export": "Export"
+    }
+  },
+  "Disclaimer DIFC": "Disclaimer: This is a computer generated notice and therefore does not require an authorized signature from First Abu Dhabi Bank PSJC (the 'Custodian'). The Custodian is providing this notice as custodian and not as agent or other fiduciary of any party, including any issuer of securities or the recipient of this notice. The content of this notice may include information produced by a third party and the accuracy of such information has not been separately verified by the Custodian. The information in this notice is private and confidential and addressed solely to the recipient. This notice has been sent by electronic communication, which is not a secure or error free means of communication and which may be delayed and may contain viruses. The Custodian shall not be liable for any losses resulting, directly or indirectly, from any such events. In case of any discrepancy, please advise FAB Custody via email (<1>CustodyOperations-ClientReporting@bankfab.com</1>) within 24 hours of receipt of this notice. The recipient should seek such independent financial or other advice as it deems necessary in order to make an informed decision in respect of any information in this notice. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided by the recipient to the Custodian in connection with this notice.",
+  "Disclaimer DIFC Report": "Disclaimer: This is a computer generated notice and therefore does not require an authorized signature from First Abu Dhabi Bank PSJC (the 'Custodian'). The Custodian is providing this notice as custodian and not as agent or other fiduciary of any party, including any issuer of securities or the recipient of this notice. The content of this notice may include information produced by a third party and the accuracy of such information has not been separately verified by the Custodian. The information in this notice is private and confidential and addressed solely to the recipient. This notice has been sent by electronic communication, which is not a secure or error free means of communication and which may be delayed and may contain viruses. The Custodian shall not be liable for any losses resulting, directly or indirectly, from any such events. In case of any discrepancy, please advise FAB Custody via email (CustodyOperations-ClientReporting@bankfab.com) within 24 hours of receipt of this notice. The recipient should seek such independent financial or other advice as it deems necessary in order to make an informed decision in respect of any information in this notice. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided by the recipient to the Custodian in connection with this notice.",
+  "Disclaimer KSA": "Disclaimer: This is a computer-generated report and therefore does not require an authorized signature from Emrgo Capital Platform JSC (the “Custodian”). The information in this report is private and confidential and addressed solely to the Account holder. In case of any discrepancy, please advise the Custodian via email at <1>operations@wethaq.capital</1> within 30 days of receipt of this report. Failure to notify us constitutes your acceptance of this report. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to the Custodian in connection with this report.",
+  "Disclaimer KSA Report": "Disclaimer: This is a computer-generated report and therefore does not require an authorized signature from Emrgo Capital Platform JSC (the “Custodian”). The information in this report is private and confidential and addressed solely to the Account holder. In case of any discrepancy, please advise the Custodian via email at operations@wethaq.capital within 30 days of receipt of this report. Failure to notify us constitutes your acceptance of this report. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to the Custodian in connection with this report.",
+  "Securities Holdings": {
+    "Securities Holdings": "Securities Holdings",
+    "Headers": {
+      "Date": "Date",
+      "WSN": "WSN",
+      "ISIN": "ISIN",
+      "Security": "Security",
+      "Currency": "Currency",
+      "Registrar": "Registrar",
+      "Quantity": "Quantity",
+      "Num Cert": "Num Cert",
+      "Position Type": "Position Type",
+      "Broker": "Broker",
+      "Portfolio ID": "Portfolio ID",
+      "Inst Description": "Inst. Description",
+      "Last Movement": "Last Movement"
+    },
+    "Filters": {
+      "All": "All",
+      "Date": "Date",
+      "Entity": "Entity",
+      "Securities Account": "Securities Account",
+      "Security": "Security",
+      "Currency": "Currency",
+      "Position Type": "Position Type",
+      "Credit/Debit": "Credit/Debit",
+      "Account": "Account",
+      "CSV": "CSV",
+      "PDF": "PDF",
+      "Export Report": "[CSV] Export Report",
+      "Filter": "Filter",
+      "Update": "Update",
+      "Clear": "Clear",
+      "Apply": "Apply",
+      "Search": "Search",
+      "Export": "Export"
+    }
+  },
+  "Reference Data": {
+    "Reference Data": "Reference Data",
+    "Filters": {
+      "Security": "Security",
+      "ISIN": "ISIN",
+      "Clear": "Clear"
+    },
+    "Buttons": {
+      "Update Reference Data": "Update Reference Data",
+      "View Coupon Schedule": "View Coupon Schedule"
+    }
+  },
+  "Coupon Payment Schedule": {
+    "Coupon Payment Schedule": "Coupon Payment Schedule",
+    "Name": "Name",
+    "Security Short Name": "Security Short Name",
+    "Total Issuance Amount": "Total Issuance Amount",
+    "Profit Rate": "Profit Rate",
+    "Frequency": "Frequency",
+    "Currency": "Currency",
+    "Status": "Status",
+    "WSN": "WSN",
+    "ISIN": "ISIN",
+    "Last Updated": "Last Updated",
+    "Maturity Date": "Maturity Date",
+    "Headers": {
+      "Date": "Date",
+      "Notional": "Notional",
+      "Coupon": "Coupon Rate"
+    }
+  },
+  "Empty List": {
+    "No Security Selected": "No Security Selected",
+    "Please select a security to view its reference data": "Please select a security to view its reference data"
+  },
+  "Leave Guard": {
+    "Title": "Navigate away?",
+    "Message": "You are about to navigate away from this page. Your report data will be lost"
+  },
+  "TemplateDisclaimerTextKSA": "Disclaimer: This is a computer-generated report and therefore does not require an authorized signature from Emrgo Capital Platform JSC (the “Custodian”). The information in this report is private and confidential and addressed solely to the Account holder. In case of any discrepancy, please advise the Custodian via email (<1>securitiesservices@wethaqcapital.sa</1>) within 30 days of receipt of this report. Failure to notify us constitutes your acceptance of this report. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to the Custodian in connection with this report.",
+  "TemplateDisclaimerTextDIFC": "Disclaimer: This is a computer-generated report and therefore does not require an authorised signature from EMRGO (DIFC) Ltd. (the “Custodian”). The information in this report is private and confidential and addressed solely to the Account holder. In case of any discrepancy, please advise the Custodian via email  (<1>solutions@difc.emrgo.com</1>) within 24 hours of receipt of this report. Failure to notify us constitutes your acceptance of this report. The Custodian shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided by the recipient to the Custodian in connection with this report.",
+  "PlainDisclaimerTextKSA": "EMRGO  (DIFC)  Ltd  Disclaimer:  This  is  a  computer-generated  report  and,  therefore,  does  not  require  an authorized  signature.  The  information  in  this  report  is  private  and  confidential  and  addressed  solely  to  the  Account holder. In case of any discrepancy, please advise us via email (rm@difc.emrgo.com) within seven (7) days of receipt of this report. Failure to notify us constitutes your acceptance of this report. We shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to us in connection with this report.",
+  "PlainDisclaimerTextDIFC": "EMRGO  (DIFC)  Ltd  Disclaimer:  This  is  a  computer-generated  report  and,  therefore,  does  not  require  an authorized  signature.  The  information  in  this  report  is  private  and  confidential  and  addressed  solely  to  the  Account holder. In case of any discrepancy, please advise us via email (rm@difc.emrgo.com) within seven (7) days of receipt of this report. Failure to notify us constitutes your acceptance of this report. We shall not be liable for any losses arising, directly or indirectly, as a result of any instructions provided to us in connection with this report."
+}

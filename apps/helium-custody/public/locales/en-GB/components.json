@@ -1,0 +1,47 @@
+{
+  "PDFViewer": {
+    "Page": "Page",
+    "Previous Page": "Previous Page",
+    "Next Page": "Next Page"
+  },
+  "FileUploadField": {
+    "Choose file(s)": "Choose file(s)",
+    "Choose file": "Choose file",
+    "Default Placeholder": "Choose file(s)"
+  },
+  "Document Viewer": {
+    "Error: Document File Type Not Supported": "Error: Document File Type Not Supported"
+  },
+  "Material Table": {
+    "pagination": {
+      "rows": "records",
+      "First Page": "First Page",
+      "Previous Page": "Previous Page",
+      "Last Page": "Last Page",
+      "Next Page": "Next Page",
+      "Displayed Rows": "{from}-{to} of {count}"
+    },
+    "header": {
+      "actions": "Actions"
+    },
+    "body": {
+      "No records to display": "No records to display"
+    },
+    "toolbar": {
+      "Search": "Search"
+    }
+  },
+  "Single Upload": {
+    "File": "File",
+    "Document Name": "Document Name",
+    "Category": "Category",
+    "File Uploaded": "File Uploaded"
+  },
+  "Select": {
+    "Select": "Select..."
+  },
+  "UnsavedFormDataGuard": {
+    "title": "Confirm Navigation",
+    "message": "You have unsaved changes that will be lost if you decide to leave this page. Are you sure you want to leave this page?"
+  }
+}

@@ -1,0 +1,53 @@
+@import "../../styles/config.scss";
+
+.actions {
+  &__wrapper {
+    margin-top: 5rem;
+  }
+}
+
+.grid {
+  display: grid;
+  column-gap: 5px;
+  row-gap: 5px;
+  grid-template-columns: repeat(6, 16.66% [col-start]);
+
+  &__item {
+    &--left {
+      margin-right: auto;
+    }
+
+    &--right {
+      margin-left: auto;
+    }
+
+    &--center {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
+.input-field {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+.post-signing {
+  &__condition-names {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  &__parties-involved {
+    grid-column-start: 3;
+    grid-column-end: 5;
+  }
+}
+
+.docusign {
+  &__iframe {
+    width: 100%;
+    height: 100%;
+  }
+}

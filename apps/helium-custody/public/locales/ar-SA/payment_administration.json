@@ -1,0 +1,60 @@
+{
+  "Payment Administration": "إدارة السداد",
+  "Periodic Distribution Payments": "التوزيعات الدورية والسداد",
+  "Please follow the payment instructions below for the subscription payment you are required to make pursuant to your subscription agreement": "يرجى اتباع تعليمات الدفع أدناه لدفع مبلغ الاكتتاب الذي يتعين عليك سداده وفقاً لاتفاقية الاكتتاب الخاصة بك.",
+  "Please follow the payment instructions below for the periodic distribution and redemption payments you are required to make pursuant to the transaction documentation": "يرجى اتباع تعليمات الدفع أدناه والخاصة بالتوزيعات الدورية ودفعات الاسترداد التي يتعين عليك سدادها وفقًا لمستندات المعاملة",
+  "instructions": {
+    "sa": {
+      "instruction 1_INVESTOR": "يرجى تحويل مبلغ {{amount}} {{currencyName}} وفقًا لاتفاقية الاكتتاب الخاصة بك للاستلام في موعد لا يتجاوز يوم عمل واحد قبل {{- date}}",
+      "instruction 1_OBLIGOR": "يرجى تحويل مبلغ {{amount}} {{currencyName}}  وفقًا لوثائق المعاملة للاستلام في موعد لا يتجاوز يوم عمل واحد قبل {{- date}}",
+      "instruction 2_INVESTOR": "يجب استلام هذا المبلغ في حساب أموال العميل صافٍ من أي رسوم بنكية أوتحويل العملات أو لن يفي بالتزام الاكتتاب..",
+      "instruction 2_OBLIGOR": "يجب استلام هذا المبلغ في حساب المصدر- المنشأة ذات الغرض الخاص صافٍ من أي رسوم بنكية أوتحويل العملات أو لن يفي بالتزام السداد .",
+      "account name_INVESTOR": "حساب عملاء منصة وثاق المالية",
+      "account name_OBLIGOR": "حساب عميل منصة وثاق المالية المصدر SPE",
+      "swift": "ARNBSARI",
+      "iban": "{{iban}}"
+    },
+    "ae": {
+      "instruction 1_INVESTOR": "Please remit the amount of {{amount}} {{currencyName}} according to your subscription agreement for receipt no later that one business day before {{- date}}",
+      "instruction 1_OBLIGOR": "Please remit the amount of {{amount}} {{currencyName}} or any other amount according to your legal documentation for receipt no later than one business day before {{- date}}",
+      "instruction 2_INVESTOR": "This amount should be received in free and available funds into our client money account net ( from bank, currency conversion and any other charges) or you will not meet your subscription commitment.",
+      "instruction 2_OBLIGOR": "This amount should be received into our Issuer SPV ( from bank, currency conversion and other charges) or you will not meet your full repayment commitment",
+      "account name_INVESTOR": "Emrgo Capital Markets Client Account",
+      "account name_OBLIGOR": "Emrgo Capital Markets Issuer Client SPV Account",
+      "swift": "ARNBSARI",
+      "iban": "{{iban}}"
+    }
+  },
+  "headers": {
+    "Issuance Name": "اسم الإصدار",
+    "Settlement Date": "تاريخ التسوية",
+    "Address 1": "العنوان 1",
+    "Address 2": "العنوان 2",
+    "IBAN": "رقم الحساب بصيغة IBAN",
+    "Date": "التاريخ",
+    "Amount": "المبلغ",
+    "Status": "الحالة"
+  },
+  "You have subscribed to an Issuance": "لقد اكتتبت في إصدار",
+  "You are now required to send the Subscription funds no later than by the end of Settlement Date": "يرجى إرسال مبلغ الاكتتاب في موعد لا يتجاوز تاريخ التسوية",
+  "These are the payment details for the Subscription funds": "هذه هي تفاصيل الدفع الخاصة بمبلغ الاكتتاب ",
+  "Select Origin Account": "حدد حساب المصدر",
+  "Submit": "إرسال",
+  "Setup account": "إعداد حساب",
+  "Accounts not found": "الحسابات غير موجودة",
+  "Please visit the Cash Management module to set up accounts": "يرجى زيارة وحدة إدارة النقد لإعداد الحسابات",
+  "Payment instructions": "تعليمات الدفع",
+  "Address": "العنوان",
+  "IBAN": "IBAN افتراضي",
+  "Download": "تحميل",
+  "CSV": "CSV",
+  "Payment Status": "حالة السداد",
+  "When the status of your subscription changes to 'Received',please move to the Blotter module to follow the Settlement status": "عندما تتغير حالة اكتتابك إلىتم الاستلام ، يرجى الانتقال إلى وحدة سجل المعاملات لمتابعة حالة التسوية",
+  "Periodic Schedule_INVESTOR": "جدول استلام التوزيعات الدورية",
+  "Periodic Schedule_OBLIGOR": "جدول التوزيعات الدورية",
+  "Please check your transaction document for the next periodic distribution payment or redemption payment you are required to make": "يرجى اتباع تعليمات الدفع أدناه لدفع مبلغ الاكتتاب الذي يتعين عليك سداده وفقاً لاتفاقية الاكتتاب الخاصة بك.",
+  "Upload document evidencing payment": "تحميل المستند الثبوتي للدفع ) SWIFT, SARIE, UAEFTS etc(",
+  "For information only, you may refer to the Priodic Distribution Schedule below": "للحصول على مزيد من المعلومات يمكن الرجوع إلى جدول التوزيعات الدوري أدناه",
+  "Account Name: Wethaq Capital Markets Issuer SPV Account": "Account Name: Emrgo Capital Markets Issuer SPV Account",
+  "Account Name": "اسم الحساب"
+}

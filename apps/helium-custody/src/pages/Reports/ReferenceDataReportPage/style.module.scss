@@ -1,0 +1,16 @@
+@import "../../../styles/config.scss";
+
+.input {
+  &__form_control {
+    width: 100%;
+  }
+}
+
+.filter {
+  margin-top: 1rem;
+}
+
+.disclaimer {
+  padding-top: 2rem !important;
+  padding-bottom: 5rem !important;
+}

@@ -1,0 +1,31 @@
+{
+  "SPEIncorporation": {
+    "title": "SPE Incorporation",
+    "promptMessage": "You must submit the following application to the Capital Market Authority and fulfil the requirements to establish and license an SPE, in accordance with the standardized form approved by the CMA and the Rules for Special Purposes Entities.",
+    "SPEDocumentsTable": {
+      "headers": {
+        "Documents": "Documents",
+        "Download": "Download"
+      },
+      "rows": {
+        "documents": {
+          "Application to Establish and License a Special Purpose Entity (AR-SA)": "Application to Establish and License a Special Purpose Entity (AR-SA)",
+          "Application to Register a Director of a Special Purpose Entity (AR-SA)": "Application to Register a Director of a Special Purpose Entity (AR-SA)",
+          "Appointment of Representatives for Special Purposes Entity (AR-SA)": "Appointment of representatives for Special Purposes Entity (AR-SA)",
+          "Appointment of Representatives for Special Purposes Entity (EN)": "Appointment of representatives for Special Purposes Entity (EN)",
+          "Appointment of Representatives for Sponsor of Special Purposes Entity (AR-SA)": "Appointment of Representatives for Sponsor of Special Purposes Entity (AR-SA)",
+          "Appointment of Representatives for Sponsor of Special Purposes Entity (EN)": "Appointment of Representatives for Sponsor of Special Purposes Entity (EN)",
+          "By-laws of Special Purpose Entities (AR-SA)": "By-laws of Special Purpose Entities (AR-SA)"
+        }
+      }
+    },
+    "ConfirmSPEEstablishmentAndLicensingForm": {
+      "checkboxLabel": "I confirm that the CMA has approved the application to establish and license the SPE and that the SPE has been registered in CMA's register",
+      "submitButtonText": "Confirm SPE Establishment and Licensing",
+      "infoAlert": "Proceed to View Term Sheet",
+      "speByLawsfileUploadField": {
+        "label": "Upload by-laws signed by the Sponsor in the presence of a notary public or a notary certified in the Kingdom"
+      }
+    }
+  }
+}

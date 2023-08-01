@@ -1,0 +1,60 @@
+{
+  "Payment Administration": "Payment Administration",
+  "Periodic Distribution Payments": "Periodic Distribution Payments",
+  "Please follow the payment instructions below for the subscription payment you are required to make pursuant to your subscription agreement": "Please follow the payment instructions below for the subscription payment you are required to make pursuant to your subscription agreement.",
+  "Please follow the payment instructions below for the periodic distribution and redemption payments you are required to make pursuant to the transaction documentation": "Please follow the payment instructions below for the periodic distribution and redemption payments you are required to make pursuant to the transaction documentation",
+  "instructions": {
+    "sa": {
+      "instruction 1_INVESTOR": "Please remit the amount of {{amount}} {{currencyName}} according to your subscription agreement for receipt no later that one business day before {{- date}}",
+      "instruction 1_OBLIGOR": "Please remit the amount of {{amount}} {{currencyName}} or any other amount according to your legal documentation for receipt no later than one business day before {{- date}}",
+      "instruction 2_INVESTOR": "This amount should be received in free and available funds into our client money account net ( from bank, currency conversion and any other charges) or you will not meet your subscription commitment.",
+      "instruction 2_OBLIGOR": "This amount should be received into our Issuer SPV ( from bank, currency conversion and other charges) or you will not meet your full repayment commitment",
+      "account name_INVESTOR": "Emrgo Capital Markets Client Account",
+      "account name_OBLIGOR": "Emrgo Capital Markets Issuer Client SPV Account",
+      "swift": "ARNBSARI",
+      "iban": "{{iban}}"
+    },
+    "ae": {
+      "instruction 1_INVESTOR": "Please remit the amount of {{amount}} {{currencyName}} according to your subscription agreement for receipt no later that one business day before {{- date}}",
+      "instruction 1_OBLIGOR": "Please remit the amount of {{amount}} {{currencyName}} or any other amount according to your legal documentation for receipt no later than one business day before {{- date}}",
+      "instruction 2_INVESTOR": "This amount should be received in free and available funds into our client money account net ( from bank, currency conversion and any other charges) or you will not meet your subscription commitment.",
+      "instruction 2_OBLIGOR": "This amount should be received into our Issuer SPV ( from bank, currency conversion and other charges) or you will not meet your full repayment commitment",
+      "account name_INVESTOR": "Emrgo Capital Markets Client Account",
+      "account name_OBLIGOR": "Emrgo Capital Markets Issuer Client SPV Account",
+      "swift": "ARNBSARI",
+      "iban": "{{iban}}"
+    }
+  },
+  "headers": {
+    "Issuance Name": "Issuance Name",
+    "Settlement Date": "Settlement Date",
+    "Address 1": "Address 1",
+    "Address 2": "Address 2",
+    "IBAN": "IBAN",
+    "Date": "Date",
+    "Amount": "Amount",
+    "Status": "Status"
+  },
+  "Please follow the payment instructions below for the subscription payment you are required to make pursuant to your subscription amount": "Please follow the payment instructions below for the subscription payment or redemption payment you are required to make pursuant to your subscription amount",
+  "You are now required to send the Subscription funds no later than by the end of Settlement Date": "You are now required to send the Subscription funds no later than by the end of Settlement Date",
+  "These are the payment details for the Subscription funds": "These are the payment details for the Subscription funds",
+  "Select Origin Account": "Select Origin Account",
+  "Submit": "Submit",
+  "Setup account": "Setup account",
+  "Accounts not found": "Accounts not found",
+  "Please visit the Cash Management module to set up accounts": "Please visit the Cash Management module to set up accounts",
+  "Payment instructions": "Payment instructions",
+  "Address": "Address",
+  "IBAN": "IBAN",
+  "Download": "Download",
+  "CSV": "CSV",
+  "Payment Status": "Payment Status",
+  "When the status of your subscription changes to 'Received',please move to the Blotter module to follow the Settlement status": "When the status of your subscription changes to 'Received',please move to the Blotter module to follow the Settlement status",
+  "Periodic Schedule_INVESTOR": "Periodic Distribution Receipt Schedule",
+  "Periodic Schedule_OBLIGOR": "Periodic Distribution Schedule",
+  "Please check your transaction document for the next periodic distribution payment or redemption payment you are required to make": "Please check your transaction document for the next periodic distribution payment or redemption payment you are required to make.",
+  "For information only, you may refer to the Priodic Distribution Schedule below": " For information only, you may refer to the Priodic Distribution Schedule below.",
+  "Account Name: Wethaq Capital Markets Issuer SPV Account": "Account Name: Emrgo Capital Markets Issuer SPV Account",
+  "Upload document evidencing payment": "Upload document evidencing payment \n ( SWIFT, SARIE, UAEFTS etc)",
+  "Account Name": "Account Name"
+}

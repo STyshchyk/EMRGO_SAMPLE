@@ -1,0 +1,11 @@
+@import "../../styles//config.scss";
+
+.title {
+  border-bottom: 4px solid $secondary-color;
+  display: inline-block;
+}
+
+.stepperContainer {
+  width: 100%;
+  max-width: 1500px;
+}

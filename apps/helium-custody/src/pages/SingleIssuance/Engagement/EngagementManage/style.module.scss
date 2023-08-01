@@ -1,0 +1,57 @@
+@import "../../../../styles/config.scss";
+
+.dataTable {
+  width: 100%;
+  .actionButton {
+    font-size: 13px;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+  .dataRow {
+    text-align: left;
+    td {
+      padding-right: 1rem;
+    }
+  }
+  .heading {
+    text-align: left;
+    th {
+      padding-right: 1rem;
+    }
+  }
+  .actionItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 610px;
+    .uploadBox {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.docusign {
+  &__modal {
+    // position: absolute;
+    // top: 5vh !important;
+    // left: 5vw !important;
+    // right: auto !important;
+    // bottom: auto !important;
+    // background: rgb(255, 255, 255);
+    // overflow: auto;
+    // outline: none;
+    // padding: 20px;
+    // display: flex;
+    // flex-direction: column;
+    // width: 90vw;
+    height: 90vh;
+    // border: none !important;
+    // border-radius: 6px !important;
+    // box-shadow: 10px 10px 8px #888888;
+  }
+
+  &__iframe {
+    width: 100%;
+    height: 98%;
+  }
+}

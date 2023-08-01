@@ -1,0 +1,71 @@
+{
+  "Client Rate Card": {
+    "Title": "Client Rate Card",
+    "Add": "Add Rate Card",
+    "Table": {
+      "Client": "Client",
+      "Billing Account": "Billing Account",
+      "Billing Period": "Billing Period",
+      "Status": "Status",
+      "Version": "Version",
+      "Last Updated": "Last Updated",
+      "Actions": {
+        "Amend": "Amend",
+        "Review for Approval": "Review for Approval",
+        "View": "View"
+      }
+    },
+    "View Dialog": {
+      "Client Rate Card": "{{type}} Client Rate Card",
+      "Client": "Client",
+      "Billing Account": "Billing Account",
+      "Billing Period": "Billing Period",
+      "Minimum Charge (USD)": "Minimum Charge (USD)",
+      "OverlappingPeriodMessageKey": "Overlapping payment holiday period found",
+      "OverlappingPeriodMessageKey_plural": "{{count}} overlapping payment holiday periods found",
+      "": ""
+    },
+    "Add Dialog": {
+      "Add Client Rate Card": "Add Client Rate Card",
+      "Client": "Client",
+      "Billing Account": "Billing Account",
+      "Billing Period": "Billing Period",
+      "Minimum Charge (USD)": "Minimum Charge (USD)",
+      "Start Date": "Start Date",
+      "End Date": "End Date",
+      "Add more Rate Cards?": "Add more Rate Cards?",
+      "": ""
+    }
+  },
+  "Invoice Management": {
+    "Title": "Invoice Management",
+    "Table": {
+      "Client": "Client",
+      "Invoice Reference": "Invoice Reference",
+      "Invoice Amount (USD)": "Invoice Amount (USD)",
+      "Payment Status": "Payment Status",
+      "Client Account": "Client Account",
+      "Balance (USD)": "Balance (USD)",
+      "Invoice Status": "Invoice Status",
+      "Last Amended": "Last Amended",
+      "Actions": {
+        "Amend": "Amend",
+        "Review for Approval": "Review for Approval",
+        "View": "View",
+        "Download": "Download",
+        "Take Payment": "Take Payment"
+      }
+    },
+    "View Dialog": {
+      "Invoice": "{{type}} Invoice",
+      "Client": "Client",
+      "Invoice Reference": "Invoice Reference",
+      "Invoice Date": "Invoice Date",
+      "Minimum Charge (USD)": "Minimum Charge (USD)",
+      "TransactionChargeOverrideMessageKey": "Transaction charge discrepency found",
+      "TransactionChargeOverrideMessageKey_plural": "{{count}} transaction charge discrepencies found",
+      "OverlappingPeriodMessageKey": "Overlapping payment holiday period found",
+      "OverlappingPeriodMessageKey_plural": "{{count}} overlapping payment holiday periods found"
+    }
+  }
+}

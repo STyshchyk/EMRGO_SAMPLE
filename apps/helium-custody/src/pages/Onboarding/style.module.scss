@@ -1,0 +1,195 @@
+@import "../../styles/config.scss";
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.form {
+  // display: flex;
+  // flex-direction: column;
+  max-width: 560px;
+  width: 100%;
+}
+
+.modalContainer {
+  width: 700px;
+  border: 2px solid #eeeeee;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 30px;
+}
+
+.formContainer {
+  justify-content: center;
+  display: flex;
+  padding: 90px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.header {
+  color: #23389c;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 19px;
+  text-align: center;
+}
+
+.greyText {
+  color: #9b9b9b;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 14px;
+  text-align: justify;
+}
+
+.termsText {
+  color: #9b9b9b;
+  font-size: 14px;
+  letter-spacing: 0;
+  // line-height: 19px;
+  text-align: justify;
+}
+
+.acceptTerms {
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.formNav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 30px;
+  padding-right: 0;
+  width: 700px;
+}
+
+.labelText {
+  color: #143673;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 19px;
+}
+
+.popoverText {
+  color: #143673;
+  // font-size: 12px;
+  // letter-spacing: 0;
+  // line-height: 12px;
+}
+
+.optionRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.optionRowLabel {
+  margin: 5px 10px;
+}
+
+.submitLabel {
+  color: #23389c;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 19px;
+  text-align: center;
+}
+
+.successContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.svg-box {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+}
+
+.green-stroke {
+  stroke: #48e5c2;
+}
+
+.circular circle.path {
+  stroke-dasharray: 330;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  opacity: 0.8;
+  animation-duration: 0.7s;
+  animation-name: draw-circle;
+  animation-timing-function: ease-out;
+  // animation: 0.7s draw-circle ease-out;
+}
+
+/*------- Checkmark ---------*/
+.checkmark {
+  stroke-width: 6.25;
+  stroke-linecap: round;
+  position: absolute;
+  top: 56px;
+  left: 49px;
+  width: 52px;
+  height: 40px;
+}
+
+.checkmark path {
+  animation-duration: 1s;
+  animation-name: draw-check;
+  animation-timing-function: ease-out;
+  // animation: 1s draw-check ease-out;
+}
+
+@keyframes draw-circle {
+  0% {
+    stroke-dasharray: 0, 330;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  80% {
+    stroke-dasharray: 330, 330;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes draw-check {
+  0% {
+    stroke-dasharray: 49, 80;
+    stroke-dashoffset: 48;
+    opacity: 0;
+  }
+
+  50% {
+    stroke-dasharray: 49, 80;
+    stroke-dashoffset: 48;
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dasharray: 130, 80;
+    stroke-dashoffset: 48;
+  }
+}
+
+.retailClientBox {
+  padding: 100px 120px;
+  padding-top: 50px;
+}

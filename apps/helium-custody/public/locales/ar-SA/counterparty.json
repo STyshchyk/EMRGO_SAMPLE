@@ -1,0 +1,72 @@
+{
+  "Counterparty": {
+    "Counterparty": "طرف نظير",
+    "New Counterparty": "طرف نظير جديد",
+    "Edit Counterparty": "تعديل الطرف النظير",
+    "Headers": {
+      "Entity": "الجهة",
+      "Counterparty ID": "هوية الطرف النظير",
+      "Short Name": "الاسم المختصر",
+      "Long Name": "الاسم الطويل",
+      "Status": "الحالة"
+    },
+    "Context Menu": {
+      "Amend": "تعديل",
+      "Delete": "حذف",
+      "Active": "نشط",
+      "Inactive": "غير نشط"
+    },
+    "Buttons": {
+      "New Counterparty": "طرف نظير جديد"
+    },
+    "Add Counterparty Form": {
+      "Entity": "الجهة",
+      "Counterparty ID": "هوية الطرف النظير",
+      "Short Name": "الاسم المختصر",
+      "Long Name": "الاسم الطويل",
+      "Status": "الحالة"
+    },
+    "Status": {
+      "Active": "نشط",
+      "Inactive": "غير نشط"
+    }
+  },
+  "Counterparty SSI": {
+    "Counterparty SSI": "الـ SSI  للطرف النظير",
+    "New Counterparty SSI": "الـ SSI الجديد للطرف النظير",
+    "Edit Counterparty SSI": "تعديل الـ SSI للطرف النظير",
+    "Headers": {
+      "Entity": "الجهة",
+      "Counterparty": "الطرف النظير",
+      "Counterparty Long Name": "Long Name",
+      "SSI Label": "تسمية الـ SSI",
+      "Settlement Location": "مكان التسوية",
+      "DeliveryOrReceive Agent": "وكيل التسليم / الاستلام",
+      "SellerOrBuyer": "البائع / المشتري",
+      "ID Type": "نوع الهوية",
+      "Identifier": "المحدد",
+      "Safekeeping Account": "حساب الحفظ",
+      "Status": "الحالة"
+    },
+    "Context Menu": {
+      "Amend": "تعديل",
+      "Delete": "حذف",
+      "Active": "نشط",
+      "Inactive": "غير نشط"
+    },
+    "Buttons": {
+      "New SSI": "الـ SSI الجديد"
+    },
+    "Add Counterparty SSI Form": {
+      "Entity": "الجهة",
+      "Counterparty": "الطرف النظير",
+      "SSI Label": "تسمية الـ SSI",
+      "Settlement Location": "مكان التسوية",
+      "DeliveryOrReceive Agent ID Type": "نوع هوية وكيل التسليم / الاستلام",
+      "DeliveryOrReceive Agent Identifier": "معرف وكيل التسليم / الاستلام",
+      "SellerOrBuyer ID Type": "نوع هوية البائع / المشتري",
+      "SellerOrBuyer Identifier": "معرف البائع / المشتري",
+      "Safekeeping Account": "حساب الحفظ"
+    }
+  }
+}

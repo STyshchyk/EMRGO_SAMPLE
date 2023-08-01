@@ -1,0 +1,39 @@
+{
+  "mixed": {
+    "oneOf": {
+      "confirmPassword": "Passwords must match"
+    },
+    "required": {
+      "confirmPassword": "Please confirm your password",
+      "email": "Email address is required",
+      "password": "Password is required",
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "entityName": "Entity Name is required",
+      "entityEmail": "Entity email address is required",
+      "counterparty": "Counterparty is required",
+      "counterpartySSI": "Counterparty SSI is required",
+      "price": "Price is required",
+      "quantity": "Quantity is required",
+      "settlementAmount": "Settlement amount is required",
+      "principalAmount": "Principal amount is required",
+      "accruedInterest": "Accrued Interest is required",
+      "settlementType": "Settlement type is required",
+      "csdSelectOption": "Please select a Registrar before submitting",
+      "baseCurrency": "Base Currency is required",
+      "portfolioCurrency": "Portfolio Currency is required",
+      "registrationRequirement": "Registration requirement is required",
+      "reportingCycle": "Reporting cycle is required",
+      "reportingMode": "Reporting mode is required"
+    }
+  },
+  "string": {
+    "email": "Must be a valid email address",
+    "maxLength": "Must be at most {{count}} characters",
+    "minLength": "Must be at least {{count}} characters",
+    "matches": {
+      "password": "Must contain at least one of the following: uppercase letters, lowercase letters, numbers and symbols"
+    }
+  },
+  "Password must be minimum 8 characters and must include an uppercase letter, lowercase letter, number and character": "Password must be minimum 8 characters and must include an uppercase letter, lowercase letter, number and character"
+}

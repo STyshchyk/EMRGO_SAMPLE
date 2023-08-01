@@ -1,0 +1,32 @@
+@import "../../styles/config.scss";
+
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-areas:
+    "header-area"
+    "content-area"
+    "footer-area";
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr max-content;
+}
+
+.header-area {
+  grid-area: header-area;
+  background-color: $logo-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 8rem;
+  padding: 1.5rem;
+}
+
+.content-area {
+  grid-area: content-area;
+  padding: 1.5rem;
+}
+
+.footer-area {
+  grid-area: footer-area;
+  padding: 1rem 2rem 0;
+}

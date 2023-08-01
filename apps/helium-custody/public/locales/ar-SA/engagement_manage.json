@@ -1,0 +1,21 @@
+{
+  "Engagement Requests": "طلبات التعاقد",
+  "Headers": {
+    "Entity Group": "مجموعة الجهة",
+    "Security Title": "اسم الورقة المالية ",
+    "Status": "الحالة"
+  },
+  "Status": {
+    "Engagement Requested": "تم طلب التعاقد",
+    "Engagement Letter Uploaded": "تم تحميل خطاب التعاقد",
+    "Generating Letter for Signature": "إنشاء خطاب للتوقيع",
+    "Sent for Signature": "إرسال للتوقيع",
+    "Signed": "موقعة",
+    "Engaged": "متعاقد"
+  },
+  "Buttons": {
+    "Send For Signature": "إرسال للتوقيع",
+    "Engagement Letter": "خطاب التعاقد",
+    "Upload Document": "Upload Document"
+  }
+}

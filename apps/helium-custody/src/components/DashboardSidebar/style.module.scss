@@ -1,0 +1,70 @@
+@import "../../styles/config.scss";
+
+.drawer {
+  width: $sidebar-width !important;
+  flex-shrink: 0 !important;
+
+  &__paper {
+    width: $sidebar-width !important;
+    border: none !important;
+  }
+
+  &__content {
+    height: 100%;
+    padding: 0.5rem 0.1rem;
+    background-color: #143673 !important;
+  }
+
+  &__logo {
+    height: 4rem;
+  }
+
+  &__items {
+    flex: 1;
+  }
+
+  &__link {
+    color: #fff !important;
+    width: 100%;
+    font-weight: 700 !important;
+    padding: 0.5rem;
+    background-color: $selection-color !important;
+
+    &__wrapper {
+      &__right {
+        width: 100%;
+        text-align: right;
+      }
+
+      &__left {
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    &--active {
+      border-style: inset;
+      border: 3px solid $secondary-color;
+    }
+
+    &__text {
+      color: inherit !important;
+      font-weight: inherit !important;
+    }
+  }
+
+  &__icons {
+    color: #fff;
+  }
+
+  &__divider {
+    background-color: #fff !important;
+    margin: 1rem 0 !important;
+  }
+
+  &__section {
+    height: 100%;
+    color: #fff !important;
+    background-color: $primary-color !important;
+  }
+}
