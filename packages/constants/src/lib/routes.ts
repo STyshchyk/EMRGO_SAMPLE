@@ -20,6 +20,7 @@ export const clientModuleURLs: IMap = {
 export const clientAuthenticationRoutes = {
   home: "",
   createPassword: "/create-password",
+  setupTwoFactorAuth:"/setup-two-factor-auth",
   signUp: "/signup",
   login: "/login",
   resetPassword: "/reset-password",

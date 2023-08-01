@@ -2,7 +2,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
-import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
+// import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
+import { ToastProvider } from "@emrgo-frontend/shared-ui";
+import { UserProvider } from "./components/UserContext"; //! using app level user context with further mfa checks
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
@@ -19,6 +21,8 @@ import { Signup } from "./pages/Signup";
 import { TroubleSigningIn } from "./pages/TroubleSigningIn";
 import { TroubleSigningInThanks } from "./pages/TroubleSigningInThanks";
 import { Verification } from "./pages/Verification";
+import { SetupMFA } from "./pages/SetupMFA";
+
 
 const router = createBrowserRouter([
   {
@@ -36,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: routes.createPassword,
     element: <CreatePassword />,
+  },
+  {
+    path: routes.setupTwoFactorAuth,
+    element: <SetupMFA />,
   },
   {
     path: routes.resetPassword,
