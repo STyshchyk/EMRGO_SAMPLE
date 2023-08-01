@@ -1,14 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -67,93 +65,91 @@ const UploadKYCDocumentForm = ({ initialValues, handleSubmit, handleClose, entit
   };
 
   return (
-    <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
-        {({ values }) => (
-          <Form>
-            <Grid container spacing={2}>
-              <Grid item container xs={12}>
-                <Grid item xs={4} container direction="column" justifyContent="center">
-                  <Typography>{t("documents:Upload Modal.Name")}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Field
-                    required
-                    fullWidth
-                    component={TextField}
-                    name="name"
-                    variant="filled"
-                    type="text"
-                    // inputProps={{
-                    //   maxLength: 40,
-                    // }}
-                  />
-                </Grid>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+      {({ values }) => (
+        <Form>
+          <Grid container spacing={2}>
+            <Grid item container xs={12}>
+              <Grid item xs={4} container direction="column" justifyContent="center">
+                <Typography>{t("documents:Upload Modal.Name")}</Typography>
               </Grid>
-
-              <Grid item container xs={12}>
-                <Grid item xs={4} container direction="column" justifyContent="center">
-                  <Typography>{t("documents:Upload Modal.Upload Document")}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <FileUploadField
-                    fullWidth
-                    name="supportingDocumentFileName"
-                    acceptableFileTypes={ACCEPTABLE_FILE_TYPES.join(",")}
-                    customHandleChange={(e) =>
-                      handleSingleFileUpload({ files: e, keyName: "supportingDocumentFileName" })
-                    }
-                    defaultFiles={
-                      values.supportingDocumentFileName
-                        ? [{ file: { name: values.supportingDocumentFileName.files[0].file } }]
-                        : null
-                    }
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid item container lg={12}>
-                <Grid item xs={4} container direction="column" justifyContent="center">
-                  <Typography>
-                    {t("documents:Upload Modal.Document Expiry (if applicable)")}
-                  </Typography>
-                </Grid>
-                <Grid xs={8} container alignContent="center" className="px-1">
-                  <Field
-                    fullWidth
-                    format="DD/MM/YYYY"
-                    inputVariant="filled"
-                    inputProps={{
-                      shrink: "false",
-                    }}
-                    minDate={moment()}
-                    variant="dialog"
-                    placeholder="DD/MM/YYYY"
-                    component={DatePicker}
-                    name="expiry"
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid item container xs={12} md={12} lg={12} justifyContent="flex-end">
-                <Button type="button" color="primary" data-testid="cancel" onClick={handleClose}>
-                  {t("documents:Upload Modal.Cancel")}
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  data-testid="submit"
-                  disabled={isUploading}
-                >
-                  {t("documents:Upload Modal.Submit")}
-                </Button>
+              <Grid item xs={8}>
+                <Field
+                  required
+                  fullWidth
+                  component={TextField}
+                  name="name"
+                  variant="filled"
+                  type="text"
+                  // inputProps={{
+                  //   maxLength: 40,
+                  // }}
+                />
               </Grid>
             </Grid>
-          </Form>
-        )}
-      </Formik>
-    </MuiPickersUtilsProvider>
+
+            <Grid item container xs={12}>
+              <Grid item xs={4} container direction="column" justifyContent="center">
+                <Typography>{t("documents:Upload Modal.Upload Document")}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <FileUploadField
+                  fullWidth
+                  name="supportingDocumentFileName"
+                  acceptableFileTypes={ACCEPTABLE_FILE_TYPES.join(",")}
+                  customHandleChange={(e) =>
+                    handleSingleFileUpload({ files: e, keyName: "supportingDocumentFileName" })
+                  }
+                  defaultFiles={
+                    values.supportingDocumentFileName
+                      ? [{ file: { name: values.supportingDocumentFileName.files[0].file } }]
+                      : null
+                  }
+                />
+              </Grid>
+            </Grid>
+
+            <Grid item container lg={12}>
+              <Grid item xs={4} container direction="column" justifyContent="center">
+                <Typography>
+                  {t("documents:Upload Modal.Document Expiry (if applicable)")}
+                </Typography>
+              </Grid>
+              <Grid xs={8} container alignContent="center" className="px-1">
+                <Field
+                  fullWidth
+                  format="DD/MM/YYYY"
+                  inputVariant="filled"
+                  inputProps={{
+                    shrink: "false",
+                  }}
+                  minDate={moment()}
+                  variant="dialog"
+                  placeholder="DD/MM/YYYY"
+                  component={DatePicker}
+                  name="expiry"
+                />
+              </Grid>
+            </Grid>
+
+            <Grid item container xs={12} md={12} lg={12} justifyContent="flex-end">
+              <Button type="button" color="primary" data-testid="cancel" onClick={handleClose}>
+                {t("documents:Upload Modal.Cancel")}
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                data-testid="submit"
+                disabled={isUploading}
+              >
+                {t("documents:Upload Modal.Submit")}
+              </Button>
+            </Grid>
+          </Grid>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

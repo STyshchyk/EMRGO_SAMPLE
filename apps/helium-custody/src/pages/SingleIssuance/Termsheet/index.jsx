@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
 import { mdiBlockHelper } from "@mdi/js";
-import LoadingPage from "components/LoadingPage";
 
 import ErrorBanner from "../../../components/ErrorBanner";
+import LoadingPage from "../../../components/LoadingPage";
 import * as issuanceActionCreators from "../../../redux/actionCreators/issuance";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as issuanceSelectors from "../../../redux/selectors/issuance";

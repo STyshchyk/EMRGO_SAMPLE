@@ -9,10 +9,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Link from "@mui/material/Link";
-import LoadingPage from "components/LoadingPage";
 import { v4 as uuidv4 } from "uuid";
 
 import Button from "../../../../components/Button";
+import LoadingPage from "../../../../components/LoadingPage";
 import * as documentActionCreators from "../../../../redux/actionCreators/documents";
 import * as issuanceActionCreators from "../../../../redux/actionCreators/issuance";
 import * as authSelectors from "../../../../redux/selectors/auth";
