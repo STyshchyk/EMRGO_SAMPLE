@@ -1,7 +1,7 @@
 import { ErrorIcon as ErrorIconBase } from "@emrgo-frontend/shared-ui";
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const maxWidth = 458;
 
@@ -30,16 +30,38 @@ export const OneColCheck = styled.div`
   padding-left: ${rem(4)};
 `;
 
-export const Heading = styled.h1`
+export const Heading = styled.h1<{ align?: string }>`
   ${getTheme("typography.heading.01")}
-  color: ${getTheme("colors.white.100")};
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      color: ${getTheme("colors.black.100")};
+    `}
+
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      color: ${getTheme("colors.white.100")};
+    `}
   margin: 0;
+  text-align: ${(props) => props.align || "left"};
 `;
 
-export const SubHeading = styled.p`
+export const SubHeading = styled.p<{ align?: string }>`
   ${getTheme("typography.regular.02")}
-  color: ${getTheme("colors.white.70")};
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      color: ${getTheme("colors.black.70")};
+    `}
+
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      color: ${getTheme("colors.white.70")};
+    `}
   margin: 0;
+  text-align: ${(props) => props.align || "left"};
 `;
 
 export const FormError = styled.div`

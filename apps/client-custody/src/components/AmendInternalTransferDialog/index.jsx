@@ -8,10 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import * as paymentAndSettlementSelectors from "redux/selectors/paymentAndSettlement";
 
 import * as journalsActionCreators from "../../redux/actionCreators/journals";
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
+import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
 import AddInternalTransferForm, {
   buildAddInternalTransferRequestPayload,
   generateEntityOptionsList,
