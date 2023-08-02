@@ -1,0 +1,10 @@
+@import "../../styles/config.scss";
+
+.container {
+  align-items: center;
+  color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}

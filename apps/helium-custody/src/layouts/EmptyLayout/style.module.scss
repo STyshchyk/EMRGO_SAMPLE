@@ -1,0 +1,35 @@
+@import "../../styles/config.scss";
+
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-areas: "content-area";
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr max-content;
+}
+
+.header-area {
+  grid-area: header-area;
+  padding: 1rem 2rem 0;
+}
+
+.content-area {
+  grid-area: content-area;
+  padding: 0 2rem;
+}
+
+.footer-area {
+  grid-area: footer-area;
+  padding: 1rem 2rem 0;
+}
+
+@media only screen and (max-width: $viewport-md) {
+  .container {
+    grid-template-areas: "content-area";
+    grid-template-columns: 1fr;
+    grid-template-rows:
+      max-content /* header */
+      1fr /* content */
+      auto; /* footer */
+  }
+}

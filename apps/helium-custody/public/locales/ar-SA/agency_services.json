@@ -1,0 +1,13 @@
+{
+  "Security Information": "Security Information",
+  "TableActions": {
+    "Review Security Info": "Review Security Info",
+    "View SSI": "View SSI",
+    "Upload Payment Confirmation": "Upload Payment Confirmation",
+    "View Counterparty SSI": "View Counterparty SSI",
+    "View Notifications": "View Notifications",
+    "View Payment Evidence": "View Payment Evidence",
+    "View Coupon Schedule": "View Coupon Schedule",
+    "Distribute Coupon": "Distribute Coupon"
+  }
+}

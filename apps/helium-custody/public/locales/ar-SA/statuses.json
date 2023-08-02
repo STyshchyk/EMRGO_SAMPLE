@@ -1,0 +1,109 @@
+{
+  "Issuance": {
+    "Sukuk Types": {
+      "Sukuk Al Ijarah": "صكوك الإجارة",
+      "Sukuk Al Murabaha": "صكوك المرابحة",
+      "Sukuk Al Musharaka": "صكوك المشاركة",
+      "Sukuk Al Wakalah": "صكوك الوكالة",
+      "N/A": "غير متوفر"
+    },
+    "Distribution Method": {
+      "Private Placement": "الطرح الخاص"
+    },
+    "Pricing Name": {
+      "Issue To Order": "إصدار حسب الطلب"
+    },
+    "Private Placement": {
+      "Term Sheet Generation": "إنشاء الشروط",
+      "Subscription": "التخصيص المبدئي",
+      "Subscription Confirmations": "تأكيد التخصيص المبدئي",
+      "Signing": "التوقيع",
+      "Closing": "الانهاء",
+      "Admission Settlement": "تسوية القبول",
+      "Certificate Allocation": "تحصيص الشهادات",
+      "BidPayments": "مدفوعات المناقصة",
+      "Certificate Registry": "سجل الشهادات",
+      "Coupon Payment": "قسيمة الدفع",
+      "Redemption Payment": "مبلغ الاسترداد"
+    },
+    "Engagement Settings": {
+      "Arranger Counsel Only": "المستشار القانوني التابع للجهة المنظمة فقط",
+      "Obligor Engages Issuer": "المُلزم يتعاقد مع المُصدر"
+    }
+  },
+  "Issuer": {
+    "Incorporated": "مندمج",
+    "Pending Instructions": " التعليمات معلقة"
+  },
+  "Users": {
+    "Obligor": "الملتزم",
+    "Issuer SPV": "المنشأة ذات الأغراض الخاصة التابعة للمُصدر",
+    "Arranger": "الجهة المنظمة",
+    "Co Arranger": "مرتب مشارك",
+    "Capital Market Institution": "مؤسسة سوق مالية",
+    "Arranger_plural": "الجهة المنظمة",
+    "Service Providers": "مقدمي الخدمات",
+    "Legal Counsel": "المستشار القانوني ",
+    "Fiduciary": "ائتمانية",
+    "Investor": "المستثمر",
+    "Sharia Board": "الهيئة الشرعية",
+    "Corporate Service Provider": " مقدمي الخدمات المؤسسية",
+    "Rating Agency": "وكالة التصنيف ",
+    "SPE Trustee": "SPE Trustee",
+    "Issuer": "Issuer",
+    "": ""
+  },
+  "Documents": {
+    "awaiting": "بالانتظار",
+    "review": "قيد المراجعة",
+    "reviewed": "تمت المراجعة",
+    "execution": "تنفيذ",
+    "signing": "توقيع",
+    "signed": "موقعة"
+  },
+  "Profit Rate Terms": {
+    "Fixed": "ثابت"
+  },
+  "Frequency": {
+    "Annually": "سنوياً",
+    "Monthly": "شهرياً",
+    "Quarterly": "ربع سنوي",
+    "Semi-Annually": "نصف سنوي"
+  },
+  "Settlement Status": {
+    "In Queue": "في قائمة الانتظار",
+    "Ready to Settle": "جاهز للتسوية",
+    "Settling": "قيد التسوية",
+    "Approved": "موافق",
+    "Settled": "تمت التسوية",
+    "Unallocated": "غير مخصص"
+  },
+  "Settlement Type": {
+    "DVP": "التسليم مقابل الدفع"
+  },
+  "Security Status": {
+    "Partially Filled": "مملوء جزئيا",
+    "Finalized": "تم الانتهاء",
+    "Active": "نشط ",
+    "-": "-"
+  },
+  "Ready to Settle": {
+    "Yes": "نعم",
+    "No": "لا"
+  },
+  "Trade Status": {
+    "Submitted": "تم الارسال",
+    "Confirmed": "مؤكد",
+    "Allocated": "تم التخصيص",
+    "N/A": "غير متوفر"
+  },
+  "Trade Type": {
+    "Subscription": "الاكتتابات",
+    "N/A": "غير متوفر"
+  },
+  "Direction": {
+    "Buy": "شراء ",
+    "Sell": "بيع",
+    "N/A": "غير متوفر"
+  }
+}

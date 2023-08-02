@@ -1,0 +1,17 @@
+{
+  "Engage a Service Provider": "إشراك مقدم خدمات ",
+  "Categories": {
+    "Legal Counsel": "المستشار القانوني ",
+    "Corporate Service Provider": " مقدمي الخدمات المؤسسية",
+    "Sharia Board": "الهيئة الشرعية",
+    "Rating Agency": "وكالة التصنيف ",
+    "SPE Trustee ": "SPE Trustee",
+    "Capital Market Institution": "Capital Market Institution"
+  },
+  "Buttons": {
+    "Message": "مراسلة",
+    "Send Engagement Request": "إرسال طلب التعاقد",
+    "View Engagement Letter": "عرض  خطاب التعاقد"
+  },
+  "There are currently no service providers available for": "ليس هناك مقدم خدمات متاح في الوقت الحالي$t(Categories.{{category}}) الخدمات"
+}

@@ -1,0 +1,13 @@
+.selectContainer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.wrapText {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
+  height: 1.2em;
+  white-space: nowrap;
+}

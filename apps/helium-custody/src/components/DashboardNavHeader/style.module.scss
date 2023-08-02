@@ -1,0 +1,45 @@
+@import '../../styles/config.scss';
+
+.linkMenuWrapper {
+  background-color: #143673;
+  padding: 1em;
+  margin-top: 3.5em;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.linkMenuContainer {
+  display: flex;
+}
+
+.linkContainer {
+  margin-right: 10px;
+  background-color: #3a5194;
+  display: flex;
+  align-items: center;
+  border-radius: 0.6em;
+
+  .linkText {
+    font-size: 14px;
+    padding: 0 1.25em;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .linkIndicator {
+    width: calc(100% - 10px);
+  }
+}
+
+.selectedBorder {
+  border: 0.2em solid $secondary-color !important;
+  border-radius: 0.6em;
+  padding: 0.35em;
+}

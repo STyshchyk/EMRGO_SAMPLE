@@ -1,0 +1,11 @@
+tbody.MuiTableBody-root > :nth-of-type(odd) {
+  background-color: #eeeeee;
+}
+
+tbody.MuiTableBody-root > :nth-of-type(even) {
+  background-color: #ffffff;
+}
+
+.MuiTable-root tr td:last-child div {
+  justify-content: center;
+}

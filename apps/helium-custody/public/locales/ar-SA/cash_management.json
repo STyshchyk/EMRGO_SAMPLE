@@ -1,0 +1,217 @@
+{
+  "Cash Statement": {
+    "Cash Statement": "كشف حساب النقد",
+    "Currency": "العملة",
+    "Account": "الحساب",
+    "Address": "العنوان",
+    "NA": "غير متوفر",
+    "Rows per page": "عدد الصفوف في الصفحة",
+    "of": "من",
+    "Headers": {
+      "Date": "التاريخ",
+      "Transaction_Balance Type": "نوع المعاملة / الرصيد",
+      "Reference No": "رقم المرجع.",
+      "Related ISIN": "ISIN ذات الصلة ",
+      "Narrative": "التوضيح",
+      "Debit": "قيد على حساب ",
+      "Credit": "قيد لحساب ",
+      "Balance": "الرصيد",
+      "Actions": " الإجراءات"
+    },
+    "Filters": {
+      "Date": "التاريخ",
+      "Entity": "الجهة",
+      "Account": "الحساب",
+      "Export Report": "[CSV] تصدير التقرير",
+      "Filter": "انتقاء معلومات محددة",
+      "Apply": "تطبيق",
+      "Export": "تصدير"
+    }
+  },
+  "Internal Transfer": {
+    "Internal Transfer": "تحويل داخلي",
+    "Date": "التاريخ",
+    "Source Account Owner": "صاحب حساب المصدر",
+    "Source Account": "صاحب الحساب",
+    "Destination Account Owner": "صاحب حساب الوجهة",
+    "Destination Account": "حساب الوجهة",
+    "Transfer Amount": "مبلغ التحويل",
+    "Description": "الوصف",
+    "Initiate Transfer": "بدء التحويل"
+  },
+  "Entity Accounts": {
+    "Entity Accounts": "حسابات الجهة",
+    "Add Account": "إضافة حساب",
+    "IBAN Number": "IBAN رقم",
+    "Entity Name": "اسم الجهة",
+    "Account Type": "نوع الحساب",
+    "Currency": "العملة",
+    "Cancel": "الغاء",
+    "Submit": "ارسال",
+    "Release": "صرف",
+    "Move to suspense": "الانتقال إلى الحساب الانتقالي",
+    "Virtual IBAN": "الافتراضي IBAN"
+  },
+  "PaymentAccountManagement": {
+    "ManagePaymentAccountsPage": {
+      "PageTitle": "إدارة حسابات الدفع",
+      "AddPaymentAccountButtonText": "+ إضافة حساب الدفع"
+    },
+    "PaymentAccountsTable": {
+      "Name": "الاسم",
+      "Account ID": "معرف الحساب",
+      "Default": "افتراضي",
+      "Validated": "صالح",
+      "Label": "رقعة تعريف",
+      "IBAN": "IBAN",
+      "SWIFT/BIC": "SWIFT/BIC",
+      "Address": "العنوان",
+      "City": "المدينة",
+      "Country": "الدولة",
+      "Post Code": "الرمز البريدي",
+      "Bank Name": "اسم المصرف ",
+      "Account No": "رقم الحساب.",
+      "Routing No": "رقم التحويل المصرفي.",
+      "Sort Code": "Sort رمز",
+      "IFSC Code": "IFSC رمز",
+      "BSB Code": "BSB رمز",
+      "Currency": "العملة",
+      "Balance": "الرصيد",
+      "Actions": "الإجراءات"
+    },
+    "AddPaymentAccountForm": {
+      "Currency": "العملة",
+      "Entity": "الجهة",
+      "SubmitButtonText": "إرسال",
+      "Full Name": "الاسم الكامل",
+      "Label": "رقعة تعريف",
+      "Bank Name": "اسم المصرف",
+      "IBAN": "IBAN",
+      "SWIFT/BIC": "SWIFT/BIC",
+      "Account Number": "رقم الحساب",
+      "Routing Number": "رقم التحويل المصرفي",
+      "Sort Code": "Sort رمز",
+      "IFSC Code": "IFSC رمز",
+      "BSB Code": "BSB رمز",
+      "Address": "العنوان",
+      "City": "المدينة",
+      "Country": "الدولة",
+      "Post Code": "رمز البريد",
+      "Supporting Document": "الوثائق الداعمة"
+    },
+    "PaymentAccountsTableActionMenu": {
+      "SetAsDefault": "التعيين كإعداد افتراضي",
+      "Amend": "تعديل",
+      "Delete": "حذف",
+      "ViewSupportingDocument": " عرض الوثائق الداعمة ",
+      "Validate": "تحقق"
+    },
+    "AddPaymentAccountFormDialog": {
+      "DialogTitle": "إضافة نموذج حساب الدفع",
+      "CloseDialogButtonText": "إنهاء",
+      "Your form submission is being processed": "جاري النظر في النموذج المرسل"
+    },
+    "EditPaymentAccountFormDialog": {
+      "DialogTitle": "تحرير نموذج حساب الدفع",
+      "CloseDialogButtonText": "إنهاء"
+    },
+    "DeleteAccountDialog": {
+      "DialogTitle": "حذف حساب الدفع",
+      "DialogContent": "يرجى تأكيد رغبتك في حذف هذا الحساب. يرجى ملاحظة أن هذا الإجراء نهائي ويتعذر الرجوع عنه!",
+      "ConfirmDeletionButtonText": "تأكيد",
+      "CloseDialogButtonText": "إلغاء"
+    }
+  },
+  "Payment Instructions": {
+    "External Payments": "المدفوعات الخارجية",
+    "New Payment Instructions": "تعليمات دفع جديدة",
+    "Headers": {
+      "Created At Date": "أنشئت في",
+      "Client Balance": "رصيد العميل",
+      "Value Date": "تاريخ صالح",
+      "Investor/Owner": "مسثثمر/مالك",
+      "Payment Amount": "مبلغ الدفع",
+      "CCY": "CCY",
+      "Account No": "رقم الحساب",
+      "Country": "الدولة ",
+      "Bank": "المصرف",
+      "IBAN/Account": "IBAN/الحساب",
+      "BIC": "BIC",
+      "Status": "الحالة",
+      "Reference No": "رقم المرجع",
+      "Actions": "الإجراءات",
+      "Transfer Purpose": "سبب التحويل"
+    },
+    "Context Menu": {
+      "Modify": "تعديل",
+      "Cancel": "إلغاء",
+      "Submit": "ارسال",
+      "Approve": "موافقة",
+      "Finalize": "انتهاء",
+      "Reject": "رفض",
+      "Confirm": "يتأكد",
+      "View Audit History": "View Audit History"
+    },
+    "Modals": {
+      "New Payment Instruction": "تعليمات دفع جديدة",
+      "Fields": {
+        "Payment Account": "مبلغ الدفع",
+        "Value Date": "تاريخ القيمة",
+        "Payment Amount": "مبلغ الدفع",
+        "Payment Details": "بيانات الدفع"
+      },
+      "Placeholders": {
+        "Select Source Entity": "حدد مصدر الجهة",
+        "Select Source Account": "حدد مصدر الحساب",
+        "Select Beneficiary User": "تحديد حساب المستفيد",
+        "Transfer Purpose": "سبب التحويل"
+      }
+    },
+    "ApproveDialog": {
+      "label": "الموافقة على تعليمات الدفع الصادرة بمبلغ {{currency}} {{payment_amount}}"
+    },
+    "FinalizeDialog": {
+      "label": "إتمام تعليمات الدفع الصادرة مقابل {{currency}} {{payment_amount}}"
+    },
+    "RejectDialog": {
+      "label": "رفض تعليمات الدفع الصادرة بقيمة {{currency}} {{payment_amount}}"
+    },
+    "CancelDialog": {
+      "label": "إلغاء تعليمات الدفع الصادرة بمبلغ {{currency}} {{payment_amount}}"
+    }
+  },
+  "Incoming Payments": {
+    "Incoming Payments": "المدفوعات الواردة",
+    "Headers": {
+      "Value Date": "تاريخ القيمة",
+      "Entry Date": "تاريخ الإدخال",
+      "Account No": "رقم الحساب",
+      "Currency": "العملة",
+      "Amount": "المبلغ",
+      "Transaction Type": "نوع المعاملة",
+      "Customer Ref": "رقم العميل المرجعي ",
+      "Bank Ref": "رقم البنك المرجعي ",
+      "Supplementary": "مُلحَق",
+      "Assigned Client": "تم تعيين العميل",
+      "Assigned Account": "تم تخصيص الحساب ",
+      "Actions": "الإجراءات"
+    },
+    "Context Menu": {
+      "Payment Details": "بيانات الدفع",
+      "Release": "صرف",
+      "Assign Account": "تعيين حساب",
+      "View Evidence": "عرض الدليل",
+      "Move to Suspense": "الانتقال إلى الحساب الانتقالي"
+    },
+    "Modals": {
+      "Assign Account": "تعيين حساب",
+      "Payment Details": "بيانات الدفع",
+      "Release Payment": "صرف المبلغ المدفوع",
+      "Move to Suspense": "الانتقال إلى الحساب الانتقالي",
+      "Fields": {
+        "Client Account": "حساب العميل",
+        "Client": "العميل"
+      }
+    }
+  }
+}

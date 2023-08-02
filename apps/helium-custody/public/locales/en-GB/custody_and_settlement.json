@@ -1,0 +1,87 @@
+{
+  "Headers": {
+    "Reference": "Reference",
+    "WSN": "WSN",
+    "Security": "Security",
+    "Trade Type": "Trade Type",
+    "Entry Date": "Entry Date",
+    "Trade Date": "Trade Date",
+    "Settlement Date": "Settlement Date",
+    "Value Date": "Value Date",
+    "Settlement Status": "Settlement Status",
+    "CCY": "CCY",
+    "Inv Cash Acc No": "Inv. Cash Acc. No.",
+    "Inv Cash Acc Bal": "Inv. Cash Acc. Bal.",
+    "Inv Sec Acc No": "Inv. Sec. Acc. No.",
+    "Inv Sec Acc Bal": "Inv. Sec. Acc. Bal.",
+    "Iss Cash Acc No": "Iss. Cash Acc. No.",
+    "Iss Cash Acc Bal": "Iss. Cash Acc. Bal.",
+    "Iss Sec Acc No": "Iss. Sec. Acc. No.",
+    "Iss Sec Acc Bal": "Iss. Sec. Acc. Bal.",
+    "Qty": "Qty.",
+    "Num Certs": "Num. Certs",
+    "Issuer": "Issuer",
+    "Investor": "Investor",
+    "Cash SSI": "Cash SSI",
+    "Evidence Uploaded": "Evidence Uploaded",
+    "Settle Type": "Settle Type",
+    "ISIN": "ISIN",
+    "Price": "Price",
+    "Settle Amount": "Settle Amount",
+    "Cpty": "Cpty.",
+    "Cpty SSI": "Cpty. SSI",
+    "Last Amended": "Last Amended",
+    "Principal Amount": "Principal Amount",
+    "Accrued Interest": "Accrued Interest",
+    "Internal Trade Ref": "Internal Trade Ref"
+  },
+  "TableActions": {
+    "Review Security Info": "Review Security Info",
+    "View SSI": "View SSI",
+    "Upload Payment Confirmation": "Upload Payment Confirmation",
+    "View Counterparty SSI": "View Counterparty SSI",
+    "View Trade Details": "View Trade Details",
+    "Amend Settlement Instruction": "Amend Settlement Instruction",
+    "Cancel Settlement Instruction": "Cancel Settlement Instruction",
+    "View Notifications": "View Notifications",
+    "Settle": "Settle",
+    "Approve": "Approve",
+    "View Payment Evidence": "View Payment Evidence",
+    "Set to Unmatched": "Set to Unmatched",
+    "Set to Matched": "Set to Matched",
+    "Set to Settled": "Set to Settled",
+    "Set to Failed": "Set to Failed",
+    "Set to Rejected": "Set to Rejected"
+  },
+  "settlementInstructionStatusEnum": {
+    "REQUESTED": "REQUESTED",
+    "UNMATCHED": "UNMATCHED",
+    "MATCHED": "MATCHED",
+    "CANCELLED": "CANCELLED",
+    "REJECTED": "REJECTED"
+  },
+  "securityTradeSettlementStatusEnum": {
+    "primaryIssuance": {
+      "PENDING_SETTLEMENT": "PENDING_SETTLEMENT",
+      "INITIATE_SETTLEMENT": "INITIATE_SETTLEMENT",
+      "APPROVED": "APPROVED",
+      "SETTLED": "SETTLED",
+      "FAILED": "FAILED"
+    }
+  },
+  "Buttons": {
+    "Add Settlement Instruction": "Add Settlement Instruction"
+  },
+  "Filters": {
+    "Date": "Date",
+    "Entry Date": "Entry Date",
+    "Trade Date": "Trade Date",
+    "Settlement Date": "Settlement Date",
+    "Security": "Security",
+    "Entity": "Entity",
+    "Status": "Status",
+    "ISIN": "ISIN"
+  },
+  "Upload Payment Confirmation": "Upload Payment Confirmation",
+  "Upload document evidencing payment ": "Upload document evidencing payment "
+}

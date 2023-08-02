@@ -1,0 +1,16 @@
+{
+  "Engagement Letter": "خطاب التعاقد",
+  "Please review and agree to this Engagement Letter if you wish to proceed to this stage of the platform": "يرجى مراجعة خطاب التعاقد هذا والموافقة عليه إذا كنت راغباً في المتابعة إلى هذه المرحلة من المنصة",
+  "Rate Card": "قائمة الأسعار",
+  "These are the rates corresponding to the services you are engaging us for pursuant to the Engagement Letter": "هذه هي الأسعار الموافقة للخدمات التي تم التعاقد عليها وفقاً لخطاب التعاقد",
+  "Table": {
+    "Service": "الخدمة",
+    "Service Description": "وصف الخدمة",
+    "Fee Details": "تفاصيل الرسوم",
+    "Fees": "الرسوم"
+  },
+  "By clicking this button you, as the Authorised Person of the": "بالنقر على هذا الزر، فإنك، بصفتك المفوض للتوقيع لـ  {{corporateEntityName}}, توافق على خطاب التعاقد",
+  "The form was submitted successfully": "تم إرسال النموذج بنجاح",
+  "Please wait": "يرجى الانتظار ...",
+  "Engage": "تعاقد"
+}

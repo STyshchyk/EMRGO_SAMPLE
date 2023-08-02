@@ -1,0 +1,112 @@
+@import "../../styles/config.scss";
+
+.container {
+  font-family: "D-DIN Exp";
+  margin-bottom: 1rem;
+}
+
+.container__dense {
+  font-family: "D-DIN Exp";
+}
+
+.input-group {
+  align-items: center;
+  display: grid;
+  gap: 1em;
+  grid-template-areas: "label field";
+  grid-template-columns: minmax(0, auto) 1fr;
+
+  &--sans-label {
+    align-items: center;
+    display: grid;
+    gap: 0;
+    grid-template-areas: "field";
+    grid-template-columns: minmax(0, auto);
+  }
+
+  &__label {
+    grid: label;
+    min-width: 250px;
+  }
+
+  &__field {
+    grid: field;
+  }
+
+  @media only screen and (max-width: $viewport-lg) {
+    gap: 0.5em;
+    grid-template-areas:
+      "label"
+      "field";
+    grid-template-columns: 1fr;
+    grid-template-rows:
+      max-content
+      max-content;
+  }
+}
+
+.file-input {
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0.1px;
+  z-index: -1;
+
+  &__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100% !important;
+  }
+
+  &__label {
+    align-items: center;
+    background: $lightgray-color;
+    border-radius: 6px;
+    border: none;
+    color: $darkgray-color;
+    cursor: pointer;
+    display: flex;
+    height: 36px;
+    justify-content: space-between;
+    outline: 0;
+    padding: 0.5em;
+    transition: all 0.1s;
+    width: 250px;
+
+    &--fullwidth {
+      width: 100% !important;
+      min-width: 0;
+      height: 50px;
+    }
+
+    &--tiny {
+    }
+
+    &:hover {
+      background-color: darken($lightgray-color, 10%);
+    }
+
+    &--loaded {
+      background-color: $secondary-color;
+      color: #fff;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+}
+
+.cloud-upload-icon {
+  fill: #8f978f;
+}
+
+.close-icon {
+  fill: #fff;
+}
+
+.fullWidth {
+  width: 100% !important;
+}

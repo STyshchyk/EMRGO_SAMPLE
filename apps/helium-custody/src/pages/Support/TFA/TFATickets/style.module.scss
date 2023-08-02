@@ -1,0 +1,17 @@
+.document_dialogue {
+  &__content {
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  &__iframe {
+    flex-grow: 1;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}

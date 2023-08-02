@@ -1,0 +1,198 @@
+@import '../config.scss';
+
+/*
+TODO:
+
+* This style module is due for a major cleanup (getting rid of dead CSS codes etc...)
+*/
+
+.form-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-wrapper-alt {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 560px;
+  padding: 1rem;
+  width: 100%;
+}
+
+.form-title {
+  font-family: 'D-DIN Exp';
+  font-weight: bold;
+
+  &--primary {
+    color: $primary-color;
+  }
+
+  &--secondary {
+    color: $secondary-color;
+  }
+}
+
+.floating-label {
+  color: $lightselection-color;
+  cursor: text;
+  font-size: 1.25rem;
+  transform: translateY(-34px);
+  transition: all 0.3s;
+  line-height: 16px;
+}
+
+.input-group {
+  display: block;
+  padding-top: 1rem;
+  text-align: center;
+  position: relative;
+
+  .input-field {
+    border: 0;
+    color: $primary-color;
+    background-color: $lightgray-color;
+    font-size: 1.25em;
+    outline: 0;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 13px;
+    height: 52px;
+    text-align: center;
+    transition: all 0.3s;
+
+    &:valid {
+      & ~ .floating-label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+
+    &[value=''] {
+      & ~ .floating-label {
+        font-size: 1.25rem;
+        transform: translateY(-34px);
+        transition: all 0.3s;
+        line-height: 16px;
+      }
+    }
+
+    &:focus {
+      & ~ .floating-label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+
+    &__error {
+      width: 100%;
+      text-align: left;
+      font-size: 0.75rem;
+      color: $red-color;
+      position: absolute;
+      margin-top: 55px;
+
+      ~ .input-field {
+        box-shadow: 1px 1px 5px 1px $lightred-color;
+      }
+
+      ~ .floating-label {
+        color: $lightred-color;
+      }
+
+      ~ .SingleDatePicker div .SingleDatePickerInput .DateInput input.DateInput_input {
+        box-shadow: 1px 1px 5px 1px $lightred-color!important;
+      }
+
+      ~ .time_picker_container{
+        box-shadow: 1px 1px 5px 1px $lightred-color;
+      }
+    }
+  }
+
+  .input-field-textarea {
+    border: 0;
+    color: $primary-color;
+    background-color: $lightgray-color;
+    font-size: 1.25em;
+    outline: 0;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 13px;
+    transition: all 0.3s;
+    padding:1.5rem 1.5rem;
+    &:valid {
+      & ~ .floating-label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+
+    &[value=''] {
+      & ~ .floating-label {
+        font-size: 1.25rem;
+        transform: translateY(-34px);
+        transition: all 0.3s;
+        line-height: 16px;
+      }
+    }
+
+    &:focus {
+      & ~ .floating-label {
+        font-size: 0.8rem;
+        transform: translateY(-74px);
+      }
+    }
+
+    &__error {
+      width: 100%;
+      text-align: left;
+      font-size: 0.75rem;
+      color: $red-color;
+      position: absolute;
+      margin-top: 55px;
+
+      ~ .input-field {
+        box-shadow: 1px 1px 5px 1px $lightred-color;
+      }
+
+      ~ .floating-label {
+        color: $lightred-color;
+      }
+    }
+  }
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: $primary-color;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.datepicker-left{
+  & .DateInput_input {
+    text-align: left;
+  }
+}
+
+.datepicker-center{
+  & .DateInput_input {
+    text-align: center;
+  }
+}

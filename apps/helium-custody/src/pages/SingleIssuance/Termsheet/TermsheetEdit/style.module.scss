@@ -1,0 +1,54 @@
+@import "../../../../styles/config.scss";
+
+.lightText {
+  font-size: 16px;
+  color: #979797;
+  width: 260px;
+}
+
+.button {
+  width: 115px;
+}
+
+.fixed {
+  position: fixed;
+  z-index: 1;
+  width: calc(100vw - 272px); // 240(drawer width) + 32(padding)
+}
+
+.sectionHeading {
+  font-weight: bold;
+}
+
+.scroll {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  margin-top: 1rem;
+  max-height: 78vh;
+  overflow: auto;
+}
+.scroll::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.block {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  height: 3rem;
+}
+
+.saveTermsheet {
+  &__left {
+    position: fixed;
+    top: 150px;
+    right: 2rem;
+  }
+
+  &__right {
+    position: fixed;
+    top: 150px;
+    left: 2rem;
+  }
+}

@@ -1,0 +1,16 @@
+.content {
+  &__wrapper {
+    padding: 3rem 1rem;
+  }
+
+  &__right {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.rtl__disabled {
+  flip: false;
+}
