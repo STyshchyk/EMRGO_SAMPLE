@@ -27,6 +27,13 @@ const reports = {
   homeUrl: routes.dashboard.custody.reports.home,
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
+const onboarding = {
+  acls: ["Reports/View"],
+  baseURLPattern: /(?:\/dashboard\/custody\/onboarding\/)(?:[\w-/]*)/,
+  displayName: "Onboarding",
+  homeUrl: routes.dashboard.custody.onboarding.home,
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
+};
 const issuerServices = {
   acls: ["Services/Issuer/View"],
   baseURLPattern: /(?:\/dashboard\/custody\/issuer-securities-services\/)(?:[\w-/]*)/,
@@ -135,6 +142,7 @@ const DashboardNavHeader = () => {
 
   const RoutingConfigs = {
     cashManagement,
+    onboarding,
     securitiesServices: isIntlSecTradeSettlementWorkflow ? securitiesServices : undefined,
     issuerServices: isIntlSecTradeSettlementWorkflow ? issuerServices : undefined,
     investorServices: isIntlSecTradeSettlementWorkflow ? investorServices : undefined,
