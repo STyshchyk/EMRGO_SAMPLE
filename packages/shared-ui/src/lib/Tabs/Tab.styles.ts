@@ -11,6 +11,7 @@ export const Tab = styled.button<ITabProps>`
   cursor: pointer;
   background-color: transparent;
   border: none;
+  width: "100%";
   padding: ${rem(15)} ${rem(8)};
   ${getTheme("typography.regular.01")}
   border-bottom: ${rem(2)} solid transparent;

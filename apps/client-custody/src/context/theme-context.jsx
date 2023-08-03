@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
+import { amber, deepOrange, grey } from "@mui/material/colors";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 // import { jssPreset, StylesProvider } from "@mui/styles";
 // import { create } from "jss";
@@ -17,17 +18,14 @@ ThemeContext.displayName = "Theme";
 // const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const CustomThemeProvider = (props) => {
-  const { children } = props;
+  const { children, isDarkMode } = props;
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
   const locale = locales.find(({ code }) => code === currentLang);
 
   const theme = {
-    ...themeStyles,
+    ...themeStyles(isDarkMode),
     direction: locale.rtl ? "rtl" : "ltr",
-    // palette: {
-    //   mode: 'light',
-    // },
   };
 
   const muiTheme = createTheme(theme);

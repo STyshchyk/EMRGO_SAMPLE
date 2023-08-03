@@ -1,49 +1,40 @@
 import { useTranslation } from "react-i18next";
 import { Link, useMatch } from "react-router-dom";
 
+import {
+  MinorNavbarListItem,
+  MinorNavbarListItemLink,
+  MinorNavbar as SharedMinorNavbar,
+} from "@emrgo-frontend/shared-ui";
+import { Box } from "@mui/material";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
-import style from "./style.module.scss";
-
-// TODO: Refactor this to use MUI's Tabs/Tab components for better consistency
-
-const Pill = ({ route }) => {
-  const { t } = useTranslation();
-  const isActive = useMatch(route.link);
-
-  return (
-    <div className={style.pillContainer}>
-      <div className={style.pillTextWrapper}>
-        <Link className={cx(style.pillText, isActive ? style.selected : "")} to={route.link}>
-          {t(`${route.text}`)}
-        </Link>
-      </div>
-      <div className={cx(style.pillIndicator, isActive ? style.selectedLine : "")} />
-    </div>
-  );
-};
-
-Pill.propTypes = {
-  route: PropTypes.shape({
-    path: PropTypes.string,
-    link: PropTypes.string,
-    text: PropTypes.string,
-    disabled: PropTypes.bool,
-  }).isRequired,
-};
-
 const MinorNavbar = ({ routes }) => {
-  const enabledRouteConfigs = routes.filter((item) => !item?.disabled);
-
+  const { t } = useTranslation();
+  const enabledRouteConfigs = routes
+    .filter((item) => !item?.disabled)
+    .map((route) => {
+      const isActive = useMatch(route.link);
+      return {
+        ...route,
+        isActive,
+      };
+    });
+  
   return (
-    <div className={style.pillMenuWrapper}>
-      <div className={style.pillMenuContainer}>
-        {enabledRouteConfigs.map((routeConfig) => (
-          <Pill route={routeConfig} key={routeConfig.link} />
-        ))}
-      </div>
-    </div>
+    <SharedMinorNavbar>
+      {enabledRouteConfigs.map((routeConfig) => (
+        // <Pill route={routeConfig} key={routeConfig.link} />
+        <MinorNavbarListItem key={routeConfig.path}>
+          <Link to={routeConfig.link}>
+            <MinorNavbarListItemLink className={routeConfig.isActive ? "active" : ""}>
+              {t(`${routeConfig.text}`)}
+            </MinorNavbarListItemLink>
+          </Link>
+        </MinorNavbarListItem>
+      ))}
+    </SharedMinorNavbar>
   );
 };
 

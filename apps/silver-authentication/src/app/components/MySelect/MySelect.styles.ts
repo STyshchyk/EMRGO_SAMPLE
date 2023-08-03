@@ -1,4 +1,4 @@
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import styled from "styled-components";
 
