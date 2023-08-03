@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 // import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import MomentUtils from "@date-io/moment";

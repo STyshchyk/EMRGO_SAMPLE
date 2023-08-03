@@ -20,6 +20,7 @@ export * from "./lib/Icons";
 export * from "./lib/Input";
 export * from "./lib/InputFile";
 export * from "./lib/Logo";
+export * from "./lib/MinorNavbar";
 export * from "./lib/Modal";
 export * from "./lib/MyFormikInput";
 export * from "./lib/MySelect";

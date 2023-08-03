@@ -1,6 +1,7 @@
+import { Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
-const PageTitle = ({ title }) => <h3>{title}</h3>;
+const PageTitle = ({ title }) => <Typography variant="h5">{title}</Typography>;
 
 PageTitle.propTypes = {
   title: PropTypes.string.isRequired,

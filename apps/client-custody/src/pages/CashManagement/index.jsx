@@ -9,6 +9,7 @@ import authorizeRouteAccess from "../../helpers/authorizeRouteAccess";
 import findTheFirstAccessibleRoutePath from "../../helpers/findTheFirstAccessibleRoutePath";
 import * as authSelectors from "../../redux/selectors/auth";
 import useIsProduction from "../../utils/useIsProduction";
+import { Box } from "@mui/material";
 
 const ManagePaymentAccountsPage = lazy(() => import("./ManagePaymentAccountsPage"));
 const CashStatementPage = lazy(() => import("./CashStatementPage"));
@@ -73,32 +74,34 @@ const BillingAndPayments = () => {
   return (
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-      <Routes>
-        <Route exact path="/" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
+      <Box sx={{ py: "2rem", px: "2rem" }}>
+        <Routes>
+          <Route exact path="/" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
 
-        <Route exact path="/manage-accounts" element={<ManagePaymentAccountsPage />}></Route>
-        <Route exact path="/cash-statement" element={<CashStatementPage />}></Route>
+          <Route exact path="/manage-accounts" element={<ManagePaymentAccountsPage />}></Route>
+          <Route exact path="/cash-statement" element={<CashStatementPage />}></Route>
 
-        <Route
-          exact
-          path="/internal-transfer"
-          element={
-            <Fragment>
-              {
-                // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
-              }
-              {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
-            </Fragment>
-          }
-        ></Route>
-        <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
-        <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
-        {/*
+          <Route
+            exact
+            path="/internal-transfer"
+            element={
+              <Fragment>
+                {
+                  // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
+                }
+                {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
+              </Fragment>
+            }
+          ></Route>
+          <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
+          <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
+          {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}
-      </Routes>
+        </Routes>
+      </Box>
     </Fragment>
   );
 };

@@ -3,7 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
+import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
 import cx from "classnames";
+import { useDarkMode } from "usehooks-ts";
 
 import featureFlags from "../../constants/featureFlags";
 import routes from "../../constants/routes";
@@ -60,6 +62,7 @@ const securitiesAdmin = {
 };
 
 const NavLinkList = ({ routingConfigs }) => {
+  const { isDarkMode } = useDarkMode();
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
 
   const entityType = useSelector(authSelectors.selectCurrentEntityType);
@@ -93,29 +96,33 @@ const NavLinkList = ({ routingConfigs }) => {
       .find((obj) => obj.baseURLPattern.test(location.pathname))
   );
 
-  return shouldShowNav ? (
-    <div className={style.linkMenuWrapper}>
-      <div className={style.linkMenuContainer}>
-        {filteredRoutingConfigs.map((item, index) => {
-          const currentDashboardRoutingConfig = routingConfigs[item];
-          const { displayName, homeUrl, baseURLPattern } = currentDashboardRoutingConfig;
-          const matchURL = baseURLPattern.test(location.pathname);
+  const processedRoutingConfigs = filteredRoutingConfigs.map((item, index) => {
+    const currentDashboardRoutingConfig = routingConfigs[item];
+    const { displayName, homeUrl, baseURLPattern } = currentDashboardRoutingConfig;
+    const matchURL = baseURLPattern.test(location.pathname);
 
-          return (
-            <div className={style.linkContainer} key={index}>
-              <div className={cx(matchURL ? style.selectedBorder : "")}>
-                <RouterLink
-                  className={cx(style.linkText, matchURL ? style.selected : "")}
-                  to={homeUrl}
-                >
-                  {t(`Sidebar.${displayName}`)}
-                </RouterLink>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    return {
+      matchURL,
+      displayName,
+      homeUrl,
+      key: item,
+      notification: 0,
+    };
+  });
+
+  const matchedUrl = processedRoutingConfigs.find((config) => config.matchURL === true);
+
+  return shouldShowNav ? (
+    <Tabs value={matchedUrl.key}>
+      {processedRoutingConfigs.map((tab, index) => {
+        return (
+          <Tab value={tab.key} as={RouterLink} to={tab.homeUrl} key={tab.key}>
+            {t(`Sidebar.${tab.displayName}`)}
+            {tab.notification > 0 && <Badge>{tab.notification}</Badge>}
+          </Tab>
+        );
+      })}
+    </Tabs>
   ) : (
     <></>
   );

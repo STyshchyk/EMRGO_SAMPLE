@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import {
   clientAccountRoutes,
+  clientCustodyRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
   getAllRoutes,
@@ -61,7 +62,7 @@ export const DashboardSidebar = () => {
       icon: <CustodyIcon />,
       key: "custody",
       path: clientSecondariesRoutes.home,
-      paths: [""],
+      paths: getAllRoutes(clientCustodyRoutes),
     },
     {
       label: "Research",

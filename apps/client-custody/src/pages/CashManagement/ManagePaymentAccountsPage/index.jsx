@@ -271,7 +271,7 @@ const ManagePaymentAccountsPage = () => {
 
   return (
     <Fragment>
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" sx={{ mb: "1rem" }}>
         <Grid container lg={3}>
           <PageTitle title={t("PaymentAccountManagement.ManagePaymentAccountsPage.PageTitle")} />
         </Grid>
@@ -279,20 +279,24 @@ const ManagePaymentAccountsPage = () => {
         <Grid container alignItems="flex-start" justifyContent="flex-end" spacing={2} lg={9}>
           <Grid item>
             <Button
-              variant="contained"
+              variant="outlined"
               startIcon={<CloudDownloadIcon />}
               onClick={() => {
                 handleExportToCSV(data);
               }}
               color="primary"
-              disabled={!isTableDataNotEmpty}
+              // disabled={!isTableDataNotEmpty}
             >
               <strong>Export to CSV</strong>
             </Button>
           </Grid>
 
           <Grid item>
-            <Button color="secondary" onClick={handleClickOnAddPaymentAccountButton}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleClickOnAddPaymentAccountButton}
+            >
               {t("PaymentAccountManagement.ManagePaymentAccountsPage.AddPaymentAccountButtonText")}
             </Button>
           </Grid>

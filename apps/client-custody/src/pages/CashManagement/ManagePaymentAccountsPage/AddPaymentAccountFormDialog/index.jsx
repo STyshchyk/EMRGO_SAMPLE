@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import CloseIcon from "@mui/icons-material/Close";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -57,7 +58,9 @@ const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
       <DialogTitle id="add-payment-account-form-dialog-title">
         <Grid container justifyContent="space-between">
           <Grid item xs container alignContent="center">
-            <strong>{t("PaymentAccountManagement.AddPaymentAccountFormDialog.DialogTitle")}</strong>
+            <Typography variant="h5">
+              {t("PaymentAccountManagement.AddPaymentAccountFormDialog.DialogTitle")}
+            </Typography>
           </Grid>
 
           <IconButton aria-label="close" onClick={handleClose} size="large">

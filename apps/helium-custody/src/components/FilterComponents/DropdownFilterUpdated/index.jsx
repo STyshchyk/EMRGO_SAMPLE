@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import Box from "@mui/material/Box";

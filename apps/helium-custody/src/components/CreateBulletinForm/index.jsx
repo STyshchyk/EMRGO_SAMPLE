@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 // import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";

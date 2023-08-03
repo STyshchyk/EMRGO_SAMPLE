@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
+import { useDarkMode } from "usehooks-ts";
 
 // import * as accountsSelectors from '../../../../redux/selectors/accounts';
 // import * as accountsActionCreators from '../../../../redux/actionCreators/accounts';
@@ -168,14 +169,14 @@ const AddPaymentAccountForm = ({
         return (
           <Form noValidate onKeyDown={onKeyDown}>
             <Grid container spacing={2}>
-              <Grid item container spacing={2} lg={6}>
+              <Grid item container spacing={2} lg={12}>
                 {isWethaqUser && (
                   <InlineFormField label={"Entity"}>
                     <Select
                       closeMenuOnSelect
                       placeholder={t("PaymentAccountManagement.AddPaymentAccountForm.Entity")}
                       isSearchable
-                      styles={selectStyles}
+                      styles={selectStyles(true)}
                       menuPortalTarget={document.body}
                       value={values.sourceEntity}
                       isClearable
@@ -213,15 +214,23 @@ const AddPaymentAccountForm = ({
                 <InlineFormField
                   label={t("PaymentAccountManagement.AddPaymentAccountForm.Full Name")}
                 >
-                  <Field fullWidth component={TextField} name="name" variant="filled" type="text" />
+                  <Field
+                    fullWidth
+                    component={TextField}
+                    size="small"
+                    name="name"
+                    variant="outlined"
+                    type="text"
+                  />
                 </InlineFormField>
 
                 <InlineFormField label={t("PaymentAccountManagement.AddPaymentAccountForm.Label")}>
                   <Field
                     fullWidth
                     component={TextField}
+                    size="small"
                     name="label"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                   />
                 </InlineFormField>
@@ -252,7 +261,7 @@ const AddPaymentAccountForm = ({
                 </InlineFormField>
               </Grid>
 
-              <div className="w-full">
+              <Grid item className="w-full">
                 <div className="w-1/2 inline-block p-2">
                   <Grid container spacing={2}>
                     <InlineFormField label={" "}>
@@ -266,8 +275,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="iban"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -278,8 +288,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="swift"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -290,8 +301,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="bankName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -304,8 +316,9 @@ const AddPaymentAccountForm = ({
                         multiline
                         rows={5}
                         component={TextField}
+                        size="small"
                         name="address"
-                        variant="filled"
+                        variant="outlined"
                       />
                     </InlineFormField>
 
@@ -315,8 +328,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="city"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -327,8 +341,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="postcode"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -361,8 +376,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="accountNo"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -375,8 +391,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="routingNo"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -389,8 +406,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="sortCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -403,8 +421,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="ifscCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -417,8 +436,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="bsbCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -440,8 +460,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="intermediaryBankIBAN"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -452,8 +473,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="intermediaryBankBIC"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -464,8 +486,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="intermediaryBankName"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -478,8 +501,9 @@ const AddPaymentAccountForm = ({
                           multiline
                           rows={5}
                           component={TextField}
+                          size="small"
                           name="intermediaryBankAddress"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </InlineFormField>
 
@@ -489,8 +513,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="intermediaryBankCity"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -501,8 +526,9 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           component={TextField}
+                          size="small"
                           name="intermediaryBankPostCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -534,8 +560,9 @@ const AddPaymentAccountForm = ({
                           <Field
                             fullWidth
                             component={TextField}
+                            size="small"
                             name="intermediaryBankAccountNo"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -547,8 +574,9 @@ const AddPaymentAccountForm = ({
                           <Field
                             fullWidth
                             component={TextField}
+                            size="small"
                             name="intermediaryBankRouteCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -560,8 +588,9 @@ const AddPaymentAccountForm = ({
                           <Field
                             fullWidth
                             component={TextField}
+                            size="small"
                             name="intermediaryBankSortCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -573,8 +602,9 @@ const AddPaymentAccountForm = ({
                           <Field
                             fullWidth
                             component={TextField}
+                            size="small"
                             name="intermediaryBankIfscCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -586,8 +616,9 @@ const AddPaymentAccountForm = ({
                           <Field
                             fullWidth
                             component={TextField}
+                            size="small"
                             name="intermediaryBankBsbCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -595,7 +626,7 @@ const AddPaymentAccountForm = ({
                     </Grid>
                   )}
                 </div>
-              </div>
+              </Grid>
               {/*
                 <Grid item container xs={12} md={12} lg={12}>
                 <Grid item xs={4} container direction="column" justify="center">
