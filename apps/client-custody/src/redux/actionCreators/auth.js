@@ -14,6 +14,10 @@ export const doFetchCurrentUserData = createAction(actionTypes.AUTH_CURRENT_REQU
 export const doFetchCurrentUserDataSuccess = createAction(actionTypes.AUTH_CURRENT_SUCCEEDED);
 export const doFetchCurrentUserDataFailure = createAction(actionTypes.AUTH_CURRENT_FAILED);
 
+export const doFetchUserProfile = createAction(actionTypes.AUTH_USER_PROFILE_REQUESTED);
+export const doFetchUserProfileSuccess = createAction(actionTypes.AUTH_USER_PROFILE_SUCCEEDED);
+export const doFetchUserProfileFailure = createAction(actionTypes.AUTH_USER_PROFILE_FAILED);
+
 export const doLogoutUser = createAction(actionTypes.AUTH_LOGOUT_REQUESTED);
 export const doLogoutUserSuccess = createAction(actionTypes.AUTH_LOGOUT_SUCCEEDED);
 export const doLogoutUserFailure = createAction(actionTypes.AUTH_LOGOUT_FAILED);

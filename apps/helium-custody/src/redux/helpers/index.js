@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { toast } from "react-toastify";
 
 export const extractErrorMessage = (error) => {

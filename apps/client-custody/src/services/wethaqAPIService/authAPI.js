@@ -14,6 +14,13 @@ const fetchCurrentUserData = () =>
     url: "/v1/auth/current",
   });
 
+// for backward compatibility with user obj in legacy portal
+const fetchUserProfile = () =>
+  baseAxiosInstance({
+    method: "GET",
+    url: "/v2/profile/legacy",
+  });
+
 const getAuthenticatedUserData = () =>
   baseAxiosInstance({
     method: "GET",
@@ -104,6 +111,7 @@ const authAPI = {
   requestMFAPath,
   setupMFA,
   refreshToken,
+  fetchUserProfile,
 };
 
 export default authAPI;

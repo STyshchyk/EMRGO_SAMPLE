@@ -2,6 +2,7 @@ import { produce } from "immer";
 import { handleActions } from "redux-actions";
 
 import * as actionCreators from "../actionCreators/auth";
+import profileDummyData from "../helpers/profileMock.json";
 
 const defaultState = {
   authenticatedUserObject: {},
@@ -22,6 +23,24 @@ const defaultState = {
   isSessionTimeoutDialog: false,
   isAccessDeniedDialog: false,
   isEntityTypeAdmin: false,
+};
+
+const changeDefaultEntityType = (userData) => {
+  return userData.entityGroups.map((eg) => {
+    if (eg.entityType === "invst_mngr") {
+      return {
+        ...eg,
+        entityType: "INVESTOR",
+        entity: {
+          ...eg.entity,
+          kyc: {
+            status: "Approved",
+          },
+        },
+      };
+    }
+    return eg;
+  });
 };
 
 const authReducer = handleActions(
@@ -48,8 +67,8 @@ const authReducer = handleActions(
       draft.isUserLoggingIn = false;
       draft.isAuthenticated = true;
       draft.authenticatedUserObject = { ...user };
-      draft.message = message;
-      draft.isEntityTypeAdmin = user?.isUserEntityAdmin;
+      draft.isEntityTypeAdmin = true;
+      // draft.isEntityTypeAdmin = user?.isUserEntityAdmin;
     }),
     [actionCreators.doLoginMFAFailure]: produce((draft, { payload }) => {
       draft.isUserLoggingIn = false;
@@ -75,6 +94,25 @@ const authReducer = handleActions(
       draft.isRequesting = false;
       draft.errorMessage = payload;
     }),
+    // fetch user profile
+    [actionCreators.doFetchUserProfile]: produce((draft) => {
+      draft.isRequesting = true;
+    }),
+    [actionCreators.doFetchUserProfileSuccess]: produce((draft, { payload }) => {
+      draft.isRequesting = false;
+      draft.isAuthenticated = true;
+      draft.authenticatedUserObject = {
+        ...payload,
+        entityGroups: changeDefaultEntityType(payload),
+      };
+      // draft.authenticatedUserObject = { ...profileDummyData };
+      draft.isEntityTypeAdmin = payload?.isUserEntityAdmin;
+    }),
+    [actionCreators.doFetchUserProfileFailure]: produce((draft, { payload }) => {
+      draft.isRequesting = false;
+      draft.errorMessage = payload;
+    }),
+
     [actionCreators.doLogoutUser]: produce((draft) => {
       draft.isUserLoggingOut = true;
     }),
