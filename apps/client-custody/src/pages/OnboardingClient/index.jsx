@@ -23,6 +23,24 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "left",
   color: theme.palette.text.secondary,
 }));
+const enitityIdDetails = [
+  {
+    formId: "1",
+    formReferenceId: "1",
+    id: "1",
+    label: "KYC",
+    hasCompleted: false,
+    timeRemaining: "5",
+  },
+  {
+    formId: "2",
+    formReferenceId: "2",
+    id: "2",
+    label: "Onboarding Package (FATCA, CRS, Regulatory Forms)",
+    hasCompleted: false,
+    timeRemaining: "5",
+  },
+];
 
 const OnboardingClient = () => {
   const { t } = useTranslation(["onboarding"]);
@@ -42,8 +60,10 @@ const OnboardingClient = () => {
           <CardContent>
             <PageTitle title={"Regulatory Onboarding"} />
             <Stack spacing={2}>
-              <Item>KYC</Item>
-              <Item>Onboarding Package (FATCA, CRS, Regulatory Forms)</Item>
+              {enitityIdDetails &&
+                enitityIdDetails.map((item) => {
+                  return <Item key={item.id}>{item.label}</Item>;
+                })}
             </Stack>
           </CardContent>
         </Card>

@@ -141,8 +141,8 @@ const DashboardNavHeader = () => {
   };
 
   const RoutingConfigs = {
-    cashManagement,
     onboarding,
+    cashManagement,
     securitiesServices: isIntlSecTradeSettlementWorkflow ? securitiesServices : undefined,
     issuerServices: isIntlSecTradeSettlementWorkflow ? issuerServices : undefined,
     investorServices: isIntlSecTradeSettlementWorkflow ? investorServices : undefined,
