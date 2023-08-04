@@ -25,6 +25,10 @@ export const silverModuleURLs: IMap = {
   dataroom:
     import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"] ||
     "https://internal-silver-dataroom.exp-difc.emrgo.com/",
+  custody:
+    import.meta.env["VITE_INTERNAL_CUSTODY_URL"] ||
+    "https://internal-helium-custody.exp-difc.emrgo.com/", // ! recheck URL once its deployed
+    
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
@@ -93,6 +97,10 @@ export const silverDataRoomRoutes = {
     opportunities: "opportunities",
     manageDocuments: "opportunities/manage-documents/:id/",
   }),
+};
+
+export const heliumCustodyRoutes = {
+  home: "/dashboard",
 };
 
 export const getAllSilverRoutes = (routesObj: IRouteObject, result: string[] = []): string[] => {

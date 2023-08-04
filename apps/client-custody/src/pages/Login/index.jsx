@@ -99,7 +99,7 @@ const Login = () => {
         navigate(from);
       }
     }
-  }, [history, isAuthenticated, location.state, userObject, is2FAEnabled]);
+  }, [isAuthenticated, location.state, userObject, is2FAEnabled, navigate]);
 
   if (isUserLoggingIn) {
     return <LoadingIndicator />;

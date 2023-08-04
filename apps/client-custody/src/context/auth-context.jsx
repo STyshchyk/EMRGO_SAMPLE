@@ -43,4 +43,4 @@ const mapStateToProps = (state) => ({
 const useAuth = () => useContext(AuthContext);
 const AuthProvider = connect(mapStateToProps, {})(DisconnectedAuthProvider);
 
-export { useAuth, AuthProvider };
+export { AuthProvider, useAuth };

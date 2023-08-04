@@ -4,6 +4,7 @@ import {
   clientAccountRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
+  clientCustodyRoutes,
   getAllRoutes,
 } from "@emrgo-frontend/constants";
 import {
@@ -60,7 +61,7 @@ export const DashboardSidebar = () => {
       label: "Custody",
       icon: <CustodyIcon />,
       key: "custody",
-      path: clientSecondariesRoutes.home,
+      path: clientCustodyRoutes.home,
       paths: [""],
     },
     {

@@ -80,6 +80,24 @@ function* fetchCurrentUserData() {
   }
 }
 
+function* fetchUserProfile({ payload }) {
+  try {
+    const response = yield call(wethaqAPIService.authAPI.fetchUserProfile);
+    const { data } = response;
+    yield put(authActionCreators.doFetchUserProfileSuccess(data));
+
+    if (typeof payload?.successCallback === "function") {
+      payload.successCallback();
+    }
+    // yield put(authActionCreators.doFetchUserProfileSuccess());
+    // yield call(toast.success, i18n.t("messages:Userdata is successfully fetched"));
+  } catch (error) {
+    const errorMessage = extractErrorMessage(error);
+    showToastErrorNotification(error, errorMessage);
+    yield put(authActionCreators.doFetchUserProfileFailure(errorMessage));
+  }
+}
+
 function* logoutUser() {
   try {
     const response = yield call(wethaqAPIService.authAPI.logoutUser);
@@ -292,6 +310,7 @@ const authSaga = [
   takeLatest(actionTypes.SESSION_TIMEOUT_REQUESTED, handleSessionTimeout),
   takeLatest(actionTypes.ACCESS_DENIED_REQUESTED, handleAccessDenied),
   takeLatest(actionTypes.AUTH_REFRESH_TOKEN_REQUESTED, refreshToken),
+  takeLatest(actionTypes.AUTH_USER_PROFILE_REQUESTED, fetchUserProfile),
 ];
 
 export default authSaga;

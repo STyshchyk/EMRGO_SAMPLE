@@ -77,7 +77,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         initialValues={{
           email: "",
           password: "",
-          code: "",
+          code: "777777",
         }}
         validationSchema={loginSchema}
         onSubmit={(values) => {

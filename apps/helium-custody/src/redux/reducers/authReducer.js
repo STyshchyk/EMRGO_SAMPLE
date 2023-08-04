@@ -24,6 +24,24 @@ const defaultState = {
   isEntityTypeAdmin: false,
 };
 
+const changeDefaultEntityType = (userData) => {
+  return userData.entityGroups.map((eg) => {
+    if (eg.entityType === "super_user") {
+      return {
+        ...eg,
+        entityType: "EMRGO_SERVICES",
+        entity: {
+          ...eg.entity,
+          kyc: {
+            status: "Approved",
+          },
+        },
+      };
+    }
+    return eg;
+  });
+};
+
 const authReducer = handleActions(
   {
     [actionCreators.doResetAuthState]: produce((draft) => {
@@ -48,8 +66,8 @@ const authReducer = handleActions(
       draft.isUserLoggingIn = false;
       draft.isAuthenticated = true;
       draft.authenticatedUserObject = { ...user };
-      draft.message = message;
-      draft.isEntityTypeAdmin = user?.isUserEntityAdmin;
+      draft.isEntityTypeAdmin = true;
+      // draft.isEntityTypeAdmin = user?.isUserEntityAdmin;
     }),
     [actionCreators.doLoginMFAFailure]: produce((draft, { payload }) => {
       draft.isUserLoggingIn = false;
@@ -75,6 +93,24 @@ const authReducer = handleActions(
       draft.isRequesting = false;
       draft.errorMessage = payload;
     }),
+    // fetch user profile
+    [actionCreators.doFetchUserProfile]: produce((draft) => {
+      draft.isRequesting = true;
+    }),
+    [actionCreators.doFetchUserProfileSuccess]: produce((draft, { payload }) => {
+      draft.isRequesting = false;
+      draft.isAuthenticated = true;
+      draft.authenticatedUserObject = {
+        ...payload,
+        entityGroups: changeDefaultEntityType(payload),
+      };
+      draft.isEntityTypeAdmin = payload?.isUserEntityAdmin;
+    }),
+    [actionCreators.doFetchUserProfileFailure]: produce((draft, { payload }) => {
+      draft.isRequesting = false;
+      draft.errorMessage = payload;
+    }),
+
     [actionCreators.doLogoutUser]: produce((draft) => {
       draft.isUserLoggingOut = true;
     }),

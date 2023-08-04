@@ -1,0 +1,195 @@
+{
+    "id": "0cc2b45d-6aa3-44ed-b431-4d5eaa5c5a3a",
+    "email": "",
+    "firstName": "John",
+    "lastName": "Doe",
+    "isVerified": true,
+    "tncStatus": 1,
+    "MFAEnabled": true,
+    "MFAType": "authenticator",
+    "role": "invst_mngr",
+    "middleName": null,
+    "displayRole": null,
+    "isEntityAdmin": true,
+    "isActive": true,
+    "userAddedById": null,
+    "lastLoginTime": null,
+    "MFAActive": true,
+    "wethaqIdKernel": null,
+    "wethaqUserId": null,
+    "isArchived": false,
+    "entityGroups": [
+        {
+            "id": "d1902d93-e235-4dd9-bdef-ff0be2beda42",
+            "name": "Default Group",
+            "isActive": true,
+            "entityType": "INVESTOR",
+            "entityTypeCode": null,
+            "entity": {
+                "id": "746e24e5-cb78-4cad-a176-e2861d33b828",
+                "corporateEntityName": "JD Enterprises Inc",
+                "legalIdentifier": null,
+                "isActive": true,
+                "tncStatus": 1,
+                "kyc": {
+                    "status": "Approved"                
+                },
+                "clientTerms": null,
+                "onboardingRequest": null
+            },
+            "groupUserId": null,
+            "isAdmin": true,
+            "accessControls": [
+                {
+                    "id": "39b6b42c-e5a6-46e4-9a76-68d0f11f5555",
+                    "key": "Issuance/View",
+                    "displayName": "View Issuance"
+                },
+                {
+                    "id": "ac33e7a0-4653-4aa7-9784-1170a8e63ad0",
+                    "key": "Termsheet/View",
+                    "displayName": "View Termsheet"
+                },
+                {
+                    "id": "d39ef931-d6fd-4028-933d-d419096721e5",
+                    "key": "Blotter/View",
+                    "displayName": "View Blotter"
+                },
+                {
+                    "id": "48a1c5d5-7a6d-41ee-9769-88aa8fdf349b",
+                    "key": "KYC/View",
+                    "displayName": "View KYC"
+                },
+                {
+                    "id": "2f4fdd7f-e68c-4c15-bfc7-0fd808b10f6e",
+                    "key": "KYC/Edit",
+                    "displayName": "Edit KYC"
+                },
+                {
+                    "id": "21e5d65e-f867-478a-8cea-b8e87689ffae",
+                    "key": "Subscription/View",
+                    "displayName": "View Subscription"
+                },
+                {
+                    "id": "0a10a7bd-fa86-40a0-8808-5b71e94b9e5c",
+                    "key": "Subscription/Confirm",
+                    "displayName": "Confirm Subscription"
+                },
+                {
+                    "id": "efa33c96-5bbb-40f3-b150-f84c68f109f6",
+                    "key": "Admission/View",
+                    "displayName": "View Admissions"
+                },
+                {
+                    "id": "38723d3f-48f1-4552-9836-cd3baa46e9a3",
+                    "key": "Admission/Finalize",
+                    "displayName": "Finalize Admission"
+                },
+                {
+                    "id": "404a7e98-d96e-4dac-b34f-5232299575b7",
+                    "key": "Signing/View",
+                    "displayName": "View Signing"
+                },
+                {
+                    "id": "dcf9081b-7b9f-4657-8567-bdaff16b40a4",
+                    "key": "Signing/Sign",
+                    "displayName": "Sign Signing"
+                },
+                {
+                    "id": "2be20120-cbdf-4ad0-b912-ea88b8ebaff9",
+                    "key": "Account/Edit",
+                    "displayName": "Edit Accounts"
+                },
+                {
+                    "id": "baae623c-3a3f-46d0-abba-f9de47027203",
+                    "key": "Payment/Admin",
+                    "displayName": "Investor Payment Administration"
+                },
+                {
+                    "id": "6b223656-1812-4550-88eb-d55a317de09d",
+                    "key": "Quotes/View",
+                    "displayName": "View bulletin quotes"
+                },
+                {
+                    "id": "121a20ad-fee1-44c6-8807-0954e056aad0",
+                    "key": "Reports/Generate",
+                    "displayName": "Generate report"
+                },
+                {
+                    "id": "cbb11df8-afda-4131-a2cb-28ce9e5d5c34",
+                    "key": "Reports/View",
+                    "displayName": "View reports"
+                },
+                {
+                    "id": "ffd77066-1e37-4fc6-a848-ccc4f7b06442",
+                    "key": "Payment/Client/Initialize",
+                    "displayName": "Client Initialize Outgoing Payments"
+                },
+                {
+                    "id": "fdcca5b2-e551-4449-9678-22628a479b27",
+                    "key": "Payment/Client/Approve",
+                    "displayName": "Client Approve Outgoing Payments"
+                },
+                {
+                    "id": "48aa2340-d6ca-466b-a721-30bb8e7bb4ee",
+                    "key": "Services/Investor/View",
+                    "displayName": "View Investor Services"
+                },
+                {
+                    "id": "63cec21d-a290-435d-b0b7-dfdb6a2e0038",
+                    "key": "Services/Investor/Manage",
+                    "displayName": "Manage Investor Services"
+                },
+                {
+                    "id": "de770ac3-6918-4b1c-add5-0cdf3266179f",
+                    "key": "Services/Audit/View",
+                    "displayName": "View Audit log for transactions"
+                },
+                {
+                    "id": "d094cc0c-7c9a-41a1-8369-1cee14394f87",
+                    "key": "Services/CustodyClearing/View",
+                    "displayName": "View Custody & Clearing"
+                }
+            ]
+        },
+        {
+            "id": "55df2b4e-35d0-43ad-b8b9-efd2ae891df6",
+            "name": "Superuser Group",
+            "isActive": true,
+            "entityType": "admin",
+            "entityTypeCode": null,
+            "entity": {
+                "id": "746e24e5-cb78-4cad-a176-e2861d33b828",
+                "corporateEntityName": "JD Enterprises Inc",
+                "legalIdentifier": null,
+                "isActive": true,
+                "tncStatus": 1,
+                "kyc": null,
+                "clientTerms": null,
+                "onboardingRequest": null
+            },
+            "groupUserId": null,
+            "isAdmin": true,
+            "accessControls": [
+                {
+                    "id": "3cbd46c7-e645-4e34-a130-be463bb9c251",
+                    "key": "KYC/Invite",
+                    "displayName": "Invite issuer on the platform"
+                },
+                {
+                    "id": "631fa8d5-e3c5-429b-83d0-6ebf5d5190e9",
+                    "key": "GroupManagement/View",
+                    "displayName": "View Group Management"
+                },
+                {
+                    "id": "583f5d2e-0724-40d1-b502-af123cc7ecff",
+                    "key": "GroupManagement/Edit",
+                    "displayName": "Edit Group Management"
+                }
+            ]
+        }
+    ],
+    "isUserEntityAdmin": true,
+    "individualKyc": null,
+    "isMFACodeVerified": true
+}

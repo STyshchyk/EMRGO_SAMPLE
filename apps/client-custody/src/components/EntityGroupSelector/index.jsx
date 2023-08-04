@@ -42,7 +42,7 @@ const EntityGroupSelector = () => {
     if (currentEntityGroupIndex !== entityGroupIndex) {
       navigate(routes.dashboard.home);
     }
-  }, [currentEntityGroupIndex, dispatch, entityGroupIndex, history]);
+  }, [currentEntityGroupIndex, dispatch, entityGroupIndex, navigate]);
 
   const handleSwitchIconClick = (event) => {
     setEntityGroupMenu(event.currentTarget);

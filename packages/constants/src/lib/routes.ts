@@ -83,7 +83,7 @@ export const clientAccountRoutes = {
 };
 
 export const clientCustodyRoutes = {
-  home: "/",
+  home: "/dashboard",
 };
 
 export const BASE_API_URL = import.meta.env["VITE_API_URL"];
