@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 // import { useUser } from "@emrgo-frontend/shared-ui";
 import { useToast } from "@emrgo-frontend/shared-ui";
+// import { IMFA,IUser } from "@emrgo-frontend/types";
 import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useDarkMode } from "usehooks-ts";
 
-import { useUser } from "../../components/UserContext"; //! using app level user context with further mfa checks
+import { useUser } from "../../components/UserContext"; //* using app level user context with further mfa checks
 import { IUser } from "../../components/UserContext/UserContext.types";
 import { IMFA } from "../../services";
 import { LoginSchema } from "./Login.schema";
@@ -58,7 +59,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
           const user = response.data.user;
           const MFA = user instanceof Object && "email" in user;
           if (!MFA || !user.mfaEnabled) {
-            setMFA(response as unknown as IMFA);
+            setMFA?.(response as unknown as IMFA);
             navigate(routes.setupTwoFactorAuth);
             return;
           }

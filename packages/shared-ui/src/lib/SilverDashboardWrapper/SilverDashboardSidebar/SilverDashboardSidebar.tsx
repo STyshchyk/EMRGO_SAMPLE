@@ -7,6 +7,7 @@ import {
   silverDataRoomRoutes,
   silverOnboardingRoutes,
   silverPrimariesRoutes,
+  heliumCustodyRoutes,
 } from "@emrgo-frontend/constants";
 import { logoutUser } from "@emrgo-frontend/services";
 import {
@@ -62,6 +63,13 @@ const mainRoutes = [
     key: "dataroom",
     path: silverDataRoomRoutes.home,
     paths: getAllSilverRoutes(silverDataRoomRoutes),
+  },
+  {
+    label: "Custody",
+    icon: <PrimariesIcon />,
+    key: "custody",
+    path: heliumCustodyRoutes.home,
+    paths: getAllSilverRoutes(heliumCustodyRoutes),
   },
 ];
 

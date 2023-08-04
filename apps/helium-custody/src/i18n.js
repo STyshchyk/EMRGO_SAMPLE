@@ -10,7 +10,8 @@ import LocalStorageBackend from "i18next-localstorage-backend";
 import appConfig from "./appConfig";
 
 // !Dev note: If region is not set to SA then English will be selected as the default language
-const defaultLanguageCode = appConfig.appRegion === "SA" ? "ar-SA" : "en-GB";
+// const defaultLanguageCode = appConfig.appRegion === "SA" ? "ar-SA" : "en-GB";
+const defaultLanguageCode = "en-GB";
 
 const isDevelopmentEnv = ["development"].includes(process.env.NODE_ENV);
 
