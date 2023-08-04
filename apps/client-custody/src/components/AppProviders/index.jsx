@@ -21,26 +21,24 @@ const AppProviders = ({ children }) => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <CustodyWrapperProvider>
-        <AuthProvider>
-          <UserProvider>
-            <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-              <GlobalStyles />
-              <SilverUserProvider>
-                <FeatureToggleProvider>
-                  <Suspense fallback={<h2>Loading theme...</h2>}>
-                    <CustomThemeProvider isDarkMode={isDarkMode}>
-                      <LocalizationProvider dateAdapter={AdapterMoment}>
-                        {children}
-                      </LocalizationProvider>
-                    </CustomThemeProvider>
-                  </Suspense>
-                </FeatureToggleProvider>
-              </SilverUserProvider>
-            </ThemeProvider>
-          </UserProvider>
-        </AuthProvider>
-      </CustodyWrapperProvider>
+      <AuthProvider>
+        <UserProvider>
+          <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+            <GlobalStyles />
+            <SilverUserProvider>
+              <FeatureToggleProvider>
+                <Suspense fallback={<h2>Loading theme...</h2>}>
+                  <CustomThemeProvider isDarkMode={isDarkMode}>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      {children}
+                    </LocalizationProvider>
+                  </CustomThemeProvider>
+                </Suspense>
+              </FeatureToggleProvider>
+            </SilverUserProvider>
+          </ThemeProvider>
+        </UserProvider>
+      </AuthProvider>
     </I18nextProvider>
   );
 };
