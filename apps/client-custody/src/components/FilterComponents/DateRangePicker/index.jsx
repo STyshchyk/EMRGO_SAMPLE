@@ -76,7 +76,7 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
   };
 
   return (
-    <Box>
+    <Box className="w-full">
       <Grid container justifyContent="space-between">
         <Grid item xs={9} container alignContent="center" justifyContent="flex-start">
           <Typography
@@ -177,6 +177,12 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
                 shrink: "false",
               }}
               variant="dialog"
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
               showTodayButton
               maxDate={pickerValues.endDate ?? moment()}
               placeholder="DD/MM/YYYY"
@@ -212,6 +218,12 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
               // maxDate={moment()}
               placeholder="DD/MM/YYYY"
               name="endDate"
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
               value={pickerValues.endDate ?? null}
               label={t("miscellaneous:Filters.Date Dropdown.To")}
               onChange={(selectedDate) => {

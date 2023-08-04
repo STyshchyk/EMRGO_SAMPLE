@@ -44,7 +44,7 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
   };
 
   return (
-    <Grid container>
+    <Grid item xs={12}>
       {toolbar && (
         <Grid container justifyContent="space-between">
           <Grid item xs={9} container alignContent="center" justifyContent="flex-start">
@@ -60,9 +60,9 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
         </Grid>
       )}
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs>
             <TextField
               fullWidth
               onClick={(e) => {
@@ -74,7 +74,8 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
               label={t("miscellaneous:Filters.Search")}
               name="searchText"
               value={searchValue}
-              variant="filled"
+              variant="outlined"
+              size="small"
               InputProps={{
                 endAdornment: !toolbar && (
                   <InputAdornment position="end">

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";

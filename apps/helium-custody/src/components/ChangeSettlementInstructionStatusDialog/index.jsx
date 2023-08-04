@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";

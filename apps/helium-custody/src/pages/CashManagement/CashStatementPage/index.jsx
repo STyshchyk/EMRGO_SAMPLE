@@ -442,7 +442,7 @@ const CashStatementPage = () => {
               />
             </Grid>
 
-            <Grid item xs={12} md={12} lg={3} className="full-width">
+            <Grid item xs={12} md={12} lg={3} className="w-full">
               <Box mt={4} mb={1}>
                 <Button
                   fullWidth
@@ -490,7 +490,7 @@ const CashStatementPage = () => {
                     {t('cash_management:Cash Statement.Filters.Export')}
                   </Typography>
                 </Grid>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Button disabled={filteredRows.length === 0} variant="contained" color="primary" startIcon={<CloudDownloadIcon />} onClick={exportCSV}>
                     {t('cash_management:Cash Statement.Filters.Export Report')}
                   </Button>

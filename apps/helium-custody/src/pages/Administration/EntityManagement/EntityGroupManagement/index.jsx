@@ -258,7 +258,7 @@ const EntityGroupManagement = () => {
         data={entityGroups}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 10,
           actionsColumnIndex: -1,
           detailPanelColumnAlignment: "left",

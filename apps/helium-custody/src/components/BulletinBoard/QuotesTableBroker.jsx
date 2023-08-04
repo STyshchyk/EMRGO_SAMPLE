@@ -120,7 +120,7 @@ const QuotesTable = ({ data, actions, setSelectedRow, selectedRow }) => {
         data={data}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 5,
           actionsColumnIndex: -1,
           tableLayout: "fixed",

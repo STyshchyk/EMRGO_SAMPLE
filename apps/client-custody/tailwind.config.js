@@ -7,6 +7,9 @@ module.exports = {
     join(__dirname, "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html,js,jsx}"),
     ...createGlobPatternsForDependencies(__dirname),
   ],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {},
   },

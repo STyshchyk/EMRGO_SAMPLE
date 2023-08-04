@@ -2,9 +2,9 @@ import { Link, NavLink } from "react-router-dom";
 
 import {
   clientAccountRoutes,
+  clientCustodyRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
-  clientCustodyRoutes,
   getAllRoutes,
 } from "@emrgo-frontend/constants";
 import {
@@ -62,7 +62,7 @@ export const DashboardSidebar = () => {
       icon: <CustodyIcon />,
       key: "custody",
       path: clientCustodyRoutes.home,
-      paths: [""],
+      paths: getAllRoutes(clientCustodyRoutes),
     },
     {
       label: "Research",

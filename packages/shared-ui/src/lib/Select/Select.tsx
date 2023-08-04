@@ -59,7 +59,7 @@ export function Select<
           borderStyle: "solid",
           borderWidth: "1px",
           borderRadius: rem(4),
-          padding: `${rem(2)} ${rem(4)}`,
+          padding: `${rem(1)} ${rem(4)}`,
           borderColor: isDarkMode
             ? state.menuIsOpen
               ? colors.green5

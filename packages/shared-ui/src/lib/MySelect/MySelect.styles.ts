@@ -1,4 +1,4 @@
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";

@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import { Box } from "@mui/material";
+
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
 import routes from "../../constants/routes";

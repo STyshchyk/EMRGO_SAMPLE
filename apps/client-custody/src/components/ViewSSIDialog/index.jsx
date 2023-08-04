@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { styled } from '@mui/material/styles';
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
@@ -104,7 +104,7 @@ const AddQuoteModal = ({ isModalOpen, setIsModalOpen, handleAddQuote, issuances 
             <DialogContent>
               <Box mb={2}>
                 <Fragment>
-                  <Box my={1} className="full-width">
+                  <Box my={1} className="w-full">
                     <FormControl className={style.input__form_control}>
                       <FormControl className={style.input__form_control}>
                         <Select
@@ -126,7 +126,7 @@ const AddQuoteModal = ({ isModalOpen, setIsModalOpen, handleAddQuote, issuances 
                   </Box>
                 </Fragment>
 
-                <Box my={3} className="full-width">
+                <Box my={3} className="w-full">
                   <Grid container spacing={3}>
                     <Grid item xs={12} container>
                       <Grid item xs={6}>
@@ -186,7 +186,7 @@ const AddQuoteModal = ({ isModalOpen, setIsModalOpen, handleAddQuote, issuances 
                     </Grid>
                   </Grid>
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Accordion
                     expanded={expanded === "panel1"}
                     onChange={handleChange("panel1")}

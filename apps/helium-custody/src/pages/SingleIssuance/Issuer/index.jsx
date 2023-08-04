@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -91,7 +91,7 @@ const Issuer = () => {
                 <form onSubmit={handleSubmit} className={cx(style.formWrapper)} noValidate>
                   <Box my={3}>
                     <Typography>{t("issuer:Entity Details")}</Typography>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <FormControl className={style.input__form_control}>
                         <Select
                           closeMenuOnSelect
@@ -121,7 +121,7 @@ const Issuer = () => {
                         />
                       </FormControl>
                     </Box>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         disabled={hasIssuer}
@@ -131,7 +131,7 @@ const Issuer = () => {
                         fullWidth
                       />
                     </Box>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         disabled={hasIssuer}
@@ -145,7 +145,7 @@ const Issuer = () => {
 
                   <Box my={3}>
                     <Typography>{t("issuer:Entity Representative")}</Typography>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         label={t("issuer:Form.First Name")}
@@ -155,7 +155,7 @@ const Issuer = () => {
                         fullWidth
                       />
                     </Box>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         label={t("issuer:Form.Middle Name")}
@@ -165,7 +165,7 @@ const Issuer = () => {
                         fullWidth
                       />
                     </Box>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         label={t("issuer:Form.Last Name")}
@@ -175,7 +175,7 @@ const Issuer = () => {
                         fullWidth
                       />
                     </Box>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <Field
                         component={TextField}
                         label={t("issuer:Form.Email ID")}
@@ -229,7 +229,7 @@ const Issuer = () => {
                 <form onSubmit={handleSubmit} className={cx(style.formWrapper)} noValidate>
                   <Box my={3}>
                     <Typography>{t("issuer:Existing Issuer")}</Typography>
-                    <Box my={1} className="full-width">
+                    <Box my={1} className="w-full">
                       <FormControl className={style.input__form_control}>
                         <Select
                           closeMenuOnSelect

@@ -3,7 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import MomentUtils from "@date-io/moment";
 import { mdiAccountCheckOutline, mdiCancel, mdiLockOpenOutline } from "@mdi/js";

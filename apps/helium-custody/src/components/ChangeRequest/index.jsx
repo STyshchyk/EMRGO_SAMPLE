@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import FormControl from "@mui/material/FormControl";

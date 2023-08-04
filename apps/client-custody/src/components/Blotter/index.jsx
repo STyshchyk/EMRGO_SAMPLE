@@ -1,7 +1,7 @@
 import { createRef, Fragment, useMemo, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import MomentUtils from "@date-io/moment";
@@ -46,12 +46,12 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { pascalCase } from "change-case";
 import cx from "classnames";
 import { CsvBuilder } from "filefy";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import concat from "lodash.concat";
 import find from "lodash.find";
 import partition from "lodash.partition";
@@ -996,7 +996,7 @@ const Blotter = ({
                                   </ButtonBase>
                                 </Grid>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
@@ -1015,7 +1015,7 @@ const Blotter = ({
                                   }}
                                 />
                               </Box>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
@@ -1123,7 +1123,7 @@ const Blotter = ({
                                   </ButtonBase>
                                 </Grid>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
@@ -1142,7 +1142,7 @@ const Blotter = ({
                                   }}
                                 />
                               </Box>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   fullWidth
                                   className={style.input__datepicker}
@@ -1171,7 +1171,7 @@ const Blotter = ({
                                   </Typography>
                                 </ButtonBase>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   className={style.input__field}
                                   fullWidth
@@ -1184,7 +1184,7 @@ const Blotter = ({
                                   }}
                                 />
                               </Box>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   className={style.input__field}
                                   fullWidth
@@ -1209,7 +1209,7 @@ const Blotter = ({
                                   </Typography>
                                 </ButtonBase>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   key="entityName"
                                   className={style.input__field}
@@ -1223,7 +1223,7 @@ const Blotter = ({
                                   }}
                                 />
                               </Box>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <Field
                                   className={style.input__field}
                                   fullWidth
@@ -1248,7 +1248,7 @@ const Blotter = ({
                                   </Typography>
                                 </ButtonBase>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <FormControl className={style.input__form_control}>
                                   <Select
                                     closeMenuOnSelect
@@ -1308,7 +1308,7 @@ const Blotter = ({
                                   </Typography>
                                 </ButtonBase>
                               </Grid>
-                              <Box my={1} className="full-width">
+                              <Box my={1} className="w-full">
                                 <FormControl className={style.input__form_control}>
                                   <Select
                                     closeMenuOnSelect

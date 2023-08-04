@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import Box from "@mui/material/Box";

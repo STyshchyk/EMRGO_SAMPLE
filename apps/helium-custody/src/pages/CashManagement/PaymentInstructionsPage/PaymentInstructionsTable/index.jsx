@@ -124,7 +124,7 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
         data={data}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 20,
           actionsColumnIndex: -1,
         }}

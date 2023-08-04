@@ -15,7 +15,7 @@ import { makeStyles } from '@mui/styles';
 import { Form, Formik } from "formik";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
-import Button from "../../../components/Button";
+import Button from "@mui/material/Button";
 import Checkbox from "../../../components/Checkbox";
 import FileUploadField from "../../../components/FileUploadField";
 import InfoAlert from "../../../components/InfoAlert";

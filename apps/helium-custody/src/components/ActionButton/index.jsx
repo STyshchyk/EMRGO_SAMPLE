@@ -23,7 +23,7 @@ const ActionButton = ({
         className={cx(
           "btn",
           "btn--disabled--filled",
-          "full-width",
+          "w-full",
           "btn-text--small-text",
           hideArrow ? "" : " "
         )}
@@ -41,7 +41,7 @@ const ActionButton = ({
           className={cx(
             "btn",
             logoColor ? "btn--logo" : "btn--primary",
-            "full-width",
+            "w-full",
             "btn-text--small-text",
             hideArrow ? "" : " "
           )}
@@ -57,7 +57,7 @@ const ActionButton = ({
       className={cx(
         "btn",
         logoColor ? "btn--logo" : "btn--primary",
-        "full-width",
+        "w-full",
         "btn-text--small-text",
         hideArrow ? "" : " "
       )}

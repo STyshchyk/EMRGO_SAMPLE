@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import PropTypes from "prop-types";
 
-import Button from "../../../components/Button";
+import Button from "@mui/material/Button";
 import LoadingIndicator from "../../../components/LoadingIndicator";
 import PageTitle from "../../../components/PageTitle";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";

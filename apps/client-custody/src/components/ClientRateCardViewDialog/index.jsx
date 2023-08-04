@@ -1,7 +1,7 @@
 import { createRef, Fragment, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 
@@ -683,7 +683,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}
@@ -792,7 +792,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}
@@ -933,7 +933,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}

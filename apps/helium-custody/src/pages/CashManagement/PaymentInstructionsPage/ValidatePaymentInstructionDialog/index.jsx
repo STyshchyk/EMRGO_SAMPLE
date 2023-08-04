@@ -44,7 +44,7 @@ const ValidatePaymentInstructionDialog = ({
     >
       <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
       <DialogContent>
-        <Box my={1} className="full-width">
+        <Box my={1} className="w-full">
           <FormControl className={style.input__form_control}>
             <FormLabel component="legend">{formLabel}</FormLabel>
           </FormControl>

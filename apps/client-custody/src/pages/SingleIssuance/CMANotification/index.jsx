@@ -14,7 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import { makeStyles } from '@mui/styles';
 import { Form, Formik } from "formik";
 
-import Button from "../../../components/Button";
+import Button from "@mui/material/Button";
 import Checkbox from "../../../components/Checkbox";
 import InfoAlert from "../../../components/InfoAlert";
 import LoadingPage from "../../../components/LoadingPage";

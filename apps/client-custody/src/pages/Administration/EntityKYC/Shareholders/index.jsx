@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 
@@ -649,7 +649,7 @@ const Shareholders = () => {
                       data={shareholders}
                       options={{
                         ...tableStyles,
-                        searchFieldVariant: "filled",
+                        searchFieldVariant: "outlined",
                         pageSize: 5,
                         actionsColumnIndex: -1,
                         tableLayout: "fixed",

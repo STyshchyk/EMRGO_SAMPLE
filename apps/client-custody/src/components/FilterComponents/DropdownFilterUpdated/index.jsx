@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import Box from "@mui/material/Box";
@@ -81,7 +81,7 @@ const DropdownFilter = ({ name, label, options, defaultFilter, isMulti }) => {
         </ButtonBase>
       </Grid>
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
         <Select
           closeMenuOnSelect
           fullWidth

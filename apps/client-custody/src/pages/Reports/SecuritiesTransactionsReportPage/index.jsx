@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
+// import { useNavigate } from "react-router-dom";
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Box from "@mui/material/Box";
@@ -654,7 +654,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="full-width">
+                        <Box my={1} className="w-full">
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -662,19 +662,6 @@ const SecuritiesTransactionsReportPage = () => {
                               placeholder={`${t("Security Transactions.Filters.Entity")}...`}
                               components={{
                                 ...animatedComponents,
-                              }}
-                              styles={{
-                                menu: (styles) => ({
-                                  ...styles,
-                                  zIndex: 100,
-                                }),
-                                control: (styles) => ({
-                                  ...styles,
-                                  border: "none",
-                                  borderRadius: "6px",
-                                  backgroundColor: "rgba(0, 0, 0, 0.09)",
-                                  height: "3rem",
-                                }),
                               }}
                               value={values.entity}
                               options={filteredEntity}
@@ -702,7 +689,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="full-width">
+                        <Box my={1} className="w-full">
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -759,7 +746,7 @@ const SecuritiesTransactionsReportPage = () => {
                               .
                             </Typography>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -828,7 +815,7 @@ const SecuritiesTransactionsReportPage = () => {
                             </Typography>
                           </Grid>
 
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button

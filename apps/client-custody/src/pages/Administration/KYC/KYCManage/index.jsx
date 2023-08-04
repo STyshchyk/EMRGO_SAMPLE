@@ -207,7 +207,7 @@ const PlatformDashboard = () => {
               color: "#23389c",
               padding: "2px 2px",
             },
-            searchFieldVariant: "filled",
+            searchFieldVariant: "outlined",
             pageSize: 10,
             fixedColumns: {
               left: 1,

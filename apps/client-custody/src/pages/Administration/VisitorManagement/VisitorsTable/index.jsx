@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 // import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
 import MaterialTable from "@material-table/core";
@@ -555,7 +555,7 @@ const VisitorsTable = ({
                           </Typography>
                         </ButtonBase>
                       </Grid>
-                      <Box my={1} className="full-width">
+                      <Box my={1} className="w-full">
                         <FormControl className="w-full">
                           <Select
                             closeMenuOnSelect
@@ -599,7 +599,7 @@ const VisitorsTable = ({
                           </Typography>
                         </ButtonBase>
                       </Grid>
-                      <Box my={1} className="full-width">
+                      <Box my={1} className="w-full">
                         <FormControl className="w-full">
                           <Select
                             closeMenuOnSelect
@@ -645,7 +645,7 @@ const VisitorsTable = ({
                           </Typography>
                         </ButtonBase>
                       </Grid>
-                      <Box my={1} className="full-width">
+                      <Box my={1} className="w-full">
                         <FormControl className="w-full">
                           <Select
                             closeMenuOnSelect
@@ -691,7 +691,7 @@ const VisitorsTable = ({
                           </Typography>
                         </ButtonBase>
                       </Grid>
-                      <Box my={1} className="full-width">
+                      <Box my={1} className="w-full">
                         <FormControl className="w-full">
                           <Select
                             closeMenuOnSelect
@@ -737,7 +737,7 @@ const VisitorsTable = ({
                           </Typography>
                         </ButtonBase>
                       </Grid>
-                      <Box my={1} className="full-width">
+                      <Box my={1} className="w-full">
                         <FormControl className="w-full">
                           <Select
                             closeMenuOnSelect

@@ -236,7 +236,6 @@ const ExportButtons = ({ tableRef, name }) => {
       <Grid container className="h-full" alignContent="flex-end" spacing={2}>
         <Grid item xs={6}>
           <Button
-            size="large"
             variant="contained"
             fullWidth
             color="primary"
@@ -249,7 +248,6 @@ const ExportButtons = ({ tableRef, name }) => {
 
         <Grid item xs={6}>
           <Button
-            size="large"
             variant="contained"
             fullWidth
             color="primary"

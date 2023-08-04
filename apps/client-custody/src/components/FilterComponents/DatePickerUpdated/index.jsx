@@ -56,7 +56,7 @@ const DatePicker = ({ name, defaultFilter, label, ...props }) => {
         </Grid>
       </Grid>
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
         <MuiDatePicker
           fullWidth
           format="DD/MM/YYYY"
@@ -65,6 +65,12 @@ const DatePicker = ({ name, defaultFilter, label, ...props }) => {
             shrink: "false",
           }}
           {...props}
+          slotProps={{
+            textField: {
+              size: "small",
+              fullWidth: true,
+            },
+          }}
           variant="dialog"
           showTodayButton
           placeholder="DD/MM/YYYY"

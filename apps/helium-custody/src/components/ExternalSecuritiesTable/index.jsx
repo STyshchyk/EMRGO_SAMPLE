@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Select from "react-select";
+import { Select } from "@emrgo-frontend/shared-ui";
 
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
@@ -121,7 +121,7 @@ const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) =
           </ButtonBase>
         </Grid>
 
-        <Box my={1} className="full-width">
+        <Box my={1} className="w-full">
           <Select
             fullWidth
             closeMenuOnSelect
@@ -153,7 +153,7 @@ const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) =
           </ButtonBase>
         </Grid>
 
-        <Box my={1} className="full-width">
+        <Box my={1} className="w-full">
           <Select
             fullWidth
             closeMenuOnSelect

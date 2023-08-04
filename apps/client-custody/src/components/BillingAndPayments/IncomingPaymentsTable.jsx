@@ -143,7 +143,7 @@ const IncomingPaymentsTable = ({
           ...tableStyles,
           toolbar: false,
           search: false,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 10,
           actionsColumnIndex: -1,
         }}
