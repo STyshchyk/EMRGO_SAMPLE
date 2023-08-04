@@ -2,6 +2,9 @@ import { Fragment, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 
+import { clientAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { navigateModule } from "@emrgo-frontend/utils";
+
 import routes from "../../constants/routes";
 import { useAuth } from "../../context/auth-context";
 import { RouterMappingProvider, useRouterMapping } from "../../context/router-mapping-context";
@@ -19,6 +22,20 @@ const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
 
   return children;
 };
+
+// const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
+//   const { data } = useAuth();
+  
+//   if (!data?.isAuthenticated){
+//     navigateModule("authentication",clientAuthenticationRoutes.home)
+//   }
+
+//   if (data?.isMFAEnabled && !data?.isMFAVerified){
+//     navigateModule("authentication",clientAuthenticationRoutes.setupTwoFactorAuth)
+//   }
+
+//   return children;
+// };
 
 const MainRoutes = () => {
   const navigate = useNavigate();
@@ -51,7 +68,8 @@ const MainRoutes = () => {
               path={path}
               key={path}
               element={
-                <RequireAuth redirectTo={routes.public.login}>
+                //! change it to client-auth app route
+                <RequireAuth>
                   <Layout>
                     <Component />
                   </Layout>

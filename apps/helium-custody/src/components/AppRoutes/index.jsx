@@ -2,20 +2,26 @@ import { Fragment, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 
+import { silverAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { navigateSilverModule } from "@emrgo-frontend/utils";
+
 import routes from "../../constants/routes";
 import { useAuth } from "../../context/auth-context";
 import { RouterMappingProvider, useRouterMapping } from "../../context/router-mapping-context";
 import LocationDisplay from "../LocationDisplay";
 import NotFound from "../NotFound";
 
+
 const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
   const { data } = useAuth();
-  const authOtpRouteMatch = useMatch(routes.authentication.otp);
+  
+  if (!data?.isAuthenticated){
+    silverAuthenticationRoutes("authentication",silverAuthenticationRoutes.home)
+  }
 
-  if (!data?.isAuthenticated) return <Navigate to={redirectTo} />;
-
-  if (!authOtpRouteMatch && data?.isMFAEnabled && !data?.isMFAVerified)
-    return <Navigate to={routes.authentication.otp} />;
+  if (data?.isMFAEnabled && !data?.isMFAVerified){
+    silverAuthenticationRoutes("authentication",silverAuthenticationRoutes.completeRegistration)
+  }
 
   return children;
 };
