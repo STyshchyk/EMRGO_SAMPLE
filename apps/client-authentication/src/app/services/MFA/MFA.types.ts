@@ -1,3 +1,4 @@
 export interface IMFA {
-  otpauth_url: string;
-}
+    otpauth_url: string;
+  }
+  
