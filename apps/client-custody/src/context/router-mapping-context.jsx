@@ -25,6 +25,7 @@ const IssuerServices = lazy(() => import("../pages/IssuerSecServices"));
 const Login = lazy(() => import("../pages/Login"));
 const NoAccess = lazy(() => import("../components/NoAccess"));
 const Onboarding = lazy(() => import("../pages/Onboarding"));
+const OnboardingClient = lazy(() => import("../pages/OnboardingClient"));
 const PublicHome = lazy(() => import("../pages/PublicHome"));
 const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
 const Reconciliation = lazy(() => import("../pages/Reconciliation"));
@@ -229,6 +230,14 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.custody.reports.home}*`,
+        disabled: !kycApprovalStatus,
+      },
+      {
+        component: OnboardingClient,
+        exact: false,
+        isPublic: false,
+        layout: DashboardLayout,
+        path: `${routes.dashboard.custody.onboarding.home}*`,
         disabled: !kycApprovalStatus,
       },
       {

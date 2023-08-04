@@ -18,7 +18,7 @@ export const refreshToken = () => {
 export const doGetInvitedUsers = async (): Promise<IUserNew[]> => {
   const promise = dashboardApi({
     method: "GET",
-    url: "v2/internal/users",
+    url: "v2/users",
   });
   const res = await (await promise).data.users;
   return res || [];

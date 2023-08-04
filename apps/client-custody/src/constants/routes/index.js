@@ -38,6 +38,9 @@ const dashboardUrls = include("/dashboard", {
       paymentInstructions: "payment-instructions",
       incomingPayments: "incoming-payments",
     }),
+    onboarding: include("onboarding", {
+      home: "",
+    }),
     reports: include("reports", {
       home: "",
       securities: include("securities", {
