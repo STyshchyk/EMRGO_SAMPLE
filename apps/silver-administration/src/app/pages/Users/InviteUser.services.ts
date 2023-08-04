@@ -12,14 +12,14 @@ export const inviteUser = (requestObject: IInviteUserValues) => {
 export const cancelInvitation = (id: string) => {
   return dashboardApi({
     method: "PUT",
-    url: `/v2/internal/users/${id}/invite/cancel`,
+    url: `/v2/users/${id}/invite/cancel`,
   });
 };
 
 export const removeUser = (id: string) => {
   return dashboardApi({
     method: "PUT",
-    url: `/v2/internal/users/${id}/archive`,
+    url: `/v2/users/${id}/archive`,
   });
 };
 
@@ -33,6 +33,6 @@ export const reset2FA = (id: string) => {
 export const resendInfo = (id: string) => {
   return dashboardApi({
     method: "PUT",
-    url: `/v2/internal/users/${id}/invite/resend`,
+    url: `/v2/users/${id}/invite/resend`,
   });
 };
