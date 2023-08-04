@@ -11,16 +11,15 @@ import { RouterMappingProvider, useRouterMapping } from "../../context/router-ma
 import LocationDisplay from "../LocationDisplay";
 import NotFound from "../NotFound";
 
-
 const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
   const { data } = useAuth();
-  
-  if (!data?.isAuthenticated){
-    silverAuthenticationRoutes("authentication",silverAuthenticationRoutes.home)
+
+  if (!data?.isAuthenticated) {
+    navigateSilverModule("authentication", silverAuthenticationRoutes.home);
   }
 
-  if (data?.isMFAEnabled && !data?.isMFAVerified){
-    silverAuthenticationRoutes("authentication",silverAuthenticationRoutes.completeRegistration)
+  if (data?.isMFAEnabled && !data?.isMFAVerified) {
+    navigateSilverModule("authentication", silverAuthenticationRoutes.completeRegistration);
   }
 
   return children;
