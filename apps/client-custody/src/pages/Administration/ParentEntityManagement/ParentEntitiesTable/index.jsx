@@ -213,7 +213,7 @@ const ParentEntitiesTable = ({ tableData, isAdmin }) => {
       ]}
       data={tableData}
       options={{
-        searchFieldVariant: "filled",
+        searchFieldVariant: "outlined",
         pageSize: 10,
       }}
       localization={mtableLocalization}

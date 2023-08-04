@@ -683,7 +683,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}
@@ -792,7 +792,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}
@@ -933,7 +933,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                     }}
                     options={{
                       // search: false,
-                      searchFieldVariant: "filled",
+                      searchFieldVariant: "outlined",
                       selection: modalType === "amend",
                       actionsColumnIndex: -1,
                     }}

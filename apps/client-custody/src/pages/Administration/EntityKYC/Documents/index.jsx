@@ -355,7 +355,7 @@ const Documents = () => {
           data={tableData}
           options={{
             ...tableStyles,
-            searchFieldVariant: "filled",
+            searchFieldVariant: "outlined",
             pageSize: 10,
             tableLayout: "fixed",
             toolbar: false,

@@ -59,7 +59,7 @@ const AddPaymentInstructionForm = ({
           <Box mb={2}>
             {isWethaqUser && (
               <Fragment>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Select
                     name="sourceEntity"
                     closeMenuOnSelect
@@ -88,7 +88,7 @@ const AddPaymentInstructionForm = ({
                     }}
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Select
                     name="sourceAccount"
                     placeholder={t(
@@ -116,7 +116,7 @@ const AddPaymentInstructionForm = ({
                     }}
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Select
                     name="beneficiaryEntityGroupUser"
                     closeMenuOnSelect
@@ -153,7 +153,7 @@ const AddPaymentInstructionForm = ({
               </Fragment>
             )}
 
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Select
                 name="paymentAccount"
                 components={{ Option: ReactSelectCurrencyOption }}
@@ -178,7 +178,7 @@ const AddPaymentInstructionForm = ({
                 }}
               />
             </Box>
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Datepicker
                 minDate={Date()}
                 label={t("Payment Instructions.Modals.Fields.Value Date")}
@@ -187,7 +187,7 @@ const AddPaymentInstructionForm = ({
                 fullWidth
               />
             </Box>
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Grid item xs={12}>
                 <Field
                   fullWidth
@@ -209,7 +209,7 @@ const AddPaymentInstructionForm = ({
                 />
               </Grid>
             </Box>
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Field
                 fullWidth
                 multiline
@@ -220,7 +220,7 @@ const AddPaymentInstructionForm = ({
                 variant="filled"
               />
             </Box>
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Select
                 name="transferPurpose"
                 closeMenuOnSelect
@@ -237,7 +237,7 @@ const AddPaymentInstructionForm = ({
               />
             </Box>
 
-            <Box my={2} className="full-width">
+            <Box my={2} className="w-full">
               <Grid container xs={12} justifyContent="flex-end">
                 <Button
                   onClick={() => {

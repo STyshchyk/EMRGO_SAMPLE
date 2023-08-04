@@ -8,6 +8,7 @@ export * from "./lib/ClientDashboardWrapper";
 export * from "./lib/CodeInput";
 export * from "./lib/Countdown";
 export * from "./lib/Disclaimer/";
+export * from "./lib/DraggableColumn";
 export * from "./lib/Drawer/";
 export * from "./lib/Dropdown";
 export * from "./lib/EmrgoBackgroundAnimation";

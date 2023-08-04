@@ -1,4 +1,4 @@
-const tableStyles = {
+export const tableStyles = {
   headerStyle: {
     padding: "16px 8px",
     fontSize: "0.9rem",
@@ -23,5 +23,3 @@ const tableStyles = {
     borderBottom: "none",
   },
 };
-
-export default tableStyles;

@@ -6,7 +6,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
-import Button from "../../../components/Button";
+import Button from "@mui/material/Button";
 import PageTitle from "../../../components/PageTitle";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";

@@ -28,7 +28,7 @@ export default (isDarkMode) => {
           }
         : {
             primary: {
-              main: colors.green3,
+              main: colors.green2,
             },
             error: {
               main: "#eb0000",
@@ -85,9 +85,9 @@ export default (isDarkMode) => {
           expandIcon: {
             color: cyan[500],
           },
-          root: {
-            backgroundColor: "white!important",
-          },
+          // root: {
+          //   backgroundColor: "white!important",
+          // },
         },
       },
       MuiFilledInput: {

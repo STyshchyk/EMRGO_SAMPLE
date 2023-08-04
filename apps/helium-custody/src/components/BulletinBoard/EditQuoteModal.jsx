@@ -87,7 +87,7 @@ const AddQuoteModal = ({ isModalOpen, setIsModalOpen, handleEditQuote, quote }) 
             </DialogTitle>
             <DialogContent>
               <Box mb={2}>
-                <Box my={3} className="full-width">
+                <Box my={3} className="w-full">
                   <Grid container spacing={3}>
                     <Grid item xs={12} container>
                       <Grid item xs={6}>
@@ -145,7 +145,7 @@ const AddQuoteModal = ({ isModalOpen, setIsModalOpen, handleEditQuote, quote }) 
                     </Grid>
                   </Grid>
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Accordion
                     expanded={expanded === "panel1"}
                     onChange={handleChange("panel1")}

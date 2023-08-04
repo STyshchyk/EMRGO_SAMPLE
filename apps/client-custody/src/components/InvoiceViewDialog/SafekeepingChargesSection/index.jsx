@@ -163,7 +163,7 @@ const SafekeepingChargesSection = ({
         }}
         options={{
           // search: false,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           actionsColumnIndex: -1,
         }}
         data={processedSafeKeepingData}

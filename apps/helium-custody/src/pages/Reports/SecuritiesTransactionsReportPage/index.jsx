@@ -654,7 +654,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="full-width">
+                        <Box my={1} className="w-full">
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -702,7 +702,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="full-width">
+                        <Box my={1} className="w-full">
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -759,7 +759,7 @@ const SecuritiesTransactionsReportPage = () => {
                               .
                             </Typography>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -828,7 +828,7 @@ const SecuritiesTransactionsReportPage = () => {
                             </Typography>
                           </Grid>
 
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button

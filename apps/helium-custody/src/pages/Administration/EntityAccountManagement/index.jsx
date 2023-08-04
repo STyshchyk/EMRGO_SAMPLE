@@ -255,7 +255,7 @@ const EntityAccountManagement = () => {
         data={rows}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 30,
           actionsColumnIndex: -1,
         }}

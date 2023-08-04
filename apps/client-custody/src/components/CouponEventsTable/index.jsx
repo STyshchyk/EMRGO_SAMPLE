@@ -73,7 +73,7 @@ const CouponEventsTableFiltering = () => {
             </Typography>
           </Grid>
 
-          <Box my={1} className="full-width">
+          <Box my={1} className="w-full">
             <DatePicker
               placeholder="From"
               fullWidth
@@ -100,7 +100,7 @@ const CouponEventsTableFiltering = () => {
             </Typography>
           </Grid>
 
-          <Box my={1} className="full-width">
+          <Box my={1} className="w-full">
             <DatePicker
               placeholder="To"
               fullWidth

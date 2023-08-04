@@ -6,7 +6,7 @@ import MaterialTable from "@material-table/core";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
 
-import Button from "../../../components/Button";
+import Button from "@mui/material/Button";
 import Checkbox from "../../../components/Checkbox";
 import DocumentViewer from "../../../components/DocumentViewer";
 import Flex from "../../../components/Flex";
