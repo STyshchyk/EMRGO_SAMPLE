@@ -45,7 +45,7 @@ export const silverAuthenticationRoutes = {
   resetPasswordCodeFromText: "reset-password-code-from-text",
   resetPasswordEmailConfirmation: "reset-password-email-confirmation",
   registrationSucess: "registration-success",
-  completeRegistration: "complete-registration",
+  completeRegistration: "/complete-registration",
   verification: "verification",
   investorProfile: "investor-profile",
   troubleSigningIn: "trouble-signing-in",

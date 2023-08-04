@@ -2,13 +2,11 @@ import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 
-import MomentUtils from "@date-io/moment";
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
@@ -261,1558 +259,1495 @@ const Shareholders = () => {
 
   return (
     <Fragment>
-      <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-        <Grid container item xs={12} spacing={2}>
-          <Grid item xs={12}>
-            <StyledPageTitle
-              title={t("kyc:Shareholders.Shareholders / Ultimate Beneficial Owners")}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subtitle2">
-              {t(
-                "kyc:Shareholders.Please provide details of shareholders (individuals and companies) and identify all UBO individuals"
-              )}
-            </Typography>
-          </Grid>
+      <Grid container item xs={12} spacing={2}>
+        <Grid item xs={12}>
+          <StyledPageTitle
+            title={t("kyc:Shareholders.Shareholders / Ultimate Beneficial Owners")}
+          />
         </Grid>
-        {kycData ? (
-          <Formik
-            initialValues={{
+        <Grid item xs={12}>
+          <Typography variant="subtitle2">
+            {t(
+              "kyc:Shareholders.Please provide details of shareholders (individuals and companies) and identify all UBO individuals"
+            )}
+          </Typography>
+        </Grid>
+      </Grid>
+      {kycData ? (
+        <Formik
+          initialValues={{
+            // eslint-disable-next-line no-nested-ternary
+            publiclyListed:
+              kycData?.publiclyListed !== null ? (kycData?.publiclyListed ? "yes" : "no") : null,
+            publiclyListedExchange: kycData?.publiclyListedExchange || "",
+            publiclyListedExchangeWebsite: kycData?.publiclyListedExchangeWebsite || "",
+            publiclyListedExchangeTicker: kycData?.publiclyListedExchangeTicker || "",
+            publiclyListedExchangeListedDate: kycData?.publiclyListedExchangeListedDate,
+            publiclyListedShareholderWithTwentyFiveOrMoreInterest:
               // eslint-disable-next-line no-nested-ternary
-              publiclyListed:
-                kycData?.publiclyListed !== null ? (kycData?.publiclyListed ? "yes" : "no") : null,
-              publiclyListedExchange: kycData?.publiclyListedExchange || "",
-              publiclyListedExchangeWebsite: kycData?.publiclyListedExchangeWebsite || "",
-              publiclyListedExchangeTicker: kycData?.publiclyListedExchangeTicker || "",
-              publiclyListedExchangeListedDate: kycData?.publiclyListedExchangeListedDate,
-              publiclyListedShareholderWithTwentyFiveOrMoreInterest:
-                // eslint-disable-next-line no-nested-ternary
-                kycData?.publiclyListedShareholderWithTwentyFiveOrMoreInterest !== null
-                  ? kycData?.publiclyListedShareholderWithTwentyFiveOrMoreInterest
-                    ? "yes"
-                    : "no"
-                  : null,
+              kycData?.publiclyListedShareholderWithTwentyFiveOrMoreInterest !== null
+                ? kycData?.publiclyListedShareholderWithTwentyFiveOrMoreInterest
+                  ? "yes"
+                  : "no"
+                : null,
 
-              changeRequests: kycData?.sectionChanges
-                ? kycData?.sectionChanges.changesRequested
-                : {},
-            }}
-            validateOnMount={false}
-            onSubmit={(values, { setSubmitting }) => {
-              const shareholdersSubmitData = processShareholderFormData(values);
+            changeRequests: kycData?.sectionChanges ? kycData?.sectionChanges.changesRequested : {},
+          }}
+          validateOnMount={false}
+          onSubmit={(values, { setSubmitting }) => {
+            const shareholdersSubmitData = processShareholderFormData(values);
 
-              const isLocked = isComplianceOfficer
-                ? Object.keys(shareholdersSubmitData.changeRequests).length === 0
-                : true;
+            const isLocked = isComplianceOfficer
+              ? Object.keys(shareholdersSubmitData.changeRequests).length === 0
+              : true;
 
-              shareholdersSubmitData.updateSection = {
-                sectionKey: "shareholders",
-                changesRequested: shareholdersSubmitData.changeRequests,
-                isLocked,
-              };
+            shareholdersSubmitData.updateSection = {
+              sectionKey: "shareholders",
+              changesRequested: shareholdersSubmitData.changeRequests,
+              isLocked,
+            };
+
+            const payload = {
+              entityId,
+              requestPayload: shareholdersSubmitData,
+              successCallback: () => {
+                setSubmitting(false);
+                fetchPageData();
+              },
+            };
+            dispatch(kycActionCreators.doPostKYCData(payload));
+          }}
+        >
+          {({ handleSubmit, values, setFieldValue, isSubmitting, dirty }) => {
+            const saveForm = () => {
+              const shareholdersSaveData = processShareholderFormData(values);
 
               const payload = {
                 entityId,
-                requestPayload: shareholdersSubmitData,
+                requestPayload: shareholdersSaveData,
                 successCallback: () => {
-                  setSubmitting(false);
                   fetchPageData();
                 },
               };
               dispatch(kycActionCreators.doPostKYCData(payload));
+            };
+
+            // const addShareholdingEntity = () => {
+            // };
+
+            return (
+              <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
+                {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Grid container justifyContent="flex-end">
+                      <Grid item xs={12} md={6} lg={2}>
+                        <Grid container direction="column">
+                          {isComplianceOfficer ? (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color="secondary"
+                              onClick={() => {
+                                saveForm();
+                              }}
+                              disabled={!dirty}
+                            >
+                              {t("Miscellaneous.Save Form")}
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color="secondary"
+                              disabled={kycData?.sectionChanges?.isLocked || !dirty}
+                              onClick={() => {
+                                saveForm();
+                              }}
+                            >
+                              {t("Miscellaneous.Save Form")}
+                            </Button>
+                          )}
+
+                          <Typography variant="caption" align="center" className="text-gray-500">
+                            {t("Miscellaneous.Last Saved", {
+                              date: kycData?.sectionChanges?.updatedAt
+                                ? moment(kycData?.sectionChanges?.updatedAt).format(
+                                    "DD/MM/YYYY HH:mm"
+                                  )
+                                : "N.A",
+                            })}{" "}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(
+                        `kyc:Shareholders.Form Fields.Is the Entity ( or its holding company or subsidiary ) publicly listed?`
+                      )}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field component={RadioGroup} name="publiclyListed">
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Shareholders.Yes`)}
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Shareholders.No`)}
+                        disabled={isSubmitting}
+                      />
+                    </Field>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="publiclyListed"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-8">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(
+                        `kyc:Shareholders.Form Fields.If yes, provide details of the exchange the Entity is listed on`
+                      )}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <div className="w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Shareholders.Form Fields.Name of the Exchange`)}
+                        name="publiclyListedExchange"
+                        variant="filled"
+                        type="text"
+                      />
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Shareholders.Form Fields.Website of the Exchange`)}
+                        name="publiclyListedExchangeWebsite"
+                        variant="filled"
+                        type="text"
+                      />
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Shareholders.Form Fields.Ticker / ISIN`)}
+                        name="publiclyListedExchangeTicker"
+                        variant="filled"
+                        type="text"
+                      />
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        format="DD/MM/YYYY"
+                        inputVariant="filled"
+                        inputProps={{
+                          shrink: "false",
+                        }}
+                        variant="dialog"
+                        maxDate={moment()}
+                        placeholder="DD/MM/YYYY"
+                        component={DatePicker}
+                        name="publiclyListedExchangeListedDate"
+                        label={t("kyc:Shareholders.Form Fields.Date Listed")}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="exchangeEntityListedOn"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    {values.publiclyListedShareholderWithTwentyFiveOrMoreInterest === "yes" ? (
+                      <Typography className="mt-4">
+                        {t(
+                          `kyc:Shareholders.Form Fields.If yes, are there any shareholders/controller with 25% or more interest?`
+                        )}
+                      </Typography>
+                    ) : (
+                      <Typography className="mt-4">
+                        {t(
+                          `kyc:Shareholders.Form Fields.If yes, are there any shareholders/controller with 10% or more interest?`
+                        )}
+                      </Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      component={RadioGroup}
+                      name="publiclyListedShareholderWithTwentyFiveOrMoreInterest"
+                    >
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Shareholders.Yes`)}
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Shareholders.No`)}
+                        disabled={isSubmitting}
+                      />
+                    </Field>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="shareholdersWithMoreThan25Percent"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container>
+                  <Grid item xs={12} md={8} lg={8} container alignContent="flex-start">
+                    {values.publiclyListedShareholderWithTwentyFiveOrMoreInterest === "yes" ? (
+                      <Typography variant="caption">
+                        *
+                        {t(
+                          `kyc:Shareholders.Form Fields.Please list below shareholders/UBOs with 25% interest or more`
+                        )}
+                      </Typography>
+                    ) : (
+                      <Typography variant="caption">
+                        *
+                        {t(
+                          `kyc:Shareholders.Form Fields.Please list below shareholders/UBOs with 10% interest or more`
+                        )}
+                      </Typography>
+                    )}
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
+                  <Grid item xs={12} md={6} lg={3} className="px-1">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        if (dirty) {
+                          toast.warning(
+                            "You have unsaved changes. Please save changes before adding shareholding entity",
+                            2000
+                          );
+                        } else {
+                          setShareholdingEntityModalOpen(true);
+                        }
+                      }}
+                    >
+                      {t("kyc:Shareholders.Form Fields.Add Shareholding Entity")}
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={3} className="px-1">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        if (dirty) {
+                          toast.warning(
+                            "You have unsaved changes. Please save changes before adding shareholding individual",
+                            2000
+                          );
+                        } else {
+                          setShareholdingIndividualModalOpen(true);
+                        }
+                      }}
+                    >
+                      {t("kyc:Shareholders.Form Fields.Add Shareholding Individual")}
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} lg={12} className="pt-8">
+                  <MaterialTable
+                    size="small"
+                    title=""
+                    columns={headCells}
+                    data={shareholders}
+                    options={{
+                      ...tableStyles,
+                      searchFieldVariant: "outlined",
+                      pageSize: 5,
+                      actionsColumnIndex: -1,
+                      tableLayout: "fixed",
+                      toolbar: false,
+                      paging: false,
+                    }}
+                    actions={[
+                      {
+                        icon: "more_vert",
+                        onClick: (event, rowData) => {
+                          setMenuAnchorEl(event.currentTarget);
+                          setSelectedRow(rowData);
+                        },
+                      },
+                    ]}
+                    localization={mtableLocalization}
+                  />
+                  <MaterialTableOverflowMenu
+                    actions={actions}
+                    anchorEl={menuAnchorEl}
+                    setAnchorEl={setMenuAnchorEl}
+                    selectedRow={selectedRow}
+                  />
+                </Grid>
+
+                <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-4">
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="shareholdersTable"
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Grid container direction="column">
+                      {isComplianceOfficer ? (
+                        <Button variant="contained" type="submit" size="small" color="primary">
+                          {t("Miscellaneous.Submit")}
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          disabled={kycData?.sectionChanges?.isLocked}
+                          type="submit"
+                          size="small"
+                          color="primary"
+                        >
+                          {t("Miscellaneous.Submit")}
+                        </Button>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </form>
+            );
+          }}
+        </Formik>
+      ) : (
+        ""
+      )}
+      <Dialog
+        open={shareholdingIndividualModalOpen}
+        onClose={() => {
+          setShareholdingIndividualModalOpen(false);
+          setSelectedRow(null);
+        }}
+        scroll="body"
+        aria-labelledby="assign-role"
+        maxWidth="sm"
+        fullWidth
+      >
+        <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
+          <Formik
+            initialValues={{
+              shareHoldingPercentage: selectedRow?.shareHoldingPercentage || "",
+              firstName: selectedRow?.firstName || "",
+              middleName: selectedRow?.middleName || "",
+              lastName: selectedRow?.lastName || "",
+              // eslint-disable-next-line no-nested-ternary
+              politicallyExposed:
+                selectedRow?.politicallyExposed !== null
+                  ? selectedRow?.politicallyExposed
+                    ? "yes"
+                    : "no"
+                  : null,
+              addressLine1: selectedRow?.addressLine1 || "",
+              addressLine2: selectedRow?.addressLine2 || "",
+              city: selectedRow?.city || "",
+              country: selectedRow?.country ? selectedCountry : null,
+              pinCode: selectedRow?.pinCode || "",
+              businessPhone: selectedRow?.businessPhone || "",
+              saudiIdNumber: selectedRow?.saudiIdNumber || "",
+              saudiIdExpiry: selectedRow?.saudiIdExpiry || null,
+              passportNumber: selectedRow?.passportNumber || "",
+              passportExpiry: selectedRow?.passportExpiry || null,
+              passportCopyFileName: selectedRow?.passportCopyFileName?.name || null,
+              addressProofFileName: selectedRow?.addressProofFileName?.name || null,
+              saudiIdFileName: selectedRow?.saudiIdFileName?.name || null,
+              shareholderProofFileName: selectedRow?.shareholderProofFileName?.name || null,
+            }}
+            enableReinitialize
+            validationSchema={validationSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              const processedValues = {
+                ...values,
+                countryId: values.country.value,
+                politicallyExposed:
+                  values.politicallyExposed === null ? null : values.politicallyExposed === "yes",
+                passportCopyFileName:
+                  kycFileData?.passportCopyFileName?.fileIdentifier || values.passportCopyFileName,
+                addressProofFileName:
+                  kycFileData?.addressProofFileName?.fileIdentifier || values.addressProofFileName,
+                saudiIdFileName:
+                  kycFileData?.saudiIdFileName?.fileIdentifier || values.saudiIdFileName,
+                shareholderProofFileName:
+                  kycFileData?.shareholderProofFileName?.fileIdentifier ||
+                  values.shareholderProofFileName,
+              };
+              delete processedValues?.country;
+
+              let requestPayload;
+              if (isEdit) {
+                const editObject = { ...processedValues, id: selectedRow?.id };
+                // const editFilteredArray = oldShareholdingIndividual.filter((entity) => entity.id !== selectedRow?.id);
+                requestPayload = { shareholders: [editObject] };
+              } else {
+                requestPayload = { shareholders: [processedValues] };
+              }
+
+              const payload = {
+                entityId,
+                requestPayload,
+                successCallback: () => {
+                  setSubmitting(false);
+                  fetchPageData();
+                  setShareholdingIndividualModalOpen(false);
+                  setSelectedRow(null);
+                },
+              };
+              dispatch(kycActionCreators.doPostKYCData(payload));
+              setSubmitting(false);
             }}
           >
-            {({ handleSubmit, values, setFieldValue, isSubmitting, dirty }) => {
-              const saveForm = () => {
-                const shareholdersSaveData = processShareholderFormData(values);
-
-                const payload = {
-                  entityId,
-                  requestPayload: shareholdersSaveData,
-                  successCallback: () => {
-                    fetchPageData();
-                  },
-                };
-                dispatch(kycActionCreators.doPostKYCData(payload));
-              };
-
-              // const addShareholdingEntity = () => {
-              // };
-
-              return (
-                <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
-                  {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <Grid container justifyContent="flex-end">
-                        <Grid item xs={12} md={6} lg={2}>
-                          <Grid container direction="column">
-                            {isComplianceOfficer ? (
-                              <Button
-                                variant="contained"
-                                size="small"
-                                color="secondary"
-                                onClick={() => {
-                                  saveForm();
-                                }}
-                                disabled={!dirty}
-                              >
-                                {t("Miscellaneous.Save Form")}
-                              </Button>
-                            ) : (
-                              <Button
-                                variant="contained"
-                                size="small"
-                                color="secondary"
-                                disabled={kycData?.sectionChanges?.isLocked || !dirty}
-                                onClick={() => {
-                                  saveForm();
-                                }}
-                              >
-                                {t("Miscellaneous.Save Form")}
-                              </Button>
-                            )}
-
-                            <Typography variant="caption" align="center" className="text-gray-500">
-                              {t("Miscellaneous.Last Saved", {
-                                date: kycData?.sectionChanges?.updatedAt
-                                  ? moment(kycData?.sectionChanges?.updatedAt).format(
-                                      "DD/MM/YYYY HH:mm"
-                                    )
-                                  : "N.A",
-                              })}{" "}
-                            </Typography>
-                          </Grid>
+            {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
+              <form onSubmit={handleSubmit} noValidate>
+                <DialogTitle id="form-dialog-title">
+                  {isEdit
+                    ? t("kyc:Shareholders.Form Fields.Edit Shareholding Individual")
+                    : t("kyc:Shareholders.Form Fields.Add Shareholding Individual")}
+                </DialogTitle>
+                <DialogContent>
+                  <Box mb={2}>
+                    <Grid container>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            InputProps={{
+                              type: "number",
+                              endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                            }}
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)}
+                            name="shareHoldingPercentage"
+                            variant="filled"
+                            type="text"
+                          />
                         </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(
-                          `kyc:Shareholders.Form Fields.Is the Entity ( or its holding company or subsidiary ) publicly listed?`
-                        )}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      alignContent="center"
-                      className="px-1"
-                    >
-                      <Field component={RadioGroup} name="publiclyListed">
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Shareholders.Yes`)}
-                          disabled={isSubmitting}
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Shareholders.No`)}
-                          disabled={isSubmitting}
-                        />
-                      </Field>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="publiclyListed"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-8">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(
-                          `kyc:Shareholders.Form Fields.If yes, provide details of the exchange the Entity is listed on`
-                        )}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      alignContent="center"
-                      className="px-1"
-                    >
-                      <div className="w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Shareholders.Form Fields.Name of the Exchange`)}
-                          name="publiclyListedExchange"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                      <div className="mt-4 w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Shareholders.Form Fields.Website of the Exchange`)}
-                          name="publiclyListedExchangeWebsite"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                      <div className="mt-4 w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Shareholders.Form Fields.Ticker / ISIN`)}
-                          name="publiclyListedExchangeTicker"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                      <div className="mt-4 w-full">
-                        <Field
-                          fullWidth
-                          format="DD/MM/YYYY"
-                          inputVariant="filled"
-                          inputProps={{
-                            shrink: "false",
-                          }}
-                          variant="dialog"
-                          maxDate={moment()}
-                          placeholder="DD/MM/YYYY"
-                          component={DatePicker}
-                          name="publiclyListedExchangeListedDate"
-                          label={t("kyc:Shareholders.Form Fields.Date Listed")}
-                        />
-                      </div>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="exchangeEntityListedOn"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      {values.publiclyListedShareholderWithTwentyFiveOrMoreInterest === "yes" ? (
-                        <Typography className="mt-4">
-                          {t(
-                            `kyc:Shareholders.Form Fields.If yes, are there any shareholders/controller with 25% or more interest?`
-                          )}
-                        </Typography>
-                      ) : (
-                        <Typography className="mt-4">
-                          {t(
-                            `kyc:Shareholders.Form Fields.If yes, are there any shareholders/controller with 10% or more interest?`
-                          )}
-                        </Typography>
-                      )}
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      alignContent="center"
-                      className="px-1"
-                    >
-                      <Field
-                        component={RadioGroup}
-                        name="publiclyListedShareholderWithTwentyFiveOrMoreInterest"
-                      >
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Shareholders.Yes`)}
-                          disabled={isSubmitting}
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Shareholders.No`)}
-                          disabled={isSubmitting}
-                        />
-                      </Field>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="shareholdersWithMoreThan25Percent"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container>
-                    <Grid item xs={12} md={8} lg={8} container alignContent="flex-start">
-                      {values.publiclyListedShareholderWithTwentyFiveOrMoreInterest === "yes" ? (
-                        <Typography variant="caption">
-                          *
-                          {t(
-                            `kyc:Shareholders.Form Fields.Please list below shareholders/UBOs with 25% interest or more`
-                          )}
-                        </Typography>
-                      ) : (
-                        <Typography variant="caption">
-                          *
-                          {t(
-                            `kyc:Shareholders.Form Fields.Please list below shareholders/UBOs with 10% interest or more`
-                          )}
-                        </Typography>
-                      )}
-                    </Grid>
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
-                    <Grid item xs={12} md={6} lg={3} className="px-1">
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        onClick={() => {
-                          if (dirty) {
-                            toast.warning(
-                              "You have unsaved changes. Please save changes before adding shareholding entity",
-                              2000
-                            );
-                          } else {
-                            setShareholdingEntityModalOpen(true);
-                          }
-                        }}
-                      >
-                        {t("kyc:Shareholders.Form Fields.Add Shareholding Entity")}
-                      </Button>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={3} className="px-1">
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        onClick={() => {
-                          if (dirty) {
-                            toast.warning(
-                              "You have unsaved changes. Please save changes before adding shareholding individual",
-                              2000
-                            );
-                          } else {
-                            setShareholdingIndividualModalOpen(true);
-                          }
-                        }}
-                      >
-                        {t("kyc:Shareholders.Form Fields.Add Shareholding Individual")}
-                      </Button>
-                    </Grid>
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} className="pt-8">
-                    <MaterialTable
-                      size="small"
-                      title=""
-                      columns={headCells}
-                      data={shareholders}
-                      options={{
-                        ...tableStyles,
-                        searchFieldVariant: "outlined",
-                        pageSize: 5,
-                        actionsColumnIndex: -1,
-                        tableLayout: "fixed",
-                        toolbar: false,
-                        paging: false,
-                      }}
-                      actions={[
-                        {
-                          icon: "more_vert",
-                          onClick: (event, rowData) => {
-                            setMenuAnchorEl(event.currentTarget);
-                            setSelectedRow(rowData);
-                          },
-                        },
-                      ]}
-                      localization={mtableLocalization}
-                    />
-                    <MaterialTableOverflowMenu
-                      actions={actions}
-                      anchorEl={menuAnchorEl}
-                      setAnchorEl={setMenuAnchorEl}
-                      selectedRow={selectedRow}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-4">
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="shareholdersTable"
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
-                    <Grid item xs={12} md={6} lg={2}>
-                      <Grid container direction="column">
-                        {isComplianceOfficer ? (
-                          <Button variant="contained" type="submit" size="small" color="primary">
-                            {t("Miscellaneous.Submit")}
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            disabled={kycData?.sectionChanges?.isLocked}
-                            type="submit"
-                            size="small"
-                            color="primary"
-                          >
-                            {t("Miscellaneous.Submit")}
-                          </Button>
-                        )}
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.First Name`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.First Name`)}
+                            name="firstName"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                </form>
-              );
-            }}
-          </Formik>
-        ) : (
-          ""
-        )}
-        <Dialog
-          open={shareholdingIndividualModalOpen}
-          onClose={() => {
-            setShareholdingIndividualModalOpen(false);
-            setSelectedRow(null);
-          }}
-          scroll="body"
-          aria-labelledby="assign-role"
-          maxWidth="sm"
-          fullWidth
-        >
-          <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-            <Formik
-              initialValues={{
-                shareHoldingPercentage: selectedRow?.shareHoldingPercentage || "",
-                firstName: selectedRow?.firstName || "",
-                middleName: selectedRow?.middleName || "",
-                lastName: selectedRow?.lastName || "",
-                // eslint-disable-next-line no-nested-ternary
-                politicallyExposed:
-                  selectedRow?.politicallyExposed !== null
-                    ? selectedRow?.politicallyExposed
-                      ? "yes"
-                      : "no"
-                    : null,
-                addressLine1: selectedRow?.addressLine1 || "",
-                addressLine2: selectedRow?.addressLine2 || "",
-                city: selectedRow?.city || "",
-                country: selectedRow?.country ? selectedCountry : null,
-                pinCode: selectedRow?.pinCode || "",
-                businessPhone: selectedRow?.businessPhone || "",
-                saudiIdNumber: selectedRow?.saudiIdNumber || "",
-                saudiIdExpiry: selectedRow?.saudiIdExpiry || null,
-                passportNumber: selectedRow?.passportNumber || "",
-                passportExpiry: selectedRow?.passportExpiry || null,
-                passportCopyFileName: selectedRow?.passportCopyFileName?.name || null,
-                addressProofFileName: selectedRow?.addressProofFileName?.name || null,
-                saudiIdFileName: selectedRow?.saudiIdFileName?.name || null,
-                shareholderProofFileName: selectedRow?.shareholderProofFileName?.name || null,
-              }}
-              enableReinitialize
-              validationSchema={validationSchema}
-              onSubmit={(values, { setSubmitting }) => {
-                const processedValues = {
-                  ...values,
-                  countryId: values.country.value,
-                  politicallyExposed:
-                    values.politicallyExposed === null ? null : values.politicallyExposed === "yes",
-                  passportCopyFileName:
-                    kycFileData?.passportCopyFileName?.fileIdentifier ||
-                    values.passportCopyFileName,
-                  addressProofFileName:
-                    kycFileData?.addressProofFileName?.fileIdentifier ||
-                    values.addressProofFileName,
-                  saudiIdFileName:
-                    kycFileData?.saudiIdFileName?.fileIdentifier || values.saudiIdFileName,
-                  shareholderProofFileName:
-                    kycFileData?.shareholderProofFileName?.fileIdentifier ||
-                    values.shareholderProofFileName,
-                };
-                delete processedValues?.country;
-
-                let requestPayload;
-                if (isEdit) {
-                  const editObject = { ...processedValues, id: selectedRow?.id };
-                  // const editFilteredArray = oldShareholdingIndividual.filter((entity) => entity.id !== selectedRow?.id);
-                  requestPayload = { shareholders: [editObject] };
-                } else {
-                  requestPayload = { shareholders: [processedValues] };
-                }
-
-                const payload = {
-                  entityId,
-                  requestPayload,
-                  successCallback: () => {
-                    setSubmitting(false);
-                    fetchPageData();
-                    setShareholdingIndividualModalOpen(false);
-                    setSelectedRow(null);
-                  },
-                };
-                dispatch(kycActionCreators.doPostKYCData(payload));
-                setSubmitting(false);
-              }}
-            >
-              {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
-                <form onSubmit={handleSubmit} noValidate>
-                  <DialogTitle id="form-dialog-title">
-                    {isEdit
-                      ? t("kyc:Shareholders.Form Fields.Edit Shareholding Individual")
-                      : t("kyc:Shareholders.Form Fields.Add Shareholding Individual")}
-                  </DialogTitle>
-                  <DialogContent>
-                    <Box mb={2}>
-                      <Grid container>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              InputProps={{
-                                type: "number",
-                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                              }}
-                              component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)}
-                              name="shareHoldingPercentage"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Middle Name`)}
+                          </Typography>
                         </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.First Name`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Middle Name`)}
+                            name="middleName"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Last Name`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Last Name`)}
+                            name="lastName"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Politically Exposed Person`)}{" "}
+                            <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field component={RadioGroup} name="politicallyExposed">
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio disabled={isSubmitting} />}
+                              label={t(`kyc:Shareholders.Yes`)}
+                              disabled={isSubmitting}
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio disabled={isSubmitting} />}
+                              label={t(`kyc:Shareholders.No`)}
+                              disabled={isSubmitting}
+                            />
+                          </Field>
+                          <ErrorMessage
+                            component={Typography}
+                            variant="caption"
+                            color="error"
+                            className="ml-4"
+                            name="politicallyExposed"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-8">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Address`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <div className="w-full">
                             <Field
                               fullWidth
                               component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.First Name`)}
-                              name="firstName"
+                              label={t(`kyc:Shareholders.Form Fields.Address Line 1`)}
+                              name="addressLine1"
                               variant="filled"
                               type="text"
                             />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Middle Name`)}
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
+                          </div>
+                          <div className="mt-4 w-full">
                             <Field
                               fullWidth
                               component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Middle Name`)}
-                              name="middleName"
+                              label={t(`kyc:Shareholders.Form Fields.Address Line 2`)}
+                              name="addressLine2"
                               variant="filled"
                               type="text"
                             />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Last Name`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
+                          </div>
+                          <div className="mt-4 w-full">
                             <Field
                               fullWidth
                               component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Last Name`)}
-                              name="lastName"
+                              label={t(`kyc:Shareholders.Form Fields.City`)}
+                              name="city"
                               variant="filled"
                               type="text"
                             />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Politically Exposed Person`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field component={RadioGroup} name="politicallyExposed">
-                              <FormControlLabel
-                                value="yes"
-                                control={<Radio disabled={isSubmitting} />}
-                                label={t(`kyc:Shareholders.Yes`)}
-                                disabled={isSubmitting}
+                          </div>
+                          <div className="mt-4 w-full">
+                            <FormControl className="w-full">
+                              <Select
+                                closeMenuOnSelect
+                                isSearchable
+                                placeholder={`${t("kyc:Shareholders.Form Fields.Country")}`}
+                                components={{
+                                  ...animatedComponents,
+                                }}
+                                styles={selectStyles}
+                                value={values.country}
+                                options={countries}
+                                onChange={(selected) => {
+                                  setFieldValue("country", selected);
+                                }}
                               />
-                              <FormControlLabel
-                                value="no"
-                                control={<Radio disabled={isSubmitting} />}
-                                label={t(`kyc:Shareholders.No`)}
-                                disabled={isSubmitting}
-                              />
-                            </Field>
+                            </FormControl>
                             <ErrorMessage
                               component={Typography}
                               variant="caption"
                               color="error"
                               className="ml-4"
-                              name="politicallyExposed"
+                              name="country"
                             />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-8">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Address`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <div className="w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Address Line 1`)}
-                                name="addressLine1"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Address Line 2`)}
-                                name="addressLine2"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.City`)}
-                                name="city"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <FormControl className="w-full">
-                                <Select
-                                  closeMenuOnSelect
-                                  isSearchable
-                                  placeholder={`${t("kyc:Shareholders.Form Fields.Country")}`}
-                                  components={{
-                                    ...animatedComponents,
-                                  }}
-                                  styles={selectStyles}
-                                  value={values.country}
-                                  options={countries}
-                                  onChange={(selected) => {
-                                    setFieldValue("country", selected);
-                                  }}
-                                />
-                              </FormControl>
-                              <ErrorMessage
-                                component={Typography}
-                                variant="caption"
-                                color="error"
-                                className="ml-4"
-                                name="country"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Post Code`)}
-                                name="pinCode"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Telephone Number`)}
-                                name="businessPhone"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                        <RegionSwitch
-                          sa={
-                            <Fragment>
-                              <Grid item xs={12} lg={12} container className="mt-4">
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="flex-start"
-                                >
-                                  <Typography className="mt-4">
-                                    {t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Number`)}{" "}
-                                    <Required />
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="center"
-                                  className="px-1"
-                                >
-                                  <Field
-                                    fullWidth
-                                    component={TextField}
-                                    label={t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Number`)}
-                                    name="saudiIdNumber"
-                                    variant="filled"
-                                    type="text"
-                                  />
-                                </Grid>
-                              </Grid>
-                              <Grid item xs={12} lg={12} container className="mt-4">
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="flex-start"
-                                >
-                                  <Typography className="mt-4">
-                                    {t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Expiry`)}{" "}
-                                    <Required />
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="center"
-                                  className="px-1"
-                                >
-                                  <Field
-                                    fullWidth
-                                    format="DD/MM/YYYY"
-                                    inputVariant="filled"
-                                    variant="dialog"
-                                    placeholder="DD/MM/YYYY"
-                                    minDate={moment()}
-                                    component={DatePicker}
-                                    name="saudiIdExpiry"
-                                    label={t("kyc:Shareholders.Form Fields.Iqama/Saudi ID Expiry")}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Fragment>
-                          }
-                          ae=""
-                        />
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Passport Number`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
+                          </div>
+                          <div className="mt-4 w-full">
                             <Field
                               fullWidth
                               component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Passport Number`)}
-                              name="passportNumber"
+                              label={t(`kyc:Shareholders.Form Fields.Post Code`)}
+                              name="pinCode"
                               variant="filled"
                               type="text"
                             />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Passport Expiry`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
+                          </div>
+                          <div className="mt-4 w-full">
                             <Field
                               fullWidth
-                              format="DD/MM/YYYY"
-                              inputVariant="filled"
-                              variant="dialog"
-                              placeholder="DD/MM/YYYY"
-                              minDate={moment()}
-                              component={DatePicker}
-                              name="passportExpiry"
-                              label={t("kyc:Shareholders.Form Fields.Passport Expiry")}
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.Telephone Number`)}
+                              name="businessPhone"
+                              variant="filled"
+                              type="text"
                             />
-                          </Grid>
+                          </div>
                         </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Upload Passport Copy`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Box className="w-full">
-                              <FileUploadField
-                                // label="Bulletin Document"
-                                // isLoading={filesUploadInProgress}
-                                name="passportCopyFileName"
-                                fullWidth
-                                defaultFiles={
-                                  values.passportCopyFileName
-                                    ? [{ file: { name: values.passportCopyFileName } }]
-                                    : null
-                                }
-                                downloadParameters={
-                                  values.passportCopyFileName
-                                    ? {
-                                        signedURL: selectedRow?.passportCopyFileName.link,
-                                      }
-                                    : null
-                                }
-                                acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                                customHandleChange={(e) =>
-                                  handleFileUpload({ files: e, keyName: "passportCopyFileName" })
-                                }
-                                dense
-                              />
-                              <ErrorMessage
-                                component={Typography}
-                                variant="caption"
-                                color="error"
-                                className="ml-4"
-                                name="passportCopyFileName"
-                              />
-                            </Box>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Upload Proof of Address`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Box className="w-full">
-                              <FileUploadField
-                                // label="Bulletin Document"
-                                // isLoading={filesUploadInProgress}
-                                name="addressProofFileName"
-                                fullWidth
-                                defaultFiles={
-                                  values.addressProofFileName
-                                    ? [{ file: { name: values.addressProofFileName } }]
-                                    : null
-                                }
-                                downloadParameters={
-                                  values.addressProofFileName
-                                    ? {
-                                        signedURL: selectedRow?.addressProofFileName.link,
-                                      }
-                                    : null
-                                }
-                                acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                                customHandleChange={(e) =>
-                                  handleFileUpload({ files: e, keyName: "addressProofFileName" })
-                                }
-                                dense
-                              />
-                              <ErrorMessage
-                                component={Typography}
-                                variant="caption"
-                                color="error"
-                                className="ml-4"
-                                name="addressProofFileName"
-                              />
-                            </Box>
-                          </Grid>
-                        </Grid>
-                        <RegionSwitch
-                          sa={
-                            <Fragment>
-                              <Grid item xs={12} lg={12} container className="mt-4">
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="flex-start"
-                                >
-                                  <Typography className="mt-4">
-                                    {t(`kyc:Shareholders.Form Fields.Upload Iqama/Saudi ID Copy`)}{" "}
-                                    <Required />
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="center"
-                                  className="px-1"
-                                >
-                                  <Box className="w-full">
-                                    <FileUploadField
-                                      // label="Bulletin Document"
-                                      // isLoading={filesUploadInProgress}
-                                      name="saudiIdFileName"
-                                      fullWidth
-                                      defaultFiles={
-                                        values.saudiIdFileName
-                                          ? [{ file: { name: values.saudiIdFileName } }]
-                                          : null
-                                      }
-                                      downloadParameters={
-                                        values.saudiIdFileName
-                                          ? {
-                                              signedURL: selectedRow?.saudiIdFileName.link,
-                                            }
-                                          : null
-                                      }
-                                      acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                                      customHandleChange={(e) =>
-                                        handleFileUpload({ files: e, keyName: "saudiIdFileName" })
-                                      }
-                                      dense
-                                    />
-                                    <ErrorMessage
-                                      component={Typography}
-                                      variant="caption"
-                                      color="error"
-                                      className="ml-4"
-                                      name="saudiIdFileName"
-                                    />
-                                  </Box>
-                                </Grid>
-                              </Grid>
-                              <Grid item xs={12} lg={12} container className="mt-4">
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="flex-start"
-                                >
-                                  <Typography className="mt-4">
-                                    {t(
-                                      `kyc:Shareholders.Form Fields.Upload Shareholder Proof from MoC`
-                                    )}{" "}
-                                    <Required />
-                                  </Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={12}
-                                  md={6}
-                                  lg={6}
-                                  container
-                                  alignContent="center"
-                                  className="px-1"
-                                >
-                                  <Box className="w-full">
-                                    <FileUploadField
-                                      // label="Bulletin Document"
-                                      // isLoading={filesUploadInProgress}
-                                      name="shareholderProofFileName"
-                                      fullWidth
-                                      defaultFiles={
-                                        values.shareholderProofFileName
-                                          ? [{ file: { name: values.shareholderProofFileName } }]
-                                          : null
-                                      }
-                                      downloadParameters={
-                                        values.shareholderProofFileName
-                                          ? {
-                                              signedURL: selectedRow?.shareholderProofFileName.link,
-                                            }
-                                          : null
-                                      }
-                                      acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                                      customHandleChange={(e) =>
-                                        handleFileUpload({
-                                          files: e,
-                                          keyName: "shareholderProofFileName",
-                                        })
-                                      }
-                                      dense
-                                    />
-                                    <ErrorMessage
-                                      component={Typography}
-                                      variant="caption"
-                                      color="error"
-                                      className="ml-4"
-                                      name="shareholderProofFileName"
-                                    />
-                                  </Box>
-                                </Grid>
-                              </Grid>
-                            </Fragment>
-                          }
-                          ae=""
-                        />
                       </Grid>
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <Grid container justifyContent="flex-end" className="w-full">
-                      <Grid item lg={4}>
-                        <Button
-                          fullWidth
-                          onClick={() => {
-                            setShareholdingIndividualModalOpen(false);
-                          }}
-                          color="primary"
+                      <RegionSwitch
+                        sa={
+                          <Fragment>
+                            <Grid item xs={12} lg={12} container className="mt-4">
+                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                                <Typography className="mt-4">
+                                  {t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Number`)}{" "}
+                                  <Required />
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                container
+                                alignContent="center"
+                                className="px-1"
+                              >
+                                <Field
+                                  fullWidth
+                                  component={TextField}
+                                  label={t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Number`)}
+                                  name="saudiIdNumber"
+                                  variant="filled"
+                                  type="text"
+                                />
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12} lg={12} container className="mt-4">
+                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                                <Typography className="mt-4">
+                                  {t(`kyc:Shareholders.Form Fields.Iqama/Saudi ID Expiry`)}{" "}
+                                  <Required />
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                container
+                                alignContent="center"
+                                className="px-1"
+                              >
+                                <Field
+                                  fullWidth
+                                  format="DD/MM/YYYY"
+                                  inputVariant="filled"
+                                  variant="dialog"
+                                  placeholder="DD/MM/YYYY"
+                                  minDate={moment()}
+                                  component={DatePicker}
+                                  name="saudiIdExpiry"
+                                  label={t("kyc:Shareholders.Form Fields.Iqama/Saudi ID Expiry")}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Fragment>
+                        }
+                        ae=""
+                      />
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Passport Number`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
                         >
-                          {t("Miscellaneous.Cancel")}
-                        </Button>
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Passport Number`)}
+                            name="passportNumber"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
                       </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Passport Expiry`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            format="DD/MM/YYYY"
+                            inputVariant="filled"
+                            variant="dialog"
+                            placeholder="DD/MM/YYYY"
+                            minDate={moment()}
+                            component={DatePicker}
+                            name="passportExpiry"
+                            label={t("kyc:Shareholders.Form Fields.Passport Expiry")}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Upload Passport Copy`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Box className="w-full">
+                            <FileUploadField
+                              // label="Bulletin Document"
+                              // isLoading={filesUploadInProgress}
+                              name="passportCopyFileName"
+                              fullWidth
+                              defaultFiles={
+                                values.passportCopyFileName
+                                  ? [{ file: { name: values.passportCopyFileName } }]
+                                  : null
+                              }
+                              downloadParameters={
+                                values.passportCopyFileName
+                                  ? {
+                                      signedURL: selectedRow?.passportCopyFileName.link,
+                                    }
+                                  : null
+                              }
+                              acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                              customHandleChange={(e) =>
+                                handleFileUpload({ files: e, keyName: "passportCopyFileName" })
+                              }
+                              dense
+                            />
+                            <ErrorMessage
+                              component={Typography}
+                              variant="caption"
+                              color="error"
+                              className="ml-4"
+                              name="passportCopyFileName"
+                            />
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Upload Proof of Address`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Box className="w-full">
+                            <FileUploadField
+                              // label="Bulletin Document"
+                              // isLoading={filesUploadInProgress}
+                              name="addressProofFileName"
+                              fullWidth
+                              defaultFiles={
+                                values.addressProofFileName
+                                  ? [{ file: { name: values.addressProofFileName } }]
+                                  : null
+                              }
+                              downloadParameters={
+                                values.addressProofFileName
+                                  ? {
+                                      signedURL: selectedRow?.addressProofFileName.link,
+                                    }
+                                  : null
+                              }
+                              acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                              customHandleChange={(e) =>
+                                handleFileUpload({ files: e, keyName: "addressProofFileName" })
+                              }
+                              dense
+                            />
+                            <ErrorMessage
+                              component={Typography}
+                              variant="caption"
+                              color="error"
+                              className="ml-4"
+                              name="addressProofFileName"
+                            />
+                          </Box>
+                        </Grid>
+                      </Grid>
+                      <RegionSwitch
+                        sa={
+                          <Fragment>
+                            <Grid item xs={12} lg={12} container className="mt-4">
+                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                                <Typography className="mt-4">
+                                  {t(`kyc:Shareholders.Form Fields.Upload Iqama/Saudi ID Copy`)}{" "}
+                                  <Required />
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                container
+                                alignContent="center"
+                                className="px-1"
+                              >
+                                <Box className="w-full">
+                                  <FileUploadField
+                                    // label="Bulletin Document"
+                                    // isLoading={filesUploadInProgress}
+                                    name="saudiIdFileName"
+                                    fullWidth
+                                    defaultFiles={
+                                      values.saudiIdFileName
+                                        ? [{ file: { name: values.saudiIdFileName } }]
+                                        : null
+                                    }
+                                    downloadParameters={
+                                      values.saudiIdFileName
+                                        ? {
+                                            signedURL: selectedRow?.saudiIdFileName.link,
+                                          }
+                                        : null
+                                    }
+                                    acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                                    customHandleChange={(e) =>
+                                      handleFileUpload({ files: e, keyName: "saudiIdFileName" })
+                                    }
+                                    dense
+                                  />
+                                  <ErrorMessage
+                                    component={Typography}
+                                    variant="caption"
+                                    color="error"
+                                    className="ml-4"
+                                    name="saudiIdFileName"
+                                  />
+                                </Box>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12} lg={12} container className="mt-4">
+                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                                <Typography className="mt-4">
+                                  {t(
+                                    `kyc:Shareholders.Form Fields.Upload Shareholder Proof from MoC`
+                                  )}{" "}
+                                  <Required />
+                                </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                lg={6}
+                                container
+                                alignContent="center"
+                                className="px-1"
+                              >
+                                <Box className="w-full">
+                                  <FileUploadField
+                                    // label="Bulletin Document"
+                                    // isLoading={filesUploadInProgress}
+                                    name="shareholderProofFileName"
+                                    fullWidth
+                                    defaultFiles={
+                                      values.shareholderProofFileName
+                                        ? [{ file: { name: values.shareholderProofFileName } }]
+                                        : null
+                                    }
+                                    downloadParameters={
+                                      values.shareholderProofFileName
+                                        ? {
+                                            signedURL: selectedRow?.shareholderProofFileName.link,
+                                          }
+                                        : null
+                                    }
+                                    acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                                    customHandleChange={(e) =>
+                                      handleFileUpload({
+                                        files: e,
+                                        keyName: "shareholderProofFileName",
+                                      })
+                                    }
+                                    dense
+                                  />
+                                  <ErrorMessage
+                                    component={Typography}
+                                    variant="caption"
+                                    color="error"
+                                    className="ml-4"
+                                    name="shareholderProofFileName"
+                                  />
+                                </Box>
+                              </Grid>
+                            </Grid>
+                          </Fragment>
+                        }
+                        ae=""
+                      />
                     </Grid>
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Grid container justifyContent="flex-end" className="w-full">
                     <Grid item lg={4}>
-                      <Button fullWidth type="submit" variant="contained" color="primary">
-                        {t("Miscellaneous.Save")}
+                      <Button
+                        fullWidth
+                        onClick={() => {
+                          setShareholdingIndividualModalOpen(false);
+                        }}
+                        color="primary"
+                      >
+                        {t("Miscellaneous.Cancel")}
                       </Button>
                     </Grid>
-                  </DialogActions>
-                </form>
-              )}
-            </Formik>
-          </MuiPickersUtilsProvider>
-        </Dialog>
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Button fullWidth type="submit" variant="contained" color="primary">
+                      {t("Miscellaneous.Save")}
+                    </Button>
+                  </Grid>
+                </DialogActions>
+              </form>
+            )}
+          </Formik>
+        </MuiPickersUtilsProvider>
+      </Dialog>
 
-        <Dialog
-          open={shareholdingEntityModalOpen}
-          onClose={() => {
-            setShareholdingEntityModalOpen(false);
-            setSelectedRow(null);
-          }}
-          scroll="body"
-          aria-labelledby="assign-role"
-          maxWidth="sm"
-          fullWidth
-        >
-          <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-            <Formik
-              initialValues={{
-                name: selectedRow?.name || "",
-                shareHoldingPercentage: selectedRow?.shareHoldingPercentage || "",
-                incorporationDate: selectedRow?.incorporationDate || null,
-                incorporationPlace: selectedRow?.incorporationPlace || "",
-                legalEntityIdentifier: selectedRow?.legalEntityIdentifier || "",
-                commercialRegNo: selectedRow?.commercialRegNo || "",
-                addressLine1: selectedRow?.addressLine1 || "",
-                addressLine2: selectedRow?.addressLine2 || "",
-                city: selectedRow?.city || "",
-                country: selectedRow?.country ? selectedCountry : null,
-                pinCode: selectedRow?.pinCode || "",
-                businessPhone: selectedRow?.businessPhone || "",
-              }}
-              validationSchema={kycSchema.shareholdingEntitySchema}
-              enableReinitialize
-              onSubmit={(values, { setSubmitting }) => {
-                const processedValues = { ...values, countryId: values.country.value };
-                delete processedValues?.country;
+      <Dialog
+        open={shareholdingEntityModalOpen}
+        onClose={() => {
+          setShareholdingEntityModalOpen(false);
+          setSelectedRow(null);
+        }}
+        scroll="body"
+        aria-labelledby="assign-role"
+        maxWidth="sm"
+        fullWidth
+      >
+        <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
+          <Formik
+            initialValues={{
+              name: selectedRow?.name || "",
+              shareHoldingPercentage: selectedRow?.shareHoldingPercentage || "",
+              incorporationDate: selectedRow?.incorporationDate || null,
+              incorporationPlace: selectedRow?.incorporationPlace || "",
+              legalEntityIdentifier: selectedRow?.legalEntityIdentifier || "",
+              commercialRegNo: selectedRow?.commercialRegNo || "",
+              addressLine1: selectedRow?.addressLine1 || "",
+              addressLine2: selectedRow?.addressLine2 || "",
+              city: selectedRow?.city || "",
+              country: selectedRow?.country ? selectedCountry : null,
+              pinCode: selectedRow?.pinCode || "",
+              businessPhone: selectedRow?.businessPhone || "",
+            }}
+            validationSchema={kycSchema.shareholdingEntitySchema}
+            enableReinitialize
+            onSubmit={(values, { setSubmitting }) => {
+              const processedValues = { ...values, countryId: values.country.value };
+              delete processedValues?.country;
 
-                let requestPayload;
-                if (isEdit) {
-                  const editObject = { ...processedValues, id: selectedRow?.id };
-                  requestPayload = { shareholdingEntities: [editObject] };
-                } else {
-                  requestPayload = { shareholdingEntities: [processedValues] };
-                }
+              let requestPayload;
+              if (isEdit) {
+                const editObject = { ...processedValues, id: selectedRow?.id };
+                requestPayload = { shareholdingEntities: [editObject] };
+              } else {
+                requestPayload = { shareholdingEntities: [processedValues] };
+              }
 
-                const payload = {
-                  entityId,
-                  requestPayload,
-                  successCallback: () => {
-                    setSubmitting(false);
-                    fetchPageData();
-                    setShareholdingEntityModalOpen(false);
-                    setSelectedRow(null);
-                  },
-                };
-                dispatch(kycActionCreators.doPostKYCData(payload));
-              }}
-            >
-              {({ handleSubmit, setFieldValue, values }) => (
-                <form onSubmit={handleSubmit} noValidate>
-                  <DialogTitle id="form-dialog-title">
-                    {selectedRow
-                      ? t("kyc:Shareholders.Form Fields.Edit Shareholding Entity")
-                      : t("kyc:Shareholders.Form Fields.Add Shareholding Entity")}
-                  </DialogTitle>
-                  <DialogContent>
-                    <Box mb={2}>
-                      <Grid container>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4"></Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              InputProps={{
-                                type: "number",
-                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                              }}
-                              component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)}
-                              name="shareHoldingPercentage"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
+              const payload = {
+                entityId,
+                requestPayload,
+                successCallback: () => {
+                  setSubmitting(false);
+                  fetchPageData();
+                  setShareholdingEntityModalOpen(false);
+                  setSelectedRow(null);
+                },
+              };
+              dispatch(kycActionCreators.doPostKYCData(payload));
+            }}
+          >
+            {({ handleSubmit, setFieldValue, values }) => (
+              <form onSubmit={handleSubmit} noValidate>
+                <DialogTitle id="form-dialog-title">
+                  {selectedRow
+                    ? t("kyc:Shareholders.Form Fields.Edit Shareholding Entity")
+                    : t("kyc:Shareholders.Form Fields.Add Shareholding Entity")}
+                </DialogTitle>
+                <DialogContent>
+                  <Box mb={2}>
+                    <Grid container>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4"></Typography>
                         </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Registered Name`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Registered Name`)}
-                              name="name"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Date of Incorporation`)} <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              format="DD/MM/YYYY"
-                              inputVariant="filled"
-                              variant="dialog"
-                              maxDate={moment()}
-                              placeholder="DD/MM/YYYY"
-                              component={DatePicker}
-                              name="incorporationDate"
-                              label={t("kyc:Shareholders.Form Fields.Date of Incorporation")}
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Place of Incorporation`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Place of Incorporation`)}
-                              name="incorporationPlace"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Legal Entity Identifier (LEI)`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(
-                                `kyc:Shareholders.Form Fields.Legal Entity Identifier (LEI)`
-                              )}
-                              name="legalEntityIdentifier"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-4">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Commercial License Number`)}{" "}
-                              <Required />
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Shareholders.Form Fields.Commercial License Number`)}
-                              name="commercialRegNo"
-                              variant="filled"
-                              type="text"
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} lg={12} container className="mt-8">
-                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                            <Typography className="mt-4">
-                              {t(`kyc:Shareholders.Form Fields.Registered Address`)} <Required />{" "}
-                            </Typography>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            container
-                            alignContent="center"
-                            className="px-1"
-                          >
-                            <div className="w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Address Line 1`)}
-                                name="addressLine1"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Address Line 2`)}
-                                name="addressLine2"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.City`)}
-                                name="city"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <FormControl className="w-full">
-                                <Select
-                                  closeMenuOnSelect
-                                  isSearchable
-                                  placeholder={`${t("kyc:Shareholders.Form Fields.Country")}`}
-                                  components={{
-                                    ...animatedComponents,
-                                  }}
-                                  styles={selectStyles}
-                                  value={values.country}
-                                  options={countries}
-                                  onChange={(selected) => {
-                                    setFieldValue("country", selected);
-                                  }}
-                                />
-                              </FormControl>
-                              <ErrorMessage
-                                component={Typography}
-                                variant="caption"
-                                color="error"
-                                className="ml-4"
-                                name="country"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Post Code`)}
-                                name="pinCode"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                            <div className="mt-4 w-full">
-                              <Field
-                                fullWidth
-                                component={TextField}
-                                label={t(`kyc:Shareholders.Form Fields.Telephone Number`)}
-                                name="businessPhone"
-                                variant="filled"
-                                type="text"
-                              />
-                            </div>
-                          </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            InputProps={{
+                              type: "number",
+                              endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                            }}
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Shareholding Percentage`)}
+                            name="shareHoldingPercentage"
+                            variant="filled"
+                            type="text"
+                          />
                         </Grid>
                       </Grid>
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <Grid container justifyContent="flex-end" className="w-full">
-                      <Grid item lg={4}>
-                        <Button
-                          fullWidth
-                          onClick={() => {
-                            setShareholdingEntityModalOpen(false);
-                            // handleClose();
-                            // resetForm();
-                          }}
-                          color="primary"
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Registered Name`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
                         >
-                          {t("Miscellaneous.Cancel")}
-                        </Button>
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Registered Name`)}
+                            name="name"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Date of Incorporation`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            format="DD/MM/YYYY"
+                            inputVariant="filled"
+                            variant="dialog"
+                            maxDate={moment()}
+                            placeholder="DD/MM/YYYY"
+                            component={DatePicker}
+                            name="incorporationDate"
+                            label={t("kyc:Shareholders.Form Fields.Date of Incorporation")}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Place of Incorporation`)} <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Place of Incorporation`)}
+                            name="incorporationPlace"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Legal Entity Identifier (LEI)`)}{" "}
+                            <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Legal Entity Identifier (LEI)`)}
+                            name="legalEntityIdentifier"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-4">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Commercial License Number`)}{" "}
+                            <Required />
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Shareholders.Form Fields.Commercial License Number`)}
+                            name="commercialRegNo"
+                            variant="filled"
+                            type="text"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} lg={12} container className="mt-8">
+                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                          <Typography className="mt-4">
+                            {t(`kyc:Shareholders.Form Fields.Registered Address`)} <Required />{" "}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={6}
+                          container
+                          alignContent="center"
+                          className="px-1"
+                        >
+                          <div className="w-full">
+                            <Field
+                              fullWidth
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.Address Line 1`)}
+                              name="addressLine1"
+                              variant="filled"
+                              type="text"
+                            />
+                          </div>
+                          <div className="mt-4 w-full">
+                            <Field
+                              fullWidth
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.Address Line 2`)}
+                              name="addressLine2"
+                              variant="filled"
+                              type="text"
+                            />
+                          </div>
+                          <div className="mt-4 w-full">
+                            <Field
+                              fullWidth
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.City`)}
+                              name="city"
+                              variant="filled"
+                              type="text"
+                            />
+                          </div>
+                          <div className="mt-4 w-full">
+                            <FormControl className="w-full">
+                              <Select
+                                closeMenuOnSelect
+                                isSearchable
+                                placeholder={`${t("kyc:Shareholders.Form Fields.Country")}`}
+                                components={{
+                                  ...animatedComponents,
+                                }}
+                                styles={selectStyles}
+                                value={values.country}
+                                options={countries}
+                                onChange={(selected) => {
+                                  setFieldValue("country", selected);
+                                }}
+                              />
+                            </FormControl>
+                            <ErrorMessage
+                              component={Typography}
+                              variant="caption"
+                              color="error"
+                              className="ml-4"
+                              name="country"
+                            />
+                          </div>
+                          <div className="mt-4 w-full">
+                            <Field
+                              fullWidth
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.Post Code`)}
+                              name="pinCode"
+                              variant="filled"
+                              type="text"
+                            />
+                          </div>
+                          <div className="mt-4 w-full">
+                            <Field
+                              fullWidth
+                              component={TextField}
+                              label={t(`kyc:Shareholders.Form Fields.Telephone Number`)}
+                              name="businessPhone"
+                              variant="filled"
+                              type="text"
+                            />
+                          </div>
+                        </Grid>
                       </Grid>
                     </Grid>
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Grid container justifyContent="flex-end" className="w-full">
                     <Grid item lg={4}>
-                      <Button fullWidth type="submit" variant="contained" color="primary">
-                        {t("Miscellaneous.Save")}
+                      <Button
+                        fullWidth
+                        onClick={() => {
+                          setShareholdingEntityModalOpen(false);
+                          // handleClose();
+                          // resetForm();
+                        }}
+                        color="primary"
+                      >
+                        {t("Miscellaneous.Cancel")}
                       </Button>
                     </Grid>
-                  </DialogActions>
-                </form>
-              )}
-            </Formik>
-          </MuiPickersUtilsProvider>
-        </Dialog>
-        <Dialog
-          open={deleteShareholderModalOpen}
-          onClose={() => setDeleteShareholderModalOpen(false)}
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogTitle id="alert-dialog-title">
-            {t("kyc:Shareholders.Form Fields.Delete Shareholder?")}
-          </DialogTitle>
-          <DialogContent dir={locale.rtl ? "rtl" : "ltr"}>
-            <DialogContentText id="alert-dialog-description">
-              {t(
-                "kyc:Shareholders.Form Fields.This action is non reversible! It will permanently delete the shareholder"
-              )}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setDeleteShareholderModalOpen(false);
-              }}
-              color="primary"
-            >
-              {t("Miscellaneous.Cancel")}
-            </Button>
-            <Button onClick={deleteShareholder} variant="contained" color="primary">
-              {t("Miscellaneous.Yes, Delete it")}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </MuiPickersUtilsProvider>
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Button fullWidth type="submit" variant="contained" color="primary">
+                      {t("Miscellaneous.Save")}
+                    </Button>
+                  </Grid>
+                </DialogActions>
+              </form>
+            )}
+          </Formik>
+        </MuiPickersUtilsProvider>
+      </Dialog>
+      <Dialog
+        open={deleteShareholderModalOpen}
+        onClose={() => setDeleteShareholderModalOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle id="alert-dialog-title">
+          {t("kyc:Shareholders.Form Fields.Delete Shareholder?")}
+        </DialogTitle>
+        <DialogContent dir={locale.rtl ? "rtl" : "ltr"}>
+          <DialogContentText id="alert-dialog-description">
+            {t(
+              "kyc:Shareholders.Form Fields.This action is non reversible! It will permanently delete the shareholder"
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setDeleteShareholderModalOpen(false);
+            }}
+            color="primary"
+          >
+            {t("Miscellaneous.Cancel")}
+          </Button>
+          <Button onClick={deleteShareholder} variant="contained" color="primary">
+            {t("Miscellaneous.Yes, Delete it")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   );
 };
