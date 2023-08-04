@@ -1,5 +1,5 @@
 import { dashboardApi } from "../../services/APIService";
-import { INewUser } from "./InvitedUsersTable/IvitedUsersTable.types";
+import { INewUser } from "./InvitedUsersTable/InvitedUsersTable.types";
 
 
 export const getOnboardedUsers = async (): Promise<INewUser[]> => {

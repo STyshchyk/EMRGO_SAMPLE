@@ -1,2 +1,2 @@
-export { IvitedUsersTable } from "./IvitedUsersTable";
-export type { IIvitedUsersTableProps } from "./IvitedUsersTable.types";
+export { InvitedUsersTable } from "./InvitedUsersTable";
+export type { IInvitedUsersTableProps } from "./InvitedUsersTable.types";

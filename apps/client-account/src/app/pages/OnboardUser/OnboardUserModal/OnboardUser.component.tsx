@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { onboardUser } from "../EntityManagement.service";
-import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
+import { INewUser } from "../InvitedUsersTable/InvitedUsersTable.types";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
 import { TwoCol } from "./OnboardUser.styles";
@@ -15,11 +15,11 @@ const initialValues: INewUser = {
   email: "",
   lastName: "",
   role: "",
-  middleName: "",
+  // middleName: "",
   firstName: ""
 };
 
-export const OnboardUserComponent = ({}: IOnboardedUser) => {
+export const OnboardUserComponent = () => {
   const { showErrorToast, showSuccessToast } = useToast();
   const queryClient = useQueryClient();
   const { mutate: doPostUser } = useMutation({
@@ -53,24 +53,13 @@ export const OnboardUserComponent = ({}: IOnboardedUser) => {
               />
             </TwoCol>
             <TwoCol>
-              <label htmlFor="middleName">Middle name</label>
-              <Field
-                id="middleName"
-                component={FormikInputCustom}
-                name="middleName"
-                type={"input"}
-                label={"Enter Second Name"}
-                placeholder="Enter your email"
-              />
-            </TwoCol>
-            <TwoCol>
-              <label htmlFor="lastName">Second name</label>
+              <label htmlFor="lastName">Last name</label>
               <Field
                 id="lastName"
                 component={FormikInputCustom}
                 name="lastName"
                 type={"input"}
-                label={"Enter Second Name"}
+                label={"Enter Last Name"}
                 placeholder="Enter your email"
               />
             </TwoCol>

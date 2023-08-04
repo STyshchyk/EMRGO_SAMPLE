@@ -24,7 +24,7 @@ import { useEntityManagementContext } from "./EntityManagement.provider";
 import { getOnboardedUsers } from "./EntityManagement.service";
 import * as Styles from "./EntityManagement.styles";
 import { IEntityManagementProps } from "./EntityManagement.types";
-import { IvitedUsersTable } from "./InvitedUsersTable";
+import { InvitedUsersTable } from "./InvitedUsersTable";
 import { OnboardUserModal } from "./OnboardUserModal";
 
 const enitityIdDetails = [
@@ -134,7 +134,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
 
           <PanelContent>
             <SubHeading>List of users part of Elefant Capital on the EMRGO platform</SubHeading>
-            {data && <IvitedUsersTable users={data} />}
+            {data && <InvitedUsersTable users={data} />}
           </PanelContent>
         </Panel>
         <Modal

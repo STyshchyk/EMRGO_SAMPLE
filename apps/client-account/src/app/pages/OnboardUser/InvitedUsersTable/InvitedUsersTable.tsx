@@ -5,11 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { setStatus } from "../EntityManagement.service";
-import { IIvitedUsersTableProps, INewUser } from "./IvitedUsersTable.types";
+import { IInvitedUsersTableProps, INewUser } from "./InvitedUsersTable.types";
 
 const columnHelper = createColumnHelper<INewUser>();
 
-export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
+export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
   const { showErrorToast, showSuccessToast } = useToast();
 
   const { mutate: doSetStatus } = useMutation({
@@ -23,10 +23,7 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
       header: "First Name"
     }),
     columnHelper.accessor("lastName", {
-      header: "Second name"
-    }),
-    columnHelper.accessor("middleName", {
-      header: "Middle name"
+      header: "Last name"
     }),
     columnHelper.accessor("email", {
       header: "Email ID"
@@ -48,21 +45,22 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
               <TooltipButtonBox>
                 <TooltipButtonActions
                   $disabled={true}
-                  onClick={() => {
-                    doSetStatus({ id: id, status: "inactive" });
-                  }}
+                  onClick={() => console.log('click')}
                 >
-                  Deactivate User
+                  Resend Invitation
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  onClick={() => {
-                    doSetStatus({ id: id, status: "active" });
-                  }}
+                  onClick={() => console.log('click')}
                 >
-                  Reactivate User
+                  Cancel Invitation
                 </TooltipButtonActions>
-
+                <TooltipButtonActions
+                  onClick={() => console.log('click')}
+                >
+                  Archive User
+                </TooltipButtonActions>
               </TooltipButtonBox>
+              
             }
           />
         );

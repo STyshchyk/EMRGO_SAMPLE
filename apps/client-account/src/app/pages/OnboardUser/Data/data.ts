@@ -1,4 +1,4 @@
-import { INewUser } from "../InvitedUsersTable/IvitedUsersTable.types";
+import { INewUser } from "../InvitedUsersTable/InvitedUsersTable.types";
 
 export const onboarderUsers: INewUser[] = [{
   "id": "0",

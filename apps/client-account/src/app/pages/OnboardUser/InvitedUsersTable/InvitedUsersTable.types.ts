@@ -1,6 +1,6 @@
 
 
-export interface IIvitedUsersTableProps {
+export interface IInvitedUsersTableProps {
   users: INewUser[];
 }
 export interface INewUser {
