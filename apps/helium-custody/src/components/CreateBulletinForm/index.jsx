@@ -80,7 +80,7 @@ const CreateBulletinForm = ({
                 <DialogContentText>
                   {t("New Bulletin Modal.Bulletin Information")}
                 </DialogContentText>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Field
                     component={TextField}
                     label={t("New Bulletin Modal.Bulletin Title")}
@@ -89,7 +89,7 @@ const CreateBulletinForm = ({
                     fullWidth
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Datepicker
                     label={t("New Bulletin Modal.Bulletin Date")}
                     name="itemDate"
@@ -97,7 +97,7 @@ const CreateBulletinForm = ({
                     fullWidth
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <FormControl className={style.input__form_control}>
                     <Select
                       closeMenuOnSelect

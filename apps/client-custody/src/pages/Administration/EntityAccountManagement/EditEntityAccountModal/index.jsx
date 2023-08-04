@@ -58,7 +58,7 @@ const EditEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, account
             </DialogTitle>
             <DialogContent>
               <Box mb={2}>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Field
                     component={TextField}
                     label={t("EntityAccountManagement.IBAN Number")}
@@ -67,7 +67,7 @@ const EditEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, account
                     fullWidth
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Field
                     component={TextField}
                     label={t("EntityAccountManagement.External Account")}
@@ -76,7 +76,7 @@ const EditEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, account
                     fullWidth
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <FormControl className={style.input__form_control}>
                     <Checkbox
                       name="isVirtualIBAN"

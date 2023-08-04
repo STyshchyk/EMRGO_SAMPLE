@@ -60,7 +60,7 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
         </Grid>
       )}
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField

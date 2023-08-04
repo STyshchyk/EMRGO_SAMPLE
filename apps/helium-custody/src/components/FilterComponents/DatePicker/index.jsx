@@ -41,7 +41,7 @@ const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
         </Grid>
       </Grid>
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
           <DatePicker
             fullWidth
             format="DD/MM/YYYY"

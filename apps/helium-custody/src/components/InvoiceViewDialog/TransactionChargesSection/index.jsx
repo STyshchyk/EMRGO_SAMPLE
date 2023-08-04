@@ -190,7 +190,7 @@ const TransactionChargesSection = ({
         }}
         options={{
           // search: false,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           actionsColumnIndex: -1,
         }}
         data={localTransactionCharges}

@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import { Box } from "@mui/material";
+
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
 import routes from "../../constants/routes";
@@ -58,24 +60,26 @@ const Reports = () => {
   return (
     <Fragment>
       <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-      <Routes>
-        <Route exact path="" element={<Navigate to={firstAccessibleRoutePath} />}></Route>
+      <Box sx={{ px: "2rem", py: "2rem" }}>
+        <Routes>
+          <Route exact path="" element={<Navigate to={firstAccessibleRoutePath} />}></Route>
 
-        <Route exact path="securities/holdings" element={<NewSecHoldingsReportPage />}></Route>
-        <Route
-          path="securities/transactions"
-          element={<SecuritiesTransactionsReportPage />}
-        ></Route>
-        <Route path="cash/balances" element={<CashBalancesReportPage />}></Route>
-        <Route path="cash/statement" element={<CashStatementReportPage />}></Route>
-        <Route path="securities/reference-data" element={<ReferenceDataReportPage />}></Route>
+          <Route exact path="securities/holdings" element={<NewSecHoldingsReportPage />}></Route>
+          <Route
+            path="securities/transactions"
+            element={<SecuritiesTransactionsReportPage />}
+          ></Route>
+          <Route path="cash/balances" element={<CashBalancesReportPage />}></Route>
+          <Route path="cash/statement" element={<CashStatementReportPage />}></Route>
+          <Route path="securities/reference-data" element={<ReferenceDataReportPage />}></Route>
 
-        {/*
+          {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />
           </Route>
             */}
-      </Routes>
+        </Routes>
+      </Box>
     </Fragment>
   );
 };

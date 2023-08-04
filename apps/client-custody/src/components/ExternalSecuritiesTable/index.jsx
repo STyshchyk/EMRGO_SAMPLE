@@ -121,7 +121,7 @@ const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) =
           </ButtonBase>
         </Grid>
 
-        <Box my={1} className="full-width">
+        <Box my={1} className="w-full">
           <Select
             fullWidth
             closeMenuOnSelect
@@ -153,7 +153,7 @@ const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) =
           </ButtonBase>
         </Grid>
 
-        <Box my={1} className="full-width">
+        <Box my={1} className="w-full">
           <Select
             fullWidth
             closeMenuOnSelect

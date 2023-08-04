@@ -567,7 +567,7 @@ const VisitorsTable = ({
                               </Typography>
                             </ButtonBase>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <FormControl className="w-full">
                               <Select
                                 closeMenuOnSelect
@@ -613,7 +613,7 @@ const VisitorsTable = ({
                               </Typography>
                             </ButtonBase>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <FormControl className="w-full">
                               <Select
                                 closeMenuOnSelect
@@ -659,7 +659,7 @@ const VisitorsTable = ({
                               </Typography>
                             </ButtonBase>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <FormControl className="w-full">
                               <Select
                                 closeMenuOnSelect
@@ -705,7 +705,7 @@ const VisitorsTable = ({
                               </Typography>
                             </ButtonBase>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <FormControl className="w-full">
                               <Select
                                 closeMenuOnSelect
@@ -751,7 +751,7 @@ const VisitorsTable = ({
                               </Typography>
                             </ButtonBase>
                           </Grid>
-                          <Box my={1} className="full-width">
+                          <Box my={1} className="w-full">
                             <FormControl className="w-full">
                               <Select
                                 closeMenuOnSelect

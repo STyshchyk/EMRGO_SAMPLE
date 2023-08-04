@@ -145,7 +145,7 @@ const AssignAccountModal = ({
               </DialogTitle>
               <DialogContent>
                 <Box mb={2}>
-                  <Box my={1} className="full-width">
+                  <Box my={1} className="w-full">
                     <FormControl className={style.input__form_control}>
                       <Select
                         closeMenuOnSelect
@@ -163,7 +163,7 @@ const AssignAccountModal = ({
                     </FormControl>
                   </Box>
 
-                  <Box my={1} className="full-width">
+                  <Box my={1} className="w-full">
                     <FormControl className={style.input__form_control}>
                       <Select
                         components={{ Option: ReactSelectCurrencyOption }}

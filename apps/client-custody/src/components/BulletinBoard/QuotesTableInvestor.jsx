@@ -142,7 +142,7 @@ const QuotesTable = ({ data }) => {
         data={data}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 5,
           actionsColumnIndex: -1,
           tableLayout: "fixed",

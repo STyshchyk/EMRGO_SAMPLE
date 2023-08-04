@@ -25,6 +25,8 @@ import * as wethaqAPIService from "../services/wethaqAPIService";
 import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
 import useIsProduction from "../utils/useIsProduction";
 
+import "./app.styles.css";
+
 const { store, persistor } = configureStore();
 
 const region = appConfig.appRegion;

@@ -1,23 +1,20 @@
-const selectStyles = (isDarkMode) => {
+export const selectStyles = (isDarkMode: boolean) => {
   return {
-    menu: (styles) => ({
+    menu: (styles: any) => ({
       ...styles,
       zIndex: 10,
     }),
-    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-    control: (styles) => ({
+    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
+    control: (styles: any) => ({
       ...styles,
       border: "none",
       borderRadius: "6px",
       backgroundColor: "rgba(0, 0, 0, 0.09)",
-      height: "3rem",
-      padding: "0.1rem 0.30rem",
+      height: "2.5rem",
     }),
-    singleValue: (styles, state) => ({
+    singleValue: (styles: any, state: any) => ({
       ...styles,
       color: state.isDisabled ? "rgba(0, 0, 0, 0.38)" : "#23389c",
     }),
   };
 };
-
-export default selectStyles;

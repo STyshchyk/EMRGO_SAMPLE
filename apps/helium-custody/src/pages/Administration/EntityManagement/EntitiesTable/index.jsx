@@ -484,7 +484,7 @@ const EntitiesTable = ({ tableData }) => {
         )}
         options={{
           ...tableStyles,
-          searchFieldVariant: "filled",
+          searchFieldVariant: "outlined",
           pageSize: 20,
           actionsColumnIndex: -1,
         }}

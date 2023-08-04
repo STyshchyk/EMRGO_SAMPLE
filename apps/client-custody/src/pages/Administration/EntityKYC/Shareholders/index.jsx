@@ -649,7 +649,7 @@ const Shareholders = () => {
                       data={shareholders}
                       options={{
                         ...tableStyles,
-                        searchFieldVariant: "filled",
+                        searchFieldVariant: "outlined",
                         pageSize: 5,
                         actionsColumnIndex: -1,
                         tableLayout: "fixed",

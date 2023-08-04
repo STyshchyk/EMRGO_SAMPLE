@@ -248,7 +248,7 @@ const KYCEntitiesList = () => {
           data={entities.map((entity) => createEntitiesTableData(entity, t))}
           options={{
             ...tableStyles,
-            searchFieldVariant: "filled",
+            searchFieldVariant: "outlined",
             pageSize: 5,
             actionsColumnIndex: -1,
             tableLayout: "fixed",

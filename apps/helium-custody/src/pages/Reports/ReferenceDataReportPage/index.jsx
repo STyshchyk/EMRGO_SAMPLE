@@ -309,7 +309,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="full-width">
+          <Box my={1} className="w-full">
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect
@@ -337,7 +337,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="full-width">
+          <Box my={1} className="w-full">
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect
@@ -366,7 +366,7 @@ const ReferenceDataReportPage = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Box my={1} className="full-width">
+            <Box my={1} className="w-full">
               <Grid container spacing={2} alignItems="center">
                 {isWethaqAdmin && (
                   <Grid item>

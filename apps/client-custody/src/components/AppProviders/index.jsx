@@ -16,7 +16,7 @@ import { UserProvider } from "../../context/user-context";
 import i18n from "../../i18n";
 
 const AppProviders = ({ children }) => {
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode(false);
 
   return (
     <I18nextProvider i18n={i18n}>

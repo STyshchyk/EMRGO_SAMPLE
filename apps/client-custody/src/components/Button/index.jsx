@@ -16,9 +16,9 @@ const StyledMuiButton = styled(MuiButton)({
   [`&.${classes.root}`]: {
     textTransform: "none",
     fontWeight: "bold",
-    "&:disabled": {
-      color: "black",
-    },
+    // "&:disabled": {
+    //   color: "black",
+    // },
   },
 });
 

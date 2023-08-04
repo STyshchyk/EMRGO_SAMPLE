@@ -117,7 +117,7 @@ const TableFiltersWrapper = ({
                 variant="outlined"
                 onClick={openManageColumnsDialog}
                 startIcon={<ViewColumnIcon />}
-                color="secondary"
+                color="primary"
                 size="large"
                 fullWidth
               >
@@ -125,7 +125,7 @@ const TableFiltersWrapper = ({
               </Button>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={3}>
+            <Grid item xs={12} sm={12} md={12} lg={3} container>
               <TableSearch
                 name="search"
                 tableRef={tableRef}

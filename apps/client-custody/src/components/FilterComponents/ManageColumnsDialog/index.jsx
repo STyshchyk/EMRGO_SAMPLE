@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 
+import { DraggableColumnItem, DraggableColumnWrapper } from "@emrgo-frontend/shared-ui";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SwapHorizontalCircleIcon from "@mui/icons-material/SwapHorizontalCircle";
@@ -159,10 +160,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
               </Grid>
               <Droppable droppableId="hidden">
                 {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    className={cx(style.columnManager__list, getListStyle(snapshot.isDraggingOver))}
-                  >
+                  <DraggableColumnWrapper ref={provided.innerRef} snapshot={snapshot}>
                     {currentHiddenColumns
                       //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
                       .map((item, index) => (
@@ -172,24 +170,21 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                           index={index}
                         >
                           {(currentProvided, currentSnapshot) => (
-                            <div
+                            <DraggableColumnItem
                               ref={currentProvided.innerRef}
+                              snapshot={currentSnapshot}
+                              isDisplayed={false}
                               {...currentProvided.draggableProps}
                               {...currentProvided.dragHandleProps}
                               style={{ ...currentProvided.draggableProps.style }}
-                              className={cx(
-                                style.columnManager__column,
-                                style["columnManager__column--hidden"],
-                                getItemStyle(currentSnapshot.isDragging)
-                              )}
                             >
                               {item.title}
-                            </div>
+                            </DraggableColumnItem>
                           )}
                         </Draggable>
                       ))}
                     {provided.placeholder}
-                  </div>
+                  </DraggableColumnWrapper>
                 )}
               </Droppable>
             </Grid>
@@ -243,10 +238,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
               </Grid>
               <Droppable droppableId="shown">
                 {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    className={cx(style.columnManager__list, getListStyle(snapshot.isDraggingOver))}
-                  >
+                  <DraggableColumnWrapper ref={provided.innerRef} snapshot={snapshot}>
                     {currentShownColumns
                       //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
                       .map((item, index) => (
@@ -256,24 +248,21 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                           index={index}
                         >
                           {(currentProvided, currentSnapshot) => (
-                            <div
+                            <DraggableColumnItem
                               ref={currentProvided.innerRef}
+                              snapshot={currentSnapshot}
+                              isDisplayed={true}
                               {...currentProvided.draggableProps}
                               {...currentProvided.dragHandleProps}
                               style={{ ...currentProvided.draggableProps.style }}
-                              className={cx(
-                                style.columnManager__column,
-                                style["columnManager__column--shown"],
-                                getItemStyle(currentSnapshot.isDragging)
-                              )}
                             >
                               {item.title}
-                            </div>
+                            </DraggableColumnItem>
                           )}
                         </Draggable>
                       ))}
                     {provided.placeholder}
-                  </div>
+                  </DraggableColumnWrapper>
                 )}
               </Droppable>
             </Grid>
@@ -281,7 +270,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
         </DragDropContext>
       </DialogContent>
       <DialogActions>
-        <Grid container justifyContent="space-between" className="px-4 py-2">
+        <Grid container justifyContent="space-between" className="px-8 py-2">
           <Grid item>
             <Button
               onClick={() => handleResetConfirmClick()}

@@ -79,7 +79,7 @@ const UpdateBulletinForm = ({
                 <DialogContentText>
                   {t("Update Bulletin Modal.Bulletin Information")}
                 </DialogContentText>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Field
                     component={TextField}
                     label={t("Update Bulletin Modal.Bulletin Title")}
@@ -88,7 +88,7 @@ const UpdateBulletinForm = ({
                     fullWidth
                   />
                 </Box>
-                <Box my={1} className="full-width">
+                <Box my={1} className="w-full">
                   <Datepicker
                     label={t("Update Bulletin Modal.Bulletin Date")}
                     name="itemDate"

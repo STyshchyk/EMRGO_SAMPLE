@@ -30,7 +30,7 @@ const ReportingButtons = ({ handleClear, handleFilter, disableApplyBtn, data }) 
         </Typography>
       </Grid>
 
-      <Box my={1} className="full-width">
+      <Box my={1} className="w-full">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={6} lg={6} container alignContent="center">
             <Button
