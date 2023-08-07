@@ -11,7 +11,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=nginx_reverse_proxy_network"
+      - "traefik.docker.network=traefik_reverse_proxy_network"
 
       - "traefik.http.routers.whoami-secured.entrypoints=websecure"
       - "traefik.http.routers.whoami-secured.rule=Host(`${APP_SUBDOMAIN}.${CI_ACME_DOMAIN_NAME}`)"
@@ -19,6 +19,7 @@ services:
 
     security_opt:
       - "no-new-privileges:true"
+
 networks:
   nginx_reverse_proxy_network:
     external: true
