@@ -101,7 +101,7 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
   };
 
   const onRejectClientTerms = () => {
-    doLogoutUser(null, {
+    doLogoutUser(undefined, {
       onSuccess: () => {
         updateUser(null);
         navigateModule("authentication", constants.clientAuthenticationRoutes.login);
@@ -116,11 +116,7 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
   const state: IPrimariesWrapperContext = {
     numberOfNewTradeOpportunities: 1,
     numberOfNotifications: 1,
-
     user,
-
-    onAcceptPlatformTerms,
-    onRejectPlatformTerms,
     onAcceptClientTerms,
     onRejectClientTerms,
 

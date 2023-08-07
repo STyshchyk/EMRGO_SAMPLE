@@ -5,7 +5,7 @@ import {
   clientCustodyRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
-  getAllRoutes,
+  getAllRoutes
 } from "@emrgo-frontend/constants";
 import {
   AccountIcon,
@@ -24,53 +24,61 @@ import {
   SidebarListItemContent,
   SidebarListItemIcon,
   SidebarListItemLink,
-  SidebarListItemSecondaryLink,
-  ThemeSwitcher,
+  SidebarListItemSecondaryLink, TermsModal,
+  ThemeSwitcher
 } from "@emrgo-frontend/shared-ui";
 import {
   buildModuleURL,
   ensureNotNull,
   navigateModule,
-  useClientMatchedPathSidebar,
+  useClientMatchedPathSidebar
 } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
+import { useEffect } from "react";
 
 export const DashboardSidebar = () => {
   const { isDarkMode, toggle } = useDarkMode();
-  const { numberOfNotifications } = ensureNotNull(useDashboardWrapperContext());
-
+  const {
+    numberOfNotifications,
+    onAcceptPlatformTerms,
+    onRejectPlatformTerms,
+    user,
+    showTermsModal,
+    termsDocumentURL
+  } = ensureNotNull(useDashboardWrapperContext());
+  const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
   const mainRoutes = [
     {
       label: "Primaries",
       icon: <PrimariesIcon />,
       key: "primaries",
       path: clientPrimariesRoutes.home,
-      paths: getAllRoutes(clientPrimariesRoutes),
+      paths: getAllRoutes(clientPrimariesRoutes)
     },
     {
       label: "Secondaries",
       icon: <SecondariesIcon />,
       key: "secondaries",
       path: clientSecondariesRoutes.home,
-      paths: getAllRoutes(clientSecondariesRoutes),
+      paths: getAllRoutes(clientSecondariesRoutes)
     },
     {
       label: "Custody",
       icon: <CustodyIcon />,
       key: "custody",
       path: clientCustodyRoutes.home,
-      paths: getAllRoutes(clientCustodyRoutes),
+      paths: getAllRoutes(clientCustodyRoutes)
     },
     {
       label: "Research",
       icon: <ResearchIcon />,
       key: "research",
       path: clientSecondariesRoutes.home,
-      paths: [""],
-    },
+      paths: [""]
+    }
   ];
 
   const navigateToModule = (module: string, path: string) => {
@@ -78,9 +86,10 @@ export const DashboardSidebar = () => {
   };
 
   const allAccountRoutes = getAllRoutes(clientAccountRoutes);
-
   return (
     <Styles.DashboardSidebar>
+
+
       <SidebarHeader>
         <Link to="/">
           <Logo />
@@ -145,6 +154,17 @@ export const DashboardSidebar = () => {
           </SidebarListItem>
         </SidebarList>
       </SidebarFooter>
+
+      <TermsModal
+        title="Platform Terms"
+        subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
+        documentURL={termsDocumentURL}
+        isOpen={showTermsModal === "tnc"}
+        onAccept={onAcceptPlatformTerms}
+        onReject={onRejectPlatformTerms}
+        hasAccepted={hasAcceptedPlatformTerms}
+        type={showTermsModal}
+      />
     </Styles.DashboardSidebar>
   );
 };

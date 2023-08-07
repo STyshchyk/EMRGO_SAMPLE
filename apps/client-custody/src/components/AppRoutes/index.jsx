@@ -25,7 +25,6 @@ const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
 
 // const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
 //   const { data } = useAuth();
-  
 //   if (!data?.isAuthenticated){
 //     navigateModule("authentication",clientAuthenticationRoutes.home)
 //   }
@@ -118,6 +117,8 @@ const MainRoutes = () => {
 
 const AppRoutes = () => {
   const { t } = useTranslation(["translation"]);
+  const navigate = useNavigate();
+
   return (
     <RouterMappingProvider>
       <Suspense fallback={<h1>{t("translation:Miscellaneous.Loading Page")}</h1>}>

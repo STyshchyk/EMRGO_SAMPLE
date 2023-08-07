@@ -10,8 +10,7 @@ export interface IPrimariesWrapperContext {
 
   user: IUser | null;
 
-  onAcceptPlatformTerms: () => void;
-  onRejectPlatformTerms: () => void;
+
   onAcceptClientTerms: () => void;
   onRejectClientTerms: () => void;
 

@@ -12,15 +12,14 @@ import { IPrimariesWrapperProps } from "./PrimariesWrapper.types";
 export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children }) => {
   const {
     user,
-    onAcceptPlatformTerms,
-    onRejectPlatformTerms,
+
     onAcceptClientTerms,
     onRejectClientTerms,
     showTermsModal,
     termsDocumentURL,
   } = ensureNotNull(usePrimariesWrapperContext());
 
-  const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
+
   const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
   const primariesTabs = [
@@ -58,16 +57,7 @@ export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children
       </Tabs>
 
       {children}
-      <TermsModal
-        title="Platform Terms"
-        subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
-        documentURL={termsDocumentURL}
-        isOpen={showTermsModal === "tnc"}
-        onAccept={onAcceptPlatformTerms}
-        onReject={onRejectPlatformTerms}
-        hasAccepted={hasAcceptedPlatformTerms}
-        type={showTermsModal}
-      />
+
 
       <TermsModal
         title="Client Terms"
