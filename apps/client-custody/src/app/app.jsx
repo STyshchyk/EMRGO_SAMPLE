@@ -24,6 +24,8 @@ import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
 import "./app.styles.css";
 
 import "./app.styles.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const { store, persistor } = configureStore();
 
@@ -45,7 +47,7 @@ baseAxiosInstance.interceptors.request.use((config) => {
 //       const {
 //         auth: { authenticatedUserObject },
 //       } = store.getState();
-  
+
 //       updateUser(authenticatedUserObject)
 //       // store.set("user", authenticatedUserObject);
 //     },
@@ -79,12 +81,25 @@ export const App = () => (
     <AccessDeniedDialog />
   </>
 );
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+      retry: 3,
+      staleTime: 5 * 1000
+    }
+  }
+});
 const ConnectedApp = () => (
   <ReduxProvider>
-    <AppProviders>
-      <App />
-    </AppProviders>
+    <QueryClientProvider client={queryClient}>
+      <AppProviders>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AppProviders>
+    </QueryClientProvider>
   </ReduxProvider>
 );
 

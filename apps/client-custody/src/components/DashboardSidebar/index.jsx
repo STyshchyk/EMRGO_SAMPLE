@@ -24,7 +24,6 @@ import { useTheme } from "../../context/theme-context";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import useIsProduction from "../../utils/useIsProduction";
-import TermsModal from "../TermsModal/TermsModal";
 import HelpDeskDialog from "./HelpDeskDialog";
 import style from "./style.module.scss";
 
@@ -225,7 +224,6 @@ const DashboardSidebar = ({ open }) => {
   const { t } = useTranslation();
   const [openHelpDeskDialog, setOpenHelpDeskDialog] = useState(false);
   const inProd = useIsProduction();
-  const [isTermsModalOpen, setTermsModalOpen] = useState(true);
   // selectors
   const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
 
@@ -319,22 +317,6 @@ const DashboardSidebar = ({ open }) => {
         </Grid>
       </Drawer>
       <HelpDeskDialog open={openHelpDeskDialog} handleClose={handleClose} />
-      <TermsModal
-        title="Platform Terms"
-        subtitle={"Please accept our platform terms to proceed."}
-        documentURL={""}
-        isOpen={isTermsModalOpen}
-        onAccept={() => {
-          setTermsModalOpen(false);
-        }}
-        onReject={() => {
-          setTermsModalOpen(false);
-        }}
-        hasAccepted={() => {
-          setTermsModalOpen(false);
-        }}
-        type={"asda"}
-      />
     </Fragment>
   );
 };
