@@ -31,7 +31,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doLogoutUser } = useMutation(logoutUser);
   const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
   const { mutate: doAcceptPlatformTerms } = useMutation(acceptPlatformTerms);
-  const [showTermsModal, setShowTermsModal] = useState("tnc");
+  const [showTermsModal, setShowTermsModal] = useState("");
   const [termsDocumentURL, setTermsDocumentURL] = useState("");
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
