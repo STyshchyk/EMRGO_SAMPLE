@@ -118,9 +118,7 @@ const MainRoutes = () => {
 const AppRoutes = () => {
   const { t } = useTranslation(["translation"]);
   const navigate = useNavigate();
-  useEffect(() => {
-    navigate(routes.dashboard.custody.onboarding.home);
-  }, []);
+
   return (
     <RouterMappingProvider>
       <Suspense fallback={<h1>{t("translation:Miscellaneous.Loading Page")}</h1>}>
