@@ -2,13 +2,25 @@
 services:
   $TARGET_APP_NAME: # TO BE REPLACED WITH THE NAME OF THE SERVICE
     image: $DOCKER_REGISTRY_IMAGE:$DOCKER_IMMUTABLE_IMAGE_TAG
-    restart: always
+    restart: "unless-stopped"
     healthcheck:
       test: "curl -f http://localhost/healthcheck || exit 1"
     networks:
       - nginx_reverse_proxy_network
+      - traefik_reverse_proxy_network
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=nginx_reverse_proxy_network"
+
+      - "traefik.http.routers.whoami-secured.entrypoints=websecure"
+      - "traefik.http.routers.whoami-secured.rule=Host(`${APP_SUBDOMAIN}.${CI_ACME_DOMAIN_NAME}`)"
+      - "traefik.http.routers.whoami-secured.tls.certresolver=lets-encrypt"
+
     security_opt:
       - "no-new-privileges:true"
 networks:
   nginx_reverse_proxy_network:
+    external: true
+  traefik_reverse_proxy_network:
     external: true

@@ -1,6 +1,7 @@
 .build_and_deploy_config:
   before_script:
     - echo $TARGET_APP_NAME
+    - echo $APP_SUBDOMAIN
     # !INSTALL ALPINE LINUX DEPENDENCIES
     - apk update && apk upgrade
     - apk --no-cache add curl bash openssh-client
@@ -42,6 +43,7 @@
     - docker compose -f docker-compose.${TARGET_APP_NAME}.yml config > docker-compose.${TARGET_APP_NAME}_config.yml
     - export DOCKER_HOST=$CI_SSH_REMOTE_URL
     - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" "${CI_REGISTRY}" --password-stdin
+    - docker compose -f docker-compose.${TARGET_APP_NAME}.yml config
     - docker compose -f docker-compose.${TARGET_APP_NAME}.yml down
     - docker compose -f docker-compose.${TARGET_APP_NAME}.yml pull
     - docker compose -f docker-compose.${TARGET_APP_NAME}.yml up -d
@@ -49,6 +51,3 @@
   after_script:
     - docker compose ls
   interruptible: true
-  artifacts:
-    paths:
-      - docker-compose.${TARGET_APP_NAME}_config.yml

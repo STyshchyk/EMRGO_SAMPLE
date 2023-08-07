@@ -22,6 +22,7 @@ stages:
 Deploy:client-authentication-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "client-authentication"
+    APP_SUBDOMAIN: "silver-auth"
   stage: deploy
   environment:
     name: exp-difc
@@ -32,6 +33,7 @@ Deploy:client-authentication-EXP-DIFC:
 Deploy:client-primaries-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "client-primaries"
+    APP_SUBDOMAIN: "silver-primaries"
   stage: deploy
   environment:
     name: exp-difc
@@ -42,6 +44,7 @@ Deploy:client-primaries-EXP-DIFC:
 Deploy:silver-admin-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-administration"
+    APP_SUBDOMAIN: "internal-silver-admin"
   stage: deploy
   environment:
     name: exp-difc
@@ -52,6 +55,7 @@ Deploy:silver-admin-EXP-DIFC:
 Deploy:silver-auth-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-authentication"
+    APP_SUBDOMAIN: "internal-silver-auth"
   stage: deploy
   environment:
     name: exp-difc
@@ -62,6 +66,7 @@ Deploy:silver-auth-EXP-DIFC:
 Deploy:silver-dataroom-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-dataroom"
+    APP_SUBDOMAIN: "internal-silver-dataroom"
   stage: deploy
   environment:
     name: exp-difc
@@ -72,6 +77,7 @@ Deploy:silver-dataroom-EXP-DIFC:
 Deploy:silver-onboarding-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-onboarding"
+    APP_SUBDOMAIN: "internal-silver-onboarding"
   stage: deploy
   environment:
     name: exp-difc
@@ -82,6 +88,7 @@ Deploy:silver-onboarding-EXP-DIFC:
 Deploy:silver-prim-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-primaries"
+    APP_SUBDOMAIN: "internal-silver-prim"
   stage: deploy
   environment:
     name: exp-difc
