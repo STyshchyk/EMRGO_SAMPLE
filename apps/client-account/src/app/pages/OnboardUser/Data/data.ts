@@ -1,4 +1,4 @@
-import { INewUser } from "../InvitedUsersTable/InvitedUsersTable.types";
+import { INewUser } from "../EntityManagement.types";
 
 export const onboarderUsers: INewUser[] = [{
   "id": "0",

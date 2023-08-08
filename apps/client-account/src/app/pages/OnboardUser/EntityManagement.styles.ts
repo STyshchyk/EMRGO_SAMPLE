@@ -23,3 +23,10 @@ export const QuestionnairePanelContent = styled(AccountPanelContent)`
   padding-bottom: ${rem(8)};
 `;
 
+
+export const EntityDetails = styled.div`
+ 
+ & > div:nth-child(1) {
+    padding-bottom: ${rem(24)};
+  }
+`;

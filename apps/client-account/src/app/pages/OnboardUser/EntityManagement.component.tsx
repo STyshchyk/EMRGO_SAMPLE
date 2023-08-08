@@ -1,76 +1,65 @@
 import { FC } from "react";
 
-import { queryKeys } from "@emrgo-frontend/constants";
 import {
   Button,
   DashboardContent,
+  Input,
   Modal,
   Panel,
   PanelContent,
   PanelHeader,
   QuestionnaireItem,
   QuestionnaireItems,
-  useToast
-} from "@emrgo-frontend/shared-ui";
+  useToast} from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
-import { useQuery } from "@tanstack/react-query";
 
 import { AccountPanel } from "../../components/AccountPanel";
+import { AccountPanelContent } from "../../components/AccountPanelContent";
 import { AccountPanelHeader } from "../../components/AccountPanelHeader";
 import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
 import { SubHeading } from "../../components/Shared";
-import { onboarderUsers } from "./Data/data";
 import { useEntityManagementContext } from "./EntityManagement.provider";
-import { getOnboardedUsers } from "./EntityManagement.service";
 import * as Styles from "./EntityManagement.styles";
 import { IEntityManagementProps } from "./EntityManagement.types";
 import { InvitedUsersTable } from "./InvitedUsersTable";
 import { OnboardUserModal } from "./OnboardUserModal";
+import { UserItem, UserItems } from "./UserItems";
 
-const enitityIdDetails = [
-  {
-    id: "1",
-    label: "AUM1129384X",
-    hasCompleted: false
-  }, {
-    id: "2",
-    label: "Elefant Capital",
-    hasCompleted: false
-  }];
-
-const entityOperationDetails = [
-  {
-    id: "1",
-    label: "Portfolio Details",
-    hasCompleted: false
-  }, {
-    id: "2",
-    label: "Client Banking Details",
-    hasCompleted: false
-  }, {
-    id: "3",
-    label: "Account Opening (Safekeeping & Cash)",
-    hasCompleted: false
-  }, {
-    id: "4",
-    label: "Authorised Representatives",
-    hasCompleted: false
-  }
-];
 
 export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children }: IEntityManagementProps) => {
-  const { showErrorToast, showSuccessToast } = useToast();
-  const { data } = useQuery({
-    queryFn: getOnboardedUsers,
-    enabled: false,//remove this to make request
-    queryKey: [queryKeys.account.onboardedUsers.fetch],
-    onError: () => {
-      showErrorToast("Error fetching users");
-    },
-    placeholderData: onboarderUsers//remove this field after api is ready
-  });
 
-  const { isShown, setIsShow } = ensureNotNull(useEntityManagementContext());
+
+  const { 
+      onboardedUsers, 
+      isOnboardUserModalOpen, 
+      setIsOnboardUserModalOpen, 
+      onViewPlatformDetails,
+      onViewBankingDetails, 
+      onViewCashAccounts, 
+      onViewAuthRepresentatives 
+    } = ensureNotNull(useEntityManagementContext());
+
+  const entityOperationDetails = [
+    {
+      id: "1",
+      label: "Portfolio Details",
+      callback: onViewPlatformDetails
+    }, {
+      id: "2",
+      label: "Client Banking Details",
+      callback: onViewBankingDetails
+    }, {
+      id: "3",
+      label: "Account Opening (Safekeeping & Cash)",
+      callback: onViewCashAccounts
+    }, {
+      id: "4",
+      label: "Authorised Representatives",
+      callback: onViewAuthRepresentatives
+    }
+  ];
+
+
   return (
     <Styles.OnboardUser>
       <DashboardContent>
@@ -81,20 +70,13 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Entity Identification Details</AccountPanelHeaderTitle>
             </AccountPanelHeader>
-            <Styles.QuestionnairePanelContent>
-              <QuestionnaireItems>
-                {enitityIdDetails.map((item) => (
-                  <QuestionnaireItem
-                    key={item.id}
-                    completed={item.hasCompleted}
-                    timeRemaining={"2"}
-                  >
-                    {item.label}
-                  </QuestionnaireItem>
-                ))}
-              </QuestionnaireItems>
-            </Styles.QuestionnairePanelContent>
-
+     
+            <AccountPanelContent>
+              <Styles.EntityDetails>
+                <Input disabled value={"AUM1129384X"} />
+                <Input disabled value={"Elefant Capital"} />
+              </Styles.EntityDetails>
+            </AccountPanelContent>
           </AccountPanel>
 
           <AccountPanel>
@@ -102,20 +84,18 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
               <AccountPanelHeaderTitle>Entity Operational Details</AccountPanelHeaderTitle>
             </AccountPanelHeader>
             <Styles.QuestionnairePanelContent>
-              <QuestionnaireItems>
+              <UserItems>
                 {entityOperationDetails.map((item) => (
-                  <QuestionnaireItem
+                  <UserItem
                     key={item.id}
-                    completed={item.hasCompleted}
-                    timeRemaining={"1"}
+                    handleCallback={item.callback}
                   >
                     {item.label}
-                  </QuestionnaireItem>
+                  </UserItem>
                 ))}
-              </QuestionnaireItems>
+              </UserItems>
             </Styles.QuestionnairePanelContent>
           </AccountPanel>
-
         </Styles.Container>
 
 
@@ -124,7 +104,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
             Entity Personnel
             <div style={{ marginLeft: "auto" }}>
               <Button onClick={() => {
-                setIsShow(true);
+                setIsOnboardUserModalOpen(true);
               }}
               >
                 Add user
@@ -134,14 +114,15 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
 
           <PanelContent>
             <SubHeading>List of users part of Elefant Capital on the EMRGO platform</SubHeading>
-            {data && <InvitedUsersTable users={data} />}
+            {onboardedUsers && <InvitedUsersTable users={onboardedUsers} />}
           </PanelContent>
         </Panel>
+
         <Modal
-          isOpen={isShown}
+          isOpen={isOnboardUserModalOpen}
           title={"Onboard User"}
           onClose={() => {
-            setIsShow(false);
+            setIsOnboardUserModalOpen(false);
           }}
           width={768}
           showCloseButton={true}

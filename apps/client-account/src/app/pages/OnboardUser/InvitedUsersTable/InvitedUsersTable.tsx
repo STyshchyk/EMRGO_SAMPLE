@@ -5,7 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { setStatus } from "../EntityManagement.service";
-import { IInvitedUsersTableProps, INewUser } from "./InvitedUsersTable.types";
+import { INewUser } from "../EntityManagement.types";
+import { IInvitedUsersTableProps } from "./InvitedUsersTable.types";
 
 const columnHelper = createColumnHelper<INewUser>();
 

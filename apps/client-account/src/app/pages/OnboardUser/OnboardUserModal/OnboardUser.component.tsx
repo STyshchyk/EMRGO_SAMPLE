@@ -5,18 +5,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { onboardUser } from "../EntityManagement.service";
-import { INewUser } from "../InvitedUsersTable/InvitedUsersTable.types";
+import { INewUser } from "../EntityManagement.types";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
 import { TwoCol } from "./OnboardUser.styles";
 import { IOnboardedUser } from "./OnboardUser.types";
 
 const initialValues: INewUser = {
-  email: "",
-  lastName: "",
-  role: "",
+  email: "hadid@emrgo.com",
+  lastName: "Hadid",
+  roles: [],
   // middleName: "",
-  firstName: ""
+  firstName: "Yolanda"
 };
 
 export const OnboardUserComponent = () => {
@@ -34,10 +34,20 @@ export const OnboardUserComponent = () => {
         initialValues={initialValues}
         validationSchema={onboardUserSchema}
         onSubmit={(values, formikHelpers) => {
-          doPostUser(values);
-          alert(JSON.stringify(values, null, 2));
+          // doPostUser(values);
+          console.log(values)
+          const roles = values.roles.map((role) => role.value )
+          console.log(roles)
+
+          const payload = {
+            ...values,
+            roles,
+          }
+
+          console.log(payload)
           formikHelpers.setSubmitting(false);
         }}
+        
       >
         {({ values, setFieldValue, errors, setErrors, setFieldError }) => (
           <Form>
@@ -74,21 +84,22 @@ export const OnboardUserComponent = () => {
               />
             </TwoCol>
             <TwoCol>
-              <label htmlFor="role">Select role</label>
+              <label htmlFor="roles">Select role</label>
               <Field
-                name="role"
+                name="roles"
                 component={FormikInputCustom}
                 type={"select"}
                 hideSelectedOptions={false}
                 isClearable={false}
-                value={values.role}
-                id={"role"}
+                value={values.roles}
+                id={"roles"}
                 isMulti={true}
                 onChange={(selected: any) => {
-                  setFieldValue("role", selected);
+                  console.log('onchaneg',selected)
+                  setFieldValue("roles",selected );
                 }}
                 options={[
-                  { label: "Investor", value: "invst_mgr" },
+                  { label: "Investor", value: "invst_mngr" },
                   { label: "Admin", value: "admin" }
                 ]
                 }
