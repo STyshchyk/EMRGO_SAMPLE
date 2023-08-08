@@ -10,5 +10,5 @@ export const onboardUserSchema = Yup.object().shape({
     .max(50, "Last Name is Too Long!")
     .required("Last Name is Required"),
   email: Yup.string().email("Enter valid email").required("Email ID is Required"),
-  role: Yup.object().required("Select role")
+  roles: Yup.array().required("Select role")
 });

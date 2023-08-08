@@ -10,7 +10,9 @@ import {
   PanelHeader,
   QuestionnaireItem,
   QuestionnaireItems,
-  useToast} from "@emrgo-frontend/shared-ui";
+  useToast,
+  useUser
+} from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { AccountPanel } from "../../components/AccountPanel";
@@ -27,7 +29,7 @@ import { UserItem, UserItems } from "./UserItems";
 
 
 export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children }: IEntityManagementProps) => {
-
+  const {user} = useUser()
 
   const { 
       onboardedUsers, 
@@ -73,8 +75,8 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
      
             <AccountPanelContent>
               <Styles.EntityDetails>
-                <Input disabled value={"AUM1129384X"} />
-                <Input disabled value={"Elefant Capital"} />
+                <Input disabled value={user?.entityId || ""} />
+                <Input disabled value={user?.entityName || ""} />
               </Styles.EntityDetails>
             </AccountPanelContent>
           </AccountPanel>
@@ -113,7 +115,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
           </PanelHeader>
 
           <PanelContent>
-            <SubHeading>List of users part of Elefant Capital on the EMRGO platform</SubHeading>
+            <SubHeading>List of users part of {user?.entityName} on the EMRGO platform</SubHeading>
             {onboardedUsers && <InvitedUsersTable users={onboardedUsers} />}
           </PanelContent>
         </Panel>

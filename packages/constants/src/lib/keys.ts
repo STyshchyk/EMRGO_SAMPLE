@@ -26,6 +26,7 @@ export const queryKeys = {
     }),
     onboardedUsers: include("/onboarder-users", {
       fetch: "fetch",
+      roles:"roles"
     })
   }),
   miscelleneous: include("/miscelleneous", {

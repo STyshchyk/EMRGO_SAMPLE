@@ -4,21 +4,15 @@ import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox, useToast 
 import { useMutation } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { setStatus } from "../EntityManagement.service";
-import { INewUser } from "../EntityManagement.types";
+import { INewUser, TNewUserTypes } from "../EntityManagement.types";
+import { getNewUserTypeLabel } from "../helpers";
+import * as Styles from './InvitedUsersTable.styles';
 import { IInvitedUsersTableProps } from "./InvitedUsersTable.types";
 
 const columnHelper = createColumnHelper<INewUser>();
 
 export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
-  const { showErrorToast, showSuccessToast } = useToast();
-
-  const { mutate: doSetStatus } = useMutation({
-    mutationFn: setStatus,
-    onError: () => {
-      showErrorToast("Error while setting status");
-    }
-  });
+  
   const columns = [
     columnHelper.accessor("firstName", {
       header: "First Name"
@@ -27,10 +21,20 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       header: "Last name"
     }),
     columnHelper.accessor("email", {
-      header: "Email ID"
+      header: "Email ID",
     }),
-    columnHelper.accessor("role", {
-      header: "Role"
+    columnHelper.accessor("roles", {
+      header: "Roles",
+      cell: (info) => {
+         return (
+          <Styles.InvitedUserTypeLabel>
+            {info.getValue().map((r)=> getNewUserTypeLabel(r)).join(`  ,  `)}
+          </Styles.InvitedUserTypeLabel>
+         )
+      },
+    }),
+    columnHelper.accessor("invitationStatus", {
+      header: "Status",
     }),
     columnHelper.display({
       id: "Actions",
@@ -40,6 +44,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       cell: ({ row }) => {
         const { original } = row;
         const id = original.id ?? "";
+        console.log(id)
         return (
           <ActionTooltip
             title={

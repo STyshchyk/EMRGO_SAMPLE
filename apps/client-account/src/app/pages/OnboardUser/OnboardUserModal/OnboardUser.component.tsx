@@ -1,9 +1,12 @@
 import React from "react";
 
+import { queryKeys } from "@emrgo-frontend/constants";
 import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
+import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
+import { useEntityManagementContext } from "../EntityManagement.provider";
 import { onboardUser } from "../EntityManagement.service";
 import { INewUser } from "../EntityManagement.types";
 import { onboardUserSchema } from "./OnboardUser.schema";
@@ -20,31 +23,15 @@ const initialValues: INewUser = {
 };
 
 export const OnboardUserComponent = () => {
-  const { showErrorToast, showSuccessToast } = useToast();
-  const queryClient = useQueryClient();
-  const { mutate: doPostUser } = useMutation({
-    mutationFn: onboardUser,
-    onError: () => {
-      showErrorToast("Error while onboarding user");
-    }
-  });
+  const {handleSubmit , rolesList} = ensureNotNull(useEntityManagementContext())
+  
   return (
     <Styles.OnboardUser>
       <Formik
         initialValues={initialValues}
         validationSchema={onboardUserSchema}
         onSubmit={(values, formikHelpers) => {
-          // doPostUser(values);
-          console.log(values)
-          const roles = values.roles.map((role) => role.value )
-          console.log(roles)
-
-          const payload = {
-            ...values,
-            roles,
-          }
-
-          console.log(payload)
+          handleSubmit(values)
           formikHelpers.setSubmitting(false);
         }}
         
@@ -95,14 +82,9 @@ export const OnboardUserComponent = () => {
                 id={"roles"}
                 isMulti={true}
                 onChange={(selected: any) => {
-                  console.log('onchaneg',selected)
                   setFieldValue("roles",selected );
                 }}
-                options={[
-                  { label: "Investor", value: "invst_mngr" },
-                  { label: "Admin", value: "admin" }
-                ]
-                }
+                options={rolesList}
                 placeholder="Select role"
               />
             </TwoCol>

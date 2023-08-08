@@ -2,13 +2,13 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { queryKeys } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
-import { useQuery } from "@tanstack/react-query";
-import { FormikHelpers, useFormik } from "formik";
+import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
+import { camelCase } from "change-case";
 
-import { onboarderUsers } from "./Data/data";
-import { getOnboardedUsers } from "./EntityManagement.service";
-import { IEntityManagementContext, INewUser } from "./EntityManagement.types";
-import { onboardUserSchema } from "./OnboardUserModal/OnboardUser.schema";
+import { getOnboardedUsers, getRoles } from "./EntityManagement.service";
+import { archiveUser,cancelInvitation,onboardUser,resendInvite } from "./EntityManagement.service";
+import { IEntityManagementContext, INewUser, UserRoles } from "./EntityManagement.types";
+import { getNewUserTypeLabel } from "./helpers";
 
 
 
@@ -24,31 +24,68 @@ const EntityManagementContext = createContext<IEntityManagementContext | null>(n
  * TODO: Implement this code.
  */
 export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
+  const queryClient = useQueryClient();
   const { showErrorToast, showSuccessToast } = useToast();
   const [isOnboardUserModalOpen, setIsOnboardUserModalOpen] = useState(false);
+  const [rolesList, setRolesList] = useState([])
 
+  const { mutate: doOnboardUser } = useMutation({
+    mutationFn: onboardUser,
+    onError: () => {
+      showErrorToast("Error while onboarding user");
+    }
+  });
 
-  // const { data: onboardedUsers } = useQuery({
-  //   queryFn: getOnboardedUsers,
-  //   // enabled: false,//remove this to make request
-  //   queryKey: [queryKeys.account.onboardedUsers.fetch],
-  //   onError: () => {
-  //     showErrorToast("Error fetching users");
-  //   },
-  //   // placeholderData: onboarderUsers//remove this field after api is ready
-  // });
-
-
-  const { data: onboardedUsers, isError, isFetched } = useQuery(
-    [queryKeys.account.onboardedUsers.fetch],
-    getOnboardedUsers,
-    {
+  useQuery({
+      staleTime:Infinity,
+      queryFn: () => getRoles(),
+      queryKey : [queryKeys.account.onboardedUsers.roles],
+      onSuccess: (response) => {
+        const roles = response.map((role: { name: string, key: string}) => {
+          const roleName = camelCase(role.name)
+          return {
+            label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]), 
+            value: role.key
+          }
+        });
+        setRolesList(roles);
+      }, 
+    }
+  );
+  
+  const { data: onboardedUsers, isError, isFetched } = useQuery({
+      queryKey: [queryKeys.account.onboardedUsers.fetch],
+      queryFn : () => getOnboardedUsers(),
       enabled: true,
       onError: () => {
         if (isError && isFetched) showErrorToast("Error while fetching invited users");
       },
     }
   );
+  
+  const handleSubmit = (values: INewUser) => {
+    console.log(values)
+    const roles = values.roles.map((role: any) => role.value )
+    const requestPayload = {
+      ...values,
+      roles,
+    }
+
+    doOnboardUser(requestPayload, {
+      onSuccess: (response) => {
+        showSuccessToast("User invited");
+        setIsOnboardUserModalOpen(false)
+        queryClient
+          .invalidateQueries({ queryKey: [queryKeys.account.onboardedUsers.fetch] })
+          .then((r) => {
+            console.log("success", r);
+          });
+      },
+      onError: () => {
+        showErrorToast("Error occured during inviting new user");
+      },
+    });
+  }
 
   const onViewPlatformDetails = () => {
     console.log('go to platform details page')
@@ -70,11 +107,13 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
     isOnboardUserModalOpen,
     setIsOnboardUserModalOpen,
     onboardedUsers,
+    rolesList,
 
     onViewPlatformDetails,
     onViewBankingDetails,
     onViewCashAccounts,
-    onViewAuthRepresentatives
+    onViewAuthRepresentatives,
+    handleSubmit,
 
   };
 
