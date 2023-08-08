@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import {
@@ -5,10 +6,12 @@ import {
   clientCustodyRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
-  getAllRoutes
+  externalUserRoles,
+  getAllRoutes,
 } from "@emrgo-frontend/constants";
 import {
   AccountIcon,
+  ChevronRightIcon,
   CustodyIcon,
   EyeIcon,
   HelpIcon,
@@ -24,20 +27,23 @@ import {
   SidebarListItemContent,
   SidebarListItemIcon,
   SidebarListItemLink,
-  SidebarListItemSecondaryLink, TermsModal,
-  ThemeSwitcher
+  SidebarListItemSecondaryLink,
+  TermsModal,
+  ThemeSwitcher,
+  Tooltip,
+  useUser,
 } from "@emrgo-frontend/shared-ui";
 import {
   buildModuleURL,
   ensureNotNull,
   navigateModule,
-  useClientMatchedPathSidebar
+  useClientMatchedPathSidebar,
 } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
-import { useEffect } from "react";
+import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip";
 
 export const DashboardSidebar = () => {
   const { isDarkMode, toggle } = useDarkMode();
@@ -47,8 +53,12 @@ export const DashboardSidebar = () => {
     onRejectPlatformTerms,
     user,
     showTermsModal,
-    termsDocumentURL
+    termsDocumentURL,
   } = ensureNotNull(useDashboardWrapperContext());
+  const fullNameInitials = user
+    ? `${user?.firstName[0].toUpperCase()}${user?.lastName[0].toUpperCase()}`
+    : "NA";
+  const role = externalUserRoles[user?.role || "na"];
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
   const mainRoutes = [
     {
@@ -56,29 +66,29 @@ export const DashboardSidebar = () => {
       icon: <PrimariesIcon />,
       key: "primaries",
       path: clientPrimariesRoutes.home,
-      paths: getAllRoutes(clientPrimariesRoutes)
+      paths: getAllRoutes(clientPrimariesRoutes),
     },
     {
       label: "Secondaries",
       icon: <SecondariesIcon />,
       key: "secondaries",
       path: clientSecondariesRoutes.home,
-      paths: getAllRoutes(clientSecondariesRoutes)
+      paths: getAllRoutes(clientSecondariesRoutes),
     },
     {
       label: "Custody",
       icon: <CustodyIcon />,
       key: "custody",
       path: clientCustodyRoutes.home,
-      paths: getAllRoutes(clientCustodyRoutes)
+      paths: getAllRoutes(clientCustodyRoutes),
     },
     {
       label: "Research",
       icon: <ResearchIcon />,
       key: "research",
       path: clientSecondariesRoutes.home,
-      paths: [""]
-    }
+      paths: [""],
+    },
   ];
 
   const navigateToModule = (module: string, path: string) => {
@@ -88,8 +98,6 @@ export const DashboardSidebar = () => {
   const allAccountRoutes = getAllRoutes(clientAccountRoutes);
   return (
     <Styles.DashboardSidebar>
-
-
       <SidebarHeader>
         <Link to="/">
           <Logo />
@@ -116,6 +124,21 @@ export const DashboardSidebar = () => {
 
       <SidebarFooter>
         <SidebarList>
+          <Tooltip content={<DashboardSidebarAccountTooltip user={user} />}>
+            <SidebarListItem>
+              <SidebarListItemSecondaryLink>
+                <Styles.SidebarListItemAccountAvatar>
+                  {fullNameInitials}
+                </Styles.SidebarListItemAccountAvatar>
+                <Styles.SidebarListItemAccountLabel>
+                  {role?.label}
+                </Styles.SidebarListItemAccountLabel>
+                <SidebarListItemIcon>
+                  <ChevronRightIcon />
+                </SidebarListItemIcon>
+              </SidebarListItemSecondaryLink>
+            </SidebarListItem>
+          </Tooltip>
           <SidebarListItem>
             <SidebarListItemSecondaryLink href="#">
               <Styles.SidebarListItemIconWithBadge>
