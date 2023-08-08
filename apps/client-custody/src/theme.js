@@ -28,7 +28,7 @@ export default (isDarkMode) => {
           }
         : {
             primary: {
-              main: colors.green2,
+              main: colors.green3,
             },
             error: {
               main: "#eb0000",

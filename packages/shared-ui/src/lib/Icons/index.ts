@@ -18,6 +18,7 @@ export { ReactComponent as HandshakeIcon } from "./icons/handshake.svg";
 export { ReactComponent as HelpIcon } from "./icons/help.svg";
 export { ReactComponent as InfoIcon } from "./icons/info.svg";
 export { ReactComponent as InfoFillIcon } from "./icons/info-fill.svg";
+export { ReactComponent as LogoutIcon } from "./icons/logout.svg";
 export { ReactComponent as NotificationsIcon } from "./icons/notifications.svg";
 export { ReactComponent as PdfIcon } from "./icons/pdf.svg";
 export { ReactComponent as PrimariesIcon } from "./icons/primaries.svg";

@@ -5,10 +5,12 @@ import {
   clientCustodyRoutes,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
+  externalUserRoles,
   getAllRoutes,
 } from "@emrgo-frontend/constants";
 import {
   AccountIcon,
+  ChevronRightIcon,
   CustodyIcon,
   EyeIcon,
   HelpIcon,
@@ -26,6 +28,8 @@ import {
   SidebarListItemLink,
   SidebarListItemSecondaryLink,
   ThemeSwitcher,
+  Tooltip,
+  useUser,
 } from "@emrgo-frontend/shared-ui";
 import {
   buildModuleURL,
@@ -37,8 +41,14 @@ import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
+import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip";
 
 export const DashboardSidebar = () => {
+  const { user } = useUser();
+  const fullNameInitials = user
+    ? `${user?.firstName[0].toUpperCase()}${user?.lastName[0].toUpperCase()}`
+    : "NA";
+  const role = externalUserRoles[user?.role || "na"];
   const { isDarkMode, toggle } = useDarkMode();
   const { numberOfNotifications } = ensureNotNull(useDashboardWrapperContext());
 
@@ -107,6 +117,21 @@ export const DashboardSidebar = () => {
 
       <SidebarFooter>
         <SidebarList>
+          <Tooltip content={<DashboardSidebarAccountTooltip user={user} />}>
+            <SidebarListItem>
+              <SidebarListItemSecondaryLink>
+                <Styles.SidebarListItemAccountAvatar>
+                  {fullNameInitials}
+                </Styles.SidebarListItemAccountAvatar>
+                <Styles.SidebarListItemAccountLabel>
+                  {role?.label}
+                </Styles.SidebarListItemAccountLabel>
+                <SidebarListItemIcon>
+                  <ChevronRightIcon />
+                </SidebarListItemIcon>
+              </SidebarListItemSecondaryLink>
+            </SidebarListItem>
+          </Tooltip>
           <SidebarListItem>
             <SidebarListItemSecondaryLink href="#">
               <Styles.SidebarListItemIconWithBadge>
