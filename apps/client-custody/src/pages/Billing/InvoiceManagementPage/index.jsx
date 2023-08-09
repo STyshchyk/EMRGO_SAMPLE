@@ -96,11 +96,7 @@ const InvoiceManagementPage = () => {
     [invoices]
   );
 
-  const handleApproveClick = (row) => {
-    setCurrentlySelectedRowData(row);
-    setOpenViewClientRateDialog(true);
-    setModalType("approve");
-  };
+
 
   const handleAmendClick = (row) => {
     setCurrentlySelectedRowData(row);
@@ -115,16 +111,6 @@ const InvoiceManagementPage = () => {
   };
 
   const actions = [
-    {
-      callback: handleAmendClick,
-      icon: <CreateIcon fontSize="small" />,
-      label: t("Invoice Management.Table.Actions.Amend"),
-      hidden: (rowData) => {
-        const currentStatus = rowData?.statusId;
-        const foundStatus = invoiceStatuses?.find((status) => status.id === currentStatus);
-        return foundStatus?.key !== "amended" && foundStatus?.key !== "open";
-      },
-    },
     {
       callback: handleApproveClick,
       icon: <PlaylistAddCheckIcon fontSize="small" />,

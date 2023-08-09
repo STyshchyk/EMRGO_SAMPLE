@@ -135,7 +135,6 @@ const dashboardUrls = include("/dashboard", {
     home: "",
     invoices: "invoices",
     manageInvoices: "manage-invoices",
-    clientRateCard: "client-rate-card",
   }),
 });
 

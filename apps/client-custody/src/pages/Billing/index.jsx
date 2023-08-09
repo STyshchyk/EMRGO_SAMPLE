@@ -55,9 +55,6 @@ const Billing = () => {
         <Route exact path={routes.dashboard.billing.manageInvoices}>
           <InvoiceManagementPage />
         </Route>
-        <Route exact path={routes.dashboard.billing.clientRateCard}>
-          <ClientRateCardPage />
-        </Route>
 
         {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
