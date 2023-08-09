@@ -31,6 +31,7 @@ export const onboardUser = (user: IOnboardUserPayload) => {
 };
 
 export const cancelInvitation = (id: string) => {
+  if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
     url: `v2/users/${id}/invite/cancel`,
@@ -38,6 +39,7 @@ export const cancelInvitation = (id: string) => {
 };
 
 export const resendInvite = (id: string) => {
+  if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
     url: `/v2/users/${id}/invite/resend`,
@@ -45,6 +47,7 @@ export const resendInvite = (id: string) => {
 };
 
 export const archiveUser = (id: string) => {
+  if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
     url: `/v2/users/${id}/archive`,
@@ -52,14 +55,4 @@ export const archiveUser = (id: string) => {
 };
 
 
-export const setStatus = (user: { id: string, status: string }) => {
-  if (!user.id || user?.id === "") return Promise.reject();
-  return dashboardApi({
-    url: `v1/onboarderUsers/${user.id}`,
-    method: "PUT",
-    data: {
-      status: user.status
-    }
-  });
-};
 

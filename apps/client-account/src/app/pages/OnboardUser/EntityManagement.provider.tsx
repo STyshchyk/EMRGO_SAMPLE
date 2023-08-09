@@ -29,6 +29,11 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const [isOnboardUserModalOpen, setIsOnboardUserModalOpen] = useState(false);
   const [rolesList, setRolesList] = useState([])
 
+  const { mutate: doCancelInvitation } = useMutation(cancelInvitation);
+  const { mutate: doArchiveUser } = useMutation(archiveUser);
+  const { mutate: doResendInvite } = useMutation(resendInvite);
+
+
   const { mutate: doOnboardUser } = useMutation({
     mutationFn: onboardUser,
     onError: () => {
@@ -41,8 +46,10 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
       queryFn: () => getRoles(),
       queryKey : [queryKeys.account.onboardedUsers.roles],
       onSuccess: (response) => {
+        console.log(response)
         const roles = response.map((role: { name: string, key: string}) => {
           const roleName = camelCase(role.name)
+          console.log(roleName,'camel')
           return {
             label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]), 
             value: role.key
@@ -62,6 +69,46 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
       },
     }
   );
+
+  const onArchiveUser = (id: string) => {
+    console.log("Remove user");
+    doArchiveUser(id, {
+      onSuccess: () => {
+        showSuccessToast("Archived User successfully");
+        queryClient.invalidateQueries([queryKeys.account.onboardedUsers.fetch]);
+      },
+      onError: () => {
+        showErrorToast("Error while trying to remove user");
+      },
+    });
+}
+
+  const onCancelInvitation = (id: string) => {
+    console.log("Cancel invite");
+    doCancelInvitation(id, {
+      onSuccess: () => {
+        showSuccessToast("Cancelled Invitation successfully");
+        queryClient.invalidateQueries([queryKeys.account.onboardedUsers.fetch]);
+      },
+      onError: () => {
+        showErrorToast("Error canceling invitation");
+      },
+    });
+  }
+
+  const onResendInvitation = (id: string) => {
+    console.log("Resend invite");
+    doResendInvite(id, {
+      onSuccess: () => {
+        showSuccessToast("Resent invitation successfully");
+        queryClient.invalidateQueries([queryKeys.account.onboardedUsers.fetch]);
+      },
+      onError: () => {
+        showErrorToast("Error while trying to Resend Invite");
+      },
+    });
+  }
+
   
   const handleSubmit = (values: INewUser) => {
     console.log(values)
@@ -72,14 +119,11 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
     }
 
     doOnboardUser(requestPayload, {
-      onSuccess: (response) => {
+      onSuccess: () => {
         showSuccessToast("User invited");
         setIsOnboardUserModalOpen(false)
         queryClient
           .invalidateQueries({ queryKey: [queryKeys.account.onboardedUsers.fetch] })
-          .then((r) => {
-            console.log("success", r);
-          });
       },
       onError: () => {
         showErrorToast("Error occured during inviting new user");
@@ -114,7 +158,9 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
     onViewCashAccounts,
     onViewAuthRepresentatives,
     handleSubmit,
-
+    onArchiveUser,
+    onCancelInvitation,
+    onResendInvitation
   };
 
 

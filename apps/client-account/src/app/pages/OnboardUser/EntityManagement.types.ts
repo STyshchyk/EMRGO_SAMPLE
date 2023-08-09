@@ -42,13 +42,20 @@ export interface IOnboardUserPayload {
 export interface IEntityManagementContext {
   isOnboardUserModalOpen: boolean,
   setIsOnboardUserModalOpen: (flag: boolean) => void
+
   onViewPlatformDetails: () => void;
   onViewBankingDetails: () => void;
   onViewCashAccounts: () => void;
   onViewAuthRepresentatives: () => void;
+
   handleSubmit : (values :INewUser ) => void;
   onboardedUsers: INewUser[] | undefined
   rolesList: IRole[]
+
+  onArchiveUser:(id:string) => void
+  onCancelInvitation:(id:string) => void
+  onResendInvitation:(id:string) => void
+
 }
 
 

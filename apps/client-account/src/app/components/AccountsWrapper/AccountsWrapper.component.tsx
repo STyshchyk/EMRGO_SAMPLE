@@ -24,7 +24,7 @@ export const AccountsWrapperComponent: FC<IAccountsWrapperProps> = ({ children }
       key: "onboard",
       paths: [routes.account.onboardUser],
       notification: 0,
-      roles: ["invst_mngr", "admin"]//List of allowed roles. Empty  == allow all
+      roles: ["admin"]//List of allowed roles. Empty  == allow all
     },
     {
       label: "Account Security",
