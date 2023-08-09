@@ -71,13 +71,7 @@ const issuance = {
   ],
 };
 
-const support = {
-  acls: ["Support/Auth"],
-  baseURLPattern: /(?:\/dashboard\/support\/)(?:[\w-/]*)/,
-  displayName: "Support",
-  homeUrl: routes.dashboard.support.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
-};
+
 
 const bulletinBoard = {
   acls: ["Quotes/View", "Quotes/Manage"],
@@ -227,7 +221,6 @@ const DashboardSidebar = ({ open }) => {
     home,
     billing: inProd ? undefined : billing,
     issuance,
-    support,
     custody,
     bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,

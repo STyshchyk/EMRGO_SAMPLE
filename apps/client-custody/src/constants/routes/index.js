@@ -113,10 +113,6 @@ const dashboardUrls = include("/dashboard", {
   blotters: include("blotters", {
     home: "",
   }),
-  support: include("support", {
-    home: "",
-    tfa: "tfa",
-  }),
   bulletins: include("bulletins", {
     home: "",
     view: "view",

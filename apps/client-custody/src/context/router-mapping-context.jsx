@@ -33,7 +33,6 @@ const SecuritiesAdmin = lazy(() => import("../pages/SecuritiesAdmin"));
 const OperationsSecServices = lazy(() => import("../pages/OperationsSecServices"));
 const SettlementAdmin = lazy(() => import("../pages/SettlementAdmin"));
 const SingleIssuance = lazy(() => import("../pages/SingleIssuance"));
-const Support = lazy(() => import("../pages/Support"));
 const Billing = lazy(() => import("../pages/Billing"));
 
 const RouterMappingContext = createContext();
@@ -190,14 +189,6 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.blotters.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: Support,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.support.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
