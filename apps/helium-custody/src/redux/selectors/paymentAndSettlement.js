@@ -2,9 +2,6 @@ import { createSelector } from "reselect";
 
 export const selectPaymentDetails = (state) => state.paymentAndSettlement?.details ?? [];
 export const selectPaymentDetailsLoading = (state) => state.paymentAndSettlement.isLoading;
-export const selectBlotters = (state) => state.paymentAndSettlement.blotterList;
-export const selectBlotterDropdowns = (state) => state.paymentAndSettlement.dropDowns;
-export const selectBlotterFirstLoadFlag = (state) => state.paymentAndSettlement.firstLoadFlag;
 export const selectIsRequesting = (state) => state.paymentAndSettlement.isRequesting;
 export const selectPaymentsList = (state) => state.paymentAndSettlement.paymentsList;
 export const selectIsFetching = (state) => state.paymentAndSettlement.isFetching;

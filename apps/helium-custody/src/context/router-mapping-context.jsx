@@ -11,7 +11,6 @@ const Administration = lazy(() => import("../pages/Administration"));
 const AuthContainer = lazy(() => import("../containers/AuthContainer"));
 const AuthFlowLayout = lazy(() => import("../layouts/AuthFlowLayout"));
 const CashManagement = lazy(() => import("../pages/CashManagement"));
-const BlotterView = lazy(() => import("../containers/BlotterView"));
 const Bulletin = lazy(() => import("../pages/Bulletin"));
 const DashboardHome = lazy(() => import("../pages/DashboardHome"));
 const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
@@ -189,14 +188,6 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.issuances.issuance.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: BlotterView,
-        exact: true,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.blotters.home}*`,
         disabled: !kycApprovalStatus,
       },
       {

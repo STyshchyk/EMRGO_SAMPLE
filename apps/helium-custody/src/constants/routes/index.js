@@ -177,9 +177,6 @@ const dashboardUrls = include("/dashboard", {
       speIncorporation: "spe-incorporation",
     }),
   }),
-  blotters: include("blotters", {
-    home: "",
-  }),
   support: include("support", {
     home: "",
     tfa: "tfa",

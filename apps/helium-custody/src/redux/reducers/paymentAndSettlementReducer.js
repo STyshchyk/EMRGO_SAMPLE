@@ -6,7 +6,6 @@ import { handleActions } from "redux-actions";
 import * as actionCreators from "../actionCreators/paymentAndSettlement";
 
 const defaultState = {
-  blotterList: [],
   details: [],
   dropDowns: {
     currency: [],
@@ -62,89 +61,6 @@ const paymentAndSettlementReducer = handleActions(
       draft.isLoading = false;
       draft.errorMessage = message;
     }),
-
-    [actionCreators.doBlotterReadRequest]: produce((draft) => {
-      draft.isLoading = true;
-      draft.errorMessage = null;
-    }),
-    [actionCreators.doBlotterReadSuccess]: produce((draft, { payload: { data } }) => {
-      const { blotters } = data;
-
-      const blotterList = blotters.map((blotter) => {
-        const parsedkey = JSON.parse(blotter.key);
-
-        const parsedBlotterItem = {
-          ...blotter,
-          key: parsedkey,
-        };
-
-        return parsedBlotterItem;
-      });
-
-      draft.blotterList = blotterList;
-      draft.isLoading = false;
-      draft.firstLoadFlag = true;
-    }),
-    [actionCreators.doBlotterReadFailure]: produce((draft, { message }) => {
-      draft.isLoading = false;
-      draft.errorMessage = message;
-      draft.firstLoadFlag = true;
-    }),
-
-    [actionCreators.doBlotterUpdateRequest]: produce((draft) => {
-      draft.isLoading = true;
-      draft.errorMessage = null;
-    }),
-    [actionCreators.doBlotterUpdateSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isLoading = false;
-      const { blotters } = data;
-      const blotterList = blotters.map((blotter) => ({
-        ...blotter,
-        key: JSON.parse(blotter.key),
-      }));
-      draft.blotterList = blotterList;
-    }),
-    [actionCreators.doBlotterUpdateFailure]: produce((draft, { message }) => {
-      draft.isLoading = false;
-      draft.errorMessage = message;
-    }),
-
-    [actionCreators.doBlotterCreateRequest]: produce((draft) => {
-      draft.isLoading = true;
-      draft.errorMessage = null;
-    }),
-    [actionCreators.doBlotterCreateSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isLoading = false;
-      const { blotters } = data;
-      const blotterList = blotters.map((blotter) => ({
-        ...blotter,
-        key: JSON.parse(blotter.key),
-      }));
-      draft.blotterList = blotterList;
-    }),
-    [actionCreators.doBlotterCreateFailure]: produce((draft, { message }) => {
-      draft.isLoading = false;
-      draft.errorMessage = message;
-    }),
-
-    [actionCreators.doBlotterDeleteRequest]: produce((draft) => {
-      draft.isLoading = true;
-      draft.errorMessage = null;
-    }),
-    [actionCreators.doBlotterDeleteSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isLoading = false;
-      const { blotters } = data;
-      const blotterList = blotters.map((blotter) => ({
-        ...blotter,
-        key: JSON.parse(blotter.key),
-      }));
-      draft.blotterList = blotterList;
-    }),
-    [actionCreators.doBlotterDeleteFailure]: produce((draft, { message }) => {
-      draft.isLoading = false;
-      draft.errorMessage = message;
-    }),
-
     [actionCreators.doDropdownReadRequest]: produce((draft) => {
       draft.isLoading = true;
       draft.errorMessage = null;

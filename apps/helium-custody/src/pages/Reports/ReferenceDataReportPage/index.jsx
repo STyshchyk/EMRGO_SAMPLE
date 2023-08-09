@@ -60,7 +60,7 @@ const SecurityReportView = ({ data }) => (
 );
 
 const ReferenceDataReportPage = () => {
-  const { t } = useTranslation(["reports", "blotter", "termsheet"]);
+  const { t } = useTranslation(["reports", "termsheet"]);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
 

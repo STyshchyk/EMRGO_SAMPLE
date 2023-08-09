@@ -45,7 +45,7 @@ const CashBalancesTable = ({ data, accounts }) => {
   const dispatch = useDispatch();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
   console.log(data, "data");
 
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);

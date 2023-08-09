@@ -19,7 +19,6 @@
     "Home": "Home",
     "Administration": "Administration",
     "Issuance": "Issuance",
-    "Blotter": "Blotter",
     "Support": "Support",
     "Custody": "Custody",
     "Securities Services": "Securities Services",
@@ -70,9 +69,6 @@
       "Visitors": "Visitors",
       "Parent Entity": "Parent Entity",
       "Users": "Users"
-    },
-    "Blotter": {
-      "Overview": "Overview"
     },
     "Support": {
       "2FA Tickets": "2FA Tickets"

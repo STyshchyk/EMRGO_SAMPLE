@@ -19,54 +19,6 @@ function* fetchPaymentAndSettlementDetails({ payload }) {
   }
 }
 
-function* readBlotterDetails({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.paymentsAPI.readBlotterDetails, payload);
-    const { data } = response;
-    yield put(actionCreators.doBlotterReadSuccess({ data }));
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(actionCreators.doBlotterReadFailure(errorMessage));
-  }
-}
-
-function* createBlotterDetails({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateBlotterDetails, payload);
-    const { data } = response;
-    yield put(actionCreators.doBlotterCreateSuccess({ data }));
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(actionCreators.doBlotterCreateFailure(errorMessage));
-  }
-}
-
-function* updateBlotterDetails({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateBlotterDetails, payload);
-    const { data } = response;
-    yield put(actionCreators.doBlotterUpdateSuccess({ data }));
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(actionCreators.doBlotterUpdateFailure(errorMessage));
-  }
-}
-
-function* deleteBlotterDetails({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.paymentsAPI.updateBlotterDetails, payload);
-    const { data } = response;
-    yield put(actionCreators.doBlotterDeleteSuccess({ data }));
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(actionCreators.doBlotterDeleteFailure(errorMessage));
-  }
-}
-
 function* readDropdownDetails({ payload }) {
   try {
     const response = yield call(wethaqAPIService.dropdownAPI.getDropDownValues, payload);
@@ -293,10 +245,6 @@ function* fetchSettlementInstructionAuditData({ payload }) {
 
 const paymentAndSettlementSaga = [
   takeLatest(actionTypes.PAYMENT_DETAILS_REQUESTED, fetchPaymentAndSettlementDetails),
-  takeLatest(actionTypes.BLOTTER_READ_REQUESTED, readBlotterDetails),
-  takeLatest(actionTypes.BLOTTER_CREATE_REQUESTED, createBlotterDetails),
-  takeLatest(actionTypes.BLOTTER_UPDATE_REQUESTED, updateBlotterDetails),
-  takeLatest(actionTypes.BLOTTER_DELETE_REQUESTED, deleteBlotterDetails),
   takeLatest(actionTypes.READ_DROPDOWN_REQUESTED, readDropdownDetails),
   takeLatest(actionTypes.TRADE_SETTLEMENT_REQUESTED, settleTrade),
   takeLatest(actionTypes.CLIENT_ACCOUNT_UPDATE_REQUESTED, updateClientAccountTrade),

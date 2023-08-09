@@ -55,7 +55,7 @@ const CashStatementReportPage = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
 
   // selectors

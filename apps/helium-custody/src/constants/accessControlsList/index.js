@@ -27,16 +27,6 @@ const TERMSHEET = {
   },
 };
 
-const BLOTTER = {
-  settle: {
-    displayName: "Settle Blotter",
-    key: "Blotter/Settle",
-  },
-  view: {
-    displayName: "View Blotter",
-    key: "Blotter/View",
-  },
-};
 
 const KYC = {
   view: {
@@ -293,7 +283,6 @@ const RELATIONSHIP = {
 
 export default {
   ADMISSION,
-  BLOTTER,
   ENGAGEMENT,
   GROUP_MANAGEMENT,
   ISSUANCE,

@@ -119,20 +119,6 @@ const billing = {
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR"],
 };
 
-const blotter = {
-  acls: ["Blotter/Settle", "Blotter/View"],
-  baseURLPattern: /(?:\/dashboard\/blotters\/)(?:[\w-/]*)/,
-  displayName: "Blotter",
-  homeUrl: routes.dashboard.blotters.home,
-  requiredEntityTypes: [
-    "ARRANGER",
-    "CO_ARRANGER",
-    "INVESTOR",
-    "ISSUER",
-    "OBLIGOR",
-    "EMRGO_SERVICES",
-  ],
-};
 
 const issuerServices = {
   acls: ["Services/Issuer/View"],
@@ -250,7 +236,6 @@ const DashboardSidebar = ({ open }) => {
     custody,
     bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,
-    blotter,
     reconciliation: isReconciliationFeatureEnabled ? reconciliation : undefined,
   };
 

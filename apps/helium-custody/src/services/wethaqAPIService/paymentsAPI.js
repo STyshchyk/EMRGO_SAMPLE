@@ -8,21 +8,6 @@ const getPaymentDetails = (payload) =>
     params: payload,
   });
 
-const readBlotterDetails = (payload) =>
-  baseAxiosInstance({
-    method: "GET",
-    url: `/v1/payment/blotter`,
-    params: payload,
-  });
-
-const updateBlotterDetails = (payload) =>
-  baseAxiosInstance({
-    method: "PUT",
-    data: payload.data,
-    url: `/v1/payment/blotter`,
-    params: payload.params,
-  });
-
 const settleTrade = (payload) =>
   baseAxiosInstance({
     method: "PUT",
@@ -90,9 +75,7 @@ const raiseBulkSettlementInstructions = (payload) =>
 
 const paymentsAPI = {
   getPaymentDetails,
-  readBlotterDetails,
   settleTrade,
-  updateBlotterDetails,
   updateClientAccountTrade,
   approveTrade,
   raiseSettlementInstruction,

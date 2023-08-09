@@ -54,7 +54,7 @@ const SecuritiesTransactionsReportPage = () => {
   // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "blotter", "filters"]);
+  const { t } = useTranslation(["reports", "filters"]);
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
@@ -381,7 +381,6 @@ const SecuritiesTransactionsReportPage = () => {
               setTimeout(() => {
                 setSubmitting(false);
               }, 500);
-              // updateSingleBlotter(blotterId, values);
             }}
           >
             {({ submitForm, values, setFieldValue }) => {

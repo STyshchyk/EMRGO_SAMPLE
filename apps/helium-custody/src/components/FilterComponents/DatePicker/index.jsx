@@ -10,7 +10,7 @@ import moment from "moment";
 import { useFilters } from "../../../context/filter-context";
 
 const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
 
   const filterContext = useFilters();
   const { setFilterValue, clearFilterValue } = filterContext;
