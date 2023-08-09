@@ -42,8 +42,5 @@ export const OneCol = styled.div`
   max-width: ${rem(maxWidth)};
 `;
 
-// import { getColor, PropsWithTheme } from "~/styles";
 
-export type TButtonVariants = "primary" | "secondary";
-export type TButtonSizes = "small" | "medium" | "large";
 

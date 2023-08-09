@@ -8,9 +8,6 @@ import {
   Panel,
   PanelContent,
   PanelHeader,
-  QuestionnaireItem,
-  QuestionnaireItems,
-  useToast,
   useUser
 } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
@@ -29,7 +26,7 @@ import { UserItem, UserItems } from "./UserItems";
 
 
 export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children }: IEntityManagementProps) => {
-  const {user} = useUser()
+  const { user } = useUser()
 
   const { 
       onboardedUsers, 
@@ -74,10 +71,10 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
             </AccountPanelHeader>
      
             <AccountPanelContent>
-              <Styles.EntityDetails>
+              <Styles.EntityIdentityDetails>
                 <Input disabled value={user?.entityId || ""} />
                 <Input disabled value={user?.entityName || ""} />
-              </Styles.EntityDetails>
+              </Styles.EntityIdentityDetails>
             </AccountPanelContent>
           </AccountPanel>
 
@@ -85,7 +82,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Entity Operational Details</AccountPanelHeaderTitle>
             </AccountPanelHeader>
-            <Styles.QuestionnairePanelContent>
+            <Styles.EntityDetailsPanelContent>
               <UserItems>
                 {entityOperationDetails.map((item) => (
                   <UserItem
@@ -96,7 +93,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
                   </UserItem>
                 ))}
               </UserItems>
-            </Styles.QuestionnairePanelContent>
+            </Styles.EntityDetailsPanelContent>
           </AccountPanel>
         </Styles.Container>
 

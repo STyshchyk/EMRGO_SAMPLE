@@ -1,5 +1,5 @@
 import { dashboardApi } from "../../services/APIService";
-import { INewUser,IOnboardUserPayload } from "./EntityManagement.types";
+import { INewUser } from "./EntityManagement.types";
 
 
 export const getOnboardedUsers = async (): Promise<INewUser[]> => {
@@ -20,7 +20,7 @@ export const getRoles = async () => {
   return res || []
 };
 
-export const onboardUser = (user: IOnboardUserPayload) => {
+export const inviteUser = (user: INewUser) => {
   const promise = dashboardApi({
     url: "v2/client/users",
     method: "POST",

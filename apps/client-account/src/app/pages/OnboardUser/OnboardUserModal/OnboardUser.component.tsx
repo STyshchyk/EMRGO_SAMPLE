@@ -1,25 +1,18 @@
-import React from "react";
-
-import { queryKeys } from "@emrgo-frontend/constants";
-import { Button, FormikInputCustom, useToast } from "@emrgo-frontend/shared-ui";
+import { Button, FormikInputCustom } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 
 import { useEntityManagementContext } from "../EntityManagement.provider";
-import { onboardUser } from "../EntityManagement.service";
 import { INewUser } from "../EntityManagement.types";
 import { onboardUserSchema } from "./OnboardUser.schema";
 import * as Styles from "./OnboardUser.styles";
 import { TwoCol } from "./OnboardUser.styles";
-import { IOnboardedUser } from "./OnboardUser.types";
 
 const initialValues: INewUser = {
-  email: "hadid@emrgo.com",
-  lastName: "Hadid",
+  firstName: "",
+  lastName: "",
+  email: "",
   roles: [],
-  // middleName: "",
-  firstName: "Yolanda"
 };
 
 export const OnboardUserComponent = () => {
@@ -36,7 +29,7 @@ export const OnboardUserComponent = () => {
         }}
         
       >
-        {({ values, setFieldValue, errors, setErrors, setFieldError }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <TwoCol>
               <label htmlFor="firstName">First name</label>

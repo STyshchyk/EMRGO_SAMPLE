@@ -1,7 +1,5 @@
 import { PropsWithChildren } from "react";
 
-
-
 export enum UserRoles {
   superUser = "admin",
   investmentManager = "invst_mngr"
@@ -26,17 +24,9 @@ export interface INewUser {
   firstName: string,
   lastName: string,
   middleName?: string,
-  roles: UserRoles[],
+  roles: TNewUserTypes[],
   email: string,
-  invitationStatus?: string,
-}
-
-export interface IOnboardUserPayload {
-  id?: string;
-  firstName: string,
-  lastName: string,
-  roles: string[],
-  email: string,
+  invitationStatus?: TNewUserStatus,
 }
 
 export interface IEntityManagementContext {
@@ -48,7 +38,7 @@ export interface IEntityManagementContext {
   onViewCashAccounts: () => void;
   onViewAuthRepresentatives: () => void;
 
-  handleSubmit : (values :INewUser ) => void;
+  handleSubmit : (values : INewUser ) => void;
   onboardedUsers: INewUser[] | undefined
   rolesList: IRole[]
 

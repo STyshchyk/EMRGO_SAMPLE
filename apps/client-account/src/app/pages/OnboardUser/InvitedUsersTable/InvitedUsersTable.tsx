@@ -1,13 +1,12 @@
 import { FC } from "react";
 
-import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox, useToast } from "@emrgo-frontend/shared-ui";
+import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
-import { useMutation } from "@tanstack/react-query";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useEntityManagementContext } from "../EntityManagement.provider";
-import { INewUser, TNewUserTypes } from "../EntityManagement.types";
-import { getNewUserTypeLabel } from "../helpers";
+import { INewUser, TNewUserStatus,TNewUserTypes } from "../EntityManagement.types";
+import { getNewUserStatusLabel,getNewUserTypeLabel } from "../helpers";
 import * as Styles from './InvitedUsersTable.styles';
 import { IInvitedUsersTableProps } from "./InvitedUsersTable.types";
 
@@ -32,14 +31,18 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       cell: (info) => {
          return (
           <Styles.InvitedUserTypeLabel>
-            {info.getValue().map((r)=> getNewUserTypeLabel(r)).join(`  ,  `)}
+            {info.getValue().map((r)=> getNewUserTypeLabel(r as TNewUserTypes)).join(` , `)}
           </Styles.InvitedUserTypeLabel>
          )
       },
     }),
     columnHelper.accessor("invitationStatus", {
       header: "Status",
+      cell: (info) => {
+        return getNewUserStatusLabel(info.getValue()?.toLowerCase() as TNewUserStatus)
+     },
     }),
+
     columnHelper.display({
       id: "Actions",
       header: () => {
@@ -53,13 +56,13 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
             title={
               <TooltipButtonBox>
                 <TooltipButtonActions
-                  $disabled={status === 'Onboarded'}
+                  $disabled={status === 'onboarded'}
                   onClick={() => onResendInvitation(id)}
                 >
                   Resend Invitation
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={status === 'Canceled' || status === 'Onboarded'}
+                  $disabled={status === 'canceled' || status === 'onboarded'}
                   onClick={() => onCancelInvitation(id)}
                 >
                   Cancel Invitation

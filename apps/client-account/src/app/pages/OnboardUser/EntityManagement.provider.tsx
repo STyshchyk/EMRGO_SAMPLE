@@ -5,8 +5,7 @@ import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
 import { camelCase } from "change-case";
 
-import { getOnboardedUsers, getRoles } from "./EntityManagement.service";
-import { archiveUser,cancelInvitation,onboardUser,resendInvite } from "./EntityManagement.service";
+import { archiveUser,cancelInvitation,getOnboardedUsers,getRoles,inviteUser,resendInvite } from "./EntityManagement.service";
 import { IEntityManagementContext, INewUser, UserRoles } from "./EntityManagement.types";
 import { getNewUserTypeLabel } from "./helpers";
 
@@ -29,25 +28,17 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const [isOnboardUserModalOpen, setIsOnboardUserModalOpen] = useState(false);
   const [rolesList, setRolesList] = useState([])
 
+  const { mutate: doOnboardUser } = useMutation(inviteUser);
   const { mutate: doCancelInvitation } = useMutation(cancelInvitation);
   const { mutate: doArchiveUser } = useMutation(archiveUser);
   const { mutate: doResendInvite } = useMutation(resendInvite);
-
-
-  const { mutate: doOnboardUser } = useMutation({
-    mutationFn: onboardUser,
-    onError: () => {
-      showErrorToast("Error while onboarding user");
-    }
-  });
 
   useQuery({
       staleTime:Infinity,
       queryFn: () => getRoles(),
       queryKey : [queryKeys.account.onboardedUsers.roles],
       onSuccess: (response) => {
-        console.log(response)
-        const roles = response.map((role: { name: string, key: string}) => {
+          const roles = response.map((role: { name: string, key: string}) => {
           const roleName = camelCase(role.name)
           console.log(roleName,'camel')
           return {
@@ -63,7 +54,6 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const { data: onboardedUsers, isError, isFetched } = useQuery({
       queryKey: [queryKeys.account.onboardedUsers.fetch],
       queryFn : () => getOnboardedUsers(),
-      enabled: true,
       onError: () => {
         if (isError && isFetched) showErrorToast("Error while fetching invited users");
       },

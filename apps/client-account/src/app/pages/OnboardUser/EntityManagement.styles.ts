@@ -19,13 +19,12 @@ export const Container = styled.div`
   gap: ${rem(24)};
 `;
 
-export const QuestionnairePanelContent = styled(AccountPanelContent)`
+export const EntityDetailsPanelContent = styled(AccountPanelContent)`
   padding-bottom: ${rem(8)};
 `;
 
 
-export const EntityDetails = styled.div`
- 
+export const EntityIdentityDetails = styled.div`
  & > div:nth-child(1) {
     padding-bottom: ${rem(24)};
   }

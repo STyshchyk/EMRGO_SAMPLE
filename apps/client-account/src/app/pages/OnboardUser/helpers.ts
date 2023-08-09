@@ -1,6 +1,5 @@
 import { TNewUserStatus,TNewUserTypes,UserRoles } from "./EntityManagement.types";
 
-
 const newUserTypeLabels: Record<TNewUserTypes, string> = {
     [UserRoles.superUser]: "Admin",
     [UserRoles.investmentManager]: "Investor",
@@ -14,7 +13,6 @@ const newUserTypeLabels: Record<TNewUserTypes, string> = {
   };
   
   export const getNewUserTypeLabel = (type: TNewUserTypes) => {
-    console.log(type)
     return newUserTypeLabels[type];
   };
   
