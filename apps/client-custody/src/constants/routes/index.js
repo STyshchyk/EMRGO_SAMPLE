@@ -77,7 +77,6 @@ const dashboardUrls = include("/dashboard", {
       fxTransactionList: "fx-transaction-list",
       counterpartyList: "counterparty-list",
       counterpartySSIList: "counterparty-ssi-list",
-      couponAdministration: "coupon-administration",
       corporateActionEvents: "corporate-action-events",
     }),
   }),

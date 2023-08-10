@@ -15,7 +15,6 @@ import * as authSelectors from "../../redux/selectors/auth";
 const AgencyServices = lazy(() => import("./AgencyServices"));
 const CounterpartyList = lazy(() => import("../SettlementAdmin/CounterpartyList"));
 const CounterpartySSIList = lazy(() => import("../SettlementAdmin/CounterpartySSIList"));
-const CouponAdministration = lazy(() => import("./CouponAdministration"));
 const CustodyAndSettlement = lazy(() => import("./CustodyAndSettlement"));
 const FXTransactionList = lazy(() => import("./FXTransactionList"));
 const Registrar = lazy(() => import("./Registrar"));
@@ -55,12 +54,6 @@ const OperationsSecServices = () => {
       path: routes.dashboard.custody.opsSecServices.corporateActionEvents,
       link: routes.dashboard.custody.opsSecServices.corporateActionEvents,
       text: "Corporate Action Diary",
-      // disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key]),
-    },
-    {
-      path: routes.dashboard.custody.opsSecServices.couponAdministration,
-      link: routes.dashboard.custody.opsSecServices.couponAdministration,
-      text: "Coupon Administration",
       // disabled: !authorizeRouteAccess(listOfUserACLs, [accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key]),
     },
     {
@@ -162,20 +155,7 @@ const OperationsSecServices = () => {
         }
       ></Route>
 
-      <Route
-        path="coupon-administration"
-        element={
-          <Fragment>
-            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
 
-            <PageWrapper>
-              <CouponEventsTableFiltersProvider>
-                <CouponAdministration />
-              </CouponEventsTableFiltersProvider>
-            </PageWrapper>
-          </Fragment>
-        }
-      ></Route>
 
       <Route
         path="agency-services"
