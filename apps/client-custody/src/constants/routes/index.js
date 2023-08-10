@@ -80,10 +80,6 @@ const dashboardUrls = include("/dashboard", {
       couponAdministration: "coupon-administration",
       corporateActionEvents: "corporate-action-events",
     }),
-    securitiesAdmin: include("securities-admin", {
-      home: "",
-      securitiesList: "securities-list",
-    }),
   }),
 
   issuances: include("issuances", {

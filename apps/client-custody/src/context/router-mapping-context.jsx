@@ -29,7 +29,6 @@ const PublicHome = lazy(() => import("../pages/PublicHome"));
 const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
 const Reconciliation = lazy(() => import("../pages/Reconciliation"));
 const Reports = lazy(() => import("../pages/Reports"));
-const SecuritiesAdmin = lazy(() => import("../pages/SecuritiesAdmin"));
 const OperationsSecServices = lazy(() => import("../pages/OperationsSecServices"));
 const SettlementAdmin = lazy(() => import("../pages/SettlementAdmin"));
 const SingleIssuance = lazy(() => import("../pages/SingleIssuance"));
@@ -246,14 +245,6 @@ const RouterMappingProvider = ({ children }) => {
         layout: DashboardLayout,
         path: `${routes.dashboard.custody.opsSecServices.home}*`,
         disabled: !kycApprovalStatus,
-      },
-      {
-        component: SecuritiesAdmin,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.custody.securitiesAdmin.home}*`,
-        disabled: !kycApprovalStatus || !isIntlSecTradeSettlementWorkflow,
       },
       {
         component: SettlementAdmin,
