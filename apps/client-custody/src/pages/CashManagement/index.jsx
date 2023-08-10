@@ -16,7 +16,6 @@ const CashStatementPage = lazy(() => import("./CashStatementPage"));
 const AccountTransferPage = lazy(() => import("./AccountTransferPage"));
 const PaymentInstructionsPage = lazy(() => import("./PaymentInstructionsPage"));
 const IncomingPaymentsPage = lazy(() => import("./IncomingPaymentsPage"));
-const InternalTransfersPage = lazy(() => import("./InternalTransfersPage"));
 
 const BillingAndPayments = () => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
@@ -89,7 +88,7 @@ const BillingAndPayments = () => {
                 {
                   // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
                 }
-                {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
+                {inProd ? <AccountTransferPage /> : <AccountTransferPage />}
               </Fragment>
             }
           ></Route>
