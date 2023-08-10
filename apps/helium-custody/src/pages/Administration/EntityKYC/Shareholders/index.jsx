@@ -1153,8 +1153,6 @@ const Shareholders = () => {
                         >
                           <Box className="w-full">
                             <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
                               name="passportCopyFileName"
                               fullWidth
                               defaultFiles={
@@ -1202,8 +1200,6 @@ const Shareholders = () => {
                         >
                           <Box className="w-full">
                             <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
                               name="addressProofFileName"
                               fullWidth
                               defaultFiles={
@@ -1255,8 +1251,6 @@ const Shareholders = () => {
                               >
                                 <Box className="w-full">
                                   <FileUploadField
-                                    // label="Bulletin Document"
-                                    // isLoading={filesUploadInProgress}
                                     name="saudiIdFileName"
                                     fullWidth
                                     defaultFiles={
@@ -1307,8 +1301,6 @@ const Shareholders = () => {
                               >
                                 <Box className="w-full">
                                   <FileUploadField
-                                    // label="Bulletin Document"
-                                    // isLoading={filesUploadInProgress}
                                     name="shareholderProofFileName"
                                     fullWidth
                                     defaultFiles={

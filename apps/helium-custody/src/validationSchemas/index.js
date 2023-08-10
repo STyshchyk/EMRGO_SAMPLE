@@ -22,8 +22,6 @@ export { default as kycSanctionsSchema } from "./kycSanctionsSchema";
 export { default as inviteExistingIssuerSchema } from "./inviteExistingIssuerSchema";
 export { default as addAccountFormSchema } from "./addAccountFormSchema";
 export { default as lcClosingFormSchema } from "./lcClosingFormSchema";
-export { default as addBulletinFormSchema } from "./addBulletinFormSchema";
-export { default as updateBulletinFormSchema } from "./updateBulletinFormSchema";
 export { default as ksaKycRequirementsScehma } from "./ksaKycRequirementsScehma";
 export { default as clientTermsFormSchema } from "./clientTermsFormSchema";
 export { default as addPaymentAccountFormSchema } from "./addPaymentAccountFormSchema";

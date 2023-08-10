@@ -181,11 +181,6 @@ const dashboardUrls = include("/dashboard", {
     home: "",
     tfa: "tfa",
   }),
-  bulletins: include("bulletins", {
-    home: "",
-    view: "view",
-    manage: "manage",
-  }),
 
   settlementAdmin: include("settlement-admin", {
     home: "",

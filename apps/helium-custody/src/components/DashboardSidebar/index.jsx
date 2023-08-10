@@ -95,13 +95,6 @@ const support = {
   requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
-const bulletinBoard = {
-  acls: ["Quotes/View", "Quotes/Manage"],
-  baseURLPattern: /(?:\/dashboard\/bulletins\/)(?:[\w-/]*)/,
-  displayName: "Bulletin Board",
-  homeUrl: routes.dashboard.bulletins.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "BROKER", "INVESTOR"],
-};
 
 const custody = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -215,8 +208,6 @@ const DashboardSidebar = ({ open }) => {
   const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
 
   const { checkFeatureFlag } = useFeatureToggle();
-  // const isBulletinBoardFeatureEnabled = enabledFeatures.includes(featureFlags.bulletinBoardFeature);
-  const isBulletinBoardFeatureEnabled = checkFeatureFlag(featureFlags.bulletinBoardFeature);
   const isIntlSecTradeSettlementWorkflow = checkFeatureFlag(
     featureFlags.intlSecTradeSettlementWorkflow
   );
@@ -234,7 +225,6 @@ const DashboardSidebar = ({ open }) => {
     issuance,
     support,
     custody,
-    bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,
     reconciliation: isReconciliationFeatureEnabled ? reconciliation : undefined,
   };

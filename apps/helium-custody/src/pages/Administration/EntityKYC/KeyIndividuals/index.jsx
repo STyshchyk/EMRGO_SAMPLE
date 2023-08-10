@@ -944,8 +944,6 @@ const KeyIndividuals = () => {
                         >
                           <Box className="w-full">
                             <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
                               name="passportCopyFileName"
                               fullWidth
                               downloadParameters={
@@ -992,8 +990,6 @@ const KeyIndividuals = () => {
                         >
                           <Box className="w-full">
                             <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
                               name="addressProofFileName"
                               fullWidth
                               downloadParameters={
@@ -1044,8 +1040,6 @@ const KeyIndividuals = () => {
                             >
                               <Box className="w-full">
                                 <FileUploadField
-                                  // label="Bulletin Document"
-                                  // isLoading={filesUploadInProgress}
                                   name="chamberOfCommerceAuthorizationFileName"
                                   fullWidth
                                   downloadParameters={
@@ -1107,8 +1101,6 @@ const KeyIndividuals = () => {
                         >
                           <Box className="w-full">
                             <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
                               name="corporateAuthorizationFileName"
                               fullWidth
                               downloadParameters={
