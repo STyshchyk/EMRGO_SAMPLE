@@ -1,7 +1,12 @@
 import { FC, Fragment } from "react";
 
+import * as constants from "@emrgo-frontend/constants";
+import { fetchUserProfile } from "@emrgo-frontend/services";
 import { Button, DashboardContent, EnterOTPCodeModal, Input } from "@emrgo-frontend/shared-ui";
+import { useUser } from "@emrgo-frontend/shared-ui";
+import { useRefreshProfile } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { AccountPanel } from "../../components/AccountPanel";
 import { AccountPanelContent } from "../../components/AccountPanelContent";
@@ -14,6 +19,7 @@ import { EditEmailAddressModal } from "./EditEmailAddressModal/EditEmailAddressM
 import { EditNameModal } from "./EditNameModal/EditNameModal";
 import { EditPhoneNumberModal } from "./EditPhoneNumberModal/EditPhoneNumberModal";
 import { useUserDetailsContext } from "./UserDetails.provider";
+import { refreshToken } from "./UserDetails.service";
 import * as Styles from "./UserDetails.styles";
 import { IUserDetailsProps } from "./UserDetails.types";
 
@@ -29,6 +35,29 @@ export const UserDetailsComponent: FC<IUserDetailsProps> = (props: IUserDetailsP
     onVerifyCorporateMobileNumber,
     onLogOut,
   } = ensureNotNull(useUserDetailsContext());
+
+  const { updateUser } = useUser();
+
+  const { data, refetch: userProfileRefetch } = useQuery([constants.queryKeys.account.profile.fetch], {
+    staleTime: 60 * 60,
+    queryFn: () => fetchUserProfile(),
+    onSuccess: (response) => {
+      const user = response;
+      updateUser(user);
+    },
+  });
+  
+  const { mutate: doRefreshToken } = useMutation({
+    mutationFn: refreshToken,
+  });
+
+  const switchRole = (role : string) => {
+    doRefreshToken(role, {
+      onSuccess: () => {
+        userProfileRefetch();
+      },
+    });
+  };
 
   return (
     <DashboardContent>
@@ -121,6 +150,13 @@ export const UserDetailsComponent: FC<IUserDetailsProps> = (props: IUserDetailsP
             <Button size="large" variant="secondary" color="error" onClick={onLogOut}>
               Log out
             </Button>
+            
+            {/* //! Just for development to be removed */}
+            <span style={{marginLeft:'24px'}}>
+              <Button size="large" variant="secondary" onClick={() => switchRole("admin")}>
+                Switch to Admin
+              </Button>
+            </span>
           </AccountPanelFooter>
         </AccountPanel>
       </Styles.Container>
