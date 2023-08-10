@@ -7,7 +7,6 @@ import ReviewSecurityDialog from "../../../components/ReviewSecurityDialog";
 import SecurityTradesTable, {
   generateSecurityTradesTableRowData,
 } from "../../../components/SecuritiesTradesTable";
-import ViewSSIDialog from "../../../components/ViewSSIDialog";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
 import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
@@ -23,7 +22,6 @@ const CustodyAndSettlement = () => {
   const [currentlySelectedRowData, setCurrentlySelectedRowData] = useState(null);
 
   const [openReviewSecurityInfoDialog, setOpenReviewSecurityInfoDialog] = useState(false);
-  const [openViewSSIDialog, setOpenViewSSIDialog] = useState(false);
   // const [openViewNotificationsDialog, setOpenViewNotificationsDialog] = useState(false);
 
   // selectors
@@ -68,15 +66,7 @@ const CustodyAndSettlement = () => {
       },
       disabled: !currentlySelectedRowData?.externalSecurity,
     },
-    {
-      id: 2,
-      label: `${t("TableActions.View SSI")}`,
-      onClick: () => {
-        setOpenViewSSIDialog(true);
-        handleCloseMenu();
-      },
-      disabled: true,
-    },
+
     {
       id: 3,
       label: `${t("TableActions.View Notifications")}`,
@@ -113,18 +103,7 @@ const CustodyAndSettlement = () => {
           }}
         />
       )}
-      {openViewSSIDialog && (
-        <ViewSSIDialog
-          operationsMode
-          paymentAccounts={paymentAccounts}
-          currentlySelectedRowData={currentlySelectedRowData}
-          open={openViewSSIDialog}
-          handleClose={() => {
-            setOpenViewSSIDialog(false);
-            handleCloseMenu();
-          }}
-        />
-      )}
+
     </Fragment>
   );
 };
