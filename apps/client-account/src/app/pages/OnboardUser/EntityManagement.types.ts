@@ -5,7 +5,7 @@ export enum UserRoles {
   investmentManager = "invst_mngr"
 }
 
-export type TNewUserStatus = "invited" | "onboarded" | "canceled";
+export type TNewUserStatus = "invited" | "onboarded" | "cancelled";
 
 
 export type TNewUserTypes =

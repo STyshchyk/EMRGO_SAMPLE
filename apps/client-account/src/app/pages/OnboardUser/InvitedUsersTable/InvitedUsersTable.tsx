@@ -50,7 +50,8 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       },
       cell: ({ row }) => {
         const id: string = row.original.id as string;
-        const status = row.original.invitationStatus; 
+        const status = row.original.invitationStatus?.toLowerCase(); 
+        console.log(status)
         return (
           <ActionTooltip
             title={
@@ -62,7 +63,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   Resend Invitation
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={status === 'canceled' || status === 'onboarded'}
+                  $disabled={status === 'cancelled' || status === 'onboarded'}
                   onClick={() => onCancelInvitation(id)}
                 >
                   Cancel Invitation

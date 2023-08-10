@@ -115,7 +115,12 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         queryClient
           .invalidateQueries({ queryKey: [queryKeys.account.onboardedUsers.fetch] })
       },
-      onError: () => {
+      onError: (err: any) => {
+        // message from BE is in arabic using messageCode for now
+        const { messageCode } = err.response.data
+        if(messageCode === "ERR_EmailAlreadyExists"){
+          return showErrorToast("User with this email already exists");
+        }
         showErrorToast("Error occured during inviting new user");
       },
     });

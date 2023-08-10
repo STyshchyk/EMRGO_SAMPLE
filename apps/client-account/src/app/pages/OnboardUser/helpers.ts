@@ -8,7 +8,7 @@ const newUserTypeLabels: Record<TNewUserTypes, string> = {
   
   const newUserStatusLabel: Record<TNewUserStatus, string> = {
     invited: "Invited",
-    canceled: "Canceled",
+    cancelled: "Cancelled",
     onboarded: "Onboarded",
   };
   
