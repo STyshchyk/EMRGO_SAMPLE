@@ -16,8 +16,6 @@ const AgencyServices = lazy(() => import("./AgencyServices"));
 const CounterpartyList = lazy(() => import("../SettlementAdmin/CounterpartyList"));
 const CounterpartySSIList = lazy(() => import("../SettlementAdmin/CounterpartySSIList"));
 const CustodyAndSettlement = lazy(() => import("./CustodyAndSettlement"));
-const FXTransactionList = lazy(() => import("./FXTransactionList"));
-const Registrar = lazy(() => import("./Registrar"));
 const SecuritiesRegistration = lazy(() => import("./SecuritiesRegistration"));
 const CorporateActionEvents = lazy(() => import("./CorporateActionEvents"));
 // const TrusteeServices = lazy(() => import('./TrusteeServices'));
@@ -64,14 +62,6 @@ const OperationsSecServices = () => {
         accessControlsList.SECURITIES_CUSTODY_AND_CLEARING.view.key,
       ]),
     },
-    {
-      path: routes.dashboard.custody.opsSecServices.registrar,
-      link: routes.dashboard.custody.opsSecServices.registrar,
-      text: "Minor Navigation.Securities Services.Registrar",
-      disabled: !authorizeRouteAccess(currentListOfAcls, [
-        accessControlsList.SECURITIES_SERVICES_OPS.view.key,
-      ]),
-    },
     /*
     {
       path: routes.dashboard.custody.opsSecServices.trusteeServices,
@@ -81,15 +71,6 @@ const OperationsSecServices = () => {
     },
 
     */
-    {
-      path: routes.dashboard.custody.opsSecServices.fxTransactionList,
-      link: routes.dashboard.custody.opsSecServices.fxTransactionList,
-      text: "Minor Navigation.Securities Services.FX Transaction List",
-      disabled: !authorizeRouteAccess(currentListOfAcls, [
-        accessControlsList.ENTITIES_LISTING.view.key,
-      ]),
-    },
-
     {
       path: routes.dashboard.custody.opsSecServices.counterpartyList,
       link: routes.dashboard.custody.opsSecServices.counterpartyList,
@@ -170,19 +151,6 @@ const OperationsSecServices = () => {
         }
       ></Route>
 
-      <Route
-        path="registrar"
-        element={
-          <Fragment>
-            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-
-            <PageWrapper>
-              <Registrar />
-            </PageWrapper>
-          </Fragment>
-        }
-      ></Route>
-
       {/*
       <Route path={routes.dashboard.custody.opsSecServices.trusteeServices}>
         <MinorNavigation routes={PILL_ROUTE_CONFIGS} currentAccessList={accessControls} />
@@ -192,19 +160,6 @@ const OperationsSecServices = () => {
         </PageWrapper>
       </Route>
     */}
-
-      <Route
-        path="fx-transaction-list"
-        element={
-          <Fragment>
-            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-
-            <PageWrapper>
-              <FXTransactionList />
-            </PageWrapper>
-          </Fragment>
-        }
-      ></Route>
 
       <Route
         path="counterparty-list"

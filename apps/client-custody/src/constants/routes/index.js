@@ -73,8 +73,6 @@ const dashboardUrls = include("/dashboard", {
       custodyAndSettlement: "custody-and-settlement",
       trusteeServices: "trustee-services",
       agencyServices: "agency-services",
-      registrar: "registrar",
-      fxTransactionList: "fx-transaction-list",
       counterpartyList: "counterparty-list",
       counterpartySSIList: "counterparty-ssi-list",
       corporateActionEvents: "corporate-action-events",
