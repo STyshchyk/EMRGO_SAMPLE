@@ -59,13 +59,7 @@ const BillingAndPayments = () => {
         accessControlsList.ACCOUNT.edit.key,
       ]),
     },
-    {
-      path: routes.dashboard.custody.cashManagement.incomingPayments,
-      link: routes.dashboard.custody.cashManagement.incomingPayments,
-      text: "Minor Navigation.Cash Management.Incoming Payments",
-      // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
-      disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
-    },
+
   ];
 
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
@@ -93,7 +87,6 @@ const BillingAndPayments = () => {
             }
           ></Route>
           <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
-          <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
           {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />

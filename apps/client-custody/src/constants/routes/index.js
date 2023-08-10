@@ -35,7 +35,6 @@ const dashboardUrls = include("/dashboard", {
       cashStatement: "cash-statement",
       accountTransfer: "internal-transfer",
       paymentInstructions: "payment-instructions",
-      incomingPayments: "incoming-payments",
     }),
     onboarding: include("onboarding", {
       home: "",
