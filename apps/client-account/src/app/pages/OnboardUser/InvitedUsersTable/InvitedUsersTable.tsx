@@ -51,7 +51,6 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       cell: ({ row }) => {
         const id: string = row.original.id as string;
         const status = row.original.invitationStatus?.toLowerCase(); 
-        console.log(status)
         return (
           <ActionTooltip
             title={

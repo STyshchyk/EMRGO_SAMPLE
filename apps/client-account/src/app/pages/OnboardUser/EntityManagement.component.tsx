@@ -39,22 +39,28 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
     } = ensureNotNull(useEntityManagementContext());
 
   const entityOperationDetails = [
+    // {
+    //   id: "1",
+    //   label: "Portfolio Details",
+    //   callback: onViewPlatformDetails
+    // }, 
     {
       id: "1",
-      label: "Portfolio Details",
-      callback: onViewPlatformDetails
-    }, {
-      id: "2",
       label: "Client Banking Details",
-      callback: onViewBankingDetails
-    }, {
-      id: "3",
+      callback: onViewBankingDetails,
+      disabled:true,
+    }, 
+    {
+      id: "2",
       label: "Account Opening (Safekeeping & Cash)",
-      callback: onViewCashAccounts
-    }, {
-      id: "4",
+      callback: onViewCashAccounts,
+      disabled:true,
+    },
+    {
+      id: "3",
       label: "Authorised Representatives",
-      callback: onViewAuthRepresentatives
+      callback: onViewAuthRepresentatives,
+      disabled:true,
     }
   ];
 
@@ -88,6 +94,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
                   <UserItem
                     key={item.id}
                     handleCallback={item.callback}
+                    disabled = {item.disabled}
                   >
                     {item.label}
                   </UserItem>

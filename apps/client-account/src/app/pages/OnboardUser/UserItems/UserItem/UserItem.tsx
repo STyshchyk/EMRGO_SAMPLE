@@ -9,7 +9,8 @@ import { IUserItemProps } from "./UserItem.types";
 
 export const UserItem: FC<IUserItemProps> = ({
   children,
-  handleCallback
+  handleCallback,
+  disabled
 }) => {
   return (
     <Styles.UserItem>
@@ -17,7 +18,7 @@ export const UserItem: FC<IUserItemProps> = ({
 
       <Styles.Spacer/>
 
-      <Button variant="primary" onClick={handleCallback}>
+      <Button variant="primary" onClick={handleCallback} disabled={disabled}>
         View
       </Button>
     </Styles.UserItem>
