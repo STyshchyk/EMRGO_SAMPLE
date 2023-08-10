@@ -37,23 +37,7 @@ const home = {
   requiredEntityTypes: [],
 };
 
-const administration = {
-  acls: ["KYC/View", "KYC/Edit", "Account/Manage", "GroupManagement/View", "GroupManagement/Edit"],
-  baseURLPattern: /(?:\/dashboard\/administration\/)(?:[\w-/]*)/,
-  displayName: "Administration",
-  homeUrl: routes.dashboard.administration.home,
-  requiredEntityTypes: [
-    "ADMINISTRATOR",
-    "ARRANGER",
-    "FIDUCIARY",
-    "INVESTOR",
-    "ISSUER",
-    "LEGAL_COUNSEL",
-    "OBLIGOR",
-    "VISITOR",
-    "EMRGO_SERVICES",
-  ],
-};
+
 
 const issuance = {
   acls: [
@@ -87,13 +71,7 @@ const issuance = {
   ],
 };
 
-const support = {
-  acls: ["Support/Auth"],
-  baseURLPattern: /(?:\/dashboard\/support\/)(?:[\w-/]*)/,
-  displayName: "Support",
-  homeUrl: routes.dashboard.support.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
-};
+
 
 const bulletinBoard = {
   acls: ["Quotes/View", "Quotes/Manage"],
@@ -237,15 +215,12 @@ const DashboardSidebar = ({ open }) => {
 
   const initialRoutingConfigs = {
     home,
-    administration,
   };
 
   const RoutingConfigs = {
     home,
-    administration,
     billing: inProd ? undefined : billing,
     issuance,
-    support,
     custody,
     bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,
