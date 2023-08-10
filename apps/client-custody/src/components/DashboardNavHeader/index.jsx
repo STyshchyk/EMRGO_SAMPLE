@@ -60,13 +60,7 @@ const securitiesServices = {
   requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
-const securitiesAdmin = {
-  acls: ["Services/Security/View", "Services/CustodyClearing/View"],
-  baseURLPattern: /(?:\/dashboard\/custody\/securities-admin\/)(?:[\w-/]*)/,
-  displayName: "Securities Admin",
-  homeUrl: routes.dashboard.custody.securitiesAdmin.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
-};
+
 
 const NavLinkList = ({ routingConfigs }) => {
   const { isDarkMode } = useDarkMode();
@@ -153,7 +147,6 @@ const DashboardNavHeader = () => {
     securitiesServices: isIntlSecTradeSettlementWorkflow ? securitiesServices : undefined,
     issuerServices: isIntlSecTradeSettlementWorkflow ? issuerServices : undefined,
     investorServices: isIntlSecTradeSettlementWorkflow ? investorServices : undefined,
-    securitiesAdmin: isIntlSecTradeSettlementWorkflow ? securitiesAdmin : undefined,
     reports,
   };
 
