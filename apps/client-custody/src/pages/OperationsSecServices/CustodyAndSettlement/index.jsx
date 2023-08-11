@@ -18,7 +18,6 @@ import SecurityTradesTable, {
 import ViewCounterpartySSIDialog from "../../../components/ViewCounterpartySSIDialog";
 import ViewPaymentEvidenceDialog from "../../../components/ViewPaymentEvidenceDialog";
 import ViewSettlementInstructionAuditHistoryDialog from "../../../components/ViewSettlementInstructionAuditHistoryDialog";
-import ViewSSIDialog from "../../../components/ViewSSIDialog";
 import ViewTradeDetailsDialog from "../../../components/ViewTradeDetailsDialog";
 import featureFlags from "../../../constants/featureFlags";
 import {
@@ -47,7 +46,6 @@ const CustodyAndSettlement = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentlySelectedRowData, setCurrentlySelectedRowData] = useState(null);
   const [openViewPaymentEvidenceDialog, setOpenViewPaymentEvidenceDialog] = useState(false);
-  const [openViewSSIDialog, setOpenViewSSIDialog] = useState(false);
   const [openViewCounterpartySSIDialog, setOpenViewCounterpartySSIDialog] = useState(false);
   const [openChangeSettlementInstructionDialog, setOpenChangeSettlementInstructionDialog] =
     useState(false);
@@ -214,14 +212,7 @@ const CustodyAndSettlement = () => {
         ),
       hidden: !isPrimSecTrade,
     },
-    {
-      id: 3,
-      label: `${t("TableActions.View SSI")}`, // TODO: FIND OUT IF THIS IS STILL NEEDED
-      onClick: () => {
-        setOpenViewSSIDialog(true);
-      },
-      disabled: true,
-    },
+
     {
       id: 4,
       label: `${t("TableActions.View Counterparty SSI")}`,
@@ -454,18 +445,7 @@ const CustodyAndSettlement = () => {
           currentlySelectedRowData={currentlySelectedRowData}
         />
       )}
-      {openViewSSIDialog && (
-        <ViewSSIDialog
-          operationsMode
-          paymentAccounts={paymentAccounts}
-          open={openViewSSIDialog}
-          handleClose={() => {
-            setOpenViewSSIDialog(false);
-            handleCloseMenu();
-          }}
-          currentlySelectedRowData={currentlySelectedRowData}
-        />
-      )}
+
       {openViewCounterpartySSIDialog && (
         <ViewCounterpartySSIDialog
           data={currentlySelectedRowData}

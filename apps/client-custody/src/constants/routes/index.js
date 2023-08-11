@@ -19,7 +19,6 @@ const authenticationUrls = include("/authentication", {
   otp: "otp",
   forgotPassword: "forgot-password",
   reset: "reset-password/:token",
-  setupMFA: "setup-mfa",
   resetMFA: "reset-mfa/:token",
   resetMFAAndPassword: "reset-mfa-password/:token",
   resetPasswordSuccess: "reset-password-success",
@@ -36,7 +35,6 @@ const dashboardUrls = include("/dashboard", {
       cashStatement: "cash-statement",
       accountTransfer: "internal-transfer",
       paymentInstructions: "payment-instructions",
-      incomingPayments: "incoming-payments",
     }),
     onboarding: include("onboarding", {
       home: "",
@@ -75,88 +73,13 @@ const dashboardUrls = include("/dashboard", {
       custodyAndSettlement: "custody-and-settlement",
       trusteeServices: "trustee-services",
       agencyServices: "agency-services",
-      registrar: "registrar",
-      fxTransactionList: "fx-transaction-list",
       counterpartyList: "counterparty-list",
       counterpartySSIList: "counterparty-ssi-list",
-      couponAdministration: "coupon-administration",
       corporateActionEvents: "corporate-action-events",
-    }),
-    securitiesAdmin: include("securities-admin", {
-      home: "",
-      securitiesList: "securities-list",
     }),
   }),
 
-  administration: include("administration", {
-    home: "",
-    entityDetails: include("entity-details", {
-      kyc: include("kyc", {
-        entities: include("entities", {
-          home: "",
-          entity: include(":entityId", {
-            home: "",
-            banking: "banking",
-            classification: "classification",
-            clientTerms: "client-terms",
-            documents: "documents",
-            experience: "experience",
-            identification: "identification",
-            individuals: include("individuals", {
-              home: "",
-              individual: include(":individualId", {
-                home: "details",
-                setupMFA: "setup-mfa",
-              }),
-            }),
-            entityClassification: "entity-classification",
-            keyIndividuals: "key-individuals",
-            overview: "overview",
-            shareholders: "shareholders",
-            wealth: "wealth",
-          }),
-        }),
-      }),
-    }),
-    entityManagement: include("entity-management", {
-      entities: include("entities", {
-        home: "",
-        entity: include(":entityId", {
-          home: "",
-          entityGroups: include("entity-groups", {
-            home: "",
-            entityGroup: include(":groupId", {
-              entityUserAccessManagement: "entity-user-access-management",
-            }),
-          }),
-          entityUsers: include("entity-users", {
-            home: "",
-          }),
-          editEntityPrefs: include("edit-entity-preferences", {
-            home: "",
-          }),
-        }),
-      }),
-      visitors: include("visitors", {
-        home: "",
-      }),
-      users: include("users", {
-        home: "",
-      }),
-    }),
-    parentEntityManagement: include("parent-entity-management", {
-      home: "",
-    }),
-    entityAccountManagement: include("entity-account-management", {
-      home: "",
-    }),
-    tfa: include("tfa", {
-      tickets: "tickets",
-    }),
-    userManagement: include("user-management", {
-      home: "",
-    }),
-  }),
+
   issuances: include("issuances", {
     home: "",
     issuance: include(":issuanceID", {
@@ -183,10 +106,6 @@ const dashboardUrls = include("/dashboard", {
   blotters: include("blotters", {
     home: "",
   }),
-  support: include("support", {
-    home: "",
-    tfa: "tfa",
-  }),
   bulletins: include("bulletins", {
     home: "",
     view: "view",
@@ -205,7 +124,6 @@ const dashboardUrls = include("/dashboard", {
     home: "",
     invoices: "invoices",
     manageInvoices: "manage-invoices",
-    clientRateCard: "client-rate-card",
   }),
 });
 

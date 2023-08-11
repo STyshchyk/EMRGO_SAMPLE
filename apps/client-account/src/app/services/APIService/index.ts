@@ -1,6 +1,7 @@
 import { BASE_API_URL, clientAuthenticationRoutes } from "@emrgo-frontend/constants";
 import { navigateModule } from "@emrgo-frontend/utils";
 import axios from "axios";
+import store from "store";
 
 export const dashboardApi = axios.create({
   baseURL: BASE_API_URL,
@@ -8,6 +9,8 @@ export const dashboardApi = axios.create({
 });
 
 dashboardApi.defaults.headers.common["Content-Type"] = "application/json";
+
+const hydratedUser = store.get("user")
 
 // Add an Axios interceptor to handle token refresh
 dashboardApi.interceptors.response.use(
@@ -23,6 +26,7 @@ dashboardApi.interceptors.response.use(
         await dashboardApi({
           method: "post",
           url: "v2/refreshTokens",
+          data: { role: hydratedUser?.role }
         });
 
         // Retry the original request with the updated token

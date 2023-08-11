@@ -16,7 +16,6 @@ const CashStatementPage = lazy(() => import("./CashStatementPage"));
 const AccountTransferPage = lazy(() => import("./AccountTransferPage"));
 const PaymentInstructionsPage = lazy(() => import("./PaymentInstructionsPage"));
 const IncomingPaymentsPage = lazy(() => import("./IncomingPaymentsPage"));
-const InternalTransfersPage = lazy(() => import("./InternalTransfersPage"));
 
 const BillingAndPayments = () => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
@@ -60,13 +59,7 @@ const BillingAndPayments = () => {
         accessControlsList.ACCOUNT.edit.key,
       ]),
     },
-    {
-      path: routes.dashboard.custody.cashManagement.incomingPayments,
-      link: routes.dashboard.custody.cashManagement.incomingPayments,
-      text: "Minor Navigation.Cash Management.Incoming Payments",
-      // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
-      disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
-    },
+
   ];
 
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
@@ -89,12 +82,11 @@ const BillingAndPayments = () => {
                 {
                   // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
                 }
-                {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
+                {inProd ? <AccountTransferPage /> : <AccountTransferPage />}
               </Fragment>
             }
           ></Route>
           <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
-          <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
           {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />

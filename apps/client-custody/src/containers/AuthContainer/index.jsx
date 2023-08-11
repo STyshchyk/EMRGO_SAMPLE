@@ -10,7 +10,6 @@ import RegistrationSuccess from "../../components/RegistrationSuccess";
 import TwoFactorAuthentication from "../../components/TwoFactorAuthentication";
 import TwoFactorAuthenticationExp from "../../components/TwoFactorAuthenticationExp";
 import routes from "../../constants/routes";
-import MFASetup from "../../pages/Administration/IndividualKYC/Details";
 import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import { doPasswordReset } from "../../redux/actionCreators/auth";
@@ -43,8 +42,7 @@ const AuthContainer = ({ requestPasswordReset, resetPasswordSuccess }) => {
       return <RegistrationSuccess />;
     case routes.authentication.otp:
       return inProd ? <TwoFactorAuthentication /> : <TwoFactorAuthenticationExp />;
-    case routes.authentication.setupMFA:
-      return <MFASetup />;
+
     case routes.authentication.resetMFA:
       return <MFAReset />;
     default:

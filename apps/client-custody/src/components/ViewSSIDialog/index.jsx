@@ -330,28 +330,3 @@ const OperationsUI = ({ selectedRowData, open, handleClose }) => {
     </Dialog>
   );
 };
-const ViewSSIDialog = ({
-  paymentAccounts,
-  open,
-  handleClose,
-  operationsMode,
-  currentlySelectedRowData,
-}) => (
-  <Fragment>
-    {operationsMode ? (
-      <OperationsUI
-        selectedRowData={currentlySelectedRowData}
-        open={open}
-        handleClose={handleClose}
-      />
-    ) : (
-      <EditableUI paymentAccounts={paymentAccounts} open={open} handleClose={handleClose} />
-    )}
-  </Fragment>
-);
-
-export default ViewSSIDialog;
-
-ViewSSIDialog.defaultProps = {
-  operationsMode: false,
-};

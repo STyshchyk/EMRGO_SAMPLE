@@ -27,7 +27,6 @@ const DashboardHome = () => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  const [showCreateBulletinModal, setCreateBulletinModal] = useState(false);
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
@@ -104,28 +103,13 @@ const DashboardHome = () => {
     <div data-testid="dashboard-home">
       <Grid container justifyContent="space-between">
         <MinorNavigation routes={ROUTES} />
-        {hasBulletinsManageACL ? (
-          <div>
-            <Button
-              color="secondary"
-              variant="contained"
-              size="small"
-              onClick={() => setCreateBulletinModal(true)}
-            >
-              {t(`New Bulletin +`)}
-            </Button>
-          </div>
-        ) : null}
       </Grid>
       <Bulletin
         bulletins={bulletins}
-        showCreateBulletinModal={showCreateBulletinModal}
-        setCreateBulletinModal={setCreateBulletinModal}
         bulletinTypeDropdown={bulletinTypeDropdown}
         handleFileUpload={handleFileUpload}
         filesUploaded={filesUploaded}
         filesUploadInProgress={filesUploadInProgress}
-        createBulletin={createBulletin}
         deleteBulletin={deleteBulletin}
         fetchBulletinDocument={fetchBulletinDocument}
         isLoading={isLoading}

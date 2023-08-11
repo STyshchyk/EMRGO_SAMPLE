@@ -21,6 +21,7 @@ const AppProviders = ({ children }) => {
 
   return (
     <I18nextProvider i18n={i18n}>
+      <CustodyWrapperProvider>
       <AuthProvider>
         <UserProvider>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
@@ -39,6 +40,7 @@ const AppProviders = ({ children }) => {
           </ThemeProvider>
         </UserProvider>
       </AuthProvider>
+      </CustodyWrapperProvider>
     </I18nextProvider>
   );
 };
