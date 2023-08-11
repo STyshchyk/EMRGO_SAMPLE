@@ -10,7 +10,6 @@ import * as authSelectors from "../../redux/selectors/auth";
 
 // import authorizeRouteAccess from '../../helpers/authorizeRouteAccess';
 
-const ClientRateCardPage = lazy(() => import("./ClientRateCardPage"));
 const InvoiceManagementPage = lazy(() => import("./InvoiceManagementPage"));
 const InvestorInvoicesPage = lazy(() => import("./InvestorInvoicesPage"));
 

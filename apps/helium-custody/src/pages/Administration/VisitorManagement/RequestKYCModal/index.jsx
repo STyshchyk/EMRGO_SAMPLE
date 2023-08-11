@@ -1,10 +1,8 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -58,75 +56,73 @@ const RequestKYCModal = ({ open, onClose, selectedRow, requestKYC }) => {
                 {t("onboarding:Forms.Request User & Entity KYC")}
               </DialogTitle>
               <DialogContent className="overflow-y-visible">
-                <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                  <Grid container>
-                    <Box my={1} className="w-full">
-                      <FormControl className="w-full">
-                        <Select
-                          id="entity-type"
-                          closeMenuOnSelect
-                          placeholder={`${t("onboarding:Forms.Entity Type")}...`}
-                          isSearchable
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          styles={{
-                            menu: (styles) => ({
-                              ...styles,
-                              zIndex: 10,
-                            }),
-                            control: (styles) => ({
-                              ...styles,
-                              border: "none",
-                              borderRadius: "6px",
-                              backgroundColor: "rgba(0, 0, 0, 0.09)",
-                              height: "3rem",
-                            }),
-                          }}
-                          value={values.entityType}
-                          options={entityTypes}
-                          onChange={(selectedValue) => {
-                            setFieldValue("role", null, false);
-                            setFieldValue("entityType", selectedValue, false);
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </Grid>
-                  <Grid container>
-                    <Box my={1} className="w-full">
-                      <FormControl className="w-full">
-                        <Select
-                          id="role"
-                          closeMenuOnSelect
-                          placeholder={`${t("onboarding:Forms.Role")}...`}
-                          isSearchable
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          styles={{
-                            menu: (styles) => ({
-                              ...styles,
-                              zIndex: 10,
-                            }),
-                            control: (styles) => ({
-                              ...styles,
-                              border: "none",
-                              borderRadius: "6px",
-                              backgroundColor: "rgba(0, 0, 0, 0.09)",
-                              height: "3rem",
-                            }),
-                          }}
-                          value={values.role}
-                          options={values?.entityType?.roles || []}
-                          onChange={(selectedValue) => {
-                            setFieldValue("role", selectedValue, false);
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                <Grid container>
+                  <Box my={1} className="w-full">
+                    <FormControl className="w-full">
+                      <Select
+                        id="entity-type"
+                        closeMenuOnSelect
+                        placeholder={`${t("onboarding:Forms.Entity Type")}...`}
+                        isSearchable
+                        components={{
+                          ...animatedComponents,
+                        }}
+                        styles={{
+                          menu: (styles) => ({
+                            ...styles,
+                            zIndex: 10,
+                          }),
+                          control: (styles) => ({
+                            ...styles,
+                            border: "none",
+                            borderRadius: "6px",
+                            backgroundColor: "rgba(0, 0, 0, 0.09)",
+                            height: "3rem",
+                          }),
+                        }}
+                        value={values.entityType}
+                        options={entityTypes}
+                        onChange={(selectedValue) => {
+                          setFieldValue("role", null, false);
+                          setFieldValue("entityType", selectedValue, false);
+                        }}
+                      />
+                    </FormControl>
+                  </Box>
+                </Grid>
+                <Grid container>
+                  <Box my={1} className="w-full">
+                    <FormControl className="w-full">
+                      <Select
+                        id="role"
+                        closeMenuOnSelect
+                        placeholder={`${t("onboarding:Forms.Role")}...`}
+                        isSearchable
+                        components={{
+                          ...animatedComponents,
+                        }}
+                        styles={{
+                          menu: (styles) => ({
+                            ...styles,
+                            zIndex: 10,
+                          }),
+                          control: (styles) => ({
+                            ...styles,
+                            border: "none",
+                            borderRadius: "6px",
+                            backgroundColor: "rgba(0, 0, 0, 0.09)",
+                            height: "3rem",
+                          }),
+                        }}
+                        value={values.role}
+                        options={values?.entityType?.roles || []}
+                        onChange={(selectedValue) => {
+                          setFieldValue("role", selectedValue, false);
+                        }}
+                      />
+                    </FormControl>
+                  </Box>
+                </Grid>
               </DialogContent>
               <DialogActions>
                 <Grid container justifyContent="flex-end" className="mx-4 mb-4">
