@@ -141,8 +141,14 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   Approve Client Profile
                 </TooltipButtonActions>
                 <TooltipButtonActions
+                  $disabled={allowApproveCustody !== "Submitted"}
                   onClick={() => {
-
+                    if (allowApproveCustody !== "Submitted") {
+                      showErrorToast(
+                        `Error while trying to approve Client Profile with status ${allowApproveKYC}`
+                      );
+                      return;
+                    }
                     doKycSumbit(
                       {
                         id: entityId,
