@@ -13,6 +13,7 @@ import { InvestmentProfileForm } from "./pages/InvestmentProfile/InvestmentProfi
 import { InvestmentProfileThankYou } from "./pages/InvestmentProfile/InvestmentProfileThankYou";
 import { KYC } from "./pages/KYC";
 import { KYCForm } from "./pages/KYC/KYCForm";
+import { EntityManagement } from "./pages/OnboardUser";
 import { PlatformAccess } from "./pages/PlatformAccess";
 import { UserDetails } from "./pages/UserDetails";
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: routes.account.dataRoom,
     element: <DataRoom />,
+  },
+  {
+    path: routes.account.onboardUser,
+    element: <EntityManagement/>,
   },
   {
     path: routes.clientInvestmentProfile.home,

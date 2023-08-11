@@ -78,8 +78,9 @@ export const clientAccountRoutes = {
     userDetails: "user-details",
     accountSecurity: "account-security",
     platformAccess: "platform-access",
-    dataRoom: "data-room"
-  })
+    dataRoom: "data-room",
+    onboardUser: "onboard-user",
+  }),
 };
 
 export const clientCustodyRoutes = include("/dashboard", {

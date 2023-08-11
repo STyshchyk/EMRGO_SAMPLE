@@ -29,33 +29,12 @@ export const Error = styled(GlobalError)`
 
   /* Variants */
 
-  span {
-    ${({ theme }) => css`
-      ${theme.mode === "light" &&
-      css`
-        color: ${getTheme("colors.black.80")};
-      `}
-      ${theme.mode === "dark" &&
-      css`
-        color: ${getTheme("colors.white.80")};
-      `}
-    `}
-  }
+
 `;
 
 export const ErrorIcon = styled(GlobalErrorIcon)`
   width: ${rem(24)};
   height: ${rem(24)};
 
-  /* Variants */
-  ${({ theme }) => css`
-    ${theme.mode === "light" &&
-    css`
-      color: ${getTheme("colors.red")};
-    `}
-    ${theme.mode === "dark" &&
-    css`
-      color: ${getTheme("colors.red")};
-    `}
-  `}
+
 `;

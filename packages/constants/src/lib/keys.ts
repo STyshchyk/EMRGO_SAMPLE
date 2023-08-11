@@ -24,6 +24,10 @@ export const queryKeys = {
     kyc: include("/kyc", {
       fetch: "fetch",
     }),
+    onboardedUsers: include("/onboarder-users", {
+      fetch: "fetch",
+      roles:"roles"
+    })
   }),
   miscelleneous: include("/miscelleneous", {
     documents: include("documents", {

@@ -23,13 +23,13 @@ export const TableActionButton = styled(BiDotsVerticalRounded)`
   ${(props) =>
     props.theme.mode === "light" &&
     css`
-      color: ${getTheme("colors.green4")};
+      color: ${getTheme("colors.green3")};
     `}
 
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.green")};
+      color: ${getTheme("colors.green5")};
     `}
 `;
 
@@ -69,6 +69,10 @@ export const TooltipButtonActions = styled.button<{ $disabled?: boolean }>`
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.white.100")};
+      color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.white.100")} ;
+      &:hover {
+        color: ${props.$disabled ? getTheme("colors.grey") : getTheme("colors.green5")} ;
+      }
     `}
+
 `;
