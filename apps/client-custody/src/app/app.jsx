@@ -23,7 +23,6 @@ import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
 
 import "./app.styles.css";
 
-import "./app.styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -38,21 +37,6 @@ baseAxiosInstance.interceptors.request.use((config) => {
   updatedConfig.headers.region = `${region}`;
   return updatedConfig;
 });
-
-// useEffect(() => {
-//   const fetchUserProfile = (payload) => store.dispatch(authActionCreators.doFetchUserProfile(payload));
-
-//   fetchUserProfile({
-//     successCallback: () => {
-//       const {
-//         auth: { authenticatedUserObject },
-//       } = store.getState();
-
-//       updateUser(authenticatedUserObject)
-//       // store.set("user", authenticatedUserObject);
-//     },
-//   });
-// }, [dispatch]);
 
 const ReduxProvider = ({ children }) => (
   <Provider store={store}>
@@ -88,9 +72,9 @@ const queryClient = new QueryClient({
       refetchOnMount: false,
       refetchOnReconnect: true,
       retry: 3,
-      staleTime: 5 * 1000
-    }
-  }
+      staleTime: 5 * 1000,
+    },
+  },
 });
 const ConnectedApp = () => (
   <ReduxProvider>

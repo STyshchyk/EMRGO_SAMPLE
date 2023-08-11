@@ -15,14 +15,14 @@ const AccountsWrapperContext = createContext<IAccountsWrapperContext | null>(nul
  * @returns {JSX.Element}
  */
 export const AccountsWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { updateUser } = useUser();
+  const { updateUserConfig } = useUser();
 
   useQuery([constants.queryKeys.account.profile.fetch], {
     staleTime: 60 * 60,
     queryFn: () => fetchUserProfile(),
     onSuccess: (response) => {
       const user = response;
-      updateUser(user);
+      updateUserConfig(user);
     },
   });
 

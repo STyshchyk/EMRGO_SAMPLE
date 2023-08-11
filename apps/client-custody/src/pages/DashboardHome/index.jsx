@@ -39,10 +39,6 @@ const DashboardHome = () => {
   const filesUploadInProgress = useSelector(bulletinSelectors.selectFilesUploadInProgress);
   const isLoading = useSelector(bulletinSelectors.selectIsLoading);
   const currentBulletinDocument = useSelector(bulletinSelectors.selectCurrentBulletinDocument);
-  console.log(
-    "🚀 ~ file: index.jsx:43 ~ DashboardHome ~ currentBulletinDocument:",
-    currentBulletinDocument
-  );
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const hasBulletinsManageACL = currentListOfACLs.includes("Bulletins/Manage");

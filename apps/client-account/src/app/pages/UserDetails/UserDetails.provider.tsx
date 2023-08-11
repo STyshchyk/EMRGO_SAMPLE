@@ -167,8 +167,7 @@ export const UserDetailsProvider = ({ children }: PropsWithChildren) => {
   };
 
   const onLogOut = () => {
-    const requestPayload = null;
-    doLogoutUser(requestPayload, {
+    doLogoutUser(undefined, {
       onSuccess: (response) => {
         navigateModule("authentication", clientAuthenticationRoutes.home);
       },

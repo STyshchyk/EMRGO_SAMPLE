@@ -25,7 +25,7 @@ const PrimariesWrapperContext = createContext<IPrimariesWrapperContext | null>(n
  * @returns {JSX.Element}
  */
 export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { user, updateUser } = useUser();
+  const { user, updateUser, updateUserConfig } = useUser();
   const refreshProfile = useRefreshProfile();
   const { mutate: doLogoutUser } = useMutation(logoutUser);
   const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
@@ -76,7 +76,7 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
     queryFn: () => fetchUserProfile(),
     onSuccess: (response) => {
       const user = response;
-      updateUser(user);
+      updateUserConfig(user);
     },
   });
 

@@ -1,13 +1,13 @@
-import { IUser } from "@emrgo-frontend/types";
+import { IUserConfigData } from "@emrgo-frontend/types";
 
 import { sharedDashboardApi } from "./instances";
 
-export const fetchUserProfile = async (): Promise<IUser> => {
+export const fetchUserProfile = async (): Promise<IUserConfigData> => {
   const promise = sharedDashboardApi({
     method: "get",
     url: `/v2/profile`,
   });
-  const data = await (await promise).data?.user;
+  const data = await (await promise).data;
   return data || [];
 };
 
@@ -61,4 +61,13 @@ export const requestResetAuthenticatorMFA = () => {
     url: `/v2/mfa/reset/request`,
   });
   return promise;
+};
+
+export const refreshToken = (role: string) => {
+  return sharedDashboardApi({
+    method: "POST",
+    url: "v2/refreshTokens",
+    data: { role },
+    validateStatus: null,
+  });
 };

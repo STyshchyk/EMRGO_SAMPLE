@@ -5,6 +5,7 @@ import { UserProvider as SilverUserProvider, ToastProvider } from "@emrgo-fronte
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
@@ -19,25 +20,40 @@ import i18n from "../../i18n";
 const AppProviders = ({ children }) => {
   const { isDarkMode } = useDarkMode(false);
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true,
+        refetchOnMount: false,
+        refetchOnReconnect: true,
+        retry: 3,
+        staleTime: 5 * 1000,
+      },
+    },
+  });
+
   return (
     <I18nextProvider i18n={i18n}>
       <CustodyWrapperProvider>
       <AuthProvider>
         <UserProvider>
-          <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-            <GlobalStyles />
-            <SilverUserProvider>
-              <FeatureToggleProvider>
-                <Suspense fallback={<h2>Loading theme...</h2>}>
-                  <CustomThemeProvider isDarkMode={isDarkMode}>
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
-                      {children}
-                    </LocalizationProvider>
-                  </CustomThemeProvider>
-                </Suspense>
-              </FeatureToggleProvider>
-            </SilverUserProvider>
-          </ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+              <GlobalStyles />
+              <SilverUserProvider>
+                <FeatureToggleProvider>
+                  <Suspense fallback={<h2>Loading theme...</h2>}>
+                    <CustomThemeProvider isDarkMode={isDarkMode}>
+                      <LocalizationProvider dateAdapter={AdapterMoment}>
+                        {children}
+                      </LocalizationProvider>
+                    </CustomThemeProvider>
+                  </Suspense>
+                </FeatureToggleProvider>
+                <ToastProvider />
+              </SilverUserProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
         </UserProvider>
       </AuthProvider>
       </CustodyWrapperProvider>

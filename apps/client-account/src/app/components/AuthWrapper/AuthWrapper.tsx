@@ -14,13 +14,13 @@ import { FaqSidebar } from "./FaqSidebar";
 export const AuthWrapper: FC<IAuthWrapperProps> = ({ children, backUrl, hideFAQ = false }) => {
   const [isFaqSidebarOpen, setIsFaqSidebarOpen] = useState(false);
 
-  const { updateUser } = useUser();
+  const { updateUserConfig } = useUser();
 
   useQuery([queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
     onSuccess: (response) => {
       const user = response;
-      updateUser(user);
+      updateUserConfig(user);
     },
   });
   const openFaqSidebar = () => {

@@ -15,14 +15,14 @@ export const IconButton = styled.button`
   ${({ theme }) =>
     theme.mode === "light" &&
     css`
-      color: ${getTheme("colors.black.100")};
+      color: ${getTheme("colors.black.50")};
       background-color: ${getTheme("colors.black.5")};
     `}
 
   ${({ theme }) =>
     theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.white.100")};
+      color: ${getTheme("colors.white.50")};
       background-color: ${getTheme("colors.white.5")};
     `}
 `;
