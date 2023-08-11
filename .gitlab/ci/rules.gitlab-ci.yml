@@ -1,5 +1,37 @@
 # !REMINDER: There's no way to DRY UP those rules as array merging is not supported by GitLab CI/CD parser.
 
+.client_custody_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-custody/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
+.helium_custody_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/helium-custody/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
 .client_auth_build_rules_develop:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
