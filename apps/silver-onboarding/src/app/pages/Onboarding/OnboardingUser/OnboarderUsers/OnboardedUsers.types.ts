@@ -11,11 +11,16 @@ export interface IEntity {
   userId: string;
   userKycStatus: kycStatusType;
   userKycSubmissionDate: string;
+  entityCustodyKycSubmissionDate: string;
+  entityCustodyKycStatus: kycStatusType;
+
+
 }
 
 export enum kycType {
   "user" = "user",
   "entity" = "entity",
+  "entityCustody" = "entityCustody"
 }
 
 export enum kycStatusType {
