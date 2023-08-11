@@ -173,9 +173,7 @@ const IssuancesList = () => {
                     </div>
                     <div className={style.sectionValueContainer}>
                       <p className={cx(style.sectionValue, style.highlighted)}>
-                        {t(
-                          `statuses:Issuer.${entry?.issuerSPV || entry?.issuerSPVStatus}`
-                        )}
+                        {t(`statuses:Issuer.${entry?.issuerSPV || entry?.issuerSPVStatus}`)}
                       </p>
                     </div>
                   </div>

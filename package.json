@@ -10,6 +10,8 @@
     "build:client-account": "nx run-many -t build -p client-account --parallel=true --skip-nx-cache",
     "build:client-authentication": "nx run-many -t build -p client-authentication --parallel=true --skip-nx-cache",
     "build:client-primaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
+    "build:client-custody": "nx run-many -t build -p client-custody --parallel=true --skip-nx-cache",
+    "build:helium-custody": "nx run-many -t build -p helium-custody --parallel=true --skip-nx-cache",
     "build:client-secondaries": "nx run-many -t build -p client-primaries --parallel=true --skip-nx-cache",
     "build:client-custody": "nx run-many -t build -p client-custody --parallel=true --skip-nx-cache",
     "build:helium-custody": "nx run-many -t build -p helium-custody --parallel=true --skip-nx-cache",

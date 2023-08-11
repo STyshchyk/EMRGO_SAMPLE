@@ -14,8 +14,6 @@ const generateAppConfig = (environment) => ({
   featureFlags: parseFeatureFlags(environment.VITE_APP_FEATURE_FLAGS),
 });
 
-const appConfig = ["development", "test"].includes(process.env.NODE_ENV)
-  ? generateAppConfig(import.meta.env)
-  : generateAppConfig(window.__ENV);
+const appConfig = generateAppConfig(import.meta.env);
 
 export default appConfig;

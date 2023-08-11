@@ -7,15 +7,13 @@ const parseFeatureFlags = (value) => {
 };
 
 const generateAppConfig = (environment) => ({
-  appENV: environment.VITE_APP_ENV,
+  appENV: "local",
   appRegion: environment.VITE_APP_REGION,
   baseAPIURL: environment.VITE_APP_BASE_API_URL,
   appEnable2FA: environment.VITE_APP_ENABLE_2FA,
   featureFlags: parseFeatureFlags(environment.VITE_APP_FEATURE_FLAGS),
 });
 
-const appConfig = ["development", "test"].includes(process.env.NODE_ENV)
-  ? generateAppConfig(import.meta.env)
-  : generateAppConfig(window.__ENV);
+const appConfig = generateAppConfig(import.meta.env);
 
 export default appConfig;

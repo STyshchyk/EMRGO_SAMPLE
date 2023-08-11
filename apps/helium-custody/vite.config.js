@@ -30,6 +30,11 @@ export default defineConfig({
   //    }),
   //  ],
   // },
+  build: {
+    rollupOptions: {
+      external: ["@mui/styles", "@material-ui/pickers"],
+    },
+  },
   test: {
     globals: true,
     cache: {
