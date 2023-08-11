@@ -57,6 +57,14 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
       header: "KYC TS",
       cell: (props) => (props.getValue() ? trimDate(props.getValue()) : "N/A"),
     }),
+    columnHelper.accessor("entityCustodyKycStatus", {
+      header: "Custody KYC",
+      cell: (props) => getKycLabel(props.getValue()),
+    }),
+    columnHelper.accessor("entityCustodyKycSubmissionDate", {
+      header: "Custody KYC TS",
+      cell: (props) => (props.getValue() ? trimDate(props.getValue()) : "N/A"),
+    }),
     columnHelper.display({
       id: "Actions",
       header: () => {
@@ -68,6 +76,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
         const entityId = getRow.entityId;
         const allowApproveKYC = getKycLabel(getRow.userKycStatus);
         const allowApproveCP = getKycLabel(getRow.entityKycStatus);
+        const allowApproveCustody = getKycLabel(getRow.entityCustodyKycStatus);
 
         return (
           <ActionTooltip
@@ -130,6 +139,25 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   }}
                 >
                   Approve Client Profile
+                </TooltipButtonActions>
+                <TooltipButtonActions
+                  onClick={() => {
+
+                    doKycSumbit(
+                      {
+                        id: entityId,
+                        isApproved: true,
+                        kycType: kycType.entityCustody,
+                      },
+                      {
+                        onError: () => {
+                          showErrorToast("Error while trying to approve Custody KYC");
+                        },
+                      }
+                    );
+                  }}
+                >
+                  Approve Custody KYC
                 </TooltipButtonActions>
               </TooltipButtonBox>
             }
