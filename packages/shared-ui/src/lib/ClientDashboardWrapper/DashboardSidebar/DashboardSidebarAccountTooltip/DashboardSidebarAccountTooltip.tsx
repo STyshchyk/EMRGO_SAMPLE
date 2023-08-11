@@ -1,24 +1,18 @@
 import { FC } from "react";
 
+import { roles } from "@emrgo-frontend/constants";
+import { ensureNotNull } from "@emrgo-frontend/utils";
+
 import { IconButton } from "../../../IconButton";
 import { AccountIcon, LogoutIcon } from "../../../Icons";
 import { SidebarList, SidebarListItem, SidebarListItemSecondaryLink } from "../../../Sidebar";
 import { TooltipContent } from "../../../Tooltip";
+import { useDashboardWrapperContext } from "../../DashboardWrapper.provider";
 import { IDashboardSidebarAccountTooltipProps } from "./DashboardSidebarAccountTooltip.types";
 
 export const DashboardSidebarAccountTooltip: FC<IDashboardSidebarAccountTooltipProps> = (props) => {
   const { user } = props;
-  console.log("🚀 ~ file: DashboardSidebarAccountTooltip.tsx:11 ~ user:", user);
-  const roles = [
-    {
-      label: "Administrator",
-      key: "admin",
-    },
-    {
-      label: "Investor",
-      key: "invst_mngr",
-    },
-  ];
+  const { changeUserRole } = ensureNotNull(useDashboardWrapperContext());
   return (
     <TooltipContent>
       <p className="text-center text-sm font-bold">{user?.entityName}</p>
@@ -33,13 +27,13 @@ export const DashboardSidebarAccountTooltip: FC<IDashboardSidebarAccountTooltipP
           <LogoutIcon />
         </IconButton>
       </div>
-      <p className="my-2">Select one of your available Roles</p>
+      <p className="my-2">Select one of your available roles</p>
       <SidebarList className="my-2">
         {roles.map((role, index) => (
           <SidebarListItem>
             <SidebarListItemSecondaryLink
-              href="#"
-              className={`p-0 rounded ${index === 1 ? "active" : ""}`}
+              onClick={() => changeUserRole(role)}
+              className={`p-0 rounded ${role.key === user?.role ? "active" : ""}`}
             >
               {role.label}
             </SidebarListItemSecondaryLink>

@@ -62,3 +62,12 @@ export const requestResetAuthenticatorMFA = () => {
   });
   return promise;
 };
+
+export const refreshToken = (role: string) => {
+  return sharedDashboardApi({
+    method: "POST",
+    url: "v2/refreshTokens",
+    data: { role },
+    validateStatus: null,
+  });
+};
