@@ -26,7 +26,8 @@ const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(n
  * @returns {JSX.Element}
  */
 export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { user, updateUser } = useUser();
+  const { user, roles, updateUserConfig } = useUser();
+
   const refreshProfile = useRefreshProfile();
   const { showWarningToast, showInfoToast } = useToast();
   const currentRole = constants.roles.find((role) => role.key === user?.role);
@@ -77,7 +78,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     queryFn: () => fetchUserProfile(),
     onSuccess: (response) => {
       const user = response;
-      updateUser(user);
+      updateUserConfig(user);
     },
   });
 
@@ -88,11 +89,13 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (!currentRole?.access.includes(currentModuleKey)) {
-      const message = `You do not have access to the ${currentModuleKey} module`;
-      showWarningToast(message);
+      setTimeout(() => {
+        const message = `You do not have access to the ${currentModuleKey} module`;
+        showWarningToast(message);
+      }, 1000);
       setTimeout(() => {
         navigateToModule(currentRole?.module || "", currentRole?.route || "");
-      }, 1000);
+      }, 2000);
     }
   }, [currentModuleKey, currentRole, showWarningToast]);
 
@@ -158,16 +161,23 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
         showInfoToast(message);
         setTimeout(() => {
           navigateModule(role.module, role.route);
-        }, 2000);
+        }, 1000);
+      },
+    });
+  };
+
+  const onLogOut = () => {
+    doLogoutUser(undefined, {
+      onSuccess: (response) => {
+        navigateModule("authentication", constants.clientAuthenticationRoutes.home);
       },
     });
   };
 
   const state: IDashboardWrapperContext = {
     numberOfNotifications: 1,
-    onAcceptPlatformTerms,
-    onRejectPlatformTerms,
     user,
+    roles,
     showTermsModal,
     termsDocumentURL,
     mainRoutes,
@@ -177,6 +187,9 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     allAccountRoutes,
     navigateToModule,
     changeUserRole,
+    onLogOut,
+    onAcceptPlatformTerms,
+    onRejectPlatformTerms,
   };
 
   return (

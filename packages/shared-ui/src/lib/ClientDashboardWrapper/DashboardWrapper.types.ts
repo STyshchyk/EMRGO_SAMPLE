@@ -1,14 +1,19 @@
 import { PropsWithChildren, ReactElement } from "react";
 
+
+
 import { IUser } from "@emrgo-frontend/types";
 
-export type IDashboardWrapperProps = PropsWithChildren
+
+
+
+
+export type IDashboardWrapperProps = PropsWithChildren;
 
 export interface IDashboardWrapperContext {
   numberOfNotifications: number;
-  onAcceptPlatformTerms: () => void;
-  onRejectPlatformTerms: () => void;
-  user: IUser | null;
+  user?: IUser | null;
+  roles?: string[] | null;
   showTermsModal: string;
   termsDocumentURL: string;
   mainRoutes: IModuleConfig[];
@@ -18,6 +23,9 @@ export interface IDashboardWrapperContext {
   allAccountRoutes: string[];
   navigateToModule: (module: string, path: string) => void;
   changeUserRole: (role: IRoleSelector) => void;
+  onAcceptPlatformTerms: () => void;
+  onRejectPlatformTerms: () => void;
+  onLogOut: () => void;
 }
 
 export interface IRoleSelector {

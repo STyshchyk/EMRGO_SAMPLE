@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { roles } from "@emrgo-frontend/constants";
-import { ensureNotNull } from "@emrgo-frontend/utils";
+import { clientAccountRoutes, roles as staticRoles } from "@emrgo-frontend/constants";
+import { ensureNotNull, navigateModule } from "@emrgo-frontend/utils";
 
 import { IconButton } from "../../../IconButton";
 import { AccountIcon, LogoutIcon } from "../../../Icons";
@@ -12,7 +12,7 @@ import { IDashboardSidebarAccountTooltipProps } from "./DashboardSidebarAccountT
 
 export const DashboardSidebarAccountTooltip: FC<IDashboardSidebarAccountTooltipProps> = (props) => {
   const { user } = props;
-  const { changeUserRole } = ensureNotNull(useDashboardWrapperContext());
+  const { changeUserRole, roles, onLogOut } = ensureNotNull(useDashboardWrapperContext());
   return (
     <TooltipContent>
       <p className="text-center text-sm font-bold">{user?.entityName}</p>
@@ -20,25 +20,38 @@ export const DashboardSidebarAccountTooltip: FC<IDashboardSidebarAccountTooltipP
         {user?.firstName} {user?.lastName}
       </p>
       <div className="flex justify-center gap-x-4 mb-4">
-        <IconButton onClick={() => {}}>
+        <IconButton
+          onClick={() => {
+            navigateModule("account", clientAccountRoutes.home);
+          }}
+        >
           <AccountIcon />
         </IconButton>
-        <IconButton onClick={() => {}}>
+        <IconButton
+          onClick={() => {
+            onLogOut();
+          }}
+        >
           <LogoutIcon />
         </IconButton>
       </div>
       <p className="my-2">Select one of your available roles</p>
       <SidebarList className="my-2">
-        {roles.map((role, index) => (
-          <SidebarListItem>
-            <SidebarListItemSecondaryLink
-              onClick={() => changeUserRole(role)}
-              className={`p-0 rounded ${role.key === user?.role ? "active" : ""}`}
-            >
-              {role.label}
-            </SidebarListItemSecondaryLink>
-          </SidebarListItem>
-        ))}
+        {roles?.map((role: string) => {
+          const roleConfig = staticRoles.find((staticRole) => staticRole.key === role);
+          return (
+            <SidebarListItem>
+              {roleConfig && (
+                <SidebarListItemSecondaryLink
+                  onClick={() => changeUserRole(roleConfig)}
+                  className={`p-0 rounded ${roleConfig.key === user?.role ? "active" : ""}`}
+                >
+                  {roleConfig.label}
+                </SidebarListItemSecondaryLink>
+              )}
+            </SidebarListItem>
+          );
+        })}
       </SidebarList>
       <p className="mt-2">Access to different modules could change based on the selected role.</p>
     </TooltipContent>

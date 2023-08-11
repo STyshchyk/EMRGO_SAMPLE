@@ -38,21 +38,6 @@ baseAxiosInstance.interceptors.request.use((config) => {
   return updatedConfig;
 });
 
-// useEffect(() => {
-//   const fetchUserProfile = (payload) => store.dispatch(authActionCreators.doFetchUserProfile(payload));
-
-//   fetchUserProfile({
-//     successCallback: () => {
-//       const {
-//         auth: { authenticatedUserObject },
-//       } = store.getState();
-
-//       updateUser(authenticatedUserObject)
-//       // store.set("user", authenticatedUserObject);
-//     },
-//   });
-// }, [dispatch]);
-
 const ReduxProvider = ({ children }) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

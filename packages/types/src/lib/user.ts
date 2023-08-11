@@ -1,3 +1,9 @@
+export interface IUserConfigData {
+  user: IUser | null;
+  roles: string[];
+  permissions: string[];
+}
+
 export interface IUser {
   email: string;
   phone: string;
