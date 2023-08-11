@@ -20,14 +20,15 @@ import * as Styles from "./OnboardingClient.styles";
 import { AccountPanelFooter } from "../../components/AccountPanelFooter";
 import { reverse } from "named-urls";
 
-import { dashboardApi } from "../../../../client-account/src/app/services/APIService";
+
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AboutUs } from "../../components/AboutCustody";
 import { navigateModule } from "@emrgo-frontend/utils";
+import {baseAxiosInstance} from "../../services/wethaqAPIService/helpers";
 
 
 export const fetchInvestorProfileForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "get",
     url: `v2/client/kyc/forms`,
     params: {
@@ -41,7 +42,7 @@ export const fetchInvestorProfileForms = async () => {
 export const createInvestmentFormSession = async (
   requestPayload
 ) => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "post",
     url: `v2/client/kyc/forms`,
     data: requestPayload
@@ -51,7 +52,7 @@ export const createInvestmentFormSession = async (
 };
 
 export const submitInvestorProfileForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "put",
     url: `v2/client/kyc/submit`,
     params: {
@@ -62,7 +63,7 @@ export const submitInvestorProfileForms = async () => {
   return data || [];
 };
 export const fetchKYCForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "get",
     url: `v2/client/kyc/forms`,
     params: {
