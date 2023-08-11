@@ -122,7 +122,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       label: "Custody",
       icon: <CustodyIcon />,
       key: "custody",
-      path: constants.clientCustodyRoutes.custody.cashManagement.home,
+      path: constants.clientCustodyRoutes.custody.onboarding.home,
       paths: constants.getAllRoutes(constants.clientCustodyRoutes),
     },
     {
