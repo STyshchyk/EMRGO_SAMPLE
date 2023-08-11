@@ -19,7 +19,6 @@ import ImportSecurityTradesTableDataDialog from "../../../components/SecuritiesT
 import UploadPaymentConfirmationDialog from "../../../components/UploadPaymentConfirmationDialog";
 import ViewCounterpartySSIDialog from "../../../components/ViewCounterpartySSIDialog";
 import ViewSettlementInstructionAuditHistoryDialog from "../../../components/ViewSettlementInstructionAuditHistoryDialog";
-import ViewSSIDialog from "../../../components/ViewSSIDialog";
 import featureFlags from "../../../constants/featureFlags";
 import { settlementInstructionStatusEnum } from "../../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../../context/feature-toggle-context";
@@ -56,7 +55,6 @@ const CustodyAndSettlement = () => {
     useState(false);
 
   // const [openViewNotificationsDialog, setOpenViewNotificationsDialog] = useState(false);
-  const [openViewSSIDialog, setOpenViewSSIDialog] = useState(false);
   const [openViewCounterpartySSIDialog, setOpenViewCounterpartySSIDialog] = useState(false);
   const [openViewSIAuditHistoryDialog, setOpenViewSIAuditHistoryDialog] = useState(false);
 
@@ -140,15 +138,7 @@ const CustodyAndSettlement = () => {
       },
       disabled: !currentlySelectedRowData?.externalSecurity,
     },
-    {
-      id: 2,
-      label: `${t("TableActions.View SSI")}`,
-      onClick: () => {
-        setOpenViewSSIDialog(true);
-        handleCloseMenu();
-      },
-      disabled: true,
-    },
+
     {
       id: 3,
       label: `${t("TableActions.Upload Payment Confirmation")}`,
@@ -304,16 +294,6 @@ const CustodyAndSettlement = () => {
           open={openUploadPaymentConfirmationDialog}
           handleClose={() => {
             setOpenUploadPaymentConfirmationDialog(false);
-            handleCloseMenu();
-          }}
-        />
-      )}
-      {openViewSSIDialog && (
-        <ViewSSIDialog
-          paymentAccounts={paymentAccounts}
-          open={openViewSSIDialog}
-          handleClose={() => {
-            setOpenViewSSIDialog(false);
             handleCloseMenu();
           }}
         />

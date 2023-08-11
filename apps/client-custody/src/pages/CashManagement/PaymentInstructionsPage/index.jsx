@@ -34,7 +34,6 @@ import AddPaymentInstructionDialog from "./AddPaymentInstructionDialog";
 import EditPaymentInstructionDialog from "./EditPaymentInstructionDialog";
 import PaymentInstructionsTable from "./PaymentInstructionsTable";
 import ValidatePaymentInstructionDialog from "./ValidatePaymentInstructionDialog";
-import ViewExternalPaymentsAuditHistoryDialog from "./ViewExternalPaymentsAuditHistoryDialog";
 
 const PAYMENT_INSTRUCTION_INTERNAL_STATUS_ENUM = {
   "Wethaq Approval": "Wethaq Approval",
@@ -282,10 +281,6 @@ const PaymentInstructionsPage = () => {
     setClientApproveModalOpen(true);
   };
 
-  const handleViewAuditHistoryClick = (data) => {
-    setSelectedPaymentInstruction(data);
-    setViewExternalPaymentsAuditHistory(true);
-  };
 
   const handleApprovePaymentInstructionOnSubmit = () => {
     const payload = {
@@ -354,7 +349,6 @@ const PaymentInstructionsPage = () => {
     handleApproveClick: () => handleApproveClick(entry),
     handleRejectClick: () => handleRejectClick(entry),
     handleClientApproveClick: () => handleClientApproveClick(entry),
-    handleViewAuditHistoryClick: () => handleViewAuditHistoryClick(entry),
   });
 
   const actions = [
@@ -363,11 +357,7 @@ const PaymentInstructionsPage = () => {
       icon: <EditIcon fontSize="small" />,
       label: t("Payment Instructions.Context Menu.Modify"),
     },
-    {
-      callback: handleViewAuditHistoryClick,
-      icon: <ViewIcon fontSize="small" />,
-      label: t("Payment Instructions.Context Menu.View Audit History"),
-    },
+
     {
       callback: handleCancelClick,
       icon: <CloseIcon fontSize="small" />,
@@ -625,16 +615,7 @@ const PaymentInstructionsPage = () => {
         }
       />
 
-      {viewExternalPaymentsAuditHistory && (
-        <ViewExternalPaymentsAuditHistoryDialog
-          currentlySelectedRowData={selectedRow}
-          isModalOpen={viewExternalPaymentsAuditHistory}
-          handleClose={() => {
-            setViewExternalPaymentsAuditHistory(false);
-            setSelectedRow(null);
-          }}
-        />
-      )}
+
 
       <ValidatePaymentInstructionDialog
         dialogTitle={t("Payment Instructions.Context Menu.Approve")}

@@ -7,7 +7,6 @@ import * as kycSelectors from "../redux/selectors/kyc";
 import useIsProduction from "../utils/useIsProduction";
 import { useFeatureToggle } from "./feature-toggle-context";
 
-const Administration = lazy(() => import("../pages/Administration"));
 const AuthContainer = lazy(() => import("../containers/AuthContainer"));
 const AuthFlowLayout = lazy(() => import("../layouts/AuthFlowLayout"));
 const CashManagement = lazy(() => import("../pages/CashManagement"));
@@ -30,11 +29,9 @@ const PublicHome = lazy(() => import("../pages/PublicHome"));
 const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
 const Reconciliation = lazy(() => import("../pages/Reconciliation"));
 const Reports = lazy(() => import("../pages/Reports"));
-const SecuritiesAdmin = lazy(() => import("../pages/SecuritiesAdmin"));
 const OperationsSecServices = lazy(() => import("../pages/OperationsSecServices"));
 const SettlementAdmin = lazy(() => import("../pages/SettlementAdmin"));
 const SingleIssuance = lazy(() => import("../pages/SingleIssuance"));
-const Support = lazy(() => import("../pages/Support"));
 const Billing = lazy(() => import("../pages/Billing"));
 
 const RouterMappingContext = createContext();
@@ -170,13 +167,6 @@ const RouterMappingProvider = ({ children }) => {
         path: `${routes.dashboard.home}*`,
       },
       {
-        component: Administration,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.administration.home}*`,
-      },
-      {
         component: IssuancesList,
         exact: true,
         isPublic: false,
@@ -198,14 +188,6 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.blotters.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: Support,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.support.home}*`,
         disabled: !kycApprovalStatus,
       },
       {
@@ -263,14 +245,6 @@ const RouterMappingProvider = ({ children }) => {
         layout: DashboardLayout,
         path: `${routes.dashboard.custody.opsSecServices.home}*`,
         disabled: !kycApprovalStatus,
-      },
-      {
-        component: SecuritiesAdmin,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.custody.securitiesAdmin.home}*`,
-        disabled: !kycApprovalStatus || !isIntlSecTradeSettlementWorkflow,
       },
       {
         component: SettlementAdmin,

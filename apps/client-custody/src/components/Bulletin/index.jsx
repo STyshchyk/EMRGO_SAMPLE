@@ -14,7 +14,6 @@ import PropTypes from "prop-types";
 
 import { useTheme } from "../../context/theme-context";
 import BulletinSection from "../BulletinSection";
-import CreateBulletinForm from "../CreateBulletinForm";
 import ErrorBanner from "../ErrorBanner";
 import LoadingIndicator from "../LoadingIndicator";
 import UpdateBulletinForm from "../UpdateBulletinForm";
@@ -22,13 +21,10 @@ import style from "./style.module.scss";
 
 const Bulletin = ({
   bulletins = [],
-  showCreateBulletinModal,
-  setCreateBulletinModal,
   bulletinTypeDropdown,
   handleFileUpload,
   filesUploaded,
   filesUploadInProgress,
-  createBulletin,
   deleteBulletin,
   fetchBulletinDocument,
   isLoading,
@@ -72,15 +68,6 @@ const Bulletin = ({
         </Fragment>
       )}
 
-      <CreateBulletinForm
-        open={showCreateBulletinModal}
-        handleClose={setCreateBulletinModal}
-        formOptions={bulletinTypeDropdown}
-        handleFileUpload={handleFileUpload}
-        filesUploaded={filesUploaded}
-        filesUploadInProgress={filesUploadInProgress}
-        onSubmit={createBulletin}
-      />
       <UpdateBulletinForm
         open={showUpdateBulletinModal}
         currentBulletin={currentBulletin}
@@ -158,13 +145,10 @@ const Bulletin = ({
 
 Bulletin.propTypes = {
   bulletins: PropTypes.arrayOf(PropTypes.object).isRequired,
-  showCreateBulletinModal: PropTypes.bool.isRequired,
-  setCreateBulletinModal: PropTypes.func.isRequired,
   bulletinTypeDropdown: PropTypes.shape().isRequired,
   handleFileUpload: PropTypes.func.isRequired,
   filesUploaded: PropTypes.shape().isRequired,
   filesUploadInProgress: PropTypes.bool.isRequired,
-  createBulletin: PropTypes.func.isRequired,
   deleteBulletin: PropTypes.func.isRequired,
   fetchBulletinDocument: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
