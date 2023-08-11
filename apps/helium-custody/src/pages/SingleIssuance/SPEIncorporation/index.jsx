@@ -11,7 +11,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { makeStyles } from '@mui/styles';
 import { Form, Formik } from "formik";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
@@ -24,36 +23,8 @@ import PageTitle from "../../../components/PageTitle";
 import * as issuanceActionCreators from "../../../redux/actionCreators/issuance";
 import * as issuanceSelectors from "../../../redux/selectors/issuance";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  table: {
-    color: theme.palette.primary.main,
-  },
-  tableRow: {
-    marginBottom: 0,
-  },
-  tableCell: {
-    background: "white",
-    borderBottom: "none",
-    color: theme.palette.primary.main,
-    fontSize: "1em",
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: "50px",
-  },
-  tableHeadCell: {
-    borderBottom: "none",
-    color: theme.palette.primary.main,
-    fontSize: "1em",
-    fontWeight: "bold",
-    height: "50px",
-  },
-}));
 
 const SPEIncorporation = () => {
-  const classes = useStyles();
   const { issuanceID } = useParams();
   const dispatch = useDispatch();
   const { t } = useTranslation(["spe_incorporation"]);
@@ -169,13 +140,13 @@ const SPEIncorporation = () => {
           marginBottom: "rem",
         }}
       >
-        <Table className={classes.table} aria-label="spe-incorporation-table">
-          <TableHead className={classes.thead}>
+        <Table aria-label="spe-incorporation-table">
+          <TableHead >
             <TableRow>
-              <TableCell className={classes.tableHeadCell}>
+              <TableCell>
                 {t("SPEIncorporation.SPEDocumentsTable.headers.Documents")}
               </TableCell>
-              <TableCell className={classes.tableHeadCell}>
+              <TableCell>
                 {t("SPEIncorporation.SPEDocumentsTable.headers.Download")}
               </TableCell>
             </TableRow>
@@ -183,10 +154,10 @@ const SPEIncorporation = () => {
           <TableBody>
             {tableData.map((rowData) => (
               <TableRow key={rowData.documentName}>
-                <TableCell className={classes.tableCell} component="th" scope="row">
+                <TableCell  component="th" scope="row">
                   {rowData.documentName}
                 </TableCell>
-                <TableCell className={classes.tableCell}>
+                <TableCell >
                   {rowData.documentURL ? (
                     <IconButton
                       color="primary"

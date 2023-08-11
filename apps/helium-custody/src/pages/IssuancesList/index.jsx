@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { capitalCase, titleCase } from "change-case";
+import { capitalCase } from "change-case";
 import cx from "classnames";
 import { reverse } from "named-urls";
 
@@ -173,9 +173,7 @@ const IssuancesList = () => {
                     </div>
                     <div className={style.sectionValueContainer}>
                       <p className={cx(style.sectionValue, style.highlighted)}>
-                        {t(
-                          `statuses:Issuer.${entry?.issuerSPV || titleCase(entry?.issuerSPVStatus)}`
-                        )}
+                        {t(`statuses:Issuer.${entry?.issuerSPV || entry?.issuerSPVStatus}`)}
                       </p>
                     </div>
                   </div>

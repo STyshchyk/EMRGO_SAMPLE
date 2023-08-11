@@ -2,12 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
@@ -22,9 +20,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 
 import ChangeRequest from "../../../../components/ChangeRequest";
@@ -476,121 +474,261 @@ const KeyIndividuals = () => {
         maxWidth="sm"
         fullWidth
       >
-        <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-          <Formik
-            initialValues={{
-              capacity: selectedCapacity || null,
-              firstName: selectedRow?.firstName || "",
-              middleName: selectedRow?.middleName || "",
-              lastName: selectedRow?.lastName || "",
-              politicallyExposed: getYesNoValue(selectedRow?.politicallyExposed),
-              addressLine1: selectedRow?.addressLine1 || "",
-              addressLine2: selectedRow?.addressLine2 || "",
-              city: selectedRow?.city || "",
-              country: selectedCountry || "",
-              pinCode: selectedRow?.pinCode || "",
-              businessPhone: selectedRow?.businessPhone || "",
-              saudiIdNumber: selectedRow?.saudiIdNumber || "",
-              saudiIdExpiry: selectedRow?.saudiIdExpiry || null,
-              passportNumber: selectedRow?.passportNumber || "",
-              passportExpiry: selectedRow?.passportExpiry || null,
-              passportCopyFileName: selectedRow?.passportCopyFileName?.name || null,
-              addressProofFileName: selectedRow?.addressProofFileName?.name || null,
+        <Formik
+          initialValues={{
+            capacity: selectedCapacity || null,
+            firstName: selectedRow?.firstName || "",
+            middleName: selectedRow?.middleName || "",
+            lastName: selectedRow?.lastName || "",
+            politicallyExposed: getYesNoValue(selectedRow?.politicallyExposed),
+            addressLine1: selectedRow?.addressLine1 || "",
+            addressLine2: selectedRow?.addressLine2 || "",
+            city: selectedRow?.city || "",
+            country: selectedCountry || "",
+            pinCode: selectedRow?.pinCode || "",
+            businessPhone: selectedRow?.businessPhone || "",
+            saudiIdNumber: selectedRow?.saudiIdNumber || "",
+            saudiIdExpiry: selectedRow?.saudiIdExpiry || null,
+            passportNumber: selectedRow?.passportNumber || "",
+            passportExpiry: selectedRow?.passportExpiry || null,
+            passportCopyFileName: selectedRow?.passportCopyFileName?.name || null,
+            addressProofFileName: selectedRow?.addressProofFileName?.name || null,
+            chamberOfCommerceAuthorizationFileName:
+              selectedRow?.chamberOfCommerceAuthorizationFileName?.name || null,
+            corporateAuthorizationFileName:
+              selectedRow?.corporateAuthorizationFileName?.name || null,
+          }}
+          enableReinitialize
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            const processedValues = {
+              ...values,
+              countryId: values.country.value,
+              capacityId: values.capacity.value,
+              politicallyExposed: values.politicallyExposed === "yes",
+              passportCopyFileName:
+                kycFileData?.passportCopyFileName?.fileIdentifier || values.passportCopyFileName,
+              addressProofFileName:
+                kycFileData?.addressProofFileName?.fileIdentifier || values.addressProofFileName,
               chamberOfCommerceAuthorizationFileName:
-                selectedRow?.chamberOfCommerceAuthorizationFileName?.name || null,
+                kycFileData?.chamberOfCommerceAuthorizationFileName?.fileIdentifier ||
+                values.chamberOfCommerceAuthorizationFileName,
               corporateAuthorizationFileName:
-                selectedRow?.corporateAuthorizationFileName?.name || null,
-            }}
-            enableReinitialize
-            validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              const processedValues = {
-                ...values,
-                countryId: values.country.value,
-                capacityId: values.capacity.value,
-                politicallyExposed: values.politicallyExposed === "yes",
-                passportCopyFileName:
-                  kycFileData?.passportCopyFileName?.fileIdentifier || values.passportCopyFileName,
-                addressProofFileName:
-                  kycFileData?.addressProofFileName?.fileIdentifier || values.addressProofFileName,
-                chamberOfCommerceAuthorizationFileName:
-                  kycFileData?.chamberOfCommerceAuthorizationFileName?.fileIdentifier ||
-                  values.chamberOfCommerceAuthorizationFileName,
-                corporateAuthorizationFileName:
-                  kycFileData?.corporateAuthorizationFileName?.fileIdentifier ||
-                  values.corporateAuthorizationFileName,
-              };
-              delete processedValues?.country;
-              delete processedValues?.capacity;
-              // delete processedValues?.saudiIdExpiry;
+                kycFileData?.corporateAuthorizationFileName?.fileIdentifier ||
+                values.corporateAuthorizationFileName,
+            };
+            delete processedValues?.country;
+            delete processedValues?.capacity;
+            // delete processedValues?.saudiIdExpiry;
 
-              let requestPayload;
-              if (isEdit) {
-                const editObject = { ...processedValues, id: selectedRow.id };
-                requestPayload = { keyIndividuals: [editObject] };
-              } else {
-                requestPayload = { keyIndividuals: [processedValues] };
-              }
+            let requestPayload;
+            if (isEdit) {
+              const editObject = { ...processedValues, id: selectedRow.id };
+              requestPayload = { keyIndividuals: [editObject] };
+            } else {
+              requestPayload = { keyIndividuals: [processedValues] };
+            }
 
-              const payload = {
-                entityId,
-                requestPayload,
-                successCallback: () => {
-                  setSubmitting(false);
-                  dispatch(
-                    kycActionCreators.doFetchKYCData({
-                      entityId,
-                      requestPayload: {
-                        keys: ["keyIndividuals"],
-                        includeSignedUrl: true,
-                        sectionChanges: "key_individuals",
-                      },
-                    })
-                  );
-                  setKeyIndividualModalOpen(false);
-                  setSelectedRow(null);
-                },
-              };
-              dispatch(kycActionCreators.doPostKYCData(payload));
-              setSubmitting(false);
-            }}
-          >
-            {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
-              <form onSubmit={handleSubmit} noValidate>
-                <DialogTitle id="form-dialog-title">
-                  {t("kyc:Individuals.Form Fields.Add Individual")}
-                </DialogTitle>
-                <DialogContent>
-                  <Box mb={2}>
-                    <Grid container>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Capacity`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <FormControl className="w-full mt-4">
+            const payload = {
+              entityId,
+              requestPayload,
+              successCallback: () => {
+                setSubmitting(false);
+                dispatch(
+                  kycActionCreators.doFetchKYCData({
+                    entityId,
+                    requestPayload: {
+                      keys: ["keyIndividuals"],
+                      includeSignedUrl: true,
+                      sectionChanges: "key_individuals",
+                    },
+                  })
+                );
+                setKeyIndividualModalOpen(false);
+                setSelectedRow(null);
+              },
+            };
+            dispatch(kycActionCreators.doPostKYCData(payload));
+            setSubmitting(false);
+          }}
+        >
+          {({ handleSubmit, isSubmitting, setFieldValue, values }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <DialogTitle id="form-dialog-title">
+                {t("kyc:Individuals.Form Fields.Add Individual")}
+              </DialogTitle>
+              <DialogContent>
+                <Box mb={2}>
+                  <Grid container>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Capacity`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <FormControl className="w-full mt-4">
+                          <Select
+                            closeMenuOnSelect
+                            isSearchable
+                            placeholder={`${t("kyc:Individuals.Form Fields.Capacity")}`}
+                            components={{
+                              ...animatedComponents,
+                            }}
+                            styles={selectStyles}
+                            value={values.capacity}
+                            options={capacities}
+                            onChange={(selected) => {
+                              setFieldValue("capacity", selected);
+                            }}
+                          />
+                        </FormControl>
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="ml-4"
+                          name="capacity"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.First Name`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          component={TextField}
+                          label={t(`kyc:Individuals.Form Fields.First Name`)}
+                          name="firstName"
+                          variant="filled"
+                          type="text"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Middle Name`)}
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          component={TextField}
+                          label={t(`kyc:Individuals.Form Fields.Middle Name`)}
+                          name="middleName"
+                          variant="filled"
+                          type="text"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Last Name`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          component={TextField}
+                          label={t(`kyc:Individuals.Form Fields.Last Name`)}
+                          name="lastName"
+                          variant="filled"
+                          type="text"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Politically Exposed Person`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field component={RadioGroup} name="politicallyExposed">
+                          <FormControlLabel
+                            value="yes"
+                            control={<Radio disabled={isSubmitting} />}
+                            label={t(`kyc:Individuals.Yes`)}
+                            disabled={isSubmitting}
+                          />
+                          <FormControlLabel
+                            value="no"
+                            control={<Radio disabled={isSubmitting} />}
+                            label={t(`kyc:Individuals.No`)}
+                            disabled={isSubmitting}
+                          />
+                        </Field>
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="ml-4"
+                          name="politicallyExposed"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-8">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Address`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <div className="w-full">
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Individuals.Form Fields.Address Line 1`)}
+                            name="addressLine1"
+                            variant="filled"
+                            type="text"
+                          />
+                        </div>
+                        <div className="mt-4 w-full">
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Individuals.Form Fields.Address Line 2`)}
+                            name="addressLine2"
+                            variant="filled"
+                            type="text"
+                          />
+                        </div>
+                        <div className="mt-4 w-full">
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Individuals.Form Fields.City`)}
+                            name="city"
+                            variant="filled"
+                            type="text"
+                          />
+                        </div>
+                        <div className="mt-4 w-full">
+                          <FormControl className="w-full">
                             <Select
                               closeMenuOnSelect
                               isSearchable
-                              placeholder={`${t("kyc:Individuals.Form Fields.Capacity")}`}
+                              placeholder={`${t("kyc:Individuals.Form Fields.Country")}`}
                               components={{
                                 ...animatedComponents,
                               }}
                               styles={selectStyles}
-                              value={values.capacity}
-                              options={capacities}
+                              value={values?.country}
+                              options={countries}
                               onChange={(selected) => {
-                                setFieldValue("capacity", selected);
+                                setFieldValue("country", selected);
                               }}
                             />
                           </FormControl>
@@ -599,438 +737,38 @@ const KeyIndividuals = () => {
                             variant="caption"
                             color="error"
                             className="ml-4"
-                            name="capacity"
+                            name="country"
                           />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.First Name`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
+                        </div>
+                        <div className="mt-4 w-full">
                           <Field
                             fullWidth
                             component={TextField}
-                            label={t(`kyc:Individuals.Form Fields.First Name`)}
-                            name="firstName"
+                            label={t(`kyc:Individuals.Form Fields.Post Code`)}
+                            name="pinCode"
                             variant="filled"
                             type="text"
                           />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Middle Name`)}
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
+                        </div>
+                        <div className="mt-4 w-full">
                           <Field
                             fullWidth
                             component={TextField}
-                            label={t(`kyc:Individuals.Form Fields.Middle Name`)}
-                            name="middleName"
+                            label={t(`kyc:Individuals.Form Fields.Telephone Number`)}
+                            name="businessPhone"
                             variant="filled"
                             type="text"
                           />
-                        </Grid>
+                        </div>
                       </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Last Name`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Individuals.Form Fields.Last Name`)}
-                            name="lastName"
-                            variant="filled"
-                            type="text"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Politically Exposed Person`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Field component={RadioGroup} name="politicallyExposed">
-                            <FormControlLabel
-                              value="yes"
-                              control={<Radio disabled={isSubmitting} />}
-                              label={t(`kyc:Individuals.Yes`)}
-                              disabled={isSubmitting}
-                            />
-                            <FormControlLabel
-                              value="no"
-                              control={<Radio disabled={isSubmitting} />}
-                              label={t(`kyc:Individuals.No`)}
-                              disabled={isSubmitting}
-                            />
-                          </Field>
-                          <ErrorMessage
-                            component={Typography}
-                            variant="caption"
-                            color="error"
-                            className="ml-4"
-                            name="politicallyExposed"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-8">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Address`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <div className="w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Individuals.Form Fields.Address Line 1`)}
-                              name="addressLine1"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                          <div className="mt-4 w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Individuals.Form Fields.Address Line 2`)}
-                              name="addressLine2"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                          <div className="mt-4 w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Individuals.Form Fields.City`)}
-                              name="city"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                          <div className="mt-4 w-full">
-                            <FormControl className="w-full">
-                              <Select
-                                closeMenuOnSelect
-                                isSearchable
-                                placeholder={`${t("kyc:Individuals.Form Fields.Country")}`}
-                                components={{
-                                  ...animatedComponents,
-                                }}
-                                styles={selectStyles}
-                                value={values?.country}
-                                options={countries}
-                                onChange={(selected) => {
-                                  setFieldValue("country", selected);
-                                }}
-                              />
-                            </FormControl>
-                            <ErrorMessage
-                              component={Typography}
-                              variant="caption"
-                              color="error"
-                              className="ml-4"
-                              name="country"
-                            />
-                          </div>
-                          <div className="mt-4 w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Individuals.Form Fields.Post Code`)}
-                              name="pinCode"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                          <div className="mt-4 w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Individuals.Form Fields.Telephone Number`)}
-                              name="businessPhone"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                        </Grid>
-                      </Grid>
-                      <RegionSwitch
-                        sa={
-                          <Fragment>
-                            <Grid item xs={12} lg={12} container className="mt-4">
-                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                                <Typography className="mt-4">
-                                  {t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Number`)}
-                                  <Required />
-                                </Typography>
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={6}
-                                lg={6}
-                                container
-                                alignContent="center"
-                                className="px-1"
-                              >
-                                <Field
-                                  fullWidth
-                                  component={TextField}
-                                  label={t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Number`)}
-                                  name="saudiIdNumber"
-                                  variant="filled"
-                                  type="text"
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid item xs={12} lg={12} container className="mt-4">
-                              <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                                <Typography className="mt-4">
-                                  {t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Expiry`)}
-                                  <Required />
-                                </Typography>
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={6}
-                                lg={6}
-                                container
-                                alignContent="center"
-                                className="px-1"
-                              >
-                                <Field
-                                  fullWidth
-                                  format="DD/MM/YYYY"
-                                  inputVariant="filled"
-                                  inputProps={{
-                                    shrink: "false",
-                                  }}
-                                  minDate={moment()}
-                                  variant="dialog"
-                                  placeholder="DD/MM/YYYY"
-                                  component={DatePicker}
-                                  name="saudiIdExpiry"
-                                  label={t("kyc:Individuals.Form Fields.Iqama/Saudi ID Expiry")}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Fragment>
-                        }
-                        ae=""
-                      />
-
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Passport Number`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Individuals.Form Fields.Passport Number`)}
-                            name="passportNumber"
-                            variant="filled"
-                            type="text"
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Passport Expiry`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Field
-                            fullWidth
-                            format="DD/MM/YYYY"
-                            inputVariant="filled"
-                            inputProps={{
-                              shrink: "false",
-                            }}
-                            minDate={moment()}
-                            variant="dialog"
-                            placeholder="DD/MM/YYYY"
-                            component={DatePicker}
-                            name="passportExpiry"
-                            label={t("kyc:Individuals.Form Fields.Passport Expiry")}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Upload Passport Copy`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Box className="w-full">
-                            <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
-                              name="passportCopyFileName"
-                              fullWidth
-                              downloadParameters={
-                                values.passportCopyFileName
-                                  ? {
-                                      signedURL: selectedRow?.passportCopyFileName.link,
-                                    }
-                                  : null
-                              }
-                              defaultFiles={
-                                values.passportCopyFileName
-                                  ? [{ file: { name: values.passportCopyFileName } }]
-                                  : null
-                              }
-                              acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                              customHandleChange={(e) =>
-                                handleFileUpload({ files: e, keyName: "passportCopyFileName" })
-                              }
-                            />
-                            <ErrorMessage
-                              component={Typography}
-                              variant="caption"
-                              color="error"
-                              className="ml-4"
-                              name="passportCopyFileName"
-                            />
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Upload Proof of Address`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Box className="w-full">
-                            <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
-                              name="addressProofFileName"
-                              fullWidth
-                              downloadParameters={
-                                values.addressProofFileName
-                                  ? {
-                                      signedURL: selectedRow?.addressProofFileName.link,
-                                    }
-                                  : null
-                              }
-                              defaultFiles={
-                                values.addressProofFileName
-                                  ? [{ file: { name: values.addressProofFileName } }]
-                                  : null
-                              }
-                              acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                              customHandleChange={(e) =>
-                                handleFileUpload({ files: e, keyName: "addressProofFileName" })
-                              }
-                            />
-                            <ErrorMessage
-                              component={Typography}
-                              variant="caption"
-                              color="error"
-                              className="ml-4"
-                              name="addressProofFileName"
-                            />
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      <RegionSwitch
-                        sa={
+                    </Grid>
+                    <RegionSwitch
+                      sa={
+                        <Fragment>
                           <Grid item xs={12} lg={12} container className="mt-4">
                             <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
                               <Typography className="mt-4">
-                                {t(
-                                  `kyc:Individuals.Form Fields.Upload Chamber of Commerce Authorization`
-                                )}
+                                {t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Number`)}
                                 <Required />
                               </Typography>
                             </Grid>
@@ -1042,134 +780,314 @@ const KeyIndividuals = () => {
                               alignContent="center"
                               className="px-1"
                             >
-                              <Box className="w-full">
-                                <FileUploadField
-                                  // label="Bulletin Document"
-                                  // isLoading={filesUploadInProgress}
-                                  name="chamberOfCommerceAuthorizationFileName"
-                                  fullWidth
-                                  downloadParameters={
-                                    values.chamberOfCommerceAuthorizationFileName
-                                      ? {
-                                          signedURL:
-                                            selectedRow?.chamberOfCommerceAuthorizationFileName
-                                              .link,
-                                        }
-                                      : null
-                                  }
-                                  defaultFiles={
-                                    values.chamberOfCommerceAuthorizationFileName
-                                      ? [
-                                          {
-                                            file: {
-                                              name: values.chamberOfCommerceAuthorizationFileName,
-                                            },
-                                          },
-                                        ]
-                                      : null
-                                  }
-                                  acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                                  customHandleChange={(e) =>
-                                    handleFileUpload({
-                                      files: e,
-                                      keyName: "chamberOfCommerceAuthorizationFileName",
-                                    })
-                                  }
-                                />
-                                <ErrorMessage
-                                  component={Typography}
-                                  variant="caption"
-                                  color="error"
-                                  className="ml-4"
-                                  name="chamberOfCommerceAuthorizationFileName"
-                                />
-                              </Box>
+                              <Field
+                                fullWidth
+                                component={TextField}
+                                label={t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Number`)}
+                                name="saudiIdNumber"
+                                variant="filled"
+                                type="text"
+                              />
                             </Grid>
                           </Grid>
-                        }
-                        ae=""
-                      />
+                          <Grid item xs={12} lg={12} container className="mt-4">
+                            <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                              <Typography className="mt-4">
+                                {t(`kyc:Individuals.Form Fields.Iqama/Saudi ID Expiry`)}
+                                <Required />
+                              </Typography>
+                            </Grid>
+                            <Grid
+                              xs={12}
+                              md={6}
+                              lg={6}
+                              container
+                              alignContent="center"
+                              className="px-1"
+                            >
+                              <Field
+                                fullWidth
+                                format="DD/MM/YYYY"
+                                inputVariant="filled"
+                                inputProps={{
+                                  shrink: "false",
+                                }}
+                                minDate={moment()}
+                                variant="dialog"
+                                placeholder="DD/MM/YYYY"
+                                component={DatePicker}
+                                name="saudiIdExpiry"
+                                label={t("kyc:Individuals.Form Fields.Iqama/Saudi ID Expiry")}
+                              />
+                            </Grid>
+                          </Grid>
+                        </Fragment>
+                      }
+                      ae=""
+                    />
 
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
-                          <Typography className="mt-4">
-                            {t(`kyc:Individuals.Form Fields.Upload Corporate Authorization`)}
-                            <Required />
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={6}
-                          lg={6}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <Box className="w-full">
-                            <FileUploadField
-                              // label="Bulletin Document"
-                              // isLoading={filesUploadInProgress}
-                              name="corporateAuthorizationFileName"
-                              fullWidth
-                              downloadParameters={
-                                values.corporateAuthorizationFileName
-                                  ? {
-                                      signedURL: selectedRow?.corporateAuthorizationFileName.link,
-                                    }
-                                  : null
-                              }
-                              defaultFiles={
-                                values.corporateAuthorizationFileName
-                                  ? [{ file: { name: values.corporateAuthorizationFileName } }]
-                                  : null
-                              }
-                              acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
-                              customHandleChange={(e) =>
-                                handleFileUpload({
-                                  files: e,
-                                  keyName: "corporateAuthorizationFileName",
-                                })
-                              }
-                            />
-                            <ErrorMessage
-                              component={Typography}
-                              variant="caption"
-                              color="error"
-                              className="ml-4"
-                              name="corporateAuthorizationFileName"
-                            />
-                          </Box>
-                        </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Passport Number`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          component={TextField}
+                          label={t(`kyc:Individuals.Form Fields.Passport Number`)}
+                          name="passportNumber"
+                          variant="filled"
+                          type="text"
+                        />
                       </Grid>
                     </Grid>
-                  </Box>
-                </DialogContent>
-                <DialogActions>
-                  <Grid container justifyContent="flex-end" className="w-full">
-                    <Grid item lg={4}>
-                      <Button
-                        fullWidth
-                        onClick={() => {
-                          setKeyIndividualModalOpen(false);
-                          // handleClose();
-                          // resetForm();
-                        }}
-                        color="primary"
-                      >
-                        {t("Miscellaneous.Cancel")}
-                      </Button>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Passport Expiry`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Field
+                          fullWidth
+                          format="DD/MM/YYYY"
+                          inputVariant="filled"
+                          inputProps={{
+                            shrink: "false",
+                          }}
+                          minDate={moment()}
+                          variant="dialog"
+                          placeholder="DD/MM/YYYY"
+                          component={DatePicker}
+                          name="passportExpiry"
+                          label={t("kyc:Individuals.Form Fields.Passport Expiry")}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Upload Passport Copy`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Box className="w-full">
+                          <FileUploadField
+                            // label="Bulletin Document"
+                            // isLoading={filesUploadInProgress}
+                            name="passportCopyFileName"
+                            fullWidth
+                            downloadParameters={
+                              values.passportCopyFileName
+                                ? {
+                                    signedURL: selectedRow?.passportCopyFileName.link,
+                                  }
+                                : null
+                            }
+                            defaultFiles={
+                              values.passportCopyFileName
+                                ? [{ file: { name: values.passportCopyFileName } }]
+                                : null
+                            }
+                            acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                            customHandleChange={(e) =>
+                              handleFileUpload({ files: e, keyName: "passportCopyFileName" })
+                            }
+                          />
+                          <ErrorMessage
+                            component={Typography}
+                            variant="caption"
+                            color="error"
+                            className="ml-4"
+                            name="passportCopyFileName"
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Upload Proof of Address`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Box className="w-full">
+                          <FileUploadField
+                            // label="Bulletin Document"
+                            // isLoading={filesUploadInProgress}
+                            name="addressProofFileName"
+                            fullWidth
+                            downloadParameters={
+                              values.addressProofFileName
+                                ? {
+                                    signedURL: selectedRow?.addressProofFileName.link,
+                                  }
+                                : null
+                            }
+                            defaultFiles={
+                              values.addressProofFileName
+                                ? [{ file: { name: values.addressProofFileName } }]
+                                : null
+                            }
+                            acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                            customHandleChange={(e) =>
+                              handleFileUpload({ files: e, keyName: "addressProofFileName" })
+                            }
+                          />
+                          <ErrorMessage
+                            component={Typography}
+                            variant="caption"
+                            color="error"
+                            className="ml-4"
+                            name="addressProofFileName"
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <RegionSwitch
+                      sa={
+                        <Grid item xs={12} lg={12} container className="mt-4">
+                          <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                            <Typography className="mt-4">
+                              {t(
+                                `kyc:Individuals.Form Fields.Upload Chamber of Commerce Authorization`
+                              )}
+                              <Required />
+                            </Typography>
+                          </Grid>
+                          <Grid
+                            xs={12}
+                            md={6}
+                            lg={6}
+                            container
+                            alignContent="center"
+                            className="px-1"
+                          >
+                            <Box className="w-full">
+                              <FileUploadField
+                                // label="Bulletin Document"
+                                // isLoading={filesUploadInProgress}
+                                name="chamberOfCommerceAuthorizationFileName"
+                                fullWidth
+                                downloadParameters={
+                                  values.chamberOfCommerceAuthorizationFileName
+                                    ? {
+                                        signedURL:
+                                          selectedRow?.chamberOfCommerceAuthorizationFileName.link,
+                                      }
+                                    : null
+                                }
+                                defaultFiles={
+                                  values.chamberOfCommerceAuthorizationFileName
+                                    ? [
+                                        {
+                                          file: {
+                                            name: values.chamberOfCommerceAuthorizationFileName,
+                                          },
+                                        },
+                                      ]
+                                    : null
+                                }
+                                acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                                customHandleChange={(e) =>
+                                  handleFileUpload({
+                                    files: e,
+                                    keyName: "chamberOfCommerceAuthorizationFileName",
+                                  })
+                                }
+                              />
+                              <ErrorMessage
+                                component={Typography}
+                                variant="caption"
+                                color="error"
+                                className="ml-4"
+                                name="chamberOfCommerceAuthorizationFileName"
+                              />
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      }
+                      ae=""
+                    />
+
+                    <Grid item xs={12} lg={12} container className="mt-4">
+                      <Grid item xs={12} md={6} lg={6} container alignContent="flex-start">
+                        <Typography className="mt-4">
+                          {t(`kyc:Individuals.Form Fields.Upload Corporate Authorization`)}
+                          <Required />
+                        </Typography>
+                      </Grid>
+                      <Grid xs={12} md={6} lg={6} container alignContent="center" className="px-1">
+                        <Box className="w-full">
+                          <FileUploadField
+                            // label="Bulletin Document"
+                            // isLoading={filesUploadInProgress}
+                            name="corporateAuthorizationFileName"
+                            fullWidth
+                            downloadParameters={
+                              values.corporateAuthorizationFileName
+                                ? {
+                                    signedURL: selectedRow?.corporateAuthorizationFileName.link,
+                                  }
+                                : null
+                            }
+                            defaultFiles={
+                              values.corporateAuthorizationFileName
+                                ? [{ file: { name: values.corporateAuthorizationFileName } }]
+                                : null
+                            }
+                            acceptableFileTypes={DEFAULT_ACCEPTABLE_FILE_TYPES.join(",")}
+                            customHandleChange={(e) =>
+                              handleFileUpload({
+                                files: e,
+                                keyName: "corporateAuthorizationFileName",
+                              })
+                            }
+                          />
+                          <ErrorMessage
+                            component={Typography}
+                            variant="caption"
+                            color="error"
+                            className="ml-4"
+                            name="corporateAuthorizationFileName"
+                          />
+                        </Box>
+                      </Grid>
                     </Grid>
                   </Grid>
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Grid container justifyContent="flex-end" className="w-full">
                   <Grid item lg={4}>
-                    <Button type="submit" fullWidth variant="contained" color="primary">
-                      {t("Miscellaneous.Submit")}
+                    <Button
+                      fullWidth
+                      onClick={() => {
+                        setKeyIndividualModalOpen(false);
+                        // handleClose();
+                        // resetForm();
+                      }}
+                      color="primary"
+                    >
+                      {t("Miscellaneous.Cancel")}
                     </Button>
                   </Grid>
-                </DialogActions>
-              </form>
-            )}
-          </Formik>
-        </MuiPickersUtilsProvider>
+                </Grid>
+                <Grid item lg={4}>
+                  <Button type="submit" fullWidth variant="contained" color="primary">
+                    {t("Miscellaneous.Submit")}
+                  </Button>
+                </Grid>
+              </DialogActions>
+            </form>
+          )}
+        </Formik>
       </Dialog>
       <Dialog
         open={deleteShareholderModalOpen}

@@ -1,8 +1,6 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

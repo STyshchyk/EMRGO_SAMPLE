@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,10 +12,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { makeStyles } from '@mui/styles';
 import { Form, Formik } from "formik";
 
-import Button from "@mui/material/Button";
 import Checkbox from "../../../components/Checkbox";
 import InfoAlert from "../../../components/InfoAlert";
 import LoadingPage from "../../../components/LoadingPage";
@@ -23,36 +22,7 @@ import * as issuanceActionCreators from "../../../redux/actionCreators/issuance"
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as issuanceSelectors from "../../../redux/selectors/issuance";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  table: {
-    color: theme.palette.primary.main,
-  },
-  tableRow: {
-    marginBottom: 0,
-  },
-  tableCell: {
-    background: "white",
-    borderBottom: "none",
-    color: theme.palette.primary.main,
-    fontSize: "1em",
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: "50px",
-  },
-  tableHeadCell: {
-    borderBottom: "none",
-    color: theme.palette.primary.main,
-    fontSize: "1em",
-    fontWeight: "bold",
-    height: "50px",
-  },
-}));
-
 const CMANotification = () => {
-  const classes = useStyles();
   const { issuanceID } = useParams();
   const dispatch = useDispatch();
   const { t } = useTranslation(["cma_notification"]);
@@ -146,16 +116,40 @@ const CMANotification = () => {
           marginBottom: "1rem",
         }}
       >
-        <Table className={classes.table} aria-label="cma-notification-table">
-          <TableHead className={classes.thead}>
+        <Table sx={{ color: "blue" }} aria-label="cma-notification-table">
+          <TableHead>
             <TableRow>
-              <TableCell className={classes.tableHeadCell}>
+              <TableCell
+                sx={{
+                  borderBottom: "none",
+                  color: "blue",
+                  fontSize: "1em",
+                  fontWeight: "bold",
+                  height: "50px",
+                }}
+              >
                 {t("CMANotification.CMADocumentsTable.headers.Documents")}
               </TableCell>
-              <TableCell className={classes.tableHeadCell}>
+              <TableCell
+                sx={{
+                  borderBottom: "none",
+                  color: "blue",
+                  fontSize: "1em",
+                  fontWeight: "bold",
+                  height: "50px",
+                }}
+              >
                 {t("CMANotification.CMADocumentsTable.headers.Related Parties")}
               </TableCell>
-              <TableCell className={classes.tableHeadCell}>
+              <TableCell
+                sx={{
+                  borderBottom: "none",
+                  color: "blue",
+                  fontSize: "1em",
+                  fontWeight: "bold",
+                  height: "50px",
+                }}
+              >
                 {t("CMANotification.CMADocumentsTable.headers.Download")}
               </TableCell>
             </TableRow>
@@ -163,11 +157,45 @@ const CMANotification = () => {
           <TableBody>
             {tableData.map((rowData) => (
               <TableRow key={rowData.documentName}>
-                <TableCell className={classes.tableCell} component="th" scope="row">
+                <TableCell
+                  sx={{
+                    background: "white",
+                    borderBottom: "none",
+                    color: theme.palette.primary.main,
+                    fontSize: "1em",
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    height: "50px",
+                  }}
+                  component="th"
+                  scope="row"
+                >
                   {rowData.documentName}
                 </TableCell>
-                <TableCell className={classes.tableCell}>{rowData.party}</TableCell>
-                <TableCell className={classes.tableCell}>
+                <TableCell
+                  sx={{
+                    background: "white",
+                    borderBottom: "none",
+                    color: theme.palette.primary.main,
+                    fontSize: "1em",
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    height: "50px",
+                  }}
+                >
+                  {rowData.party}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    background: "white",
+                    borderBottom: "none",
+                    color: theme.palette.primary.main,
+                    fontSize: "1em",
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    height: "50px",
+                  }}
+                >
                   {rowData.documentURL ? (
                     <IconButton
                       color="primary"
