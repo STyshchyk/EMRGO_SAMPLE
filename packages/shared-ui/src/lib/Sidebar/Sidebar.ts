@@ -107,8 +107,33 @@ const activeLinkStyles = css`
     `}
 `;
 
+const disabledLinkStyles = css`
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      &,
+      &:hover {
+        opacity: 0.4;
+        cursor: default;
+        background-color: ${getTheme("colors.white.100")};
+      }
+    `}
+
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      &,
+      &:hover {
+        opacity: 0.4;
+        cursor: default;
+        background-color: ${getTheme("colors.green1")};
+      }
+    `}
+`;
+
 interface ILinkProps {
   active?: boolean;
+  disabled?: boolean;
 }
 
 export const SidebarListItemLink = styled.a<ILinkProps>`
@@ -120,6 +145,12 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
     css`
       ${getTheme("typography.semiBold.01")}
       ${activeLinkStyles}
+    `}
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      ${disabledLinkStyles}
     `}
 
   &.active {
