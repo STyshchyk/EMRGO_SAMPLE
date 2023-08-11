@@ -1,10 +1,8 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -93,122 +91,120 @@ const AssignApproveModal = ({
                 {t("onboarding:Forms.Assign & Approve")}
               </DialogTitle>
               <DialogContent className="overflow-y-visible">
-                <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.First Name")}
-                      name="firstName"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Middle Name")}
-                      name="middleName"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Last Name")}
-                      name="lastName"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Entity Type")}
-                      name="entityType"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Role")}
-                      name="role"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container>
-                    <Box my={1} className="w-full">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder={`${t("onboarding:Forms.Classification")}...`}
-                          isSearchable
-                          components={{
-                            ...animatedComponents,
-                            // eslint-disable-next-line react/prop-types
-                            MultiValueContainer: ({ data }) => (
-                              <Chip
-                                // eslint-disable-next-line react/prop-types
-                                key={data.value}
-                                // eslint-disable-next-line react/prop-types
-                                label={data.value}
-                                className="my-2"
-                                // eslint-disable-next-line react/prop-types
-                                // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
-                                color="secondary"
-                              />
-                            ),
-                          }}
-                          styles={{
-                            menu: (styles) => ({
-                              ...styles,
-                              zIndex: 10,
-                            }),
-                            control: (styles) => ({
-                              ...styles,
-                              border: "none",
-                              borderRadius: "6px",
-                              backgroundColor: "rgba(0, 0, 0, 0.09)",
-                              height: "3rem",
-                            }),
-                          }}
-                          value={values.classification}
-                          options={classificationOptions}
-                          onChange={(selectedValue) => {
-                            setFieldValue("classification", selectedValue, false);
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Entity Name (Legal)")}
-                      name="legalName"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Field
-                      disabled
-                      fullWidth
-                      component={TextField}
-                      label={t("onboarding:Forms.Entity Name (Platform)")}
-                      name="entityName"
-                      variant="filled"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.First Name")}
+                    name="firstName"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Middle Name")}
+                    name="middleName"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Last Name")}
+                    name="lastName"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Entity Type")}
+                    name="entityType"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Role")}
+                    name="role"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container>
+                  <Box my={1} className="w-full">
+                    <FormControl className="w-full">
+                      <Select
+                        closeMenuOnSelect
+                        placeholder={`${t("onboarding:Forms.Classification")}...`}
+                        isSearchable
+                        components={{
+                          ...animatedComponents,
+                          // eslint-disable-next-line react/prop-types
+                          MultiValueContainer: ({ data }) => (
+                            <Chip
+                              // eslint-disable-next-line react/prop-types
+                              key={data.value}
+                              // eslint-disable-next-line react/prop-types
+                              label={data.value}
+                              className="my-2"
+                              // eslint-disable-next-line react/prop-types
+                              // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
+                              color="secondary"
+                            />
+                          ),
+                        }}
+                        styles={{
+                          menu: (styles) => ({
+                            ...styles,
+                            zIndex: 10,
+                          }),
+                          control: (styles) => ({
+                            ...styles,
+                            border: "none",
+                            borderRadius: "6px",
+                            backgroundColor: "rgba(0, 0, 0, 0.09)",
+                            height: "3rem",
+                          }),
+                        }}
+                        value={values.classification}
+                        options={classificationOptions}
+                        onChange={(selectedValue) => {
+                          setFieldValue("classification", selectedValue, false);
+                        }}
+                      />
+                    </FormControl>
+                  </Box>
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Entity Name (Legal)")}
+                    name="legalName"
+                    variant="filled"
+                  />
+                </Grid>
+                <Grid container className="my-4">
+                  <Field
+                    disabled
+                    fullWidth
+                    component={TextField}
+                    label={t("onboarding:Forms.Entity Name (Platform)")}
+                    name="entityName"
+                    variant="filled"
+                  />
+                </Grid>
               </DialogContent>
               <DialogActions>
                 <Grid container justifyContent="flex-end" className="mx-4 mb-4">

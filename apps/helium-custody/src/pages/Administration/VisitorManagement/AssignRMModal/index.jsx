@@ -1,10 +1,8 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -61,54 +59,52 @@ const AssignRMModal = ({ open, onClose, selectedRow, assignRM, relationshipManag
                 {t("onboarding:Forms.Assign Relationship Manager")}
               </DialogTitle>
               <DialogContent className="overflow-y-visible">
-                <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                  <Grid container>
-                    <Box my={1} className="w-full">
-                      <FormControl className="w-full">
-                        <Select
-                          id="relationship-managers"
-                          closeMenuOnSelect
-                          placeholder={`${t("onboarding:Forms.Relationship Manager")}...`}
-                          isSearchable
-                          components={{
-                            ...animatedComponents,
-                            // eslint-disable-next-line react/prop-types
-                            MultiValueContainer: ({ data }) => (
-                              <Chip
-                                // eslint-disable-next-line react/prop-types
-                                key={data.value}
-                                // eslint-disable-next-line react/prop-types
-                                label={data.value}
-                                className="my-2"
-                                // eslint-disable-next-line react/prop-types
-                                // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
-                                color="secondary"
-                              />
-                            ),
-                          }}
-                          styles={{
-                            menu: (styles) => ({
-                              ...styles,
-                              zIndex: 10,
-                            }),
-                            control: (styles) => ({
-                              ...styles,
-                              border: "none",
-                              borderRadius: "6px",
-                              backgroundColor: "rgba(0, 0, 0, 0.09)",
-                              height: "3rem",
-                            }),
-                          }}
-                          value={values.selectedRM}
-                          options={filteredRelationshipManagers}
-                          onChange={(selectedValue) => {
-                            setFieldValue("selectedRM", selectedValue, false);
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                <Grid container>
+                  <Box my={1} className="w-full">
+                    <FormControl className="w-full">
+                      <Select
+                        id="relationship-managers"
+                        closeMenuOnSelect
+                        placeholder={`${t("onboarding:Forms.Relationship Manager")}...`}
+                        isSearchable
+                        components={{
+                          ...animatedComponents,
+                          // eslint-disable-next-line react/prop-types
+                          MultiValueContainer: ({ data }) => (
+                            <Chip
+                              // eslint-disable-next-line react/prop-types
+                              key={data.value}
+                              // eslint-disable-next-line react/prop-types
+                              label={data.value}
+                              className="my-2"
+                              // eslint-disable-next-line react/prop-types
+                              // onDelete={(e) => handleRemoveCountrySelection(e, data.value)}
+                              color="secondary"
+                            />
+                          ),
+                        }}
+                        styles={{
+                          menu: (styles) => ({
+                            ...styles,
+                            zIndex: 10,
+                          }),
+                          control: (styles) => ({
+                            ...styles,
+                            border: "none",
+                            borderRadius: "6px",
+                            backgroundColor: "rgba(0, 0, 0, 0.09)",
+                            height: "3rem",
+                          }),
+                        }}
+                        value={values.selectedRM}
+                        options={filteredRelationshipManagers}
+                        onChange={(selectedValue) => {
+                          setFieldValue("selectedRM", selectedValue, false);
+                        }}
+                      />
+                    </FormControl>
+                  </Box>
+                </Grid>
               </DialogContent>
               <DialogActions>
                 <Grid container justifyContent="flex-end" className="mx-4 mb-4">

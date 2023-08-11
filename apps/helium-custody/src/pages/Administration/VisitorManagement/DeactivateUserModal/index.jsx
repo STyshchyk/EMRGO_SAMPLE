@@ -1,8 +1,6 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -50,19 +48,17 @@ const DeactivateUserModal = ({ open, onClose, selectedRow, deactivateEntity }) =
                 {t("onboarding:Forms.Deactivate User")}
               </DialogTitle>
               <DialogContent className="overflow-y-visible">
-                <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-                  <Grid container>
-                    <Field
-                      fullWidth
-                      component={TextField}
-                      minRows={3}
-                      multiline
-                      label={t("onboarding:Forms.Reason")}
-                      name="reason"
-                      variant="filled"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
+                <Grid container>
+                  <Field
+                    fullWidth
+                    component={TextField}
+                    minRows={3}
+                    multiline
+                    label={t("onboarding:Forms.Reason")}
+                    name="reason"
+                    variant="filled"
+                  />
+                </Grid>
               </DialogContent>
               <DialogActions>
                 <Grid container justifyContent="flex-end" className="mx-4 mb-4">

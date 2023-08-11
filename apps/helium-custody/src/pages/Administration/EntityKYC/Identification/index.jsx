@@ -2,11 +2,9 @@ import { Fragment, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Select } from "@emrgo-frontend/shared-ui";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -16,9 +14,9 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, FieldArray, Formik } from "formik";
 import { RadioGroup, TextField } from "formik-mui";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import sortby from "lodash.sortby";
 import moment from "moment";
 
@@ -192,540 +190,628 @@ const Identification = () => {
 
   return (
     <Fragment>
-      <MuiPickersUtilsProvider utils={MomentUtils} locale={theme.locale.altLocale}>
-        <Grid container item xs={12} spacing={2}>
-          <Grid item xs={12}>
-            <StyledPageTitle title={t("kyc:Identification.Identification Details of the Entity")} />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="subtitle2">
-              {t(
-                "kyc:Identification.Please provide the Legal Form and constitutional details that BEST describes your entity"
-              )}
-            </Typography>
-          </Grid>
+      <Grid container item xs={12} spacing={2}>
+        <Grid item xs={12}>
+          <StyledPageTitle title={t("kyc:Identification.Identification Details of the Entity")} />
         </Grid>
-        {kycData ? (
-          <Formik
-            initialValues={{
-              entityName: kycData?.entityName || "",
-              legalForm: selectedLegalForm,
-              legalFormOther: kycData?.legalFormOther,
-              tradingNames: kycData.tradingNames || [""],
-              incorporationDate: kycData?.incorporationDate,
-              incorporationPlace: kycData?.incorporationPlace || "",
-              legalEntityIdentifier: kycData?.legalEntityIdentifier || "",
-              commercialRegNo: kycData?.commercialRegNo || "",
-              taxIdentificationNumber: kycData?.taxIdentificationNumber || "",
-              registeredAddress: {
-                addressLine1: kycData?.registeredAddress?.addressLine1 || "",
-                addressLine2: kycData?.registeredAddress?.addressLine2 || "",
-                city: kycData?.registeredAddress?.city || "",
-                country: selectedRegisteredAddressCountry,
-                pinCode: kycData?.registeredAddress?.pinCode || "",
-                businessPhone: kycData?.registeredAddress?.businessPhone || "",
+        <Grid item xs={12}>
+          <Typography variant="subtitle2">
+            {t(
+              "kyc:Identification.Please provide the Legal Form and constitutional details that BEST describes your entity"
+            )}
+          </Typography>
+        </Grid>
+      </Grid>
+      {kycData ? (
+        <Formik
+          initialValues={{
+            entityName: kycData?.entityName || "",
+            legalForm: selectedLegalForm,
+            legalFormOther: kycData?.legalFormOther,
+            tradingNames: kycData.tradingNames || [""],
+            incorporationDate: kycData?.incorporationDate,
+            incorporationPlace: kycData?.incorporationPlace || "",
+            legalEntityIdentifier: kycData?.legalEntityIdentifier || "",
+            commercialRegNo: kycData?.commercialRegNo || "",
+            taxIdentificationNumber: kycData?.taxIdentificationNumber || "",
+            registeredAddress: {
+              addressLine1: kycData?.registeredAddress?.addressLine1 || "",
+              addressLine2: kycData?.registeredAddress?.addressLine2 || "",
+              city: kycData?.registeredAddress?.city || "",
+              country: selectedRegisteredAddressCountry,
+              pinCode: kycData?.registeredAddress?.pinCode || "",
+              businessPhone: kycData?.registeredAddress?.businessPhone || "",
+            },
+            tradingAddress: {
+              addressLine1: kycData?.tradingAddress?.addressLine1 || "",
+              addressLine2: kycData?.tradingAddress?.addressLine2 || "",
+              city: kycData?.tradingAddress?.city || "",
+              country: selectedTradeAddressCountry,
+              pinCode: kycData?.tradingAddress?.pinCode || "",
+              businessPhone: kycData?.tradingAddress?.businessPhone || "",
+            },
+            pocBusinessPhone: kycData?.pocBusinessPhone,
+            pocWebsite: kycData?.pocWebsite,
+            pocEmail: kycData?.pocEmail,
+            numberOfEmployees: kycData?.numberOfEmployees,
+            businessActivityIndustry: selectedIndustryBusinessActvity,
+            businessActivitySector: selectedSectorBusinessActvity,
+            partOfGroup: getYesNoValue(kycData?.partOfGroup),
+            supervisedByFinancialServicesRegulatory: getYesNoValue(
+              kycData?.supervisedByFinancialServicesRegulatory
+            ),
+            supervisoryAuthorityName: kycData?.supervisoryAuthorityName,
+            regulatoryLicenseNumber: kycData?.regulatoryLicenseNumber,
+            externalAuditor: kycData?.externalAuditor,
+            changeRequests: kycData?.sectionChanges
+              ? kycData?.sectionChanges?.changesRequested
+              : {},
+          }}
+          enableReinitialize
+          validationSchema={
+            isIssuer
+              ? kycSchema.identificationDetailsIssuerSchema
+              : kycSchema.identificationDetailsSchema
+          }
+          validateOnMount={false}
+          onSubmit={(values, { setSubmitting }) => {
+            const identificationSubmitData = processIdentificationFormData(values);
+
+            delete identificationSubmitData.changeRequests.test;
+
+            const isLocked = isComplianceOfficer
+              ? Object.keys(identificationSubmitData.changeRequests).length === 0
+              : true;
+
+            identificationSubmitData.updateSection = {
+              sectionKey: "identification",
+              changesRequested: identificationSubmitData.changeRequests,
+              isLocked,
+            };
+
+            const payload = {
+              entityId,
+              requestPayload: identificationSubmitData,
+              successCallback: () => {
+                setSubmitting(false);
+                fetchPageData();
+                // navigate(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
               },
-              tradingAddress: {
-                addressLine1: kycData?.tradingAddress?.addressLine1 || "",
-                addressLine2: kycData?.tradingAddress?.addressLine2 || "",
-                city: kycData?.tradingAddress?.city || "",
-                country: selectedTradeAddressCountry,
-                pinCode: kycData?.tradingAddress?.pinCode || "",
-                businessPhone: kycData?.tradingAddress?.businessPhone || "",
-              },
-              pocBusinessPhone: kycData?.pocBusinessPhone,
-              pocWebsite: kycData?.pocWebsite,
-              pocEmail: kycData?.pocEmail,
-              numberOfEmployees: kycData?.numberOfEmployees,
-              businessActivityIndustry: selectedIndustryBusinessActvity,
-              businessActivitySector: selectedSectorBusinessActvity,
-              partOfGroup: getYesNoValue(kycData?.partOfGroup),
-              supervisedByFinancialServicesRegulatory: getYesNoValue(
-                kycData?.supervisedByFinancialServicesRegulatory
-              ),
-              supervisoryAuthorityName: kycData?.supervisoryAuthorityName,
-              regulatoryLicenseNumber: kycData?.regulatoryLicenseNumber,
-              externalAuditor: kycData?.externalAuditor,
-              changeRequests: kycData?.sectionChanges
-                ? kycData?.sectionChanges?.changesRequested
-                : {},
-            }}
-            enableReinitialize
-            validationSchema={
-              isIssuer
-                ? kycSchema.identificationDetailsIssuerSchema
-                : kycSchema.identificationDetailsSchema
-            }
-            validateOnMount={false}
-            onSubmit={(values, { setSubmitting }) => {
-              const identificationSubmitData = processIdentificationFormData(values);
+            };
+            dispatch(kycActionCreators.doPostKYCData(payload));
+          }}
+        >
+          {({ handleSubmit, values, setFieldValue, isSubmitting, dirty }) => {
+            const saveForm = () => {
+              const identificationSaveData = processIdentificationFormData(values);
 
-              delete identificationSubmitData.changeRequests.test;
-
-              const isLocked = isComplianceOfficer
-                ? Object.keys(identificationSubmitData.changeRequests).length === 0
-                : true;
-
-              identificationSubmitData.updateSection = {
-                sectionKey: "identification",
-                changesRequested: identificationSubmitData.changeRequests,
-                isLocked,
-              };
+              const isRegisteredAddressEmpty = Object.keys(
+                identificationSaveData.registeredAddress
+              ).every((k) => !identificationSaveData.registeredAddress[k]);
+              if (isRegisteredAddressEmpty) identificationSaveData.registeredAddress = null;
 
               const payload = {
                 entityId,
-                requestPayload: identificationSubmitData,
+                requestPayload: identificationSaveData,
                 successCallback: () => {
-                  setSubmitting(false);
                   fetchPageData();
-                  // navigate(reverse(routes.dashboard.administration.kyc.entities.entity.edit.banking, { entityId }));
                 },
               };
               dispatch(kycActionCreators.doPostKYCData(payload));
-            }}
-          >
-            {({ handleSubmit, values, setFieldValue, isSubmitting, dirty }) => {
-              const saveForm = () => {
-                const identificationSaveData = processIdentificationFormData(values);
+            };
 
-                const isRegisteredAddressEmpty = Object.keys(
-                  identificationSaveData.registeredAddress
-                ).every((k) => !identificationSaveData.registeredAddress[k]);
-                if (isRegisteredAddressEmpty) identificationSaveData.registeredAddress = null;
+            const industryBusinessActvity = sortby(
+              getDropdownValues(values?.businessActivitySector?.meta, locale),
+              ["label"]
+            );
 
-                const payload = {
-                  entityId,
-                  requestPayload: identificationSaveData,
-                  successCallback: () => {
-                    fetchPageData();
-                  },
-                };
-                dispatch(kycActionCreators.doPostKYCData(payload));
-              };
+            return (
+              <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
+                {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
+                <Grid container className="pb-8">
+                  <Grid item xs={12}>
+                    <Grid container justifyContent="flex-end">
+                      <Grid item xs={12} md={6} lg={2}>
+                        <Grid container direction="column">
+                          {isComplianceOfficer ? (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color="secondary"
+                              onClick={() => {
+                                saveForm();
+                              }}
+                              disabled={!dirty}
+                            >
+                              {t("Miscellaneous.Save Form")}
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color="secondary"
+                              onClick={() => {
+                                saveForm();
+                              }}
+                              disabled={kycData?.sectionChanges?.isLocked || !dirty}
+                            >
+                              {t("Miscellaneous.Save Form")}
+                            </Button>
+                          )}
 
-              const industryBusinessActvity = sortby(
-                getDropdownValues(values?.businessActivitySector?.meta, locale),
-                ["label"]
-              );
-
-              return (
-                <form onSubmit={handleSubmit} noValidate className="pb-16 py-8">
-                  {/* <UnsavedFormDataGuard dirty={dirty && !kycData?.sectionChanges?.isLocked} /> */}
-                  <Grid container className="pb-8">
-                    <Grid item xs={12}>
-                      <Grid container justifyContent="flex-end">
-                        <Grid item xs={12} md={6} lg={2}>
-                          <Grid container direction="column">
-                            {isComplianceOfficer ? (
-                              <Button
-                                variant="contained"
-                                size="small"
-                                color="secondary"
-                                onClick={() => {
-                                  saveForm();
-                                }}
-                                disabled={!dirty}
-                              >
-                                {t("Miscellaneous.Save Form")}
-                              </Button>
-                            ) : (
-                              <Button
-                                variant="contained"
-                                size="small"
-                                color="secondary"
-                                onClick={() => {
-                                  saveForm();
-                                }}
-                                disabled={kycData?.sectionChanges?.isLocked || !dirty}
-                              >
-                                {t("Miscellaneous.Save Form")}
-                              </Button>
-                            )}
-
-                            <Typography variant="caption" align="center" className="text-gray-500">
-                              {t("Miscellaneous.Last Saved", {
-                                date: kycData?.sectionChanges?.updatedAt
-                                  ? moment(kycData?.sectionChanges?.updatedAt).format(
-                                      "DD/MM/YYYY HH:mm"
-                                    )
-                                  : "N.A",
-                              })}{" "}
-                            </Typography>
-                          </Grid>
+                          <Typography variant="caption" align="center" className="text-gray-500">
+                            {t("Miscellaneous.Last Saved", {
+                              date: kycData?.sectionChanges?.updatedAt
+                                ? moment(kycData?.sectionChanges?.updatedAt).format(
+                                    "DD/MM/YYYY HH:mm"
+                                  )
+                                : "N.A",
+                            })}{" "}
+                          </Typography>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid container>
-                    <Grid item xs={12} lg={12} container className="mt-4">
-                      <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t(`kyc:Identification.Form Fields.Registered Name`)}
-                          <Required />
-                        </Typography>
-                      </Grid>
-                      <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Registered Name`)}
-                          name="entityName"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        justifyContent="flex-end"
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <ChangeRequest
-                          setFieldValue={setFieldValue}
-                          changeRequests={values.changeRequests}
-                          fieldKey="entityName"
-                        />
-                      </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} lg={12} container className="mt-4">
+                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t(`kyc:Identification.Form Fields.Registered Name`)}
+                        <Required />
+                      </Typography>
                     </Grid>
-                    <Grid item xs={12} lg={12} container className="mt-4">
-                      <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t(`kyc:Identification.Form Fields.Legal Form`)}
-                          <Required />
-                        </Typography>
-                      </Grid>
-                      <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                        <FormControl className="w-full">
-                          <Select
-                            closeMenuOnSelect
-                            isSearchable
-                            placeholder={`${t("components:Select.Select")}...`}
-                            components={{
-                              ...animatedComponents,
-                            }}
-                            styles={selectStyles}
-                            value={values.legalForm}
-                            options={legalForms}
-                            onChange={(selectedEntity) => {
-                              setFieldValue("legalForm", selectedEntity);
-                            }}
+                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Identification.Form Fields.Registered Name`)}
+                        name="entityName"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                    <Grid
+                      xs={12}
+                      md={4}
+                      lg={4}
+                      container
+                      justifyContent="flex-end"
+                      alignContent="flex-start"
+                      className="px-1"
+                    >
+                      <ChangeRequest
+                        setFieldValue={setFieldValue}
+                        changeRequests={values.changeRequests}
+                        fieldKey="entityName"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} lg={12} container className="mt-4">
+                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t(`kyc:Identification.Form Fields.Legal Form`)}
+                        <Required />
+                      </Typography>
+                    </Grid>
+                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          isSearchable
+                          placeholder={`${t("components:Select.Select")}...`}
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          styles={selectStyles}
+                          value={values.legalForm}
+                          options={legalForms}
+                          onChange={(selectedEntity) => {
+                            setFieldValue("legalForm", selectedEntity);
+                          }}
+                        />
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="ml-4"
+                          name="legalForm"
+                        />
+                      </FormControl>
+                      {values.legalForm?.label === "Other" ? (
+                        <div className="mt-4 w-full">
+                          <Field
+                            fullWidth
+                            component={TextField}
+                            label={t(`kyc:Identification.Form Fields.Other Legal Form`)}
+                            name="legalFormOther"
+                            variant="filled"
+                            type="text"
                           />
-                          <ErrorMessage
-                            component={Typography}
-                            variant="caption"
-                            color="error"
-                            className="ml-4"
-                            name="legalForm"
-                          />
-                        </FormControl>
-                        {values.legalForm?.label === "Other" ? (
-                          <div className="mt-4 w-full">
-                            <Field
-                              fullWidth
-                              component={TextField}
-                              label={t(`kyc:Identification.Form Fields.Other Legal Form`)}
-                              name="legalFormOther"
-                              variant="filled"
-                              type="text"
-                            />
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </Grid>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </Grid>
 
+                    <Grid
+                      xs={12}
+                      md={4}
+                      lg={4}
+                      container
+                      justifyContent="flex-end"
+                      alignContent="flex-start"
+                      className="px-1"
+                    >
+                      <ChangeRequest
+                        setFieldValue={setFieldValue}
+                        changeRequests={values.changeRequests}
+                        fieldKey="legalForm"
+                      />
+                    </Grid>
+                  </Grid>
+                  {!isIssuer ? (
+                    <Grid item xs={12} lg={12} container className="mt-4">
                       <Grid
+                        item
                         xs={12}
                         md={4}
                         lg={4}
                         container
-                        justifyContent="flex-end"
                         alignContent="flex-start"
-                        className="px-1"
+                        className="py-2"
                       >
-                        <ChangeRequest
-                          setFieldValue={setFieldValue}
-                          changeRequests={values.changeRequests}
-                          fieldKey="legalForm"
-                        />
+                        <Typography className="w-full">
+                          {t(`kyc:Identification.Form Fields.Trading Name(s)`)}
+                        </Typography>
+                        <Typography variant="caption" className="w-full text-gray-500">
+                          {t(`kyc:Identification.Form Fields.If Different from Registered Name`)}
+                        </Typography>
                       </Grid>
-                    </Grid>
-                    {!isIssuer ? (
-                      <Grid item xs={12} lg={12} container className="mt-4">
-                        <Grid
-                          item
-                          xs={12}
-                          md={4}
-                          lg={4}
-                          container
-                          alignContent="flex-start"
-                          className="py-2"
-                        >
-                          <Typography className="w-full">
-                            {t(`kyc:Identification.Form Fields.Trading Name(s)`)}
-                          </Typography>
-                          <Typography variant="caption" className="w-full text-gray-500">
-                            {t(`kyc:Identification.Form Fields.If Different from Registered Name`)}
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={4}
-                          lg={4}
-                          container
-                          alignContent="center"
-                          className="px-1"
-                        >
-                          <FieldArray
-                            name="tradingNames"
-                            render={(arrayHelpers) => (
-                              <div className="w-full">
-                                {values.tradingNames.map((tradingName, index) => (
-                                  <Grid xs={12}>
-                                    <Field
-                                      fullWidth
-                                      component={TextField}
-                                      label={t(`kyc:Identification.Form Fields.Trading Name`)}
-                                      name={`tradingNames.${index}`}
-                                      variant="filled"
-                                      type="text"
-                                      className="mb-4"
-                                      InputProps={{
-                                        endAdornment: (
-                                          <InputAdornment position="end">
-                                            {index !== 0 ? (
-                                              <IconButton
-                                                onClick={() => arrayHelpers.remove(index)}
-                                                size="large"
-                                              >
-                                                <CloseIcon />
-                                              </IconButton>
-                                            ) : (
-                                              ""
-                                            )}
-                                          </InputAdornment>
-                                        ),
-                                      }}
-                                    />
-                                  </Grid>
-                                ))}
-                                <Grid xs={12} container justifyContent="flex-end">
-                                  <Button
-                                    size="small"
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() => arrayHelpers.push("")}
-                                  >
-                                    {t(`kyc:Identification.Buttons.Add`)}
-                                  </Button>
+                      <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                        <FieldArray
+                          name="tradingNames"
+                          render={(arrayHelpers) => (
+                            <div className="w-full">
+                              {values.tradingNames.map((tradingName, index) => (
+                                <Grid xs={12}>
+                                  <Field
+                                    fullWidth
+                                    component={TextField}
+                                    label={t(`kyc:Identification.Form Fields.Trading Name`)}
+                                    name={`tradingNames.${index}`}
+                                    variant="filled"
+                                    type="text"
+                                    className="mb-4"
+                                    InputProps={{
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          {index !== 0 ? (
+                                            <IconButton
+                                              onClick={() => arrayHelpers.remove(index)}
+                                              size="large"
+                                            >
+                                              <CloseIcon />
+                                            </IconButton>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </InputAdornment>
+                                      ),
+                                    }}
+                                  />
                                 </Grid>
-                              </div>
-                            )}
-                          />
-                        </Grid>
-                        <Grid
-                          xs={12}
-                          md={4}
-                          lg={4}
-                          container
-                          justifyContent="flex-end"
-                          alignContent="flex-start"
-                          className="px-1"
-                        >
-                          <ChangeRequest
-                            setFieldValue={setFieldValue}
-                            changeRequests={values.changeRequests}
-                            fieldKey="tradingNames"
-                          />
-                        </Grid>
-                        <Grid
-                          xs={8}
-                          container
-                          justifyContent="flex-end"
-                          alignContent="center"
-                          className="px-1"
-                        ></Grid>
+                              ))}
+                              <Grid xs={12} container justifyContent="flex-end">
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  color="secondary"
+                                  onClick={() => arrayHelpers.push("")}
+                                >
+                                  {t(`kyc:Identification.Buttons.Add`)}
+                                </Button>
+                              </Grid>
+                            </div>
+                          )}
+                        />
                       </Grid>
-                    ) : (
-                      ""
-                    )}
+                      <Grid
+                        xs={12}
+                        md={4}
+                        lg={4}
+                        container
+                        justifyContent="flex-end"
+                        alignContent="flex-start"
+                        className="px-1"
+                      >
+                        <ChangeRequest
+                          setFieldValue={setFieldValue}
+                          changeRequests={values.changeRequests}
+                          fieldKey="tradingNames"
+                        />
+                      </Grid>
+                      <Grid
+                        xs={8}
+                        container
+                        justifyContent="flex-end"
+                        alignContent="center"
+                        className="px-1"
+                      ></Grid>
+                    </Grid>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Date of Incorporation`)}
+                      <Required />
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Date of Incorporation`)}
-                        <Required />
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        format="DD/MM/YYYY"
-                        inputVariant="filled"
-                        inputProps={{
-                          shrink: "false",
-                        }}
-                        maxDate={moment()}
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        component={DatePicker}
-                        name="incorporationDate"
-                        label={t("kyc:Identification.Form Fields.Date of Incorporation")}
-                      />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="incorporationDate"
-                      />
-                    </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      inputVariant="filled"
+                      inputProps={{
+                        shrink: "false",
+                      }}
+                      maxDate={moment()}
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      component={DatePicker}
+                      name="incorporationDate"
+                      label={t("kyc:Identification.Form Fields.Date of Incorporation")}
+                    />
                   </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Place of Incorporation`)}
-                        <Required />
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="incorporationDate"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Place of Incorporation`)}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Place of Incorporation`)}
+                      name="incorporationPlace"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="incorporationPlace"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Legal Entity Identifier (LEI)`)}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Legal Entity Identifier (LEI)`)}
+                      name="legalEntityIdentifier"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="legalEntityIdentifier"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Commercial Licence Number`)}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Commercial Licence Number`)}
+                      name="commercialRegNo"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="commercialRegNo"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Tax Identitfication Number`)}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Tax Identitfication Number`)}
+                      name="taxIdentificationNumber"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="taxIdentificationNumber"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-8">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Registered Address`)}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <div className="w-full">
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Place of Incorporation`)}
-                        name="incorporationPlace"
+                        label={t(`kyc:Identification.Form Fields.Address Line 1`)}
+                        name="registeredAddress.addressLine1"
                         variant="filled"
                         type="text"
                       />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="incorporationPlace"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Legal Entity Identifier (LEI)`)}
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    </div>
+                    <div className="mt-4 w-full">
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Legal Entity Identifier (LEI)`)}
-                        name="legalEntityIdentifier"
+                        label={t(`kyc:Identification.Form Fields.Address Line 2`)}
+                        name="registeredAddress.addressLine2"
                         variant="filled"
                         type="text"
                       />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="legalEntityIdentifier"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Commercial Licence Number`)}
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    </div>
+                    <div className="mt-4 w-full">
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Commercial Licence Number`)}
-                        name="commercialRegNo"
+                        label={t(`kyc:Identification.Form Fields.City`)}
+                        name="registeredAddress.city"
                         variant="filled"
                         type="text"
                       />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="commercialRegNo"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Tax Identitfication Number`)}
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    </div>
+                    <div className="mt-4 w-full">
+                      <FormControl className="w-full">
+                        <Select
+                          closeMenuOnSelect
+                          isSearchable
+                          placeholder={`${t("kyc:Identification.Form Fields.Country")}`}
+                          components={{
+                            ...animatedComponents,
+                          }}
+                          styles={selectStyles}
+                          value={values.registeredAddress.country}
+                          options={countries}
+                          onChange={(selected) => {
+                            setFieldValue("registeredAddress.country", selected);
+                          }}
+                        />
+                      </FormControl>
+                    </div>
+                    <div className="mt-4 w-full">
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Tax Identitfication Number`)}
-                        name="taxIdentificationNumber"
+                        label={t(`kyc:Identification.Form Fields.Post Code`)}
+                        name="registeredAddress.pinCode"
                         variant="filled"
                         type="text"
                       />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="taxIdentificationNumber"
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Identification.Form Fields.Telephone Number`)}
+                        name="registeredAddress.businessPhone"
+                        variant="filled"
+                        type="text"
                       />
-                    </Grid>
+                    </div>
                   </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="registeredAddress"
+                    />
+                  </Grid>
+                </Grid>
+                {!isIssuer ? (
                   <Grid item xs={12} lg={12} container className="mt-8">
                     <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Registered Address`)}
-                        <Required />
+                      <Typography className="">
+                        {t(`kyc:Identification.Form Fields.Trading Address`)}
+                      </Typography>
+                      <Typography variant="caption" className="w-full text-gray-500">
+                        {t(`kyc:Identification.Form Fields.If different from Registered Address`)}
                       </Typography>
                     </Grid>
                     <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
@@ -734,7 +820,7 @@ const Identification = () => {
                           fullWidth
                           component={TextField}
                           label={t(`kyc:Identification.Form Fields.Address Line 1`)}
-                          name="registeredAddress.addressLine1"
+                          name="tradingAddress.addressLine1"
                           variant="filled"
                           type="text"
                         />
@@ -744,7 +830,7 @@ const Identification = () => {
                           fullWidth
                           component={TextField}
                           label={t(`kyc:Identification.Form Fields.Address Line 2`)}
-                          name="registeredAddress.addressLine2"
+                          name="tradingAddress.addressLine2"
                           variant="filled"
                           type="text"
                         />
@@ -754,7 +840,7 @@ const Identification = () => {
                           fullWidth
                           component={TextField}
                           label={t(`kyc:Identification.Form Fields.City`)}
-                          name="registeredAddress.city"
+                          name="tradingAddress.city"
                           variant="filled"
                           type="text"
                         />
@@ -769,10 +855,10 @@ const Identification = () => {
                               ...animatedComponents,
                             }}
                             styles={selectStyles}
-                            value={values.registeredAddress.country}
+                            value={values.tradingAddress.country}
                             options={countries}
                             onChange={(selected) => {
-                              setFieldValue("registeredAddress.country", selected);
+                              setFieldValue("tradingAddress.country", selected);
                             }}
                           />
                         </FormControl>
@@ -782,7 +868,7 @@ const Identification = () => {
                           fullWidth
                           component={TextField}
                           label={t(`kyc:Identification.Form Fields.Post Code`)}
-                          name="registeredAddress.pinCode"
+                          name="tradingAddress.pinCode"
                           variant="filled"
                           type="text"
                         />
@@ -792,7 +878,7 @@ const Identification = () => {
                           fullWidth
                           component={TextField}
                           label={t(`kyc:Identification.Form Fields.Telephone Number`)}
-                          name="registeredAddress.businessPhone"
+                          name="tradingAddress.businessPhone"
                           variant="filled"
                           type="text"
                         />
@@ -810,354 +896,313 @@ const Identification = () => {
                       <ChangeRequest
                         setFieldValue={setFieldValue}
                         changeRequests={values.changeRequests}
-                        fieldKey="registeredAddress"
+                        fieldKey="tradingAddress"
                       />
                     </Grid>
                   </Grid>
-                  {!isIssuer ? (
-                    <Grid item xs={12} lg={12} container className="mt-8">
-                      <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                        <Typography className="">
-                          {t(`kyc:Identification.Form Fields.Trading Address`)}
-                        </Typography>
-                        <Typography variant="caption" className="w-full text-gray-500">
-                          {t(`kyc:Identification.Form Fields.If different from Registered Address`)}
-                        </Typography>
-                      </Grid>
-                      <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                        <div className="w-full">
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Identification.Form Fields.Address Line 1`)}
-                            name="tradingAddress.addressLine1"
-                            variant="filled"
-                            type="text"
-                          />
-                        </div>
-                        <div className="mt-4 w-full">
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Identification.Form Fields.Address Line 2`)}
-                            name="tradingAddress.addressLine2"
-                            variant="filled"
-                            type="text"
-                          />
-                        </div>
-                        <div className="mt-4 w-full">
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Identification.Form Fields.City`)}
-                            name="tradingAddress.city"
-                            variant="filled"
-                            type="text"
-                          />
-                        </div>
-                        <div className="mt-4 w-full">
-                          <FormControl className="w-full">
-                            <Select
-                              closeMenuOnSelect
-                              isSearchable
-                              placeholder={`${t("kyc:Identification.Form Fields.Country")}`}
-                              components={{
-                                ...animatedComponents,
-                              }}
-                              styles={selectStyles}
-                              value={values.tradingAddress.country}
-                              options={countries}
-                              onChange={(selected) => {
-                                setFieldValue("tradingAddress.country", selected);
-                              }}
-                            />
-                          </FormControl>
-                        </div>
-                        <div className="mt-4 w-full">
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Identification.Form Fields.Post Code`)}
-                            name="tradingAddress.pinCode"
-                            variant="filled"
-                            type="text"
-                          />
-                        </div>
-                        <div className="mt-4 w-full">
-                          <Field
-                            fullWidth
-                            component={TextField}
-                            label={t(`kyc:Identification.Form Fields.Telephone Number`)}
-                            name="tradingAddress.businessPhone"
-                            variant="filled"
-                            type="text"
-                          />
-                        </div>
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        justifyContent="flex-end"
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <ChangeRequest
-                          setFieldValue={setFieldValue}
-                          changeRequests={values.changeRequests}
-                          fieldKey="tradingAddress"
-                        />
-                      </Grid>
-                    </Grid>
-                  ) : (
-                    ""
-                  )}
-                  <Grid item xs={12} lg={12} container className="mt-8">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Contact Details`)}
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                      <div className="w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Telephone`)}
-                          name="pocBusinessPhone"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                      <div className="mt-4 w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Email`)}
-                          name="pocEmail"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                      <div className="mt-4 w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Website`)}
-                          name="pocWebsite"
-                          variant="filled"
-                          type="text"
-                        />
-                      </div>
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="contactDetails"
-                      />
-                    </Grid>
+                ) : (
+                  ""
+                )}
+                <Grid item xs={12} lg={12} container className="mt-8">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Contact Details`)}
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Number of Employees`)}
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <div className="w-full">
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Number of Employees`)}
-                        name="numberOfEmployees"
+                        label={t(`kyc:Identification.Form Fields.Telephone`)}
+                        name="pocBusinessPhone"
                         variant="filled"
                         type="text"
                       />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="numberOfEmployees"
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Identification.Form Fields.Email`)}
+                        name="pocEmail"
+                        variant="filled"
+                        type="text"
                       />
-                    </Grid>
+                    </div>
+                    <div className="mt-4 w-full">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Identification.Form Fields.Website`)}
+                        name="pocWebsite"
+                        variant="filled"
+                        type="text"
+                      />
+                    </div>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="contactDetails"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Number of Employees`)}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Number of Employees`)}
+                      name="numberOfEmployees"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="numberOfEmployees"
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Business Activity - Sector`)}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <FormControl className="w-full">
+                      <Select
+                        closeMenuOnSelect
+                        isSearchable
+                        placeholder={`${t("components:Select.Select")}...`}
+                        components={{
+                          ...animatedComponents,
+                        }}
+                        styles={selectStyles}
+                        value={values.businessActivitySector}
+                        options={sectorBusinessActvity}
+                        onChange={(selected) => {
+                          setFieldValue("businessActivityIndustry", null);
+                          setFieldValue("businessActivitySector", selected);
+                        }}
+                      />
+                    </FormControl>
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="businessActivitySector"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="businessActivitySector"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Business Activity - Industry`)}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <FormControl className="w-full">
+                      <Select
+                        closeMenuOnSelect
+                        isSearchable
+                        placeholder={`${t("components:Select.Select")}...`}
+                        components={{
+                          ...animatedComponents,
+                        }}
+                        styles={selectStyles}
+                        value={values.businessActivityIndustry}
+                        options={industryBusinessActvity}
+                        onChange={(selected) => {
+                          setFieldValue("businessActivityIndustry", selected);
+                        }}
+                      />
+                    </FormControl>
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="businessActivityIndustry"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="businessActivityIndustry"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Is the Entity part of a Group`)}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    direction="column"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <Field component={RadioGroup} name="partOfGroup">
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Identification.Yes`)}
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Identification.No`)}
+                        disabled={isSubmitting}
+                      />
+                    </Field>
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="partOfGroup"
+                    />
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="partOfGroup"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(
+                        `kyc:Identification.Form Fields.Is the Entity supervised by a Financial Services Regulator?`
+                      )}
+                      <Required />
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    direction="column"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <Field component={RadioGroup} name="supervisedByFinancialServicesRegulatory">
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Identification.Yes`)}
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio disabled={isSubmitting} />}
+                        label={t(`kyc:Identification.No`)}
+                        disabled={isSubmitting}
+                      />
+                    </Field>
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="supervisedByFinancialServicesRegulatory"
+                    />
                   </Grid>
 
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Business Activity - Sector`)}
-                        <Required />
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          isSearchable
-                          placeholder={`${t("components:Select.Select")}...`}
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          styles={selectStyles}
-                          value={values.businessActivitySector}
-                          options={sectorBusinessActvity}
-                          onChange={(selected) => {
-                            setFieldValue("businessActivityIndustry", null);
-                            setFieldValue("businessActivitySector", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="businessActivitySector"
-                      />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="businessActivitySector"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Business Activity - Industry`)}
-                        <Required />
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} md={4} lg={4} container alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          isSearchable
-                          placeholder={`${t("components:Select.Select")}...`}
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          styles={selectStyles}
-                          value={values.businessActivityIndustry}
-                          options={industryBusinessActvity}
-                          onChange={(selected) => {
-                            setFieldValue("businessActivityIndustry", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="businessActivityIndustry"
-                      />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="businessActivityIndustry"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Is the Entity part of a Group`)}
-                        <Required />
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      direction="column"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <Field component={RadioGroup} name="partOfGroup">
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Identification.Yes`)}
-                          disabled={isSubmitting}
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Identification.No`)}
-                          disabled={isSubmitting}
-                        />
-                      </Field>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="partOfGroup"
-                      />
-                    </Grid>
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="partOfGroup"
-                      />
-                    </Grid>
+                  <Grid
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="supervisedByFinancialServicesRegulatory"
+                    />
                   </Grid>
                   <Grid item xs={12} lg={12} container className="mt-4">
                     <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
                       <Typography className="mt-4">
                         {t(
-                          `kyc:Identification.Form Fields.Is the Entity supervised by a Financial Services Regulator?`
+                          `kyc:Identification.Form Fields.If yes, name of the Financial Services Regulator`
                         )}
-                        <Required />
                       </Typography>
                     </Grid>
                     <Grid
@@ -1165,156 +1210,19 @@ const Identification = () => {
                       md={4}
                       lg={4}
                       container
-                      direction="column"
                       alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <Field component={RadioGroup} name="supervisedByFinancialServicesRegulatory">
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Identification.Yes`)}
-                          disabled={isSubmitting}
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio disabled={isSubmitting} />}
-                          label={t(`kyc:Identification.No`)}
-                          disabled={isSubmitting}
-                        />
-                      </Field>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="supervisedByFinancialServicesRegulatory"
-                      />
-                    </Grid>
-
-                    <Grid
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      justifyContent="flex-end"
-                      alignContent="flex-start"
-                      className="px-1"
-                    >
-                      <ChangeRequest
-                        setFieldValue={setFieldValue}
-                        changeRequests={values.changeRequests}
-                        fieldKey="supervisedByFinancialServicesRegulatory"
-                      />
-                    </Grid>
-                    <Grid item xs={12} lg={12} container className="mt-4">
-                      <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t(
-                            `kyc:Identification.Form Fields.If yes, name of the Financial Services Regulator`
-                          )}
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Name of FSR`)}
-                          name="supervisoryAuthorityName"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        justifyContent="flex-end"
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <ChangeRequest
-                          setFieldValue={setFieldValue}
-                          changeRequests={values.changeRequests}
-                          fieldKey="supervisoryAuthorityName"
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} lg={12} container className="mt-4">
-                      <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                        <Typography className="mt-4">
-                          {t(`kyc:Identification.Form Fields.if yes, Regulatory License Number`)}
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          label={t(`kyc:Identification.Form Fields.Regulatory License Number`)}
-                          name="regulatoryLicenseNumber"
-                          variant="filled"
-                          type="text"
-                        />
-                      </Grid>
-                      <Grid
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        container
-                        justifyContent="flex-end"
-                        alignContent="flex-start"
-                        className="px-1"
-                      >
-                        <ChangeRequest
-                          setFieldValue={setFieldValue}
-                          changeRequests={values.changeRequests}
-                          fieldKey="regulatoryLicenseNumber"
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} container className="mt-4">
-                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
-                      <Typography className="mt-4">
-                        {t(`kyc:Identification.Form Fields.Name of External Auditor`)}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={4}
-                      lg={4}
-                      container
-                      alignContent="center"
                       className="px-1"
                     >
                       <Field
                         fullWidth
                         component={TextField}
-                        label={t(`kyc:Identification.Form Fields.Name of External Auditor`)}
-                        name="externalAuditor"
+                        label={t(`kyc:Identification.Form Fields.Name of FSR`)}
+                        name="supervisoryAuthorityName"
                         variant="filled"
                         type="text"
                       />
                     </Grid>
                     <Grid
-                      item
                       xs={12}
                       md={4}
                       lg={4}
@@ -1326,39 +1234,112 @@ const Identification = () => {
                       <ChangeRequest
                         setFieldValue={setFieldValue}
                         changeRequests={values.changeRequests}
-                        fieldKey="externalAuditor"
+                        fieldKey="supervisoryAuthorityName"
                       />
                     </Grid>
                   </Grid>
-                  <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
-                    <Grid item xs={12} md={6} lg={2}>
-                      <Grid container direction="column">
-                        {isComplianceOfficer ? (
-                          <Button variant="contained" type="submit" size="small" color="primary">
-                            {t("Miscellaneous.Submit")}
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            disabled={kycData?.sectionChanges?.isLocked}
-                            type="submit"
-                            size="small"
-                            color="primary"
-                          >
-                            {t("Miscellaneous.Submit")}
-                          </Button>
-                        )}
-                      </Grid>
+                  <Grid item xs={12} lg={12} container className="mt-4">
+                    <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                      <Typography className="mt-4">
+                        {t(`kyc:Identification.Form Fields.if yes, Regulatory License Number`)}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      xs={12}
+                      md={4}
+                      lg={4}
+                      container
+                      alignContent="flex-start"
+                      className="px-1"
+                    >
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        label={t(`kyc:Identification.Form Fields.Regulatory License Number`)}
+                        name="regulatoryLicenseNumber"
+                        variant="filled"
+                        type="text"
+                      />
+                    </Grid>
+                    <Grid
+                      xs={12}
+                      md={4}
+                      lg={4}
+                      container
+                      justifyContent="flex-end"
+                      alignContent="flex-start"
+                      className="px-1"
+                    >
+                      <ChangeRequest
+                        setFieldValue={setFieldValue}
+                        changeRequests={values.changeRequests}
+                        fieldKey="regulatoryLicenseNumber"
+                      />
                     </Grid>
                   </Grid>
-                </form>
-              );
-            }}
-          </Formik>
-        ) : (
-          ""
-        )}
-      </MuiPickersUtilsProvider>
+                </Grid>
+
+                <Grid item xs={12} lg={12} container className="mt-4">
+                  <Grid item xs={12} md={4} lg={4} container alignContent="flex-start">
+                    <Typography className="mt-4">
+                      {t(`kyc:Identification.Form Fields.Name of External Auditor`)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} md={4} lg={4} container alignContent="center" className="px-1">
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      label={t(`kyc:Identification.Form Fields.Name of External Auditor`)}
+                      name="externalAuditor"
+                      variant="filled"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    lg={4}
+                    container
+                    justifyContent="flex-end"
+                    alignContent="flex-start"
+                    className="px-1"
+                  >
+                    <ChangeRequest
+                      setFieldValue={setFieldValue}
+                      changeRequests={values.changeRequests}
+                      fieldKey="externalAuditor"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} lg={12} container justifyContent="flex-end" className="mt-8">
+                  <Grid item xs={12} md={6} lg={2}>
+                    <Grid container direction="column">
+                      {isComplianceOfficer ? (
+                        <Button variant="contained" type="submit" size="small" color="primary">
+                          {t("Miscellaneous.Submit")}
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          disabled={kycData?.sectionChanges?.isLocked}
+                          type="submit"
+                          size="small"
+                          color="primary"
+                        >
+                          {t("Miscellaneous.Submit")}
+                        </Button>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </form>
+            );
+          }}
+        </Formik>
+      ) : (
+        ""
+      )}
     </Fragment>
   );
 };
