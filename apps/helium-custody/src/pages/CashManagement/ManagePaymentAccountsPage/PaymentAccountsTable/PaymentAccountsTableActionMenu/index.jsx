@@ -99,20 +99,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
   };
 
 
-  const handleClickOnViewSupportingDocument = () => {
-    const doFetchUploadedSupportingDocumentFile = (payload) =>
-      dispatch(accountsActionCreators.doFetchUploadedSupportingDocumentFile(payload));
-
-    const payload = {
-      type: "accountSupporting",
-      fileName: rowData?.supportingDoc,
-      entityId: isAdmin ? rowData?.entityGroupId : currentEntityGroupID,
-    };
-
-    doFetchUploadedSupportingDocumentFile(payload);
-    handleCloseMenu();
-  };
-
   const handleClickOnValidate = () => {
     const doValidatePaymentAccount = (payload) =>
       dispatch(accountsActionCreators.doValidatePaymentAccount(payload));
@@ -146,19 +132,12 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
             <MenuItem disabled={rowData?.isDefault} onClick={handleClickOnSetAsDefault}>
               {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.SetAsDefault")}
             </MenuItem>
-            <MenuItem onClick={handleClickOnEditAccount}>
-              {" "}
-              {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Amend")}
-            </MenuItem>
             <MenuItem onClick={handleClickOnDeleteAccount}>
               {" "}
               {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Delete")}
             </MenuItem>
           </div>
         )}
-        <MenuItem onClick={handleClickOnViewSupportingDocument}>
-          {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.ViewSupportingDocument")}
-        </MenuItem>
         {isAdmin && hasManageAccountsACL && (
           <MenuItem disabled={rowData?.isValidated} onClick={handleClickOnValidate}>
             {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Validate")}

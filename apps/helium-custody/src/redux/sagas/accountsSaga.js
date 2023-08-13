@@ -224,27 +224,6 @@ function* fetchInvestorPayment({ payload }) {
   }
 }
 
-function* fetchUploadedSupportingDocumentFile({ payload }) {
-  const key = payload.fileName;
-  try {
-    const response = yield call(wethaqAPIService.fileAPI.download, payload);
-    const { data } = response;
-    data.fileName = key;
-    window.open(data.link);
-    yield put(accountsActionCreators.doFetchUploadedSupportingDocumentFileSuccess({ data }));
-    yield call(toast.success, data.message);
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(
-      accountsActionCreators.doFetchUploadedSupportingDocumentFileFailure({
-        message: errorMessage,
-        key,
-      })
-    );
-  }
-}
-
 function* fetchOutgoingInstructions({ payload }) {
   try {
     const response = yield call(wethaqAPIService.accountsAPI.fetchOutgoingInstructions, payload);
@@ -375,10 +354,6 @@ const accountsSaga = [
   takeLatest(accountsActionTypes.ACCOUNT_FILE_UPLOAD_REQUESTED, uploadAccountFile),
   takeLatest(accountsActionTypes.UPDATE_INVESTOR_PAYMENT_REQUESTED, updateInvestorPayment),
   takeLatest(accountsActionTypes.FETCH_INVESTOR_PAYMENT_REQUESTED, fetchInvestorPayment),
-  takeLatest(
-    accountsActionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED,
-    fetchUploadedSupportingDocumentFile
-  ),
   takeLatest(accountsActionTypes.FETCH_OUTGOING_INSTRUCTIONS_REQUESTED, fetchOutgoingInstructions),
   takeLatest(
     accountsActionTypes.CREATE_OUTGOING_INSTRUCTIONS_REQUESTED,

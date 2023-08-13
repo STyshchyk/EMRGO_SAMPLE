@@ -68,15 +68,6 @@ export const doUploadSupportingDocumentForPaymentAccountFailure = createAction(
   actionTypes.PAYMENT_ACCOUNTS_UPLOAD_SUPPORTING_DOC_FILE_FAILED
 );
 
-export const doFetchUploadedSupportingDocumentFile = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED
-);
-export const doFetchUploadedSupportingDocumentFileSuccess = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_SUCCEEDED
-);
-export const doFetchUploadedSupportingDocumentFileFailure = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_FAILED
-);
 
 export const doFetchValidatedAccounts = createAction(
   actionTypes.VALIDATED_ACCOUNTS_FETCH_REQUESTED
