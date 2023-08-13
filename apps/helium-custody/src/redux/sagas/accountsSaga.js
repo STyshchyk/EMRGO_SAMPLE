@@ -88,20 +88,6 @@ function* addPaymentAccountSaga({ payload }) {
   }
 }
 
-function* editPaymentAccountSaga({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.accountsAPI.editPaymentAccount, payload);
-    const { data } = response;
-    yield put(accountsActionCreators.doEditPaymentAccountSuccess({ data }));
-    yield call(toast.success, data.message);
-    yield put(accountsActionCreators.doFetchPaymentAccounts());
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(accountsActionCreators.doEditPaymentAccountFailure(errorMessage));
-  }
-}
-
 function* deletePaymentAccountSaga({ payload }) {
   try {
     const response = yield call(wethaqAPIService.accountsAPI.deletePaymentAccount, payload);
@@ -375,7 +361,6 @@ const accountsSaga = [
   takeLatest(accountsActionTypes.ACCOUNTS_DELETE_REQUESTED, deleteAccountSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_FETCH_REQUESTED, fetchPaymentAccountsSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_ADD_REQUESTED, addPaymentAccountSaga),
-  takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED, editPaymentAccountSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED, deletePaymentAccountSaga),
   takeLatest(
     accountsActionTypes.PAYMENT_ACCOUNTS_SET_AS_DEFAULT_REQUESTED,

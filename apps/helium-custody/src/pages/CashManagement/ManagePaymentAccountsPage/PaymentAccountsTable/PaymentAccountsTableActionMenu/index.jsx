@@ -59,7 +59,6 @@ const generateInitialValues = (rowData) => {
 const PaymentAccountsTableActionMenu = ({ rowData }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openEditAccountFormDialog, setOpenEditAccountFormDialog] = useState(false);
   const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false);
   const { t } = useTranslation(["cash_management"]);
 
@@ -79,10 +78,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     setAnchorEl(null);
   };
 
-  const handleCloseEditAccountDialog = () => {
-    setOpenEditAccountFormDialog(false);
-    handleCloseMenu();
-  };
 
   const handleCloseDeleteAccountDialog = () => {
     setOpenDeleteAccountDialog(false);
@@ -103,9 +98,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     setOpenDeleteAccountDialog(true);
   };
 
-  const handleClickOnEditAccount = () => {
-    setOpenEditAccountFormDialog(true);
-  };
 
   const handleClickOnViewSupportingDocument = () => {
     const doFetchUploadedSupportingDocumentFile = (payload) =>
@@ -173,14 +165,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
           </MenuItem>
         )}
       </Menu>
-      {openEditAccountFormDialog ? (
-        <EditPaymentAccountFormDialog
-          accountId={rowData.id}
-          initialValues={generateInitialValues(rowData)}
-          open={openEditAccountFormDialog}
-          handleClose={handleCloseEditAccountDialog}
-        />
-      ) : null}
       {openDeleteAccountDialog ? (
         <DeleteAccountDialog
           accountId={rowData.id}

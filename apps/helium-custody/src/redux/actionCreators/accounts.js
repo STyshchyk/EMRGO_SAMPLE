@@ -30,12 +30,6 @@ export const doAddPaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD
 export const doAddPaymentAccountSuccess = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD_SUCCEEDED);
 export const doAddPaymentAccountFailure = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD_FAILED);
 
-export const doEditPaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED);
-export const doEditPaymentAccountSuccess = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_EDIT_SUCCEEDED
-);
-export const doEditPaymentAccountFailure = createAction(actionTypes.PAYMENT_ACCOUNTS_EDIT_FAILED);
-
 export const doDeletePaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED);
 export const doDeletePaymentAccountSuccess = createAction(
   actionTypes.PAYMENT_ACCOUNTS_DELETE_SUCCEEDED

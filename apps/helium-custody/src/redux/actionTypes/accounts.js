@@ -22,10 +22,6 @@ export const PAYMENT_ACCOUNTS_ADD_REQUESTED = "accounts/payment/ADD_REQUESTED";
 export const PAYMENT_ACCOUNTS_ADD_SUCCEEDED = "accounts/payment/ADD_SUCCEEDED";
 export const PAYMENT_ACCOUNTS_ADD_FAILED = "accounts/payment/ADD_FAILED";
 
-export const PAYMENT_ACCOUNTS_EDIT_REQUESTED = "accounts/payment/EDIT_REQUESTED";
-export const PAYMENT_ACCOUNTS_EDIT_SUCCEEDED = "accounts/payment/EDIT_SUCCEEDED";
-export const PAYMENT_ACCOUNTS_EDIT_FAILED = "accounts/payment/EDIT_FAILED";
-
 export const PAYMENT_ACCOUNTS_DELETE_REQUESTED = "accounts/payment/DELETE_REQUESTED";
 export const PAYMENT_ACCOUNTS_DELETE_SUCCEEDED = "accounts/payment/DELETE_SUCCEEDED";
 export const PAYMENT_ACCOUNTS_DELETE_FAILED = "accounts/payment/DELETE_FAILED";
