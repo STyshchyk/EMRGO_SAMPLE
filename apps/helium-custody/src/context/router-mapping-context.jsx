@@ -7,7 +7,6 @@ import * as kycSelectors from "../redux/selectors/kyc";
 import useIsProduction from "../utils/useIsProduction";
 import { useFeatureToggle } from "./feature-toggle-context";
 
-const Administration = lazy(() => import("../pages/Administration"));
 const AuthContainer = lazy(() => import("../containers/AuthContainer"));
 const AuthFlowLayout = lazy(() => import("../layouts/AuthFlowLayout"));
 const CashManagement = lazy(() => import("../pages/CashManagement"));
@@ -164,13 +163,6 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.home}*`,
-      },
-      {
-        component: Administration,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.administration.home}*`,
       },
       {
         component: IssuancesList,

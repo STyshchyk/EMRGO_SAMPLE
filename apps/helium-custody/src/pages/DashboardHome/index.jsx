@@ -20,7 +20,7 @@ PageTitle.propTypes = {
 };
 
 const DashboardHome = () => {
-  const { t } = useTranslation(["translation", "administration", "kyc"]);
+  const { t } = useTranslation(["translation", "kyc"]);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
