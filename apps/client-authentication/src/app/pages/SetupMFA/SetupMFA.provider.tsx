@@ -1,5 +1,5 @@
-import { createContext, PropsWithChildren, useContext,useEffect,useState } from "react";
-import {useLocation,useNavigate} from "react-router-dom";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
@@ -7,11 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
 
 import { useUser } from "../../components/UserContext";
-import {enableMFA, setupMFA,verifyMFA} from "../../services";
+import { enableMFA, setupMFA, verifyMFA } from "../../services";
 import { ISetupMFAContext } from "./SetupMFA.types";
-
-
-
 
 const SetupMFAContext = createContext<ISetupMFAContext | null>(null);
 
@@ -23,19 +20,18 @@ const SetupMFAContext = createContext<ISetupMFAContext | null>(null);
 
 export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
   const location = useLocation();
-  console.log(location)
+  console.log(location);
   const navigate = useNavigate();
   const { enable } = useDarkMode();
-  
+
   const { showErrorToast } = useToast();
-  const { setVerifyMFA }= useUser()
-  
+  const { setVerifyMFA } = useUser();
+
   const [authenticatorURL, setAuthenticatorURL] = useState("");
 
   const { mutate: doSetupAuthenticatorMFA, isLoading: isQRCodeLoading } = useMutation(setupMFA);
   const { mutate: doEnableAuthenticatorMFA } = useMutation(enableMFA);
   const { mutate: doVerifyAuthenticatorMFA } = useMutation(verifyMFA);
-
 
   const onVerifyMFA = (otp: string) => {
     const requestPayload = { code: otp };
@@ -45,19 +41,19 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       },
       onError: () => {
         showErrorToast("Error while verifing mfa code");
-      }
-    });  };
-
+      },
+    });
+  };
 
   const onEnableMFA = (otp: string) => {
     const requestPayload = { code: otp };
     doEnableAuthenticatorMFA(requestPayload, {
       onSuccess: (data) => {
-       navigate(routes.login);
+        navigate(routes.login);
       },
       onError: () => {
         showErrorToast("Error while trying to enable mfa");
-      }
+      },
     });
   };
 
@@ -69,14 +65,12 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-
   useEffect(() => {
-    // to get the qr code 
-    onSetupMFA()
+    // to get the qr code
+    onSetupMFA();
     // set to dark theme
-    enable()
-  }, [])
-
+    enable();
+  }, []);
 
   const state: ISetupMFAContext = {
     otpauth_url: "",
@@ -87,14 +81,9 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
 
     isQRCodeLoading,
     authenticatorURL,
-
   };
 
-  return (
-    <SetupMFAContext.Provider value={state}>
-      {children}
-    </SetupMFAContext.Provider>
-  );
+  return <SetupMFAContext.Provider value={state}>{children}</SetupMFAContext.Provider>;
 };
 
 export const useSetupMFAContext = () => useContext(SetupMFAContext);

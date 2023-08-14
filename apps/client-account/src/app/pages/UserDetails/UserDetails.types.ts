@@ -11,7 +11,7 @@ import {
 export interface IUserDetailsProps {}
 
 export interface IUserDetailsContext {
-  user: IUser | null;
+  user?: IUser | null;
 
   isEditNameModalOpen: boolean;
   setStateOfEditNameModal: (state: boolean) => void;

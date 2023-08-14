@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -20,12 +20,15 @@ import * as Styles from "./OnboardingClient.styles";
 import { AccountPanelFooter } from "../../components/AccountPanelFooter";
 import { reverse } from "named-urls";
 
-import { dashboardApi } from "../../../../client-account/src/app/services/APIService";
+
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { AboutUs } from "../../components/AboutCustody";
+import { navigateModule } from "@emrgo-frontend/utils";
+import {baseAxiosInstance} from "../../services/wethaqAPIService/helpers";
 
 
 export const fetchInvestorProfileForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "get",
     url: `v2/client/kyc/forms`,
     params: {
@@ -39,7 +42,7 @@ export const fetchInvestorProfileForms = async () => {
 export const createInvestmentFormSession = async (
   requestPayload
 ) => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "post",
     url: `v2/client/kyc/forms`,
     data: requestPayload
@@ -49,7 +52,7 @@ export const createInvestmentFormSession = async (
 };
 
 export const submitInvestorProfileForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "put",
     url: `v2/client/kyc/submit`,
     params: {
@@ -60,12 +63,12 @@ export const submitInvestorProfileForms = async () => {
   return data || [];
 };
 export const fetchKYCForms = async () => {
-  const promise = dashboardApi({
+  const promise = baseAxiosInstance({
     method: "get",
     url: `v2/client/kyc/forms`,
     params: {
-      kycType: "entity",
-    },
+      kycType: "entity"
+    }
   });
   const data = await (await promise).data;
   return data || [];
@@ -77,7 +80,7 @@ const OnboardingClient = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
-
+  const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
   const { data: investmentProfileForms, refetch: investmentProfileRefetch } = useQuery({
     staleTime: Infinity,
     queryKey: [constants.queryKeys.account.clientInvestmentProfile.fetch],
@@ -118,7 +121,7 @@ const OnboardingClient = () => {
           typeFormId: formId
         })}/?session=${sessionId}&redirect=${encodeURI(redirectPath)}`;
 
-        navigate(route);
+        navigateModule("account", route);
       }
     });
   };
@@ -136,7 +139,7 @@ const OnboardingClient = () => {
           typeFormId: formId
         })}/?session=${sessionId}&redirect=${redirectPath}`;
 
-        navigate(route);
+        navigateModule("account", route);
       }
     });
   };
@@ -224,55 +227,10 @@ const OnboardingClient = () => {
   return (
     <DashboardContent>
       <Styles.Container>
-        <AccountPanel>
-          <AccountPanelHeader>
-            <AccountPanelHeaderTitle>User Profiling Questionnaire</AccountPanelHeaderTitle>
-          </AccountPanelHeader>
-          <Styles.QuestionnairePanelContent>
-            <QuestionnaireItems>
-              {userProfilingQuestionnaireItems.map((item) => (
-                <QuestionnaireItem
-                  key={item.id}
-                  timeRemaining={`${item.timeRemaining} minutes`}
-                  completed={item.hasCompleted}
-                >
-                  {item.label}
-                </QuestionnaireItem>
-              ))}
-            </QuestionnaireItems>
-          </Styles.QuestionnairePanelContent>
-          <AccountPanelFooter>
-            {clientKycStatus === accountIdentification.KYC_STATUS_PENDING ? (
-              <div>
-                {!areAllInvestmentProfileSectionsComplete && (
-                  <Button
-                    size="large"
-                    onClick={() =>
-                      onInvestmentProfileStartForm(
-                        firstInvestmentProfileIncompleteForm?.formId || "",
-                        firstInvestmentProfileIncompleteForm?.formReferenceId || ""
-                      )
-                    }
-                  >
-                    Start {firstInvestmentProfileIncompleteForm?.label}
-                  </Button>
-                )}
-
-                {areAllInvestmentProfileSectionsComplete && (
-                  <Button size="large" onClick={onInvestmentProfileSubmit}>
-                    Submit Investment Profile
-                  </Button>
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-          </AccountPanelFooter>
-        </AccountPanel>
 
         <AccountPanel>
           <AccountPanelHeader>
-            <AccountPanelHeaderTitle>KYC Questionnaire</AccountPanelHeaderTitle>
+            <AccountPanelHeaderTitle>Regulatory Onboarding</AccountPanelHeaderTitle>
           </AccountPanelHeader>
           <Styles.QuestionnairePanelContent>
             <QuestionnaireItems>
@@ -311,6 +269,9 @@ const OnboardingClient = () => {
             </div>
           </AccountPanelFooter>
         </AccountPanel>
+        {isAboutCustodyDisplayed && <AboutUs onClose={() => {
+          setAboutCustodyDisplayed(false);
+        }} />}
       </Styles.Container>
     </DashboardContent>
   );

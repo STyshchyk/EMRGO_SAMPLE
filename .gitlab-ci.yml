@@ -19,6 +19,28 @@ services:
 stages:
   - deploy
 
+Deploy:client-custody-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-custody"
+    APP_SUBDOMAIN: "helium"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_custody_build_rules_develop
+
+Deploy:helium-custody-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "helium-custody"
+    APP_SUBDOMAIN: "helium-internal"
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .helium_custody_build_rules_develop
+
 Deploy:client-authentication-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "client-authentication"

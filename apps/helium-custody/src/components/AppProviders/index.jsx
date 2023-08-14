@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
 
+import { UserProvider } from "@emrgo-frontend/shared-ui";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import PropTypes from "prop-types";
@@ -9,7 +10,6 @@ import { AuthProvider } from "../../context/auth-context";
 import { CustodyWrapperProvider } from "../../context/custody-context";
 import { FeatureToggleProvider } from "../../context/feature-toggle-context";
 import { CustomThemeProvider } from "../../context/theme-context";
-import { UserProvider } from "../../context/user-context";
 import i18n from "../../i18n";
 
 const AppProviders = ({ children }) => (

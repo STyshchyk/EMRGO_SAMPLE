@@ -1,14 +1,18 @@
+import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import {
   clientAccountRoutes,
   clientCustodyRoutes,
+  clientModuleURLs,
   clientPrimariesRoutes,
   clientSecondariesRoutes,
-  getAllRoutes
+  getAllRoutes,
+  roles,
 } from "@emrgo-frontend/constants";
 import {
   AccountIcon,
+  ChevronRightIcon,
   CustodyIcon,
   EyeIcon,
   HelpIcon,
@@ -24,72 +28,50 @@ import {
   SidebarListItemContent,
   SidebarListItemIcon,
   SidebarListItemLink,
-  SidebarListItemSecondaryLink, TermsModal,
-  ThemeSwitcher
+  SidebarListItemSecondaryLink,
+  TermsModal,
+  ThemeSwitcher,
+  Tooltip,
+  useUser,
 } from "@emrgo-frontend/shared-ui";
 import {
   buildModuleURL,
   ensureNotNull,
   navigateModule,
-  useClientMatchedPathSidebar
+  useClientMatchedPathSidebar,
 } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
-import { useEffect } from "react";
+import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip";
 
 export const DashboardSidebar = () => {
+  const origin = window.location.origin;
+  const { user } = useUser();
+  const currentRole = roles.find((role) => role.key === user?.role);
   const { isDarkMode, toggle } = useDarkMode();
   const {
     numberOfNotifications,
+    mainRoutes,
+    fullName,
+    navigateToModule,
+    allAccountRoutes,
     onAcceptPlatformTerms,
     onRejectPlatformTerms,
-    user,
     showTermsModal,
-    termsDocumentURL
+    termsDocumentURL,
   } = ensureNotNull(useDashboardWrapperContext());
+
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
-  const mainRoutes = [
-    {
-      label: "Primaries",
-      icon: <PrimariesIcon />,
-      key: "primaries",
-      path: clientPrimariesRoutes.home,
-      paths: getAllRoutes(clientPrimariesRoutes)
-    },
-    {
-      label: "Secondaries",
-      icon: <SecondariesIcon />,
-      key: "secondaries",
-      path: clientSecondariesRoutes.home,
-      paths: getAllRoutes(clientSecondariesRoutes)
-    },
-    {
-      label: "Custody",
-      icon: <CustodyIcon />,
-      key: "custody",
-      path: clientCustodyRoutes.home,
-      paths: getAllRoutes(clientCustodyRoutes)
-    },
-    {
-      label: "Research",
-      icon: <ResearchIcon />,
-      key: "research",
-      path: clientSecondariesRoutes.home,
-      paths: [""]
-    }
-  ];
 
-  const navigateToModule = (module: string, path: string) => {
-    navigateModule(module, path);
-  };
+  const fullNameInitials = fullName
+    .split(" ")
+    .map((part) => part[0].toUpperCase())
+    .join("");
 
-  const allAccountRoutes = getAllRoutes(clientAccountRoutes);
   return (
     <Styles.DashboardSidebar>
-
-
       <SidebarHeader>
         <Link to="/">
           <Logo />
@@ -102,9 +84,12 @@ export const DashboardSidebar = () => {
             <SidebarListItem key={module.key}>
               <SidebarListItemLink
                 onClick={() => {
-                  navigateToModule(module.key, module.path);
+                  if (currentRole?.access.includes(module.key)) {
+                    navigateToModule(module.key, module.path);
+                  }
                 }}
-                className={useClientMatchedPathSidebar(module.paths) ? "active" : ""}
+                active={useClientMatchedPathSidebar(module.paths)}
+                disabled={!currentRole?.access.includes(module.key)}
               >
                 <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
                 {module.label}
@@ -116,6 +101,21 @@ export const DashboardSidebar = () => {
 
       <SidebarFooter>
         <SidebarList>
+          <Tooltip content={<DashboardSidebarAccountTooltip user={user} />}>
+            <SidebarListItem>
+              <SidebarListItemSecondaryLink>
+                <Styles.SidebarListItemAccountAvatar>
+                  {fullNameInitials}
+                </Styles.SidebarListItemAccountAvatar>
+                <Styles.SidebarListItemAccountLabel>
+                  {currentRole?.label}
+                </Styles.SidebarListItemAccountLabel>
+                <SidebarListItemIcon>
+                  <ChevronRightIcon />
+                </SidebarListItemIcon>
+              </SidebarListItemSecondaryLink>
+            </SidebarListItem>
+          </Tooltip>
           <SidebarListItem>
             <SidebarListItemSecondaryLink href="#">
               <Styles.SidebarListItemIconWithBadge>

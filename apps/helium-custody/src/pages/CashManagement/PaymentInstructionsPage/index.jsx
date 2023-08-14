@@ -586,7 +586,7 @@ const PaymentInstructionsPage = () => {
             <Grid item>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 startIcon={<AddIcon />}
                 onClick={() => {
                   setAddModalOpen(true);

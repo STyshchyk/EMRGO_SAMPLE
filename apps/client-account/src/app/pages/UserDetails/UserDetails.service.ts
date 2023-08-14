@@ -62,13 +62,3 @@ export const verifyMobileNumber = (requestObject: IVerifyPhoneNumberModalFormPro
   });
   return promise;
 };
-
-
-export const refreshToken = (role:string) => {
-  return dashboardApi({
-    method: "POST",
-    url: "v2/refreshTokens",
-    data: { role },
-    validateStatus: null,
-  });
-};
