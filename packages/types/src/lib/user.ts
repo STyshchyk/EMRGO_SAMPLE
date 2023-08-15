@@ -21,5 +21,6 @@ export interface IUser {
   tncAcceptedVersion: string | number | null;
   clientKycStatus: number;
   entityKycStatus: number;
+  entityCustodyKycStatus: number;
   verifyMFA?: boolean;
 }
