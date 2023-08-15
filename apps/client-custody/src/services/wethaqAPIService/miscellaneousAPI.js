@@ -17,14 +17,14 @@ export const fetchStaticFileLink = (payload) =>
 export const readTableConfig = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/users/profile/settings/tables-manage`,
+    url: `/v2/profile/settings`,
     params: payload,
   });
 
 export const updateTableConfig = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: `/v1/users/profile/settings/tables-manage`,
+    url: `/v2/profile/settings`,
     data: payload,
   });
 
