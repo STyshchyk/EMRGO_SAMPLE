@@ -16,6 +16,7 @@ import style from "./style.module.scss";
 import {useQuery} from "@tanstack/react-query";
 import * as constants from "@emrgo-frontend/constants";
 import {fetchKYCForms} from "../../services/KYC";
+import {accountIdentification} from "@emrgo-frontend/constants";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -148,7 +149,7 @@ const DashboardNavHeader = () => {
   });
 
   const kycCustodyFilled = Array.isArray(kycCustodyForms?.forms) && kycCustodyForms.forms?.find(form => form.hasCompleted === false);
-  const displayCustody = !kycCustodyFilled && user.entityCustodyKycStatus === 3
+  const displayCustody = !kycCustodyFilled && user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
 
   const initialRoutingConfigs = {
     securitiesServices,
