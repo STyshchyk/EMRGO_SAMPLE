@@ -44,7 +44,7 @@ Deploy:helium-custody-EXP-DIFC:
 Deploy:client-authentication-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "client-authentication"
-    APP_SUBDOMAIN: "silver-auth"
+    APP_SUBDOMAIN: "silver-auth" # !SHOULD THE PREFIX BE "client-" instead?
   stage: deploy
   environment:
     name: exp-difc
@@ -55,13 +55,24 @@ Deploy:client-authentication-EXP-DIFC:
 Deploy:client-primaries-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "client-primaries"
-    APP_SUBDOMAIN: "silver-primaries"
+    APP_SUBDOMAIN: "silver-primaries" # !SHOULD THE PREFIX BE "client-" instead?
   stage: deploy
   environment:
     name: exp-difc
   extends:
     - .build_and_deploy_config
     - .client_primaries_build_rules_develop
+
+Deploy:client-secondaries-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-secondaries"
+    APP_SUBDOMAIN: "silver-secondaries" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_secondaries_build_rules_develop
 
 Deploy:silver-admin-EXP-DIFC:
   variables:
