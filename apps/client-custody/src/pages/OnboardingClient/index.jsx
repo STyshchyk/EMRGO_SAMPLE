@@ -25,54 +25,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { AboutUs } from "../../components/AboutCustody";
 import { navigateModule } from "@emrgo-frontend/utils";
 import {baseAxiosInstance} from "../../services/wethaqAPIService/helpers";
+import {
+   fetchKYCForms, createInvestmentFormSession, submitInvestorProfileForms
+} from "../../services/KYC";
 
 
-export const fetchInvestorProfileForms = async () => {
-  const promise = baseAxiosInstance({
-    method: "get",
-    url: `v2/client/kyc/forms`,
-    params: {
-      kycType: "user"
-    }
-  });
-  const data = await (await promise).data;
-  return data || [];
-};
 
-export const createInvestmentFormSession = async (
-  requestPayload
-) => {
-  const promise = baseAxiosInstance({
-    method: "post",
-    url: `v2/client/kyc/forms`,
-    data: requestPayload
-  });
-  const data = await (await promise).data;
-  return data || [];
-};
 
-export const submitInvestorProfileForms = async () => {
-  const promise = baseAxiosInstance({
-    method: "put",
-    url: `v2/client/kyc/submit`,
-    params: {
-      kycType: "user"
-    }
-  });
-  const data = await (await promise).data;
-  return data || [];
-};
-export const fetchKYCForms = async () => {
-  const promise = baseAxiosInstance({
-    method: "get",
-    url: `v2/client/kyc/forms`,
-    params: {
-      kycType: "entity"
-    }
-  });
-  const data = await (await promise).data;
-  return data || [];
-};
+
 
 const OnboardingClient = () => {
   const refreshProfile = useRefreshProfile();
@@ -81,14 +41,8 @@ const OnboardingClient = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
   const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
-  const { data: investmentProfileForms, refetch: investmentProfileRefetch } = useQuery({
-    staleTime: Infinity,
-    queryKey: [constants.queryKeys.account.clientInvestmentProfile.fetch],
-    queryFn: () => fetchInvestorProfileForms(),
-    enabled: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false
-  });
+
+
 
   const { data: kycForms, refetch: kycRefetch } = useQuery({
     staleTime: Infinity,
@@ -103,7 +57,7 @@ const OnboardingClient = () => {
   const { mutate: doKYCCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doSubmitInvestmentProfile } = useMutation(submitInvestorProfileForms);
 
-  const investmentProfileFormItems = investmentProfileForms?.forms;
+  // const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
 
   const redirectPath = constants.clientAccountRoutes.account.platformAccess;
@@ -147,39 +101,39 @@ const OnboardingClient = () => {
   const onInvestmentProfileSubmit = () => {
     doSubmitInvestmentProfile(undefined, {
       onSuccess: (response) => {
-        investmentProfileRefetch();
+        // investmentProfileRefetch();
         refreshProfile();
       }
     });
   };
 
   const onKYCSubmit = () => {
-    navigate("thank-you");
+    navigateModule("account","thank-you");
   };
 
-  useEffect(() => {
-    if (searchParams.has("form")) {
-      const callbackFormId = searchParams.get("form");
-      if (callbackFormId) {
-        searchParams.delete("form");
-        if (investmentProfileForms) {
-          const completedForm = investmentProfileForms?.forms.find(
-            (form) => form.formId === callbackFormId
-          );
-          showSuccessToast(`Successfully completed Investor Profile ${completedForm?.label} form`);
-
-          setTimeout(() => {
-            investmentProfileRefetch();
-          }, 1000);
-        }
-        setSearchParams(searchParams);
-      }
-    } else {
-      investmentProfileRefetch();
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (searchParams.has("form")) {
+  //     const callbackFormId = searchParams.get("form");
+  //     if (callbackFormId) {
+  //       searchParams.delete("form");
+  //       if (investmentProfileForms) {
+  //         const completedForm = investmentProfileForms?.forms.find(
+  //           (form) => form.formId === callbackFormId
+  //         );
+  //         showSuccessToast(`Successfully completed Investor Profile ${completedForm?.label} form`);
+  //
+  //         setTimeout(() => {
+  //           // investmentProfileRefetch();
+  //         }, 1000);
+  //       }
+  //       setSearchParams(searchParams);
+  //     }
+  //   } else {
+  //     // investmentProfileRefetch();
+  //   }
+  //
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     if (searchParams.has("form")) {
@@ -205,20 +159,20 @@ const OnboardingClient = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const userProfilingQuestionnaireItems = investmentProfileFormItems || [];
+  // const userProfilingQuestionnaireItems = investmentProfileFormItems || [];
   const kycQuestionnaireItems = kycFormItems || [];
 
 
   const entityKycStatus = user?.entityKycStatus;
   const clientKycStatus = user?.clientKycStatus;
 
-  const firstInvestmentProfileIncompleteForm = userProfilingQuestionnaireItems?.find(
-    (form) => form.hasCompleted === false
-  );
-
-  const areAllInvestmentProfileSectionsComplete = userProfilingQuestionnaireItems?.every(
-    (form) => form.hasCompleted
-  );
+  // const firstInvestmentProfileIncompleteForm = userProfilingQuestionnaireItems?.find(
+  //   (form) => form.hasCompleted === false
+  // );
+  //
+  // const areAllInvestmentProfileSectionsComplete = userProfilingQuestionnaireItems?.every(
+  //   (form) => form.hasCompleted
+  // );
 
   const firstKYCIncompleteForm = kycQuestionnaireItems?.find((form) => form.hasCompleted === false);
 
