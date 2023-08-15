@@ -12,7 +12,7 @@ export const roles = [
     label: "Investor",
     key: "invst_mngr",
     module: "custody",
-    route: clientCustodyRoutes.custody.cashManagement.home,
+    route: clientCustodyRoutes.custody.onboarding.home,
     access: ["authentication", "primaries", "secondaries", "custody", "account", "research"],
   },
 ];
