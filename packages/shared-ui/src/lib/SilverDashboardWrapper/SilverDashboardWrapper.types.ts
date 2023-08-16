@@ -6,7 +6,7 @@ export interface ISilverDashboardWrapperProps extends PropsWithChildren {
 }
 
 export interface ISilverDashboardWrapperContext {
-
+  enableRoleMapping: boolean;
   user?: IUser | null;
   roles?: string[] | null;
   mainRoutes: IModuleConfig[];

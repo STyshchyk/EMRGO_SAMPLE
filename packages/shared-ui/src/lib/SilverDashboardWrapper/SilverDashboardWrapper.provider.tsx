@@ -42,6 +42,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const { showWarningToast, showInfoToast } = useToast();
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
+  const [enableRoleMapping, setRoleMapping] = useState(false)
   useLayoutEffect(() => {
     disable();
   }, []);
@@ -99,7 +100,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     ) || "";
 
   useEffect(() => {
-    if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
+    if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
         showWarningToast(message);
@@ -108,13 +109,14 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
         navigateSilverModule(currentRole?.module || "", currentRole?.route || "");
       }, 2000);
     }
-  }, [currentModuleKey, currentRole, showWarningToast]);
+  }, [currentModuleKey, currentRole, enableRoleMapping]);
   const state: ISilverDashboardWrapperContext = {
     user: user,
     roles: roles,
     mainRoutes: mainRoutes,
     doLogout,
-    currentRole
+    currentRole,
+    enableRoleMapping: enableRoleMapping
   };
 
   return (
