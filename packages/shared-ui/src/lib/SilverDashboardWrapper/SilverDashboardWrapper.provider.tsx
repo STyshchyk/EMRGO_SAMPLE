@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useLayoutEffect, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
 import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
@@ -33,11 +33,10 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const { disable } = useDarkMode();
   const { user, roles, updateUserConfig } = useUser();
   const currentRole = constants.silverRoles.find((role) => role.key === user?.role);
-  const origin = window.location.origin;
   const { showWarningToast, showInfoToast } = useToast();
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
-  const [enableRoleMapping, setRoleMapping] = useState(true)
+  const [enableRoleMapping, setRoleMapping] = useState(true);
   useLayoutEffect(() => {
     disable();
   }, []);
@@ -89,12 +88,13 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       paths: getAllSilverRoutes(heliumCustodyRoutes)
     }
   ];
-  const currentModuleKey =
-    Object.keys(constants.silverModuleURLs).find(
-      (key) => constants.silverModuleURLs[key] === origin
-    ) || "";
+
 
   useEffect(() => {
+    const currentModuleKey =
+      Object.keys(constants.silverModuleURLs).find(
+        (key) => constants.silverModuleURLs[key] === window.location.origin
+      ) || "";
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
@@ -104,7 +104,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
         navigateSilverModule(currentRole?.module || "", currentRole?.route || "");
       }, 2000);
     }
-  }, [currentModuleKey, currentRole, enableRoleMapping]);
+  }, [currentRole, enableRoleMapping]);
   const state: ISilverDashboardWrapperContext = {
     user: user,
     roles: roles,
