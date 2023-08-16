@@ -11,17 +11,8 @@ import { ISilverDashboardWrapperProps } from "./SilverDashboardWrapper.types";
 export const SilverDashboardWrapperComponent: FC<ISilverDashboardWrapperProps> = ({
   children,
 }: ISilverDashboardWrapperProps) => {
-  const {
-    showClientTermsModal,
-    onAcceptTerms,
-    onDownloadTerms,
-    onPrintTerms,
-    onShareTerms,
-    onRejectTerms,
-  } = ensureNotNull(useSilverDashboardWrapperContext());
-  useEffect(() => {
-    console.log(silverModuleURLs);
-  }, []);
+
+
   return (
     <Styles.Container>
       <SilverDashboardSidebar />

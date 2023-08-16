@@ -47,7 +47,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         const navigateModileRole = silverRoles.find(role => user?.user?.role === role.key);
         //set light theme
         disable();
-         navigateSilverModule(navigateModileRole?.module, navigateModileRole?.route);
+        navigateSilverModule(navigateModileRole?.module, navigateModileRole?.route);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -169,7 +169,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                   </OneCol>
                   <Styles.Spacer />
                   <Styles.HelpListItem>
-                    <Link to={routes.dash.administration.home}>Raise support ticket</Link>
+                    <Link to={routes.auth.troubleSigningIn}>Raise support ticket</Link>
                   </Styles.HelpListItem>
                 </Styles.Form>
               )}

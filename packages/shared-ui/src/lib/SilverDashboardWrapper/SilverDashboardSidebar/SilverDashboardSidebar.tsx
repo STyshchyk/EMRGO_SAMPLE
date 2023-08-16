@@ -7,7 +7,7 @@ import {
   silverDataRoomRoutes,
   silverOnboardingRoutes,
   silverPrimariesRoutes,
-  heliumCustodyRoutes,
+  heliumCustodyRoutes, roles, silverRoles
 } from "@emrgo-frontend/constants";
 import { logoutUser } from "@emrgo-frontend/services";
 import {
@@ -22,60 +22,29 @@ import {
   SidebarListItem,
   SidebarListItemIcon,
   SidebarListItemLink,
-  SidebarListItemSecondaryLink,
+  SidebarListItemSecondaryLink
 } from "@emrgo-frontend/shared-ui";
 import {
   ensureNotNull,
   navigateSilverModule,
   silverModule,
-  useInternalMatchedPathDashboard,
+  useInternalMatchedPathDashboard
 } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 
 import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.provider";
 import * as Styles from "./SilverDashboardSidebar.styles";
 
-const mainRoutes = [
-  {
-    label: "Administration",
-    icon: <PrimariesIcon />,
-    key: "administration",
-    path: silverAdministrationRoutes.home,
-    paths: getAllSilverRoutes(silverAdministrationRoutes),
-  },
-  {
-    label: "Primaries",
-    icon: <PrimariesIcon />,
-    key: "primaries",
-    path: silverPrimariesRoutes.home,
-    paths: getAllSilverRoutes(silverPrimariesRoutes),
-  },
-  {
-    label: "Onboarding",
-    icon: <PrimariesIcon />,
-    key: "onboarding",
-    path: silverOnboardingRoutes.home,
-    paths: getAllSilverRoutes(silverOnboardingRoutes),
-  },
-  {
-    label: "Data Room",
-    icon: <PrimariesIcon />,
-    key: "dataroom",
-    path: silverDataRoomRoutes.home,
-    paths: getAllSilverRoutes(silverDataRoomRoutes),
-  },
-  {
-    label: "Custody",
-    icon: <PrimariesIcon />,
-    key: "custody",
-    path: heliumCustodyRoutes.home,
-    paths: getAllSilverRoutes(heliumCustodyRoutes),
-  },
-];
 
 export const SilverDashboardSidebar = () => {
-  const { numberOfNotifications } = ensureNotNull(useSilverDashboardWrapperContext());
-  const { mutate: doLogout } = useMutation({ mutationFn: logoutUser });
+  const {
+    mainRoutes,
+    roles,
+    user,
+    doLogout,
+    currentRole
+  } = ensureNotNull(useSilverDashboardWrapperContext());
+
   return (
     <Styles.DashboardSidebar>
       <SidebarHeader>
@@ -89,8 +58,11 @@ export const SilverDashboardSidebar = () => {
             <SidebarListItem key={module.key}>
               <SidebarListItemLink
                 onClick={() => {
-                  navigateSilverModule(module.key, module.path);
+                  if (currentRole?.access.includes(module.key)) {
+                    navigateSilverModule(module.key, module.path);
+                  }
                 }}
+                disabled={!currentRole?.access.includes(module.key)}
                 className={useInternalMatchedPathDashboard(module) ? "active" : ""}
               >
                 <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
@@ -100,7 +72,6 @@ export const SilverDashboardSidebar = () => {
           ))}
         </SidebarList>
       </nav>
-
       <SidebarFooter>
         <SidebarList>
           <SidebarListItem>
@@ -120,7 +91,7 @@ export const SilverDashboardSidebar = () => {
             <SidebarListItemSecondaryLink href="#">
               <Styles.SidebarListItemIconWithBadge>
                 <NotificationsIcon />
-                <Styles.NotificationsBadge>{numberOfNotifications}</Styles.NotificationsBadge>
+                <Styles.NotificationsBadge>{}</Styles.NotificationsBadge>
               </Styles.SidebarListItemIconWithBadge>
               Notifications
             </SidebarListItemSecondaryLink>

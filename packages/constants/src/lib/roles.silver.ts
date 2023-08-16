@@ -1,6 +1,6 @@
 import {silverAdministrationRoutes, silverCustodyRoutes, silverOnboardingRoutes} from "./silver.routes";
 
-export const silverRoles = [
+export const silverRoles: any = [
   {
     label: "Super User",
     key: "super_user",
