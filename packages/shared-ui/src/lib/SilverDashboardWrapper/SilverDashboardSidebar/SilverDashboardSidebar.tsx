@@ -42,7 +42,8 @@ export const SilverDashboardSidebar = () => {
     roles,
     user,
     doLogout,
-    currentRole
+    currentRole,
+    enableRoleMapping
   } = ensureNotNull(useSilverDashboardWrapperContext());
 
   return (
@@ -58,11 +59,12 @@ export const SilverDashboardSidebar = () => {
             <SidebarListItem key={module.key}>
               <SidebarListItemLink
                 onClick={() => {
-                  if (currentRole?.access.includes(module.key)) {
+                  if (!enableRoleMapping)navigateSilverModule(module.key, module.path);
+                  if ( currentRole?.access.includes(module.key)) {
                     navigateSilverModule(module.key, module.path);
                   }
                 }}
-                disabled={!currentRole?.access.includes(module.key)}
+                disabled={enableRoleMapping && !currentRole?.access.includes(module.key)}
                 className={useInternalMatchedPathDashboard(module) ? "active" : ""}
               >
                 <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 
 import { silverAuthenticationRoutes } from "@emrgo-frontend/constants";
-import { navigateSilverModule } from "@emrgo-frontend/utils";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 
 import routes from "../../constants/routes";
 import { useAuth } from "../../context/auth-context";
@@ -13,15 +13,18 @@ import NotFound from "../NotFound";
 
 const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
   const { data } = useAuth();
+  useEffect(() => {
+    setTimeout(()=>{
+      if (!data?.isAuthenticated) {
+        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
+      }
+      if (data?.isMFAEnabled && !data?.isMFAVerified) {
+        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.completeRegistration);
+      }
+    }, 1000)
 
+  }, []);
 
-  if (!data?.isAuthenticated) {
-    navigateSilverModule("authentication", silverAuthenticationRoutes.home);
-  }
-
-  if (data?.isMFAEnabled && !data?.isMFAVerified) {
-    navigateSilverModule("authentication", silverAuthenticationRoutes.completeRegistration);
-  }
 
   return children;
 };
@@ -39,7 +42,7 @@ const MainRoutes = () => {
       window.scroll({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: "smooth"
       });
     } catch (error) {
       window.scrollTo(0, 0);
@@ -88,7 +91,7 @@ const MainRoutes = () => {
   const generatedRouteComponents = makeRoutes([
     ...publicRouteConfigs,
     ...authFlowRouteConfigs,
-    ...dashboardRouteConfigs,
+    ...dashboardRouteConfigs
   ]);
 
   /* {generatedRouteComponents || <Fragment />} */
