@@ -42,7 +42,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const { showWarningToast, showInfoToast } = useToast();
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
-  const [enableRoleMapping, setRoleMapping] = useState(false)
+  const [enableRoleMapping, setRoleMapping] = useState(true)
   useLayoutEffect(() => {
     disable();
   }, []);
