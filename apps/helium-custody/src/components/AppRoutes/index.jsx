@@ -14,6 +14,7 @@ import NotFound from "../NotFound";
 const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
   const { data } = useAuth();
 
+
   if (!data?.isAuthenticated) {
     navigateSilverModule("authentication", silverAuthenticationRoutes.home);
   }
