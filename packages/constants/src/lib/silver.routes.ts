@@ -11,23 +11,17 @@ interface IRouteObject {
 
 export const silverModuleURLs: IMap = {
   authentication:
-    import.meta.env["VITE_INTERNAL_AUTH_URL"] ||
-    "https://internal-silver-auth.exp-difc.emrgo.com/",
+    import.meta.env["VITE_INTERNAL_AUTH_URL"],
   administration:
-    import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"] ||
-    "https://internal-silver-admin.exp-difc.emrgo.com/",
+    import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"],
   primaries:
-    import.meta.env["VITE_INTERNAL_PRIMARIES_URL"] ||
-    "https://internal-silver-prim.exp-difc.emrgo.com/",
+    import.meta.env["VITE_INTERNAL_PRIMARIES_URL"],
   onboarding:
-    import.meta.env["VITE_INTERNAL_ONBOARDING_URL"] ||
-    "https://internal-silver-onboarding.exp-difc.emrgo.com/",
+    import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
   dataroom:
-    import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"] ||
-    "https://internal-silver-dataroom.exp-difc.emrgo.com/",
+    import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
   custody:
-    import.meta.env["VITE_INTERNAL_CUSTODY_URL"] ||
-    "https://internal-helium-custody.exp-difc.emrgo.com/", // ! recheck URL once its deployed
+    import.meta.env["VITE_INTERNAL_CUSTODY_URL"], // ! recheck URL once its deployed
 
 };
 

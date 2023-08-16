@@ -95,12 +95,12 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     }
   ];
   const currentModuleKey =
-    Object.keys(constants.silverModuleURLs).find(
+    Object.keys(constants.clientModuleURLs).find(
       (key) => constants.silverModuleURLs[key] === origin
     ) || "";
 
   useEffect(() => {
-    console.log(currentRole, currentModuleKey);
+    console.log(currentRole, currentModuleKey, origin, constants.silverModuleURLs);
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
