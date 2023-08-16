@@ -2,7 +2,7 @@ import * as React from "react";
 import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { silverAdministrationRoutes } from "@emrgo-frontend/constants";
+import { silverAdministrationRoutes, silverRoles } from "@emrgo-frontend/constants";
 import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo, useToast } from "@emrgo-frontend/shared-ui";
 import { IUser } from "@emrgo-frontend/types";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
@@ -15,7 +15,7 @@ import { LoginHelp } from "../../components/LoginHelp";
 import { SixDigitCodeInput } from "../../components/SixDigitCodeInput";
 import routes from "../../constants/routes";
 import { IMFA } from "../../services";
-import {  useUserStore } from "../store";
+import { useUserStore } from "../store";
 import { loginSchema } from "./Login.schema";
 import { loginUser } from "./Login.services";
 import * as Styles from "./Login.styles";
@@ -44,9 +44,10 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         }
         // Update user, set verify MFA false. For futher MFA checking
         updateUser({ ...(user as IUser), verifyMFA: false });
+        const navigateModileRole = silverRoles.find(role => user?.user?.role === role.key);
         //set light theme
         disable();
-        navigateSilverModule(silverModule.administration, silverAdministrationRoutes.home);
+         navigateSilverModule(navigateModileRole?.module, navigateModileRole?.route);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
