@@ -88,7 +88,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     ) || "";
 
   useEffect(() => {
-    if (!currentRole?.access.includes(currentModuleKey)) {
+    if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
         showWarningToast(message);
