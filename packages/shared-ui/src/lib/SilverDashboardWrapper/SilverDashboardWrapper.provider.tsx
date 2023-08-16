@@ -100,6 +100,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     ) || "";
 
   useEffect(() => {
+    console.log(currentRole, currentModuleKey);
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
