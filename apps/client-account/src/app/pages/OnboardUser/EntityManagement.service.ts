@@ -1,5 +1,5 @@
 import { dashboardApi } from "../../services/APIService";
-import { INewUser } from "./EntityManagement.types";
+import { IMakeOrRevokeAdminRequestPayload,INewUser } from "./EntityManagement.types";
 
 
 export const getOnboardedUsers = async (): Promise<INewUser[]> => {
@@ -53,6 +53,20 @@ export const archiveUser = (id: string) => {
     url: `/v2/users/${id}/archive`,
   });
 };
+
+
+export const makeOrRevokeAdmin = (requestPayload : IMakeOrRevokeAdminRequestPayload) => {
+  const { id, isAdmin } = requestPayload
+  if (!id || id === "") return Promise.reject();
+  return dashboardApi({
+    method: "PUT",
+    url: `/v2/users/${id}/admin`,
+    data: { isAdmin }
+  });
+};
+
+
+
 
 
 

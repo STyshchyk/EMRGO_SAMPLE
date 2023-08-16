@@ -5,7 +5,7 @@ import { ensureNotNull } from "@emrgo-frontend/utils";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useEntityManagementContext } from "../EntityManagement.provider";
-import { INewUser, TNewUserStatus,TNewUserTypes } from "../EntityManagement.types";
+import { INewUser, TNewUserStatus,TNewUserTypes,UserRoles, UserStatus } from "../EntityManagement.types";
 import { getNewUserStatusLabel,getNewUserTypeLabel } from "../helpers";
 import * as Styles from './InvitedUsersTable.styles';
 import { IInvitedUsersTableProps } from "./InvitedUsersTable.types";
@@ -14,7 +14,7 @@ const columnHelper = createColumnHelper<INewUser>();
 
 export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
 
-  const {onArchiveUser, onCancelInvitation, onResendInvitation} = ensureNotNull(useEntityManagementContext())
+  const {onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin} = ensureNotNull(useEntityManagementContext())
   
   const columns = [
     columnHelper.accessor("firstName", {
@@ -50,19 +50,20 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       },
       cell: ({ row }) => {
         const id: string = row.original.id as string;
-        const status = row.original.invitationStatus?.toLowerCase(); 
+        const status = row.original.invitationStatus?.toLowerCase() as TNewUserStatus; 
+        const roles = row.original.roles; 
         return (
           <ActionTooltip
             title={
               <TooltipButtonBox>
                 <TooltipButtonActions
-                  $disabled={status === 'onboarded'}
+                  $disabled={status === UserStatus.onboarded}
                   onClick={() => onResendInvitation(id)}
                 >
                   Resend Invitation
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={status === 'cancelled' || status === 'onboarded'}
+                  $disabled={status === UserStatus.cancelled || status === UserStatus.onboarded}
                   onClick={() => onCancelInvitation(id)}
                 >
                   Cancel Invitation
@@ -71,6 +72,18 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   onClick={() => onArchiveUser(id)}
                 >
                   Archive User
+                </TooltipButtonActions>
+                <TooltipButtonActions
+                  $disabled={roles.includes(UserRoles.superUser)}
+                  onClick={() => onMakeAdmin(id)}
+                >
+                  Make Admin
+                </TooltipButtonActions>
+                <TooltipButtonActions
+                  $disabled={!roles.includes(UserRoles.superUser)}
+                  onClick={() => onRevokeAdmin(id)}
+                >
+                  Revoke Admin
                 </TooltipButtonActions>
               </TooltipButtonBox>
               

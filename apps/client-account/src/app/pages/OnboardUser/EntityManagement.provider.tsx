@@ -5,7 +5,7 @@ import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
 import { camelCase } from "change-case";
 
-import { archiveUser,cancelInvitation,getOnboardedUsers,getRoles,inviteUser,resendInvite } from "./EntityManagement.service";
+import { archiveUser,cancelInvitation,getOnboardedUsers,getRoles,inviteUser,makeOrRevokeAdmin,resendInvite } from "./EntityManagement.service";
 import { IEntityManagementContext, INewUser, UserRoles } from "./EntityManagement.types";
 import { getNewUserTypeLabel } from "./helpers";
 
@@ -32,6 +32,8 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doCancelInvitation } = useMutation(cancelInvitation);
   const { mutate: doArchiveUser } = useMutation(archiveUser);
   const { mutate: doResendInvite } = useMutation(resendInvite);
+  const { mutate: doMakeOrRevokeAdmin } = useMutation(makeOrRevokeAdmin);
+
 
   useQuery({
       staleTime:Infinity,
@@ -40,7 +42,6 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
           const roles = response.map((role: { name: string, key: string}) => {
           const roleName = camelCase(role.name)
-          console.log(roleName,'camel')
           return {
             label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]), 
             value: role.key
@@ -95,6 +96,38 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
       },
       onError: () => {
         showErrorToast("Error while trying to Resend Invite");
+      },
+    });
+  }
+
+  const onMakeAdmin = (id:string) => {
+    const requestPayload = {
+      id, 
+      isAdmin:true
+    }
+    doMakeOrRevokeAdmin(requestPayload, {
+      onSuccess: () => {
+        showSuccessToast("Assigned Admin role successfully");
+        queryClient.invalidateQueries([queryKeys.account.onboardedUsers.fetch]);
+      },
+      onError: () => {
+        showErrorToast("Error making admin");
+      },
+    });
+  }
+
+  const onRevokeAdmin = (id:string) => {
+    const requestPayload = {
+      id, 
+      isAdmin:false
+    }
+    doMakeOrRevokeAdmin(requestPayload, {
+      onSuccess: () => {
+        showSuccessToast("Unassigned Admin role successfully");
+        queryClient.invalidateQueries([queryKeys.account.onboardedUsers.fetch]);
+      },
+      onError: () => {
+        showErrorToast("Error revoking admin");
       },
     });
   }
@@ -155,7 +188,9 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
     handleSubmit,
     onArchiveUser,
     onCancelInvitation,
-    onResendInvitation
+    onResendInvitation,
+    onMakeAdmin,
+    onRevokeAdmin
   };
 
 

@@ -5,7 +5,15 @@ export enum UserRoles {
   investmentManager = "invst_mngr"
 }
 
-export type TNewUserStatus = "invited" | "onboarded" | "cancelled";
+export enum UserStatus {
+  invited = "invited",
+  onboarded = "onboarded",
+  cancelled = "cancelled"
+}
+
+// export type TNewUserStatus = "invited" | "onboarded" | "cancelled";
+
+export type TNewUserStatus =  UserStatus.invited | UserStatus.onboarded | UserStatus.cancelled
 
 
 export type TNewUserTypes =
@@ -29,6 +37,11 @@ export interface INewUser {
   invitationStatus?: TNewUserStatus,
 }
 
+export interface IMakeOrRevokeAdminRequestPayload{
+  id:string;
+  isAdmin:boolean;
+}
+
 export interface IEntityManagementContext {
   isOnboardUserModalOpen: boolean,
   setIsOnboardUserModalOpen: (flag: boolean) => void
@@ -45,6 +58,8 @@ export interface IEntityManagementContext {
   onArchiveUser:(id:string) => void
   onCancelInvitation:(id:string) => void
   onResendInvitation:(id:string) => void
+  onMakeAdmin:(id:string) => void
+  onRevokeAdmin:(id:string) => void
 
 }
 
