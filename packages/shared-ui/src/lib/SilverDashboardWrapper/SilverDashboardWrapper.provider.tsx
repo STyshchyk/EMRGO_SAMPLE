@@ -95,6 +95,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       Object.keys(constants.silverModuleURLs).find(
         (key) => constants.silverModuleURLs[key] === window.location.origin
       ) || "";
+    console.log(window.location.origin, "\n", currentModuleKey, "\n", currentRole, "\n", constants.silverModuleURLs, "\n");
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
