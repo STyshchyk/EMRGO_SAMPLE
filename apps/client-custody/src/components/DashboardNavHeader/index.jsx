@@ -149,7 +149,7 @@ const DashboardNavHeader = () => {
   });
 
   const kycCustodyFilled = Array.isArray(kycCustodyForms?.forms) && kycCustodyForms.forms?.find(form => form.hasCompleted === false);
-  const displayCustody = !kycCustodyFilled && user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
+  const displayCustody = !kycCustodyFilled && user?.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
 
   const initialRoutingConfigs = {
     securitiesServices,
