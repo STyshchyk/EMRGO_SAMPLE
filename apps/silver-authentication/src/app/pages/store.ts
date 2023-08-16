@@ -1,3 +1,4 @@
+import {IUser} from "@emrgo-frontend/types";
 import { produce } from "immer";
 import store from "store";
 import { create } from "zustand";
@@ -7,21 +8,7 @@ import { IMFA } from "../services";
 
 const hydratedUser = store.get("user");
 
-export interface IUser {
-  email: string;
-  entityId: string;
-  entityName: string;
-  firstName: string;
-  groupId: string;
-  hasAcceptedClientTerms: boolean;
-  id: string;
-  lastName: string;
-  mfaEnabled: boolean;
-  mfaType: string | null;
-  role: string;
-  tncAcceptedVersion: string | number | null;
-  verifyMFA?: boolean;
-}
+
 
 export interface IUserData {
   user: IUser | null;

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { silverAdministrationRoutes } from "@emrgo-frontend/constants";
 import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo, useToast } from "@emrgo-frontend/shared-ui";
+import { IUser } from "@emrgo-frontend/types";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
@@ -14,7 +15,7 @@ import { LoginHelp } from "../../components/LoginHelp";
 import { SixDigitCodeInput } from "../../components/SixDigitCodeInput";
 import routes from "../../constants/routes";
 import { IMFA } from "../../services";
-import { IUser, useUserStore } from "../store";
+import {  useUserStore } from "../store";
 import { loginSchema } from "./Login.schema";
 import { loginUser } from "./Login.services";
 import * as Styles from "./Login.styles";
@@ -34,12 +35,10 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
       onSuccess: (response) => {
         const user = response;
         //Check if user type implement IMFA interface, means mfa is not set
-        const MFA = response instanceof Object && "email" in response;
         //if user type iMFA or user has type IUSER and mfa is not enabled - redirect to MFa setup page
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        if (!MFA || !user.mfaEnabled) {
-          setMFA(response as IMFA);
+        if ("otpauth_url" in user || user?.user?.mfaEnabled && user.user.mfaEnabled === false) {
           navigate(routes.auth.completeRegistration);
           return;
         }
@@ -47,14 +46,13 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         updateUser({ ...(user as IUser), verifyMFA: false });
         //set light theme
         disable();
-        // window.location.assign(routes.dash.administration.users);
         navigateSilverModule(silverModule.administration, silverAdministrationRoutes.home);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         showErrorToast(response?.data?.message ?? "Error appeared during login");
-      },
+      }
     });
   };
   const handleNext = () => {
@@ -77,7 +75,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         initialValues={{
           email: "",
           password: "",
-          code: "777777",
+          code: "777777"
         }}
         validationSchema={loginSchema}
         onSubmit={(values) => {
@@ -128,7 +126,7 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
                       component={Button}
                       disabled={errors.password || errors.email}
                       onClick={() => {
-                        if (errors.password || errors.email)return;
+                        if (errors.password || errors.email) return;
                         handleNext();
                       }}
                     >

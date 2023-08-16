@@ -11,6 +11,7 @@ export const TwoFactorAuth = styled.div<{ position?: string }>`
   display: flex;
   justify-content: center;
   align-content: center;
+
 `;
 
 export const CompleteRegistration = styled.div`
