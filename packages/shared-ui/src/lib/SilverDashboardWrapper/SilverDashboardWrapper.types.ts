@@ -1,13 +1,33 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 
-export interface ISilverDashboardWrapperProps extends PropsWithChildren {}
+import { IUser } from "@emrgo-frontend/types";
+
+export interface ISilverDashboardWrapperProps extends PropsWithChildren {
+}
 
 export interface ISilverDashboardWrapperContext {
-  numberOfNotifications: number;
-  showClientTermsModal: boolean;
-  onAcceptTerms: () => void;
-  onDownloadTerms: () => void;
-  onPrintTerms: () => void;
-  onShareTerms: () => void;
-  onRejectTerms: () => void;
+
+  user?: IUser | null;
+  roles?: string[] | null;
+  mainRoutes: IModuleConfig[];
+  doLogout: () => void;
+  currentRole: any;
+
+}
+
+
+export interface IRoleSelector {
+  label: string;
+  key: string;
+  module: string;
+  route: string;
+  access: string[];
+}
+
+export interface IModuleConfig {
+  label: string;
+  icon: ReactElement;
+  key: string;
+  path: string;
+  paths: string[];
 }

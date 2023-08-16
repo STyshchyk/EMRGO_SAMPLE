@@ -4,15 +4,24 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
-  useState,
+  useState
 } from "react";
 import { useCopyToClipboard } from "react-use";
 
-import { useToast } from "@emrgo-frontend/shared-ui";
-import { useMutation } from "@tanstack/react-query";
+import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
 
-import { ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
+import { IModuleConfig, ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
+import * as constants from "@emrgo-frontend/constants";
+import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
+import {
+  getAllSilverRoutes, heliumCustodyRoutes,
+  silverAdministrationRoutes, silverDataRoomRoutes,
+  silverOnboardingRoutes,
+  silverPrimariesRoutes, silverRoles
+} from "@emrgo-frontend/constants";
+import { navigateSilverModule } from "@emrgo-frontend/utils";
 
 const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | null>(null);
 
@@ -26,69 +35,86 @@ const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | n
  * TODO: Implement this code.
  */
 export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) => {
-  const [clientTermsDocumentURL, setClientTermsDocumentURL] = useState("");
-  const [showClientTermsModal, setShowClientTermsModal] = useState(false);
-  const [showMFAModal, setShowMFAModal] = useState(true);
   const { disable } = useDarkMode();
+  const { user, roles, updateUserConfig } = useUser();
+  const currentRole = constants.silverRoles.find((role) => role.key === user?.role);
+  const origin = window.location.origin;
+  const { showWarningToast, showInfoToast } = useToast();
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
   useLayoutEffect(() => {
     disable();
   }, []);
+  const { mutate: doLogout } = useMutation({ mutationFn: logoutUser });
 
-  useEffect(() => {}, []);
-  const onAcceptTerms = () => {
-    setShowClientTermsModal(false);
-  };
-
-  const onDownloadTerms = () => {
-    // TODO: Implement this code.
-    const link = document.createElement("a");
-    link.href = clientTermsDocumentURL;
-    link.target = "_blank";
-    link.download = "emrgo-client-terms.pdf";
-    link.click();
-    // Suggest trriggering a download by appending a link to the DOM and clicking it.
-  };
-
-  const onPrintTerms = () => {
-    // TODO: Implement this code.
-    window.open(
-      clientTermsDocumentURL,
-      "_blank",
-      "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=768,height=920"
-    );
-    const newWindow = window.open(clientTermsDocumentURL, "");
-    if (newWindow) {
-      newWindow.onload = () => {
-        newWindow?.print();
-      };
+  const { data: userData } = useQuery([constants.queryKeys.account.profile.fetch], {
+    queryFn: () => fetchUserProfile(),
+    keepPreviousData: false,
+    refetchOnMount: true,
+    onSuccess: (response) => {
+      const user = response;
+      updateUserConfig(user);
     }
-  };
-
-  const onShareTerms = () => {
-    // TODO: Implement this code.
-    const text = `Hey, check out the client-terms on the Emrgo platform. ${clientTermsDocumentURL}`;
-    copyToClipboard(text);
-    if (copyState.error) {
-      showErrorToast("An error occurred while copying to clipboard");
-    } else {
-      showSuccessToast("Successfully copied to clipboard");
+  });
+  const mainRoutes = [
+    {
+      label: "Administration",
+      icon: <PrimariesIcon />,
+      key: "administration",
+      path: silverAdministrationRoutes.home,
+      paths: getAllSilverRoutes(silverAdministrationRoutes)
+    },
+    {
+      label: "Primaries",
+      icon: <PrimariesIcon />,
+      key: "primaries",
+      path: silverPrimariesRoutes.home,
+      paths: getAllSilverRoutes(silverPrimariesRoutes)
+    },
+    {
+      label: "Onboarding",
+      icon: <PrimariesIcon />,
+      key: "onboarding",
+      path: silverOnboardingRoutes.home,
+      paths: getAllSilverRoutes(silverOnboardingRoutes)
+    },
+    {
+      label: "Data Room",
+      icon: <PrimariesIcon />,
+      key: "dataroom",
+      path: silverDataRoomRoutes.home,
+      paths: getAllSilverRoutes(silverDataRoomRoutes)
+    },
+    {
+      label: "Custody",
+      icon: <PrimariesIcon />,
+      key: "custody",
+      path: heliumCustodyRoutes.home,
+      paths: getAllSilverRoutes(heliumCustodyRoutes)
     }
-  };
+  ];
+  const currentModuleKey =
+    Object.keys(constants.silverModuleURLs).find(
+      (key) => constants.silverModuleURLs[key] === origin
+    ) || "";
 
-  const onRejectTerms = () => {
-    // TODO: Implement this code.
-  };
-
+  useEffect(() => {
+    if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
+      setTimeout(() => {
+        const message = `You do not have access to the ${currentModuleKey} module`;
+        showWarningToast(message);
+      }, 1250);
+      setTimeout(() => {
+        navigateSilverModule(currentRole?.module || "", currentRole?.route || "");
+      }, 2000);
+    }
+  }, [currentModuleKey, currentRole, showWarningToast]);
   const state: ISilverDashboardWrapperContext = {
-    showClientTermsModal,
-    onAcceptTerms,
-    onDownloadTerms,
-    onPrintTerms,
-    onShareTerms,
-    onRejectTerms,
-    numberOfNotifications: 1,
+    user: user,
+    roles: roles,
+    mainRoutes: mainRoutes,
+    doLogout,
+    currentRole
   };
 
   return (
