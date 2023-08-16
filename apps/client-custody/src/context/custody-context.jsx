@@ -13,7 +13,7 @@ const CustodyWrapperContext = createContext(null);
 export const CustodyWrapperProvider = ({ children }) => {
   const dispatch = useDispatch();
   const authenticatedUserObject = useSelector(authSelectors.selectAuthenticatedUserObject);
-  const { updateUserConfig,updateUser } = useUser();
+  const { updateUserConfig, updateUser } = useUser();
 
   useEffect(() => {
     const fetchUserProfile = (payload) => dispatch(authActionCreators.doFetchUserProfile(payload));

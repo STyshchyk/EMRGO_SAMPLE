@@ -15,11 +15,13 @@ const fetchCurrentUserData = () =>
   });
 
 // for backward compatibility with user obj in legacy portal
-const fetchUserProfile = () =>
-  baseAxiosInstance({
+const fetchUserProfile = () => {
+ return baseAxiosInstance({
     method: "GET",
     url: "/auth/v2/profile/legacy",
   });
+}
+
 
 const getAuthenticatedUserData = () =>
   baseAxiosInstance({
