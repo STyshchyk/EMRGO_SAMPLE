@@ -1,26 +1,21 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState
-} from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
 import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
 
-import { IModuleConfig, ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
+import { ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
 import * as constants from "@emrgo-frontend/constants";
-import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
 import {
-  getAllSilverRoutes, heliumCustodyRoutes,
-  silverAdministrationRoutes, silverDataRoomRoutes,
+  getAllSilverRoutes,
+  heliumCustodyRoutes,
+  silverAdministrationRoutes,
+  silverDataRoomRoutes,
   silverOnboardingRoutes,
-  silverPrimariesRoutes, silverRoles
+  silverPrimariesRoutes
 } from "@emrgo-frontend/constants";
+import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
 import { navigateSilverModule } from "@emrgo-frontend/utils";
 
 const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | null>(null);
@@ -95,12 +90,11 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     }
   ];
   const currentModuleKey =
-    Object.keys(constants.clientModuleURLs).find(
+    Object.keys(constants.silverModuleURLs).find(
       (key) => constants.silverModuleURLs[key] === origin
     ) || "";
 
   useEffect(() => {
-    console.log(currentRole, currentModuleKey, origin, constants.silverModuleURLs);
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
