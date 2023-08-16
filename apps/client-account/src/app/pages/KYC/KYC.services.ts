@@ -10,7 +10,7 @@ export const fetchKYCForms = async (): Promise<IKYCResponse> => {
     method: "get",
     url: `v2/client/kyc/forms`,
     params: {
-      kycType: "entityCustody",
+      kycType: "enitity",
     },
   });
   const data = await (await promise).data;
