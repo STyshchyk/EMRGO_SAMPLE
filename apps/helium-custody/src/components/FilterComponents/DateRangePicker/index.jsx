@@ -20,7 +20,7 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
     startDate: defaultStartDate,
     endDate: defaultEndDate,
   });
-  const { t } = useTranslation(["reports", "blotter", "miscellaneous"]);
+  const { t } = useTranslation(["reports", "miscellaneous"]);
   const filterContext = useFilters();
   const { setFilterValue, clearFilterValue } = filterContext;
 

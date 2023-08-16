@@ -59,7 +59,6 @@ const generateInitialValues = (rowData) => {
 const PaymentAccountsTableActionMenu = ({ rowData }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openEditAccountFormDialog, setOpenEditAccountFormDialog] = useState(false);
   const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false);
   const { t } = useTranslation(["cash_management"]);
 
@@ -79,10 +78,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     setAnchorEl(null);
   };
 
-  const handleCloseEditAccountDialog = () => {
-    setOpenEditAccountFormDialog(false);
-    handleCloseMenu();
-  };
 
   const handleCloseDeleteAccountDialog = () => {
     setOpenDeleteAccountDialog(false);
@@ -103,23 +98,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     setOpenDeleteAccountDialog(true);
   };
 
-  const handleClickOnEditAccount = () => {
-    setOpenEditAccountFormDialog(true);
-  };
-
-  const handleClickOnViewSupportingDocument = () => {
-    const doFetchUploadedSupportingDocumentFile = (payload) =>
-      dispatch(accountsActionCreators.doFetchUploadedSupportingDocumentFile(payload));
-
-    const payload = {
-      type: "accountSupporting",
-      fileName: rowData?.supportingDoc,
-      entityId: isAdmin ? rowData?.entityGroupId : currentEntityGroupID,
-    };
-
-    doFetchUploadedSupportingDocumentFile(payload);
-    handleCloseMenu();
-  };
 
   const handleClickOnValidate = () => {
     const doValidatePaymentAccount = (payload) =>
@@ -154,33 +132,18 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
             <MenuItem disabled={rowData?.isDefault} onClick={handleClickOnSetAsDefault}>
               {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.SetAsDefault")}
             </MenuItem>
-            <MenuItem onClick={handleClickOnEditAccount}>
-              {" "}
-              {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Amend")}
-            </MenuItem>
             <MenuItem onClick={handleClickOnDeleteAccount}>
               {" "}
               {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Delete")}
             </MenuItem>
           </div>
         )}
-        <MenuItem onClick={handleClickOnViewSupportingDocument}>
-          {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.ViewSupportingDocument")}
-        </MenuItem>
         {isAdmin && hasManageAccountsACL && (
           <MenuItem disabled={rowData?.isValidated} onClick={handleClickOnValidate}>
             {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Validate")}
           </MenuItem>
         )}
       </Menu>
-      {openEditAccountFormDialog ? (
-        <EditPaymentAccountFormDialog
-          accountId={rowData.id}
-          initialValues={generateInitialValues(rowData)}
-          open={openEditAccountFormDialog}
-          handleClose={handleCloseEditAccountDialog}
-        />
-      ) : null}
       {openDeleteAccountDialog ? (
         <DeleteAccountDialog
           accountId={rowData.id}

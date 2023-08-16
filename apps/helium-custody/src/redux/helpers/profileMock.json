@@ -51,11 +51,6 @@
                     "displayName": "View Termsheet"
                 },
                 {
-                    "id": "d39ef931-d6fd-4028-933d-d419096721e5",
-                    "key": "Blotter/View",
-                    "displayName": "View Blotter"
-                },
-                {
                     "id": "48a1c5d5-7a6d-41ee-9769-88aa8fdf349b",
                     "key": "KYC/View",
                     "displayName": "View KYC"

@@ -15,7 +15,7 @@ import ReportingDisclaimer from "../ReportingDisclaimer";
 const CashBalancesReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);

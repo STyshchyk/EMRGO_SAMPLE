@@ -6,7 +6,6 @@ import admissionSaga from "./admissionSaga";
 // eslint-disable-next-line import/no-cycle
 import authSaga from "./authSaga";
 import billingSaga from "./billingSaga";
-import bulletinSaga from "./bulletinSaga";
 import billingAndPaymentsSaga from "./cashManagementSaga";
 import clientTermsSaga from "./clientTermsSaga";
 import corporateActionEventsSaga from "./corporateActionEventsSaga";
@@ -54,7 +53,6 @@ function* watchAll() {
     ...clientTermsSaga,
     ...accountsSaga,
     ...documentsSaga,
-    ...bulletinSaga,
     ...supportSaga,
     ...billingAndPaymentsSaga,
     ...accessControlsSaga,

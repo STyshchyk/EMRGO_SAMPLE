@@ -18,7 +18,7 @@ import ReportingDisclaimer from "../ReportingDisclaimer";
 const NewSecuritiesHoldingsReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
 
   const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
 

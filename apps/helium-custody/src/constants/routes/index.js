@@ -177,17 +177,9 @@ const dashboardUrls = include("/dashboard", {
       speIncorporation: "spe-incorporation",
     }),
   }),
-  blotters: include("blotters", {
-    home: "",
-  }),
   support: include("support", {
     home: "",
     tfa: "tfa",
-  }),
-  bulletins: include("bulletins", {
-    home: "",
-    view: "view",
-    manage: "manage",
   }),
 
   settlementAdmin: include("settlement-admin", {

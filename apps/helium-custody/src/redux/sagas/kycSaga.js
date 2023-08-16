@@ -481,7 +481,6 @@ const kycSaga = [
   ),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_ADD_REQUESTED, addPaymentAccountSaga),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED, deletePaymentAccountSaga),
-  takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED, editPaymentAccountSaga),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_SET_AS_DEFAULT_REQUESTED, setPaymentAccountAsDefault),
   takeLatest(kycActionTypes.PAYMENT_ACCOUNTS_VALIDATE_REQUESTED, validatePaymentAccount),
   takeLatest(

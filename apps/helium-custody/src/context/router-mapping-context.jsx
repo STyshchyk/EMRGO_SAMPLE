@@ -7,12 +7,9 @@ import * as kycSelectors from "../redux/selectors/kyc";
 import useIsProduction from "../utils/useIsProduction";
 import { useFeatureToggle } from "./feature-toggle-context";
 
-const Administration = lazy(() => import("../pages/Administration"));
 const AuthContainer = lazy(() => import("../containers/AuthContainer"));
 const AuthFlowLayout = lazy(() => import("../layouts/AuthFlowLayout"));
 const CashManagement = lazy(() => import("../pages/CashManagement"));
-const BlotterView = lazy(() => import("../containers/BlotterView"));
-const Bulletin = lazy(() => import("../pages/Bulletin"));
 const DashboardHome = lazy(() => import("../pages/DashboardHome"));
 const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
 const DocuSignSignature = lazy(() => import("../pages/DocuSignSignature"));
@@ -43,7 +40,6 @@ const RouterMappingProvider = ({ children }) => {
   const inProd = useIsProduction();
 
   const { checkFeatureFlag } = useFeatureToggle();
-  const isBulletinBoardFeatureEnabled = checkFeatureFlag(featureFlags.bulletinBoardFeature);
   const isIntlSecTradeSettlementWorkflow = checkFeatureFlag(
     featureFlags.intlSecTradeSettlementWorkflow
   );
@@ -169,13 +165,6 @@ const RouterMappingProvider = ({ children }) => {
         path: `${routes.dashboard.home}*`,
       },
       {
-        component: Administration,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.administration.home}*`,
-      },
-      {
         component: IssuancesList,
         exact: true,
         isPublic: false,
@@ -192,28 +181,12 @@ const RouterMappingProvider = ({ children }) => {
         disabled: !kycApprovalStatus,
       },
       {
-        component: BlotterView,
-        exact: true,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.blotters.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
         component: Support,
         exact: false,
         isPublic: false,
         layout: DashboardLayout,
         path: `${routes.dashboard.support.home}*`,
         disabled: !kycApprovalStatus,
-      },
-      {
-        component: Bulletin,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.bulletins.home}*`,
-        disabled: !kycApprovalStatus || !isBulletinBoardFeatureEnabled,
       },
       {
         component: CashManagement,

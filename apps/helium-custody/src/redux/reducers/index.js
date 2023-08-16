@@ -10,7 +10,6 @@ import accessControlsReducer from "./accessControlsReducer";
 import accountsReducer from "./accountsReducer";
 import authReducer from "./authReducer";
 import billingReducer from "./billingReducer";
-import bulletinReducer from "./bulletinReducer";
 import billingAndPaymentsReducer from "./cashManagementReducer";
 import clientTermsReducer from "./clientTermsReducer";
 import corporateActionEventsReducer from "./corporateActionEventsReducer";
@@ -121,7 +120,6 @@ const appReducer = combineReducers({
   accounts: accountsReducer,
   form: formValuesReducer,
   documents: documentsReducer,
-  bulletins: bulletinReducer,
   support: supportReducer,
   billingAndPayments: billingAndPaymentsReducer,
   accessControls: accessControlsReducer,

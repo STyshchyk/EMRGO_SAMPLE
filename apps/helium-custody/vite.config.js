@@ -6,7 +6,7 @@ import svgr from "vite-plugin-svgr";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  cacheDir: "../../node_modules/.vite/client-custody",
+  cacheDir: "../../node_modules/.vite/helium-custody",
   server: {
     port: 4200,
     host: "localhost",

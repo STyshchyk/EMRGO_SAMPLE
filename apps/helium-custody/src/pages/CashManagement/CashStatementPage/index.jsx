@@ -52,7 +52,7 @@ const CashStatementPage = () => {
   const dispatch = useDispatch();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["cash_management", "blotter", "reports"]);
+  const { t } = useTranslation(["cash_management", "reports"]);
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);

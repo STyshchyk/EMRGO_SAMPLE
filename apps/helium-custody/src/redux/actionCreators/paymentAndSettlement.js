@@ -6,22 +6,6 @@ export const doFetchDetailsRequest = createAction(actionTypes.PAYMENT_DETAILS_RE
 export const doFetchDetailsSuccess = createAction(actionTypes.PAYMENT_DETAILS_SUCCEEDED);
 export const doFetchDetailsFailure = createAction(actionTypes.PAYMENT_DETAILS_FAILED);
 
-export const doBlotterReadRequest = createAction(actionTypes.BLOTTER_READ_REQUESTED);
-export const doBlotterReadSuccess = createAction(actionTypes.BLOTTER_READ_SUCCEEDED);
-export const doBlotterReadFailure = createAction(actionTypes.BLOTTER_READ_FAILED);
-
-export const doBlotterUpdateRequest = createAction(actionTypes.BLOTTER_UPDATE_REQUESTED);
-export const doBlotterUpdateSuccess = createAction(actionTypes.BLOTTER_UPDATE_SUCCEEDED);
-export const doBlotterUpdateFailure = createAction(actionTypes.BLOTTER_UPDATE_FAILED);
-
-export const doBlotterCreateRequest = createAction(actionTypes.BLOTTER_CREATE_REQUESTED);
-export const doBlotterCreateSuccess = createAction(actionTypes.BLOTTER_CREATE_SUCCEEDED);
-export const doBlotterCreateFailure = createAction(actionTypes.BLOTTER_CREATE_FAILED);
-
-export const doBlotterDeleteRequest = createAction(actionTypes.BLOTTER_DELETE_REQUESTED);
-export const doBlotterDeleteSuccess = createAction(actionTypes.BLOTTER_DELETE_SUCCEEDED);
-export const doBlotterDeleteFailure = createAction(actionTypes.BLOTTER_DELETE_FAILED);
-
 export const doDropdownReadRequest = createAction(actionTypes.READ_DROPDOWN_REQUESTED);
 export const doDropdownReadSuccess = createAction(actionTypes.READ_DROPDOWN_SUCCEEDED);
 export const doDropdownReadFailure = createAction(actionTypes.READ_DROPDOWN_FAILED);

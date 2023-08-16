@@ -19,14 +19,12 @@
     "Home": "Home",
     "Administration": "Administration",
     "Issuance": "Issuance",
-    "Blotter": "Blotter",
     "Support": "Support",
     "Custody": "Custody",
     "Securities Services": "Securities Services",
     "Securities Admin": "Securities Admin",
     "Settlement Admin": "Settlement Admin",
     "Billing and Payments": "Billing and Payments",
-    "Bulletin Board": "Bulletin Board",
     "Cash Management": "Cash Management",
     "Help Desk": "Help Desk",
     "Help Desk Modal": {
@@ -70,9 +68,6 @@
       "Visitors": "Visitors",
       "Parent Entity": "Parent Entity",
       "Users": "Users"
-    },
-    "Blotter": {
-      "Overview": "Overview"
     },
     "Support": {
       "2FA Tickets": "2FA Tickets"

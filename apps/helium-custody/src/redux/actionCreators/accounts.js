@@ -30,12 +30,6 @@ export const doAddPaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD
 export const doAddPaymentAccountSuccess = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD_SUCCEEDED);
 export const doAddPaymentAccountFailure = createAction(actionTypes.PAYMENT_ACCOUNTS_ADD_FAILED);
 
-export const doEditPaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED);
-export const doEditPaymentAccountSuccess = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_EDIT_SUCCEEDED
-);
-export const doEditPaymentAccountFailure = createAction(actionTypes.PAYMENT_ACCOUNTS_EDIT_FAILED);
-
 export const doDeletePaymentAccount = createAction(actionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED);
 export const doDeletePaymentAccountSuccess = createAction(
   actionTypes.PAYMENT_ACCOUNTS_DELETE_SUCCEEDED
@@ -74,15 +68,6 @@ export const doUploadSupportingDocumentForPaymentAccountFailure = createAction(
   actionTypes.PAYMENT_ACCOUNTS_UPLOAD_SUPPORTING_DOC_FILE_FAILED
 );
 
-export const doFetchUploadedSupportingDocumentFile = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED
-);
-export const doFetchUploadedSupportingDocumentFileSuccess = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_SUCCEEDED
-);
-export const doFetchUploadedSupportingDocumentFileFailure = createAction(
-  actionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_FAILED
-);
 
 export const doFetchValidatedAccounts = createAction(
   actionTypes.VALIDATED_ACCOUNTS_FETCH_REQUESTED

@@ -88,20 +88,6 @@ function* addPaymentAccountSaga({ payload }) {
   }
 }
 
-function* editPaymentAccountSaga({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.accountsAPI.editPaymentAccount, payload);
-    const { data } = response;
-    yield put(accountsActionCreators.doEditPaymentAccountSuccess({ data }));
-    yield call(toast.success, data.message);
-    yield put(accountsActionCreators.doFetchPaymentAccounts());
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(accountsActionCreators.doEditPaymentAccountFailure(errorMessage));
-  }
-}
-
 function* deletePaymentAccountSaga({ payload }) {
   try {
     const response = yield call(wethaqAPIService.accountsAPI.deletePaymentAccount, payload);
@@ -238,27 +224,6 @@ function* fetchInvestorPayment({ payload }) {
   }
 }
 
-function* fetchUploadedSupportingDocumentFile({ payload }) {
-  const key = payload.fileName;
-  try {
-    const response = yield call(wethaqAPIService.fileAPI.download, payload);
-    const { data } = response;
-    data.fileName = key;
-    window.open(data.link);
-    yield put(accountsActionCreators.doFetchUploadedSupportingDocumentFileSuccess({ data }));
-    yield call(toast.success, data.message);
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(
-      accountsActionCreators.doFetchUploadedSupportingDocumentFileFailure({
-        message: errorMessage,
-        key,
-      })
-    );
-  }
-}
-
 function* fetchOutgoingInstructions({ payload }) {
   try {
     const response = yield call(wethaqAPIService.accountsAPI.fetchOutgoingInstructions, payload);
@@ -375,7 +340,6 @@ const accountsSaga = [
   takeLatest(accountsActionTypes.ACCOUNTS_DELETE_REQUESTED, deleteAccountSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_FETCH_REQUESTED, fetchPaymentAccountsSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_ADD_REQUESTED, addPaymentAccountSaga),
-  takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_EDIT_REQUESTED, editPaymentAccountSaga),
   takeLatest(accountsActionTypes.PAYMENT_ACCOUNTS_DELETE_REQUESTED, deletePaymentAccountSaga),
   takeLatest(
     accountsActionTypes.PAYMENT_ACCOUNTS_SET_AS_DEFAULT_REQUESTED,
@@ -390,10 +354,6 @@ const accountsSaga = [
   takeLatest(accountsActionTypes.ACCOUNT_FILE_UPLOAD_REQUESTED, uploadAccountFile),
   takeLatest(accountsActionTypes.UPDATE_INVESTOR_PAYMENT_REQUESTED, updateInvestorPayment),
   takeLatest(accountsActionTypes.FETCH_INVESTOR_PAYMENT_REQUESTED, fetchInvestorPayment),
-  takeLatest(
-    accountsActionTypes.PAYMENT_ACCOUNTS_FETCH_UPLOADED_SUPPORTING_DOCUMENT_FILE_REQUESTED,
-    fetchUploadedSupportingDocumentFile
-  ),
   takeLatest(accountsActionTypes.FETCH_OUTGOING_INSTRUCTIONS_REQUESTED, fetchOutgoingInstructions),
   takeLatest(
     accountsActionTypes.CREATE_OUTGOING_INSTRUCTIONS_REQUESTED,

@@ -27,16 +27,6 @@ const TERMSHEET = {
   },
 };
 
-const BLOTTER = {
-  settle: {
-    displayName: "Settle Blotter",
-    key: "Blotter/Settle",
-  },
-  view: {
-    displayName: "View Blotter",
-    key: "Blotter/View",
-  },
-};
 
 const KYC = {
   view: {
@@ -143,12 +133,6 @@ const SIGNING = {
   },
 };
 
-const BULLETIN_MANAGEMENT = {
-  manage: {
-    displayName: "Manage bulletins",
-    key: "Bulletins/Manage",
-  },
-};
 
 const SUPPORT_TICKET_MANAGEMENT = {
   manage: {
@@ -293,7 +277,6 @@ const RELATIONSHIP = {
 
 export default {
   ADMISSION,
-  BLOTTER,
   ENGAGEMENT,
   GROUP_MANAGEMENT,
   ISSUANCE,
@@ -302,7 +285,6 @@ export default {
   SUBSCRIPTION,
   TERMSHEET,
   PARTICIPATION,
-  BULLETIN_MANAGEMENT,
   SUPPORT_TICKET_MANAGEMENT,
   ACCOUNT,
   PAYMENT,

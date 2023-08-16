@@ -37,23 +37,23 @@ const home = {
   requiredEntityTypes: [],
 };
 
-const administration = {
-  acls: ["KYC/View", "KYC/Edit", "Account/Manage", "GroupManagement/View", "GroupManagement/Edit"],
-  baseURLPattern: /(?:\/dashboard\/administration\/)(?:[\w-/]*)/,
-  displayName: "Administration",
-  homeUrl: routes.dashboard.administration.home,
-  requiredEntityTypes: [
-    "ADMINISTRATOR",
-    "ARRANGER",
-    "FIDUCIARY",
-    "INVESTOR",
-    "ISSUER",
-    "LEGAL_COUNSEL",
-    "OBLIGOR",
-    "VISITOR",
-    "EMRGO_SERVICES",
-  ],
-};
+// const administration = {
+//   acls: ["KYC/View", "KYC/Edit", "Account/Manage", "GroupManagement/View", "GroupManagement/Edit"],
+//   baseURLPattern: /(?:\/dashboard\/administration\/)(?:[\w-/]*)/,
+//   displayName: "Administration",
+//   homeUrl: routes.dashboard.administration.home,
+//   requiredEntityTypes: [
+//     "ADMINISTRATOR",
+//     "ARRANGER",
+//     "FIDUCIARY",
+//     "INVESTOR",
+//     "ISSUER",
+//     "LEGAL_COUNSEL",
+//     "OBLIGOR",
+//     "VISITOR",
+//     "EMRGO_SERVICES",
+//   ],
+// };
 
 const issuance = {
   acls: [
@@ -95,13 +95,6 @@ const support = {
   requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
-const bulletinBoard = {
-  acls: ["Quotes/View", "Quotes/Manage"],
-  baseURLPattern: /(?:\/dashboard\/bulletins\/)(?:[\w-/]*)/,
-  displayName: "Bulletin Board",
-  homeUrl: routes.dashboard.bulletins.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "BROKER", "INVESTOR"],
-};
 
 const custody = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -119,20 +112,6 @@ const billing = {
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR"],
 };
 
-const blotter = {
-  acls: ["Blotter/Settle", "Blotter/View"],
-  baseURLPattern: /(?:\/dashboard\/blotters\/)(?:[\w-/]*)/,
-  displayName: "Blotter",
-  homeUrl: routes.dashboard.blotters.home,
-  requiredEntityTypes: [
-    "ARRANGER",
-    "CO_ARRANGER",
-    "INVESTOR",
-    "ISSUER",
-    "OBLIGOR",
-    "EMRGO_SERVICES",
-  ],
-};
 
 const issuerServices = {
   acls: ["Services/Issuer/View"],
@@ -229,8 +208,6 @@ const DashboardSidebar = ({ open }) => {
   const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
 
   const { checkFeatureFlag } = useFeatureToggle();
-  // const isBulletinBoardFeatureEnabled = enabledFeatures.includes(featureFlags.bulletinBoardFeature);
-  const isBulletinBoardFeatureEnabled = checkFeatureFlag(featureFlags.bulletinBoardFeature);
   const isIntlSecTradeSettlementWorkflow = checkFeatureFlag(
     featureFlags.intlSecTradeSettlementWorkflow
   );
@@ -238,19 +215,17 @@ const DashboardSidebar = ({ open }) => {
 
   const initialRoutingConfigs = {
     home,
-    administration,
+    // administration,
   };
 
   const RoutingConfigs = {
     home,
-    administration,
+    // administration,
     billing: inProd ? undefined : billing,
     issuance,
     support,
     custody,
-    bulletinBoard: isBulletinBoardFeatureEnabled ? bulletinBoard : undefined,
     // settlementAdmin: isIntlSecTradeSettlementWorkflow ? settlementAdmin : undefined,
-    blotter,
     reconciliation: isReconciliationFeatureEnabled ? reconciliation : undefined,
   };
 
