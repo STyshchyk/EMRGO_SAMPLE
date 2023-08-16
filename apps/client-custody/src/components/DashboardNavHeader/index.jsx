@@ -149,6 +149,7 @@ const DashboardNavHeader = () => {
   });
 
   const kycCustodyFilled = Array.isArray(kycCustodyForms?.forms) && kycCustodyForms.forms?.find(form => form.hasCompleted === false);
+  // add user.entityCustodyKycStatus in authUserObject of legacy profile api
   const displayCustody = !kycCustodyFilled && user?.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
 
   const initialRoutingConfigs = {

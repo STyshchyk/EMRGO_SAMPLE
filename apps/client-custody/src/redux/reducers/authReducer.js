@@ -99,11 +99,15 @@ const authReducer = handleActions(
       draft.isRequesting = true;
     }),
     [actionCreators.doFetchUserProfileSuccess]: produce((draft, { payload }) => {
+      console.log('called here');
       draft.isRequesting = false;
       draft.isAuthenticated = true;
       draft.authenticatedUserObject = {
         ...payload,
         entityGroups: changeDefaultEntityType(payload),
+        entityCustodyKycStatus: 3,
+        hasAcceptedClientTerms:true,
+        hasAcceptedSilverTnc:true,
       };
       // draft.authenticatedUserObject = { ...profileDummyData };
       draft.isEntityTypeAdmin = payload?.isUserEntityAdmin;

@@ -14,7 +14,7 @@ export const fetchUserProfile = async (): Promise<IUserConfigData> => {
 export const fetchLegacyUserProfile = async () => {
   const promise = sharedDashboardApi({
     method: "get",
-    url: `/v2/profile`,
+    url: `/v2/profile/legacy`,
   });
   return promise
 };

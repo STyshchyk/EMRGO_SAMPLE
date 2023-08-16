@@ -6,10 +6,13 @@ import cx from "classnames";
 import PropTypes from "prop-types";
 
 import { ClientDashboardWrapper } from "../../../../../packages/shared-ui/src/";
+import { useUser } from "../../../../../packages/shared-ui/src/";
 import DashboardHeader from "../../components/DashboardHeader";
 import DashboardNavHeader from "../../components/DashboardNavHeader";
 import DashboardSidebar from "../../components/DashboardSidebar";
 import { useTheme } from "../../context/theme-context";
+import * as authActionCreators from "../../redux/actionCreators/auth";
+import * as authSelectors from "../../redux/selectors/auth";
 import style from "./style.module.scss";
 
 const drawerWidth = 240;
@@ -40,6 +43,10 @@ const drawerWidth = 240;
 
 const DashboardLayout = ({ children }) => {
   const [open, setOpen] = useState(true);
+  const authenticatedUserObject = useSelector(authSelectors.selectAuthenticatedUserObject);
+  const {updateUser } = useUser();
+
+
   const { theme } = useTheme();
   const { locale } = theme;
   // const classes = useStyles();
@@ -47,6 +54,17 @@ const DashboardLayout = ({ children }) => {
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const fetchUserProfile = (payload) => dispatch(authActionCreators.doFetchUserProfile(payload));
+
+    fetchUserProfile({
+      successCallback: () => {
+        console.log("success call")
+        updateUser(authenticatedUserObject)
+      },
+    });
+  }, [dispatch]);
 
   return (
     <ClientDashboardWrapper>

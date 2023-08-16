@@ -7,6 +7,7 @@ import {
   acceptPlatformTerms,
   fetchDocumentLink,
   fetchDocumentPath,
+  fetchLegacyUserProfile,
   fetchUserProfile,
   logoutUser,
   refreshToken,
@@ -26,11 +27,12 @@ const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(n
  * @returns {JSX.Element}
  */
 export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { user, roles, updateUserConfig } = useUser();
+  const { user, roles, updateUserConfig,updateUser } = useUser();
 
   const refreshProfile = useRefreshProfile();
   const { showWarningToast, showInfoToast } = useToast();
   const currentRole = constants.roles.find((role) => role.key === user?.role);
+  console.log(currentRole)
   const fullName = user ? `${user?.firstName} ${user?.lastName}` : "N.A";
 
   const origin = window.location.origin;
@@ -74,18 +76,21 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
+  const currentModuleKey =
+  Object.keys(constants.clientModuleURLs).find(
+    (key) => constants.clientModuleURLs[key] === origin
+  ) || "";
+
+  console.log(currentModuleKey)
+
   useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
+    enabled: currentModuleKey === 'primaries',
     onSuccess: (response) => {
       const user = response;
       updateUserConfig(user);
     },
   });
-
-  const currentModuleKey =
-    Object.keys(constants.clientModuleURLs).find(
-      (key) => constants.clientModuleURLs[key] === origin
-    ) || "";
 
   useEffect(() => {
     if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
