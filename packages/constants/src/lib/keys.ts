@@ -17,6 +17,9 @@ export const queryKeys = {
   account: include("/account", {
     profile: include("profile", {
       fetch: "fetch",
+      legacy: include ("legacy", {
+        fetch:"fetch"
+      })
     }),
     clientInvestmentProfile: include("/client-investment-profile", {
       fetch: "fetch",

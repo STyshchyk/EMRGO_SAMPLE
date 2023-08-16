@@ -11,30 +11,31 @@ import { RouterMappingProvider, useRouterMapping } from "../../context/router-ma
 import LocationDisplay from "../LocationDisplay";
 import NotFound from "../NotFound";
 
-const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
-  const { data } = useAuth();
-  const authOtpRouteMatch = useMatch(routes.authentication.otp);
-
-  if (!data?.isAuthenticated) return <Navigate to={redirectTo} />;
-
-  if (!authOtpRouteMatch && data?.isMFAEnabled && !data?.isMFAVerified)
-    return <Navigate to={routes.authentication.otp} />;
-
-  return children;
-};
-
 // const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
 //   const { data } = useAuth();
-//   if (!data?.isAuthenticated){
-//     navigateModule("authentication",clientAuthenticationRoutes.home)
-//   }
+//   const authOtpRouteMatch = useMatch(routes.authentication.otp);
 
-//   if (data?.isMFAEnabled && !data?.isMFAVerified){
-//     navigateModule("authentication",clientAuthenticationRoutes.setupTwoFactorAuth)
-//   }
+//   if (!data?.isAuthenticated) return <Navigate to={redirectTo} />;
+
+//   if (!authOtpRouteMatch && data?.isMFAEnabled && !data?.isMFAVerified)
+//     return <Navigate to={routes.authentication.otp} />;
 
 //   return children;
 // };
+
+const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
+  const { data } = useAuth();
+  console.log(data)
+  if (!data?.isAuthenticated){
+    navigateModule("authentication",clientAuthenticationRoutes.home)
+  }
+
+  if (data?.isMFAEnabled && !data?.isMFAVerified){
+    navigateModule("authentication",clientAuthenticationRoutes.setupTwoFactorAuth)
+  }
+
+  return children;
+};
 
 const MainRoutes = () => {
   const navigate = useNavigate();

@@ -11,6 +11,14 @@ export const fetchUserProfile = async (): Promise<IUserConfigData> => {
   return data || [];
 };
 
+export const fetchLegacyUserProfile = async () => {
+  const promise = sharedDashboardApi({
+    method: "get",
+    url: `/v2/profile`,
+  });
+  return promise
+};
+
 export const logoutUser = async () => {
   const promise = sharedDashboardApi({
     method: "post",
