@@ -74,6 +74,17 @@ Deploy:client-secondaries-EXP-DIFC:
     - .build_and_deploy_config
     - .client_secondaries_build_rules_develop
 
+Deploy:client-account-EXP-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-account"
+    APP_SUBDOMAIN: "silver-account" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: exp-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_account_build_rules_develop
+
 Deploy:silver-admin-EXP-DIFC:
   variables:
     TARGET_APP_NAME: "silver-administration"
