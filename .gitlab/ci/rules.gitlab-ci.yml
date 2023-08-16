@@ -1,5 +1,22 @@
 # !REMINDER: There's no way to DRY UP those rules as array merging is not supported by GitLab CI/CD parser.
 
+# !THIS MERGING TECHNIQUE DOESNT WORK. TODO: TRY ANOTHER WAY (CUSTOM YAML TAG PROVIDED BY GITLAB CI/CD -> !REFERENCE)
+#.default_develop_rules: &develop_rules
+#  - when: always
+#    changes:
+#      paths:
+#        - .env.production
+#        - .gitlab-ci.yml
+#        - .gitlab/**/*
+#        - docker-compose.prod.template.yml
+#        - Dockerfile
+#        - package-lock.json
+#        - package.json
+#        - packages/**/*
+#
+#.app_specific_paths: &app_specific_paths
+#  client-account: apps/client-account/**/*
+#
 .client_custody_build_rules_develop:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
@@ -23,6 +40,22 @@
       changes:
         paths:
           - apps/helium-custody/**/*
+          - .gitlab-ci.yml
+          - .gitlab/**/*
+          - Dockerfile
+          - docker-compose.prod.template.yml
+          - package-lock.json
+          - package.json
+          - packages/**/*
+          - .env.production
+
+.client_account_build_rules_develop:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+      changes:
+        paths:
+          - apps/client-account/**/*
           - .gitlab-ci.yml
           - .gitlab/**/*
           - Dockerfile
@@ -79,38 +112,6 @@
           - package.json
           - packages/**/*
           - .env.production
-
-.client_accounts_build_rules_develop:
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-      changes:
-        paths:
-          - apps/client-accounts/**/*
-          - .gitlab-ci.yml
-          - .gitlab/**/*
-          - Dockerfile
-          - docker-compose.prod.template.yml
-          - package-lock.json
-          - package.json
-          - packages/**/*
-          - .env.production
-
-# .silver-internal_build_rules_develop:
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == "develop"
-#       when: always
-#       changes:
-#         paths:
-#           - apps/silver-internal/**/*
-#           - .gitlab-ci.yml
-#           - .gitlab/**/*
-#           - Dockerfile
-#           - package-lock.json
-#           - package.json
-#           - packages/**/*
-#           - .env.production
-#
 
 .silver-admin_build_rules_develop:
   rules:
