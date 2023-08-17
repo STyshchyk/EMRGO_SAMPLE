@@ -9,7 +9,7 @@ import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useFilters } from "../../../context/filter-context";
 
-const DatePicker = ({ name, defaultFilter, label, ...props }) => {
+const DatePicker = ({ name, defaultFilter, label,maxDate, ...props }) => {
   const [pickerValue, setPickerValue] = useState(defaultFilter);
   const filterContext = useFilters();
   const { setFilterValue } = filterContext;
@@ -71,6 +71,7 @@ const DatePicker = ({ name, defaultFilter, label, ...props }) => {
               fullWidth: true,
             },
           }}
+          maxDate={maxDate ?? null}
           variant="dialog"
           showTodayButton
           placeholder="DD/MM/YYYY"
