@@ -118,7 +118,6 @@ const SecuritiesHoldingsTable = ({
 
   const handleFetch = (filters) => {
     const { entity, date } = filters;
-
     const isAllEntitiesOptionSelected = entity?.value.value === "all";
     if (isAllEntitiesOptionSelected) {
       setAllEntitiesOptionSelected(() => isAllEntitiesOptionSelected);
@@ -195,7 +194,7 @@ const SecuritiesHoldingsTable = ({
       id: "quantity",
       title: t("Securities Holdings.Headers.Quantity"),
       field: "quantity",
-      type: "numeric",
+      // type: "numeric",
       exportConfig: { align: "right", width: 8 },
     },
     {
@@ -220,6 +219,9 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Portfolio ID"),
       field: "portfolioId",
       hidden: ["ISSUER"].includes(entityUserType),
+      cellStyle: {
+        minWidth: 120,
+      }  
     },
     {
       id: "instDescription",
@@ -232,6 +234,9 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Last Movement"),
       field: "lastMovement",
       exportConfig: { render: (rowData) => rowData.lastMovement, width: 8 },
+      cellStyle: {
+        maxWidth: 100,
+      } 
     },
   ];
 
@@ -256,7 +261,7 @@ const SecuritiesHoldingsTable = ({
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
-                  <DatePicker name="date" label="Date" defaultFilter={moment()} />
+                  <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()}/>
                 )}
               </Grid>
               <Grid item container xs={12} md={6} lg={3} alignItems="center">
@@ -293,11 +298,11 @@ const SecuritiesHoldingsTable = ({
                   options={positionTypeOptionsList}
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={3}>
+              {/* <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
-              </Grid>
+              </Grid> */}
 
-              <Grid item xs={12} container>
+              {/* <Grid item xs={12} container>
                 <Typography variant="subtitle1">
                   <Box fontWeight="bold">{t("Cash Balances.Address")} : </Box>{" "}
                 </Typography>
@@ -306,7 +311,7 @@ const SecuritiesHoldingsTable = ({
                     ? formatAddress(entityAddress?.group?.addresses)
                     : t("Cash Balances.NA")
                 }`}</Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
           </TableFiltersWrapper>
         </div>
