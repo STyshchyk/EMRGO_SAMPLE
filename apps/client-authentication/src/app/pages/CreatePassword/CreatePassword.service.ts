@@ -5,7 +5,7 @@ export const createPassword = (requestObject: ICreatePasswordFormValues) => {
   const promise = authApi({
     method: "post",
     data: requestObject,
-    url: `/v2/client/entity/register/set-password`,
+    url: `/auth/v2/client/entity/register/set-password`,
   });
   return promise;
 };

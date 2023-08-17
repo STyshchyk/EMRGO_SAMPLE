@@ -9,7 +9,7 @@ export interface ISetPassword {
 export const createPassword = async (payload: ISetPassword): Promise<IMFA> => {
   const promise = authApi({
     method: "POST",
-    url: "/v2/internal/users/set-password",
+    url: "/auth/v2/internal/users/set-password",
     data: payload,
   });
   const data = await await promise;

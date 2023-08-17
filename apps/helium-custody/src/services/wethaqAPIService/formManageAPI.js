@@ -3,7 +3,7 @@ import { baseAxiosInstance } from "./helpers";
 const fetchValues = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v2/profile/settings`,
+    url: `/auth/v2/profile/settings`,
     params: {
       keys: JSON.stringify(payload.keys),
     },
@@ -12,7 +12,7 @@ const fetchValues = (payload) =>
 const postValues = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: `/v2/profile/settings`,
+    url: `/auth/v2/profile/settings`,
     data: payload,
   });
 

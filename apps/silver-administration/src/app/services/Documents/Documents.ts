@@ -9,7 +9,7 @@ export interface IDocument {
 
 export const getDocument = async (docType_: docTypes): Promise<IDocument> => {
   const promise = dashboardApi({
-    url: "/v2/platform/documents",
+    url: "/auth/v2/platform/documents",
     method: "GET",
     params: {
       documentType: `${docType_}`,

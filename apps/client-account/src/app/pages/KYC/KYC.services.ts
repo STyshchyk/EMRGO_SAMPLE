@@ -8,7 +8,7 @@ import {
 export const fetchKYCForms = async (): Promise<IKYCResponse> => {
   const promise = dashboardApi({
     method: "get",
-    url: `v2/client/kyc/forms`,
+    url: `/auth/v2/client/kyc/forms`,
     params: {
       kycType: "enitity",
     },
@@ -22,7 +22,7 @@ export const createFormSession = async (
 ): Promise<ICreateFormSessionResponsePayload> => {
   const promise = dashboardApi({
     method: "post",
-    url: `v2/client/kyc/forms`,
+    url: `/auth/v2/client/kyc/forms`,
     data: requestPayload,
   });
   const data = await (await promise).data;

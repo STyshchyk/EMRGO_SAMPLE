@@ -7,7 +7,7 @@ export const enableMFA = (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
     data: requestObject,
-    url: `/v2/mfa/enable`,
+    url: `/auth/v2/mfa/enable`,
   });
   return promise;
 };
@@ -27,7 +27,7 @@ export const verifyMFA = (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
     data: requestObject,
-    url: `/v2/mfa/enable`,
+    url: `/auth/v2/mfa/enable`,
   });
   return promise;
 };

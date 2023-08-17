@@ -5,7 +5,7 @@ export const createInvestmentFormSession = async (
 ) => {
   const promise = baseAxiosInstance({
     method: "post",
-    url: `v2/client/kyc/forms`,
+    url: `/auth/v2/client/kyc/forms`,
     data: requestPayload
   });
   const data = await (await promise).data;
@@ -15,7 +15,7 @@ export const createInvestmentFormSession = async (
 export const submitInvestorProfileForms = async () => {
   const promise = baseAxiosInstance({
     method: "put",
-    url: `v2/client/kyc/submit`,
+    url: `/auth/v2/client/kyc/submit`,
     params: {
       kycType: "entityCustody"
     }
@@ -26,7 +26,7 @@ export const submitInvestorProfileForms = async () => {
 export const fetchKYCForms = async () => {
   const promise = baseAxiosInstance({
     method: "get",
-    url: `v2/client/kyc/forms`,
+    url: `/auth/v2/client/kyc/forms`,
     params: {
       kycType: "entityCustody"
     }

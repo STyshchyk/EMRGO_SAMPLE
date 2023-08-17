@@ -31,7 +31,7 @@ baseAxiosInstance.interceptors.response.use(
       try {
         await baseAxiosInstance({
           method: "post",
-          url: "v2/refreshTokens",
+          url: "/auth/v2/refreshTokens",
           data: { role: hydratedUser?.role },
         });
         // Retry the original request with the updated token

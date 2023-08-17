@@ -8,7 +8,7 @@ export const loginUser = async (requestObject: ILoginFormValues): Promise<IUser 
   const promise = authApi({
     method: "POST",
     data: requestObject,
-    url: "/v2/internal/login",
+    url: "/auth/v2/internal/login",
   });
   const data = await promise;
   //Set to onError react query status to handle error msg
@@ -22,6 +22,6 @@ export const loginUser = async (requestObject: ILoginFormValues): Promise<IUser 
 export const logoutUser = () => {
   return authApi({
     method: "POST",
-    url: "/v2/logout",
+    url: "/auth/v2/logout",
   });
 };

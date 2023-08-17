@@ -18,7 +18,7 @@ const fetchCurrentUserData = () =>
 const fetchUserProfile = () =>
   baseAxiosInstance({
     method: "GET",
-    url: "/v2/profile/legacy",
+    url: "/auth/v2/profile/legacy",
   });
 
 const getAuthenticatedUserData = () =>

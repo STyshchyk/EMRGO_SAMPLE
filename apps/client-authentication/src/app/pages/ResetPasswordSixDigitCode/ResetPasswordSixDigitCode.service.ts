@@ -5,7 +5,7 @@ export const verifyOTP = (requestObject: IResetPasswordSixDigitCodeValues) => {
   const promise = authApi({
     method: "post",
     data: requestObject,
-    url: `/v2/client/forgot-password/verify`,
+    url: `/auth/v2/client/forgot-password/verify`,
   });
   return promise;
 };

@@ -5,7 +5,7 @@ export const loginUser = (requestObject: ILoginFormValues) => {
   const promise = authApi({
     method: "post",
     data: requestObject,
-    url: `/v2/client/login`,
+    url: `/auth/v2/client/login`,
   });
   return promise;
 };
