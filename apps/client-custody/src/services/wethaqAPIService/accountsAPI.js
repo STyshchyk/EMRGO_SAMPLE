@@ -30,39 +30,39 @@ const addPaymentAccount = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/v1/accounts/payments`,
+    url: `/accounts/v1/accounts/payments`,
   });
 
 const deletePaymentAccount = (payload) =>
   baseAxiosInstance({
     method: "DELETE",
-    url: `v1/accounts/payments/${payload.accountId}`,
+    url: `/accounts/v1/accounts/payments/${payload.accountId}`,
   });
 
 const editPaymentAccount = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `v1/accounts/payments/${payload.accountId}`,
+    url: `/accounts/v1/accounts/payments/${payload.accountId}`,
   });
 
 const getPaymentAccounts = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/payments`,
+    url: `/accounts/v1/accounts/payments`,
   });
 
 const setPaymentAccountAsDefault = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
-    url: `v1/accounts/payments/${payload.accountId}/default`,
+    url: `/accounts/v1/accounts/payments/${payload.accountId}/default`,
   });
 
 const validatePaymentAccount = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `v1/accounts/payments/${payload.accountId}/validation`,
+    url: `/accounts/v1/accounts/payments/${payload.accountId}/validation`,
   });
 
 const getValidatedAccounts = (payload) =>
