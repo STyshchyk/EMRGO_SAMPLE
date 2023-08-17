@@ -17,13 +17,13 @@ const editAccount = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/v1/accounts/${payload.accountId}`,
+    url: `/accounts/v1/accounts/${payload.accountId}`,
   });
 
 const deleteAccount = (payload) =>
   baseAxiosInstance({
     method: "DELETE",
-    url: `/v1/accounts/${payload.accountId}`,
+    url: `/accounts/v1/accounts/${payload.accountId}`,
   });
 
 const addPaymentAccount = (payload) =>
