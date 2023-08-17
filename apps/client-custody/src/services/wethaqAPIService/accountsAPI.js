@@ -3,14 +3,14 @@ import { baseAxiosInstance } from "./helpers";
 const getAccounts = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts`,
+    url: `/accounts/v1/accounts`,
   });
 
 const addAccount = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/v1/accounts`,
+    url: `/accounts/v1/accounts`,
   });
 
 const editAccount = (payload) =>

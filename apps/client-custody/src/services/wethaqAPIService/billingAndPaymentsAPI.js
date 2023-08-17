@@ -9,7 +9,7 @@ const getTransactions = (payload) =>
 const getAccounts = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts`,
+    url: `/accounts/v1/accounts`,
     params: payload || null,
   });
 
