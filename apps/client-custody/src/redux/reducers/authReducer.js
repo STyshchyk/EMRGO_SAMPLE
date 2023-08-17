@@ -104,6 +104,9 @@ const authReducer = handleActions(
       draft.authenticatedUserObject = {
         ...payload,
         entityGroups: changeDefaultEntityType(payload),
+        entityCustodyKycStatus: 3,
+        hasAcceptedClientTerms:true,
+        hasAcceptedSilverTnc:true,
       };
       // draft.authenticatedUserObject = { ...profileDummyData };
       draft.isEntityTypeAdmin = payload?.isUserEntityAdmin;

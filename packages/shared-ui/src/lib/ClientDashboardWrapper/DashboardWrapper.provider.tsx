@@ -26,7 +26,7 @@ const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(n
  * @returns {JSX.Element}
  */
 export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { user, roles, updateUserConfig } = useUser();
+  const { user, roles, updateUserConfig} = useUser();
 
   const refreshProfile = useRefreshProfile();
   const { showWarningToast, showInfoToast } = useToast();
@@ -74,19 +74,22 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
+  const currentModuleKey =
+  Object.keys(constants.clientModuleURLs).find(
+    (key) => constants.clientModuleURLs[key] === origin
+    ) || "";
+
+  // console.log(currentModuleKey,"module key")
+
   useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
+    enabled: currentModuleKey !== 'custody',
     onSuccess: (response) => {
       const user = response;
       updateUserConfig(user);
     },
   });
-
-  const currentModuleKey =
-    Object.keys(constants.clientModuleURLs).find(
-      (key) => constants.clientModuleURLs[key] === origin
-    ) || "";
-
+  
   useEffect(() => {
     if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {

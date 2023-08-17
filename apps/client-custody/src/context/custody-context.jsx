@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import store from "store";
 //!* use shared user store
-// import { useUser } from "@emrgo-frontend/shared-ui";
+import { useUser } from "@emrgo-frontend/shared-ui";
 import * as authActionCreators from "../redux/actionCreators/auth";
 import * as authSelectors from "../redux/selectors/auth";
 
@@ -13,15 +13,15 @@ const CustodyWrapperContext = createContext(null);
 export const CustodyWrapperProvider = ({ children }) => {
   const dispatch = useDispatch();
   const authenticatedUserObject = useSelector(authSelectors.selectAuthenticatedUserObject);
-  // const { updateUser } = useUser()
+  const { updateUserConfig, updateUser } = useUser();
 
   useEffect(() => {
     const fetchUserProfile = (payload) => dispatch(authActionCreators.doFetchUserProfile(payload));
 
     fetchUserProfile({
       successCallback: () => {
-        // updateUser(authenticatedUserObject)
-        store.set("user", authenticatedUserObject);
+        console.log("success custody call")
+        updateUser(authenticatedUserObject)
       },
     });
   }, [dispatch]);
