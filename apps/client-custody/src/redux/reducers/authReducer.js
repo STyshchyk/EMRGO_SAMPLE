@@ -99,7 +99,6 @@ const authReducer = handleActions(
       draft.isRequesting = true;
     }),
     [actionCreators.doFetchUserProfileSuccess]: produce((draft, { payload }) => {
-      console.log('called here');
       draft.isRequesting = false;
       draft.isAuthenticated = true;
       draft.authenticatedUserObject = {

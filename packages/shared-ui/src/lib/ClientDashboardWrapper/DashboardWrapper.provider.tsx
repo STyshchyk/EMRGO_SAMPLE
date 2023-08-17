@@ -7,7 +7,6 @@ import {
   acceptPlatformTerms,
   fetchDocumentLink,
   fetchDocumentPath,
-  fetchLegacyUserProfile,
   fetchUserProfile,
   logoutUser,
   refreshToken,
