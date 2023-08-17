@@ -37,24 +37,6 @@ const home = {
   requiredEntityTypes: [],
 };
 
-// const administration = {
-//   acls: ["KYC/View", "KYC/Edit", "Account/Manage", "GroupManagement/View", "GroupManagement/Edit"],
-//   baseURLPattern: /(?:\/dashboard\/administration\/)(?:[\w-/]*)/,
-//   displayName: "Administration",
-//   homeUrl: routes.dashboard.administration.home,
-//   requiredEntityTypes: [
-//     "ADMINISTRATOR",
-//     "ARRANGER",
-//     "FIDUCIARY",
-//     "INVESTOR",
-//     "ISSUER",
-//     "LEGAL_COUNSEL",
-//     "OBLIGOR",
-//     "VISITOR",
-//     "EMRGO_SERVICES",
-//   ],
-// };
-
 const issuance = {
   acls: [
     "CMA/Manage",

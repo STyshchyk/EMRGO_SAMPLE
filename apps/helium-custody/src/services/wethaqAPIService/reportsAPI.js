@@ -24,7 +24,7 @@ const getCashBalances = (payload) =>
 const getSecuritiesAccounts = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/securitiesAccounts`,
+    url: `/accounts/v1/securitiesAccounts`,
     params: payload || null,
   });
 

@@ -30,7 +30,7 @@ const addPaymentAccount = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/v1/accounts/payments`,
+    url: `/accounts/v1/accounts/payments`,
   });
 
 const deletePaymentAccount = (payload) =>
@@ -49,7 +49,7 @@ const editPaymentAccount = (payload) =>
 const getPaymentAccounts = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/payments`,
+    url: `/accounts/v1/accounts/payments`,
   });
 
 const setPaymentAccountAsDefault = (payload) =>
