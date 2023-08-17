@@ -29,6 +29,7 @@ const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | n
  *
  * TODO: Implement this code.
  */
+
 export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const { disable } = useDarkMode();
   const { user, roles, updateUserConfig } = useUser();
@@ -88,19 +89,19 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       paths: getAllSilverRoutes(heliumCustodyRoutes)
     }
   ];
-
-
+  function removeHttp(url:string) {
+    return url.replace(/^https?:\/\//, '');
+  }
   useEffect(() => {
     const currentModuleKey =
       Object.keys(constants.silverModuleURLs).find(
-        (key) => constants.silverModuleURLs[key] === window.location.origin
+        (key) => removeHttp(constants.silverModuleURLs[key]) === removeHttp(window.location.origin)
       ) || "";
-    console.log(window.location.origin, "\n", currentModuleKey, "\n", currentRole, "\n", constants.silverModuleURLs, "\n");
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
         showWarningToast(message);
-      }, 1250);
+      }, 1000);
       setTimeout(() => {
         navigateSilverModule(currentRole?.module || "", currentRole?.route || "");
       }, 2000);
