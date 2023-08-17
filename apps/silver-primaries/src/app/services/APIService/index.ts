@@ -21,7 +21,7 @@ dashboardApi.interceptors.response.use(
       try {
         await dashboardApi({
           method: "post",
-          url: "v2/refreshTokens",
+          url: "/auth/v2/refreshTokens",
         });
         // Retry the original request with the updated token
         return dashboardApi(originalRequest);

@@ -9,7 +9,7 @@ const QUERY_KEY = [queryKeys.account.profile.fetch];
 const fetchUser = async (): Promise<IUserResponse> => {
   const { data } = await sharedDashboardApi({
     method: "get",
-    url: `/v2/profile`,
+    url: `/auth/v2/profile`,
   });
   return data;
 };

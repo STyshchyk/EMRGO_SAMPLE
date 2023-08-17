@@ -5,7 +5,7 @@ export const verifyEmailChange = (requestObject: IChangeEmailVerificationFormPro
   const promise = authApi({
     method: "put",
     data: requestObject,
-    url: `/v2/profile/change-email`,
+    url: `/auth/v2/profile/change-email`,
   });
   return promise;
 };

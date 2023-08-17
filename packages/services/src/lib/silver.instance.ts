@@ -22,7 +22,7 @@ sharedSilverDashboardApi.interceptors.response.use(
       try {
         await sharedSilverDashboardApi({
           method: "post",
-          url: "v2/refreshTokens",
+          url: "/auth/v2/refreshTokens",
         });
 
         // Retry the original request with the updated token

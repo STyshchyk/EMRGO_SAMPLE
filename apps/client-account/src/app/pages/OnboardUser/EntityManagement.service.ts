@@ -5,7 +5,7 @@ import { IMakeOrRevokeAdminRequestPayload,INewUser } from "./EntityManagement.ty
 export const getOnboardedUsers = async (): Promise<INewUser[]> => {
   const promise = dashboardApi({
     method: "GET",
-    url: "v2/users",
+    url: "/auth/v2/users",
   });
   const res = await (await promise).data.users;
   return res || [];
@@ -13,7 +13,7 @@ export const getOnboardedUsers = async (): Promise<INewUser[]> => {
 
 export const getRoles = async () => {
   const promise = dashboardApi({
-    url: "v2/client/roles",
+    url: "/auth/v2/client/roles",
     method: "GET"
   });
   const res = await (await promise).data.roles;
@@ -22,7 +22,7 @@ export const getRoles = async () => {
 
 export const inviteUser = (user: INewUser) => {
   const promise = dashboardApi({
-    url: "v2/client/users",
+    url: "/auth/v2/client/users",
     method: "POST",
     data: { ...user }
   });
@@ -34,7 +34,7 @@ export const cancelInvitation = (id: string) => {
   if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
-    url: `v2/users/${id}/invite/cancel`,
+    url: `/auth/v2/users/${id}/invite/cancel`,
   });
 };
 
@@ -42,7 +42,7 @@ export const resendInvite = (id: string) => {
   if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
-    url: `/v2/users/${id}/invite/resend`,
+    url: `/auth/v2/users/${id}/invite/resend`,
   });
 };
 
@@ -50,7 +50,7 @@ export const archiveUser = (id: string) => {
   if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
-    url: `/v2/users/${id}/archive`,
+    url: `/auth/v2/users/${id}/archive`,
   });
 };
 
@@ -60,7 +60,7 @@ export const makeOrRevokeAdmin = (requestPayload : IMakeOrRevokeAdminRequestPayl
   if (!id || id === "") return Promise.reject();
   return dashboardApi({
     method: "PUT",
-    url: `/v2/users/${id}/admin`,
+    url: `/auth/v2/users/${id}/admin`,
     data: { isAdmin }
   });
 };

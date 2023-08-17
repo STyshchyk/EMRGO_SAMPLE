@@ -5,7 +5,7 @@ export const resetPasswordWithPhone = (requestObject: IResetPasswordOptionsPhone
   const promise = authApi({
     method: "post",
     data: requestObject,
-    url: `/v2/client/forgot-password/phone/request`,
+    url: `/auth/v2/client/forgot-password/phone/request`,
   });
   return promise;
 };

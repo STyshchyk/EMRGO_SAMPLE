@@ -22,7 +22,7 @@ sharedDashboardApi.interceptors.response.use(
       try {
         await sharedDashboardApi({
           method: "post",
-          url: "v2/refreshTokens",
+          url: "/auth/v2/refreshTokens",
         });
 
         // Retry the original request with the updated token

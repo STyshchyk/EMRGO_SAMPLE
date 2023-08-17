@@ -5,7 +5,7 @@ import { sharedDashboardApi } from "./instances";
 export const fetchUserProfile = async (): Promise<IUserConfigData> => {
   const promise = sharedDashboardApi({
     method: "get",
-    url: `/v2/profile`,
+    url: `/auth/v2/profile`,
   });
   const data = await (await promise).data;
   return data || [];
@@ -14,7 +14,7 @@ export const fetchUserProfile = async (): Promise<IUserConfigData> => {
 export const logoutUser = async () => {
   const promise = sharedDashboardApi({
     method: "post",
-    url: `/v2/logout`,
+    url: `/auth/v2/logout`,
   });
   const data = await (await promise).data;
   return data || [];
@@ -24,7 +24,7 @@ export const verifyEmailExists = (requestObject: { email: string }) => {
   const promise = sharedDashboardApi({
     method: "get",
     params: requestObject,
-    url: `/v2/client/email/exists`,
+    url: `/auth/v2/client/email/exists`,
   });
   return promise;
 };
@@ -33,7 +33,7 @@ export const enableAuthenticatorMFA = (requestObject: { code: string }) => {
   const promise = sharedDashboardApi({
     method: "post",
     data: requestObject,
-    url: `/v2/mfa/enable`,
+    url: `/auth/v2/mfa/enable`,
   });
   return promise;
 };
@@ -41,7 +41,7 @@ export const enableAuthenticatorMFA = (requestObject: { code: string }) => {
 export const setupAuthenticatorMFA = () => {
   const promise = sharedDashboardApi({
     method: "post",
-    url: `/v2/mfa/setup`,
+    url: `/auth/v2/mfa/setup`,
   });
   return promise;
 };
@@ -50,7 +50,7 @@ export const verifyAuthenticatorMFA = (requestObject: { code: string }) => {
   const promise = sharedDashboardApi({
     method: "post",
     data: requestObject,
-    url: `/v2/mfa/verify`,
+    url: `/auth/v2/mfa/verify`,
   });
   return promise;
 };
@@ -58,7 +58,7 @@ export const verifyAuthenticatorMFA = (requestObject: { code: string }) => {
 export const requestResetAuthenticatorMFA = () => {
   const promise = sharedDashboardApi({
     method: "put",
-    url: `/v2/mfa/reset/request`,
+    url: `/auth/v2/mfa/reset/request`,
   });
   return promise;
 };
@@ -66,7 +66,7 @@ export const requestResetAuthenticatorMFA = () => {
 export const refreshToken = (role: string) => {
   return sharedDashboardApi({
     method: "POST",
-    url: "v2/refreshTokens",
+    url: "/auth/v2/refreshTokens",
     data: { role },
     validateStatus: null,
   });

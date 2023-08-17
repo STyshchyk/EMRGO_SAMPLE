@@ -7,7 +7,7 @@ export const fetchPlatformDocument = async (params: {
 }): Promise<IDocument> => {
   const promise = sharedDashboardApi({
     method: "get",
-    url: `/v2/platform/documents`,
+    url: `/auth/v2/platform/documents`,
     params,
   });
   const data = await (await promise).data?.data;
@@ -39,7 +39,7 @@ export const fetchDocumentLink = async (requestPayload: { path: string }): Promi
 export const acceptClientTerms = async (): Promise<IUser> => {
   const promise = sharedDashboardApi({
     method: "put",
-    url: `/v2/client/terms/accept`,
+    url: `/auth/v2/client/terms/accept`,
   });
   const data = await (await promise).data?.user;
   return data || [];
@@ -48,7 +48,7 @@ export const acceptClientTerms = async (): Promise<IUser> => {
 export const acceptPlatformTerms = async (): Promise<IUser> => {
   const promise = sharedDashboardApi({
     method: "put",
-    url: `/v2/client/tnc/accept`,
+    url: `/auth/v2/client/tnc/accept`,
   });
   const data = await (await promise).data?.user;
   return data || [];
