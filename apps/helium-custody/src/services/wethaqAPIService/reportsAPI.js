@@ -18,7 +18,7 @@ const getCashTransactions = (payload) =>
 const getCashBalances = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/reports/cashBalances?${payload.qs}`,
+    url: `/reports/v1/reports/cashBalances?${payload.qs}`,
   });
 
 const getSecuritiesAccounts = (payload) =>
@@ -31,28 +31,28 @@ const getSecuritiesAccounts = (payload) =>
 const getSecuritiesTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/reports/securitiesTransactions?${payload.qs}`,
+    url: `/reports/v1/reports/securitiesTransactions?${payload.qs}`,
   });
 
 //
 const getSecuritiesHoldings = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/reports/securitiesHoldings`,
+    url: `/reports/v1/reports/securitiesHoldings`,
     params: payload?.params,
   });
 
 const getTradeDateSecuritiesHoldings = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/reports/securitiesHoldings/tradeDateHolding`,
+    url: `/reports/v1/reports/securitiesHoldings/tradeDateHolding`,
     params: payload?.params,
   });
 
 const getReferenceData = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/reports/referenceData`,
+    url: `/reports/v1/reports/referenceData`,
     params: payload || null,
   });
 
