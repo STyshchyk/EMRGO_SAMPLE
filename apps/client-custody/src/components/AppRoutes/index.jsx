@@ -2,7 +2,8 @@ import { Fragment, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 
-import { clientAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { accountIdentification, clientAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { useUser } from "@emrgo-frontend/shared-ui";
 import { navigateModule } from "@emrgo-frontend/utils";
 
 import routes from "../../constants/routes";
@@ -11,16 +12,16 @@ import { RouterMappingProvider, useRouterMapping } from "../../context/router-ma
 import LocationDisplay from "../LocationDisplay";
 import NotFound from "../NotFound";
 
-
 const RequireAuth = ({ children, redirectTo = routes.public.login }) => {
   const { data } = useAuth();
-  if (!data?.isAuthenticated){
-    navigateModule("authentication",clientAuthenticationRoutes.home)
-  }
+  // const { user } = useUser();
+  // if (user?.clientKycStatus !== accountIdentification.KYC_STATUS_APPROVED) {
+  //   navigateModule("authentication", clientAuthenticationRoutes.home);
+  // }
 
-  if (data?.isMFAEnabled && !data?.isMFAVerified){
-    navigateModule("authentication",clientAuthenticationRoutes.setupTwoFactorAuth)
-  }
+  // if (user?.isMFAEnabled) {
+  //   navigateModule("authentication", clientAuthenticationRoutes.setupTwoFactorAuth);
+  // }
 
   return children;
 };

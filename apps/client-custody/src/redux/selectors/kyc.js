@@ -392,4 +392,9 @@ export const selectKYCApprovalStatus = createSelector(
   (userObject) => userObject.isVerified
 );
 
+export const selectCustodyKYCApprovalStatus = createSelector(
+  [selectAuthenticatedUserObject],
+  (userObject) => userObject.isCustodyVerified
+);
+
 export const selectElmUser = (state) => state.kyc.elmUser;

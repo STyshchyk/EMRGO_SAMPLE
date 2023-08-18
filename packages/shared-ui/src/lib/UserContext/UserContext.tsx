@@ -21,9 +21,20 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setUserConfig({
       permissions: userConfig?.permissions || [],
       roles: userConfig?.roles || [],
+      legacyUser: userConfig?.legacyUser || null,
       user: newUser,
     });
     store.set("user", { ...userConfig, user: newUser });
+  };
+
+  const updateLegacyUser = (newUser: any | null) => {
+    setUserConfig({
+      permissions: userConfig?.permissions || [],
+      roles: userConfig?.roles || [],
+      user: userConfig?.user || null,
+      legacyUser: newUser,
+    });
+    store.set("user", { ...userConfig, legacyUser: newUser });
   };
 
   const removeUser = () => {
@@ -46,6 +57,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     mfa,
     updateUserConfig,
     updateUser,
+    updateLegacyUser,
     removeUser,
     setMFA,
     setVerifyMFA,

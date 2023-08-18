@@ -2,6 +2,7 @@ export interface IUserConfigData {
   user: IUser | null;
   roles: string[];
   permissions: string[];
+  legacyUser?: any;
 }
 
 export interface IUser {

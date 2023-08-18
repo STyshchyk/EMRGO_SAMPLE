@@ -10,6 +10,7 @@ export interface IUserData {
 
   updateUserConfig: (user: IUserConfigData | null) => void;
   updateUser: (user: IUser | null) => void;
+  updateLegacyUser: (user: any | null) => void;
   removeUser: () => void;
   setVerifyMFA?: (flag: boolean) => void;
   setMFA?: (mfa: IMFA) => void;
