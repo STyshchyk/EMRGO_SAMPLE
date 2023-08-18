@@ -50,17 +50,18 @@ const ExportButtons = ({ tableRef, name }) => {
   const hashMap = new Map();
   filterColumns?.shownColumns.map(({ field }) => hashMap.set(field, field));
 
-  if (securitiesAccounts.length || cashManagementSecuritiesAccounts.length) {
-    const accounts =
-      securitiesAccounts.length !== 0 ? securitiesAccounts : cashManagementSecuritiesAccounts;
-    entityAddress = accounts?.filter(
-      (account) => account?.group?.entity?.corporateEntityName === filters?.entity?.value?.label
-    )[0];
-  } else {
-    entityAddress = cashAccounts?.filter(
-      (account) => account?.group?.entity?.corporateEntityName === filters?.entity?.value?.label
-    )[0];
-  }
+  //* addrs info was captured during kyc in legacy portal
+  // if (securitiesAccounts.length || cashManagementSecuritiesAccounts.length) {
+  //   const accounts =
+  //     securitiesAccounts.length !== 0 ? securitiesAccounts : cashManagementSecuritiesAccounts;
+  //   entityAddress = accounts?.filter(
+  //     (account) => account?.group?.entity?.corporateEntityName === filters?.entity?.value?.label
+  //   )[0];
+  // } else {
+  //   entityAddress = cashAccounts?.filter(
+  //     (account) => account?.group?.entity?.corporateEntityName === filters?.entity?.value?.label
+  //   )[0];
+  // }
 
   const generateCashAccountName = () => {
     const { account: cashAccount } = filters;
@@ -179,12 +180,12 @@ const ExportButtons = ({ tableRef, name }) => {
         label: "Account Name",
         value: generateCashAccountName(),
       },
-      {
-        label: "Address",
-        value: entityAddress?.group?.addresses
-          ? formatAddress(entityAddress?.group?.addresses)
-          : null,
-      },
+      // {
+      //   label: "Address",
+      //   value: entityAddress?.group?.addresses
+      //     ? formatAddress(entityAddress?.group?.addresses)
+      //     : null,
+      // },
     ];
 
     const filteredExportConfig = exportConfig.filter((v) => !!v.value);

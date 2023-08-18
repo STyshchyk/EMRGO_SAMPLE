@@ -1,6 +1,6 @@
+import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 // import Backend from 'i18next-http-backend';
 import Backend from "i18next-chained-backend";
@@ -10,8 +10,7 @@ import LocalStorageBackend from "i18next-localstorage-backend";
 import appConfig from "./appConfig";
 
 // !Dev note: If region is not set to SA then English will be selected as the default language
-// const defaultLanguageCode = appConfig.appRegion === "SA" ? "ar-SA" : "en-GB";
-const defaultLanguageCode = "en-GB";
+const defaultLanguageCode = appConfig.appRegion === "SA" ? "en-GB" : "en-GB";
 
 const isDevelopmentEnv = ["development"].includes(process.env.NODE_ENV);
 

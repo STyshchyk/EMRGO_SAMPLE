@@ -26,7 +26,7 @@ const pdfStyles = StyleSheet.create({
   value: { fontSize: "9px", fontFamily: "D-DIN Exp", fontWeight: 700, color: primary },
 });
 
-const ReportingPDFExporter = forwardRef(({ children }, ref, title) => {
+const ReportingPDFExporter = forwardRef(({ children, title }, ref) => {
   const { t } = useTranslation(["reports"]);
 
   return (
