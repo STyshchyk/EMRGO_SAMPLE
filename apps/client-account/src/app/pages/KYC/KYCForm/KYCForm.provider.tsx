@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useContext, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
+import { navigateModule } from "@emrgo-frontend/utils";
 
 import { IKYCFormContext } from "./KYCForm.types";
 
@@ -19,13 +20,19 @@ export const KYCFormProvider = ({ children }: PropsWithChildren) => {
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
   const sessionId = searchParams.get("session");
   const redirectPath = searchParams.get("redirect");
+  const module = searchParams.get("module");
+  console.log("🚀 ~ file: KYCForm.provider.tsx:23 ~ KYCFormProvider ~ module:", module);
 
   const onSubmit = () => {
-    if (redirectPath) {
-      navigate(redirectPath);
+    if (module && redirectPath) {
+      navigateModule(module, redirectPath);
     } else {
-      const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
-      navigate(route);
+      if (redirectPath) {
+        navigate(redirectPath);
+      } else {
+        const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
+        navigate(route);
+      }
     }
   };
 

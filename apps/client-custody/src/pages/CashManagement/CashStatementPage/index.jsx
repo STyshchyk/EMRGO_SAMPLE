@@ -131,11 +131,11 @@ const CashStatementPage = () => {
     const pushedEntity = [];
     const pushedAccount = [];
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
+          id: acc.group.entity.id,
           label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          value: acc.group.entity.id,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -146,18 +146,19 @@ const CashStatementPage = () => {
             original: acc,
           });
         }
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
+          label: `${acc.accountNo} (${acc.currency.name})`,
           value: acc.accountNo,
           original: acc,
         });
         pushedAccount.push(acc.accountNo);
       }
     });
+
     return { entityOpts, accountOpts, securityAccountOpts };
   };
 
@@ -250,7 +251,7 @@ const CashStatementPage = () => {
 
   let filteredAccounts = accountOpts
     .filter((account) =>
-      entityFilterValue ? account.original.group.id === entityFilterValue : false
+      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
     )
     .map((acc) => ({
       data: acc,

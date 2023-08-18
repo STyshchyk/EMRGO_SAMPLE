@@ -262,7 +262,9 @@ const AddPaymentAccountForm = ({
               </Grid>
 
               <Grid item className="w-full">
-                <div className="w-1/2 inline-block p-2">
+                <div
+                  className={`${values.hasIntermediaryBank ? "w-1/2" : "w-full"} inline-block p-2`}
+                >
                   <Grid container spacing={2}>
                     <InlineFormField label={" "}>
                       <Typography>
@@ -446,7 +448,7 @@ const AddPaymentAccountForm = ({
                   </Grid>
                 </div>
 
-                <div className="w-1/2 inline-block p-2">
+                <div className={`w-1/2 inline-block p-2`}>
                   {values.hasIntermediaryBank && (
                     <Grid container spacing={2}>
                       <InlineFormField label={" "}>

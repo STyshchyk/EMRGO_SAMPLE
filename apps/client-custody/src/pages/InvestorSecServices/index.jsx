@@ -11,12 +11,11 @@ import { useFeatureToggle } from "../../context/feature-toggle-context";
 import authorizeRouteAccess from "../../helpers/authorizeRouteAccess";
 import findTheFirstAccessibleRoutePath from "../../helpers/findTheFirstAccessibleRoutePath";
 import * as authSelectors from "../../redux/selectors/auth";
-
-const CustodyAndSettlement = lazy(() => import("./CustodyAndSettlement"));
-const Holdings = lazy(() => import("./SecurityHoldings"));
-const CounterpartyList = lazy(() => import("../SettlementAdmin/CounterpartyList"));
-const CounterpartySSIList = lazy(() => import("../SettlementAdmin/CounterpartySSIList"));
-const CorporateActionEvents = lazy(() => import("./CorporateActionEvents"));
+import CounterpartyList from "../SettlementAdmin/CounterpartyList";
+import CounterpartySSIList from "../SettlementAdmin/CounterpartySSIList";
+import CorporateActionEvents from "./CorporateActionEvents";
+import CustodyAndSettlement from "./CustodyAndSettlement";
+import Holdings from "./SecurityHoldings";
 
 // const TrusteeServices = lazy(() => import('./TrusteeServices'));
 

@@ -1,12 +1,6 @@
 import { PropsWithChildren, ReactElement } from "react";
 
-
-
 import { IUser } from "@emrgo-frontend/types";
-
-
-
-
 
 export type IDashboardWrapperProps = PropsWithChildren;
 
@@ -42,4 +36,5 @@ export interface IModuleConfig {
   key: string;
   path: string;
   paths: string[];
+  disabled?: boolean;
 }
