@@ -33,9 +33,6 @@ const changeDefaultEntityType = (userData) => {
         entityType: "INVESTOR",
         entity: {
           ...eg.entity,
-          kyc: {
-            status: "Approved",
-          },
         },
       };
     }

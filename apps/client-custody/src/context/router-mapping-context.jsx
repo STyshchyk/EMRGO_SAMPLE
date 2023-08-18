@@ -3,22 +3,26 @@ import { useSelector } from "react-redux";
 
 import featureFlags from "../constants/featureFlags";
 import routes from "../constants/routes";
+import DashboardLayout from "../layouts/DashboardLayout";
+import CashManagement from "../pages/CashManagement";
+import InvestorServices from "../pages/InvestorSecServices";
+import Reports from "../pages/Reports";
 import * as kycSelectors from "../redux/selectors/kyc";
 import useIsProduction from "../utils/useIsProduction";
 import { useFeatureToggle } from "./feature-toggle-context";
 
 const AuthContainer = lazy(() => import("../containers/AuthContainer"));
 const AuthFlowLayout = lazy(() => import("../layouts/AuthFlowLayout"));
-const CashManagement = lazy(() => import("../pages/CashManagement"));
+// const CashManagement = lazy(() => import("../pages/CashManagement"));
 const BlotterView = lazy(() => import("../containers/BlotterView"));
 const Bulletin = lazy(() => import("../pages/Bulletin"));
 const DashboardHome = lazy(() => import("../pages/DashboardHome"));
-const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
+// const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
 const DocuSignSignature = lazy(() => import("../pages/DocuSignSignature"));
 const DocuSignSignatureModalSuccess = lazy(() => import("../pages/DocuSignSignatureModalSuccess"));
 const DocuSignSignatureSuccess = lazy(() => import("../pages/DocuSignSignatureSuccess"));
 const EmptyLayout = lazy(() => import("../layouts/EmptyLayout"));
-const InvestorServices = lazy(() => import("../pages/InvestorSecServices"));
+// const InvestorServices = lazy(() => import("../pages/InvestorSecServices"));
 const IssuancesList = lazy(() => import("../pages/IssuancesList"));
 const IssuerServices = lazy(() => import("../pages/IssuerSecServices"));
 const Login = lazy(() => import("../pages/Login"));
@@ -28,7 +32,7 @@ const OnboardingClient = lazy(() => import("../pages/OnboardingClient"));
 const PublicHome = lazy(() => import("../pages/PublicHome"));
 const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
 const Reconciliation = lazy(() => import("../pages/Reconciliation"));
-const Reports = lazy(() => import("../pages/Reports"));
+// const Reports = lazy(() => import("../pages/Reports"));
 const OperationsSecServices = lazy(() => import("../pages/OperationsSecServices"));
 const SettlementAdmin = lazy(() => import("../pages/SettlementAdmin"));
 const SingleIssuance = lazy(() => import("../pages/SingleIssuance"));
@@ -166,38 +170,38 @@ const RouterMappingProvider = ({ children }) => {
         layout: DashboardLayout,
         path: `${routes.dashboard.home}*`,
       },
-      {
-        component: IssuancesList,
-        exact: true,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.issuances.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: SingleIssuance,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.issuances.issuance.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: BlotterView,
-        exact: true,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.blotters.home}*`,
-        disabled: !kycApprovalStatus,
-      },
-      {
-        component: Bulletin,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.bulletins.home}*`,
-        disabled: !kycApprovalStatus || !isBulletinBoardFeatureEnabled,
-      },
+      // {
+      //   component: IssuancesList,
+      //   exact: true,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.issuances.home}*`,
+      //   disabled: !kycApprovalStatus,
+      // },
+      // {
+      //   component: SingleIssuance,
+      //   exact: false,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.issuances.issuance.home}*`,
+      //   disabled: !kycApprovalStatus,
+      // },
+      // {
+      //   component: BlotterView,
+      //   exact: true,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.blotters.home}*`,
+      //   disabled: !kycApprovalStatus,
+      // },
+      // {
+      //   component: Bulletin,
+      //   exact: false,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.bulletins.home}*`,
+      //   disabled: !kycApprovalStatus || !isBulletinBoardFeatureEnabled,
+      // },
       {
         component: CashManagement,
         exact: false,
@@ -222,14 +226,14 @@ const RouterMappingProvider = ({ children }) => {
         path: `${routes.dashboard.custody.onboarding.home}*`,
         disabled: !kycApprovalStatus,
       },
-      {
-        component: IssuerServices,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.custody.issuerSecServices.home}*`,
-        disabled: !kycApprovalStatus,
-      },
+      // {
+      //   component: IssuerServices,
+      //   exact: false,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.custody.issuerSecServices.home}*`,
+      //   disabled: !kycApprovalStatus,
+      // },
       {
         component: InvestorServices,
         exact: false,
@@ -238,14 +242,14 @@ const RouterMappingProvider = ({ children }) => {
         path: `${routes.dashboard.custody.investorSecServices.home}*`,
         disabled: !kycApprovalStatus,
       },
-      {
-        component: OperationsSecServices,
-        exact: false,
-        isPublic: false,
-        layout: DashboardLayout,
-        path: `${routes.dashboard.custody.opsSecServices.home}*`,
-        disabled: !kycApprovalStatus,
-      },
+      // {
+      //   component: OperationsSecServices,
+      //   exact: false,
+      //   isPublic: false,
+      //   layout: DashboardLayout,
+      //   path: `${routes.dashboard.custody.opsSecServices.home}*`,
+      //   disabled: !kycApprovalStatus,
+      // },
       {
         component: SettlementAdmin,
         exact: false,

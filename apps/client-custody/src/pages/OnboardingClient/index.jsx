@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import * as constants from "@emrgo-frontend/constants";
+import { accountIdentification } from "@emrgo-frontend/constants";
 import {
   Button,
   DashboardContent,
@@ -9,40 +12,34 @@ import {
   QuestionnaireItems,
   useRefreshProfile,
   useToast,
-  useUser
+  useUser,
 } from "@emrgo-frontend/shared-ui";
-import * as constants from "@emrgo-frontend/constants";
-import { accountIdentification } from "@emrgo-frontend/constants";
-import { AccountPanelHeader } from "../../components/AccountPanelHeader";
-import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
-import { AccountPanel } from "../../components/AccountPanel";
-import * as Styles from "./OnboardingClient.styles";
-import { AccountPanelFooter } from "../../components/AccountPanelFooter";
+import { navigateModule } from "@emrgo-frontend/utils";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { reverse } from "named-urls";
 
-
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { AboutUs } from "../../components/AboutCustody";
-import { navigateModule } from "@emrgo-frontend/utils";
-import {baseAxiosInstance} from "../../services/wethaqAPIService/helpers";
+import { AccountPanel } from "../../components/AccountPanel";
+import { AccountPanelFooter } from "../../components/AccountPanelFooter";
+import { AccountPanelHeader } from "../../components/AccountPanelHeader";
+import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
+import * as authActionCreators from "../../redux/actionCreators/auth";
 import {
-   fetchKYCForms, createInvestmentFormSession, submitInvestorProfileForms
+  createInvestmentFormSession,
+  fetchKYCForms,
+  submitCustodyKYCForms,
 } from "../../services/KYC";
-
-
-
-
-
+import * as Styles from "./OnboardingClient.styles";
 
 const OnboardingClient = () => {
+  const dispatch = useDispatch();
   const refreshProfile = useRefreshProfile();
   const { user } = useUser();
+  console.log("🚀 ~ file: index.jsx:38 ~ OnboardingClient ~ user:", user);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
   const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
-
-
 
   const { data: kycForms, refetch: kycRefetch } = useQuery({
     staleTime: Infinity,
@@ -50,39 +47,20 @@ const OnboardingClient = () => {
     queryFn: () => fetchKYCForms(),
     enabled: true,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: false
+    refetchOnReconnect: false,
   });
 
-  const { mutate: doInvestmentProfileCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doKYCCreateFormSession } = useMutation(createInvestmentFormSession);
-  const { mutate: doSubmitInvestmentProfile } = useMutation(submitInvestorProfileForms);
+  const { mutate: doSubmitCustodyKYCForms } = useMutation(submitCustodyKYCForms);
 
   // const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
 
-  const redirectPath = constants.clientAccountRoutes.account.platformAccess;
-
-  const onInvestmentProfileStartForm = (formId, formReferenceId) => {
-    const requestPayload = {
-      formReferenceId
-    };
-
-    doInvestmentProfileCreateFormSession(requestPayload, {
-      onSuccess: (response) => {
-        const sessionId = response.sessionId;
-
-        const route = `${reverse(constants.clientAccountRoutes.clientInvestmentProfile.form, {
-          typeFormId: formId
-        })}/?session=${sessionId}&redirect=${encodeURI(redirectPath)}`;
-
-        navigateModule("account", route);
-      }
-    });
-  };
+  const redirectPath = constants.clientCustodyRoutes.custody.onboarding.home;
 
   const onKYCStartForm = (formId, formReferenceId) => {
     const requestPayload = {
-      formReferenceId
+      formReferenceId,
     };
 
     doKYCCreateFormSession(requestPayload, {
@@ -90,25 +68,23 @@ const OnboardingClient = () => {
         const sessionId = response.sessionId;
 
         const route = `${reverse(constants.clientAccountRoutes.kyc.form, {
-          typeFormId: formId
-        })}/?session=${sessionId}&redirect=${redirectPath}`;
+          typeFormId: formId,
+        })}/?session=${sessionId}&module=custody&redirect=${redirectPath}`;
 
         navigateModule("account", route);
-      }
-    });
-  };
-
-  const onInvestmentProfileSubmit = () => {
-    doSubmitInvestmentProfile(undefined, {
-      onSuccess: (response) => {
-        // investmentProfileRefetch();
-        refreshProfile();
-      }
+      },
     });
   };
 
   const onKYCSubmit = () => {
-    navigateModule("account","thank-you");
+    doSubmitCustodyKYCForms(undefined, {
+      onSuccess: (response) => {
+        const fetchUserProfile = (payload) =>
+          dispatch(authActionCreators.doFetchUserProfile(payload));
+        fetchUserProfile();
+        refreshProfile();
+      },
+    });
   };
 
   // useEffect(() => {
@@ -141,9 +117,7 @@ const OnboardingClient = () => {
       if (callbackFormId) {
         searchParams.delete("form");
         if (kycForms) {
-          const completedForm = kycForms?.forms.find(
-            (form) => form.formId === callbackFormId
-          );
+          const completedForm = kycForms?.forms.find((form) => form.formId === callbackFormId);
           showSuccessToast(`Successfully completed KYC ${completedForm?.label} form`);
 
           setTimeout(() => {
@@ -161,7 +135,6 @@ const OnboardingClient = () => {
 
   // const userProfilingQuestionnaireItems = investmentProfileFormItems || [];
   const kycQuestionnaireItems = kycFormItems || [];
-
 
   const entityKycStatus = user?.entityKycStatus;
   const clientKycStatus = user?.clientKycStatus;
@@ -181,7 +154,6 @@ const OnboardingClient = () => {
   return (
     <DashboardContent>
       <Styles.Container>
-
         <AccountPanel>
           <AccountPanelHeader>
             <AccountPanelHeaderTitle>Regulatory Onboarding</AccountPanelHeaderTitle>
@@ -200,36 +172,41 @@ const OnboardingClient = () => {
             </QuestionnaireItems>
           </Styles.QuestionnairePanelContent>
           <AccountPanelFooter>
-            <div>
-              {!areAllKYCSectionsComplete && (
-                <Button
-                  size="large"
-                  onClick={() =>
-                    onKYCStartForm(
-                      firstKYCIncompleteForm?.formId || "",
-                      firstKYCIncompleteForm?.formReferenceId || ""
-                    )
-                  }
-                >
-                  Start {firstKYCIncompleteForm?.label}
-                </Button>
-              )}
+            {user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_PENDING && (
+              <div>
+                {!areAllKYCSectionsComplete && (
+                  <Button
+                    size="large"
+                    onClick={() =>
+                      onKYCStartForm(
+                        firstKYCIncompleteForm?.formId || "",
+                        firstKYCIncompleteForm?.formReferenceId || ""
+                      )
+                    }
+                  >
+                    Start {firstKYCIncompleteForm?.label}
+                  </Button>
+                )}
 
-              {areAllKYCSectionsComplete && (
-                <Button size="large" onClick={onKYCSubmit}>
-                  Submit KYC
-                </Button>
-              )}
-            </div>
+                {areAllKYCSectionsComplete && (
+                  <Button size="large" onClick={onKYCSubmit}>
+                    Submit Regulatory Onboarding
+                  </Button>
+                )}
+              </div>
+            )}
           </AccountPanelFooter>
         </AccountPanel>
-        {isAboutCustodyDisplayed && <AboutUs onClose={() => {
-          setAboutCustodyDisplayed(false);
-        }} />}
+        {isAboutCustodyDisplayed && (
+          <AboutUs
+            onClose={() => {
+              setAboutCustodyDisplayed(false);
+            }}
+          />
+        )}
       </Styles.Container>
     </DashboardContent>
   );
 };
-
 
 export default OnboardingClient;

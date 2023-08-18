@@ -21,7 +21,7 @@ export const CustodyWrapperProvider = ({ children }) => {
     fetchUserProfile({
       successCallback: () => {
         console.log("success custody call")
-        updateUser(authenticatedUserObject)
+        // updateUser(authenticatedUserObject)
       },
     });
   }, [dispatch]);

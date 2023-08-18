@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
 
-import { UserProvider as SilverUserProvider, ToastProvider } from "@emrgo-frontend/shared-ui";
+import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -14,7 +14,7 @@ import { AuthProvider } from "../../context/auth-context";
 import { CustodyWrapperProvider } from "../../context/custody-context";
 import { FeatureToggleProvider } from "../../context/feature-toggle-context";
 import { CustomThemeProvider } from "../../context/theme-context";
-import { UserProvider } from "../../context/user-context";
+import { UserProvider as CustodyUserProvider } from "../../context/user-context";
 import i18n from "../../i18n";
 
 const AppProviders = ({ children }) => {
@@ -33,31 +33,32 @@ const AppProviders = ({ children }) => {
   });
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <SilverUserProvider>
+    <UserProvider>
+      <I18nextProvider i18n={i18n}>
         <CustodyWrapperProvider>
           <AuthProvider>
-            <UserProvider>
-                <QueryClientProvider client={queryClient}>
-                  <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-                    <GlobalStyles />
-                      <FeatureToggleProvider>
-                        <Suspense fallback={<h2>Loading theme...</h2>}>
-                          <CustomThemeProvider isDarkMode={isDarkMode}>
-                            <LocalizationProvider dateAdapter={AdapterMoment}>
-                              {children}
-                            </LocalizationProvider>
-                          </CustomThemeProvider>
-                        </Suspense>
-                      </FeatureToggleProvider>
-                      <ToastProvider />
-                  </ThemeProvider>
-                </QueryClientProvider>
-            </UserProvider>
+            <CustodyUserProvider>
+              <QueryClientProvider client={queryClient}>
+                <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+                  <GlobalStyles />
+
+                  <FeatureToggleProvider>
+                    <Suspense fallback={<></>}>
+                      <CustomThemeProvider isDarkMode={isDarkMode}>
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                          {children}
+                        </LocalizationProvider>
+                      </CustomThemeProvider>
+                    </Suspense>
+                  </FeatureToggleProvider>
+                  <ToastProvider />
+                </ThemeProvider>
+              </QueryClientProvider>
+            </CustodyUserProvider>
           </AuthProvider>
         </CustodyWrapperProvider>
-      </SilverUserProvider>
-    </I18nextProvider>
+      </I18nextProvider>
+    </UserProvider>
   );
 };
 

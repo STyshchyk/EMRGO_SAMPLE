@@ -83,7 +83,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
 
   useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
-    enabled: currentModuleKey !== 'custody',
+    // enabled: currentModuleKey !== 'custody',
     onSuccess: (response) => {
       const user = response;
       updateUserConfig(user);
@@ -103,6 +103,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   }, [currentModuleKey, currentRole, showWarningToast]);
 
   const navigateToModule = (module: string, path: string) => {
+    console.log("🚀 ~ file: DashboardWrapper.provider.tsx:106 ~ navigateToModule ~ module:", module)
     navigateModule(module, path);
   };
 
@@ -134,6 +135,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "research",
       path: constants.clientSecondariesRoutes.home,
       paths: [""],
+      disabled: true,
     },
   ];
 
@@ -163,7 +165,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
         const message = `Switching role to ${role.label}. Please wait...`;
         showInfoToast(message);
         setTimeout(() => {
-          navigateModule(role.module, role.route);
+          navigateToModule(role.module, role.route);
         }, 1000);
       },
     });
@@ -172,7 +174,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const onLogOut = () => {
     doLogoutUser(undefined, {
       onSuccess: (response) => {
-        navigateModule("authentication", constants.clientAuthenticationRoutes.home);
+        navigateToModule("authentication", constants.clientAuthenticationRoutes.home);
       },
     });
   };
