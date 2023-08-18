@@ -8,21 +8,24 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { StyleSheet, Text } from "@react-pdf/renderer";
+import { StyleSheet, Text,View } from "@react-pdf/renderer";
 import { CsvBuilder } from "filefy";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
+import { roundNumber } from "../../helpers/renderers";
 import ReportingPDFExporter from "../ReportingPDFExporter";
 import StyledDialogHeader from "../StyledDialogHeader";
 
 const primary = "#23389c";
 
 const pdfStyles = StyleSheet.create({
-  label: { fontSize: "9px", fontFamily: "D-DIN Exp", color: primary, marginTop: "5px" },
-  value: { fontSize: "9px", fontFamily: "D-DIN Exp", fontWeight: 700, color: primary },
+  label: { fontSize: "10px", fontFamily: "D-DIN Exp", color: primary, marginTop: "5px"},
+  value: { fontSize: "10px", fontFamily: "D-DIN Exp", fontWeight: 700, color: primary },
+  labelWrapper:{minWidth:'250px'},
+  block:{flexDirection:'row'}
 });
 
 const SecurityInfoDataGridRow = ({ label, value }) => (
@@ -70,7 +73,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
       },
       profitRate: {
         label: t("termsheet:Profit Rate"),
-        value: profitRate,
+        value: roundNumber(profitRate,4),
       },
       frequencyName: {
         label: t("termsheet:Frequency"),
@@ -157,7 +160,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
         aria-labelledby="form-dialog-title"
       >
         <StyledDialogHeader
-          title={t("agency_services:Security Information")}
+          title={"Security Information"}
           handleClose={handleClose}
         />
         <DialogContent>
@@ -186,12 +189,18 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <ReportingPDFExporter ref={ref} title="Security Info Report">
+
+      <ReportingPDFExporter ref={ref} title="Security Information">
         {transformedSecurityData &&
           Object.entries(transformedSecurityData).map(([, { label, value }]) => (
-            <Text style={pdfStyles.label} key={label}>
-              {label} <Text style={pdfStyles.value}>{value}</Text>
-            </Text>
+            <View style={pdfStyles.block}>
+              <View style={pdfStyles.labelWrapper}>
+                <Text style={pdfStyles.label} key={label}>
+                  {label}
+                </Text>
+              </View>
+              <Text style={pdfStyles.value}>{value}</Text>
+            </View>
           ))}
       </ReportingPDFExporter>
     </Fragment>
