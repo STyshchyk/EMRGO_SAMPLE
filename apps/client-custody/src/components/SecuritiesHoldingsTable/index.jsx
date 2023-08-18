@@ -299,9 +299,9 @@ const SecuritiesHoldingsTable = ({
                   options={positionTypeOptionsList}
                 />
               </Grid>
-              {/* <Grid item xs={12} md={6} lg={3}>
+              <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
-              </Grid> */}
+              </Grid>
 
               {/* <Grid item xs={12} container>
                 <Typography variant="subtitle1">
