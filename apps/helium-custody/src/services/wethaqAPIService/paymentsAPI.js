@@ -30,46 +30,46 @@ const approveTrade = (payload) =>
 const raiseSettlementInstruction = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: "/v1/payment/external/settlement-instructions",
+    url: "/payments/v1/payment/external/settlement-instructions",
     data: payload.requestPayload,
   });
 
 const updateSettlementInstructionById = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
-    url: `/v1/payment/external/settlement-instructions/${payload.settlementId}`,
+    url: `/payments/v1/payment/external/settlement-instructions/${payload.settlementId}`,
     data: payload.requestPayload,
   });
 
 const deleteSettlementInstructionById = (payload) =>
   baseAxiosInstance({
     method: "DELETE",
-    url: `/v1/payment/external/settlement-instructions/${payload.settlementId}`,
+    url: `/payments/v1/payment/external/settlement-instructions/${payload.settlementId}`,
   });
 
 const updateSettlementInstructionStatusById = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
-    url: `/v1/payment/external/status/${payload.settlementId}`,
+    url: `/payments/v1/payment/external/status/${payload.settlementId}`,
     data: payload.requestPayload,
   });
 
 const getPaymentsList = () =>
   baseAxiosInstance({
     method: "GET",
-    url: "/v1/payment/list",
+    url: "/payments/v1/payment/list",
   });
 
 const getSettlementInstructionAuditDataById = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/payment/external/settlement-instructions/audit/${payload.settlementId}`,
+    url: `/payments/v1/payment/external/settlement-instructions/audit/${payload.settlementId}`,
   });
 
 const raiseBulkSettlementInstructions = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: "/v1/payment/external/bulk-settlement-instructions",
+    url: "/payments/v1/payment/external/bulk-settlement-instructions",
     data: payload.requestPayload,
   });
 
