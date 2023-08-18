@@ -35,27 +35,27 @@ const AppProviders = ({ children }) => {
   return (
     <I18nextProvider i18n={i18n}>
       <CustodyWrapperProvider>
-      <AuthProvider>
-        <UserProvider>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-              <GlobalStyles />
-              <SilverUserProvider>
-                <FeatureToggleProvider>
-                  <Suspense fallback={<h2>Loading theme...</h2>}>
-                    <CustomThemeProvider isDarkMode={isDarkMode}>
-                      <LocalizationProvider dateAdapter={AdapterMoment}>
-                        {children}
-                      </LocalizationProvider>
-                    </CustomThemeProvider>
-                  </Suspense>
-                </FeatureToggleProvider>
-                <ToastProvider />
-              </SilverUserProvider>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </UserProvider>
-      </AuthProvider>
+        <AuthProvider>
+          <UserProvider>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+                <GlobalStyles />
+                <SilverUserProvider>
+                  <FeatureToggleProvider>
+                    <Suspense fallback={<></>}>
+                      <CustomThemeProvider isDarkMode={isDarkMode}>
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                          {children}
+                        </LocalizationProvider>
+                      </CustomThemeProvider>
+                    </Suspense>
+                  </FeatureToggleProvider>
+                  <ToastProvider />
+                </SilverUserProvider>
+              </ThemeProvider>
+            </QueryClientProvider>
+          </UserProvider>
+        </AuthProvider>
       </CustodyWrapperProvider>
     </I18nextProvider>
   );

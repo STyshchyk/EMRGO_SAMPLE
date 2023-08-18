@@ -1,6 +1,12 @@
 import axios from "axios";
 
+
+
 import { baseAxiosInstance } from "./helpers";
+
+
+
+
 
 const getCashAccounts = (payload) =>
   baseAxiosInstance({
@@ -12,7 +18,7 @@ const getCashAccounts = (payload) =>
 const getCashTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/transactions?${payload.qs}`,
+    url: `/payments/v1/accounts/transactions?${payload.qs}`,
   });
 
 const getCashBalances = (payload) =>

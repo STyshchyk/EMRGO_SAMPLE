@@ -131,6 +131,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "research",
       path: constants.clientSecondariesRoutes.home,
       paths: [""],
+      disabled: true,
     },
   ];
 

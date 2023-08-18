@@ -86,7 +86,7 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
 
         const route = `${reverse(constants.clientAccountRoutes.kyc.form, {
           typeFormId: formId,
-        })}/?session=${sessionId}&redirect=${redirectPath}`;
+        })}/?session=${sessionId}&redirect=${encodeURI(redirectPath)}`;
 
         navigate(route);
       },

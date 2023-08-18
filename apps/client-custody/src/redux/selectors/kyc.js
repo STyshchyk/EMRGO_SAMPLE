@@ -1,8 +1,10 @@
 import { produce } from "immer";
 import { createSelector } from "reselect";
 
-import kycOnboardingStatusEnum from "../../constants/wethaqAPI/kycOnboardingStatusEnum";
-import { selectCurrentEntityGroup } from "./auth";
+import kycOnboardingStatusEnum, {
+  kycStatusEnum,
+} from "../../constants/wethaqAPI/kycOnboardingStatusEnum";
+import { selectAuthenticatedUserObject } from "./auth";
 
 export const selectEOIData = (state) => state.kyc.eoiData;
 
@@ -386,9 +388,8 @@ export const selectUploadStatus = (state) => state.kyc?.uploadStatus;
 export const selectUploadedFiles = (state) => state.kyc.filesUploaded;
 
 export const selectKYCApprovalStatus = createSelector(
-  [selectCurrentEntityGroup],
-  (currentEntityGroup) =>
-    currentEntityGroup?.entity?.kyc?.status === kycOnboardingStatusEnum.APPROVED
+  [selectAuthenticatedUserObject],
+  (userObject) => userObject.isVerified
 );
 
 export const selectElmUser = (state) => state.kyc.elmUser;

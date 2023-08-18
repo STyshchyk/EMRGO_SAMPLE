@@ -121,7 +121,7 @@ const AppRoutes = () => {
 
   return (
     <RouterMappingProvider>
-      <Suspense fallback={<h1>{t("translation:Miscellaneous.Loading Page")}</h1>}>
+      <Suspense fallback={<></>}>
         <MainRoutes />
       </Suspense>
     </RouterMappingProvider>

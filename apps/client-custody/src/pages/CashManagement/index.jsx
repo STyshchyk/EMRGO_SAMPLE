@@ -2,6 +2,8 @@ import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import { Box } from "@mui/material";
+
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
 import routes from "../../constants/routes";
@@ -9,13 +11,11 @@ import authorizeRouteAccess from "../../helpers/authorizeRouteAccess";
 import findTheFirstAccessibleRoutePath from "../../helpers/findTheFirstAccessibleRoutePath";
 import * as authSelectors from "../../redux/selectors/auth";
 import useIsProduction from "../../utils/useIsProduction";
-import { Box } from "@mui/material";
-
-const ManagePaymentAccountsPage = lazy(() => import("./ManagePaymentAccountsPage"));
-const CashStatementPage = lazy(() => import("./CashStatementPage"));
-const AccountTransferPage = lazy(() => import("./AccountTransferPage"));
-const PaymentInstructionsPage = lazy(() => import("./PaymentInstructionsPage"));
-const IncomingPaymentsPage = lazy(() => import("./IncomingPaymentsPage"));
+import AccountTransferPage from "./AccountTransferPage";
+import CashStatementPage from "./CashStatementPage";
+import IncomingPaymentsPage from "./IncomingPaymentsPage";
+import ManagePaymentAccountsPage from "./ManagePaymentAccountsPage";
+import PaymentInstructionsPage from "./PaymentInstructionsPage";
 
 const BillingAndPayments = () => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
@@ -59,7 +59,6 @@ const BillingAndPayments = () => {
         accessControlsList.ACCOUNT.edit.key,
       ]),
     },
-
   ];
 
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);

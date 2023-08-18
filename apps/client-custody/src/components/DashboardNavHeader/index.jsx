@@ -68,7 +68,7 @@ const securitiesServices = {
 const NavLinkList = ({routingConfigs}) => {
   const {isDarkMode} = useDarkMode();
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
-
+  
   const entityType = useSelector(authSelectors.selectCurrentEntityType);
   const {t} = useTranslation(["translation"]);
 
@@ -149,7 +149,9 @@ const DashboardNavHeader = () => {
   });
 
   const kycCustodyFilled = Array.isArray(kycCustodyForms?.forms) && kycCustodyForms.forms?.find(form => form.hasCompleted === false);
-  const displayCustody = !kycCustodyFilled && user?.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
+  // const displayCustody = !kycCustodyFilled && user?.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
+  // TODO uncomment this once KYC is fixed
+  const displayCustody = true
 
   const initialRoutingConfigs = {
     securitiesServices,

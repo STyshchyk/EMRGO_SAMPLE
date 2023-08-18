@@ -1,34 +1,26 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  Button,
-  DashboardContent,
-  QuestionnaireItem,
-  QuestionnaireItems,
-  useRefreshProfile,
-  useToast,
-  useUser
-} from "@emrgo-frontend/shared-ui";
+
+
 import * as constants from "@emrgo-frontend/constants";
 import { accountIdentification } from "@emrgo-frontend/constants";
-import { AccountPanelHeader } from "../../components/AccountPanelHeader";
-import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
-import { AccountPanel } from "../../components/AccountPanel";
-import * as Styles from "./OnboardingClient.styles";
-import { AccountPanelFooter } from "../../components/AccountPanelFooter";
+import { Button, DashboardContent, QuestionnaireItem, QuestionnaireItems, useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
+import { navigateModule } from "@emrgo-frontend/utils";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { reverse } from "named-urls";
 
 
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { AboutUs } from "../../components/AboutCustody";
-import { navigateModule } from "@emrgo-frontend/utils";
-import {baseAxiosInstance} from "../../services/wethaqAPIService/helpers";
-import {
-   fetchKYCForms, createInvestmentFormSession, submitInvestorProfileForms
-} from "../../services/KYC";
 
+import { AboutUs } from "../../components/AboutCustody";
+import { AccountPanel } from "../../components/AccountPanel";
+import { AccountPanelFooter } from "../../components/AccountPanelFooter";
+import { AccountPanelHeader } from "../../components/AccountPanelHeader";
+import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
+import { createInvestmentFormSession, fetchKYCForms, submitInvestorProfileForms } from "../../services/KYC";
+import { baseAxiosInstance } from "../../services/wethaqAPIService/helpers";
+import * as Styles from "./OnboardingClient.styles";
 
 
 
@@ -42,15 +34,13 @@ const OnboardingClient = () => {
   const { showSuccessToast } = useToast();
   const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
 
-
-
   const { data: kycForms, refetch: kycRefetch } = useQuery({
     staleTime: Infinity,
     queryKey: [constants.queryKeys.account.kyc.fetch],
     queryFn: () => fetchKYCForms(),
     enabled: true,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: false
+    refetchOnReconnect: false,
   });
 
   const { mutate: doInvestmentProfileCreateFormSession } = useMutation(createInvestmentFormSession);
@@ -60,29 +50,11 @@ const OnboardingClient = () => {
   // const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
 
-  const redirectPath = constants.clientAccountRoutes.account.platformAccess;
-
-  const onInvestmentProfileStartForm = (formId, formReferenceId) => {
-    const requestPayload = {
-      formReferenceId
-    };
-
-    doInvestmentProfileCreateFormSession(requestPayload, {
-      onSuccess: (response) => {
-        const sessionId = response.sessionId;
-
-        const route = `${reverse(constants.clientAccountRoutes.clientInvestmentProfile.form, {
-          typeFormId: formId
-        })}/?session=${sessionId}&redirect=${encodeURI(redirectPath)}`;
-
-        navigateModule("account", route);
-      }
-    });
-  };
+  const redirectPath = constants.clientCustodyRoutes.custody.onboarding.home;
 
   const onKYCStartForm = (formId, formReferenceId) => {
     const requestPayload = {
-      formReferenceId
+      formReferenceId,
     };
 
     doKYCCreateFormSession(requestPayload, {
@@ -90,25 +62,16 @@ const OnboardingClient = () => {
         const sessionId = response.sessionId;
 
         const route = `${reverse(constants.clientAccountRoutes.kyc.form, {
-          typeFormId: formId
-        })}/?session=${sessionId}&redirect=${redirectPath}`;
+          typeFormId: formId,
+        })}/?session=${sessionId}&module=custody&redirect=${redirectPath}`;
 
         navigateModule("account", route);
-      }
-    });
-  };
-
-  const onInvestmentProfileSubmit = () => {
-    doSubmitInvestmentProfile(undefined, {
-      onSuccess: (response) => {
-        // investmentProfileRefetch();
-        refreshProfile();
-      }
+      },
     });
   };
 
   const onKYCSubmit = () => {
-    navigateModule("account","thank-you");
+    navigateModule("account", "thank-you");
   };
 
   // useEffect(() => {
@@ -141,9 +104,7 @@ const OnboardingClient = () => {
       if (callbackFormId) {
         searchParams.delete("form");
         if (kycForms) {
-          const completedForm = kycForms?.forms.find(
-            (form) => form.formId === callbackFormId
-          );
+          const completedForm = kycForms?.forms.find((form) => form.formId === callbackFormId);
           showSuccessToast(`Successfully completed KYC ${completedForm?.label} form`);
 
           setTimeout(() => {
@@ -161,7 +122,6 @@ const OnboardingClient = () => {
 
   // const userProfilingQuestionnaireItems = investmentProfileFormItems || [];
   const kycQuestionnaireItems = kycFormItems || [];
-
 
   const entityKycStatus = user?.entityKycStatus;
   const clientKycStatus = user?.clientKycStatus;
@@ -181,7 +141,6 @@ const OnboardingClient = () => {
   return (
     <DashboardContent>
       <Styles.Container>
-
         <AccountPanel>
           <AccountPanelHeader>
             <AccountPanelHeaderTitle>Regulatory Onboarding</AccountPanelHeaderTitle>
@@ -223,13 +182,16 @@ const OnboardingClient = () => {
             </div>
           </AccountPanelFooter>
         </AccountPanel>
-        {isAboutCustodyDisplayed && <AboutUs onClose={() => {
-          setAboutCustodyDisplayed(false);
-        }} />}
+        {isAboutCustodyDisplayed && (
+          <AboutUs
+            onClose={() => {
+              setAboutCustodyDisplayed(false);
+            }}
+          />
+        )}
       </Styles.Container>
     </DashboardContent>
   );
 };
-
 
 export default OnboardingClient;
