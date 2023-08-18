@@ -3,7 +3,7 @@ import { baseAxiosInstance } from "./helpers";
 const getTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/transactions?${payload.qs}`,
+    url: `/payments/v1/accounts/transactions?${payload.qs}`,
   });
 
 const getAccounts = (payload) =>
@@ -23,20 +23,20 @@ const transferMoney = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload,
-    url: `/v1/accounts/transfer`,
+    url: `/payments/v1/accounts/transfer`,
   });
 
 const transferMoneyInternal = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload?.requestPayload,
-    url: `/v1/accounts/transfer/internal`,
+    url: `/payments/v1/accounts/transfer/internal`,
   });
 
 const getExternalPaymentsAuditDataById = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/payments/outgoing/instruction/audit/${payload.externalPaymentId}`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction/audit/${payload.externalPaymentId}`,
   });
 
 const billingAndPaymentsAPI = {

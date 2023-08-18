@@ -94,61 +94,61 @@ const fetchInvestorPayment = (payload) =>
 const fetchOutgoingInstructions = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/payments/outgoing/instruction`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction`,
   });
 
 const createOutgoingInstructions = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/v1/accounts/payments/outgoing/instruction`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction`,
   });
 
 const fetchUnallocatedTransactions = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/accounts/payments/incoming/unallocated`,
+    url: `/payments/v1/accounts/payments/incoming/unallocated`,
   });
 
 const updateUnallocatedTransactions = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload,
-    url: `/v1/accounts/payments/incoming/unallocated/${payload.transactionId}`,
+    url: `/payments/v1/accounts/payments/incoming/unallocated/${payload.transactionId}`,
   });
 
 const approveOutgoingPaymentByInstructionID = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/approve`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/approve`,
   });
 
 const finalizeOutgoingPaymentByInstructionID = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/finalize`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/finalize`,
   });
 
 const updateOutgoingPaymentByInstructionID = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/v1/accounts/payments/outgoing/instruction/${payload.instructionId}`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction/${payload.instructionId}`,
   });
 
 const clientAproveOutgoingPaymentByInstructionID = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/client/approve`,
+    url: `/payments/v1/accounts/payments/outgoing/instruction/${payload.instructionId}/client/approve`,
   });
 
 const fetchReconciledTransactions = () =>
   baseAxiosInstance({
     method: "GET",
-    url: "/v1/accounts/payments/incoming/transactions",
+    url: "/payments/v1/accounts/payments/incoming/transactions",
   });
 
 const accountsAPI = {
