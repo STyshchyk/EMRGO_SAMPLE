@@ -13,7 +13,7 @@ export const getOppotunities = async (): Promise<IInvestmentBank[]> => {
   //FIXME: update api path once data is available
   const promise = sharedSilverDashboardApi({
     method: "GET",
-    url: `/v1/internal/opportunities`,
+    url: `/opp/v1/internal/opportunities`,
   });
   const data = await (await promise).data.data;
   return data || [];
@@ -23,7 +23,7 @@ export const getTradeInterests = async (id: string | undefined): Promise<any> =>
   if (id === undefined) return Promise.reject();
   const promise = sharedSilverDashboardApi({
     method: "GET",
-    url: `/v1/internal/opportunities/${id}/participates`,
+    url: `/opp/v1/internal/opportunities/${id}/participates`,
   });
   return promise;
 };
@@ -31,7 +31,7 @@ export const getTradeInterests = async (id: string | undefined): Promise<any> =>
 export const postTradeInterest = async (tradeInterest: ITradeInterestPayload) => {
   return sharedSilverDashboardApi({
     method: "POST",
-    url: `/v1/internal/participating`,
+    url: `/opp/v1/internal/participating`,
     data: tradeInterest,
   });
 };
@@ -39,14 +39,14 @@ export const postTradeInterest = async (tradeInterest: ITradeInterestPayload) =>
 export const postOpportunity = (payload: IOpportunityPayload) => {
   return sharedSilverDashboardApi({
     method: "POST",
-    url: "/v1/internal/opportunities",
+    url: "/opp/v1/internal/opportunities",
     data: payload,
   });
 };
 export const updateOpportunity = (payload: IOpportunityPayload) => {
   return sharedSilverDashboardApi({
     method: "PUT",
-    url: `/v1/internal/opportunities/${payload.id}`,
+    url: `/opp/v1/internal/opportunities/${payload.id}`,
     data: payload,
   });
 };
@@ -92,7 +92,7 @@ export const postOpportunityDocument = async (document: {
   if (!document.id) return Promise.reject();
   return sharedSilverDashboardApi({
     method: "POST",
-    url: `/v1/internal/opportunities/${document.id}/documents`,
+    url: `/opp/v1/internal/opportunities/${document.id}/documents`,
     data: {
       name: document.name,
       isPublic: document.isPublic,
@@ -108,14 +108,14 @@ export const deleteOpportunityDocument = async (document: {
   if (!document.opportunityId || !document.docId) return Promise.reject();
   return sharedSilverDashboardApi({
     method: "DELETE",
-    url: `/v1/internal/opportunities/${document.opportunityId}/documents/${document.docId}`,
+    url: `/opp/v1/internal/opportunities/${document.opportunityId}/documents/${document.docId}`,
   });
 };
 
 export const getOpportunityDocuments = async (id: string): Promise<IOppotunityDocument[]> => {
   const promise = sharedSilverDashboardApi({
     method: "GET",
-    url: `/v1/internal/opportunities/${id}/documents`,
+    url: `/opp/v1/internal/opportunities/${id}/documents`,
   });
   const res = await (await promise).data.data;
   return res || [];
@@ -124,6 +124,6 @@ export const getOpportunityDocuments = async (id: string): Promise<IOppotunityDo
 export const showOpportunity = (payload: IShownStatus) => {
   return sharedSilverDashboardApi({
     method: "PATCH",
-    url: `/v1/internal/opportunities/${payload.id}/${payload.status}`,
+    url: `/opp/v1/internal/opportunities/${payload.id}/${payload.status}`,
   });
 };

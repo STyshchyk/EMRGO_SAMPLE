@@ -29,7 +29,7 @@ export const getOppotunities = async (): Promise<any[]> => {
   //FIXME: update api path once data is available
   const promise = dashboardApi({
     method: "GET",
-    url: `/v1/internal/opportunities`,
+    url: `/opp/v1/internal/opportunities`,
   });
   const data = await (await promise).data.data;
   return data || [];
@@ -51,7 +51,7 @@ export const postOpportunityDocument = async (document: {
   if (!document.id) return Promise.reject();
   return dashboardApi({
     method: "POST",
-    url: `/v1/internal/opportunities/${document.id}/documents`,
+    url: `/opp/v1/internal/opportunities/${document.id}/documents`,
     data: {
       name: document.name,
       isPublic: document.isPublic,
@@ -67,6 +67,6 @@ export const deleteOpportunityDocument = async (document: {
   if (!document.opportunityId || !document.docId) return Promise.reject();
   return dashboardApi({
     method: "DELETE",
-    url: `/v1/internal/opportunities/${document.opportunityId}/documents/${document.docId}`,
+    url: `/opp/v1/internal/opportunities/${document.opportunityId}/documents/${document.docId}`,
   });
 };
