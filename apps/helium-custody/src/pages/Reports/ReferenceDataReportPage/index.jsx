@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+  import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
@@ -309,7 +309,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="w-full">
+          <Box my={1} className="w-full" sx={{width: "100%"}}>
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect
@@ -337,7 +337,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="w-full">
+          <Box my={1} className="w-full" sx={{width: "100%"}}>
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect

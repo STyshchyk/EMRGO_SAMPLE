@@ -81,7 +81,7 @@ const DropdownFilter = ({ name, label, customOnChange, options, defaultFilter, i
         </ButtonBase>
       </Grid>
 
-      <Box my={1} className="w-full">
+      <Box my={1} className="w-full" sx={{width: "100%"}}>
         <Select
           closeMenuOnSelect
           fullWidth

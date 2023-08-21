@@ -653,7 +653,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full">
+                        <Box my={1} className="w-full" sx={{width: "100%"}}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -701,7 +701,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full">
+                        <Box my={1} className="w-full" sx={{width: "100%"}}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -735,7 +735,7 @@ const SecuritiesTransactionsReportPage = () => {
                           </FormControl>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={3} container>
+                      <Grid item xs={12} md={6} lg={3} container >
                         <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
                           setFieldValue("security", newValue)
                         }}
@@ -757,7 +757,7 @@ const SecuritiesTransactionsReportPage = () => {
                               .
                             </Typography>
                           </Grid>
-                          <Box my={1} className="w-full">
+                          <Box my={1} className="w-full" sx={{width: "100%"}}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -826,7 +826,7 @@ const SecuritiesTransactionsReportPage = () => {
                             </Typography>
                           </Grid>
 
-                          <Box my={1} className="w-full">
+                          <Box my={1} className="w-full" sx={{width: "100%"}}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
