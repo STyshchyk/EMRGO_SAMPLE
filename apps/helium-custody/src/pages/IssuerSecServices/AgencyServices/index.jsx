@@ -32,7 +32,7 @@ const AgencyServices = () => {
   const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
 
   const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
-  const couponPaymentScheduleId = allCouponPaymentSchedules.find(
+  const couponPaymentScheduleId = allCouponPaymentSchedules && allCouponPaymentSchedules.find(
     (item) => item?.externalSecuritiesId === currentlySelectedRowData?.externalSecuritiesId
   )?.id;
 
