@@ -54,7 +54,7 @@ const SecuritiesTransactionsReportPage = () => {
   // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "filters"]);
+  const { t } = useTranslation(["reports"]);
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
