@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import { capitalCase } from "change-case";
 import moment from "moment";
 
-import { currencyRenderer, reportDateRenderer } from "../../constants/renderers";
+import { accountTypeRenderer, currencyRenderer, reportDateRenderer } from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
@@ -225,7 +225,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       title: t("Cash Balances.Headers.Account Type"),
       field: "accountType",
       render: (rowData) => capitalCase(rowData.accountType),
-      exportConfig: { render: (rowData) => capitalCase(rowData.accountType), width: 20 },
+      exportConfig: { render: (rowData) => accountTypeRenderer(rowData.accountType), width: 20 },
     },
     {
       id: "lastMovement",
