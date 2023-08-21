@@ -519,7 +519,7 @@ const RaiseSettlementInstructionForm = ({
                 fullWidth
                 inputVariant="filled"
                 label={DEFAULT_DATE_FORMAT}
-                minDate={values.tradeDate}
+                minDate={moment(values.tradeDate)}
                 name="settlementDate"
                 variant="dialog"
                 disabled={!values.tradeDate}
