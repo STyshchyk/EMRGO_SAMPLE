@@ -6,14 +6,14 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   externalSecuritySelectOption: Yup.object().required(),
   price: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: Yup.string(),
-    otherwise: Yup.string().required(),
+    then: () => Yup.string(),
+    otherwise: () => Yup.string().required(),
   }),
   quantity: Yup.string().required(),
   settlementAmount: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: Yup.string(),
-    otherwise: Yup.string().required(),
+    then: () => Yup.string(),
+    otherwise: () => Yup.string().required(),
   }),
   settlementDate: Yup.date().nullable().required("Settlement date is required"),
   settlementTypeSelectOption: Yup.object().required(),
@@ -22,13 +22,13 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   internalTradeRef: Yup.string().nullable(),
   principalAmount: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: Yup.string(),
-    otherwise: Yup.string().required(),
+    then: () => Yup.string(),
+    otherwise: () => Yup.string().required(),
   }),
   accruedInterest: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: Yup.string(),
-    otherwise: Yup.string().required(),
+    then: () => Yup.string(),
+    otherwise: () => Yup.string().required(),
   }),
 });
 
