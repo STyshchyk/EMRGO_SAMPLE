@@ -333,7 +333,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.entity}
+                  disabled={(filters) => !(filters.entity || filters.securityAccount)}
                 />
               </Grid>
               <Grid item xs={12} lg={2} container></Grid>

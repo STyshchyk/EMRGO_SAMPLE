@@ -45,11 +45,12 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         <Typography className={classes.accountInfoLabel}>
           {t("Cash Balances.Address")} :{" "}
         </Typography>
-        <Typography className={classes.accountInfoValue}>{`${
+        {/* TODO: Need to uncomment when address data is available */}
+        {/* <Typography className={classes.accountInfoValue}>{`${
           securityAccount?.data?.original?.group?.addresses
             ? formatAddress(securityAccount?.data?.original?.group?.addresses)
             : t("Cash Balances.NA")
-        }`}</Typography>
+        }`}</Typography> */}
       </Grid>
     </Root>
   );
