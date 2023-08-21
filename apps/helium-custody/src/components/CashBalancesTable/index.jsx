@@ -46,7 +46,6 @@ const CashBalancesTable = ({ data, accounts }) => {
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
-  console.log(data, "data");
 
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
@@ -371,7 +370,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
-                <DatePicker name="date" label="Date" defaultFilter={moment()} />
+                <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()}/>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
