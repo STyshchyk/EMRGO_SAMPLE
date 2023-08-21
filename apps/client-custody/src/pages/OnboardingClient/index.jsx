@@ -30,6 +30,8 @@ import {
   submitCustodyKYCForms,
 } from "../../services/KYC";
 import * as Styles from "./OnboardingClient.styles";
+import { Spinner } from "@react-pdf-viewer/core";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 const OnboardingClient = () => {
   const dispatch = useDispatch();
@@ -40,7 +42,6 @@ const OnboardingClient = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
   const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
-
   const { data: kycForms, refetch: kycRefetch } = useQuery({
     staleTime: Infinity,
     queryKey: [constants.queryKeys.account.kyc.fetch],
@@ -150,7 +151,7 @@ const OnboardingClient = () => {
   const firstKYCIncompleteForm = kycQuestionnaireItems?.find((form) => form.hasCompleted === false);
 
   const areAllKYCSectionsComplete = kycQuestionnaireItems?.every((form) => form.hasCompleted);
-
+  if (!user)return <LoadingIndicator height={100}/>
   return (
     <DashboardContent>
       <Styles.Container>
@@ -172,7 +173,7 @@ const OnboardingClient = () => {
             </QuestionnaireItems>
           </Styles.QuestionnairePanelContent>
           <AccountPanelFooter>
-            {user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_PENDING && (
+            {user?.entityCustodyKycStatus === accountIdentification?.KYC_STATUS_PENDING && (
               <div>
                 {!areAllKYCSectionsComplete && (
                   <Button
