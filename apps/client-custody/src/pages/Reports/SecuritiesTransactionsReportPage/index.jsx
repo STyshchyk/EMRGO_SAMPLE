@@ -724,10 +724,9 @@ const SecuritiesTransactionsReportPage = () => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter
-                          name="security"
-                          label="Security"
-                          options={uniqueSecurities}
+                        <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
+                          setFieldValue("security", newValue)
+                        }}
                         />
                       </Grid>
 
