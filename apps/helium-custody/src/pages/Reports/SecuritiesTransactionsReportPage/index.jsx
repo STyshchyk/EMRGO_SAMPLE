@@ -277,8 +277,8 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => console.log(rowData, 'ROW'),
       // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
-        rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
-      exportConfig: { render: (rowData) => dateRenderer(rowData?.settleDate) },
+        rowData?.settlementInsSettlementDate ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+      exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
     },
   ];
 
@@ -480,7 +480,7 @@ const SecuritiesTransactionsReportPage = () => {
                 {
                   label: "Address",
                   value: values?.securityAccount?.data?.original
-                    ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
+                    ? null
                     : null,
                 },
               ];
@@ -881,7 +881,7 @@ const SecuritiesTransactionsReportPage = () => {
                       </Typography>
                       <Typography className={style.accountInfo__value}>{`${
                         values.securityAccount?.data?.original?.group?.addresses
-                          ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
+                          ? null
                           : t("Cash Statement.NA")
                       }`}</Typography>
                     </Grid>
