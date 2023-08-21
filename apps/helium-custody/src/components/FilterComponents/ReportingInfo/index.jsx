@@ -47,7 +47,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         </Typography>
         <Typography className={classes.accountInfoValue}>{`${
           securityAccount?.data?.original?.group?.addresses
-            ? formatAddress(securityAccount?.data?.original?.group?.addresses)
+            ? null
             : t("Cash Balances.NA")
         }`}</Typography>
       </Grid>
