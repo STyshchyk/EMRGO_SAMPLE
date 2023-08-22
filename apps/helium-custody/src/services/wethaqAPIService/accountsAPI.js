@@ -75,7 +75,7 @@ const uploadAccountFile = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload.requestPayload,
-    url: `/v1/files`,
+    url: `/files/v1/files`,
   });
 
 const updateInvestorPayment = (payload) =>
