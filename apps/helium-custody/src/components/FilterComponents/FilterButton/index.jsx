@@ -9,7 +9,6 @@ const FilterButton = ({ onClick, label, disabled }) => {
 
   const filterContext = useFilters();
   const { filters } = filterContext;
-
   const isDisabledAFunction = typeof disabled === "function";
 
   return (
