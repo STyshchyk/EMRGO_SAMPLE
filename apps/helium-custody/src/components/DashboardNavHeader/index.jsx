@@ -141,7 +141,10 @@ const DashboardNavHeader = () => {
     securitiesAdmin: isIntlSecTradeSettlementWorkflow ? securitiesAdmin : undefined,
     reports,
   };
-
+  console.log(
+    "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
+    RoutingConfigs, isIntlSecTradeSettlementWorkflow
+  );
   return (
     <Fragment>
       {kycApprovalStatus ? (

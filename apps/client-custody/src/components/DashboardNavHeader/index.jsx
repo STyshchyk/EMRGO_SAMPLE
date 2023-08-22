@@ -184,7 +184,10 @@ const DashboardNavHeader = () => {
       : undefined,
     reports: displayCustody ? reports : undefined,
   };
-
+  console.log(
+    "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
+    RoutingConfigs, displayCustody,  isIntlSecTradeSettlementWorkflow
+  );
   return (
     <Fragment>
       {kycApprovalStatus ? (
