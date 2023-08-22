@@ -10,14 +10,14 @@ const upload2faVerificationFile = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload.requestPayload,
-    url: `/v1/files/upload/supportTicket/link`,
+    url: `/files//v1/files/upload/supportTicket/link`,
   });
 
 const fetchTFAVerificationDocument = (payload) =>
   baseAxiosInstance({
     method: "PUT",
     data: payload,
-    url: `/v1/files/view`,
+    url: `/files//v1/files/view`,
   });
 
 const createTFATicket = (payload) =>

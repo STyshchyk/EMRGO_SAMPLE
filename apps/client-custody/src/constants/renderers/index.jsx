@@ -63,6 +63,11 @@ export const reportDateRenderer = (date) => {
   return formattedDate;
 };
 
+export const accountTypeRenderer = (value) => {
+  const accountType =  value == '-' ? '-' : capitalCase(value) || ""
+  return accountType;
+};
+
 export const currencyRenderer = (value) =>
   new Intl.NumberFormat("en", {
     minimumFractionDigits: 2,

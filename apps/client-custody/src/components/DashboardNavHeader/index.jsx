@@ -18,6 +18,7 @@ import * as kycSelectors from "../../redux/selectors/kyc";
 import { fetchKYCForms } from "../../services/KYC";
 import style from "./style.module.scss";
 
+
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
   baseURLPattern: /(?:\/dashboard\/custody\/cash-management\/)(?:[\w-/]*)/,
@@ -184,7 +185,10 @@ const DashboardNavHeader = () => {
       : undefined,
     reports: displayCustody ? reports : undefined,
   };
-
+  console.log(
+    "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
+    RoutingConfigs, displayCustody,  isIntlSecTradeSettlementWorkflow, checkFeatureFlag, securitiesServices
+  );
   return (
     <Fragment>
       {kycApprovalStatus ? (

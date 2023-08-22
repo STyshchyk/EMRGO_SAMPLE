@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState,forwardRef } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 import { Select } from "@emrgo-frontend/shared-ui";
@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import PropTypes from "prop-types";
+import moment from "moment"
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import * as authSelectors from "../../redux/selectors/auth";
@@ -57,14 +58,15 @@ const baseSelectProps = {
   styles: baseSelectStyles,
 };
 
-const CustomCurrencyInputField = (props) => {
-  const { inputRef, onChange, decimals = 2, ...other } = props;
+const CustomCurrencyInputField = forwardRef((props,ref) => {
+  console.log(props)
+  const {onChange, decimals = 2, ...other } = props;
   const { setFieldTouched } = useFormikContext();
 
   return (
     <NumericFormat
       {...other}
-      getInputRef={inputRef}
+      getInputRef={ref}
       onValueChange={(values) => {
         onChange({
           target: {
@@ -78,7 +80,7 @@ const CustomCurrencyInputField = (props) => {
       decimalScale={decimals}
     />
   );
-};
+});
 
 CustomCurrencyInputField.propTypes = {
   inputRef: PropTypes.func,
@@ -86,13 +88,14 @@ CustomCurrencyInputField.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const CustomNumberInputField = (props) => {
-  const { inputRef, onChange, ...other } = props;
+const CustomNumberInputField = forwardRef(
+  ( props , ref) => {
+  const {onChange, ...other } = props;
   const { setFieldTouched } = useFormikContext();
   return (
     <NumericFormat
       {...other}
-      getInputRef={inputRef}
+      getInputRef={ref}
       onValueChange={(values) => {
         onChange({
           target: {
@@ -106,10 +109,10 @@ const CustomNumberInputField = (props) => {
       decimalScale={0}
     />
   );
-};
+});
 
 CustomNumberInputField.propTypes = {
-  inputRef: PropTypes.func.isRequired,
+  inputRef: PropTypes.func,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
@@ -238,9 +241,9 @@ export const generateExternalSecurityOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
       .filter((item) => item?.assetTypeName?.name !== "Equity")
-      .filter((item) => item?.isin)
+      .filter((item) => item?.longName)
       .map((item) => ({
-        label: item.isin,
+        label: item.longName,
         value: item,
       }));
   }
@@ -329,6 +332,7 @@ const RaiseSettlementInstructionForm = ({
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  console.log(currentEntityGroup);
   const currentEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityType === "EMRGO_SERVICES";
   const [selectedEntityOption, setSelectedEntityOption] = useState(null);
@@ -411,7 +415,7 @@ const RaiseSettlementInstructionForm = ({
                   name="entity"
                   variant="filled"
                   type="text"
-                  value={values?.entityGroup?.entity?.corporateEntityName || "N/A"}
+                  value={values?.entityGroup?.entity?.corporateEntityName || currentEntityGroup?.entity?.corporateEntityName}
                   disabled
                 />
               </InlineFormField>
@@ -429,10 +433,10 @@ const RaiseSettlementInstructionForm = ({
               />
             </InlineFormField>
 
-            <InlineFormField label="ISIN">
+            <InlineFormField label="Security">
               <Select
                 {...baseSelectProps}
-                placeholder={"Select ISIN"}
+                placeholder={"Select Security"}
                 value={values.externalSecuritySelectOption}
                 options={externalSecurityOptionsList}
                 onChange={(newValue, triggeredAction) => {
@@ -462,16 +466,16 @@ const RaiseSettlementInstructionForm = ({
               </Grid>
             )}
 
-            <InlineFormField label={"Security"}>
+            <InlineFormField label={"ISIN"}>
               <Field
                 className={classes.input}
                 fullWidth
                 component={CustomTextField}
-                label="Security"
-                name="security"
+                label="ISIN"
+                name="isin"
                 variant="filled"
                 type="text"
-                value={values.externalSecuritySelectOption?.value?.shortName ?? ""}
+                value={values.externalSecuritySelectOption?.value?.isin ?? ""}
                 disabled
               />
             </InlineFormField>
@@ -499,6 +503,7 @@ const RaiseSettlementInstructionForm = ({
                 fullWidth
                 inputVariant="filled"
                 label={DEFAULT_DATE_FORMAT}
+                minDate={moment()}
                 name="tradeDate"
                 variant="dialog"
               />
@@ -514,7 +519,7 @@ const RaiseSettlementInstructionForm = ({
                 fullWidth
                 inputVariant="filled"
                 label={DEFAULT_DATE_FORMAT}
-                minDate={values.tradeDate}
+                minDate={moment(values.tradeDate)}
                 name="settlementDate"
                 variant="dialog"
                 disabled={!values.tradeDate}

@@ -9,7 +9,7 @@ export const getUsers = (payload) =>
 export const getUploadLink = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: `/v1/files/upload/link`,
+    url: `/files//v1/files/upload/link`,
     data: payload,
   });
 

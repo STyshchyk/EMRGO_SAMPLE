@@ -37,7 +37,7 @@ export const doGetSellside = (requestData: ISellside) => {
 export const doGetCurrencies = async (types: string): Promise<ICurrency[]> => {
   const response = dashboardApi({
     method: "GET",
-    url: `v1/dropdown`,
+    url: `dropdown/v1/dropdown`,
     params: {
       types: types,
     },
