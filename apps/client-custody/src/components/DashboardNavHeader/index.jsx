@@ -17,6 +17,7 @@ import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import { fetchKYCForms } from "../../services/KYC";
 import style from "./style.module.scss";
+import appConfig from "../../../../helium-custody/src/appConfig";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -186,7 +187,7 @@ const DashboardNavHeader = () => {
   };
   console.log(
     "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
-    RoutingConfigs, displayCustody,  isIntlSecTradeSettlementWorkflow
+    RoutingConfigs, displayCustody,  isIntlSecTradeSettlementWorkflow, checkFeatureFlag, appConfig.featureFlags, securitiesServices
   );
   return (
     <Fragment>

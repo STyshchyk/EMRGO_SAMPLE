@@ -11,6 +11,7 @@ import { useFeatureToggle } from "../../context/feature-toggle-context";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import style from "./style.module.scss";
+import appConfig from "../../appConfig";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -143,7 +144,7 @@ const DashboardNavHeader = () => {
   };
   console.log(
     "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
-    RoutingConfigs, isIntlSecTradeSettlementWorkflow
+    RoutingConfigs, isIntlSecTradeSettlementWorkflow, appConfig.featureFlags, securitiesServices
   );
   return (
     <Fragment>

@@ -7,7 +7,7 @@ const parseFeatureFlags = (value) => {
 };
 
 const generateAppConfig = (environment) => ({
-  appENV: "local",
+  appENV: environment.VITE_APP_ENV,
   appRegion: environment.VITE_APP_REGION,
   baseAPIURL: environment.VITE_API_URL,
   appEnable2FA: environment.VITE_APP_ENABLE_2FA,
