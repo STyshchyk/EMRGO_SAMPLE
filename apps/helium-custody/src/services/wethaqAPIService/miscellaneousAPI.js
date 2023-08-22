@@ -3,7 +3,7 @@ import { baseAxiosInstance } from "./helpers";
 export const fetchDocumentLink = (payload) =>
   baseAxiosInstance({
     method: "PUT",
-    url: `/v1/files`,
+    url: `/files/v1/files`,
     data: payload.params,
   });
 

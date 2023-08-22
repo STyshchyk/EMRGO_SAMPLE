@@ -13,7 +13,7 @@ const QUERY_KEY = [queryKeys.miscelleneous.dropdowns.fetch];
 const fetchDropdowns = async (params: IFetchDropdownsQueryParams): Promise<IDropdownsResponse> => {
   const { data } = await sharedDashboardApi({
     method: "get",
-    url: `v1/dropdown`,
+    url: `dropdown/v1/dropdown`,
     params: {
       types: JSON.stringify(params.types),
     },
