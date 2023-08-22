@@ -10,7 +10,7 @@ const uploadBulletinFile = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload.requestPayload,
-    url: `/v1/files/upload/link`,
+    url: `/files//v1/files/upload/link`,
   });
 
 const createBulletin = (payload) =>
@@ -31,7 +31,7 @@ const fetchBulletinDocument = (payload) =>
   baseAxiosInstance({
     method: "PUT",
     data: payload,
-    url: `/v1/files/view`,
+    url: `/files//v1/files/view`,
   });
 
 const updateBulletin = (payload) =>
