@@ -370,7 +370,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
-                <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()}/>
+                <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()} disableClear/>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
