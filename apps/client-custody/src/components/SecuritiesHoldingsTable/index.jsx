@@ -262,7 +262,7 @@ const SecuritiesHoldingsTable = ({
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
-                  <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()}/>
+                  <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()} disableClear/>
                 )}
               </Grid>
               <Grid item container xs={12} md={6} lg={3} alignItems="center">
