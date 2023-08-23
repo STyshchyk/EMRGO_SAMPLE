@@ -16,6 +16,7 @@ const AutoSaveFields = ({ selectedRow, initial, formKey }) => {
         {
           key: formKey,
           value: JSON.stringify(value),
+          isActive:true,
         },
       ],
     };

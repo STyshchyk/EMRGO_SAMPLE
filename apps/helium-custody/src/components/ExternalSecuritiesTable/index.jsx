@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -236,9 +237,6 @@ const ExternalSecuritiesTable = ({
   const mtableLocalization = useMaterialTableLocalization();
   const [isinFilterValue, setISINFilterValue] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
-
-  const [dateFilterValue, setDateFilterValue] = useState("");
-
   const sortedISIN = Array.from(new Set(data.map((item) => item.isin))).sort();
   const isinOptionsList = sortedISIN.map((isin) => ({
     label: isin,
@@ -273,7 +271,10 @@ const ExternalSecuritiesTable = ({
       render: (rowData) => rowData?.isin ?? FALLBACK_VALUE,
       sorting: false,
       defaultFilter: isinFilterValue,
-      customFilterAndSearch: (term, rowData) => term === rowData?.isin,
+      customFilterAndSearch: (term, rowData) => {
+        if(!term) return true
+        return term === rowData?.isin
+      },
     },
     {
       id: "wsn",
@@ -326,9 +327,6 @@ const ExternalSecuritiesTable = ({
       id: "maturityDate",
       title: t("External Securities.Headers.Maturity Date"),
       field: "maturityDate",
-      defaultFilter: dateFilterValue,
-      customFilterAndSearch: (term, rowData) =>
-        term === dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT),
       render: (rowData) => dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT),
     },
     {
@@ -362,7 +360,10 @@ const ExternalSecuritiesTable = ({
       render: (rowData) => rowData?.status,
       sorting: false,
       defaultFilter: statusFilterValue,
-      customFilterAndSearch: (term, rowData) => term === rowData?.status,
+      customFilterAndSearch: (term, rowData) => {
+        if(!term) return true
+        return term === rowData?.status
+      },
     },
   ];
 
@@ -451,7 +452,7 @@ const ExternalSecuritiesTable = ({
         data={data}
         actions={[
           {
-            icon: "more_vert",
+            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
             onClick: (event, rowData) => {
               setAnchorEl(event.currentTarget);
               setCurrentlySelectedRowData(rowData);
