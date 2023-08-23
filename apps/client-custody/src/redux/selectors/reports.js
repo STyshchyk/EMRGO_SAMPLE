@@ -28,7 +28,7 @@ export const selectCashTransactions = createSelector(
           finalData.push(tr);
         });
       });
-      return finalData;
+      return transactionsData;
     }
     return [];
   }
