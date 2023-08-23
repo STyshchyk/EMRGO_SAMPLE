@@ -21,6 +21,7 @@ import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 import ExportTableContent from "../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const generateCounterpartyTableRowData = (i) => ({
   id: i.id, // counterparty row id
@@ -224,7 +225,7 @@ const CounterpartyTable = ({
                   data={filteredData}
                   actions={[
                     {
-                      icon: "more_vert",
+                      icon: () => <MoreVertIcon  />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
                         setCurrentlySelectedRowData(rowData);
