@@ -339,7 +339,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     <Grid item>
                       <Button
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         onClick={() => setOpenRealtimeSecuritySearchDialog(true)}
                       >
                         <Typography variant="caption">Security lookup</Typography>

@@ -27,6 +27,7 @@ import * as authSelectors from "../../../redux/selectors/auth";
 import * as billingAndPaymentsSelectors from "../../../redux/selectors/cashManagement";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
+import moment from "moment";
 
 const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
 
@@ -223,7 +224,7 @@ const CashStatementPage = () => {
       field: "debit",
       render: (rowData) => currencyRenderer(rowData.debit),
       exportConfig: {
-        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.debit) : "--"),
+        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.debit) : "-"),
         align: "right",
       },
       // type: 'numeric',
@@ -234,7 +235,7 @@ const CashStatementPage = () => {
       field: "credit",
       render: (rowData) => currencyRenderer(rowData.credit),
       exportConfig: {
-        render: (rowData) => (rowData.credit !== "-" ? currencyRenderer(rowData.credit) : "--"),
+        render: (rowData) => (rowData.credit !== "-" ? currencyRenderer(rowData.credit) : "-"),
         align: "right",
       },
       // type: 'numeric',
@@ -447,7 +448,7 @@ const CashStatementPage = () => {
               <Box mt={4} mb={1}>
                 <Button
                   fullWidth
-                  disabled={accountFilterValue === null}
+                  disabled={currentlySelectedAccount === null}
                   variant="contained"
                   color="primary"
                   onClick={() => handleFilter()}
@@ -481,6 +482,7 @@ const CashStatementPage = () => {
                 defaultFilter="none"
                 setStartDateValue={setStartDateValue}
                 setEndDateValue={setEndDateValue}
+                maxDate={moment()}
               />
             </Grid>
             {/* 

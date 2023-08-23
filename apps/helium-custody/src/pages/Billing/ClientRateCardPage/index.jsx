@@ -150,7 +150,7 @@ const ClientRateCardPage = () => {
         <Grid item xs={2} container justifyContent="flex-end">
           <Grid item container direction="column" justifyContent="center">
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => {
                 addClientRateCardDialog(true);

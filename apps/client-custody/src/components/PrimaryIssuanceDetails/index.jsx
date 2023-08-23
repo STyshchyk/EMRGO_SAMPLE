@@ -222,7 +222,7 @@ const IssuanceTerms = () => {
       </Typography>
       <Grid container justifyContent="space-between">
         <Grid item>
-          <Button color="secondary" size="small">
+          <Button color="primary" size="small">
             {t("admission:Accordian.Issuance Terms.Buttons.Notify Legal Counsel")}
           </Button>
         </Grid>

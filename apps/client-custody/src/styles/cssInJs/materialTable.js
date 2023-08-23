@@ -6,7 +6,6 @@ const tableStyles = {
     textAlign: "left !important",
   },
   rowStyle: {
-    color: "#000000DE",
     fontSize: "0.875rem",
   },
   cellStyle: {

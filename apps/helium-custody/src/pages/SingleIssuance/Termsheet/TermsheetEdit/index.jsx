@@ -235,7 +235,7 @@ const TermsheetEdit = () => {
                         isFetchingTermsheetData || arrangerPublished || arrangerReviewRequired
                       }
                       variant="outlined"
-                      color="secondary"
+                      color="primary"
                       type="submit"
                       className={style.button}
                       onClick={() => setFieldValue("markAsPublished", false)}
@@ -251,7 +251,7 @@ const TermsheetEdit = () => {
                       id="review-button"
                       disabled={!legalCounselPublished}
                       variant="outlined"
-                      color="secondary"
+                      color="primary"
                       onClick={handleReview}
                     >
                       {t("termsheet:Send for Review")}
@@ -265,7 +265,7 @@ const TermsheetEdit = () => {
                       id="publish-button"
                       disabled={disablePublishButton()}
                       variant="outlined"
-                      color="secondary"
+                      color="primary"
                       type="submit"
                       className={style.button}
                       onClick={() => setFieldValue("markAsPublished", true)}

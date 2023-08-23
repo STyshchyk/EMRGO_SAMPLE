@@ -256,7 +256,7 @@ const CounterpartySSITable = ({
         <Grid alignItems="center" justifyContent="flex-end" item container md={12}>
           <Grid item>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => {
                 setOpenDialog(true);

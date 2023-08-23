@@ -417,7 +417,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                               <Grid item xs={1} md={1}>
                                 <IconButton
                                   disabled={!selectedSecurityIdentifierTypeOption}
-                                  color="secondary"
+                                  color="primary"
                                   variant="contained"
                                   onClick={() => {
                                     setSelectedSecurityIdentifierTypeOption(null);
@@ -455,7 +455,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                                     </Grid>
                                     <Grid item xs={1} md={1}>
                                       <IconButton
-                                        color="secondary"
+                                        color="primary"
                                         variant="contained"
                                         onClick={() => remove(index)}
                                         size="large"

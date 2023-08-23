@@ -106,7 +106,7 @@ const AccountTransferPage = () => {
 
   return (
     <Fragment>
-      <PageTitle title={t("cash_management:Internal Transfer.Internal Transfer")} />
+      <PageTitle title={t("Internal Transfer.Internal Transfer")} />
       <Formik
         initialValues={{
           date: formattedDate,
@@ -272,7 +272,7 @@ const AccountTransferPage = () => {
               <Grid container direction="column" spacing={2}>
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>{t("cash_management:Internal Transfer.Date")}</Typography>
+                    <Typography>{t("Internal Transfer.Date")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography>{values.date}</Typography>
@@ -282,7 +282,7 @@ const AccountTransferPage = () => {
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
                     <Typography>
-                      {t("cash_management:Internal Transfer.Source Account Owner")}
+                      {t("Internal Transfer.Source Account Owner")}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -307,7 +307,7 @@ const AccountTransferPage = () => {
 
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>{t("cash_management:Internal Transfer.Source Account")}</Typography>
+                    <Typography>{t("Internal Transfer.Source Account")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl className={style.input__form_control}>
@@ -343,7 +343,7 @@ const AccountTransferPage = () => {
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
                     <Typography>
-                      {t("cash_management:Internal Transfer.Destination Account Owner")}
+                      {t("Internal Transfer.Destination Account Owner")}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -370,7 +370,7 @@ const AccountTransferPage = () => {
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
                     <Typography>
-                      {t("cash_management:Internal Transfer.Destination Account")}
+                      {t("Internal Transfer.Destination Account")}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -406,7 +406,7 @@ const AccountTransferPage = () => {
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
                     <Typography>
-                      {t("cash_management:Internal Transfer.Transfer Amount")}
+                      {t("Internal Transfer.Transfer Amount")}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -431,7 +431,7 @@ const AccountTransferPage = () => {
                 </Grid>
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>{t("cash_management:Internal Transfer.Description")}</Typography>
+                    <Typography>{t("Internal Transfer.Description")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Field
@@ -457,7 +457,7 @@ const AccountTransferPage = () => {
                     variant="contained"
                     color="primary"
                   >
-                    {t("cash_management:Internal Transfer.Initiate Transfer")}
+                    {t("Internal Transfer.Initiate Transfer")}
                   </Button>
                 </Grid>
               </Grid>

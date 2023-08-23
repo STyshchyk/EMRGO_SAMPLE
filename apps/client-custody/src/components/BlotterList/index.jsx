@@ -531,7 +531,7 @@ const BlotterList = ({
             startIcon={<AddIcon />}
             fullWidth
             variant="outlined"
-            color="secondary"
+            color="primary"
           >
             {t("blotter:Add Blotter")}
           </Button>

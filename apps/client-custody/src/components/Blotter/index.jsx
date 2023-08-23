@@ -779,19 +779,19 @@ const Blotter = ({
                       <div>
                         <ButtonGroup
                           variant="outlined"
-                          color="secondary"
+                          color="primary"
                           ref={anchorRef}
                           aria-label="split button"
                         >
                           <Button
                             variant="outlined"
                             startIcon={<ViewColumnIcon />}
-                            color="secondary"
+                            color="primary"
                             onClick={() => selectDefaultColumns()}
                           >
                             {t("blotter:Manage Columns")}
                           </Button>
-                          {/* <Button variant="outlined" color="secondary" size="small" aria-label="select merge strategy" aria-haspopup="menu" onClick={handleViewMenuToggle}>
+                          {/* <Button variant="outlined" color="primary" size="small" aria-label="select merge strategy" aria-haspopup="menu" onClick={handleViewMenuToggle}>
                               <KeyboardArrowDownIcon />
                             </Button> */}
                         </ButtonGroup>
@@ -1261,7 +1261,7 @@ const Blotter = ({
                                         onDelete={(e) =>
                                           handleRemoveCountrySelection(e, data.value)
                                         }
-                                        color="secondary"
+                                        color="primary"
                                       />
                                     ),
                                   }}
@@ -1320,7 +1320,7 @@ const Blotter = ({
                                         onDelete={(e) =>
                                           handleRemoveCurrencySelection(e, data.value)
                                         }
-                                        color="secondary"
+                                        color="primary"
                                       />
                                     ),
                                   }}
@@ -1453,7 +1453,7 @@ const Blotter = ({
                                 }}
                                 size="large"
                               >
-                                <ArrowForwardIcon color="secondary" fontSize="small" />
+                                <ArrowForwardIcon color="primary" fontSize="small" />
                               </IconButton>
                             </Tooltip>
                           </Grid>
@@ -1543,7 +1543,7 @@ const Blotter = ({
                                 }}
                                 size="large"
                               >
-                                <ArrowBackIcon color="secondary" fontSize="small" />
+                                <ArrowBackIcon color="primary" fontSize="small" />
                               </IconButton>
                             </Tooltip>
                             <Grid
