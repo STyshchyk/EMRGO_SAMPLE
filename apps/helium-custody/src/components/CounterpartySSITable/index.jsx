@@ -6,6 +6,7 @@ import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { capitalCase } from "change-case";
 import PropTypes from "prop-types";
 
@@ -25,6 +26,7 @@ import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 import ExportTableContent from "../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
+
 
 const generateCounterpartySSITableRowData = (i) => ({
   id: i.id,
@@ -81,14 +83,20 @@ const CounterpartySSITable = ({
       title: t("Counterparty SSI.Headers.Entity"),
       field: "entity",
       defaultFilter: entityFilterValue,
-      customFilterAndSearch: (term, rowData) => term === rowData?.entity,
+      customFilterAndSearch: (term, rowData) => {
+        if(!term) return true
+        return term === rowData?.entity
+      },
     },
     {
       id: "counterparty",
       title: t("Counterparty SSI.Headers.Counterparty"),
       field: "counterparty",
       defaultFilter: counterpartyFilterValue,
-      customFilterAndSearch: (term, rowData) => term === rowData?.counterparty,
+      customFilterAndSearch: (term, rowData) => {
+        if(!term) return true
+        term === rowData?.counterparty
+      }
     },
     {
       id: "counterpartyLongName",
@@ -136,7 +144,10 @@ const CounterpartySSITable = ({
       title: t("Counterparty SSI.Headers.Status"),
       field: "status",
       defaultFilter: statusFilterValue,
-      customFilterAndSearch: (term, rowData) => term === rowData?.status,
+      customFilterAndSearch: (term, rowData) => {
+        if(!term) return true
+        return term === rowData?.status
+      },
     },
   ];
 
@@ -348,7 +359,7 @@ const CounterpartySSITable = ({
                   data={filteredData}
                   actions={[
                     {
-                      icon: "more_vert",
+                      icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
                         setCurrentlySelectedRowData(rowData);

@@ -4,7 +4,7 @@ export const getEntities = (payload) =>
   baseAxiosInstance({
     method: "GET",
     params: payload,
-    url: `/v1/entities`,
+    url: `/auth/v2/internal/entities`,
   });
 
 export const getUsersByEntityID = (payload) =>

@@ -15,13 +15,41 @@ const defaultState = {
   entityUsers: [],
 };
 
+const dummyData = [{
+  entityId: "97363395-7c87-40b6-a0fe-d9202e98aa93",
+  userId: "61a78463-30ea-49ac-8ab1-a7512765b8cd",
+  firstName: "Albus",
+  lastName: "Boris",
+  email: "mgopalan+1@solutions.emrgo.com",
+  entityName: "Andy LLC",
+  userKycStatus: 1,
+  userKycSubmissionDate: null,
+  entityKycStatus: 1,
+  entityCustodyKycStatus: 1,
+  entityKycSubmissionDate: null,
+  entityCustodyKycSubmissionDate: null
+}]
+
+// new migrated v2 endpoint doesnt return key corporateEntityName
+const formatEntities = (data) => {
+  return data.map((entity) => {
+      return {
+        ...entity,
+        corporateEntityName: entity.entityName,
+        id:entity.entityId
+      };
+  });
+};
+
+console.log(formatEntities(dummyData),'here')
+
 const moduleReducer = handleActions(
   {
     [actionCreators.doFetchEntities]: (state) => ({ ...state, isLoading: true }),
     [actionCreators.doFetchEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      entitiesList: data.entities,
+      entitiesList: formatEntities(data.entities),
     }),
     [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
