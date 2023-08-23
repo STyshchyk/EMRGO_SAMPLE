@@ -83,6 +83,7 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
                       size="small"
                       onClick={(e) => {
                         e.stopPropagation();
+                        setSearchValue("");
                         clearSearchFilter("search");
                       }}
                     >

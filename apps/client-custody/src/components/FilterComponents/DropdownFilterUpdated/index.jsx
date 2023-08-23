@@ -44,7 +44,7 @@ const customSelectStyles = {
   }),
 };
 
-const DropdownFilter = ({ name, label, options, defaultFilter, isMulti }) => {
+const DropdownFilter = ({ name, label, customOnChange, options, defaultFilter, isMulti }) => {
   const [currentlySelectedOption, setCurrentlySelectedOption] = useState([]);
 
   const filterContext = useFilters();
@@ -64,7 +64,7 @@ const DropdownFilter = ({ name, label, options, defaultFilter, isMulti }) => {
       clearFilter();
       return;
     }
-
+    if (customOnChange)customOnChange(newValue, {action});
     setCurrentlySelectedOption(newValue);
     setFilterValue(newValue, name, label, "dropdown");
   };
@@ -109,6 +109,7 @@ DropdownFilter.propTypes = {
   title: PropTypes.string,
   options: PropTypes.array.isRequired,
   setDefaultFilterValue: PropTypes.func,
+  customOnChange: PropTypes.func
 };
 
 DropdownFilter.defaultProps = {

@@ -97,6 +97,7 @@ const ExportButtons = ({ tableRef, name }) => {
 
   const exportPDF = (e) => {
     e.stopPropagation();
+
     if (tableData.length === 0) {
       const emptyData = {};
       pdfColumns.forEach((column) => {

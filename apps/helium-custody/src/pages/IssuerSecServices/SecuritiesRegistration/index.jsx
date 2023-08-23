@@ -36,7 +36,7 @@ const SecuritiesRegistration = () => {
   const isFetchingIssuances = useSelector(issuanceSelectors.selectIsRequesting);
   const issuances = useSelector(issuanceSelectors.selectIssuancesByStatus);
 
-  const couponPaymentScheduleId = allCouponPaymentSchedules.find(
+  const couponPaymentScheduleId = couponPaymentScheduleId && allCouponPaymentSchedules.find(
     (item) => item?.externalSecuritiesId === currentlySelectedRowData?.externalSecuritiesId
   )?.id;
   const generatedTableData = issuances?.map((i) => generateSecuritiesTableRowData(i));

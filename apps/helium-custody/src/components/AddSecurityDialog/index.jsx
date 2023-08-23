@@ -122,7 +122,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
-  const { t } = useTranslation(["translation", "external_securities"]);
+  const { t } = useTranslation(["external_securities"]);
   const { theme } = useTheme();
   const { locale } = theme;
   const isEdit = selectedRow !== null;

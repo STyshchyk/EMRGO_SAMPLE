@@ -42,7 +42,7 @@ const SecuritiesRegistration = () => {
     generateSecuritiesTableRowData(i)
   );
 
-  const couponPaymentScheduleId = allCouponPaymentSchedules.find(
+  const couponPaymentScheduleId = allCouponPaymentSchedules && allCouponPaymentSchedules.find(
     (item) => item?.externalSecuritiesId === currentlySelectedRowData?.externalSecuritiesId
   )?.id;
 

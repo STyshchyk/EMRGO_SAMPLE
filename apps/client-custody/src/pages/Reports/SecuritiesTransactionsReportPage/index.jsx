@@ -54,7 +54,7 @@ const SecuritiesTransactionsReportPage = () => {
   // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "blotter", "filters"]);
+  const { t } = useTranslation(["reports", "blotter"]);
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
@@ -277,8 +277,8 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => console.log(rowData, 'ROW'),
       // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
-        rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
-      exportConfig: { render: (rowData) => dateRenderer(rowData?.settleDate) },
+        rowData?.settlementInsSettlementDate ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+      exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
     },
   ];
 
@@ -724,10 +724,9 @@ const SecuritiesTransactionsReportPage = () => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter
-                          name="security"
-                          label="Security"
-                          options={uniqueSecurities}
+                        <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
+                          setFieldValue("security", newValue)
+                        }}
                         />
                       </Grid>
 

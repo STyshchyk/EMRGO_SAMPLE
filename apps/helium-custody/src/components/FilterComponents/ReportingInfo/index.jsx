@@ -48,7 +48,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         {/* TODO: Need to uncomment when address data is available */}
         {/* <Typography className={classes.accountInfoValue}>{`${
           securityAccount?.data?.original?.group?.addresses
-            ? formatAddress(securityAccount?.data?.original?.group?.addresses)
+            ? null
             : t("Cash Balances.NA")
         }`}</Typography> */}
       </Grid>

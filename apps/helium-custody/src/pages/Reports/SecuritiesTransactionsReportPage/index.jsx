@@ -54,7 +54,7 @@ const SecuritiesTransactionsReportPage = () => {
   // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "filters"]);
+  const { t } = useTranslation(["reports"]);
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
@@ -277,8 +277,8 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => console.log(rowData, 'ROW'),
       // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
-        rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
-      exportConfig: { render: (rowData) => dateRenderer(rowData?.settleDate) },
+        rowData?.settlementInsSettlementDate ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+      exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
     },
   ];
 
@@ -480,7 +480,7 @@ const SecuritiesTransactionsReportPage = () => {
                 {
                   label: "Address",
                   value: values?.securityAccount?.data?.original
-                    ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
+                    ? null
                     : null,
                 },
               ];
@@ -653,7 +653,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full">
+                        <Box my={1} className="w-full" sx={{width: "100%"}}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -701,7 +701,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full">
+                        <Box my={1} className="w-full" sx={{width: "100%"}}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -735,11 +735,10 @@ const SecuritiesTransactionsReportPage = () => {
                           </FormControl>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter
-                          name="security"
-                          label="Security"
-                          options={uniqueSecurities}
+                      <Grid item xs={12} md={6} lg={3} container >
+                        <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
+                          setFieldValue("security", newValue)
+                        }}
                         />
                       </Grid>
 
@@ -758,7 +757,7 @@ const SecuritiesTransactionsReportPage = () => {
                               .
                             </Typography>
                           </Grid>
-                          <Box my={1} className="w-full">
+                          <Box my={1} className="w-full" sx={{width: "100%"}}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -827,7 +826,7 @@ const SecuritiesTransactionsReportPage = () => {
                             </Typography>
                           </Grid>
 
-                          <Box my={1} className="w-full">
+                          <Box my={1} className="w-full" sx={{width: "100%"}}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -882,7 +881,7 @@ const SecuritiesTransactionsReportPage = () => {
                       </Typography>
                       <Typography className={style.accountInfo__value}>{`${
                         values.securityAccount?.data?.original?.group?.addresses
-                          ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
+                          ? null
                           : t("Cash Statement.NA")
                       }`}</Typography>
                     </Grid>

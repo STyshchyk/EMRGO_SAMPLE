@@ -45,7 +45,7 @@ baseAxiosInstance.interceptors.response.use(
           refreshError.response.status === 502
         ) {
           console.log("go back to login");
-          // navigateSilverModule("authentication", silverAuthenticationRoutes.home);
+          navigateSilverModule("authentication", silverAuthenticationRoutes.home);
         }
       }
     }
