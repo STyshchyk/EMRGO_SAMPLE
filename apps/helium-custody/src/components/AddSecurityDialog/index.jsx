@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState,forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,13 +38,13 @@ import AutoSaveFields from "../AutoSaveFields";
 
 const animatedComponents = makeAnimated();
 
-const CustomNumberInputField = (props) => {
-  const { inputRef, onChange, ...other } = props;
+const CustomNumberInputField = forwardRef((props,ref) => {
+  const { onChange, ...other } = props;
 
   return (
     <NumericFormat
       {...other}
-      getInputRef={inputRef}
+      getInputRef={ref}
       onValueChange={(values) => {
         onChange({
           target: {
@@ -57,7 +57,7 @@ const CustomNumberInputField = (props) => {
       decimalScale={3}
     />
   );
-};
+});
 
 CustomNumberInputField.propTypes = {
   inputRef: PropTypes.func.isRequired,
@@ -122,7 +122,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
-  const { t } = useTranslation(["external_securities"]);
+  const { t } = useTranslation(["external_securities","translation"]);
   const { theme } = useTheme();
   const { locale } = theme;
   const isEdit = selectedRow !== null;
@@ -228,6 +228,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         {
           key: "AddSecurityDialogForm",
           value: JSON.stringify(value),
+          isActive:false,
+
         },
       ],
     };
@@ -280,6 +282,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
               saveFormValues(null);
             },
           };
+
           if (isEdit) {
             dispatch(externalSecuritiesActionCreators.doEditExternalSecurities(payload));
           } else {
@@ -545,6 +548,9 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        onChange={(date) => {
+                          setFieldValue("issueDate", date.toDate());
+                        }}
                         name="issueDate"
                       />
                     </Grid>
@@ -565,6 +571,9 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         placeholder="DD/MM/YYYY"
                         minDate={moment()}
                         component={DatePicker}
+                        onChange={(date) => {
+                          setFieldValue("maturityDate", date.toDate());
+                        }}
                         name="maturityDate"
                       />
                     </Grid>
@@ -709,13 +718,13 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                     }}
                     color="primary"
                   >
-                    {t("Miscellaneous.Cancel")}
+                    {t("translation:Miscellaneous.Cancel")}
                   </Button>
                 </Grid>
               </Grid>
               <Grid item lg={4}>
                 <Button fullWidth type="submit" variant="contained" color="primary">
-                  {t("Miscellaneous.Submit")}
+                  {t("translation:Miscellaneous.Submit")}
                 </Button>
               </Grid>
             </DialogActions>
