@@ -201,7 +201,10 @@ const CashBalancesTable = ({ data, accounts }) => {
       field: "account",
       exportConfig: { width: 7 },
       defaultFilter: currentlySelectedSecurityAccount,
-      customFilterAndSearch: (term, rowData) => term === rowData?.account,
+      customFilterAndSearch: (term, rowData) => {
+        if (!term) return true;
+        return term === rowData?.account;
+      }
     },
     {
       id: "currency",
@@ -209,7 +212,10 @@ const CashBalancesTable = ({ data, accounts }) => {
       field: "currency",
       exportConfig: { width: 6 },
       defaultFilter: currentlySelectedCurrency,
-      customFilterAndSearch: (term, rowData) => term === rowData?.currency,
+      customFilterAndSearch: (term, rowData) => {
+        if (!term) return true;
+        return term === rowData?.currency;
+      }
     },
     {
       id: "balance",
