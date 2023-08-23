@@ -454,7 +454,7 @@ const RaiseSettlementInstructionForm = ({
                 <Grid item>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     onClick={() => {
                       setOpenRealtimeSecuritySearchDialog(true);
                     }}

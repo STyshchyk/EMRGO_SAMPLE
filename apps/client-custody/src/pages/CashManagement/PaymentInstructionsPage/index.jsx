@@ -281,7 +281,6 @@ const PaymentInstructionsPage = () => {
     setClientApproveModalOpen(true);
   };
 
-
   const handleApprovePaymentInstructionOnSubmit = () => {
     const payload = {
       instructionId: selectedPaymentInstruction.id,
@@ -614,8 +613,6 @@ const PaymentInstructionsPage = () => {
           ].includes(selectedRow?.status)
         }
       />
-
-
 
       <ValidatePaymentInstructionDialog
         dialogTitle={t("Payment Instructions.Context Menu.Approve")}

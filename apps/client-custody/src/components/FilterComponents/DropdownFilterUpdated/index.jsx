@@ -88,7 +88,7 @@ const DropdownFilter = ({ name, label, options, defaultFilter, isMulti }) => {
           components={{
             ...animatedComponents,
             MultiValueContainer: ({ data }) => (
-              <Chip key={data.value} label={data.value} className="" color="secondary" />
+              <Chip key={data.value} label={data.value} className="" color="primary" />
             ),
           }}
           isMulti={isMulti}

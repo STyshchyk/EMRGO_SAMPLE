@@ -423,7 +423,7 @@ const CustodyAndSettlement = () => {
       >
         <Grid item>
           <Button
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={() => {
               setOpenAddSettlementInstructionDialog(true);

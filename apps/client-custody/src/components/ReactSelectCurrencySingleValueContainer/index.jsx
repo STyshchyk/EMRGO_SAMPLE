@@ -17,7 +17,7 @@ const ReactSelectCurrencySingleValueContainer = (props) => {
           ) : (
             <Typography style={{ color: "gray" }}>{selectProps.placeholder}</Typography>
           )}
-          <Typography color="secondary" variant="subtitle2">
+          <Typography color="primary" variant="subtitle2">
             {currency}
           </Typography>
         </Grid>

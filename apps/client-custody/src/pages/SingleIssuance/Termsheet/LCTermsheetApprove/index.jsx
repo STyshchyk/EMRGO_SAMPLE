@@ -145,7 +145,7 @@ const ViewFinalTermsDocumentSection = () => {
               id="finalize-button"
               disabled={!arrangerPublished || !isFinaltermsDocumentLinkAvailable}
               variant="outlined"
-              color="secondary"
+              color="primary"
               onClick={handleFinalize}
             >
               {t("termsheet:Finalize")}
@@ -168,7 +168,7 @@ const ViewFinalTermsDocumentSection = () => {
                   onClick={handleFinalTermsUploadClick}
                   startIcon={<CloudUploadIcon />}
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   style={{ width: "115px" }}
                 >
                   {t("documents:Buttons.Upload")}

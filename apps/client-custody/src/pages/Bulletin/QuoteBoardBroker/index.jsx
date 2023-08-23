@@ -121,7 +121,7 @@ const QuoteBoardBroker = () => {
         <Grid item xs={2} container justifyContent="flex-end">
           <Grid item container direction="column" justifyContent="center">
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => {
                 setAddModalOpen(true);

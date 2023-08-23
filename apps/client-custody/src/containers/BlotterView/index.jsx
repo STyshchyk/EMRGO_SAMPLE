@@ -77,7 +77,7 @@ const BlotterView = () => {
               <Button
                 disabled={blotters.length === 2}
                 variant="outlined"
-                color="secondary"
+                color="primary"
                 onClick={() => createNewBlotter()}
                 startIcon={<AddIcon />}
               >

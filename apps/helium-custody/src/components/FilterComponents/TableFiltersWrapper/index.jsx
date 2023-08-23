@@ -117,7 +117,7 @@ const TableFiltersWrapper = ({
                 variant="outlined"
                 onClick={openManageColumnsDialog}
                 startIcon={<ViewColumnIcon />}
-                color="secondary"
+                color="primary"
                 size="large"
                 fullWidth
               >

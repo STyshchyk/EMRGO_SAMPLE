@@ -144,7 +144,7 @@ const InternalTransfersPage = () => {
       >
         <Grid item>
           <Button
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={() => {
               setOpenAddInternalTransferDialog(true);

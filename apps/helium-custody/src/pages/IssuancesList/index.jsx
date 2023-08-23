@@ -130,7 +130,7 @@ const IssuancesList = () => {
               <p className={cx(style.tableData, style.marginRight)}>
                 <PlayCircleOutlineIcon
                   className={cx(theme.locale.rtl && style.rotate180)}
-                  color="secondary"
+                  color="primary"
                   onClick={() => handleNav(entry)}
                 />
               </p>
@@ -290,7 +290,7 @@ const IssuancesList = () => {
         {hasCreateIssuanceACL && (
           <div>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               size="small"
               onClick={() => setOpenAddIssuanceFormDialog(!openAddIssuanceFormDialog)}

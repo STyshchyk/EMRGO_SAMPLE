@@ -41,7 +41,7 @@ const ViewFinalTermsDocumentSection = ({ finalterms, isFetchingFinalterms }) => 
       <div>
         <Grid container spacing={2}>
           <Grid item>
-            <Button id="finalize-button" disabled={true} variant="outlined" color="secondary">
+            <Button id="finalize-button" disabled={true} variant="outlined" color="primary">
               {t("termsheet:Finalize")}
             </Button>
           </Grid>
@@ -83,7 +83,7 @@ const ViewFinalTermsDocumentSection = ({ finalterms, isFetchingFinalterms }) => 
               <Button
                 startIcon={<CloudUploadIcon />}
                 variant="contained"
-                color="secondary"
+                color="primary"
                 disabled={true}
               >
                 {t("documents:Buttons.Upload")}
@@ -183,7 +183,7 @@ const TermsheetView = () => {
               id="save-button"
               disabled={true}
               variant="outlined"
-              color="secondary"
+              color="primary"
               type="submit"
               className={style.button}
             >
@@ -194,7 +194,7 @@ const TermsheetView = () => {
 
         {entityType === "LEGAL_COUNSEL" && (
           <Grid item>
-            <Button id="review-button" disabled={true} variant="outlined" color="secondary">
+            <Button id="review-button" disabled={true} variant="outlined" color="primary">
               {t("termsheet:Send for Review")}
             </Button>
           </Grid>
@@ -205,7 +205,7 @@ const TermsheetView = () => {
             <Button
               id="publish-button"
               variant="outlined"
-              color="secondary"
+              color="primary"
               disabled={true}
               type="submit"
               className={style.button}

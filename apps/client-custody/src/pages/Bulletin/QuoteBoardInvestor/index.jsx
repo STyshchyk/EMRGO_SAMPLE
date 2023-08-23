@@ -71,7 +71,7 @@ const QuoteBoardInvestor = () => {
         </Grid>
         <Grid item xs={2} container justifyContent="flex-end">
           <Grid item container direction="column" justifyContent="center">
-            <Button color="secondary" variant="contained" disabled onClick={() => {}}>
+            <Button color="primary" variant="contained" disabled onClick={() => {}}>
               {t("bulletin_board:Message Broker")}
             </Button>
           </Grid>

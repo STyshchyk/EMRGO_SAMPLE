@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { capitalCase } from "change-case";
 import { CsvBuilder } from "filefy";
+import moment from "moment";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -222,7 +223,7 @@ const CashStatementPage = () => {
       field: "debit",
       render: (rowData) => currencyRenderer(rowData.debit),
       exportConfig: {
-        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.debit) : "--"),
+        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.debit) : "-"),
         align: "right",
       },
       // type: 'numeric',
@@ -233,7 +234,7 @@ const CashStatementPage = () => {
       field: "credit",
       render: (rowData) => currencyRenderer(rowData.credit),
       exportConfig: {
-        render: (rowData) => (rowData.credit !== "-" ? currencyRenderer(rowData.credit) : "--"),
+        render: (rowData) => (rowData.credit !== "-" ? currencyRenderer(rowData.credit) : "-"),
         align: "right",
       },
       // type: 'numeric',
@@ -447,7 +448,7 @@ const CashStatementPage = () => {
                 <Button
                   fullWidth
                   size="large"
-                  disabled={accountFilterValue === null}
+                  disabled={currentlySelectedAccount === null}
                   variant="contained"
                   color="primary"
                   onClick={() => handleFilter()}
@@ -481,6 +482,7 @@ const CashStatementPage = () => {
                 defaultFilter="none"
                 setStartDateValue={setStartDateValue}
                 setEndDateValue={setEndDateValue}
+                maxDate={moment()}
               />
             </Grid>
             {/* 

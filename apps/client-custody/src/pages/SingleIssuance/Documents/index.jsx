@@ -595,7 +595,7 @@ const Documents = () => {
   return (
     <div className={style.documentContainer}>
       <div className={style.actionBar}>
-        <ButtonGroup variant="contained" color="secondary">
+        <ButtonGroup variant="contained" color="primary">
           {termsUploadAvailable && (
             <Button onClick={handleFinalTermsUploadClick} startIcon={<CloudUploadIcon />}>
               {t("documents:Buttons.Upload Final Terms")}

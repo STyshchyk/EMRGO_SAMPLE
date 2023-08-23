@@ -85,7 +85,7 @@ const TableToolbar = ({ searchText, setSearchText }) => {
       <Grid alignItems="center" justifyContent="flex-end" item container spacing={2} lg={9}>
         {/* {manageColumns && (
           <Grid item>
-            <Button color="secondary" variant="outlined">
+            <Button color="primary" variant="outlined">
               MANAGE COLUMNS
             </Button>
           </Grid>
@@ -402,7 +402,7 @@ const ExternalSecuritiesTable = ({
           <Grid alignItems="flex-end" item container md={12} direction="column" spacing={2}>
             <Grid item>
               <Button
-                color="secondary"
+                color="primary"
                 variant="contained"
                 onClick={() => {
                   setOpenAddSecurityDialog(true);
@@ -414,7 +414,7 @@ const ExternalSecuritiesTable = ({
             {!inProd && (
               <Grid item>
                 <Button
-                  color="secondary"
+                  color="primary"
                   variant="contained"
                   onClick={() => {
                     setOpenAddEquitySecurityDialog(true);

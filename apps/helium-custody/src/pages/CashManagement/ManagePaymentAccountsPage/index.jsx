@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
-import Button from "@mui/material/Button";
 import PageTitle from "../../../components/PageTitle";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
@@ -121,6 +121,10 @@ const ManagePaymentAccountsPage = () => {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Name"),
         value: name,
       },
+      bankName: {
+        label: t("PaymentAccountManagement.PaymentAccountsTable.Bank Name"),
+        value: bankName,
+      },
       iban: {
         label: t("PaymentAccountManagement.PaymentAccountsTable.IBAN"),
         value: iban,
@@ -145,10 +149,7 @@ const ManagePaymentAccountsPage = () => {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Post Code"),
         value: postcode,
       },
-      bankName: {
-        label: t("PaymentAccountManagement.PaymentAccountsTable.Bank Name"),
-        value: bankName,
-      },
+
       accountNo: {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Account No"),
         value: accountNo,
@@ -287,12 +288,12 @@ const ManagePaymentAccountsPage = () => {
               color="primary"
               disabled={!isTableDataNotEmpty}
             >
-              <strong>Export to CSV</strong>
+              Export to CSV
             </Button>
           </Grid>
 
           <Grid item>
-            <Button color="secondary" onClick={handleClickOnAddPaymentAccountButton}>
+            <Button color="primary" onClick={handleClickOnAddPaymentAccountButton}>
               {t("PaymentAccountManagement.ManagePaymentAccountsPage.AddPaymentAccountButtonText")}
             </Button>
           </Grid>

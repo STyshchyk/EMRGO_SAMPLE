@@ -70,6 +70,7 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     (acl) => acl?.key === "Account/Manage"
   );
   const isAdmin = currentEntityGroup?.entityType === "EMRGO_SERVICES";
+  const hasSupportingDocument = rowData.supportingDoc != null;
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -164,9 +165,12 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
             </MenuItem>
           </div>
         )}
-        <MenuItem onClick={handleClickOnViewSupportingDocument}>
-          {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.ViewSupportingDocument")}
-        </MenuItem>
+        {hasSupportingDocument && (
+          <MenuItem onClick={handleClickOnViewSupportingDocument}>
+            {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.ViewSupportingDocument")}
+          </MenuItem>
+        )}
+
         {isAdmin && hasManageAccountsACL && (
           <MenuItem disabled={rowData?.isValidated} onClick={handleClickOnValidate}>
             {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Validate")}

@@ -139,6 +139,10 @@ const PaymentAccountsTable = ({ tableData }) => {
           title: "Intermediary Bank Name",
           field: "intermediaryBankName",
         },
+         {
+          title: "Intermediary Bank Account No",
+          field: "intermediaryBankAccountNo",
+        },
         {
           title: "Intermediary Bank IBAN",
           field: "intermediaryBankIBAN",
@@ -169,7 +173,7 @@ const PaymentAccountsTable = ({ tableData }) => {
           field: "intermediaryBankAccountNo",
         },
         {
-          title: "Intermediary Routing Code",
+          title: "Intermediary Route Code",
           field: "intermediaryBankRouteCode",
         },
         {

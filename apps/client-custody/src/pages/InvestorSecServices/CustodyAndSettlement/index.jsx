@@ -237,32 +237,32 @@ const CustodyAndSettlement = () => {
               }}
               disabled={!hasImportedData}
             >
-              <Typography> Save imported Trades</Typography>
+              Save imported Trades
             </Button>
           </Grid>
 
           <Grid item>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => {
                 setHasImportedData(false);
                 setIsImportFileDialogOpen(true);
               }}
             >
-              <Typography> Import CSV Data</Typography>
+              Import CSV Data
             </Button>
           </Grid>
 
           <Grid item>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => {
                 setOpenAddSettlementInstructionDialog(true);
               }}
             >
-              <Typography> {`+ ${t("Buttons.Add Settlement Instruction")}`}</Typography>
+              {`+ ${t("Buttons.Add Settlement Instruction")}`}
             </Button>
           </Grid>
         </Grid>

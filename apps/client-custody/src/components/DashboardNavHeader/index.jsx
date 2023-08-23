@@ -135,10 +135,7 @@ const NavLinkList = ({ routingConfigs }) => {
 const DashboardNavHeader = () => {
   const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
   const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
-  console.log(
-    "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ custodykycApprovalStatus:",
-    custodykycApprovalStatus
-  );
+  
   const { checkFeatureFlag } = useFeatureToggle();
   const { user } = useUser();
   const isIntlSecTradeSettlementWorkflow = checkFeatureFlag(
@@ -185,10 +182,7 @@ const DashboardNavHeader = () => {
       : undefined,
     reports: displayCustody ? reports : undefined,
   };
-  console.log(
-    "🚀 ~ file: index.jsx:138 ~ DashboardNavHeader ~ routingConfig:",
-    RoutingConfigs, displayCustody,  isIntlSecTradeSettlementWorkflow, checkFeatureFlag, securitiesServices
-  );
+  
   return (
     <Fragment>
       {kycApprovalStatus ? (

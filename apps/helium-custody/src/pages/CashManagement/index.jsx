@@ -87,7 +87,7 @@ const BillingAndPayments = () => {
               {
                 // !NOTE: This is a temporary solution to disable the internal transfers page from the production environment
               }
-              {inProd ? <AccountTransferPage /> : <InternalTransfersPage />}
+              {inProd ? <InternalTransfersPage /> : <InternalTransfersPage />}
             </Fragment>
           }
         ></Route>

@@ -118,13 +118,13 @@ const QuotesTable = ({ data }) => {
         if (rowData.notification) {
           icon = (
             <IconButton aria-label="turn off notifications" size="large">
-              <NotificationsIcon color="secondary" />
+              <NotificationsIcon color="primary" />
             </IconButton>
           );
         } else {
           icon = (
             <IconButton aria-label="turn on notifications" size="large">
-              <NotificationsNoneIcon color="secondary" />
+              <NotificationsNoneIcon color="primary" />
             </IconButton>
           );
         }

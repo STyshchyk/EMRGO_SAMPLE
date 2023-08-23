@@ -153,7 +153,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                     }}
                     size="large"
                   >
-                    <ArrowForwardIcon color="secondary" fontSize="small" />
+                    <ArrowForwardIcon color="primary" fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Grid>
@@ -232,7 +232,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                     }}
                     size="large"
                   >
-                    <ArrowBackIcon color="secondary" fontSize="small" />
+                    <ArrowBackIcon color="primary" fontSize="small" />
                   </IconButton>
                 </Tooltip>
                 <Grid item xs={6} container justifyContent="flex-end" alignContent="center">

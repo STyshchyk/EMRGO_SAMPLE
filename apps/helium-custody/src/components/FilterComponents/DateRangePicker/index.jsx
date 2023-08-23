@@ -13,7 +13,15 @@ import moment from "moment";
 import { useFilters } from "../../../context/filter-context";
 import findDateRange from "../../../helpers/dates";
 
-const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStartDateValue }) => {
+const DateRangePicker = ({
+  name,
+  label,
+  defaultFilter,
+  setEndDateValue,
+  setStartDateValue,
+  minDate,
+  maxDate,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { defaultStartDate, defaultEndDate } = findDateRange(defaultFilter);
   const [pickerValues, setPickerValues] = useState({
@@ -25,13 +33,16 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
   const { setFilterValue, clearFilterValue } = filterContext;
 
   useEffect(() => {
-    const defaultFilters = findDateRange(defaultFilter);
-    const updatedPickerValues = {
-      startDate: defaultFilters.defaultStartDate,
-      endDate: defaultFilters.defaultEndDate,
-    };
-    setPickerValues(updatedPickerValues);
-    setFilterValue(updatedPickerValues, name, label, "daterange");
+    if (defaultFilter !== "none") {
+      const defaultFilters = findDateRange(defaultFilter);
+      const updatedPickerValues = {
+        startDate: defaultFilters.defaultStartDate,
+        endDate: defaultFilters.defaultEndDate,
+      };
+      setPickerValues(updatedPickerValues);
+      setFilterValue(updatedPickerValues, name, label, "daterange");
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -178,6 +189,7 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
               }}
               variant="dialog"
               showTodayButton
+              minDate={minDate}
               maxDate={pickerValues.endDate ?? moment()}
               placeholder="DD/MM/YYYY"
               name="startDate"
@@ -209,7 +221,7 @@ const DateRangePicker = ({ name, label, defaultFilter, setEndDateValue, setStart
               variant="dialog"
               showTodayButton
               minDate={pickerValues.startDate ?? moment()}
-              // maxDate={moment()}
+              maxDate={maxDate}
               placeholder="DD/MM/YYYY"
               name="endDate"
               value={pickerValues.endDate ?? null}

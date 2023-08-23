@@ -306,7 +306,7 @@ const CouponPaymentScheduleTable = ({
                     <Button
                       size="small"
                       variant="contained"
-                      color="secondary"
+                      color="primary"
                       onClick={() => {
                         setIsImportFileDialogOpen(true);
                       }}
@@ -320,7 +320,7 @@ const CouponPaymentScheduleTable = ({
                   <Button
                     size="small"
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     disabled={isTableDataEmpty}
                     onClick={() => {
                       handleCSVExportClick(data);
@@ -335,7 +335,7 @@ const CouponPaymentScheduleTable = ({
                     <Button
                       size="small"
                       variant="contained"
-                      color="secondary"
+                      color="primary"
                       onClick={handleAddClick}
                     >
                       <strong>ADD +</strong>

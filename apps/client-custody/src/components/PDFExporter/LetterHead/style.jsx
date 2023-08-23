@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   logo_W: {
     height: 40,
-    marginLeft: "35px",
+    marginLeft: "-15px",
     width: 120,
   },
   logo_header: {

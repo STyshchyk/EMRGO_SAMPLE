@@ -374,7 +374,7 @@ const ReferenceDataReportPage = () => {
                       disabled
                       fullWidth
                       variant="contained"
-                      color="secondary"
+                      color="primary"
                       size="large"
                       // onClick={() => {}}
                     >
@@ -386,7 +386,7 @@ const ReferenceDataReportPage = () => {
                   <Button
                     fullWidth
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     size="large"
                     disabled={!selectedExternalSecurity?.couponId}
                     onClick={() => {

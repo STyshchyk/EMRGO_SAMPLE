@@ -31,7 +31,7 @@ const TabGroup = ({ routes, primaryAction }) => {
       <Grid item xs={8} sm={8} md={9} lg={9}>
         <Tabs
           value={index}
-          indicatorColor="secondary"
+          indicatorcolor="primary"
           textColor="primary"
           variant="scrollable"
           scrollButtons="auto"

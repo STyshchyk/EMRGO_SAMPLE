@@ -121,6 +121,10 @@ const ManagePaymentAccountsPage = () => {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Name"),
         value: name,
       },
+      bankName: {
+        label: t("PaymentAccountManagement.PaymentAccountsTable.Bank Name"),
+        value: bankName,
+      },
       iban: {
         label: t("PaymentAccountManagement.PaymentAccountsTable.IBAN"),
         value: iban,
@@ -145,10 +149,7 @@ const ManagePaymentAccountsPage = () => {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Post Code"),
         value: postcode,
       },
-      bankName: {
-        label: t("PaymentAccountManagement.PaymentAccountsTable.Bank Name"),
-        value: bankName,
-      },
+      
       accountNo: {
         label: t("PaymentAccountManagement.PaymentAccountsTable.Account No"),
         value: accountNo,
@@ -287,7 +288,7 @@ const ManagePaymentAccountsPage = () => {
               color="primary"
               // disabled={!isTableDataNotEmpty}
             >
-              <strong>Export to CSV</strong>
+              Export to CSV
             </Button>
           </Grid>
 
