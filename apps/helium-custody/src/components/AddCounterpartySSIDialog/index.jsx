@@ -54,8 +54,8 @@ const initial = {
   deliveryOrReceiveAgentIdType: null,
   deliveryOrReceiveIdentifier: "",
   sellerOrBuyerIdType: null,
-  sellerOrBuyerIdentifier: null,
-  safekeepingAccount: null,
+  sellerOrBuyerIdentifier: "",
+  safekeepingAccount: "",
 };
 
 const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedRow }) => {
@@ -264,6 +264,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
         {
           key: "CounterpartySSIForm",
           value: JSON.stringify(value),
+          isActive:false,
         },
       ],
     };

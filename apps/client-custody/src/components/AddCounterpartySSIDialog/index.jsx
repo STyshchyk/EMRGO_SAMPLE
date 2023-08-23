@@ -54,8 +54,8 @@ const initial = {
   deliveryOrReceiveAgentIdType: null,
   deliveryOrReceiveIdentifier: "",
   sellerOrBuyerIdType: null,
-  sellerOrBuyerIdentifier: null,
-  safekeepingAccount: null,
+  sellerOrBuyerIdentifier: "",
+  safekeepingAccount: "",
 };
 
 const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedRow }) => {
@@ -501,11 +501,6 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             isClearable
                             options={settlementLocationOptionsList}
                             onChange={(selected) => {
-                              // if (selected?.label === 'SIX') {
-                              //   setSettlementLocationIsSix(true);
-                              // } else {
-                              //   setSettlementLocationIsSix(false);
-                              // }
                               setFieldValue("settlementLocation", selected);
                               setFieldValue("deliveryOrReceiveAgentIdType", null); // as the options are dependent on settlement location
                               setFieldValue("sellerOrBuyerIdType", null);

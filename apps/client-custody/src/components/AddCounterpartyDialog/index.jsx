@@ -101,7 +101,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   const buildRequestPayload = (values) => {
     const requestPayload = values;
 
-    const selectFields = ["entity", "status"];
+    const selectFields = ["entity","status"];
     selectFields.forEach((field) => {
       if (requestPayload[field]) {
         requestPayload[field] = requestPayload[field].value;
@@ -169,6 +169,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
         {
           key: "CounterpartyForm",
           value: JSON.stringify(value),
+          isActive:false,
         },
       ],
     };
@@ -220,7 +221,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
               setSelectedRow(null);
             },
           };
-
           if (isEdit) {
             dispatch(counterpartyActionCreators.doEditCounterparty(payload));
           } else {
