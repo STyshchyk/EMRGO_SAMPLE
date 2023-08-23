@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
 
 import { enableMFA, setupMFA, verifyMFA } from "../../services";
+import { useUserStore } from "../store";
 import { ISetupMFAContext } from "./SetupMFA.types";
 
 const SetupMFAContext = createContext<ISetupMFAContext | null>(null);
@@ -19,6 +20,7 @@ const SetupMFAContext = createContext<ISetupMFAContext | null>(null);
 
 export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
   const location = useLocation();
+  const { mfa } = useUserStore();
 
   const navigate = useNavigate();
   const { enable } = useDarkMode();
@@ -26,7 +28,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
   const { showErrorToast } = useToast();
   const { setVerifyMFA } = useUser();
 
-  const [authenticatorURL, setAuthenticatorURL] = useState("");
+  const [authenticatorURL, setAuthenticatorURL] = useState(mfa);
 
   const { mutate: doSetupAuthenticatorMFA, isLoading: isQRCodeLoading } = useMutation(setupMFA);
   const { mutate: doEnableAuthenticatorMFA } = useMutation(enableMFA);
@@ -41,7 +43,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       },
       onError: () => {
         showErrorToast("Error while verifing mfa code");
-      },
+      }
     });
   };
 
@@ -52,7 +54,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       },
       onError: () => {
         showErrorToast("Error while trying to enable mfa");
-      },
+      }
     });
   };
 
@@ -60,13 +62,13 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
     doSetupAuthenticatorMFA(undefined, {
       onSuccess: (data) => {
         setAuthenticatorURL(data?.otpauth_url);
-      },
+      }
     });
   };
 
   useEffect(() => {
     // to get the qr code
-    onSetupMFA();
+    if (!authenticatorURL)onSetupMFA();
     // set to dark theme
     enable();
   }, []);
@@ -79,7 +81,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
     onVerifyMFA,
 
     isQRCodeLoading,
-    authenticatorURL,
+    authenticatorURL
   };
 
   return <SetupMFAContext.Provider value={state}>{children}</SetupMFAContext.Provider>;

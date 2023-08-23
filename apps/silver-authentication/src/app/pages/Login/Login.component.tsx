@@ -38,7 +38,8 @@ export const LoginComponent: FC<ILoginProps> = ({}: ILoginProps) => {
         //if user type iMFA or user has type IUSER and mfa is not enabled - redirect to MFa setup page
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        if ("otpauth_url" in user || user?.user?.mfaEnabled && user.user.mfaEnabled === false) {
+        if ("otpauth_url" in user || (  user.user.mfaEnabled === false)) {
+          setMFA(user?.otpauth_url ?? "");
           navigate(routes.auth.completeRegistration);
           return;
         }
