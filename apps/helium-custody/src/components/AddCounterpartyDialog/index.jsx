@@ -169,6 +169,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
         {
           key: "CounterpartyForm",
           value: JSON.stringify(value),
+          isActive:false,
         },
       ],
     };
