@@ -1,4 +1,5 @@
 export const selectEntities = (state) => state.entities?.entitiesList ?? [];
+export const selectLegacyEntities = (state) => state.entities?.legacyEntitiesList ?? [];
 export const selectEntityUsers = (state) => state.entities.entityUsers;
 export const selectIsFetching = (state) => state.entities.isFetching;
 export const selectIsFetchingEntities = (state) => state.entities.isLoading;
