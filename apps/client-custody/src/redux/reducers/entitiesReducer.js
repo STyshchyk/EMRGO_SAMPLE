@@ -15,13 +15,23 @@ const defaultState = {
   entityUsers: [],
 };
 
+const formatEntities = (data) => {
+  return data.map((entity) => {
+      return {
+        ...entity,
+        corporateEntityName: entity.entityName,
+        id:entity.entityId
+      };
+  });
+};
+
 const moduleReducer = handleActions(
   {
     [actionCreators.doFetchEntities]: (state) => ({ ...state, isLoading: true }),
     [actionCreators.doFetchEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      entitiesList: data.entities,
+      entitiesList: formatEntities(data.entities),
     }),
     [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,

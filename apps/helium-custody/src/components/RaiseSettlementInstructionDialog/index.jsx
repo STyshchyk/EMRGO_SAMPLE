@@ -22,7 +22,7 @@ const generateEntityOptionsList = (data) =>
     .filter((i) => {
       const { groups } = i;
 
-      return groups.some((j) => j.entityType === "INVESTOR");
+      return groups?.some((j) => j.entityType === "INVESTOR");
     })
     .map((i) => ({
       label: i.corporateEntityName,

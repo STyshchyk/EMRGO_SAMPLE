@@ -13,12 +13,14 @@ const addCounterparty = (payload) =>
     url: `/counterparty/v1/counterparty`,
   });
 
-const editCounterparty = (payload) =>
-  baseAxiosInstance({
+const editCounterparty = (payload) =>{
+  console.log(payload,'edit')
+  return   baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
     url: `/counterparty/v1/counterparty/${payload.counterpartyId}`,
   });
+}
 
 const deleteCounterparty = (payload) =>
   baseAxiosInstance({
