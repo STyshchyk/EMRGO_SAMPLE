@@ -81,7 +81,7 @@ const DateRangePicker = ({
       endDate: null,
     };
     setPickerValues(updatedPickerValues);
-    setFilterValue(updatedPickerValues, name, label, "daterange");
+    clearFilterValue(name);
     setStartDateValue(null);
     setEndDateValue(null);
   };

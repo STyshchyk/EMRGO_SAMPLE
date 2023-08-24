@@ -6,6 +6,10 @@ export const doFetchEntities = createAction(actionTypes.ENTITIES_REQUESTED);
 export const doFetchEntitiesSuccess = createAction(actionTypes.ENTITIES_SUCCEEDED);
 export const doFetchEntitiesFailure = createAction(actionTypes.ENTITIES_FAILED);
 
+export const doFetchLegacyEntities = createAction(actionTypes.LEGACY_ENTITIES_REQUESTED);
+export const doFetchLegacyEntitiesSuccess = createAction(actionTypes.LEGACY_ENTITIES_SUCCEEDED);
+export const doFetchLegacyEntitiesFailure = createAction(actionTypes.LEGACY_ENTITIES_FAILED);
+
 export const doFetchEntityUsers = createAction(actionTypes.ENTITY_USERS_REQUESTED);
 export const doFetchEntityUsersSuccess = createAction(actionTypes.ENTITY_USERS_SUCCEEDED);
 export const doFetchEntityUsersFailure = createAction(actionTypes.ENTITY_USERS_FAILED);

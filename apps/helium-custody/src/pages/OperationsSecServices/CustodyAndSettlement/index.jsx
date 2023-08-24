@@ -112,7 +112,7 @@ const CustodyAndSettlement = () => {
       dispatch(counterpartyActionCreators.doFetchCounterpartyList());
     const fetchDropdownOptions = (payload) =>
       dispatch(dropdownActionCreators.doFetchDropdownOptions(payload));
-    const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchEntities(payload));
+    const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchLegacyEntities(payload));
     const fetchExternalSecuritiesList = () =>
       dispatch(externalSecuritiesActionCreators.doFetchExternalSecuritiesList());
     const fetchPaymentAccounts = () => dispatch(accountsActionCreators.doFetchPaymentAccounts());

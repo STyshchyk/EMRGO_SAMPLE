@@ -31,7 +31,7 @@ const generateEntityOptionsList = (data) =>
 
 const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
   const dispatch = useDispatch();
-  const entities = useSelector(entitiesSelectors.selectEntities);
+  const entities = useSelector(entitiesSelectors.selectLegacyEntities);
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
