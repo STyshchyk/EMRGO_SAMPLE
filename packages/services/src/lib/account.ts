@@ -20,6 +20,15 @@ export const logoutUser = async () => {
   return data || [];
 };
 
+export const verifyEntityExists = (requestObject: { entityName : string }) => {
+  const promise = sharedDashboardApi({
+    method: "get",
+    params: requestObject,
+    url: `/auth/v2/client/entity/exists`,
+  });
+  return promise;
+};
+
 export const verifyEmailExists = (requestObject: { email: string }) => {
   const promise = sharedDashboardApi({
     method: "get",
