@@ -188,6 +188,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
       value: externalSecurityStatusEnum.INACTIVE,
     },
   ];
+
   useEffect(() => {
     if (selectedRow || selectedExternalSecurities) {
       setInitialValues({
@@ -202,8 +203,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         frequency: selectedRow?.frequency ? selectedExternalSecurities.frequencyName : null,
         country: selectedRow?.country ? selectedExternalSecurities.country : null,
         currency: selectedRow?.currency ? selectedExternalSecurities.currencyName : null,
-        maturityDate: selectedRow?.maturityDate ? selectedExternalSecurities.maturityDate : null,
-        issueDate: selectedRow?.issueDate || null,
+        maturityDate: selectedRow?.maturityDate ? moment(selectedExternalSecurities.maturityDate) : null,
+        issueDate:moment(selectedRow?.issueDate) || null,
         denomination: selectedRow?.denomination
           ? selectedExternalSecurities.denominationName
           : null,
@@ -548,8 +549,10 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        value={values.issueDate}
                         onChange={(date) => {
-                          setFieldValue("issueDate", date.toDate());
+                          console.log(date,'here')
+                          setFieldValue("issueDate", date);
                         }}
                         name="issueDate"
                       />
@@ -571,8 +574,9 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         placeholder="DD/MM/YYYY"
                         minDate={moment()}
                         component={DatePicker}
+                        value={values.maturityDate}
                         onChange={(date) => {
-                          setFieldValue("maturityDate", date.toDate());
+                          setFieldValue("maturityDate", date);
                         }}
                         name="maturityDate"
                       />
