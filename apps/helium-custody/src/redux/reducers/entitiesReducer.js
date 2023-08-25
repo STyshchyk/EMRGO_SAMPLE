@@ -5,6 +5,7 @@ import * as actionCreators from "../actionCreators/entities";
 
 const defaultState = {
   entitiesList: [],
+  legacyEntitiesList: [],
   entityUsersList: [],
   errorMessage: null,
   isFetching: false,
@@ -52,6 +53,19 @@ const moduleReducer = handleActions(
       entitiesList: formatEntities(data.entities),
     }),
     [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
+      ...state,
+      isLoading: false,
+      message,
+    }),
+
+    // Legacy entities
+    [actionCreators.doFetchLegacyEntities]: (state) => ({ ...state, isLoading: true }),
+    [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
+      ...state,
+      isLoading: false,
+      legacyEntitiesList: data.entities,
+    }),
+    [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
       isLoading: false,
       message,

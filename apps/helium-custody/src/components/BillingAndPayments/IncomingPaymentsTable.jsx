@@ -31,61 +31,61 @@ const IncomingPaymentsTable = ({
   const headCells = [
     {
       id: "valueDate",
-      title: t("cash_management:Incoming Payments.Headers.Value Date"),
+      title: t("Incoming Payments.Headers.Value Date"),
       field: "valueDate",
       render: (rowData) => dateRenderer(rowData.valueDate),
     },
     {
       id: "entryDate",
-      title: t("cash_management:Incoming Payments.Headers.Entry Date"),
+      title: t("Incoming Payments.Headers.Entry Date"),
       field: "entryDate",
       render: (rowData) => dateRenderer(rowData.valueDate),
     },
     {
       id: "bankAccNo",
-      title: t("cash_management:Incoming Payments.Headers.Account No"),
+      title: t("Incoming Payments.Headers.Account No"),
       field: "bankAccNo",
     },
     {
       id: "currency",
-      title: t("cash_management:Incoming Payments.Headers.Currency"),
+      title: t("Incoming Payments.Headers.Currency"),
       field: "currency",
     },
     {
       id: "amount",
-      title: t("cash_management:Incoming Payments.Headers.Amount"),
+      title: t("Incoming Payments.Headers.Amount"),
       field: "amount",
       render: (rowData) => floatRenderer(rowData.amount),
       type: "numeric",
     },
     {
       id: "transactionType",
-      title: t("cash_management:Incoming Payments.Headers.Transaction Type"),
+      title: t("Incoming Payments.Headers.Transaction Type"),
       field: "transactionType",
     },
     {
       id: "customerRef",
-      title: t("cash_management:Incoming Payments.Headers.Customer Ref"),
+      title: t("Incoming Payments.Headers.Customer Ref"),
       field: "customerRef",
     },
     {
       id: "bankRef",
-      title: t("cash_management:Incoming Payments.Headers.Bank Ref"),
+      title: t("Incoming Payments.Headers.Bank Ref"),
       field: "bankRef",
     },
     {
       id: "supplementary",
-      title: t("cash_management:Incoming Payments.Headers.Supplementary"),
+      title: t("Incoming Payments.Headers.Supplementary"),
       field: "supplementary",
     },
     {
       id: "assignedClient",
-      title: t("cash_management:Incoming Payments.Headers.Assigned Client"),
+      title: t("Incoming Payments.Headers.Assigned Client"),
       field: "assignedClient",
     },
     {
       id: "assignedAccount",
-      title: t("cash_management:Incoming Payments.Headers.Assigned Account"),
+      title: t("Incoming Payments.Headers.Assigned Account"),
       field: "assignedAccountNo",
     },
   ];

@@ -293,10 +293,10 @@ const generateEntityGroupsOptionsList = (data) => {
 const generateEntityGroupUserOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
-      .filter((i) => i.user?.isActive)
+      .filter((i) => i.isActive)
       .map((i) => ({
-        label: i.user?.email,
-        value: i.user,
+        label: i.email,
+        value: i,
       }));
   }
 

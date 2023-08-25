@@ -19,6 +19,18 @@ function* fetchEntitiesSaga({ payload }) {
   }
 }
 
+function* fetchLegacyEntitiesSaga({ payload }) {
+  try {
+    const response = yield call(wethaqAPIService.entitiesAPI.getLegacyEntities, payload);
+    const { data } = response;
+    yield put(entitiesActionCreators.doFetchLegacyEntitiesSuccess({ data }));
+  } catch (error) {
+    const errorMessage = extractErrorMessage(error);
+    showToastErrorNotification(error, errorMessage);
+    yield put(entitiesActionCreators.doFetchLegacyEntitiesFailure(errorMessage));
+  }
+}
+
 function* fetchEntityUsersSaga({ payload }) {
   try {
     const response = yield call(wethaqAPIService.entitiesAPI.getUsersByEntityID, payload);
@@ -174,6 +186,7 @@ function* editEntityCustodySetting({ payload }) {
 
 const entitiesSaga = [
   takeLatest(actionTypes.ENTITIES_REQUESTED, fetchEntitiesSaga),
+  takeLatest(actionTypes.LEGACY_ENTITIES_REQUESTED, fetchLegacyEntitiesSaga),
   takeLatest(actionTypes.ENTITY_USERS_REQUESTED, fetchEntityUsersSaga),
   takeLatest(actionTypes.FETCH_PARENT_ENTITIES_REQUESTED, fetchParentEntitiesSaga),
   takeLatest(actionTypes.ADD_PARENT_ENTITY_REQUESTED, addParentEntity),
