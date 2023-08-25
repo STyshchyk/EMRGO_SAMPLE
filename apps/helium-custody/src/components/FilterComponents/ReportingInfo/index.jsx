@@ -36,21 +36,20 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
           {t("Cash Balances.Account")} :{" "}
         </Typography>
         <Typography className={classes.accountInfoValue}>{`${
-          cashAccount ? cashAccount.data.original.accountNo : t("Cash Balances.NA")
+          cashAccount ? cashAccount.data.original.accountNo : '-'
         } | ${
-          cashAccount ? capitalCase(cashAccount.data.original.type) : t("Cash Balances.NA")
+          cashAccount ? capitalCase(cashAccount.data.original.type) : '-'
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>
         <Typography className={classes.accountInfoLabel}>
           {t("Cash Balances.Address")} :{" "}
         </Typography>
-        {/* TODO: Need to uncomment when address data is available */}
-        {/* <Typography className={classes.accountInfoValue}>{`${
+        <Typography className={classes.accountInfoValue}>{`${
           securityAccount?.data?.original?.group?.addresses
-            ? null
-            : t("Cash Balances.NA")
-        }`}</Typography> */}
+            ? formatAddress(securityAccount?.data?.original?.group?.addresses)
+            : '-'
+        }`}</Typography>
       </Grid>
     </Root>
   );
