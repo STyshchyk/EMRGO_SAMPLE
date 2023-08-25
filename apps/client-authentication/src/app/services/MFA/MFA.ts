@@ -15,7 +15,7 @@ export const enableMFA = (requestObject: { code: string }) => {
 export const setupMFA = async (): Promise<IMFA> => {
   const promise = authApi({
     method: "POST",
-    url: "v2/mfa/setup",
+    url: "auth/v2/mfa/setup",
     validateStatus: null
 
   });
