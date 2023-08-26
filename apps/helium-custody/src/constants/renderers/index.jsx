@@ -56,7 +56,7 @@ export const dateRenderer = (date) => {
 
 export const reportDateRenderer = (date) => {
   const inputDate = moment(date);
-  let formattedDate = "NA";
+  let formattedDate = "-";
   if (inputDate.isValid()) {
     formattedDate = inputDate.format("DD/MM/YYYY HH:mm:ss");
   }
@@ -68,11 +68,16 @@ export const accountTypeRenderer = (value) => {
   return accountType;
 };
 
-export const currencyRenderer = (value) =>
-  new Intl.NumberFormat("en", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+export const currencyRenderer = (value) => {
+    if (value !== '0') {
+        return new Intl.NumberFormat("en", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        }).format(value);
+    } else {
+        return '-'
+    }
+  }
 
 export const floatRenderer = (value) =>
   new Intl.NumberFormat("en", {
