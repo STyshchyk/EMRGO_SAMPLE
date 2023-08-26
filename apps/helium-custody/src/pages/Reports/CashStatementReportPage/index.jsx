@@ -38,7 +38,7 @@ const getTableData = (accs) => {
     entries.push({
       id: acc.id,
       date: acc.date,
-      transactionType: getFormattedBalanceType(acc.activityType),
+      transactionType: acc.activityType ? getFormattedBalanceType(acc.activityType) : "N/A",
       refNo: acc.sourceReference,
       isin: acc.isin, // isin wsn not fetched ?
       narrative: acc?.description ?? "",
@@ -86,17 +86,16 @@ const CashStatementReportPage = () => {
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
   });
-
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
-
     return () => {
       dispatch(reportsActionCreators.doResetCashTransactions());
     };
   }, [dispatch]);
 
   useEffect(() => {
+
     setFilteredRows(getTableData(transactions));
   }, [transactions]);
 
@@ -479,7 +478,6 @@ const CashStatementReportPage = () => {
               }
               return true;
             });
-
             return (
               <Fragment>
                 <MaterialTable

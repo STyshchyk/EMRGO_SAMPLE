@@ -19,6 +19,7 @@ export const selectCashAccounts = createSelector([selectCashAccountsData], (acco
 export const selectCashTransactions = createSelector(
   [selectCashTransactionsData],
   (transactionsData) => {
+
     if (transactionsData) {
       const finalData = [];
       const summaryRows = transactionsData;
@@ -28,7 +29,7 @@ export const selectCashTransactions = createSelector(
           finalData.push(tr);
         });
       });
-      return finalData;
+      return transactionsData;
     }
     return [];
   }

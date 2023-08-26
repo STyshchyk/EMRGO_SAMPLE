@@ -3,7 +3,7 @@ import * as Yup from "yup";
 const addCounterpartyFormSchema = Yup.object().shape({
   // entity: Yup.string().nullable().required("Entity is required"),
   entity:Yup.object().shape({
-    label: Yup.string(), 
+    label: Yup.string(),
     value: Yup.string()
   }).nullable().required("Entity is required"),
   counterpartyId: Yup.string().nullable().required("Counterparty Id is required"),

@@ -650,7 +650,7 @@ const SecuritiesTransactionsReportPage = () => {
                             {t("Security Transactions.Filters.Entity")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("entity")}>
-                            <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
+                            <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
                         <Box my={1} className="w-full" sx={{width: "100%"}}>
@@ -698,7 +698,7 @@ const SecuritiesTransactionsReportPage = () => {
                             {t("Security Transactions.Filters.Securities Account")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("securityAccount")}>
-                            <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
+                            <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
                           </ButtonBase>
                         </Grid>
                         <Box my={1} className="w-full" sx={{width: "100%"}}>

@@ -306,7 +306,7 @@ const ReferenceDataReportPage = () => {
               {t("Reference Data.Filters.Security")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="w-full" sx={{width: "100%"}}>
@@ -334,7 +334,7 @@ const ReferenceDataReportPage = () => {
               {t("Reference Data.Filters.ISIN")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="w-full" sx={{width: "100%"}}>

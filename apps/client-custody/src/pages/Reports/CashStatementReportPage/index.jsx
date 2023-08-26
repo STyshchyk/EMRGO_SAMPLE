@@ -38,7 +38,7 @@ const getTableData = (accs) => {
     entries.push({
       id: acc.id,
       date: acc.date,
-      transactionType: getFormattedBalanceType(acc.activityType),
+      transactionType: acc.activityType ? getFormattedBalanceType(acc.activityType) : "N/A",
       refNo: acc.sourceReference,
       isin: acc.isin, // isin wsn not fetched ?
       narrative: acc?.description ?? "",

@@ -60,7 +60,7 @@ const generateInitialValues = (selectedPaymentInstructionRowData, options) => {
     (i) => i.value.id === selectedPaymentInstructionRowData?.wethaqAccountId
   );
   const sourceEntity = sourceEntityOptions.find((i) => i.value === sourceAccount?.value?.entityId);
-  const paymentAccount = allPaymentAccountOptions.find(
+  const paymentAccount = allPaymentAccountOptions &&  allPaymentAccountOptions.find(
     (i) => i.value.accountId === selectedPaymentInstructionRowData?.accountId
   );
   const beneficiaryEntityGroupUser = beneficiaryUserOptions.find(
@@ -122,7 +122,7 @@ const generateBeneficiaryUserOptions = (validatedPaymentAccounts) => {
           fullName,
           entityType,
         },
-        label: `[${name} - ${capitalCase(entityType)}]  ${fullName}`,
+        label: `[${name} - ${capitalCase(entityType ?? "")}]  ${fullName}`,
       };
     })
     .filter((user) => {
@@ -147,11 +147,12 @@ const generatePaymentAccountOptions = (validatedPaymentAccounts) =>
   }));
 
 const PaymentInstructionsPage = () => {
-  const { t } = useTranslation(["cash_management"]);
+
   const { theme } = useTheme();
   const { locale } = theme;
 
   const dispatch = useDispatch();
+  const { t } = useTranslation(["cash_management"]);
 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);

@@ -13,7 +13,7 @@ const hydratedUser = store.get("user");
 export interface IUserData {
   user: IUser | null;
   credentials: { login: string; password: string } | null;
-  mfa: IMFA | null;
+  mfa: string | null;
   updateUser: (user: IUser | null) => void;
   setCredentials: (credentials: any) => void;
   setVerifyMFA: (flag: boolean) => void;
