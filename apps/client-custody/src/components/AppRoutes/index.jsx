@@ -1,6 +1,6 @@
 import { Fragment, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import { accountIdentification, clientAuthenticationRoutes } from "@emrgo-frontend/constants";
 import { useUser } from "@emrgo-frontend/shared-ui";
@@ -93,6 +93,7 @@ const MainRoutes = () => {
   ]);
 
   /* {generatedRouteComponents || <Fragment />} */
+
 
   return (
     <Fragment>
