@@ -14,6 +14,7 @@ import LoadingIndicator from "../../../../components/LoadingIndicator";
 import * as accountsActionCreators from "../../../../redux/actionCreators/accounts";
 import * as accountsSelectors from "../../../../redux/selectors/accounts";
 import AddPaymentAccountForm from "../AddPaymentAccountForm";
+import * as authSelectors from "../../../../redux/selectors/auth";
 
 const generateRequestPayload = (formikValues) => ({
   ...formikValues,
@@ -30,11 +31,13 @@ const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
   const { t } = useTranslation(["cash_management"]);
   const uploadedFiles = useSelector(accountsSelectors.selectUploadedFiles);
   const isSubmitting = useSelector(accountsSelectors.selectIsSubmitting);
+  const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
 
+  const currentEntityGroupID = currentEntityGroup?.id;
   const handleSubmit = (values, actions) => {
     const addPaymentAccount = (payload) =>
       dispatch(accountsActionCreators.doAddPaymentAccount(payload));
-    const requestPayload = generateRequestPayload(values);
+    const requestPayload = generateRequestPayload({...values, currentEntityGroupID});
     requestPayload.supportingDoc = uploadedFiles?.supportingDoc?.fileIdentifier;
 
     addPaymentAccount(requestPayload);
