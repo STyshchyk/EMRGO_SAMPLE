@@ -45,7 +45,17 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   const handleClose = () => {
     setIsModalOpen(false);
   };
+
+
   useEffect(() => {
+    if (isModalOpen) {
+      const fetchFormValues = (payload) => dispatch(formActionCreators.doFetchForm(payload));
+      fetchFormValues({ keys: ["AddPaymentInstructionDialogForm"] });
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (!formvalues || !formvalues?.settings) return;
     const data = formvalues?.settings[0];
     if (
       !fetchingValues &&
@@ -56,13 +66,6 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
       setInitialValues(JSON.parse(data.value));
     }
   }, [formvalues, fetchingValues]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      const fetchFormValues = (payload) => dispatch(formActionCreators.doFetchForm(payload));
-      fetchFormValues({ keys: ["AddPaymentInstructionDialogForm"] });
-    }
-  }, [isModalOpen]);
 
   const saveFormValues = (value) => {
     const obj = {
