@@ -39,7 +39,7 @@ const TableFiltersWrapper = ({
 
   useEffect(() => {
     setTableData(data);
-  }, [data, setTableData]);
+  }, [data, setTableData]); 
 
   useEffect(() => {
     setAllColumns(columns);
@@ -76,7 +76,7 @@ const TableFiltersWrapper = ({
   return (
     <Fragment>
       <MuiAccordion
-        TransitionProps={{ unmountOnExit: true }}
+        TransitionProps={{ unmountOnExit: false }}
         elevation={0}
         expanded={expanded === "filter-toolbar"}
         onChange={handleChange("filter-toolbar")}

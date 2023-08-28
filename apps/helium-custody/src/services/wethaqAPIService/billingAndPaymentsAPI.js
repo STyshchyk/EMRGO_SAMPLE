@@ -20,7 +20,7 @@ const getAccounts = (payload) =>
 const getOwners = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/entities`,
+    url: `/auth/v2/internal/entities`,
   });
 
 const transferMoney = (payload) =>

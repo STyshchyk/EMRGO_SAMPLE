@@ -890,7 +890,8 @@ const SecurityTradesTable = ({
           </div>
           <FilterConsumer>
             {({ filters, filterColumns }) => {
-              const filteredData = data
+            const preFilteredData = filters.hasOwnProperty('search') ? tableRef?.current?.dataManager?.getRenderState()?.data : data;                       
+            const filteredData = preFilteredData
                 .filter((row) => {
                   if (
                     filters?.entryDateRange?.value?.startDate &&
