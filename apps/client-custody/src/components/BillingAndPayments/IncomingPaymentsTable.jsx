@@ -12,6 +12,7 @@ import { dateRenderer, floatRenderer } from "../../constants/paymentAndStatuses/
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const IncomingPaymentsTable = ({
   data,
@@ -149,7 +150,7 @@ const IncomingPaymentsTable = ({
         }}
         actions={[
           {
-            icon: "more_vert",
+            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
             onClick: (event, rowData) => {
               setMenuAnchorEl(event.currentTarget);
               setSelectedRow(rowData);

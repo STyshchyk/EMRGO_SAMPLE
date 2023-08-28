@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import React, { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
 import Grid from "@mui/material/Grid";
@@ -13,6 +13,7 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const generateCAEventsTableRowData = (i) => ({
   id: i?.id,
@@ -202,7 +203,7 @@ const CorporateActionEventsTable = ({
                   data={filteredData}
                   actions={[
                     {
-                      icon: "more_vert",
+                      icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
                         setCurrentlySelectedRowData(rowData);

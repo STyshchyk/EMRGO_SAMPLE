@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
@@ -24,6 +24,7 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import FilterButton from "../FilterComponents/FilterButton";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const generateFXTransactionTableRowData = (i) => ({
   id: i.id,
@@ -238,7 +239,7 @@ const FXTransactionTable = ({
                   data={filteredData}
                   actions={[
                     {
-                      icon: "more_vert",
+                      icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
                         setCurrentlySelectedRowData(rowData);

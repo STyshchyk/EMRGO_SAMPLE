@@ -14,6 +14,7 @@ import {
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const QuotesTable = ({ data, actions, setSelectedRow, selectedRow }) => {
   const mtableLocalization = useMaterialTableLocalization();
@@ -127,7 +128,7 @@ const QuotesTable = ({ data, actions, setSelectedRow, selectedRow }) => {
         }}
         actions={[
           {
-            icon: "more_vert",
+            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
             onClick: (event, rowData) => {
               setMenuAnchorEl(event.currentTarget);
               setSelectedRow(rowData);

@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import React, { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
 import Grid from "@mui/material/Grid";
@@ -23,6 +23,7 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import ExportTableContent from "../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const FALLBACK_VALUE = "--";
 
@@ -318,7 +319,7 @@ const InternalTransferTransactionsTable = ({
                     data={filteredData}
                     actions={[
                       {
-                        icon: "more_vert",
+                        icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                         onClick: (event, rowData) => {
                           setAnchorEl(event.currentTarget);
                           setCurrentlySelectedRowData(rowData);

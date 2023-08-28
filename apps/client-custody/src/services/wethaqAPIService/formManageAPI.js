@@ -2,11 +2,13 @@ import { baseAxiosInstance } from "./helpers";
 
 const fetchValues = (payload) =>
   baseAxiosInstance({
-    method: "GET",
-    url: `/auth/v2/profile/settings`,
-    params: {
-      keys: JSON.stringify(payload.keys),
-    },
+    method: "POST",
+    url: `/auth/v2/profile/settings/query`,
+    data: {
+      "keys": [
+        ...payload
+      ]
+    }
   });
 
 const postValues = (payload) =>

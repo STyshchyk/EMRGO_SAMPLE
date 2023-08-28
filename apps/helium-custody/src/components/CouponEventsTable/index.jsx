@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import React, { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
@@ -24,6 +24,7 @@ import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // TODO: CLEAN UP LATER
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
@@ -342,7 +343,7 @@ const CouponEventsTable = ({
                   data={filteredData}
                   actions={[
                     {
-                      icon: "more_vert",
+                      icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
                         setCurrentlySelectedRowData(rowData);
