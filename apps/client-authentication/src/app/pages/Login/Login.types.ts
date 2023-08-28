@@ -17,5 +17,5 @@ export interface ILoginContext {
 export interface ILoginFormValues {
   email: string;
   password: string;
-  code?: string;
+  code?: string | null;
 }
