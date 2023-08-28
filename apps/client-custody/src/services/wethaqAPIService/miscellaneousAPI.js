@@ -4,35 +4,38 @@ export const fetchDocumentLink = (payload) =>
   baseAxiosInstance({
     method: "PUT",
     url: `/files/v1/files`,
-    data: payload.params,
+    data: payload.params
   });
 
 export const fetchStaticFileLink = (payload) =>
   baseAxiosInstance({
     method: "GET",
     url: `/v1/files/static/assets`,
-    params: payload,
+    params: payload
   });
 
-export const readTableConfig = (payload) =>
-  baseAxiosInstance({
-    method: "GET",
-    url: `/auth/v2/profile/settings`,
-    params: payload,
+export const readTableConfig = async (payload) => {
+  const req = baseAxiosInstance({
+    method: "POST",
+    url: `/auth/v2/profile/settings/query`,
+    data: payload
   });
+  const res = await (await req)
+  return res;
+};
 
-export const updateTableConfig = (payload) =>
-  baseAxiosInstance({
+export const updateTableConfig = (payload) =>{
+  return baseAxiosInstance({
     method: "POST",
     url: `/auth/v2/profile/settings`,
-    data: payload,
-  });
+    data: payload
+  })}
 
 const miscellaneousAPI = {
   fetchDocumentLink,
   fetchStaticFileLink,
   readTableConfig,
-  updateTableConfig,
+  updateTableConfig
 };
 
 export default miscellaneousAPI;
