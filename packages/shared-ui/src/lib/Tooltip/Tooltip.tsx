@@ -33,6 +33,7 @@ export const Tooltip: FC<ITooltipProps> = ({ children, content, className }) => 
                 position: strategy,
                 top: y ?? 0,
                 left: x ?? 0,
+                zIndex: 15,
               }}
               {...getFloatingProps()}
               className={className}

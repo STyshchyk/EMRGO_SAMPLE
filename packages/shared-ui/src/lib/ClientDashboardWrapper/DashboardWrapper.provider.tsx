@@ -1,22 +1,22 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
+
+
 import * as constants from "@emrgo-frontend/constants";
-import {
-  acceptClientTerms,
-  acceptPlatformTerms,
-  fetchDocumentLink,
-  fetchDocumentPath,
-  fetchUserProfile,
-  logoutUser,
-  refreshToken,
-} from "@emrgo-frontend/services";
+import { acceptClientTerms, acceptPlatformTerms, fetchDocumentLink, fetchDocumentPath, fetchUserProfile, logoutUser, refreshToken } from "@emrgo-frontend/services";
 import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+
+
 import { CustodyIcon, PrimariesIcon, ResearchIcon, SecondariesIcon } from "../Icons";
 import { IDashboardWrapperContext, IRoleSelector } from "./DashboardWrapper.types";
+
+
+
+
 
 const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(null);
 
@@ -26,7 +26,7 @@ const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(n
  * @returns {JSX.Element}
  */
 export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
-  const { user, roles, updateUserConfig} = useUser();
+  const { user, roles, updateUserConfig } = useUser();
 
   const refreshProfile = useRefreshProfile();
   const { showWarningToast, showInfoToast } = useToast();
@@ -75,8 +75,8 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   });
 
   const currentModuleKey =
-  Object.keys(constants.clientModuleURLs).find(
-    (key) => constants.clientModuleURLs[key] === origin
+    Object.keys(constants.clientModuleURLs).find(
+      (key) => constants.clientModuleURLs[key] === origin
     ) || "";
 
   // console.log(currentModuleKey,"module key")
@@ -89,7 +89,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       updateUserConfig(user);
     },
   });
-  
+
   useEffect(() => {
     if (currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
@@ -103,7 +103,6 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   }, [currentModuleKey, currentRole, showWarningToast]);
 
   const navigateToModule = (module: string, path: string) => {
-    console.log("🚀 ~ file: DashboardWrapper.provider.tsx:106 ~ navigateToModule ~ module:", module)
     navigateModule(module, path);
   };
 
@@ -143,16 +142,22 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
 
   const onRejectPlatformTerms = () => {
     resetTermsModal();
+    onLogOut();
   };
+
   const onAcceptPlatformTerms = () => {
     doAcceptPlatformTerms(undefined, {
       onSuccess: (response) => {
         refreshProfile();
-        showSuccessToast("Successfully accepted platform terms and conditions");
+        setTimeout(() => {
+          showSuccessToast("Successfully accepted platform terms and conditions");
+          resetTermsModal();
+        }, 1000);
       },
     });
     resetTermsModal();
   };
+
   const resetTermsModal = () => {
     setShowTermsModal("");
     setTermsDocumentURL("");
