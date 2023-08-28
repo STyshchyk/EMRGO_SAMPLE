@@ -18,7 +18,7 @@ const TableFiltersWrapper = ({ children }) => {
 
   return (
     <MuiAccordion
-      TransitionProps={{ unmountOnExit: true }}
+      TransitionProps={{ unmountOnExit: false }}
       square
       expanded={expanded === "filter-toolbar"}
       onChange={handleChange("filter-toolbar")}

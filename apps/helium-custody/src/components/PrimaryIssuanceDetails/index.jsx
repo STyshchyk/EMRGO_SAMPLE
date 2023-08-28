@@ -318,7 +318,7 @@ const PrimaryIssuanceDetails = ({
     <SecuritiesRegistrationDetailsContext.Provider value={value}>
       {SECTION_DATA_OBJECT_ITEMS.filter((i) => !i.isDisabled).map(
         ({ id, accordionSummary, component }, index) => (
-          <Accordion key={id} TransitionProps={{ unmountOnExit: true }}>
+          <Accordion key={id} TransitionProps={{ unmountOnExit: false }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls={`${accordionSummary}"-content"`}
