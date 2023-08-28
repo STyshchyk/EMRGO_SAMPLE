@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import MinorNavigation from "../../components/MinorNavigation";
+import MinorNav from "../../components/MinorNavbar";
 import PageTitle from "../../components/PageTitle";
 import routes from "../../constants/routes";
 
@@ -13,7 +14,7 @@ const Support = () => {
   return (
     <Fragment>
       {/* <PageTitle title={t('support:Support')} /> */}
-      <MinorNavigation
+      <MinorNav
         routes={[
           {
             path: routes.dashboard.support.tfa,
@@ -28,13 +29,10 @@ const Support = () => {
         }}
       >
         <Routes>
-          <Route exact path={routes.dashboard.support.home}>
-            <Navigate to={routes.dashboard.support.tfa} />
-          </Route>
-          <Route exact path={routes.dashboard.support.tfa}>
-            <TFA />
-          </Route>
+          <Route exact path={'/'} element={<Navigate to={routes.dashboard.support.tfa}/>}></Route>
+          <Route exact path={'/tfa'} element={<TFA/>}></Route>
         </Routes>
+
       </div>
     </Fragment>
   );
