@@ -10,6 +10,7 @@ import { currencyRenderer, dateRenderer } from "../../../../constants/paymentAnd
 import useMaterialTableLocalization from "../../../../hooks/useMTableLocalization";
 import * as accountsSelectors from "../../../../redux/selectors/accounts";
 import tableStyles from "../../../../styles/cssInJs/materialTable";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }) => {
   const mtableLocalization = useMaterialTableLocalization();
@@ -130,7 +131,7 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
         }}
         actions={[
           {
-            icon: "more_vert",
+            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
             onClick: (event, rowData) => {
               setMenuAnchorEl(event.currentTarget);
               setSelectedRow(rowData);

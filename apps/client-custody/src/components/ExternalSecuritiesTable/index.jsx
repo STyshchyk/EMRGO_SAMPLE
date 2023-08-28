@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Select } from "@emrgo-frontend/shared-ui";
 
@@ -21,6 +21,7 @@ import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import useIsProduction from "../../utils/useIsProduction";
 import TableFiltersWrapper from "../TableFiltersWrapper";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const FALLBACK_VALUE = "--";
 
@@ -451,7 +452,7 @@ const ExternalSecuritiesTable = ({
         data={data}
         actions={[
           {
-            icon: "more_vert",
+            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
             onClick: (event, rowData) => {
               setAnchorEl(event.currentTarget);
               setCurrentlySelectedRowData(rowData);
