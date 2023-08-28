@@ -84,7 +84,7 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
             <OneCol>
             <SixDigitCodeInput
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                value={form.initialValues.code!}
+                value={form.values.code!}
                 onChange={(value) => {
                   form.setFieldValue("code", value);
 
