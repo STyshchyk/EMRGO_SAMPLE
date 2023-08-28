@@ -41,6 +41,7 @@ export const selectExternalSecuritiesList = createSelector(
         ticker: item.ticker,
         wsn: item.wsn,
         isPrimaryIssuance: Boolean(item.isPrimaryIssuance),
+        attributes:item?.attributes
       }));
     }
 
