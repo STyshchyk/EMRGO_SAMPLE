@@ -1,6 +1,8 @@
 import { createContext, lazy, useContext } from "react";
 import { useSelector } from "react-redux";
 
+import { useUser } from "@emrgo-frontend/shared-ui";
+
 import featureFlags from "../constants/featureFlags";
 import routes from "../constants/routes";
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -43,6 +45,8 @@ RouterMappingContext.displayName = "RouterMappingContext";
 
 const RouterMappingProvider = ({ children }) => {
   const inProd = useIsProduction();
+  const { user } = useUser();
+  console.log("🚀 ~ file: router-mapping-context.jsx:49 ~ RouterMappingProvider ~ user:", user);
 
   const { checkFeatureFlag } = useFeatureToggle();
   const isBulletinBoardFeatureEnabled = checkFeatureFlag(featureFlags.bulletinBoardFeature);
@@ -168,7 +172,7 @@ const RouterMappingProvider = ({ children }) => {
         exact: true,
         isPublic: false,
         layout: DashboardLayout,
-        path: `${routes.dashboard.home}*`,
+        path: `${routes.dashboard.home}/*`,
       },
       // {
       //   component: IssuancesList,
@@ -220,11 +224,11 @@ const RouterMappingProvider = ({ children }) => {
       },
       {
         component: OnboardingClient,
-        exact: false,
-        isPublic: false,
+        exact: true,
+        isPublic: true,
         layout: DashboardLayout,
         path: `${routes.dashboard.custody.onboarding.home}*`,
-        disabled: !kycApprovalStatus,
+        disabled: false,
       },
       // {
       //   component: IssuerServices,

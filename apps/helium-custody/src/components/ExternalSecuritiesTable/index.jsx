@@ -211,13 +211,32 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
   wsn: i.wsn,
   assetType: i.assetTypeName?.label ?? FALLBACK_VALUE,
   attributes: i.attributes
-    ?.filter((item) => !["Short Name", "Long Name"].includes(item?.match?.value))
+    ?.filter((item) => !["Short Name", "Long Name"].includes(item?.match?.name))
     .map((item) => ({
       identifierId: item.identifierId,
       value: item.value,
-      securityIdTypeName: item.match?.value,
+      securityIdTypeName: item.match?.name,
     })),
 });
+
+// [
+//   {
+//     "identifierId": "9f99d0a8-9b3c-4fa0-ac7d-3dfeb28bf94d",
+//     "value": "XS2348236980",
+//     "securityIdTypeName": "ISIN"
+//   },
+//   {
+//       "identifierId": "ae13131b-c455-4475-9ca4-654bf0c4bf9c",
+//       "value": "ADGB",
+//       "securityIdTypeName": "Ticker"
+//   }
+// ]
+
+const getAttribute = (attrs,fieldName) => {
+ const attribute =  attrs.filter((attr) => attr.securityIdTypeName.toLowerCase() === fieldName)[0]
+ console.log(attribute)
+ return attribute?.value ?? FALLBACK_VALUE
+}
 
 const ExternalSecuritiesTable = ({
   anchorEl,
@@ -237,8 +256,10 @@ const ExternalSecuritiesTable = ({
   const mtableLocalization = useMaterialTableLocalization();
   const [isinFilterValue, setISINFilterValue] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
-  const sortedISIN = Array.from(new Set(data.map((item) => item.isin))).sort();
-  const isinOptionsList = sortedISIN.map((isin) => ({
+  // helium issues airtable ID 259
+  const sortedISIN = Array.from(new Set(data.filter((item)=> item?.status === 'Active').map((item) => item.isin))).sort();
+  // filter out null isins
+  const isinOptionsList = sortedISIN.filter((v) => !!v).map((isin) => ({
     label: isin,
     value: isin,
   }));
@@ -268,7 +289,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "isin",
       title: t("External Securities.Headers.ISIN"),
-      render: (rowData) => rowData?.isin ?? FALLBACK_VALUE,
+      render: (rowData) => rowData?.isin ?? getAttribute(rowData?.attributes,"isin"),
       sorting: false,
       defaultFilter: isinFilterValue,
       customFilterAndSearch: (term, rowData) => {
@@ -286,14 +307,14 @@ const ExternalSecuritiesTable = ({
     {
       id: "ticker",
       title: t("External Securities.Headers.Ticker"),
-      render: (rowData) => rowData?.ticker ?? FALLBACK_VALUE,
+      render: (rowData) => rowData?.ticker ?? getAttribute(rowData?.attributes,"ticker"),
       sorting: false,
     },
     {
       id: "issuanceName",
       title: t("External Securities.Headers.Issuance Name"),
       field: "issuanceName",
-      render: (rowData) => rowData?.issuanceName,
+      render: (rowData) => rowData?.issuanceName ?? FALLBACK_VALUE,
     },
     {
       id: "profitRate",
@@ -305,7 +326,7 @@ const ExternalSecuritiesTable = ({
           maximumFractionDigits: 2,
         });
 
-        return `${localizedProfitRateStringValue}%`;
+        return rowData?.profit ? `${localizedProfitRateStringValue}%` : FALLBACK_VALUE;
       },
       searchable: false,
     },
@@ -313,7 +334,7 @@ const ExternalSecuritiesTable = ({
       id: "frequency",
       title: t("External Securities.Headers.Frequency"),
       customFilterAndSearch: (term, rowData) => term === rowData?.frequency?.name,
-      render: (rowData) => rowData?.frequency?.name,
+      render: (rowData) => rowData?.frequency?.name ?? FALLBACK_VALUE,
       sorting: false,
     },
     {
@@ -327,7 +348,9 @@ const ExternalSecuritiesTable = ({
       id: "maturityDate",
       title: t("External Securities.Headers.Maturity Date"),
       field: "maturityDate",
-      render: (rowData) => dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT),
+      render: (rowData) => {
+        return dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT) ? dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT) : '--'
+      },
     },
     {
       id: "currency",
@@ -351,7 +374,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "denomination",
       title: t("External Securities.Headers.Denomination"),
-      render: (rowData) => rowData?.denomination?.name,
+      render: (rowData) => rowData?.denomination?.name ?? FALLBACK_VALUE,
       sorting: false,
     },
     {
@@ -412,7 +435,6 @@ const ExternalSecuritiesTable = ({
                 {t("External Securities.Buttons.New Security")}
               </Button>
             </Grid>
-            {!inProd && (
               <Grid item>
                 <Button
                   color="primary"
@@ -424,7 +446,6 @@ const ExternalSecuritiesTable = ({
                   {t("External Securities.Buttons.New Equity Security")}
                 </Button>
               </Grid>
-            )}
           </Grid>
         </Box>
         <TableFiltersWrapper>

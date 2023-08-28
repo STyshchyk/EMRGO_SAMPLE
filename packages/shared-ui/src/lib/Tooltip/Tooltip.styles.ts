@@ -11,6 +11,7 @@ export const Tooltip = styled.div`
   border: 1px solid transparent;
   box-shadow: 0px ${rem(4)} ${rem(8)} rgba(0, 0, 0, 0.24);
   max-width: ${rem(256)};
+  z-index: 15;
 
   ${({ theme }) =>
     theme.mode === "light" &&

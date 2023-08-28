@@ -3,12 +3,16 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
+
+
 import * as constants from "@emrgo-frontend/constants";
 import { accountIdentification } from "@emrgo-frontend/constants";
 import { Badge, Tab, Tabs, useUser } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 import cx from "classnames";
 import { useDarkMode } from "usehooks-ts";
+
+
 
 import featureFlags from "../../constants/featureFlags";
 import routes from "../../constants/routes";
@@ -17,6 +21,9 @@ import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import { fetchKYCForms } from "../../services/KYC";
 import style from "./style.module.scss";
+
+
+
 
 
 const cashManagement = {
@@ -35,7 +42,7 @@ const reports = {
   requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
 const onboarding = {
-  acls: ["Reports/View"],
+  acls: ["Services/Investor/View"],
   baseURLPattern: /(?:\/dashboard\/custody\/onboarding\/)(?:[\w-/]*)/,
   displayName: "Onboarding",
   homeUrl: routes.dashboard.custody.onboarding.home,
@@ -66,9 +73,10 @@ const securitiesServices = {
 };
 
 const NavLinkList = ({ routingConfigs }) => {
+  console.log("🚀 ~ file: index.jsx:76 ~ NavLinkList ~ routingConfigs:", routingConfigs)
   const { isDarkMode } = useDarkMode();
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
-
+  
   const entityType = useSelector(authSelectors.selectCurrentEntityType);
   const { t } = useTranslation(["translation"]);
 
@@ -94,6 +102,7 @@ const NavLinkList = ({ routingConfigs }) => {
       return false;
     })
   );
+  
   const shouldShowNav = Boolean(
     filteredRoutingConfigs
       .map((item) => routingConfigs[item])
@@ -159,7 +168,7 @@ const DashboardNavHeader = () => {
   const displayCustody = custodykycApprovalStatus;
 
   const initialRoutingConfigs = {
-    securitiesServices,
+    onboarding,
   };
 
   const RoutingConfigs = {

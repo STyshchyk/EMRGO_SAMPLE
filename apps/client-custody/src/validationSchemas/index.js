@@ -38,5 +38,4 @@ export { default as onboardUserFormSchema } from "./onboardUserFormSchema";
 export { default as addSettlementInstructionFormSchema } from "./addSettlementInstructionFormSchema";
 export { default as inviteUserFormSchema } from "./inviteUserFormSchema";
 export { default as submitPrimIssuanceSecForAdmissionFormSchema } from "./submitPrimIssuanceSecForAdmissionFormSchema";
-export { default as addEquitySecurityFormSchema } from "./addEquitySecurityFormSchema";
 export { default as entityCustodySettingsFormSchema } from "./entityCustodySettingsFormSchema";

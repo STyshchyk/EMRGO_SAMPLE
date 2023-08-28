@@ -42,14 +42,19 @@ const ExternalSecuritiesList = () => {
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesList
   );
+
+
+
+
   const allExternalSecurities = useSelector(
     externalSecuritiesSelectors.selectAllExternalSecurities
-  );
+    );
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const generatedTableData = allExternalSecurities?.map((i) =>
     generateExternalSecuritiesListTableRowData(i)
   );
+
   const hasManageSecurityServicesACL = currentListofAcls.includes("Services/Security/Manage");
 
   useWethaqAPIParams({
@@ -77,16 +82,13 @@ const ExternalSecuritiesList = () => {
     return requestPayload;
   };
 
+  
   const handleEquitySecStatusChange = (selectedRow, status) => {
     const editEquityExternalSecurity = (payload) =>
       dispatch(externalSecuritiesActionCreators.doAddEquityExternalSecurities(payload));
     const externalSecurityItem = externalSecuritiesList?.find(({ id }) => selectedRow?.id === id);
 
-    // const requestPayload = {
-    //   requestPayload: { ...buildRequestPayload(externalSecurityItem), status },
-    //   externalSecuritiesId: selectedRow?.id,
-    // };
-
+    
     const requestPayload = buildRequestPayload(externalSecurityItem);
     requestPayload.externalSecurityId = selectedRow?.id;
     requestPayload.status = status;
@@ -257,7 +259,7 @@ const ExternalSecuritiesList = () => {
         />
       )}
 
-      {!inProd && openAddEquitySecurityDialog && (
+      {openAddEquitySecurityDialog && (
         <AddEquitySecurityDialog
           selectedRow={currentlySelectedRowData}
           setSelectedRow={setCurrentlySelectedRowData}
