@@ -64,7 +64,7 @@ CustomNumberInputField.propTypes = {
 
 const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation(["translation", "external_securties"]);
+  const { t } = useTranslation(["external_securities","translation"]);
   const { theme } = useTheme();
   const { locale } = theme;
   const isEdit = selectedRow !== null;
@@ -117,13 +117,14 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
     ({ id }) => selectedRow?.id === id
   );
 
+
   const externalSecurityStatusOptionsList = [
     {
-      label: t("external_securities:External Securities.Status.Active"),
+      label: t("External Securities.Status.Active"),
       value: externalSecurityStatusEnum.ACTIVE,
     },
     {
-      label: t("external_securities:External Securities.Status.Inactive"),
+      label: t("External Securities.Status.Inactive"),
       value: externalSecurityStatusEnum.INACTIVE,
     },
   ];
@@ -161,7 +162,12 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
         enableReinitialize
         validationSchema={addEquitySecurityFormSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          const requestPayload = buildRequestPayload(values);
+          let requestPayload;
+          if (isEdit) {
+            requestPayload = {...buildRequestPayload(values),externalSecuritiesId: selectedRow?.id, };
+          } else {
+            requestPayload = buildRequestPayload(values);
+          }
 
           const payload = {
             requestPayload,
@@ -171,9 +177,9 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
               handleClose();
               setSelectedRow(null);
             },
-          };
-
+          };          
           dispatch(externalSecuritiesActionCreators.doAddEquityExternalSecurities(payload));
+
         }}
       >
         {({ handleSubmit, setFieldValue, values }) => {
@@ -188,8 +194,8 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                   <Grid item xs container alignContent="center">
                     <strong>
                       {isEdit
-                        ? t("external_securities:External Securities.Edit Equity Security")
-                        : t("external_securities:External Securities.New Equity Security")}
+                        ? t("External Securities.Edit Equity Security")
+                        : t("External Securities.New Equity Security")}
                     </strong>
                   </Grid>
 
@@ -206,7 +212,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
                           {t(
-                            "external_securities:External Securities.Add Security Form.Security Name"
+                            "External Securities.Add Security Form.Security Name"
                           )}
                         </Typography>
                       </Grid>
@@ -215,7 +221,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           fullWidth
                           component={TextField}
                           label={t(
-                            "external_securities:External Securities.Add Security Form.Security Name"
+                            "External Securities.Add Security Form.Security Name"
                           )}
                           name="name"
                           variant="filled"
@@ -229,7 +235,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
                           {t(
-                            "external_securities:External Securities.Add Security Form.Security Long Name"
+                            "External Securities.Add Security Form.Security Long Name"
                           )}
                         </Typography>
                       </Grid>
@@ -238,7 +244,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           fullWidth
                           component={TextField}
                           label={t(
-                            "external_securities:External Securities.Add Security Form.Security Long Name"
+                            "External Securities.Add Security Form.Security Long Name"
                           )}
                           name="longName"
                           variant="filled"
@@ -251,7 +257,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
                           {t(
-                            "external_securities:External Securities.Add Security Form.Security Short Name"
+                            "External Securities.Add Security Form.Security Short Name"
                           )}
                         </Typography>
                       </Grid>
@@ -260,7 +266,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           fullWidth
                           component={TextField}
                           label={t(
-                            "external_securities:External Securities.Add Security Form.Security Short Name"
+                            "External Securities.Add Security Form.Security Short Name"
                           )}
                           name="shortName"
                           variant="filled"
@@ -273,7 +279,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Country")}
+                          {t("External Securities.Add Security Form.Country")}
                         </Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} className="px-1">
@@ -310,7 +316,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Currency")}
+                          {t("External Securities.Add Security Form.Currency")}
                         </Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} className="px-1">
@@ -344,7 +350,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                     <Grid container className="mt-4">
                       <Grid item xs={12} md={6} lg={6}>
                         <Typography className="mt-4">
-                          {t("external_securities:External Securities.Add Security Form.Status")}
+                          {t("External Securities.Add Security Form.Status")}
                         </Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6} className="px-1">
@@ -484,7 +490,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                       }}
                       color="primary"
                     >
-                      {t("Miscellaneous.Cancel")}
+                      {t("translation:Miscellaneous.Cancel")}
                     </Button>
                   </Grid>
                 </Grid>
@@ -496,7 +502,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                     color="primary"
                     disabled={values.attributes.length === 0}
                   >
-                    {t("Miscellaneous.Submit")}
+                    {t("translation:Miscellaneous.Submit")}
                   </Button>
                 </Grid>
               </DialogActions>

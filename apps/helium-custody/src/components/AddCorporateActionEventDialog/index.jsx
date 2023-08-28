@@ -192,7 +192,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     const requestPayload = {
       eventTypeId: formikValues?.eventType?.value,
       linkedEventId: formikValues?.linkedEventId?.value,
-      externalSecurityId: formikValues?.externalSecuritySelectOption?.value?.id,
+      externalSecurityId: formikValues?.externalSecuritySelectOption?.value?.id, //isin
       securityName: formikValues?.externalSecuritySelectOption?.value?.longName,
       exDate: formikValues?.exDate,
       recordDate: formikValues?.recordDate,
