@@ -78,6 +78,8 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               <span>{processAPIErrors(error)}</span>
             </Styles.Error>
           )}
+          <Styles.Spacer />
+          <LoginHelp />
         </>
 
       </Styles.LoginForm>)}
