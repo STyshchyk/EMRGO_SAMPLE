@@ -2,13 +2,15 @@ import { authApi } from "../APIService";
 import { IMFA } from "./MFA.types";
 
 
-export const enableMFA = (requestObject: { code: string }) => {
+export const enableMFA = async (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
     data: { code: requestObject },
     url: `/auth/v2/mfa/enable`
   });
-  return promise;
+  const res = await (await promise);
+  if (res.status >= 300) return Promise.reject();
+  return res;
 };
 
 export const setupMFA = async (): Promise<IMFA> => {
@@ -18,16 +20,19 @@ export const setupMFA = async (): Promise<IMFA> => {
     validateStatus: null
 
   });
-  const res = await (await promise).data;
-  return res || [];
+  const res = await (await promise);
+  if (res.status >= 300) return Promise.reject();
+  return res.data || [];
 };
 
-export const verifyMFA = (requestObject: { code: string }) => {
+export const verifyMFA = async (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
     data: requestObject,
     url: `/auth/v2/mfa/verify`
   });
+  const res = await (await promise);
+  if (res.status >= 300) return Promise.reject();
   return promise;
 };
 
