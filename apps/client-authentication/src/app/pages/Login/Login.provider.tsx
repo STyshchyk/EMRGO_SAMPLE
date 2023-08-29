@@ -64,7 +64,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
           navigate(routes.setupTwoFactorAuth);
           return;
         }
-        updateUser({ ...user as IUser, verifyMFA: false });
+        updateUser({ ...user as IUser  });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
       onError: (response) => {

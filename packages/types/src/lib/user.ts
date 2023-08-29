@@ -23,5 +23,4 @@ export interface IUser {
   clientKycStatus: number;
   entityKycStatus: number;
   entityCustodyKycStatus: number;
-  verifyMFA?: boolean;
 }
