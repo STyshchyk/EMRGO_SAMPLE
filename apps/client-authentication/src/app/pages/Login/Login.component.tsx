@@ -1,8 +1,8 @@
-import { FC } from "react";
+import React, { FC, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { clientPrimariesRoutes as routes } from "@emrgo-frontend/constants";
-import { ArrowBackwardIcon,Button, Checkbox, FormikInput, Logo } from "@emrgo-frontend/shared-ui";
+import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull, processAPIErrors } from "@emrgo-frontend/utils";
 
 import { Heading, OneCol, OneColCheck, SubHeading } from "../../components/Form";
@@ -10,15 +10,26 @@ import { LoginHelp } from "../../components/LoginHelp";
 import { SixDigitCodeInput } from "../../components/SixDigitCodeInput";
 import { useLoginContext } from "./Login.provider";
 import * as Styles from "./Login.styles";
+import { LoginContainer } from "./Login.styles";
 import { ILoginFormValues, ILoginProps } from "./Login.types";
 
 export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
-  const { form, showPassword, setShowPassword, handleNext, handleBack, activeStep,isError, error } = ensureNotNull(useLoginContext());
-  
+  const {
+    form,
+    formCode,
+    showPassword,
+    setShowPassword,
+    handleNext,
+    handleBack,
+    activeStep,
+    isError,
+    error,
+  } = ensureNotNull(useLoginContext());
+
   return (
-    <Styles.LoginForm onSubmit={form.handleSubmit}>
-      <Logo />
-      {activeStep === 0 && (
+    <>
+      {activeStep === 0 && (<Styles.LoginForm onSubmit={form.handleSubmit}>
+        <Logo />
         <>
           <div>
             <Heading>Login</Heading>
@@ -53,10 +64,10 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
           </OneColCheck>
 
           <OneCol>
-            <Button 
-              size="large" 
-              disabled={!form.isValid}        
-              onClick={handleNext}
+            <Button
+              size="large"
+              disabled={!form.isValid}
+              type={"submit"}
             >
               Submit
             </Button>
@@ -67,11 +78,12 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               <span>{processAPIErrors(error)}</span>
             </Styles.Error>
           )}
-      </>
-      )}
+        </>
 
-
+      </Styles.LoginForm>)}
       {activeStep === 1 && (
+        <Styles.LoginForm onSubmit={formCode.handleSubmit}>
+          <Logo />
           <Styles.Form $isAligned={true}>
             <Styles.BackButton onClick={handleBack} type={"button"}>
               <ArrowBackwardIcon />
@@ -82,22 +94,19 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               provided a new security code every 30 seconds.
             </SubHeading>
             <OneCol>
-            <SixDigitCodeInput
+              <SixDigitCodeInput
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                value={form.values.code!}
+                value={formCode.values.code}
                 onChange={(value) => {
-                  form.setFieldValue("code", value);
-
-                  if (form.isValid) console.log("valid");
-
+                  formCode.setFieldValue("code", value);
                 }}
               />
             </OneCol>
             <OneCol>
-              <Button 
-                size="large" 
-                disabled={!form.isValid}  
-                type={"submit"}      
+              <Button
+                size="large"
+                disabled={formCode.values.code?.length < 6}
+                type={"submit"}
               >
                 Submit
               </Button>
@@ -107,11 +116,9 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               <Link to={""}>Raise support ticket</Link>
             </Styles.HelpListItem>
           </Styles.Form>
-      )}
-
-      <Styles.Spacer />
-
-      <LoginHelp />
-    </Styles.LoginForm>
+          <Styles.Spacer />
+          <LoginHelp />
+        </Styles.LoginForm>)}
+    </>
   );
 };
