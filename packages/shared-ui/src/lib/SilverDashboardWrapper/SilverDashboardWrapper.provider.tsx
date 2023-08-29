@@ -103,11 +103,16 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       Object.keys(constants.silverModuleURLs).find(
         (key) => removeHttp(constants.silverModuleURLs[key]) === removeHttp(window.location.origin)
       ) || "";
+    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:106 : enableRoleMapping", enableRoleMapping, );
+    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:107 : currentRole",  currentRole  );
+    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:108 : Acess",  !currentRole?.access.includes(currentModuleKey));
+    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:109 : currentModuleKey",   currentModuleKey);
+    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:110 : silverModules",   constants.silverModuleURLs);
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
         showWarningToast(message);
-      }, 1000);
+      }, 1500);
       setTimeout(() => {
         navigateSilverModule(currentRole?.module || "", currentRole?.route || "");
       }, 2000);
