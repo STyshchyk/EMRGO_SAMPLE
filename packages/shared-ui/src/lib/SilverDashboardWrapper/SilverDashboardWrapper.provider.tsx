@@ -10,13 +10,13 @@ import * as constants from "@emrgo-frontend/constants";
 import {
   getAllSilverRoutes,
   heliumCustodyRoutes,
-  silverAdministrationRoutes,
+  silverAdministrationRoutes, silverAuthenticationRoutes,
   silverDataRoomRoutes,
   silverOnboardingRoutes,
   silverPrimariesRoutes
 } from "@emrgo-frontend/constants";
 import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
-import { navigateSilverModule } from "@emrgo-frontend/utils";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 
 const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | null>(null);
 
@@ -41,7 +41,11 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   useLayoutEffect(() => {
     disable();
   }, []);
-  const { mutate: doLogout } = useMutation({ mutationFn: logoutUser });
+  const { mutate: doLogout } = useMutation({
+    mutationFn: logoutUser, onSuccess: () => {
+      navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
+    }
+  });
 
   const { data: userData } = useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
@@ -89,9 +93,11 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       paths: getAllSilverRoutes(heliumCustodyRoutes)
     }
   ];
-  function removeHttp(url:string) {
-    return url.replace(/^https?:\/\//, '');
+
+  function removeHttp(url: string) {
+    return url.replace(/^https?:\/\//, "");
   }
+
   useEffect(() => {
     const currentModuleKey =
       Object.keys(constants.silverModuleURLs).find(

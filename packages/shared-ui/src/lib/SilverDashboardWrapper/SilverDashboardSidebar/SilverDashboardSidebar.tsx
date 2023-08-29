@@ -80,7 +80,7 @@ export const SilverDashboardSidebar = () => {
             <SidebarListItemSecondaryLink
               onClick={() => {
                 doLogout();
-                navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
+
               }}
             >
               <SidebarListItemIcon>
