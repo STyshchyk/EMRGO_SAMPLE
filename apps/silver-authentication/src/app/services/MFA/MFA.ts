@@ -1,5 +1,6 @@
 import { authApi } from "../APIService";
 import { IMFA } from "./MFA.types";
+import { ILoginCode } from "../../pages/Login/Login.types";
 
 export const enableMFA = (code: string) => {
   return authApi({
@@ -22,13 +23,11 @@ export const setupMFA = async (): Promise<IMFA> => {
   return res || [];
 };
 
-export const verifyMFA = (code: string) => {
+export const verifyMFA = (code: ILoginCode) => {
   return authApi({
     method: "POST",
     url: "auth/v2/mfa/verify",
     validateStatus: null,
-    data: {
-      code,
-    },
+    data: code
   });
 };

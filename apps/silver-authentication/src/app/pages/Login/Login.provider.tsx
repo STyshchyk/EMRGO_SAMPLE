@@ -1,12 +1,12 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { clientAuthenticationRoutes as routes, silverRoles } from "@emrgo-frontend/constants";
+import { silverAuthenticationRoutes, silverRoles } from "@emrgo-frontend/constants";
 // import { useUser } from "@emrgo-frontend/shared-ui";
 import { useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { IUser } from "@emrgo-frontend/types";
 // import { IMFA,IUser } from "@emrgo-frontend/types";
-import { navigateModule, navigateSilverModule } from "@emrgo-frontend/utils";
+import { navigateSilverModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useDarkMode } from "usehooks-ts";
@@ -55,15 +55,14 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     // navigateModule("primaries", routes.home);
     doLoginUser(values, {
       onSuccess: (response) => {
-        const user = response.data.user;
+        const user = response.user;
         const MFA = user instanceof Object && "email" in user;
         if (!MFA || !user.mfaEnabled) {
           setMFA?.(response as unknown as IMFA);
-          navigate(routes.setupTwoFactorAuth);
+          navigate(silverAuthenticationRoutes.completeRegistration);
           return;
         }
         updateUser({ ...user as IUser });
-
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
       onError: (response) => {

@@ -72,7 +72,7 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               Submit
             </Button>
           </OneCol>
-          {isError && (
+          {isError && false && (
             <Styles.Error>
               <Styles.ErrorIcon />
               <span>{processAPIErrors(error)}</span>
