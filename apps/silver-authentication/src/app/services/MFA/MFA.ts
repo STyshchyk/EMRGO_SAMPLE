@@ -2,12 +2,11 @@ import { authApi } from "../APIService";
 import { IMFA } from "./MFA.types";
 
 
-
 export const enableMFA = (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
-    data: requestObject,
-    url: `/auth/v2/mfa/enable`,
+    data: { code: requestObject },
+    url: `/auth/v2/mfa/enable`
   });
   return promise;
 };
@@ -27,7 +26,7 @@ export const verifyMFA = (requestObject: { code: string }) => {
   const promise = authApi({
     method: "POST",
     data: requestObject,
-    url: `/auth/v2/mfa/verify`,
+    url: `/auth/v2/mfa/verify`
   });
   return promise;
 };

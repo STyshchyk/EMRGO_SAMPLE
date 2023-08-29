@@ -20,7 +20,6 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
         validateOnMount={true}
         initialValues={{ otp: "" }}
         onSubmit={(values, formikHelpers) => {
-          console.log(values);
           if (mode === undefined) return;
           if (mode === MFATYPE.enable) onEnableMFA(values.otp);
            else onVerifyMFA(values.otp);
@@ -42,7 +41,7 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
                 </SubHeading>
                 {isQRCodeLoading ? (
                   <span>Generating QR Code...</span>
-                ) : ( 
+                ) : (
                   <div style={{ height: "224", margin: "0 auto", maxWidth: 224 }}>
                     <QRCode
                       size={256}
