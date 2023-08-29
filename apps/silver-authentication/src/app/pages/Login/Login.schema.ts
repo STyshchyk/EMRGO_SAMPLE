@@ -1,7 +1,11 @@
 import * as Yup from "yup";
 
-export const loginSchema = Yup.object({
-  email: Yup.string().email().required(),
-  password: Yup.string().required(),
-  code: Yup.string().required().min(6, "Enter a code"),
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string().email().required("Required"),
+  password: Yup.string().required("Required"),
 });
+
+export const LoginCode = Yup.object().shape({
+  code: Yup.string().length(6, "String lenght 6")
+});
+
