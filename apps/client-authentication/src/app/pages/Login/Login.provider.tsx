@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useEffect,useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
@@ -9,13 +9,14 @@ import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useDarkMode } from "usehooks-ts";
+import { a } from "vitest/dist/types-b7007192";
 
 import { useUser } from "../../components/UserContext"; //* using app level user context with further mfa checks
 import { IUser } from "../../components/UserContext/UserContext.types";
-import { IMFA } from "../../services";
-import { LoginSchema } from "./Login.schema";
+import { IMFA, verifyMFA } from "../../services";
+import { LoginCode, LoginSchema } from "./Login.schema";
 import { loginUser } from "./Login.service";
-import { ILoginContext, ILoginFormValues } from "./Login.types";
+import { ILoginCode, ILoginContext, ILoginFormValues } from "./Login.types";
 
 
 const LoginContext = createContext<ILoginContext | null>(null);
@@ -28,24 +29,25 @@ const LoginContext = createContext<ILoginContext | null>(null);
 export const LoginProvider = ({ children }: PropsWithChildren) => {
   const { showErrorToast } = useToast();
   const navigate = useNavigate();
-  const { enable,disable } = useDarkMode();
+  const { enable, disable } = useDarkMode();
 
   const { updateUser, setMFA } = useUser();
 
   const [showPassword, setShowPassword] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-
+  const [code, setCode] = useState<string | null>("");
   const { mutate: doLoginUser, isError, error } = useMutation(loginUser);
-
+  const { mutate: doVerifyAuthenticatorMFA } = useMutation(verifyMFA);
   /**
    * Initial values for the form.
    */
   const initialValues: ILoginFormValues = {
     email: "helen@emrgo.com",
-    password: "hellowolf122!",
-    code: null,
+    password: "hellowolf122!"
   };
-
+  const codeInitial: ILoginCode = {
+    code: ""
+  };
   /**
    * @param values an object containing current form values
    * @returns void
@@ -53,20 +55,17 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
    */
   const onSubmit = (values: ILoginFormValues) => {
     // navigateModule("primaries", routes.home);
-
     doLoginUser(values, {
       onSuccess: (response) => {
-          const user = response.data.user;
-          const MFA = user instanceof Object && "email" in user;
-          if (!MFA || !user.mfaEnabled) {
-            setMFA?.(response as unknown as IMFA);
-            navigate(routes.setupTwoFactorAuth);
-            return;
-          }
-
-        updateUser({ ...user as IUser, verifyMFA: false });
-        disable();
-        navigateModule("primaries", routes.home);  //* navigate to custody once dashboard is ready
+        const user = response.data.user;
+        const MFA = user instanceof Object && "email" in user;
+        if (!MFA || !user.mfaEnabled) {
+          setMFA?.(response as unknown as IMFA);
+          navigate(routes.setupTwoFactorAuth);
+          return;
+        }
+        updateUser({ ...user as IUser  });
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -74,10 +73,20 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
         showErrorToast(response?.data?.message ?? "Error appeared during login");
       }
     });
+
   };
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = (code: ILoginCode) => {
+    if (!code) return;
+    doVerifyAuthenticatorMFA(code, {
+      onSuccess: (data) => {
+        navigateModule("primaries", routes.home);  //* navigate to custody once dashboard is ready
+      },
+      onError: () => {
+        showErrorToast("Error while verifing mfa code");
+      }
+    });
+    disable();
   };
 
   const handleBack = () => {
@@ -85,26 +94,36 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-  enable()
-  }, [])
-  
+    enable();
+  }, []);
+
 
   const form = useFormik<ILoginFormValues>({
     initialValues,
     validateOnMount: true,
     validationSchema: LoginSchema,
-    onSubmit,
+    onSubmit
   });
+  const formCode = useFormik<ILoginCode>({
+    initialValues: codeInitial,
+    validateOnMount: true,
+    enableReinitialize: true,
+    validationSchema: LoginCode,
+    onSubmit: handleNext
+  });
+
 
   const state: ILoginContext = {
     form,
+    formCode,
     showPassword,
     setShowPassword,
     activeStep,
     handleNext,
     handleBack,
     isError,
-    error,
+    error
+
   };
 
   return <LoginContext.Provider value={state}>{children}</LoginContext.Provider>;

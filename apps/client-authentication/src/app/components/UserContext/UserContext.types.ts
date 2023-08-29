@@ -15,7 +15,6 @@ export interface IUser {
   mfaType: string | null;
   role: string;
   tncAcceptedVersion: string | number | null;
-  verifyMFA?: boolean;
 }
 
 export interface IUserData {
