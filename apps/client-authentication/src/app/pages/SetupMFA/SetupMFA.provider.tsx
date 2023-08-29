@@ -67,7 +67,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     // to get the qr code
-    // onSetupMFA();
+    onSetupMFA();
     // set to dark theme
     enable();
   }, []);
