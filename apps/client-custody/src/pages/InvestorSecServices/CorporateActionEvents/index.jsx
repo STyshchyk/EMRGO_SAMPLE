@@ -13,7 +13,6 @@ import * as authSelectors from "../../../redux/selectors/auth";
 import * as CAEventsSelectors from "../../../redux/selectors/corporateActionEvents";
 
 const CorporateActionEvents = () => {
-  const { t } = useTranslation([""]);
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
