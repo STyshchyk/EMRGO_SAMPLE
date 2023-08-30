@@ -16,7 +16,7 @@ import Popover from "@mui/material/Popover";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
+import v from "voca";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
@@ -127,7 +127,7 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
                   {userFullName}
                 </Typography>
                 <Typography variant="caption" align="left" className={style.user__role}>
-                  {capitalCase(currentCorporateEntityName)} - {currentEntityGroup?.name}
+                  {v.capitalize(currentCorporateEntityName)} - {currentEntityGroup?.name}
                 </Typography>
               </Grid>
             </ButtonBase>
@@ -154,10 +154,10 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
           <div className={style.menu__header}>
             <Typography variant="subtitle2" align="center" className={style.menu__current__group}>
               {locale.rtl
-                ? `(${capitalCase(t(`EntityGroupType.${currentEntityType}`))}) ${t(
+                ? `(${v.capitalize(t(`EntityGroupType.${currentEntityType}`))}) ${t(
                     `EntityGroupName.${currentEntityGroup?.name}`
                   )}`
-                : `${t(`EntityGroupName.${currentEntityGroup?.name}`)} (${capitalCase(
+                : `${t(`EntityGroupName.${currentEntityGroup?.name}`)} (${v.capitalize(
                     t(`EntityGroupType.${currentEntityType}`)
                   )})`}
             </Typography>

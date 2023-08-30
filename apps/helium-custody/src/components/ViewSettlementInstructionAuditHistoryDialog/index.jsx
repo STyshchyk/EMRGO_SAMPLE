@@ -10,8 +10,8 @@ import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { StyleSheet, View } from "@react-pdf/renderer";
-import { constantCase } from "change-case";
 import { CsvBuilder } from "filefy";
+import v from "voca";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
@@ -75,7 +75,11 @@ const generateSIAuditHistoryStatement = (item) => {
     auditHistoryStatement = `${auditSubType} by ${userFullName}`;
 
     if (auditColumnLabel) {
-      return `${constantCase(auditColumnLabel)} changed from ${formatSIFieldValue(
+      return `${v
+        .chain(auditColumnLabel)
+        .snakeCase()
+        .upperCase()
+        .value()} changed from ${formatSIFieldValue(
         prevStatus,
         auditColumnLabel
       )} to ${formatSIFieldValue(newStatus, auditColumnLabel)} by ${userFullName}`;
@@ -211,7 +215,7 @@ const ViewSettlementInstructionAuditHistoryDialog = ({
       sorting: false,
       render: (rowData) => {
         if (rowData?.auditColumnLabel) {
-          return constantCase(rowData?.auditColumnLabel);
+          return v.chain(rowData?.auditColumnLabel).snakeCase().upperCase().value();
         }
 
         return "STATUS";

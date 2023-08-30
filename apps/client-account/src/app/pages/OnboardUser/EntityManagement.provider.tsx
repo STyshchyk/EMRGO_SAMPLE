@@ -3,7 +3,7 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { queryKeys } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
-import { camelCase } from "change-case";
+import v from "voca";
 
 import { archiveUser,cancelInvitation,getOnboardedUsers,getRoles,inviteUser,makeOrRevokeAdmin,resendInvite } from "./EntityManagement.service";
 import { IEntityManagementContext, INewUser, UserRoles } from "./EntityManagement.types";
@@ -41,7 +41,7 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
       queryKey : [queryKeys.account.onboardedUsers.roles],
       onSuccess: (response) => {
           const roles = response.map((role: { name: string, key: string}) => {
-          const roleName = camelCase(role.name)
+          const roleName = v.camelCase(role.name)
           return {
             label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]), 
             value: role.key

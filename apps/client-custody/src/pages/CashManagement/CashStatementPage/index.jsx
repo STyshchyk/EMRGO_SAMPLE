@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { capitalCase } from "change-case";
+import v from "voca";
 import { CsvBuilder } from "filefy";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -29,7 +29,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 import moment from "moment";
 
-const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
+const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
   const entries = [];

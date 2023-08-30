@@ -1,4 +1,4 @@
-import { capitalCase } from "change-case";
+import v from "voca";
 import { produce } from "immer";
 import { createSelector } from "reselect";
 
@@ -104,7 +104,7 @@ export const selectSubscriptions = createSelector(
           investor: investor?.corporateEntityName ?? "-",
           subAmount: convertNumberToIntlFormat(subscriptionAmount),
           certificates: parseFloat(subscriptionAmount ?? 0) / denominationValue,
-          eoiStatus: capitalCase(status),
+          eoiStatus: v.capitalize(status),
         });
       });
     }

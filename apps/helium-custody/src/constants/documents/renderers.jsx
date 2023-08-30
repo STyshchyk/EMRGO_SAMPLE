@@ -12,7 +12,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SendIcon from "@mui/icons-material/Send";
 import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-// import { capitalCase } from 'change-case';
 import Chip from "@mui/material/Chip";
 import { amber, green, grey, lightBlue } from "@mui/material/colors";
 import Dialog from "@mui/material/Dialog";

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { capitalCase } from "change-case";
+import v from "voca";
 import cx from "classnames";
 import { reverse } from "named-urls";
 
@@ -185,7 +185,7 @@ const IssuancesList = () => {
                       <p className={style.sectionValue}>
                         {t(
                           `statuses:Issuance.Private Placement.${
-                            capitalCase(entry?.status) ?? "N/A"
+                            v.capitalize(entry?.status) ?? "N/A"
                           }`
                         )}
                       </p>

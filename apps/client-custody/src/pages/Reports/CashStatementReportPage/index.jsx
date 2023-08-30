@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { capitalCase } from "change-case";
+import v from "voca";
 import moment from "moment";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -30,7 +30,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
-const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
+const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
   const entries = [];
@@ -145,7 +145,7 @@ const CashStatementReportPage = () => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
+          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });

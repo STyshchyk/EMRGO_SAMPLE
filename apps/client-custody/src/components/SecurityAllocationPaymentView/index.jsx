@@ -8,7 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { capitalCase } from "change-case";
+import v from "voca";
 import PropTypes from "prop-types";
 
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
@@ -59,7 +59,7 @@ const SecurityAllocationPaymentView = ({ subscriptions, sukukData }) => {
               head: classes.head,
             }}
           >
-            {`${capitalCase(el?.entityGroup?.entity?.corporateEntityName ?? "")}` ?? "N/A"}
+            {`${v.capitalize(el?.entityGroup?.entity?.corporateEntityName ?? "")}` ?? "N/A"}
           </StyledTableCell>
           <StyledTableCell
             align="right"

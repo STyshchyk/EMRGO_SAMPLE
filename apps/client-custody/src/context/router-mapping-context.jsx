@@ -1,8 +1,6 @@
 import { createContext, lazy, useContext } from "react";
 import { useSelector } from "react-redux";
 
-import { useUser } from "@emrgo-frontend/shared-ui";
-
 import featureFlags from "../constants/featureFlags";
 import routes from "../constants/routes";
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -45,8 +43,6 @@ RouterMappingContext.displayName = "RouterMappingContext";
 
 const RouterMappingProvider = ({ children }) => {
   const inProd = useIsProduction();
-  const { user } = useUser();
-  console.log("🚀 ~ file: router-mapping-context.jsx:49 ~ RouterMappingProvider ~ user:", user);
 
   const { checkFeatureFlag } = useFeatureToggle();
   const isBulletinBoardFeatureEnabled = checkFeatureFlag(featureFlags.bulletinBoardFeature);

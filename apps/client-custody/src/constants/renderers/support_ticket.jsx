@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
 import { amber, green, grey, red } from "@mui/material/colors";
-import { capitalCase } from "change-case";
+import v from "voca";
 
 const chipStyle = {
   borderRadius: "3px",
@@ -27,7 +27,7 @@ export const typeRenderer = (value) => {
   }
   const statusChip = (
     <Chip
-      label={capitalCase(value)}
+      label={v.capitalize(value)}
       style={{ ...chipStyle, backgroundColor: bgColor, color: textColor }}
     />
   );
@@ -49,11 +49,11 @@ export const statusRenderer = (value) => {
   }
   const statusChip = (
     <Chip
-      label={capitalCase(text)}
+      label={v.capitalize(text)}
       style={{ ...chipStyle, backgroundColor: bgColor, color: textColor }}
     />
   );
   return statusChip;
 };
 
-export const titleRenderer = (value) => capitalCase(value);
+export const titleRenderer = (value) => v.capitalize(value);

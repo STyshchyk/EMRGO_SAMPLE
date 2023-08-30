@@ -2,7 +2,7 @@ import Chip from "@mui/material/Chip";
 import { amber, green, grey, red } from "@mui/material/colors";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
+import v from "voca";
 import moment from "moment";
 
 import tableStyles from "../../styles/cssInJs/materialTable";
@@ -41,7 +41,7 @@ export const StatusRenderer = (value) => {
 };
 
 export const titleRenderer = (value) => {
-  const titledValue = capitalCase(value);
+  const titledValue = v.capitalize(value);
   return titledValue;
 };
 
@@ -64,7 +64,7 @@ export const reportDateRenderer = (date) => {
 };
 
 export const accountTypeRenderer = (value) => {
-  const accountType =  value == '-' ? '-' : capitalCase(value) || ""
+  const accountType =  value == '-' ? '-' : v.capitalize(value) || ""
   return accountType;
 };
 

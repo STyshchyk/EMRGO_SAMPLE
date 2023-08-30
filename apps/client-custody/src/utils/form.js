@@ -1,4 +1,4 @@
-import { capitalCase } from "change-case";
+import v from "voca";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -10,7 +10,7 @@ const getDropdownValues = (entries, locale, captitalise = false, key = "") => {
       const extraData = opt[key];
       const name = locale?.altLocale === "ar-sa" ? opt.nameAr : opt.name;
       options.push({
-        label: captitalise ? capitalCase(name) : name,
+        label: captitalise ? v.capitalize(name) : name,
         value: opt.id,
         meta: extraData,
       });

@@ -13,7 +13,7 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
+import v from "voca";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import Moment from "moment";
@@ -312,7 +312,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
               <DialogTitle id="form-dialog-title">
                 {" "}
                 {t("Invoice Management.View Dialog.Invoice", {
-                  type: capitalCase(modalType),
+                  type: v.capitalize(modalType),
                 })}
               </DialogTitle>
 
