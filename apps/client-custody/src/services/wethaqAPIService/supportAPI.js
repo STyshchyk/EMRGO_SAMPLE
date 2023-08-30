@@ -3,42 +3,42 @@ import { baseAxiosInstance } from "./helpers";
 const fetchTFATickets = () =>
   baseAxiosInstance({
     method: "GET",
-    url: `/v1/supportTicket`,
+    url: `/support/v1/supportTicket`,
   });
 
 const upload2faVerificationFile = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload.requestPayload,
-    url: `/files//v1/files/upload/supportTicket/link`,
+    url: `/files/v1/files/upload/supportTicket/link`,
   });
 
 const fetchTFAVerificationDocument = (payload) =>
   baseAxiosInstance({
     method: "PUT",
     data: payload,
-    url: `/files//v1/files/view`,
+    url: `/files/v1/files/view`,
   });
 
 const createTFATicket = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/v1/supportTicket`,
+    url: `/support/v1/supportTicket`,
   });
 
 const deleteTFATicket = (payload) =>
   baseAxiosInstance({
     method: "DELETE",
     data: payload,
-    url: `/v1/supportTicket/${payload.supportTicketId}`,
+    url: `/support/v1/supportTicket/${payload.supportTicketId}`,
   });
 
 const approveTFATicket = (payload) =>
   baseAxiosInstance({
     method: "PATCH",
     data: payload,
-    url: `/v1/supportTicket/${payload.supportTicketId}`,
+    url: `/support/v1/supportTicket/${payload.supportTicketId}`,
   });
 
 const supportAPI = {

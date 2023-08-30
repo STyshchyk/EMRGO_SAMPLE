@@ -171,6 +171,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         {
           key: "AddCorporateActionEventForm",
           value: JSON.stringify(value),
+          isActive:false,
         },
       ],
     };
@@ -227,9 +228,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     >
       <Formik
         initialValues={initialValues}
-        validationSchema={addCorporateActionEventFormSchema}
+        // validationSchema={addCorporateActionEventFormSchema}
         enableReinitialize
         onSubmit={async (values, actions) => {
+          console.log('bugs')
           let requestPayload;
 
           if (isEdit) {
@@ -255,6 +257,8 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
               setSelectedRow(null);
             },
           };
+
+          console.log(payload,'here')
           if (isEdit) {
             dispatch(CAEventsActionCreators.doEditCAEvent(payload));
           } else {
@@ -416,6 +420,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
                         name="exDate"
+                        value={values.exDate}
+                        onChange={(date) => {
+                          setFieldValue("exDate", date);
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -434,6 +442,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         minDate={values.exDate}
                         component={DatePicker}
                         name="recordDate"
+                        value={values.recordDate}
+                        onChange={(date) => {
+                          setFieldValue("recordDate", date);
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -452,6 +464,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         minDate={values.exDate}
                         component={DatePicker}
                         name="paymentDate"
+                        value={values.paymentDate}
+                        onChange={(date) => {
+                          setFieldValue("paymentDate", date);
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -577,6 +593,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
                         name="responseDeadline"
+                        value={values.responseDeadline}
+                        onChange={(date) => {
+                          setFieldValue("responseDeadline", date);
+                        }}
                       />
                     </Grid>
                   </Grid>

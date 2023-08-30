@@ -33,7 +33,6 @@ const PublicHome = lazy(() => import("../pages/PublicHome"));
 const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
 const Reconciliation = lazy(() => import("../pages/Reconciliation"));
 // const Reports = lazy(() => import("../pages/Reports"));
-const OperationsSecServices = lazy(() => import("../pages/OperationsSecServices"));
 const SettlementAdmin = lazy(() => import("../pages/SettlementAdmin"));
 const SingleIssuance = lazy(() => import("../pages/SingleIssuance"));
 const Billing = lazy(() => import("../pages/Billing"));

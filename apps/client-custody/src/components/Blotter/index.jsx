@@ -1000,6 +1000,10 @@ const Blotter = ({
                                 variant="inline"
                                 placeholder="DD/MM/YYYY"
                                 component={DatePicker}
+                                value={values.fromDate}
+                                onChange={(date) => {
+                                  setFieldValue("fromDate", date);
+                                }}
                                 name="fromDate"
                                 label={t("blotter:Filters.Date Dropdown.From")}
                                 onBlur={() => {
@@ -1016,6 +1020,10 @@ const Blotter = ({
                                 variant="inline"
                                 placeholder="DD/MM/YYYY"
                                 component={DatePicker}
+                                value={values.toDate}
+                                onChange={(date) => {
+                                  setFieldValue("toDate", date);
+                                }}
                                 name="toDate"
                                 label={t("blotter:Filters.Date Dropdown.To")}
                                 onBlur={() => {
@@ -1127,6 +1135,10 @@ const Blotter = ({
                                 variant="inline"
                                 placeholder="DD/MM/YYYY"
                                 component={DatePicker}
+                                value={values.settlementFromDate}
+                                onChange={(date) => {
+                                  setFieldValue("settlementFromDate", date);
+                                }}
                                 name="settlementFromDate"
                                 label={t("blotter:Filters.Date Dropdown.From")}
                                 onBlur={() => {
@@ -1143,6 +1155,10 @@ const Blotter = ({
                                 variant="inline"
                                 placeholder="DD/MM/YYYY"
                                 component={DatePicker}
+                                value={values.settlementToDate}
+                                onChange={(date) => {
+                                  setFieldValue("settlementToDate", date);
+                                }}
                                 name="settlementToDate"
                                 label={t("blotter:Filters.Date Dropdown.To")}
                                 onBlur={() => {
