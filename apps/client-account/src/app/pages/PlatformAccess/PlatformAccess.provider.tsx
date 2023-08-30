@@ -10,6 +10,7 @@ import {
   createFormSession as createInvestmentFormSession,
   fetchInvestorProfileForms,
   submitInvestorProfileForms,
+  submitKYCForms,
 } from "../InvestmentProfile/InvestmentProfile.services";
 import { IInvestmentProfileSection } from "../InvestmentProfile/InvestmentProfile.types";
 import { fetchKYCForms } from "../KYC/KYC.services";
@@ -51,6 +52,7 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doInvestmentProfileCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doKYCCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doSubmitInvestmentProfile } = useMutation(submitInvestorProfileForms);
+  const { mutate: doSubmitKYC } = useMutation(submitKYCForms);
 
   const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
@@ -98,12 +100,19 @@ export const PlatformAccessProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
         investmentProfileRefetch();
         refreshProfile();
+        showSuccessToast(`Successfully submited user profile for review`);
       },
     });
   };
 
   const onKYCSubmit = () => {
-    navigate("thank-you");
+    doSubmitKYC(undefined, {
+      onSuccess: (response) => {
+        kycRefetch();
+        refreshProfile();
+        showSuccessToast(`Successfully submited KYC for review`);
+      },
+    });
   };
 
   useEffect(() => {

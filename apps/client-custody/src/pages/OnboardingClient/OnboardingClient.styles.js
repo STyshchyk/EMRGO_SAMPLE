@@ -1,6 +1,8 @@
-import { AccountPanelContent } from "../../components/AccountPanelContent";
-import styled from "styled-components";
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
+import styled from "styled-components";
+
+import { AccountPanelContent } from "../../components/AccountPanelContent";
 
 export const Container = styled.div`
   display: grid;
@@ -11,4 +13,9 @@ export const Container = styled.div`
 
 export const QuestionnairePanelContent = styled(AccountPanelContent)`
   padding-bottom: ${rem(8)};
+`;
+
+export const Text = styled.p`
+  margin: 0;
+  ${getTheme("typography.regular.03Tight")}
 `;

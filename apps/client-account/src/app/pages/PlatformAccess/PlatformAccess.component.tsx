@@ -110,27 +110,31 @@ export const PlatformAccessComponent: FC<IPlatformAccessProps> = (props: IPlatfo
             </QuestionnaireItems>
           </Styles.QuestionnairePanelContent>
           <AccountPanelFooter>
-            <div>
-              {!areAllKYCSectionsComplete && (
-                <Button
-                  size="large"
-                  onClick={() =>
-                    onKYCStartForm(
-                      firstKYCIncompleteForm?.formId || "",
-                      firstKYCIncompleteForm?.formReferenceId || ""
-                    )
-                  }
-                >
-                  Start {firstKYCIncompleteForm?.label}
-                </Button>
-              )}
+            {entityKycStatus === accountIdentification.KYC_STATUS_PENDING ? (
+              <div>
+                {!areAllKYCSectionsComplete && (
+                  <Button
+                    size="large"
+                    onClick={() =>
+                      onKYCStartForm(
+                        firstKYCIncompleteForm?.formId || "",
+                        firstKYCIncompleteForm?.formReferenceId || ""
+                      )
+                    }
+                  >
+                    Start {firstKYCIncompleteForm?.label}
+                  </Button>
+                )}
 
-              {areAllKYCSectionsComplete && (
-                <Button size="large" onClick={onKYCSubmit}>
-                  Submit KYC
-                </Button>
-              )}
-            </div>
+                {areAllKYCSectionsComplete && (
+                  <Button size="large" onClick={onKYCSubmit}>
+                    Submit KYC
+                  </Button>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </AccountPanelFooter>
         </AccountPanel>
       </Styles.Container>
