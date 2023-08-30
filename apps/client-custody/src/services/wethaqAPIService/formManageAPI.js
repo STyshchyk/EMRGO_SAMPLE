@@ -1,15 +1,13 @@
 import { baseAxiosInstance } from "./helpers";
 
-const fetchValues = (payload) =>
-  baseAxiosInstance({
+const fetchValues = (payload) =>{
+  return baseAxiosInstance({
     method: "POST",
     url: `/auth/v2/profile/settings/query`,
-    data: {
-      "keys": [
-        ...payload
-      ]
-    }
+    data: { keys: payload?.keys }
   });
+}
+
 
 const postValues = (payload) =>
   baseAxiosInstance({
