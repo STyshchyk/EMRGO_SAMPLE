@@ -23,6 +23,7 @@ import { AccountPanel } from "../../components/AccountPanel";
 import { AccountPanelFooter } from "../../components/AccountPanelFooter";
 import { AccountPanelHeader } from "../../components/AccountPanelHeader";
 import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import * as authActionCreators from "../../redux/actionCreators/auth";
 import {
   createInvestmentFormSession,
@@ -30,18 +31,16 @@ import {
   submitCustodyKYCForms,
 } from "../../services/KYC";
 import * as Styles from "./OnboardingClient.styles";
-import { Spinner } from "@react-pdf-viewer/core";
-import LoadingIndicator from "../../components/LoadingIndicator";
 
 const OnboardingClient = () => {
   const dispatch = useDispatch();
   const refreshProfile = useRefreshProfile();
   const { user } = useUser();
-  console.log("🚀 ~ file: index.jsx:38 ~ OnboardingClient ~ user:", user);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { showSuccessToast } = useToast();
   const [isAboutCustodyDisplayed, setAboutCustodyDisplayed] = useState(true);
+
   const { data: kycForms, refetch: kycRefetch } = useQuery({
     staleTime: Infinity,
     queryKey: [constants.queryKeys.account.kyc.fetch],
@@ -54,7 +53,6 @@ const OnboardingClient = () => {
   const { mutate: doKYCCreateFormSession } = useMutation(createInvestmentFormSession);
   const { mutate: doSubmitCustodyKYCForms } = useMutation(submitCustodyKYCForms);
 
-  // const investmentProfileFormItems = investmentProfileForms?.forms;
   const kycFormItems = kycForms?.forms;
 
   const redirectPath = constants.clientCustodyRoutes.custody.onboarding.home;
@@ -80,37 +78,15 @@ const OnboardingClient = () => {
   const onKYCSubmit = () => {
     doSubmitCustodyKYCForms(undefined, {
       onSuccess: (response) => {
+        // To keep redux in sync
         const fetchUserProfile = (payload) =>
           dispatch(authActionCreators.doFetchUserProfile(payload));
         fetchUserProfile();
         refreshProfile();
+        showSuccessToast(`Successfully submited regulatory onboarding for review`);
       },
     });
   };
-
-  // useEffect(() => {
-  //   if (searchParams.has("form")) {
-  //     const callbackFormId = searchParams.get("form");
-  //     if (callbackFormId) {
-  //       searchParams.delete("form");
-  //       if (investmentProfileForms) {
-  //         const completedForm = investmentProfileForms?.forms.find(
-  //           (form) => form.formId === callbackFormId
-  //         );
-  //         showSuccessToast(`Successfully completed Investor Profile ${completedForm?.label} form`);
-  //
-  //         setTimeout(() => {
-  //           // investmentProfileRefetch();
-  //         }, 1000);
-  //       }
-  //       setSearchParams(searchParams);
-  //     }
-  //   } else {
-  //     // investmentProfileRefetch();
-  //   }
-  //
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   useEffect(() => {
     if (searchParams.has("form")) {
@@ -134,24 +110,19 @@ const OnboardingClient = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const userProfilingQuestionnaireItems = investmentProfileFormItems || [];
   const kycQuestionnaireItems = kycFormItems || [];
 
   const entityKycStatus = user?.entityKycStatus;
-  const clientKycStatus = user?.clientKycStatus;
+  const entityCustodyKycStatus = user?.entityCustodyKycStatus;
 
-  // const firstInvestmentProfileIncompleteForm = userProfilingQuestionnaireItems?.find(
-  //   (form) => form.hasCompleted === false
-  // );
-  //
-  // const areAllInvestmentProfileSectionsComplete = userProfilingQuestionnaireItems?.every(
-  //   (form) => form.hasCompleted
-  // );
+  const redirectToKYC = () => {
+    navigateModule("account", constants.clientAccountRoutes.account.platformAccess);
+  };
 
   const firstKYCIncompleteForm = kycQuestionnaireItems?.find((form) => form.hasCompleted === false);
 
   const areAllKYCSectionsComplete = kycQuestionnaireItems?.every((form) => form.hasCompleted);
-  if (!user)return <LoadingIndicator height={100}/>
+  if (!user) return <LoadingIndicator height={100} />;
   return (
     <DashboardContent>
       <Styles.Container>
@@ -173,7 +144,7 @@ const OnboardingClient = () => {
             </QuestionnaireItems>
           </Styles.QuestionnairePanelContent>
           <AccountPanelFooter>
-            {user?.entityCustodyKycStatus === accountIdentification?.KYC_STATUS_PENDING && (
+            {entityCustodyKycStatus === accountIdentification?.KYC_STATUS_PENDING && (
               <div>
                 {!areAllKYCSectionsComplete && (
                   <Button
@@ -194,6 +165,34 @@ const OnboardingClient = () => {
                     Submit Regulatory Onboarding
                   </Button>
                 )}
+              </div>
+            )}
+
+            {entityCustodyKycStatus === accountIdentification?.KYC_STATUS_SUBMITTED && (
+              <Styles.Text>
+                Your Regulatory Onbaording is in-review. Please check back later to use the custody
+                module.{" "}
+              </Styles.Text>
+            )}
+
+            {entityKycStatus !== accountIdentification?.KYC_STATUS_APPROVED && (
+              <div className="mt-8">
+                <Styles.Text>
+                  {entityKycStatus === accountIdentification?.KYC_STATUS_PENDING && (
+                    <React.Fragment>
+                      Please complete KYC to use the custody module.{" "}
+                      <a className="cursor-pointer" onClick={() => redirectToKYC()}>
+                        Complete KYC now
+                      </a>
+                    </React.Fragment>
+                  )}
+
+                  {entityKycStatus === accountIdentification?.KYC_STATUS_SUBMITTED && (
+                    <React.Fragment>
+                      Your KYC is in-review. Please check back later to use the custody module.{" "}
+                    </React.Fragment>
+                  )}
+                </Styles.Text>
               </div>
             )}
           </AccountPanelFooter>

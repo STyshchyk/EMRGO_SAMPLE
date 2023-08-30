@@ -19,8 +19,8 @@ export const CustodyWrapperProvider = ({ children }) => {
     const fetchUserProfile = (payload) => dispatch(authActionCreators.doFetchUserProfile(payload));
 
     fetchUserProfile({
-      successCallback: () => {
-        console.log("success custody call")
+      successCallback: (response) => {
+        // console.log("success custody call")
         // updateUser(authenticatedUserObject)
       },
     });

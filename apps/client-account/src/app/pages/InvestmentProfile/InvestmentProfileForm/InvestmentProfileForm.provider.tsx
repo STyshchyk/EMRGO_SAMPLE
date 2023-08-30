@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useContext, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
+import { navigateModule } from "@emrgo-frontend/utils";
 
 import { IInvestmentProfileFormContext } from "./InvestmentProfileForm.types";
 
@@ -18,10 +19,20 @@ export const InvestmentProfileFormProvider = ({ children }: PropsWithChildren) =
   const { search } = useLocation();
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
   const sessionId = searchParams.get("session");
+  const redirectPath = searchParams.get("redirect");
+  const module = searchParams.get("module");
 
   const onSubmit = () => {
-    const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
-    navigate(route);
+    if (module && redirectPath) {
+      navigateModule(module, redirectPath);
+    } else {
+      if (redirectPath) {
+        navigate(redirectPath);
+      } else {
+        const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
+        navigate(route);
+      }
+    }
   };
 
   const state: IInvestmentProfileFormContext = {

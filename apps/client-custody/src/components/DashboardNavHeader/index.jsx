@@ -3,16 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
-
-
 import * as constants from "@emrgo-frontend/constants";
 import { accountIdentification } from "@emrgo-frontend/constants";
 import { Badge, Tab, Tabs, useUser } from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 import cx from "classnames";
 import { useDarkMode } from "usehooks-ts";
-
-
 
 import featureFlags from "../../constants/featureFlags";
 import routes from "../../constants/routes";
@@ -21,10 +17,6 @@ import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import { fetchKYCForms } from "../../services/KYC";
 import style from "./style.module.scss";
-
-
-
-
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
@@ -73,10 +65,9 @@ const securitiesServices = {
 };
 
 const NavLinkList = ({ routingConfigs }) => {
-  console.log("🚀 ~ file: index.jsx:76 ~ NavLinkList ~ routingConfigs:", routingConfigs)
   const { isDarkMode } = useDarkMode();
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
-  
+
   const entityType = useSelector(authSelectors.selectCurrentEntityType);
   const { t } = useTranslation(["translation"]);
 
@@ -102,7 +93,7 @@ const NavLinkList = ({ routingConfigs }) => {
       return false;
     })
   );
-  
+
   const shouldShowNav = Boolean(
     filteredRoutingConfigs
       .map((item) => routingConfigs[item])
@@ -142,11 +133,16 @@ const NavLinkList = ({ routingConfigs }) => {
 };
 
 const DashboardNavHeader = () => {
-  const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
-  const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
-  
-  const { checkFeatureFlag } = useFeatureToggle();
   const { user } = useUser();
+  // const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
+  const kycApprovalStatus = user.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED;
+
+  // const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
+  const custodykycApprovalStatus =
+    user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED;
+
+  const { checkFeatureFlag } = useFeatureToggle();
+
   const isIntlSecTradeSettlementWorkflow = checkFeatureFlag(
     featureFlags.intlSecTradeSettlementWorkflow
   );
@@ -191,10 +187,10 @@ const DashboardNavHeader = () => {
       : undefined,
     reports: displayCustody ? reports : undefined,
   };
-  
+
   return (
     <Fragment>
-      {kycApprovalStatus ? (
+      {kycApprovalStatus && custodykycApprovalStatus ? (
         <NavLinkList routingConfigs={RoutingConfigs} />
       ) : (
         <NavLinkList routingConfigs={initialRoutingConfigs} />
