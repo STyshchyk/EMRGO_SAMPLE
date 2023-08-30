@@ -427,6 +427,10 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       variant="dialog"
                       placeholder="DD/MM/YYYY"
                       component={DatePicker}
+                      value={values.issueDate}
+                      onChange={(date) => {
+                        setFieldValue("issueDate", date);
+                      }}
                       name="issueDate"
                     />
                   </InlineFormField>
@@ -444,6 +448,10 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       placeholder="DD/MM/YYYY"
                       minDate={moment()}
                       component={DatePicker}
+                      value={values.maturityDate}
+                      onChange={(date) => {
+                        setFieldValue("maturityDate", date);
+                      }}
                       name="maturityDate"
                     />
                   </InlineFormField>

@@ -299,6 +299,10 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                             minDate={moment()}
                             placeholder="DD/MM/YYYY"
                             component={DatePicker}
+                            value={values.startDate}
+                            onChange={(date) => {
+                              setFieldValue("startDate", date);
+                            }}
                             name="startDate"
                             label={t("Client Rate Card.Add Dialog.Start Date")}
                           />
@@ -319,6 +323,10 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                             minDate={values.startDate}
                             placeholder="DD/MM/YYYY"
                             component={DatePicker}
+                            value={values.endDate}
+                            onChange={(date) => {
+                              setFieldValue("endDate", date);
+                            }}
                             name="endDate"
                             label={t("Client Rate Card.Add Dialog.End Date")}
                           />
