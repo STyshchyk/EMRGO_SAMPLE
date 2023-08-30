@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
+import v from "voca";
 
 import formatAddress from "../../../utils/reports";
 
@@ -38,7 +38,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         <Typography className={classes.accountInfoValue}>{`${
           cashAccount ? cashAccount.data.original.accountNo : '-'
         } | ${
-          cashAccount ? capitalCase(cashAccount.data.original.type) : '-'
+          cashAccount ? v.capitalize(cashAccount.data.original.type) : '-'
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>

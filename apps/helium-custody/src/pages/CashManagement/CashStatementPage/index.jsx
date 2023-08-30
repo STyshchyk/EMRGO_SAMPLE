@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { capitalCase } from "change-case";
+import v from "voca";
 import { CsvBuilder } from "filefy";
 import moment from "moment";
 
@@ -29,7 +29,7 @@ import * as billingAndPaymentsSelectors from "../../../redux/selectors/cashManag
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 
-const getFormattedBalanceType = (accType) => capitalCase(accType.split("_").join(" "));
+const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
   const entries = [];
@@ -152,7 +152,7 @@ const CashStatementPage = () => {
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
+          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });

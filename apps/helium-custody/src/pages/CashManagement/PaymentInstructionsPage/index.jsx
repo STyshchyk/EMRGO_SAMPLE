@@ -13,7 +13,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ViewIcon from "@mui/icons-material/ViewList";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { capitalCase } from "change-case";
+import v from "voca";
 import { CsvBuilder } from "filefy";
 import moment from "moment";
 
@@ -104,7 +104,7 @@ const generateSourceAccountOptions = (sourceAccounts) =>
       currency: internalWethaqAccount.currency.name,
       entityId: internalWethaqAccount.group.entity.id,
     },
-    label: `${internalWethaqAccount.accountNo} ${capitalCase(internalWethaqAccount.type)}`,
+    label: `${internalWethaqAccount.accountNo} ${v.capitalize(internalWethaqAccount.type)}`,
     customLabel: internalWethaqAccount.accountNo,
   }));
 
@@ -123,7 +123,7 @@ const generateBeneficiaryUserOptions = (validatedPaymentAccounts) => {
           fullName,
           entityType,
         },
-        label: `[${name} - ${capitalCase(entityType)}]  ${fullName}`,
+        label: `[${name} - ${v.capitalize(entityType)}]  ${fullName}`,
       };
     })
     .filter((user) => {

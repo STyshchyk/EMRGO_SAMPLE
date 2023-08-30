@@ -1,10 +1,10 @@
 import { createRef, Fragment, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import CloseIcon from "@mui/icons-material/Close";
@@ -31,12 +31,12 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Paper from "@mui/material/Paper";
 import MuiTextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { camelCase, capitalCase } from "change-case";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import groupBy from "lodash.groupby";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
+import v from "voca";
 import * as yup from "yup";
 
 import { currencyRenderer, dateRenderer, idRenderer } from "../../constants/renderers";
@@ -320,7 +320,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
   ];
 
   const processedSafeKeepingData = localSafekeepingCharges.map((band) => {
-    const concatedKey = `${band?.name?.String}_${camelCase(band?.name_2?.String)}`;
+    const concatedKey = `${band?.name?.String}_${v.camelCase(band?.name_2?.String)}`;
     return {
       ...band,
       band_end: band?.band_end === -1 ? Infinity : band?.band_end,
@@ -470,7 +470,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
 
       if (messages.length > 0) {
         groupedMessages.push({
-          name: `${capitalCase(firstBand.name.String)} ( ${firstBand.name_2.String} )`,
+          name: `${v.capitalize(firstBand.name.String)} ( ${firstBand.name_2.String} )`,
           messages,
         });
       }
@@ -566,7 +566,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
             <DialogTitle id="form-dialog-title">
               {" "}
               {t("Client Rate Card.View Dialog.Client Rate Card", {
-                type: capitalCase(modalType),
+                type: v.capitalize(modalType),
               })}
             </DialogTitle>
 

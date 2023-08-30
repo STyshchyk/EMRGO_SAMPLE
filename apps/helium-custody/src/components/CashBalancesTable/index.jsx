@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { capitalCase } from "change-case";
+import v from "voca";
 import moment from "moment";
 
 import { accountTypeRenderer, currencyRenderer, reportDateRenderer } from "../../constants/renderers";
@@ -88,7 +88,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${capitalCase(acc.type)}`,
+          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -272,7 +272,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       },
       accountType: {
         label: t("Cash Balances.Headers.Account Type"),
-        value: capitalCase(accountType) || "",
+        value: v.capitalize(accountType) || "",
       },
       lastMovement: {
         label: t("Cash Balances.Headers.Last Movement"),

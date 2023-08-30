@@ -45,7 +45,7 @@ import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { pascalCase } from "change-case";
+import v from "voca";
 import cx from "classnames";
 import { CsvBuilder } from "filefy";
 import { Field, Form, Formik } from "formik";
@@ -198,7 +198,7 @@ const Blotter = ({
         return returnable;
       })
     );
-    const fileName = `${pascalCase(parameters.name)}_${moment().format("DD-MM-YYYY")}`;
+    const fileName = `${v.camelCase(parameters.name)}_${moment().format("DD-MM-YYYY")}`;
 
     const builder = new CsvBuilder(`${fileName}.csv`);
     builder

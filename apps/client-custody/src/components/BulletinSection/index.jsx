@@ -5,7 +5,7 @@ import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { capitalCase } from "change-case";
+import v from "voca";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
@@ -133,7 +133,7 @@ const BulletinSection = ({
             const { title } = props;
             return (
               <Typography variant="h6" className={style.table__title}>
-                {capitalCase(title)}
+                {v.capitalize(title)}
               </Typography>
             );
           },
