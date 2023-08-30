@@ -1,6 +1,10 @@
 import { dashboardApi } from "../APIService";
 import { docTypes, IPlatformDocument } from "./Documents.types";
 
+
+
+
+
 export interface IDocument {
   documentType: string;
   id: string;
@@ -24,7 +28,7 @@ export const getPlatformDocument = async (doc: {
 }): Promise<IPlatformDocument> => {
   const promise = dashboardApi({
     method: "PUT",
-    url: `v1/utils/dataroom/document`,
+    url: `utils/v1/utils/dataroom/document`,
     data: {
       documentType: "tnc",
     },
@@ -36,7 +40,7 @@ export const getPlatformDocument = async (doc: {
 export const viewFile = async (path: string): Promise<{ url: string }> => {
   const promise = dashboardApi({
     method: "PUT",
-    url: `/v1/utils/files/link`,
+    url: `/utils/v1/utils/files/link`,
     data: {
       path,
     },

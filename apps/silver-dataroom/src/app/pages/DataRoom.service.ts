@@ -4,7 +4,7 @@ import { IDataRoomDocument } from "./DataRoom.types";
 export const getDataRoomDocuments = async (): Promise<IDataRoomDocument[]> => {
   const promise = dashboardApi({
     method: "GET",
-    url: "/v1/utils/internal/dataroom",
+    url: "/utils/v1/utils/internal/dataroom",
   });
   const res = await (await promise).data.data;
   return res || [];
@@ -17,7 +17,7 @@ export const updateDocument = async (file: {
 }): Promise<any> => {
   return dashboardApi({
     method: "PUT",
-    url: `/v1/utils/internal/dataroom/${file.id}`,
+    url: `/utils/v1/utils/internal/dataroom/${file.id}`,
     data: {
       name: file.name,
       path: file.path,
@@ -37,7 +37,7 @@ export const getOppotunities = async (): Promise<any[]> => {
 export const postDocument = async (document: { name: string; path: string }): Promise<any> => {
   return dashboardApi({
     method: "POST",
-    url: `/v1/utils/internal/dataroom`,
+    url: `/utils/v1/utils/internal/dataroom`,
     data: document,
   });
 };
