@@ -8,7 +8,7 @@ export const getFileUploadLink = async (file: {
   formData: any;
 }): Promise<IUploadResponse> => {
   const promise = dashboardApi({
-    url: "/v1/utils/files/create",
+    url: "/utils/v1/utils/files/create",
     method: "POST",
     data: { filename: file.filename },
   });
@@ -24,7 +24,7 @@ export const getFileUploadLink = async (file: {
 
 export const viewFile = async (path: string): Promise<{ url: string }> => {
   const promise = dashboardApi({
-    url: "/v1/utils/files/link",
+    url: "/utils/v1/utils/files/link",
     method: "PUT",
   });
   const response = await (await promise).data;

@@ -9,7 +9,7 @@ export const fetchOpportunities = async (
   //FIXME: update api path once data is available
   const promise = dashboardApi({
     method: "get",
-    url: `/v1/external/opportunities`,
+    url: `opp/v1/external/opportunities`,
     params: {
       type: filterType?.value || "",
       status: filterStatus?.value || "",

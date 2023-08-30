@@ -5,7 +5,7 @@ import { IKYCSectionItemProps } from "../../components/KYCSectionItem";
 export interface IPlatformAccessProps {}
 
 export interface IPlatformAccessContext {
-  user: IUser | null;
+  user: IUser | null | undefined;
   userProfilingQuestionnaireItems: IKYCSectionItemProps[];
   kycQuestionnaireItems: IKYCSectionItemProps[];
   onInvestmentProfileStartForm: (formId: string, formReferenceId: string) => void;

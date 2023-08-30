@@ -19,7 +19,7 @@ export const fetchDocumentPath = async (requestPayload: {
 }): Promise<IDocument> => {
   const promise = sharedDashboardApi({
     method: "put",
-    url: `/v1/utils/dataroom/document`,
+    url: `utils/v1/utils/dataroom/document`,
     data: requestPayload,
   });
   const data = await (await promise).data?.data;
@@ -29,7 +29,7 @@ export const fetchDocumentPath = async (requestPayload: {
 export const fetchDocumentLink = async (requestPayload: { path: string }): Promise<ISignedURL> => {
   const promise = sharedDashboardApi({
     method: "put",
-    url: `/v1/utils/files/link`,
+    url: `/utils/v1/utils/files/link`,
     data: requestPayload,
   });
   const data = await (await promise).data?.data;
