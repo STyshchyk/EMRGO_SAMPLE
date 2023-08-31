@@ -24,8 +24,6 @@ const CreatePasswordContext = createContext<ICreatePasswordContext | null>(null)
  */
 export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const { setMFA } = useUserStore();
   /**
    *
    * @param values an object containing current form values
@@ -77,8 +75,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     };
     doCreatePassword(payload, {
       onSuccess: (response) => {
-        setMFA(response);
-        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
+        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.completeRegistration);
       },
       onError: (error) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
