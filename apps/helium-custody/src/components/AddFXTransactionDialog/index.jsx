@@ -179,7 +179,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
   }
 
   useEffect(() => {
-    if(!!formvalues?.settings) return
+    if(!formvalues?.settings) return
     const data = formvalues?.settings[0];
     if (
       !fetchingValues &&
