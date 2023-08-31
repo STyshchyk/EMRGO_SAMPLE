@@ -142,7 +142,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
 
   const onRejectPlatformTerms = () => {
     resetTermsModal();
-    onLogOut();
+    // onLogOut();
   };
 
   const onAcceptPlatformTerms = () => {

@@ -36,8 +36,8 @@ const invitePlatformUser = (payload) =>
 
 const logoutUser = () =>
   baseAxiosInstance({
-    method: "GET",
-    url: "/v1/auth/logout",
+    method: "POST",
+    url: `/auth/v2/logout`,
     skipAuthRefresh: true,
   });
 
