@@ -13,18 +13,19 @@ import { useDarkMode } from "usehooks-ts";
 import featureFlags from "../../constants/featureFlags";
 import routes from "../../constants/routes";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
+import { changeDefaultEntityType } from "../../helpers/user";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
 import { fetchKYCForms } from "../../services/KYC";
-import style from "./style.module.scss";
 import LoadingIndicator from "../LoadingIndicator";
+import style from "./style.module.scss";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
   baseURLPattern: /(?:\/dashboard\/custody\/cash-management\/)(?:[\w-/]*)/,
   displayName: "Cash Management",
   homeUrl: routes.dashboard.custody.cashManagement.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"]
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
 };
 
 const reports = {
@@ -32,21 +33,21 @@ const reports = {
   baseURLPattern: /(?:\/dashboard\/custody\/reports\/)(?:[\w-/]*)/,
   displayName: "Reporting",
   homeUrl: routes.dashboard.custody.reports.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"]
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
 const onboarding = {
   acls: ["Services/Investor/View"],
   baseURLPattern: /(?:\/dashboard\/custody\/onboarding\/)(?:[\w-/]*)/,
   displayName: "Onboarding",
   homeUrl: routes.dashboard.custody.onboarding.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"]
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
 };
 const issuerServices = {
   acls: ["Services/Issuer/View"],
   baseURLPattern: /(?:\/dashboard\/custody\/issuer-securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
   homeUrl: routes.dashboard.custody.issuerSecServices.home,
-  requiredEntityTypes: ["ISSUER"]
+  requiredEntityTypes: ["ISSUER"],
 };
 
 const investorServices = {
@@ -54,7 +55,7 @@ const investorServices = {
   baseURLPattern: /(?:\/dashboard\/custody\/investor-securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
   homeUrl: routes.dashboard.custody.investorSecServices.home,
-  requiredEntityTypes: ["INVESTOR"]
+  requiredEntityTypes: ["INVESTOR"],
 };
 
 const securitiesServices = {
@@ -62,14 +63,17 @@ const securitiesServices = {
   baseURLPattern: /(?:\/dashboard\/custody\/securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
   homeUrl: routes.dashboard.custody.opsSecServices.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"]
+  requiredEntityTypes: ["EMRGO_SERVICES"],
 };
 
 const NavLinkList = ({ routingConfigs }) => {
   const { isDarkMode } = useDarkMode();
-  const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
+  const { permissions, user } = useUser();
+  // const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
+  const currentListOfAcls = permissions;
 
-  const entityType = useSelector(authSelectors.selectCurrentEntityType);
+  // const entityType = useSelector(authSelectors.selectCurrentEntityType);
+  const entityType = changeDefaultEntityType(user?.role);
   const { t } = useTranslation(["translation"]);
 
   const location = useLocation();
@@ -78,6 +82,7 @@ const NavLinkList = ({ routingConfigs }) => {
     currentListOfAcls?.some((acl) => {
       if (routingConfigs[key]) {
         const currentRoutingConfig = routingConfigs[key];
+        // console.log("🚀 ~ file: index.jsx:86 ~ currentListOfAcls?.some ~ currentRoutingConfig:", currentRoutingConfig)
 
         if (!currentRoutingConfig.acls.length && !currentRoutingConfig.requiredEntityTypes.length)
           return true;
@@ -111,7 +116,7 @@ const NavLinkList = ({ routingConfigs }) => {
       displayName,
       homeUrl,
       key: item,
-      notification: 0
+      notification: 0,
     };
   });
 
@@ -154,7 +159,7 @@ const DashboardNavHeader = () => {
     queryFn: () => fetchKYCForms(),
     enabled: true,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: false
+    refetchOnReconnect: false,
   });
 
   const kycCustodyFilled =
@@ -166,7 +171,7 @@ const DashboardNavHeader = () => {
   const displayCustody = custodykycApprovalStatus;
 
   const initialRoutingConfigs = {
-    onboarding
+    onboarding,
   };
 
   const RoutingConfigs = {
@@ -187,7 +192,7 @@ const DashboardNavHeader = () => {
         ? investorServices
         : undefined
       : undefined,
-    reports: displayCustody ? reports : undefined
+    reports: displayCustody ? reports : undefined,
   };
 
   return (
