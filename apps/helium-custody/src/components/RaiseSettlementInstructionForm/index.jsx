@@ -497,7 +497,7 @@ const RaiseSettlementInstructionForm = ({
               <Field
                 component={DatePicker}
                 onChange={(date) => {
-                  setFieldValue("tradeDate", date.toDate());
+                  setFieldValue("tradeDate", date);
                 }}
                 value={values.tradeDate}
                 format={DEFAULT_DATE_FORMAT}
@@ -514,7 +514,7 @@ const RaiseSettlementInstructionForm = ({
               <Field
                 component={DatePicker}
                 onChange={(date) => {
-                  setFieldValue("settlementDate", date.toDate());
+                  setFieldValue("settlementDate", date);
                 }}
                 value={values.settlementDate}
                 format={DEFAULT_DATE_FORMAT}
