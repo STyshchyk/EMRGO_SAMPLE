@@ -51,9 +51,15 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   // selectors
   const counterpartyList = useSelector(counterpartySelectors.selectCounterpartyList);
   const entitiesList = useSelector(entitiesSelectors.selectEntities);
+  const index = useSelector(authSelectors.selectCurrentEntityGroupIndex);
+  console.log(index)
+  const groups = useSelector(authSelectors.selectOwnEntityGroups);
+  console.log(groups)
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  console.log(currentEntityGroup,'here')
 
   const currentEntityType = currentEntityGroup?.entityType;
+  console.log(currentEntityType,'here')
   const opsEntityOptionsLists = entitiesList?.map((entity) => ({
     label: entity.corporateEntityName,
     value: entity.id,
@@ -68,6 +74,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           },
         ]
       : null;
+      console.log(investorEntityType)
   const entityOptionsList = isWethaqUser ? opsEntityOptionsLists : investorEntityType; // change options list for ops/ also initial value would be populated for inv.
   const selectedCounterparty = counterpartyList?.find(({ id }) => selectedRow?.id === id);
 
@@ -101,7 +108,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   const buildRequestPayload = (values) => {
     const requestPayload = values;
 
-    const selectFields = ["entity", "status"];
+    const selectFields = ["entity","status"];
     selectFields.forEach((field) => {
       if (requestPayload[field]) {
         requestPayload[field] = requestPayload[field].value;
@@ -115,11 +122,13 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   };
 
   const getInitialEntityValue = () => {
+    console.log('first')
     if (selectedRow?.entity && isWethaqUser) {
       return selectedCounterparty.entityId;
     }
 
     if (currentEntityType === "INVESTOR") {
+      console.log('insideee')
       return investorEntityType[0];
     }
 
@@ -137,31 +146,34 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
       });
     } else {
       let values;
-      if(!!formvalues?.settings) return
-      const data = formvalues?.settings[0];
-      if (
-        !fetchingValues &&
-        data?.value &&
-        data?.value !== "null" &&
-        data?.key === "CounterpartyForm"
-      ) {
-        values = JSON.parse(data.value);
-        if (currentEntityType === "INVESTOR") {
+      if(formvalues?.settings){
+        const data = formvalues?.settings[0];
+        if (
+          !fetchingValues &&
+          data?.value &&
+          data?.value !== "null" &&
+          data?.key === "CounterpartyForm"
+        ) {
+          values = JSON.parse(data.value);
+          if (currentEntityType === "INVESTOR") {
+            values = {
+              ...values,
+              entity: getInitialEntityValue(),
+            };
+          }
+          setInitialValues(values);
+        } 
+      } 
+      if (currentEntityType === "INVESTOR") {
           values = {
-            ...values,
+            ...initialValues,
             entity: getInitialEntityValue(),
+            status: counterpartyStatusOptionsList[1],
           };
-        }
-        setInitialValues(values);
-      } else if (currentEntityType === "INVESTOR") {
-        values = {
-          ...initialValues,
-          entity: getInitialEntityValue(),
-          status: counterpartyStatusOptionsList[1],
-        };
-        setInitialValues(values);
+          setInitialValues(values);
       }
-    }
+      
+    } 
   }, [formvalues, fetchingValues, selectedCounterparty, selectedRow]);
 
   const saveFormValues = (value) => {
@@ -222,7 +234,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
               setSelectedRow(null);
             },
           };
-
           if (isEdit) {
             dispatch(counterpartyActionCreators.doEditCounterparty(payload));
           } else {

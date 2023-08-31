@@ -236,25 +236,28 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
       });
     } else {
       let values;
-      if(!!formvalues?.settings) return
-      const data = formvalues?.settings[0];
-      if (
-        !fetchingValues &&
-        data?.value &&
-        data?.value !== "null" &&
-        data?.key === "CounterpartySSIForm"
-      ) {
-        values = JSON.parse(data.value);
-        if (currentEntityType === "INVESTOR") {
-          values = {
-            ...values,
-            entity: getInitialEntityValue(),
-          };
+      if(formvalues?.settings){
+        const data = formvalues?.settings[0];
+        if (
+          !fetchingValues &&
+          data?.value &&
+          data?.value !== "null" &&
+          data?.key === "CounterpartySSIForm"
+        ) {
+          values = JSON.parse(data.value);
+          if (currentEntityType === "INVESTOR") {
+            values = {
+              ...values,
+              entity: getInitialEntityValue(),
+            };
+          }
+          setInitialValues(values);
         }
-        setInitialValues(values);
-      } else if (currentEntityType === "INVESTOR") {
-        values = { ...initialValues, entity: getInitialEntityValue() };
-        setInitialValues(values);
+      } 
+    
+      if (currentEntityType === "INVESTOR") {
+          values = { ...initialValues, entity: getInitialEntityValue() };
+          setInitialValues(values);
       }
     }
   }, [formvalues, fetchingValues, selectedCounterpartySSI, selectedRow]);
