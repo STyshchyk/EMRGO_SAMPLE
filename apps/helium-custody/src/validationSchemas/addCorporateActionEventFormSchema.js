@@ -5,7 +5,11 @@ const addCorporateActionEventFormSchema = Yup.object().shape({
     label:Yup.string(),
     value:Yup.string()
   }).nullable().required("Event Type is required"),
-  externalSecuritySelectOption: Yup.object().required(),
+  // externalSecuritySelectOption: Yup.object().required(),
+  externalSecuritySelectOption: Yup.object().shape({
+    label:Yup.string(),
+    value:Yup.object()
+  }).nullable().required("Security ISIN is required"),
   recordDate: Yup.date().nullable().required("Record Date is required"),
   paymentDate: Yup.date().nullable().required("Payment Date is required"),
   eventStatus: Yup.object().shape({

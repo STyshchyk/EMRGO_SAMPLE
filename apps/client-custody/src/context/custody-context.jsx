@@ -19,7 +19,7 @@ export const CustodyWrapperProvider = ({ children }) => {
   const { permissions, user } = useUser();
   const entityType = changeDefaultEntityType(user?.role);
 
-  const entityGroupIndex = authenticatedUserObject?.entityGroups.findIndex(
+  const entityGroupIndex = authenticatedUserObject?.entityGroups?.findIndex(
     (group) => group.entityType === entityType
   );
 
