@@ -236,6 +236,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
       });
     } else {
       let values;
+      if(!!formvalues?.settings) return
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&

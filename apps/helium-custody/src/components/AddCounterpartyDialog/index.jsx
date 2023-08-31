@@ -137,6 +137,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
       });
     } else {
       let values;
+      if(!!formvalues?.settings) return
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&
