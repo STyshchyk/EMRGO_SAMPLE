@@ -211,6 +211,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         status: selectedRow?.status ? selectedExternalSecurities.status : null,
       });
     } else {
+     if(!!formvalues?.settings) return
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&

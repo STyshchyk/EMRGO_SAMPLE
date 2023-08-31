@@ -153,6 +153,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         responseDeadline: selectedCorporateActionEvent?.clientResponseDeadline,
       });
     } else {
+      if(!!formvalues?.settings) return
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&
