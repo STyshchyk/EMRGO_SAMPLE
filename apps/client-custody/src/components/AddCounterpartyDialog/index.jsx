@@ -52,14 +52,10 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   const counterpartyList = useSelector(counterpartySelectors.selectCounterpartyList);
   const entitiesList = useSelector(entitiesSelectors.selectEntities);
   const index = useSelector(authSelectors.selectCurrentEntityGroupIndex);
-  console.log(index)
   const groups = useSelector(authSelectors.selectOwnEntityGroups);
-  console.log(groups)
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  console.log(currentEntityGroup,'here')
 
   const currentEntityType = currentEntityGroup?.entityType;
-  console.log(currentEntityType,'here')
   const opsEntityOptionsLists = entitiesList?.map((entity) => ({
     label: entity.corporateEntityName,
     value: entity.id,
@@ -74,7 +70,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           },
         ]
       : null;
-      console.log(investorEntityType)
   const entityOptionsList = isWethaqUser ? opsEntityOptionsLists : investorEntityType; // change options list for ops/ also initial value would be populated for inv.
   const selectedCounterparty = counterpartyList?.find(({ id }) => selectedRow?.id === id);
 
@@ -122,13 +117,11 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   };
 
   const getInitialEntityValue = () => {
-    console.log('first')
     if (selectedRow?.entity && isWethaqUser) {
       return selectedCounterparty.entityId;
     }
 
     if (currentEntityType === "INVESTOR") {
-      console.log('insideee')
       return investorEntityType[0];
     }
 

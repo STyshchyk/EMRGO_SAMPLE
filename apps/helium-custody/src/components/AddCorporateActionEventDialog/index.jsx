@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
+import moment from 'moment'
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -33,16 +34,16 @@ import RealtimeSecSearchDialog from "../RealtimeSecSearchDialog";
 const animatedComponents = makeAnimated();
 
 const initial = {
-  eventType: "",
+  eventType: null,
   linkedEventId: "",
   exDate: null,
   recordDate: null,
-  externalSecuritySelectOption: "",
+  externalSecuritySelectOption: null,
   paymentDate: null,
-  eventStatus: "",
+  eventStatus: null,
   eventTerms: "",
   additionalInfo: "",
-  mandatoryOrVoluntary: "",
+  mandatoryOrVoluntary: null,
   responseDeadline: null,
 };
 
@@ -142,15 +143,15 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
               value: selectedCorporateActionEvent?.linkedEvent?.id,
             }
           : "",
-        exDate: selectedCorporateActionEvent?.exDate || null,
-        recordDate: selectedCorporateActionEvent?.recordDate,
-        paymentDate: selectedCorporateActionEvent?.paymentDate,
+        exDate: moment(selectedCorporateActionEvent?.exDate) || null,
+        recordDate: moment(selectedCorporateActionEvent?.recordDate),
+        paymentDate: moment(selectedCorporateActionEvent?.paymentDate),
         eventTerms: selectedCorporateActionEvent?.eventTerms || "",
         additionalInfo: selectedCorporateActionEvent?.additionalInfo || "",
         mandatoryOrVoluntary: selectedCorporateActionEvent?.voluntary
           ? mandatoryOrVoluntaryOptions.find((option) => option.value === "voluntary")
           : mandatoryOrVoluntaryOptions.find((option) => option.value === "mandatory"),
-        responseDeadline: selectedCorporateActionEvent?.clientResponseDeadline,
+        responseDeadline: moment(selectedCorporateActionEvent?.clientResponseDeadline),
       });
     } else {
       if(!formvalues?.settings) return
@@ -229,10 +230,9 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     >
       <Formik
         initialValues={initialValues}
-        // validationSchema={addCorporateActionEventFormSchema}
+        validationSchema={addCorporateActionEventFormSchema}
         enableReinitialize
         onSubmit={async (values, actions) => {
-          console.log('bugs')
           let requestPayload;
 
           if (isEdit) {
@@ -259,7 +259,6 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
             },
           };
 
-          console.log(payload,'here')
           if (isEdit) {
             dispatch(CAEventsActionCreators.doEditCAEvent(payload));
           } else {
@@ -379,7 +378,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="caption"
                         color="error"
                         className="ml-4"
-                        name="securityId"
+                        name="externalSecuritySelectOption"
                       />
                     </Grid>
                   </Grid>
