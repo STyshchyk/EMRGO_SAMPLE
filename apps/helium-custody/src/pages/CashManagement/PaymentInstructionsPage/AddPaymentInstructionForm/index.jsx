@@ -42,11 +42,7 @@ const AddPaymentInstructionForm = ({
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
   );
   const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] = useState(
-    isWethaqUser
-      ? allPaymentAccountOptions.filter(
-          (i) => initialValues.beneficiaryEntityGroupUser?.value?.id === i.value.userId
-        )
-      : allPaymentAccountOptions
+    allPaymentAccountOptions
   );
 
   return (
@@ -113,40 +109,6 @@ const AddPaymentInstructionForm = ({
                         };
                         setFieldValue("sourceAccount", modifiedOption);
                       }
-                    }}
-                  />
-                </Box>
-                <Box my={1} className="w-full">
-                  <Select
-                    name="beneficiaryEntityGroupUser"
-                    closeMenuOnSelect
-                    placeholder={t(
-                      "Payment Instructions.Modals.Placeholders.Select Beneficiary User"
-                    )}
-                    isSearchable
-                    styles={selectStyles}
-                    menuPortalTarget={document.body}
-                    value={values.beneficiaryEntityGroupUser}
-                    isClearable
-                    options={beneficiaryUserOptions}
-                    onChange={(selectedOption, triggeredAction) => {
-                      if (triggeredAction.action === "clear") {
-                        setFilteredPaymentAccountOptions([]);
-                        setFieldValue("beneficiaryEntityGroupUser", null);
-                        setSelectedCurrencyName("");
-                      }
-
-                      if (triggeredAction.action === "select-option") {
-                        setFieldValue("beneficiaryEntityGroupUser", selectedOption);
-
-                        setFilteredPaymentAccountOptions(
-                          allPaymentAccountOptions.filter(
-                            (i) => selectedOption?.value?.id === i.value.userId
-                          )
-                        );
-                      }
-
-                      setFieldValue("paymentAccount", null);
                     }}
                   />
                 </Box>

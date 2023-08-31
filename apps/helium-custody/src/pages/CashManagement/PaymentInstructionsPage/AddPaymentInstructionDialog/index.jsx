@@ -20,7 +20,6 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   const initial = {
     sourceEntity: null,
     sourceAccount: null,
-    beneficiaryEntityGroupUser: null,
     paymentAccount: null,
     valueDate: null,
     paymentAmount: null,
