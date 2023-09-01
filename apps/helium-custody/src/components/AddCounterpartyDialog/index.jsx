@@ -155,8 +155,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           }
           setInitialValues(values);
         } 
-      } 
-      if (currentEntityType === "INVESTOR") {
+      } else if (currentEntityType === "INVESTOR") {
           values = {
             ...initialValues,
             entity: getInitialEntityValue(),

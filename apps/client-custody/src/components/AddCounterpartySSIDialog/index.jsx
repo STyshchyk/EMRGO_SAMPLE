@@ -253,9 +253,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
           }
           setInitialValues(values);
         }
-      } 
-    
-      if (currentEntityType === "INVESTOR") {
+      } else if (currentEntityType === "INVESTOR") {
           values = { ...initialValues, entity: getInitialEntityValue() };
           setInitialValues(values);
       }
