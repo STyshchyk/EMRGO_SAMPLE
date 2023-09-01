@@ -54,7 +54,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   const index = useSelector(authSelectors.selectCurrentEntityGroupIndex);
   const groups = useSelector(authSelectors.selectOwnEntityGroups);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-
   const currentEntityType = currentEntityGroup?.entityType;
   const opsEntityOptionsLists = entitiesList?.map((entity) => ({
     label: entity.corporateEntityName,
@@ -156,8 +155,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           }
           setInitialValues(values);
         } 
-      } 
-      if (currentEntityType === "INVESTOR") {
+      } else if (currentEntityType === "INVESTOR") {
           values = {
             ...initialValues,
             entity: getInitialEntityValue(),

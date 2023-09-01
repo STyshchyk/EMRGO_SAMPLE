@@ -206,7 +206,10 @@
     "CO_ARRANGER": "الجهة المشاركة في ترتيب الطرح",
     "BROKER": "الوسيط",
     "Default Group": "المجموعة الافتراضية",
-    "Default Entity Group": "مجموعة الكيان القانوني الافتراضي"
+    "Default Entity Group": "مجموعة الكيان القانوني الافتراضي",
+    "finance":"finance",
+    "operations":"operations",
+    "relationship_manager":"relationship manager"
   },
   "EntityGroupType": {
     "ARRANGER": "الجهة المنظمة",
@@ -219,6 +222,9 @@
     "EMRGO_SERVICES": "خدمات وثاق",
     "ADMINISTRATOR": "الإداري",
     "CO_ARRANGER": "الجهة المشاركة في ترتيب الطرح",
-    "BROKER": "الوسيط"
+    "BROKER": "الوسيط",
+    "finance":"finance",
+    "operations":"operations",
+    "relationship_manager":"relationship manager"
   }
 }
