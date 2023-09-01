@@ -74,7 +74,7 @@ const support = {
   baseURLPattern: /(?:\/dashboard\/support\/)(?:[\w-/]*)/,
   displayName: "Support",
   homeUrl: routes.dashboard.support.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "operations", "finance", "relationship_manager"],
 };
 
 
@@ -83,7 +83,7 @@ const custody = {
   baseURLPattern: /(?:\/dashboard\/custody\/)(?:[\w-/]*)/,
   displayName: "Custody",
   homeUrl: routes.dashboard.custody.cashManagement.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER", "operations", "finance", "relationship_manager"],
 };
 
 const billing = {
@@ -121,7 +121,6 @@ const reconciliation = {
 
 const NavLinkList = ({ routingConfigs }) => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
-
   const entityType = useSelector(authSelectors.selectCurrentEntityType);
   const { t } = useTranslation(["translation"]);
 
@@ -214,7 +213,6 @@ const DashboardSidebar = ({ open }) => {
   const handleClose = () => {
     setOpenHelpDeskDialog(false);
   };
-
   return (
     <Fragment>
       <Drawer
