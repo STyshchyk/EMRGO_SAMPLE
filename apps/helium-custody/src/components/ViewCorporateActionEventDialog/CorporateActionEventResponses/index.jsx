@@ -5,7 +5,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 
 const generateTableRowData = (item) => ({
-  clientName: item?.entityGroup?.entity?.corporateEntityName ?? item?.entity?.corporateEntityName,
+  clientName: item?.entityGroup?.entity?.name ?? item?.entity?.name,
   responseDate: item?.responseDate ?? null,
   response: item?.response,
 });
