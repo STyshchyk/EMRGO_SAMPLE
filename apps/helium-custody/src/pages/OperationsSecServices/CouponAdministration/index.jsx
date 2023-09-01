@@ -20,7 +20,6 @@ import * as couponsSelectors from "../../../redux/selectors/coupons";
 import convertToDateOnlyInISOFormat from "../../../utils/convertToDateOnlyInISOFormat";
 
 const CouponAdministration = () => {
-  const { t } = useTranslation(["coupon_administration"]);
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
