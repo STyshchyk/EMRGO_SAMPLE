@@ -18,7 +18,7 @@ const cashManagement = {
   baseURLPattern: /(?:\/dashboard\/custody\/cash-management\/)(?:[\w-/]*)/,
   displayName: "Cash Management",
   homeUrl: routes.dashboard.custody.cashManagement.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER", "operations", "finance", "relationship_manager"],
 };
 
 const reports = {
@@ -26,7 +26,7 @@ const reports = {
   baseURLPattern: /(?:\/dashboard\/custody\/reports\/)(?:[\w-/]*)/,
   displayName: "Reporting",
   homeUrl: routes.dashboard.custody.reports.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER", "operations", "finance", "relationship_manager"],
 };
 const issuerServices = {
   acls: ["Services/Issuer/View"],
@@ -49,7 +49,7 @@ const securitiesServices = {
   baseURLPattern: /(?:\/dashboard\/custody\/securities-services\/)(?:[\w-/]*)/,
   displayName: "Securities Services",
   homeUrl: routes.dashboard.custody.opsSecServices.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "operations", "finance", "relationship_manager"],
 };
 
 const securitiesAdmin = {
@@ -57,7 +57,7 @@ const securitiesAdmin = {
   baseURLPattern: /(?:\/dashboard\/custody\/securities-admin\/)(?:[\w-/]*)/,
   displayName: "Securities Admin",
   homeUrl: routes.dashboard.custody.securitiesAdmin.home,
-  requiredEntityTypes: ["EMRGO_SERVICES"],
+  requiredEntityTypes: ["EMRGO_SERVICES", "operations", "finance", "relationship_manager"],
 };
 
 const NavLinkList = ({ routingConfigs }) => {
@@ -142,7 +142,7 @@ const DashboardNavHeader = () => {
     securitiesAdmin: isIntlSecTradeSettlementWorkflow ? securitiesAdmin : undefined,
     reports,
   };
-  
+
   return (
     <Fragment>
       {kycApprovalStatus ? (
