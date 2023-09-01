@@ -26,21 +26,28 @@ const defaultState = {
 
 const changeDefaultEntityType = (userData) => {
   return userData.entityGroups.map((eg) => {
-    if (eg.entityType === "super_user") {
-      return {
-        ...eg,
-        entityType: "EMRGO_SERVICES",
-        entity: {
-          ...eg.entity,
-          kyc: {
-            status: "Approved",
-          },
-        },
-      };
+    switch (eg.entityType) {
+      case "super_user":
+      case "finance":
+      case "operations":
+      case "relationship_manager":
+        return {
+            ...eg,
+            entityType: "EMRGO_SERVICES",
+            entity: {
+              ...eg.entity,
+              kyc: {
+                status: "Approved",
+              },
+            },
+          };       
+      default:
+        break;
     }
     return eg;
   });
 };
+
 
 const authReducer = handleActions(
   {
