@@ -146,7 +146,9 @@ const DashboardNavHeader = () => {
 
   // const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
   const custodykycApprovalStatus =
-    user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED;
+    user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
+      && user.clientKycStatus === accountIdentification.KYC_STATUS_APPROVED
+  ;
 
   const { checkFeatureFlag } = useFeatureToggle();
 

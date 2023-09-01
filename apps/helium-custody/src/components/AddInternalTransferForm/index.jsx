@@ -78,7 +78,7 @@ CustomNumberInputField.propTypes = {
 export const buildAddInternalTransferRequestPayload = {};
 
 export const generateEntityOptionsList = (data) =>
-  data.map((entity) => ({ value: entity.id, label: entity.corporateEntityName }));
+  data.map((entity) => ({ value: entity.id, label: entity.entityName }));
 export const generateWethaqAccountOptionsList = (data) =>
   data.map((account) => ({
     value: {
@@ -115,7 +115,7 @@ const AddInternalTransferForm = ({
   const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectSourceAccounts);
   const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);
-
+  console.log(sourceOwners, destinationOwners)
   const sourceEntitiesDropdown = generateEntityOptionsList(sourceOwners);
   const destinationEntitiesDropdown = generateEntityOptionsList(destinationOwners);
   let sourceAccountsDropdown = generateWethaqAccountOptionsList(sourceAccounts);
@@ -238,7 +238,6 @@ const AddInternalTransferForm = ({
 
           return hasSufficientBalance;
         };
-
         return (
           <Form>
             <Grid container spacing={2}>
