@@ -197,6 +197,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
         {
           key: "NewFxTransactionForm",
           value: JSON.stringify(value),
+          isActive:false,
         },
       ],
     };

@@ -145,7 +145,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   }, [dispatch]);
 
   const buildRequestPayload = (values) => {
-    const requestPayload = values;
+    const requestPayload = { ...values }; // make a shallow copy of values so that req payload doesnt mutate formik values.
 
     const selectFields = ["currency", "denomination", "frequency", "country", "status"];
     selectFields.forEach((field) => {
@@ -153,7 +153,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         requestPayload[field] = requestPayload[field].value;
       }
     });
-
+    
     const countryId = requestPayload.country;
     delete requestPayload.entity;
 
@@ -165,30 +165,14 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
 
   const formatJSONValues =(payload) => {
 
-    // const dateFields = ["issueDate", "maturityDate"];
-    // dateFields.forEach((field) => {
-    //   if (payload[field]) {
-    //     payload[field] = moment(payload[field]);
-    //   }
-    // });
+    const dateFields = ["issueDate", "maturityDate"];
+    dateFields.forEach((field) => {
+      if (payload[field]) {
+        payload[field] = moment(payload[field]);
+      }
+    });
 
-    return {
-      name: payload?.name || "",
-      shortName: payload?.shortName || "",
-      longName: payload?.longName || "",
-      issuanceName: payload?.issuanceName || "",
-      isin: payload?.isin || "",
-      ticker: payload?.ticker || "",
-      profitRate: parseFloat(payload?.profitRate, 10) || "",
-      issuanceAmount: payload?.issuanceAmount || "",
-      frequency: payload?.frequency ?? null,
-      country: payload?.country ??  null,
-      currency: payload?.currency ?? null,
-      maturityDate:moment(payload.maturityDate) || null,
-      issueDate:moment(payload.issueDate) || null,
-      denomination: payload?.denomination ?? null,
-      status: payload?.status  ?? null,
-    };
+    return payload
   }
 
   const selectedExternalSecurities = externalSecuritiesList?.find(
