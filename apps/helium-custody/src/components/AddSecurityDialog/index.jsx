@@ -163,9 +163,39 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     return { ...requestPayload, countryId };
   };
 
+  const formatJSONValues =(payload) => {
+
+    // const dateFields = ["issueDate", "maturityDate"];
+    // dateFields.forEach((field) => {
+    //   if (payload[field]) {
+    //     payload[field] = moment(payload[field]);
+    //   }
+    // });
+
+    return {
+      name: payload?.name || "",
+      shortName: payload?.shortName || "",
+      longName: payload?.longName || "",
+      issuanceName: payload?.issuanceName || "",
+      isin: payload?.isin || "",
+      ticker: payload?.ticker || "",
+      profitRate: parseFloat(payload?.profitRate, 10) || "",
+      issuanceAmount: payload?.issuanceAmount || "",
+      frequency: payload?.frequency ?? null,
+      country: payload?.country ??  null,
+      currency: payload?.currency ?? null,
+      maturityDate:moment(payload.maturityDate) || null,
+      issueDate:moment(payload.issueDate) || null,
+      denomination: payload?.denomination ?? null,
+      status: payload?.status  ?? null,
+    };
+  }
+
   const selectedExternalSecurities = externalSecuritiesList?.find(
     ({ id }) => selectedRow?.id === id
   );
+
+
 
   const getDenominationOptions = (entries) => {
     const options = [];
@@ -219,7 +249,10 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         data?.value !== "null" &&
         data?.key === "AddSecurityDialogForm"
       ) {
-        setInitialValues(JSON.parse(data.value));
+        const payload = formatJSONValues(JSON.parse(data.value))
+        setInitialValues(payload);
+
+        // setInitialValues(JSON.parse(data.value));
       }
     }
   }, [formvalues, fetchingValues, selectedExternalSecurities, selectedRow]);
@@ -235,6 +268,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         },
       ],
     };
+    console.log(obj,'here')
     dispatch(formActionCreators.doPostFormRequested(obj));
   };
 
@@ -283,6 +317,11 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
               setSelectedRow(null);
               saveFormValues(null);
             },
+            // rejectCallback: () => {
+            //   setSubmitting(false);
+            //   handleClose();
+            //   saveFormValues(null); // setting isActive to false to remove settings value
+            // },
           };
 
           if (isEdit) {
