@@ -38,7 +38,6 @@ const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-        disableScrollLock
       >
         {actions.map((action) => (
           <MenuItem key={action.id} disabled={action.disabled} onClick={action.onClick}>
