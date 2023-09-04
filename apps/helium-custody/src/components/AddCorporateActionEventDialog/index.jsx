@@ -168,6 +168,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
   }, [formvalues, fetchingValues, selectedCorporateActionEvent, selectedRow]);
 
   const saveFormValues = (value) => {
+    if (!value)return;
     const obj = {
       settings: [
         {

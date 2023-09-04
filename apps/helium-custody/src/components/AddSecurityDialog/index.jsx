@@ -225,6 +225,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   }, [formvalues, fetchingValues, selectedExternalSecurities, selectedRow]);
 
   const saveFormValues = (value) => {
+    if (!value)return;
     const obj = {
       settings: [
         {

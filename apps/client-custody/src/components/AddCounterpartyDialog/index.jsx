@@ -154,7 +154,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
             };
           }
           setInitialValues(values);
-        } 
+        }
       } else if (currentEntityType === "INVESTOR") {
           values = {
             ...initialValues,
@@ -163,11 +163,12 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           };
           setInitialValues(values);
       }
-      
-    } 
+
+    }
   }, [formvalues, fetchingValues, selectedCounterparty, selectedRow]);
 
   const saveFormValues = (value) => {
+    if (!value)return;
     const obj = {
       settings: [
         {

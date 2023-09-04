@@ -65,6 +65,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   }, [formvalues, fetchingValues]);
 
   const saveFormValues = (value) => {
+    if (!value)return;
     const obj = {
       settings: [
         {

@@ -192,6 +192,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
   }, [formvalues, fetchingValues]);
 
   const saveFormValues = (value) => {
+    if (!value)return;
     const obj = {
       settings: [
         {
