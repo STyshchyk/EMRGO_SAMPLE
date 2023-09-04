@@ -33,7 +33,7 @@ export const KYCFormProvider = ({ children }: PropsWithChildren) => {
         if (redirectPath) {
           navigate(redirectPath);
         } else {
-          const route = `${routes.clientInvestmentProfile.home}?form=${typeFormId}`;
+          const route = `${routes.kyc.home}?form=${typeFormId}`;
           navigate(route);
         }
       }

@@ -35,17 +35,24 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
 
+  const hasCompletedInvestorProfileIdentification =
+    user?.clientKycStatus === constants.accountIdentification.KYC_STATUS_APPROVED;
+
   useEffect(() => {
     if (user) {
       if (!user?.hasAcceptedSilverTnc) {
         setShowTermsModal("tnc");
       }
 
-      if (user?.hasAcceptedSilverTnc && !user?.hasAcceptedClientTerms) {
+      if (
+        user?.hasAcceptedSilverTnc &&
+        !user?.hasAcceptedClientTerms &&
+        hasCompletedInvestorProfileIdentification
+      ) {
         setShowTermsModal("client_terms");
       }
     }
-  }, [user]);
+  }, [user, hasCompletedInvestorProfileIdentification]);
 
   const { data: documentDetails } = useQuery(
     [constants.queryKeys.miscelleneous.documents.fetchPath, showTermsModal],
