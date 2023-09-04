@@ -35,10 +35,6 @@ const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const handleSubmit = (values, actions) => {
-
-
-    console.log(values)
-    return;
     const addPaymentAccount = (payload) =>
       dispatch(accountsActionCreators.doAddPaymentAccount(payload));
     const requestPayload = generateRequestPayload({...values, currentEntityGroupID});
