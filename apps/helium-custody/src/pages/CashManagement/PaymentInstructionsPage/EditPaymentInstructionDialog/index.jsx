@@ -64,6 +64,7 @@ const EditPaymentInstructionDialog = ({
     <Dialog
       open={isModalOpen}
       onClose={(event, reason) => {
+        if (disabled && reason && reason === "backdropClick") handleClose();
         if (reason && reason === "backdropClick") return;
 
         handleClose();
