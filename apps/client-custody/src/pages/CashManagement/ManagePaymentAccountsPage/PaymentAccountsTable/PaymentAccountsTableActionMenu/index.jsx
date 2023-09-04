@@ -148,7 +148,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-        disableScrollLock
       >
         {!isAdmin && (
           <div>

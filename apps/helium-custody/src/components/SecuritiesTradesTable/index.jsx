@@ -51,7 +51,6 @@ const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-        disableScrollLock
       >
         {actions
           .filter((action) => !action.hidden)
