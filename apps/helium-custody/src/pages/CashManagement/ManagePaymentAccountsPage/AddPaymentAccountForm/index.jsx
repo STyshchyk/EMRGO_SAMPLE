@@ -131,7 +131,7 @@ const AddPaymentAccountForm = ({
     ? entitiesList.map((entity) => ({
         value: entity.id,
         label: entity.corporateEntityName,
-        groups: entity.groups,
+        groups: entity.groupId,
       }))
     : null;
 
@@ -181,8 +181,7 @@ const AddPaymentAccountForm = ({
                       isClearable
                       options={entitiesDropdown}
                       onChange={(newValue, triggeredAction) => {
-                        setFieldValue("entityGroupId", newValue?.value);
-
+                        setFieldValue("entityGroupId", newValue?.groups);
                         if (triggeredAction.action === "clear") {
                           setFieldValue("entityGroupId", null);
                         }
