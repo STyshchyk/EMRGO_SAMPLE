@@ -8,7 +8,7 @@ export interface IPrimariesWrapperContext {
   numberOfNewTradeOpportunities: number;
   numberOfNotifications: number;
 
-  user: IUser | null;
+  user: IUser | null | undefined;
 
 
   onAcceptClientTerms: () => void;

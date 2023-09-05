@@ -7,7 +7,6 @@ import {
   acceptPlatformTerms,
   fetchDocumentLink,
   fetchDocumentPath,
-  fetchPlatformDocument,
   fetchUserProfile,
   logoutUser,
 } from "@emrgo-frontend/services";
@@ -29,7 +28,6 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
   const refreshProfile = useRefreshProfile();
   const { mutate: doLogoutUser } = useMutation(logoutUser);
   const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
-  const { mutate: doAcceptPlatformTerms } = useMutation(acceptPlatformTerms);
   const [showTermsModal, setShowTermsModal] = useState("tnc");
   const [termsDocumentURL, setTermsDocumentURL] = useState("");
   const [copyState, copyToClipboard] = useCopyToClipboard();
@@ -87,16 +85,6 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const onAcceptPlatformTerms = () => {
-    doAcceptPlatformTerms(undefined, {
-      onSuccess: (response) => {
-        refreshProfile();
-        showSuccessToast("Successfully accepted platform terms and conditions");
-      },
-    });
-    resetTermsModal();
-  };
-
   const onAcceptClientTerms = () => {
     doAcceptClientTerms(undefined, {
       onSuccess: () => {
@@ -116,9 +104,6 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  const onRejectPlatformTerms = () => {
-    resetTermsModal();
-  };
 
   const state: IPrimariesWrapperContext = {
     numberOfNewTradeOpportunities: 1,
