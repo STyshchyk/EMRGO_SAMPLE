@@ -163,8 +163,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     return { ...requestPayload, countryId };
   };
 
-  const formatJSONValues =(payload) => {
-
+  const formatParsedValues =(payload) => {
     const dateFields = ["issueDate", "maturityDate"];
     dateFields.forEach((field) => {
       if (payload[field]) {
@@ -233,7 +232,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         data?.value !== "null" &&
         data?.key === "AddSecurityDialogForm"
       ) {
-        const payload = formatJSONValues(JSON.parse(data.value))
+        const payload = formatParsedValues(JSON.parse(data.value))
         setInitialValues(payload);
 
         // setInitialValues(JSON.parse(data.value));
@@ -252,7 +251,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         },
       ],
     };
-    console.log(obj,'here')
     dispatch(formActionCreators.doPostFormRequested(obj));
   };
 
@@ -575,7 +573,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={DatePicker}
                         value={values.issueDate}
                         onChange={(date) => {
-                          console.log(date,'here')
                           setFieldValue("issueDate", date);
                         }}
                         name="issueDate"
