@@ -115,6 +115,15 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       keyEvent.preventDefault();
     }
   }
+  const formatParsedValues =(payload) => {
+    const dateFields = ["exDate", "recordDate","paymentDate","responseDeadline"];
+    dateFields.forEach((field) => {
+      if (payload[field]) {
+        payload[field] = moment(payload[field]);
+      }
+    });
+    return payload
+  }
 
   useEffect(() => {
     if (selectedRow || selectedCorporateActionEvent) {
@@ -162,7 +171,9 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         data?.value !== "null" &&
         data?.key === "AddCorporateActionEventForm"
       ) {
-        setInitialValues(JSON.parse(data.value));
+        const payload = formatParsedValues(JSON.parse(data.value))
+        setInitialValues(payload);
+        // setInitialValues(JSON.parse(data.value));
       }
     }
   }, [formvalues, fetchingValues, selectedCorporateActionEvent, selectedRow]);

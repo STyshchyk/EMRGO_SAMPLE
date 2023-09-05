@@ -145,7 +145,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   }, [dispatch]);
 
   const buildRequestPayload = (values) => {
-    const requestPayload = values;
+    const requestPayload = { ...values }; // make a shallow copy of values so that req payload doesnt mutate formik values.
 
     const selectFields = ["currency", "denomination", "frequency", "country", "status"];
     selectFields.forEach((field) => {
@@ -153,7 +153,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         requestPayload[field] = requestPayload[field].value;
       }
     });
-
+    
     const countryId = requestPayload.country;
     delete requestPayload.entity;
 
@@ -163,9 +163,22 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     return { ...requestPayload, countryId };
   };
 
+  const formatParsedValues =(payload) => {
+    const dateFields = ["issueDate", "maturityDate"];
+    dateFields.forEach((field) => {
+      if (payload[field]) {
+        payload[field] = moment(payload[field]);
+      }
+    });
+
+    return payload
+  }
+
   const selectedExternalSecurities = externalSecuritiesList?.find(
     ({ id }) => selectedRow?.id === id
   );
+
+
 
   const getDenominationOptions = (entries) => {
     const options = [];
@@ -219,7 +232,10 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         data?.value !== "null" &&
         data?.key === "AddSecurityDialogForm"
       ) {
-        setInitialValues(JSON.parse(data.value));
+        const payload = formatParsedValues(JSON.parse(data.value))
+        setInitialValues(payload);
+
+        // setInitialValues(JSON.parse(data.value));
       }
     }
   }, [formvalues, fetchingValues, selectedExternalSecurities, selectedRow]);
@@ -284,6 +300,11 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
               setSelectedRow(null);
               saveFormValues(null);
             },
+            // rejectCallback: () => {
+            //   setSubmitting(false);
+            //   handleClose();
+            //   saveFormValues(null); // setting isActive to false to remove settings value
+            // },
           };
 
           if (isEdit) {
@@ -553,7 +574,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={DatePicker}
                         value={values.issueDate}
                         onChange={(date) => {
-                          console.log(date,'here')
                           setFieldValue("issueDate", date);
                         }}
                         name="issueDate"

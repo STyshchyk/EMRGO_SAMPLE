@@ -36,6 +36,9 @@ function* addExternalSecurties({ payload }) {
     }
     yield call(toast.success, data.message);
   } catch (error) {
+    if (payload?.rejectCallback) {
+      payload?.rejectCallback();
+    }    
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
     yield put(externalSecuritiesActionCreators.doAddExternalSecuritiesFailure(errorMessage));
