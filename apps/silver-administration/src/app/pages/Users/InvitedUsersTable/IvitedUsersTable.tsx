@@ -1,9 +1,15 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { ActionTooltip, Table, useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable
+} from "@tanstack/react-table";
 
 import { getInvitedUserTypeLabel } from "../../helpers";
 import { cancelInvitation, removeUser, resendInfo, reset2FA } from "../InviteUser.services";
@@ -18,6 +24,7 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
   const { mutate: doRemoveUser } = useMutation(removeUser);
   const { mutate: doReset2FA } = useMutation(reset2FA);
   const { mutate: doResendInfo } = useMutation(resendInfo);
+  const [sorting, setSorting] = React.useState<SortingState>([])
   const client = useQueryClient();
   const { showErrorToast, showSuccessToast } = useToast();
   const columns = [
@@ -125,8 +132,19 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
   const table = useReactTable({
     columns,
     data: users,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
+    initialState: {
+      sorting: [{
+        id: "firstName",
+        desc: true
+      }]
+    }
   });
-
   return <Table table={table} />;
 };

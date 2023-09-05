@@ -1,6 +1,6 @@
-import { FC } from "react";
+import React, {FC} from "react";
 
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import {silverQueryKeys as queryKeys} from "@emrgo-frontend/constants";
 import {
   ActionTooltip,
   Table,
@@ -8,23 +8,33 @@ import {
   TooltipButtonBox,
   useToast,
 } from "@emrgo-frontend/shared-ui";
-import { trimDate } from "@emrgo-frontend/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {trimDate} from "@emrgo-frontend/utils";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {
+  createColumnHelper, ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
 
-import { getKycLabel, IEntity, kycType } from "../OnboarderUsers/OnboardedUsers.types";
-import { kycSubmit } from "../OnboarderUsers/OnboardrdedUsers.service";
+import {getKycLabel, IEntity, kycType} from "../OnboarderUsers/OnboardedUsers.types";
+import {kycSubmit} from "../OnboarderUsers/OnboardrdedUsers.service";
 import * as Styles from "./OnboardedUserTable.styles";
-import { IOnboardedUserTableProps } from "./OnboardedUserTable.types";
+import {IOnboardedUserTableProps} from "./OnboardedUserTable.types";
+import {SortingTableState} from "@tanstack/table-core/src/features/Sorting";
 
 const columnHelper = createColumnHelper<IEntity>();
 
-export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUsers }) => {
-  const { showErrorToast, showSuccessToast } = useToast();
+export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({onboarderUsers}) => {
+  const {showErrorToast, showSuccessToast} = useToast();
   const client = useQueryClient();
-  const { mutate: doKycSumbit } = useMutation(kycSubmit, {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const {mutate: doKycSumbit} = useMutation(kycSubmit, {
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: [queryKeys.onboarding.fetch] }).then(() => {});
+      client.invalidateQueries({queryKey: [queryKeys.onboarding.fetch]}).then(() => {
+      });
     },
   });
 
@@ -68,9 +78,9 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
     columnHelper.display({
       id: "Actions",
       header: () => {
-        return <span style={{ marginLeft: "auto" }}>Actions</span>;
+        return <span style={{marginLeft: "auto"}}>Actions</span>;
       },
-      cell: ({ row }) => {
+      cell: ({row}) => {
         const getRow = row.original;
         const userId = getRow.userId;
         const entityId = getRow.entityId;
@@ -172,12 +182,22 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
       },
     }),
   ];
-
   const table = useReactTable({
     columns,
     data: onboarderUsers,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
+    initialState: {
+      sorting: [{
+        id: "firstName",
+        desc: true
+      }]
+    }
   });
-
-  return <Table table={table} />;
+  return <Table table={table}/>;
 };
