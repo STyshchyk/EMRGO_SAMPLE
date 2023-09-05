@@ -504,8 +504,7 @@ const RaiseSettlementInstructionForm = ({
                 fullWidth
                 inputVariant="filled"
                 label={DEFAULT_DATE_FORMAT}
-                minDate={moment()}
-                name="tradeDate"
+                  name="tradeDate"
                 variant="dialog"
               />
             </InlineFormField>
