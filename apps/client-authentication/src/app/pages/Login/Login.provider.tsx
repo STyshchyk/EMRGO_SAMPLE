@@ -67,10 +67,10 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
         updateUser({ ...user as IUser  });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
-      onError: (response) => {
+      onError: (err) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        showErrorToast(response?.data?.message ?? "Error appeared during login");
+        showErrorToast(err?.response?.data?.message ?? "Error appeared during login");
       }
     });
 
