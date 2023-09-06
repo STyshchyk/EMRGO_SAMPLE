@@ -92,7 +92,6 @@ export const renderTableHeaders = (columns, setFontFamily) => {
 export const renderDataTableCells = (columns, data) => {
   let noOfColumnsLeft = 0;
   let widthLeft = 100;
-
   columns.map((column) => {
     const { exportConfig = {}, hidden = false } = column;
     const { width = false } = exportConfig;
@@ -114,14 +113,15 @@ export const renderDataTableCells = (columns, data) => {
         const { exportConfig = {}, field, hidden = false } = column;
         const { width = false, render = false, align = "left" } = exportConfig;
         const rendered = render ? render(rowData) : resolvePath(rowData, field);
-
+        const isNan = typeof rendered === "number" && isNaN(rendered);
+        const outputVal = isNan ? "--" : rendered;
         return (
           !hidden && (
             <View
               style={[styles.tableCol, { width: `${width || defaultWidth}%`, textAlign: align }]}
               key={shortid.generate()}
             >
-              <Text style={styles.tableCell}>{rendered}</Text>
+              <Text style={[styles.tableCell, { fontSize: 10 }]}>{outputVal}</Text>
             </View>
           )
         );
