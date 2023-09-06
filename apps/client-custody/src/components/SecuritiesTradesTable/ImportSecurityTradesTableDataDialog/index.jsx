@@ -55,9 +55,10 @@ const parseCsvData = (csvString) => {
   // const res2 = res1.toISOString();
 
   data.splice(0, 1);
+  console.log("Data:: ", data);
   const resultingData = data
     .map((arrItem) => {
-      if (arrItem.length === 13) {
+      if (arrItem.length === 32) {
         const [
           settlementType,
           isin,
@@ -123,6 +124,7 @@ const ImportSecurityTradesTableDataDialog = ({
 
     reader.onload = () => {
       const fileData = reader.result;
+      console.log("fileData:: ", fileData);
       let parsed = [];
 
       if (isFileTypeCSV) {
