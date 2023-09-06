@@ -1,6 +1,6 @@
 import v from "voca";
 
-import availableCurrencies from "../../../helium-custody/src/constants/currency/availableCurrencies";
+import availableCurrencies from "../constants/currency/availableCurrencies";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
