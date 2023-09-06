@@ -1,22 +1,22 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
+
+
 import * as constants from "@emrgo-frontend/constants";
-import {
-  acceptClientTerms,
-  acceptPlatformTerms,
-  fetchDocumentLink,
-  fetchDocumentPath,
-  fetchUserProfile,
-  logoutUser,
-  refreshToken,
-} from "@emrgo-frontend/services";
+import { acceptClientTerms, acceptPlatformTerms, fetchDocumentLink, fetchDocumentPath, fetchUserProfile, logoutUser, refreshToken } from "@emrgo-frontend/services";
 import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+
+
 import { CustodyIcon, PrimariesIcon, ResearchIcon, SecondariesIcon } from "../Icons";
 import { IDashboardWrapperContext, IRoleSelector } from "./DashboardWrapper.types";
+
+
+
+
 
 const DashboardWrapperContext = createContext<IDashboardWrapperContext | null>(null);
 
@@ -120,6 +120,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "secondaries",
       path: constants.clientSecondariesRoutes.home,
       paths: constants.getAllRoutes(constants.clientSecondariesRoutes),
+      disabled: true,
     },
     {
       label: "Custody",

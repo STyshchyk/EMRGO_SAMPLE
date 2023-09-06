@@ -1,5 +1,5 @@
 import { IUser } from "@emrgo-frontend/types";
 
 export interface IDashboardSidebarAccountTooltipProps {
-  user: IUser | null;
+  user: IUser | null | undefined;
 }

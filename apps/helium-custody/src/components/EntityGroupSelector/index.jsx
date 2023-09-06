@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import shortid from "shortid";
+import v from "voca";
 
 import routes from "../../constants/routes";
 import * as authActionCreators from "../../redux/actionCreators/auth";
@@ -90,10 +91,15 @@ const EntityGroupSelector = () => {
             key={shortid.generate()}
             onClick={handleEntityGroupMenuClose}
           >
-            <Typography
-              style={{ fontWeight: "bold" }}
-              variant="body2"
-            >{`${i.name} (${i.type})`}</Typography>
+            <Typography style={{ fontWeight: "bold" }} variant="body2">{`${v
+              .chain(i?.name)
+              .replaceAll("_", " ")
+              .titleCase()
+              .value()} (${v
+              .chain(i?.type)
+              .replaceAll("_", " ")
+              .titleCase()
+              .value()})`}</Typography>
           </MenuItem>
         ))}
       </Menu>

@@ -169,8 +169,7 @@ const CashStatementPage = () => {
   };
 
   const { entityOpts, accountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-  console.log("🚀 ~ file: index.jsx:169 ~ CashStatementPage ~ accountOpts:", accountOpts);
-
+  
   const filteredEntity = entityOpts.map((entity) => ({
     data: entity,
     value: entity.id,

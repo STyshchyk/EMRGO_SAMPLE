@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import {
@@ -32,6 +32,9 @@ import {
   TermsModal,
   ThemeSwitcher,
   Tooltip,
+  TooltipContent,
+  TooltipHeader,
+  TooltipTitle,
   useUser,
 } from "@emrgo-frontend/shared-ui";
 import {
@@ -81,20 +84,38 @@ export const DashboardSidebar = () => {
       <nav>
         <SidebarList>
           {mainRoutes.map((module) => (
-            <SidebarListItem key={module.key}>
-              <SidebarListItemLink
-                onClick={() => {
-                  if (currentRole?.access.includes(module.key)) {
-                    navigateToModule(module.key, module.path);
-                  }
-                }}
-                active={useClientMatchedPathSidebar(module.paths)}
-                disabled={!currentRole?.access.includes(module.key)}
-              >
-                <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
-                {module.label}
-              </SidebarListItemLink>
-            </SidebarListItem>
+            <Tooltip
+              content={
+                module.disabled ? (
+                  <Fragment>
+                    <TooltipHeader>
+                      <TooltipTitle>Coming Soon...</TooltipTitle>
+                    </TooltipHeader>
+                    <TooltipContent>
+                      The {module.label} module is under construction and will be ready soon. Please
+                      check back later for updates.
+                    </TooltipContent>
+                  </Fragment>
+                ) : (
+                  ""
+                )
+              }
+            >
+              <SidebarListItem key={module.key}>
+                <SidebarListItemLink
+                  onClick={() => {
+                    if (currentRole?.access.includes(module.key)) {
+                      navigateToModule(module.key, module.path);
+                    }
+                  }}
+                  active={useClientMatchedPathSidebar(module.paths)}
+                  disabled={module.disabled || !currentRole?.access.includes(module.key)}
+                >
+                  <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
+                  {module.label}
+                </SidebarListItemLink>
+              </SidebarListItem>
+            </Tooltip>
           ))}
         </SidebarList>
       </nav>

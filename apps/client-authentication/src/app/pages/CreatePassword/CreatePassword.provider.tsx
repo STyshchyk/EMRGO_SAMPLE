@@ -43,7 +43,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
       onSuccess: () => {
         //* navigate to twofactor auth page instead
         // navigate(routes.login);
-        navigate(routes.setupTwoFactorAuth)
+        navigate(routes.setupTwoFactorAuth);
       },
       onError: () => {
         // TODO: wire up error message once error UI components are ready
