@@ -499,7 +499,7 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(date) => {
                   setFieldValue("tradeDate", date);
                 }}
-                value={values.tradeDate}
+                value={moment(values.tradeDate)}
                 format={DEFAULT_DATE_FORMAT}
                 fullWidth
                 inputVariant="filled"
@@ -516,7 +516,7 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(date) => {
                   setFieldValue("settlementDate", date);
                 }}
-                value={values.settlementDate}
+                value={moment(values.settlementDate)}
                 format={DEFAULT_DATE_FORMAT}
                 fullWidth
                 inputVariant="filled"
