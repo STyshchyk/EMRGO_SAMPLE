@@ -142,8 +142,9 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes);
 
   const onRejectPlatformTerms = () => {
-    resetTermsModal();
-    // onLogOut();
+    // resetTermsModal();
+    // revert change for ID 491
+    onLogOut();
   };
 
   const onAcceptPlatformTerms = () => {

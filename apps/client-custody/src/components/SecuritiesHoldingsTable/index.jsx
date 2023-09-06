@@ -142,7 +142,7 @@ const SecuritiesHoldingsTable = ({
     if (isAllEntitiesOptionSelected) {
       fetchSecuritiesHoldings({
         params: {
-          date: date?.value.toISOString(),
+          date: date?.value.toISOString(), 
         },
       });
     } else {
@@ -150,7 +150,7 @@ const SecuritiesHoldingsTable = ({
         params: {
           entityId: entity?.value?.value,
           // accountId: selectedSecuritiesAccountOption?.value,
-          date: date?.value?.toISOString(),
+          date: date?.value?.toISOString() ?? moment().toISOString(),
         },
       });
     }
