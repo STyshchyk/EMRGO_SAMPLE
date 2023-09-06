@@ -1,6 +1,7 @@
 import { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+import { currencyRenderer } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
@@ -115,13 +116,13 @@ const generateSecurityTradesTableRowData = (i) => ({
   numCerts: convertNumberToIntlFormat(i.numOfCertificates),
   paymentConfirmationFileId: i.paymentConfirmationFileId ? "Yes" : "No",
   price: i.price,
-  quantity: convertNumberToIntlFormat(i.quantity),
+  quantity: i.quantity,
   readyToSettle: i.readyToSettle,
   referenceId: i.referenceId ?? FALLBACK_VALUE,
   security: i.externalSecurity?.name,
   securityTradeSettlementStatus: i.securityTradeSettlementStatus ?? FALLBACK_VALUE,
   securityTradeType: i.securityTradeType,
-  settlementAmount: floatRenderer(i.settlementAmount) ?? FALLBACK_VALUE,
+  settlementAmount: i.settlementAmount,
   settlementDate: i.settlementDate,
   settlementInstructionStatus: i.settlementInstructionStatus ?? FALLBACK_VALUE,
   settlementType: i.settlementType?.name ?? FALLBACK_VALUE,
@@ -133,8 +134,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   type: i.type,
   wsn: i.externalSecurity?.wsn ?? FALLBACK_VALUE,
   // new fields
-  principalAmount: floatRenderer(i.principalAmount),
-  accruedInterest: floatRenderer(i.accruedInterest),
+  principalAmount: i.principalAmount,
+  accruedInterest: i.accruedInterest,
   internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
   entityGroup: i?.entityGroup,
   userId: i?.userId,
@@ -342,6 +343,8 @@ const SecurityTradesTable = ({
     {
       id: "quantity",
       title: t("Headers.Qty"),
+      render: (rowData) => convertNumberToIntlFormat(rowData.quantity),
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
       field: "quantity",
       type: "numeric",
       width: 150,
@@ -393,6 +396,7 @@ const SecurityTradesTable = ({
       title: t("Headers.Price"),
       field: "price",
       render: (rowData) => rowData?.price && floatRenderer(rowData?.price, 0, 5),
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.price) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -401,6 +405,8 @@ const SecurityTradesTable = ({
       id: "principalAmount",
       title: t("Headers.Principal Amount"),
       field: "principalAmount",
+      render: (rowData) => floatRenderer(rowData.principalAmount),
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.principalAmount) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -409,6 +415,8 @@ const SecurityTradesTable = ({
       id: "accruedInterest",
       title: t("Headers.Accrued Interest"),
       field: "accruedInterest",
+      render: (rowData) => floatRenderer(rowData.accruedInterest),
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.accruedInterest) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -417,6 +425,10 @@ const SecurityTradesTable = ({
       id: "settlementAmount",
       title: t("Headers.Settle Amount"),
       field: "settlementAmount",
+      render: (rowData) => floatRenderer(rowData.settlementAmount) ?? FALLBACK_VALUE,
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.settlementAmount) ?? FALLBACK_VALUE,
+      },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
