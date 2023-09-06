@@ -229,12 +229,6 @@ const SecuritiesTransactionsReportPage = () => {
       field: "investorName",
     },
     {
-      id: "toSecurityAccount",
-      title: t("Security Transactions.Headers.To Sec Acct"),
-      field: "toSecurityAccount",
-      exportConfig: { width: 8 },
-    },
-    {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
       field: "settlementType",
