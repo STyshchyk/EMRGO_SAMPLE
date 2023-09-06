@@ -1,27 +1,38 @@
 import { FC } from "react";
 
-import { ActionTooltip, Table, TooltipButtonActions, TooltipButtonBox } from "@emrgo-frontend/shared-ui";
+import {
+  ActionTooltip,
+  Table,
+  TooltipButtonActions,
+  TooltipButtonBox,
+} from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useEntityManagementContext } from "../EntityManagement.provider";
-import { INewUser, TNewUserStatus,TNewUserTypes,UserRoles, UserStatus } from "../EntityManagement.types";
-import { getNewUserStatusLabel,getNewUserTypeLabel } from "../helpers";
-import * as Styles from './InvitedUsersTable.styles';
+import {
+  INewUser,
+  TNewUserStatus,
+  TNewUserTypes,
+  UserRoles,
+  UserStatus,
+} from "../EntityManagement.types";
+import { getNewUserStatusLabel, getNewUserTypeLabel } from "../helpers";
+import * as Styles from "./InvitedUsersTable.styles";
 import { IInvitedUsersTableProps } from "./InvitedUsersTable.types";
 
 const columnHelper = createColumnHelper<INewUser>();
 
 export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
+  const { onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin } =
+    ensureNotNull(useEntityManagementContext());
 
-  const {onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin} = ensureNotNull(useEntityManagementContext())
-  
   const columns = [
     columnHelper.accessor("firstName", {
-      header: "First Name"
+      header: "First Name",
     }),
     columnHelper.accessor("lastName", {
-      header: "Last name"
+      header: "Last name",
     }),
     columnHelper.accessor("email", {
       header: "Email ID",
@@ -29,18 +40,21 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
     columnHelper.accessor("roles", {
       header: "Roles",
       cell: (info) => {
-         return (
+        return (
           <Styles.InvitedUserTypeLabel>
-            {info.getValue().map((r)=> getNewUserTypeLabel(r as TNewUserTypes)).join(` , `)}
+            {info
+              .getValue()
+              .map((r) => getNewUserTypeLabel(r as TNewUserTypes))
+              .join(` , `)}
           </Styles.InvitedUserTypeLabel>
-         )
+        );
       },
     }),
     columnHelper.accessor("invitationStatus", {
       header: "Status",
       cell: (info) => {
-        return getNewUserStatusLabel(info.getValue()?.toLowerCase() as TNewUserStatus)
-     },
+        return getNewUserStatusLabel(info.getValue()?.toLowerCase() as TNewUserStatus);
+      },
     }),
 
     columnHelper.display({
@@ -50,8 +64,8 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       },
       cell: ({ row }) => {
         const id: string = row.original.id as string;
-        const status = row.original.invitationStatus?.toLowerCase() as TNewUserStatus; 
-        const roles = row.original.roles; 
+        const status = row.original.invitationStatus?.toLowerCase() as TNewUserStatus;
+        const roles = row.original.roles;
         return (
           <ActionTooltip
             title={
@@ -68,9 +82,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                 >
                   Cancel Invitation
                 </TooltipButtonActions>
-                <TooltipButtonActions
-                  onClick={() => onArchiveUser(id)}
-                >
+                <TooltipButtonActions onClick={() => onArchiveUser(id)}>
                   Archive User
                 </TooltipButtonActions>
                 <TooltipButtonActions
@@ -86,18 +98,17 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   Revoke Admin
                 </TooltipButtonActions>
               </TooltipButtonBox>
-              
             }
           />
         );
-      }
-    })
+      },
+    }),
   ];
 
   const table = useReactTable({
     columns,
     data: users,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   });
 
   return <Table table={table} />;

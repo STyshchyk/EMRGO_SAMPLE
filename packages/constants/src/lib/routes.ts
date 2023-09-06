@@ -1,5 +1,9 @@
 import { include } from "named-urls";
 
+
+
+
+
 interface IMap {
   [key: string]: string | undefined;
 }
@@ -66,12 +70,12 @@ export const clientAccountRoutes = {
   clientInvestmentProfile: include("/client-investment-profile", {
     home: "",
     form: "form/:typeFormId",
-    thankYou: "thank-you"
+    thankYou: "thank-you",
   }),
   kyc: include("/kyc", {
     home: "",
     form: "form/:typeFormId",
-    thankYou: "thank-you"
+    thankYou: "thank-you",
   }),
   account: include("/account", {
     home: "",

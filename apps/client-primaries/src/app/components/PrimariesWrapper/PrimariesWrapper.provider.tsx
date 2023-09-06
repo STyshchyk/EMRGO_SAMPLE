@@ -7,7 +7,6 @@ import {
   acceptPlatformTerms,
   fetchDocumentLink,
   fetchDocumentPath,
-  fetchPlatformDocument,
   fetchUserProfile,
   logoutUser,
 } from "@emrgo-frontend/services";
@@ -29,11 +28,13 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
   const refreshProfile = useRefreshProfile();
   const { mutate: doLogoutUser } = useMutation(logoutUser);
   const { mutate: doAcceptClientTerms } = useMutation(acceptClientTerms);
-  const { mutate: doAcceptPlatformTerms } = useMutation(acceptPlatformTerms);
   const [showTermsModal, setShowTermsModal] = useState("tnc");
   const [termsDocumentURL, setTermsDocumentURL] = useState("");
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
+
+  const hasCompletedInvestorProfileIdentification =
+    user?.clientKycStatus === constants.accountIdentification.KYC_STATUS_APPROVED;
 
   useEffect(() => {
     if (user) {
@@ -41,11 +42,15 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
         setShowTermsModal("tnc");
       }
 
-      if (user?.hasAcceptedSilverTnc && !user?.hasAcceptedClientTerms) {
+      if (
+        user?.hasAcceptedSilverTnc &&
+        !user?.hasAcceptedClientTerms &&
+        hasCompletedInvestorProfileIdentification
+      ) {
         setShowTermsModal("client_terms");
       }
     }
-  }, [user]);
+  }, [user, hasCompletedInvestorProfileIdentification]);
 
   const { data: documentDetails } = useQuery(
     [constants.queryKeys.miscelleneous.documents.fetchPath, showTermsModal],
@@ -80,16 +85,6 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const onAcceptPlatformTerms = () => {
-    doAcceptPlatformTerms(undefined, {
-      onSuccess: (response) => {
-        refreshProfile();
-        showSuccessToast("Successfully accepted platform terms and conditions");
-      },
-    });
-    resetTermsModal();
-  };
-
   const onAcceptClientTerms = () => {
     doAcceptClientTerms(undefined, {
       onSuccess: () => {
@@ -109,9 +104,6 @@ export const PrimariesWrapperProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  const onRejectPlatformTerms = () => {
-    resetTermsModal();
-  };
 
   const state: IPrimariesWrapperContext = {
     numberOfNewTradeOpportunities: 1,

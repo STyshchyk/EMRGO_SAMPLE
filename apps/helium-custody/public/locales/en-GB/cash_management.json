@@ -10,12 +10,14 @@
     "Headers": {
       "Date": "Date",
       "Transaction_Balance Type": "Transaction/Balance Type",
+      "Transaction Type": "Transaction Type",
       "Reference No": "Reference No.",
       "Related ISIN": "Related ISIN",
       "Narrative": "Narrative",
       "Debit": "Debit",
       "Credit": "Credit",
       "Balance": "Balance",
+      "WSN": "WSN",
       "Actions": "Actions"
     },
     "Filters": {
