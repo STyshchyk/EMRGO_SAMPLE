@@ -29,8 +29,6 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-import ExportTableContent from "../PDFExporter/ExportTableContent";
-import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 const FALLBACK_VALUE = "--";
@@ -115,7 +113,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   issuerSecuritiesAccountNo: parseFloat(i.issuerSecuritiesAccount, 10),
   nextCouponDate: dateFormatter(i.nextCouponDate, DEFAULT_DATE_FORMAT),
   numCerts: convertNumberToIntlFormat(i.numOfCertificates),
-  paymentConfirmationFileId: i.paymentConfirmationFileId,
+  paymentConfirmationFileId: i.paymentConfirmationFileId ? "Yes" : "No",
   price: i.price,
   quantity: convertNumberToIntlFormat(i.quantity),
   readyToSettle: i.readyToSettle,
@@ -381,7 +379,6 @@ const SecurityTradesTable = ({
       id: "paymentEvidenceUploaded",
       title: t("Headers.Evidence Uploaded"),
       field: "paymentConfirmationFileId", // !Dev note: If paymentEvidenceUploaded value is not null then it's assumed that file has been uploaded (Duh!)
-      render: (rowData) => (rowData.paymentConfirmationFileId ? "Yes" : "No"),
       width: 150,
     },
     {
@@ -442,7 +439,6 @@ const SecurityTradesTable = ({
       id: "paymentEvidenceUploaded",
       title: t("Headers.Evidence Uploaded"),
       field: "paymentConfirmationFileId",
-      render: (rowData) => (rowData.paymentConfirmationFileId ? "Yes" : "No"),
       width: 150,
     },
   ];
@@ -526,285 +522,6 @@ const SecurityTradesTable = ({
     value: item,
   }));
 
-  const dummyData = [{
-    cashSSI: "--",
-    counterparty: "INVESTOR A",
-    counterpartyId: "c5df1b16-3267-4a5d-9083-02e8fce4a3fc",
-    counterpartyObject: {
-      id: "c5df1b16-3267-4a5d-9083-02e8fce4a3fc",
-      entityId: "00000000-0000-0000-0000-000000000000",
-      counterpartyId: "aINV",
-      shortName: "aINV",
-      longName: "INVESTOR A",
-      status: null,
-      createdAt: "2022-10-07T12:58:27.737983Z",
-      updatedAt: "2022-10-07T12:58:27.737983Z"
-    },
-    counterpartySSI: "INVESTOR A+B",
-    counterpartySSIObject: {
-      id: "adbe238f-1012-4f6e-b6ef-cc88e2e1ad3f",
-      entityId: "a981e6c5-b4bb-412d-b5ac-084af158553c",
-      counterpartyId: "c5df1b16-3267-4a5d-9083-02e8fce4a3fc",
-      ssiLabel: "INVESTOR A+B",
-      settlementLocationId: "6ace9499-dbcb-4c34-a535-f7177404790c",
-      deliveryAgentIdentifierTypeId: "91f9a412-16ee-4173-a25d-035b30470953",
-      deliveryAgentIdentifier: "00000000",
-      sellerIdentifierTypeId: "b0ee1c39-7e85-403b-abcb-c4a18378f825",
-      sellerIdentifier: "00000000",
-      safekeepingAccount: "00000000",
-      status: "Active",
-      createdAt: "2022-10-07T12:59:10.224994Z",
-      updatedAt: "2022-10-07T12:59:10.224994Z",
-      entity: {
-        id: "a981e6c5-b4bb-412d-b5ac-084af158553c",
-        corporateEntityName: "INVESTOR B",
-        legalIdentifier: null,
-        tncStatus: null,
-        isActive: false,
-        createdAt: "0001-01-01T00:00:00Z",
-        updatedAt: "0001-01-01T00:00:00Z",
-        kycId: null,
-        isParentEntity: false,
-        userAddedBy: null,
-        entityParentId: null,
-        wethaqIdKernel: 0,
-        wethaqEntityId: null
-      },
-      settlementLocation: {
-        id: "6ace9499-dbcb-4c34-a535-f7177404790c",
-        name: "Euroclear",
-        type: null,
-        value: null,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      },
-      deliveryAgentIdentifierType: {
-        id: "91f9a412-16ee-4173-a25d-035b30470953",
-        name: "EB Participant ID",
-        type: null,
-        value: null,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      },
-      sellerIdentifierType: {
-        id: "b0ee1c39-7e85-403b-abcb-c4a18378f825",
-        name: "BIC",
-        type: null,
-        value: null,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      }
-    },
-    createdAt: "2022-10-07T12:59:49.916375Z",
-    currency: "USD",
-    entityGroupId: "10906375-e31e-47c6-9d67-394e671be18c",
-    entityId: "a981e6c5-b4bb-412d-b5ac-084af158553c",
-    entryDate: "2022-10-07T12:59:49.916375Z",
-    lastAmended: "2022-11-03T11:58:20.948Z",
-    externalSecuritiesId: "3a0ae82c-4ee1-480d-9611-7bb8a5c118f3",
-    externalSecurity: {
-      id: "3a0ae82c-4ee1-480d-9611-7bb8a5c118f3",
-      name: "AGR",
-      shortName: "AGR 11.1 2026",
-      longName: "AgriBank 11.1 2026",
-      issuanceName: "AgriBank",
-      wsn: null,
-      isin: "US3333333333",
-      ticker: "AGR",
-      profitRate: "11.1000000000",
-      frequency: "640ca7a3-445e-4e92-921a-2e90a6cd6491",
-      countryId: "837d86f9-a03d-41da-a39b-582c7d2db178",
-      maturityDate: "2026-07-06T16:01:00.000Z",
-      issueDate: "2021-07-07T16:01:00.000Z",
-      currency: "76dffa69-a8d9-41e6-aa43-c940d57083a5",
-      issuanceAmount: "100000000",
-      denomination: "17f01d38-d51b-436e-9ab6-9e99ee7c550c",
-      status: "Active",
-      createdAt: null,
-      updatedAt: null,
-      isPrimaryIssuance: false,
-      issuePrice: null,
-      tradeDate: null,
-      csd: null,
-      underlyingAssets: null,
-      maturityAmount: null,
-      profitRateTerms: null,
-      dayCountConvention: null,
-      sellingRestrictions: null,
-      formOfOffering: null,
-      useOfProceeds: null,
-      shariahCompliance: null,
-      ranking: null,
-      listing: null,
-      governingLaw: null,
-      jurisdiction: null,
-      pricingMethod: null,
-      guarantor: null,
-      exchangeCode: null,
-      arrangerPublished: null,
-      sukukType: null,
-      distributionMethod: null,
-      sukukId: null,
-      settlementDate: null,
-      assetType: null,
-      denominationName: {
-        id: "17f01d38-d51b-436e-9ab6-9e99ee7c550c",
-        name: "1K",
-        type: null,
-        value: 1000,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      },
-      currencyName: {
-        id: "76dffa69-a8d9-41e6-aa43-c940d57083a5",
-        name: "USD",
-        type: "currency",
-        value: null,
-        active: true,
-        createdAt: "2022-08-11T14:30:01.865587Z",
-        updatedAt: "2022-08-11T14:30:01.865587Z",
-        order: 5,
-        key: null,
-        label: "US Dollar",
-        nameAr: "USD",
-        region: "AE"
-      },
-      frequencyName: {
-        id: "640ca7a3-445e-4e92-921a-2e90a6cd6491",
-        name: "Semi-Annually",
-        type: null,
-        value: 180,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      },
-      dayCountConventionName: null,
-      country: {
-        id: "837d86f9-a03d-41da-a39b-582c7d2db178",
-        name: "United Arab Emirates",
-        type: null,
-        value: null,
-        active: null,
-        createdAt: null,
-        updatedAt: null,
-        order: null,
-        key: null,
-        label: null,
-        nameAr: null,
-        region: null
-      }
-    },
-    id: "f78625aa-5a85-4028-8bff-acd24f445d51",
-    investor: "INVESTOR B",
-    investorCashAccountBalance: "11,000",
-    investorCashAccountNo: 1000007,
-    investorSecuritiesAccountBalance: "20,000",
-    investorSecuritiesAccountNo: "S0000007",
-    isin: "US3333333333",
-    isPrimaryIssuance: false,
-    issueDate: "2021-07-07T16:01:00.000Z",
-    issuerCashAccountBalance: "20,000",
-    issuerCashAccountNo: "S0000007",
-    issuerSecuritiesAccountBalance: null,
-    issuerSecuritiesAccountNo: null,
-    nextCouponDate: "",
-    numCerts: "0",
-    paymentConfirmationFileId: null,
-    price: 95.5,
-    quantity: "20,000",
-    readyToSettle: false,
-    referenceId: "0000000081",
-    security: "AGR",
-    securityTradeSettlementStatus: "--",
-    securityTradeType: "Settlement Inst.",
-    settlementAmount: "20,000.00",
-    settlementDate: "2022-10-07T12:59:18.627Z",
-    settlementInstructionStatus: "Settled",
-    settlementType: "RVP",
-    settlementTypeId: "44b99834-a236-4e7f-8613-1ac2bbcbcded",
-    sukukId: null,
-    tradeDate: "2022-10-07T12:59:18.626Z",
-    tradeId: null,
-    tradeSettlementOrSettlementInstructionStatus: "Settled",
-    type: "external",
-    wsn: "--",
-    principalAmount: "0.00",
-    accruedInterest: "0.00",
-    internalTradeRef: "--",
-    entityGroup: {
-      id: "10906375-e31e-47c6-9d67-394e671be18c",
-      entityId: "a981e6c5-b4bb-412d-b5ac-084af158553c",
-      name: "",
-      entityType: null,
-      isActive: null,
-      createdAt: "2022-08-11T14:30:06.794461Z",
-      updatedAt: "2022-08-11T14:30:06.794461Z",
-      entityTypeCode: null,
-      entity: {
-        id: "a981e6c5-b4bb-412d-b5ac-084af158553c",
-        corporateEntityName: "INVESTOR B",
-        legalIdentifier: null,
-        tncStatus: null,
-        isActive: false,
-        createdAt: "0001-01-01T00:00:00Z",
-        updatedAt: "0001-01-01T00:00:00Z",
-        kycId: null,
-        isParentEntity: false,
-        userAddedBy: null,
-        entityParentId: null,
-        wethaqIdKernel: 0,
-        wethaqEntityId: null
-      },
-      wethaqAccount: {
-        id: "29ee9b3d-1811-405c-9080-cfeca7007fda",
-        accountBalance: 11000,
-        createdAt: null,
-        updatedAt: null,
-        entityGroupId: "10906375-e31e-47c6-9d67-394e671be18c",
-        currencyId: "76dffa69-a8d9-41e6-aa43-c940d57083a5",
-        isVirtualIBAN: true,
-        iban: "LU57007XJ9553Z461967",
-        accountNo: 1000007,
-        type: "INVESTOR",
-        isActive: true,
-        isArchived: false,
-        lastStatementFetchDate: null,
-        externalAccountNumber: null,
-        openingBalance: 0,
-        closingBalance: 0
-      }
-    },
-    userId: "f5891ad7-0f58-4ee5-bb2a-fb8ae9e7d71b"
-  }]
   return (
     <Fragment>
       <div
@@ -889,8 +606,10 @@ const SecurityTradesTable = ({
           </div>
           <FilterConsumer>
             {({ filters, filterColumns }) => {
-            const preFilteredData = filters.hasOwnProperty('search') ? tableRef?.current?.dataManager?.getRenderState()?.data : data;                       
-            const filteredData = preFilteredData
+              const preFilteredData = filters.hasOwnProperty("search")
+                ? tableRef?.current?.dataManager?.getRenderState()?.data
+                : data;
+              const filteredData = preFilteredData
                 .filter((row) => {
                   if (
                     filters?.entryDateRange?.value?.startDate &&
@@ -971,7 +690,7 @@ const SecurityTradesTable = ({
 
               return (
                 <div data-testid="security-trades-table">
-                  <MaterialTable            
+                  <MaterialTable
                     tableRef={tableRef}
                     size="small"
                     title=""
@@ -982,7 +701,9 @@ const SecurityTradesTable = ({
                     data={filteredData}
                     actions={[
                       {
-                        icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
+                        icon: () => (
+                          <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />
+                        ),
                         onClick: (event, rowData) => {
                           setAnchorEl(event.currentTarget);
                           setCurrentlySelectedRowData(rowData);
