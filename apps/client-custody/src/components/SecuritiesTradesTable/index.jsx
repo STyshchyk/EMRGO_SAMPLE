@@ -992,7 +992,7 @@ const SecurityTradesTable = ({
                     options={{
                       ...tableStyles,
                       fixedColumns: {
-                        left: 1,
+                        left: 0,
                       },
                       toolbar: false,
                       pageSize: 10,
