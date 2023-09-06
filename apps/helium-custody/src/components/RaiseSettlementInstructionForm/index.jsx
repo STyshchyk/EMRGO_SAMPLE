@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Field, Form, Formik, useFormikContext } from "formik";
+import { ErrorMessage,Field, Form, Formik, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import moment from "moment"
 
@@ -167,7 +167,7 @@ const DependentAmountField = (props) => {
   );
 };
 
-const InlineFormField = ({ label, children }) => (
+const InlineFormField = (props,{ label,children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
       <Typography>{label}</Typography>
@@ -180,6 +180,13 @@ const InlineFormField = ({ label, children }) => (
       >
         {children}
       </FormControl>
+      {/* <ErrorMessage
+        component={Typography}
+        variant="caption"
+        color="error"
+        className="ml-4"
+        name = {props?.name}
+      /> */}
     </Grid>
   </Grid>
 );
@@ -431,6 +438,13 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("settlementTypeSelectOption", newValue);
                 }}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name = 'settlementTypeSelectOption'
+              />
             </InlineFormField>
 
             <InlineFormField label="Security">
@@ -448,8 +462,15 @@ const RaiseSettlementInstructionForm = ({
                 }}
                 isDisabled={editable}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name = 'externalSecuritySelectOption'
+              />
             </InlineFormField>
-            {!inProd && (
+            {inProd && (
               <Grid container item justifyContent="flex-end">
                 <Grid item>
                   <Button
@@ -504,7 +525,6 @@ const RaiseSettlementInstructionForm = ({
                 fullWidth
                 inputVariant="filled"
                 label={DEFAULT_DATE_FORMAT}
-                minDate={moment()}
                 name="tradeDate"
                 variant="dialog"
               />
@@ -637,6 +657,13 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("counterpartySSISelectOption", null);
                 }}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name='counterpartySelectOption'
+              />
             </InlineFormField>
 
             <InlineFormField label="Counterparty SSI">
@@ -651,6 +678,13 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(newValue) => {
                   setFieldValue("counterpartySSISelectOption", newValue);
                 }}
+              />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name = 'counterpartySSISelectOption'
               />
             </InlineFormField>
 

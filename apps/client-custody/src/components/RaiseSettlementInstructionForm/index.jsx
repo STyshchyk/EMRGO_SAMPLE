@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Field, Form, Formik, useFormikContext } from "formik";
+import { Field, Form, Formik, ErrorMessage, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import moment from "moment"
 
@@ -431,6 +431,13 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("settlementTypeSelectOption", newValue);
                 }}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name='settlementTypeSelectOption'
+              />
             </InlineFormField>
 
             <InlineFormField label="Security">
@@ -448,8 +455,15 @@ const RaiseSettlementInstructionForm = ({
                 }}
                 isDisabled={editable}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name='externalSecuritySelectOption'
+              />
             </InlineFormField>
-            {!inProd && (
+            {/* {inProd && ( */}
               <Grid container item justifyContent="flex-end">
                 <Grid item>
                   <Button
@@ -464,7 +478,7 @@ const RaiseSettlementInstructionForm = ({
                   </Button>
                 </Grid>
               </Grid>
-            )}
+            {/* )} */}
 
             <InlineFormField label={"ISIN"}>
               <Field
@@ -636,6 +650,13 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("counterpartySSISelectOption", null);
                 }}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name='counterpartySelectOption'
+              />
             </InlineFormField>
 
             <InlineFormField label="Counterparty SSI">
@@ -650,6 +671,13 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(newValue) => {
                   setFieldValue("counterpartySSISelectOption", newValue);
                 }}
+              />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name='counterpartySSISelectOption'
               />
             </InlineFormField>
 
