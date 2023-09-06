@@ -1,22 +1,31 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { useCopyToClipboard } from "react-use";
 
-import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useDarkMode } from "usehooks-ts";
-
-import { ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
 import * as constants from "@emrgo-frontend/constants";
 import {
   getAllSilverRoutes,
   heliumCustodyRoutes,
-  silverAdministrationRoutes, silverAuthenticationRoutes,
+  silverAdministrationRoutes,
+  silverAuthenticationRoutes,
   silverDataRoomRoutes,
   silverOnboardingRoutes,
-  silverPrimariesRoutes
+  silverPrimariesRoutes,
 } from "@emrgo-frontend/constants";
 import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
+import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDarkMode } from "usehooks-ts";
+
+import { ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
 
 const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | null>(null);
 
@@ -42,9 +51,10 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     disable();
   }, []);
   const { mutate: doLogout } = useMutation({
-    mutationFn: logoutUser, onSuccess: () => {
+    mutationFn: logoutUser,
+    onSuccess: () => {
       navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
-    }
+    },
   });
 
   const { data: userData } = useQuery([constants.queryKeys.account.profile.fetch], {
@@ -54,7 +64,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     onSuccess: (response) => {
       const user = response;
       updateUserConfig(user);
-    }
+    },
   });
   const mainRoutes = [
     {
@@ -62,36 +72,36 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <PrimariesIcon />,
       key: "administration",
       path: silverAdministrationRoutes.home,
-      paths: getAllSilverRoutes(silverAdministrationRoutes)
+      paths: getAllSilverRoutes(silverAdministrationRoutes),
     },
     {
       label: "Primaries",
       icon: <PrimariesIcon />,
       key: "primaries",
       path: silverPrimariesRoutes.home,
-      paths: getAllSilverRoutes(silverPrimariesRoutes)
+      paths: getAllSilverRoutes(silverPrimariesRoutes),
     },
     {
       label: "Onboarding",
       icon: <PrimariesIcon />,
       key: "onboarding",
       path: silverOnboardingRoutes.home,
-      paths: getAllSilverRoutes(silverOnboardingRoutes)
+      paths: getAllSilverRoutes(silverOnboardingRoutes),
     },
     {
       label: "Data Room",
       icon: <PrimariesIcon />,
       key: "dataroom",
       path: silverDataRoomRoutes.home,
-      paths: getAllSilverRoutes(silverDataRoomRoutes)
+      paths: getAllSilverRoutes(silverDataRoomRoutes),
     },
     {
       label: "Custody",
       icon: <PrimariesIcon />,
       key: "custody",
       path: heliumCustodyRoutes.home,
-      paths: getAllSilverRoutes(heliumCustodyRoutes)
-    }
+      paths: getAllSilverRoutes(heliumCustodyRoutes),
+    },
   ];
 
   function removeHttp(url: string) {
@@ -103,11 +113,6 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       Object.keys(constants.silverModuleURLs).find(
         (key) => removeHttp(constants.silverModuleURLs[key]) === removeHttp(window.location.origin)
       ) || "";
-    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:106 : enableRoleMapping", enableRoleMapping, );
-    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:107 : currentRole",  currentRole  );
-    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:108 : Acess",  !currentRole?.access.includes(currentModuleKey));
-    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:109 : currentModuleKey",   currentModuleKey);
-    console.log("🚀 ~ file: SilverDashboardWrapper.jsx:110 : silverModules",   constants.silverModuleURLs);
     if (enableRoleMapping && currentRole && !currentRole?.access.includes(currentModuleKey)) {
       setTimeout(() => {
         const message = `You do not have access to the ${currentModuleKey} module`;
@@ -124,7 +129,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     mainRoutes: mainRoutes,
     doLogout,
     currentRole,
-    enableRoleMapping: enableRoleMapping
+    enableRoleMapping: enableRoleMapping,
   };
 
   return (

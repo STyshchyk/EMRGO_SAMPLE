@@ -64,7 +64,7 @@ const generateInitialValues = (rowData) => ({
 
 const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelectedRowData }) => {
   const dispatch = useDispatch();
-  const entities = useSelector(entitiesSelectors.selectEntities);
+  const entities = useSelector(entitiesSelectors.selectLegacyEntities);
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
@@ -90,8 +90,9 @@ const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelected
     });
   };
 
+  console.log("entities:: ", entities);
   const entityOptionsList = generateEntityOptionsList(entities);
-
+    console.log("entityOptionsList:: ", entityOptionsList);
   return (
     <Dialog
       disableEscapeKeyDown

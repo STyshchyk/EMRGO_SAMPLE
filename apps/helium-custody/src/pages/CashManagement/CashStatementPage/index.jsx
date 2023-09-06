@@ -7,9 +7,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import { CsvBuilder } from "filefy";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -63,6 +63,10 @@ const CashStatementPage = () => {
   const accounts = useSelector(billingAndPaymentsSelectors.selectAccounts);
 
   const [entityFilterValue, setEntityFilterValue] = useState(null);
+  console.log(
+    "🚀 ~ file: index.jsx:66 ~ CashStatementPage ~ entityFilterValue:",
+    entityFilterValue
+  );
   const [accountFilterValue, setAccountFilterValue] = useState(null);
   const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
@@ -131,12 +135,13 @@ const CashStatementPage = () => {
     const securityAccountOpts = [];
     const pushedEntity = [];
     const pushedAccount = [];
+
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
-          label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          id: acc.group.entity.id,
+          label: v.capitalize(acc.group.entity.corporateEntityName),
+          value: acc.group.entity.id,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -147,8 +152,9 @@ const CashStatementPage = () => {
             original: acc,
           });
         }
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
+
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
           id: acc.accountNo,
@@ -163,7 +169,7 @@ const CashStatementPage = () => {
   };
 
   const { entityOpts, accountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-
+  
   const filteredEntity = entityOpts.map((entity) => ({
     data: entity,
     value: entity.id,
@@ -251,7 +257,7 @@ const CashStatementPage = () => {
 
   let filteredAccounts = accountOpts
     .filter((account) =>
-      entityFilterValue ? account.original.group.id === entityFilterValue : false
+      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
     )
     .map((acc) => ({
       data: acc,
@@ -318,7 +324,7 @@ const CashStatementPage = () => {
     setAccountFilterValue(null);
     filteredAccounts = accountOpts
       .filter((account) =>
-        selectedEntity ? account.original.group.id === selectedEntity.value : false
+        selectedEntity !== null ? account.original.group.entity.id === selectedEntity.value : false
       )
       .map((account) => ({
         data: account,
@@ -328,7 +334,7 @@ const CashStatementPage = () => {
 
     const tempSecurityAccountList = securityAccountOpts
       .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.id === selectedEntity.data.id : true
+        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -345,7 +351,7 @@ const CashStatementPage = () => {
     setCurrentlySelectedAccount(selectedAccount);
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -362,7 +368,7 @@ const CashStatementPage = () => {
 
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 

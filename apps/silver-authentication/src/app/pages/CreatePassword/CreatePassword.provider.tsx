@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 
 import { useUserStore } from "../store";
+import { CreatePasswordSchema } from "./CreatePassword.schema";
 import { createPassword, ISetPassword } from "./CreatePassword.services";
 import { ICreatePasswordContext, ICreatePasswordFormValues } from "./CreatePassword.types";
 
@@ -24,24 +25,6 @@ const CreatePasswordContext = createContext<ICreatePasswordContext | null>(null)
  */
 export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
   const [showPassword, setShowPassword] = useState(false);
-  /**
-   *
-   * @param values an object containing current form values
-   * @returns an object containing errors for each field
-   *
-   * TODO: Implement this code.
-   */
-  const validate = (values: ICreatePasswordFormValues) => {
-    const errors = {} as ICreatePasswordFormValues;
-    if (!values.password) errors.password = "Password is required";
-    if (values.confirmPassword !== values.password)
-      errors.confirmPassword = "Confirmation must match password";
-    if (!values.confirmPassword) errors.confirmPassword = "Confirmation is required";
-
-    // TODO: Implement Password validation
-
-    return errors;
-  };
 
   /**
    * Initial values for the form.
@@ -75,7 +58,10 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     };
     doCreatePassword(payload, {
       onSuccess: (response) => {
-        navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.completeRegistration);
+        navigateSilverModule(
+          silverModule.authentication,
+          silverAuthenticationRoutes.completeRegistration
+        );
       },
       onError: (error) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -88,7 +74,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
   const form = useFormik<ICreatePasswordFormValues>({
     initialValues,
     validateOnMount: true,
-    validate,
+    validationSchema: CreatePasswordSchema,
     onSubmit,
   });
 

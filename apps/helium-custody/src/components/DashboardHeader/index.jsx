@@ -16,9 +16,9 @@ import Popover from "@mui/material/Popover";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import cx from "classnames";
 import PropTypes from "prop-types";
+import v from "voca";
 
 import locales from "../../constants/locales/locales";
 import * as authActionCreators from "../../redux/actionCreators/auth";
@@ -57,6 +57,7 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const userEmail = useSelector(authSelectors.selectUserEmail);
+  console.log("🚀 ~ file: index.jsx:60 ~ DashboardHeader ~ userEmail:", userEmail)
   const userFullName = useSelector(authSelectors.selectUserFullName);
 
   const drawerToggleIcon = () => {
@@ -124,10 +125,10 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
               <Avatar className={style.user__avatar}>{getInitials(userFullName, 1)}</Avatar>
               <Grid item container direction="column" alignContent="flex-start">
                 <Typography variant="body1" align="left" className={style.user__name}>
-                  {userFullName}
+                  {v.titleCase(userFullName)}
                 </Typography>
                 <Typography variant="caption" align="left" className={style.user__role}>
-                  {v.capitalize(currentCorporateEntityName)} - {currentEntityGroup?.name}
+                  {`${v.titleCase(currentCorporateEntityName)} - ${v.chain(currentEntityGroup?.name).replaceAll("_", " ").titleCase().value()}`}
                 </Typography>
               </Grid>
             </ButtonBase>
@@ -153,13 +154,22 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
         <Box pb={3} className={style.menu__wrapper}>
           <div className={style.menu__header}>
             <Typography variant="subtitle2" align="center" className={style.menu__current__group}>
-              {locale.rtl
+              {`${v
+              .chain(currentEntityGroup?.name)
+              .replaceAll("_", " ")
+              .titleCase()
+              .value()} (${v
+              .chain(currentEntityType)
+              .replaceAll("_", " ")
+              .titleCase()
+              .value()})`}
+              {/* {locale.rtl
                 ? `(${v.capitalize(t(`EntityGroupType.${currentEntityType}`))}) ${t(
                     `EntityGroupName.${currentEntityGroup?.name}`
                   )}`
                 : `${t(`EntityGroupName.${currentEntityGroup?.name}`)} (${v.capitalize(
                     t(`EntityGroupType.${currentEntityType}`)
-                  )})`}
+                  )})`} */}
             </Typography>
           </div>
           <Box px={2} pt={2}>
@@ -173,7 +183,7 @@ const DashboardHeader = ({ open, handleDrawerToggle }) => {
               </Avatar>
               <Grid item xs={12}>
                 <Typography variant="h6" align="center" className={style.menu__current__user}>
-                  {userFullName}
+                  {v.titleCase(userFullName)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>

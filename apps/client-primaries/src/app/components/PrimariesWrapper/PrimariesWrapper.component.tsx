@@ -10,15 +10,8 @@ import * as Styles from "./PrimariesWrapper.styles";
 import { IPrimariesWrapperProps } from "./PrimariesWrapper.types";
 
 export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children }) => {
-  const {
-    user,
-
-    onAcceptClientTerms,
-    onRejectClientTerms,
-    showTermsModal,
-    termsDocumentURL,
-  } = ensureNotNull(usePrimariesWrapperContext());
-
+  const { user, onAcceptClientTerms, onRejectClientTerms, showTermsModal, termsDocumentURL } =
+    ensureNotNull(usePrimariesWrapperContext());
 
   const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
@@ -57,7 +50,6 @@ export const PrimariesWrapperComponent: FC<IPrimariesWrapperProps> = ({ children
       </Tabs>
 
       {children}
-
 
       <TermsModal
         title="Client Terms"

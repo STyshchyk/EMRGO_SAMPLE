@@ -262,6 +262,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     }
   }, [open]);
 
+    console.log("initialValues:: ", initialValues);
   return (
     <Dialog
       fullWidth
@@ -557,6 +558,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                       />
                     </Grid>
                   </Grid>
+
+
 
                   <Grid container className="mt-4">
                     <Grid item xs={12} md={6} lg={6}>
