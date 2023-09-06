@@ -116,13 +116,14 @@ export const renderDataTableCells = (columns, data) => {
         const rendered = render ? render(rowData) : resolvePath(rowData, field);
         const isNan = typeof rendered === "number" && isNaN(rendered);
         const outputVal = isNan ? "--" : rendered;
+        const size = columns.length >= 10 ? Math.ceil(columns.length / 10) : 0;
         return (
           !hidden && (
             <View
               style={[styles.tableCol, { width: `${width || defaultWidth}%`, textAlign: align }]}
               key={shortid.generate()}
             >
-              <Text style={[styles.tableCell, { fontSize: 10 }]}>{outputVal}</Text>
+              <Text style={[styles.tableCell, { fontSize: 10 - size }]}>{outputVal}</Text>
             </View>
           )
         );

@@ -5,6 +5,24 @@ import { saveAs } from "file-saver";
 
 import ExportPage from "./ExportPage";
 
+export const chunkSubstr = (str, size) => {
+  const numChunks = Math.ceil(str.length / size);
+  const chunks = new Array(numChunks);
+
+  for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
+    chunks[i] = str.substr(o, size);
+  }
+
+  return chunks;
+};
+
+Font.registerHyphenationCallback((word) => {
+  if (word.length >= 7) {
+    return chunkSubstr(word, 3);
+  } else {
+    return [word];
+  }
+});
 // changed
 
 Font.register({
