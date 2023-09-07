@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
@@ -81,7 +81,6 @@ const ValidatePaymentInstructionDialog = ({
 ValidatePaymentInstructionDialog.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   dialogTitle: PropTypes.string.isRequired,
   formLabel: PropTypes.string.isRequired,
   disabled: PropTypes.string,

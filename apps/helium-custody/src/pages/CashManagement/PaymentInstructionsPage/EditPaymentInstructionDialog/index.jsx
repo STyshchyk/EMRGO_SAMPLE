@@ -101,7 +101,6 @@ EditPaymentInstructionDialog.propTypes = {
   }).isRequired,
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default EditPaymentInstructionDialog;
