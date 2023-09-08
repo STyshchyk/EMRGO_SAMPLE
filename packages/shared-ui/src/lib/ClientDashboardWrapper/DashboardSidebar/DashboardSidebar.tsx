@@ -85,6 +85,7 @@ export const DashboardSidebar = () => {
         <SidebarList>
           {mainRoutes.map((module) => (
             <Tooltip
+              enableTooltip={module.disabled}
               content={
                 module.disabled ? (
                   <Fragment>

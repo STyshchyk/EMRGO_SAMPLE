@@ -257,7 +257,7 @@ const CounterpartyTable = ({
                     columns={filterColumns?.shownColumns}
                     tableOptions={{
                       sliceRowCount: 5,
-                      tableOffset: 3,
+                      tableOffset: 5,
                     }}
                     data={filteredDataRows}
                     filters={exportFilters}

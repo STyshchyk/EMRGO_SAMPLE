@@ -2,8 +2,6 @@ import * as React from "react";
 import { createContext, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-//! use shared user store
-import store from "store";
 
 import * as authActionCreators from "../redux/actionCreators/auth";
 import * as authSelectors from "../redux/selectors/auth";
@@ -20,7 +18,6 @@ export const CustodyWrapperProvider = ({ children }) => {
     fetchUserProfile({
       successCallback: () => {
         // updateUser(authenticatedUserObject)
-        store.set("user", authenticatedUserObject);
       },
     });
   }, [dispatch]);

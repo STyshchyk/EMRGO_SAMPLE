@@ -7,7 +7,7 @@ import * as Styles from "./Tooltip.styles";
 import { ITooltipProps } from "./Tooltip.types";
 import { useTooltip } from "./useTooltip";
 
-export const Tooltip: FC<ITooltipProps> = ({ children, content, className }) => {
+export const Tooltip: FC<ITooltipProps> = ({ children, content, enableTooltip = true, className }) => {
   const key = useId();
   const tooltip = useTooltip();
   const { refs, x, y, strategy, isOpen, getReferenceProps, getFloatingProps } = tooltip;
@@ -24,7 +24,7 @@ export const Tooltip: FC<ITooltipProps> = ({ children, content, className }) => 
         key: element.key ?? key,
       })}
 
-      {isOpen && (
+      {isOpen && enableTooltip && (
         <FloatingPortal>
           <TooltipContext.Provider value={tooltip}>
             <Styles.Tooltip

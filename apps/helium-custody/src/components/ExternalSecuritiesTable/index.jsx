@@ -233,7 +233,6 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
 
 const getAttribute = (attrs,fieldName) => {
  const attribute =  attrs.filter((attr) => attr.securityIdTypeName.toLowerCase() === fieldName)[0]
- console.log(attribute)
  return attribute?.value ?? FALLBACK_VALUE
 }
 

@@ -118,7 +118,7 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
             rowStyle: (rowData) => ({
               backgroundColor:
                 selectedRowId === rowData.tableData.id
-                  ? theme?.muiTheme?.palette?.secondary?.main
+                  ? theme?.muiTheme?.palette?.primary?.main
                   : null,
               color:
                 selectedRowId === rowData.tableData.id
