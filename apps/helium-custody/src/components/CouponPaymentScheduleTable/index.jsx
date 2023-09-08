@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
+import moment from 'moment'
 
 import MaterialTable, { MTableAction } from "@material-table/core";
 import Button from "@mui/material/Button";
@@ -203,24 +204,24 @@ const CouponPaymentScheduleTable = ({
             validate: validateDateField,
             render: (rowData) => dateFormatter(rowData?.calenderDate, DEFAULT_DATE_FORMAT),
             editComponent: (props) => (
-              <Fragment>
-                <DatePicker
-                  format={DEFAULT_DATE_FORMAT}
-                  value={props.value ?? null}
-                  onChange={(e) => {
-                    props.onChange(e.toDate());
-                  }}
-                  disablePast
-                  shouldDisableDate={disableDay}
-                  className={
-                    "MuiInputBase-root MuiInput-root MuiInput-underline Mui-error MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
-                  }
-                />
-                {props.error && (
-                  <div className="MuiFormHelperText-root Mui-error">{props.helperText}</div>
-                )}
-              </Fragment>
-            ),
+                <Fragment>
+                  <DatePicker
+                    format={DEFAULT_DATE_FORMAT}
+                    value={props.value? moment(props.value): null}
+                    onChange={(e) => {
+                      props.onChange(e.toDate());
+                    }}
+                    disablePast
+                    shouldDisableDate={disableDay}
+                    className={
+                      "MuiInputBase-root MuiInput-root MuiInput-underline Mui-error MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+                    }
+                  />
+                  {props.error && (
+                    <div className="MuiFormHelperText-root Mui-error">{props.helperText}</div>
+                  )}
+                </Fragment>
+              ),     
           },
           {
             id: "notionalAmount",
@@ -285,14 +286,14 @@ const CouponPaymentScheduleTable = ({
           },
 
           Toolbar: (props) => {
-            const { actions, data } = props;
+            const { actions, originalData: data} = props;
             const addActionItem = actions.find((i) => i.tooltip === "Add");
 
             const handleAddClick = () => {
               addActionItem.onClick();
             };
 
-            const disableImportCSVDataButton = data.some(({ couponAllocationStatus }) =>
+            const disableImportCSVDataButton = data?.some(({ couponAllocationStatus }) =>
               [
                 couponAllocationStatusEnum.PENDING_APPROVAL,
                 couponAllocationStatusEnum.ALLOCATED,
