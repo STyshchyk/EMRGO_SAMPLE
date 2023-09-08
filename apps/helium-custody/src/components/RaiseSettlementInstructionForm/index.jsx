@@ -167,7 +167,7 @@ const DependentAmountField = (props) => {
   );
 };
 
-const InlineFormField = (props,{ label,children }) => (
+const InlineFormField = ({ label,children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
       <Typography>{label}</Typography>
