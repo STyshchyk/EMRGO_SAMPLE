@@ -113,6 +113,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "primaries",
       path: constants.clientPrimariesRoutes.home,
       paths: constants.getAllRoutes(constants.clientPrimariesRoutes),
+      disabled:false,
     },
     {
       label: "Secondaries",
@@ -128,6 +129,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "custody",
       path: constants.clientCustodyRoutes.custody.onboarding.home,
       paths: constants.getAllRoutes(constants.clientCustodyRoutes),
+      disabled:false,
     },
     {
       label: "Research",

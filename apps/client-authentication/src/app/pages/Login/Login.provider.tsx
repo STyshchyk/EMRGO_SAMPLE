@@ -42,8 +42,8 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
    * Initial values for the form.
    */
   const initialValues: ILoginFormValues = {
-    email: "helen@emrgo.com",
-    password: "hellowolf122!"
+    email: "",
+    password: ""
   };
   const codeInitial: ILoginCode = {
     code: ""

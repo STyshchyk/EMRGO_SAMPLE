@@ -4,6 +4,7 @@ import { ReferenceType, UseFloatingReturn, useInteractions } from "@floating-ui/
 
 export interface ITooltipProps {
   content: ReactNode;
+  enableTooltip?:boolean;
   children: ReactElement;
   className?: string;
 }
