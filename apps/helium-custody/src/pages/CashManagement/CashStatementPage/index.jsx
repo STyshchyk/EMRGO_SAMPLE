@@ -169,7 +169,7 @@ const CashStatementPage = () => {
   };
 
   const { entityOpts, accountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-  
+
   const filteredEntity = entityOpts.map((entity) => ({
     data: entity,
     value: entity.id,
@@ -338,7 +338,11 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedEntity) {
+    if (
+      selectedEntity &&
+      Array.isArray(tempSecurityAccountList) &&
+      tempSecurityAccountList.length > 0
+    ) {
       setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
       setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
     }
@@ -355,7 +359,7 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedAccount) {
+    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
       setEntityFilterValue(tempEntitiesList[0].value);
       setCurrentlySelectedEntity(tempEntitiesList[0]);
     }
@@ -372,7 +376,7 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedAccount) {
+    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
       setEntityFilterValue(tempEntitiesList[0].value);
       setCurrentlySelectedEntity(tempEntitiesList[0]);
     }
@@ -491,7 +495,7 @@ const CashStatementPage = () => {
                 maxDate={moment()}
               />
             </Grid>
-            {/* 
+            {/*
               <Grid item xs={12} md={6} lg={2} container>
                 <Grid container justify="space-between" alignItems="flex-start">
                   <Typography variant="body1" className="bold">

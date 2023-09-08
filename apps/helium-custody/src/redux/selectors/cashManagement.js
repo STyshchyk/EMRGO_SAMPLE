@@ -35,12 +35,14 @@ export const selectTransactions = createSelector([selectTransactionsData], (tran
   if (transactionsData?.data) {
     const finalData = [];
     const summaryRows = transactionsData.data;
-    summaryRows.forEach((row) => {
-      const { transactions } = row;
-      transactions.forEach((tr) => {
-        finalData.push(tr);
+    summaryRows &&
+      summaryRows.forEach((row) => {
+        const { transactions } = row;
+        transactions &&
+          transactions.forEach((tr) => {
+            finalData.push(tr);
+          });
       });
-    });
     return finalData;
   }
   return [];

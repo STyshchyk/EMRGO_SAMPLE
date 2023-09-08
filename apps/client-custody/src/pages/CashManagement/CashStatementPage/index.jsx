@@ -7,8 +7,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import { CsvBuilder } from "filefy";
+import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -27,7 +28,6 @@ import * as authSelectors from "../../../redux/selectors/auth";
 import * as billingAndPaymentsSelectors from "../../../redux/selectors/cashManagement";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
-import moment from "moment";
 
 const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
@@ -333,7 +333,11 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedEntity) {
+    if (
+      selectedEntity &&
+      Array.isArray(tempSecurityAccountList) &&
+      tempSecurityAccountList.length > 0
+    ) {
       setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
       setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
     }
@@ -350,7 +354,7 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedAccount) {
+    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
       setEntityFilterValue(tempEntitiesList[0].value);
       setCurrentlySelectedEntity(tempEntitiesList[0]);
     }
@@ -367,7 +371,7 @@ const CashStatementPage = () => {
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedAccount) {
+    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
       setEntityFilterValue(tempEntitiesList[0].value);
       setCurrentlySelectedEntity(tempEntitiesList[0]);
     }
@@ -485,7 +489,7 @@ const CashStatementPage = () => {
                 maxDate={moment()}
               />
             </Grid>
-            {/* 
+            {/*
               <Grid item xs={12} md={6} lg={2} container>
                 <Grid container justify="space-between" alignItems="flex-start">
                   <Typography variant="body1" className="bold">
