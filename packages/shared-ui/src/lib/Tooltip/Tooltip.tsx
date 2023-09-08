@@ -28,6 +28,7 @@ export const Tooltip: FC<ITooltipProps> = ({ children, content, className }) => 
         <FloatingPortal>
           <TooltipContext.Provider value={tooltip}>
             <Styles.Tooltip
+              displayState={typeof content === "string"}
               ref={refs.setFloating}
               style={{
                 position: strategy,

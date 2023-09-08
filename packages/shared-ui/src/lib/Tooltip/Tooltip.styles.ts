@@ -2,8 +2,8 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-export const Tooltip = styled.div`
-  display: flex;
+export const Tooltip = styled.div<{ displayState?: boolean }>`
+  display: ${(props) => (props?.displayState ? "none" : "flex")};
   flex-direction: column;
   row-gap: ${rem(4)};
   padding: ${rem(8)};
