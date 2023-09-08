@@ -2,8 +2,7 @@ import { PropsWithChildren, ReactElement } from "react";
 
 import { IUser } from "@emrgo-frontend/types";
 
-export interface ISilverDashboardWrapperProps extends PropsWithChildren {
-}
+export type ISilverDashboardWrapperProps = PropsWithChildren;
 
 export interface ISilverDashboardWrapperContext {
   enableRoleMapping: boolean;
@@ -12,9 +11,8 @@ export interface ISilverDashboardWrapperContext {
   mainRoutes: IModuleConfig[];
   doLogout: () => void;
   currentRole: any;
-
+  footerRoutes: IModuleConfig[];
 }
-
 
 export interface IRoleSelector {
   label: string;
@@ -29,5 +27,7 @@ export interface IModuleConfig {
   icon: ReactElement;
   key: string;
   path: string;
-  paths: string[];
+  paths: string[] | "";
+  disabled?: boolean;
+  onClick?: () => void;
 }

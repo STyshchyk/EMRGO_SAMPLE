@@ -2,10 +2,6 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-
-
-
-
 export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
@@ -173,6 +169,14 @@ export const SidebarListItemSecondaryLink = styled.a<ILinkProps>`
     css`
       ${getTheme("typography.semiBold.02")}
       ${activeLinkStyles}
+    `}
+
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      pointer-events: none;
+      ${disabledLinkStyles}
     `}
 
   &.active {

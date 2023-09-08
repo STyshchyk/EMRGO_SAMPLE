@@ -1,4 +1,4 @@
-import { matchPath, useLocation, useMatch } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 
 import { silverModuleURLs } from "@emrgo-frontend/constants";
 
@@ -8,16 +8,16 @@ export enum silverModule {
   primaries = "primaries",
   onboarding = "onboarding",
   dataroom = "dataroom",
-  custody = "custody"
+  custody = "custody",
 }
 
-export const buildSilverModuleURL = (module: silverModule, path: string) => {
+export const buildSilverModuleURL = (module: string, path: string) => {
   const baseUrl = silverModuleURLs[module];
   const fullPath = `${baseUrl}${path}`;
   return fullPath;
 };
 
-export const navigateSilverModule = (module: silverModule, path: string) => {
+export const navigateSilverModule = (module: string, path: string) => {
   const fullPath = buildSilverModuleURL(module, path);
   console.log(fullPath);
   window.location.assign(fullPath);

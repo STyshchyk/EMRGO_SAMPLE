@@ -4,7 +4,6 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
-  useRef,
   useState,
 } from "react";
 import { useCopyToClipboard } from "react-use";
@@ -20,12 +19,23 @@ import {
   silverPrimariesRoutes,
 } from "@emrgo-frontend/constants";
 import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
-import { PrimariesIcon, useToast, useUser } from "@emrgo-frontend/shared-ui";
+import {
+  AccountIcon,
+  HelpIcon,
+  NotificationsIcon,
+  PrimariesIcon,
+  useToast,
+  useUser,
+} from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
 
-import { ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
+import {
+  NotificationsBadge,
+  SidebarListItemIconWithBadge,
+} from "./SilverDashboardSidebar/SilverDashboardSidebar.styles";
+import { IModuleConfig, ISilverDashboardWrapperContext } from "./SilverDashboardWrapper.types";
 
 const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | null>(null);
 
@@ -66,7 +76,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       updateUserConfig(user);
     },
   });
-  const mainRoutes = [
+  const mainRoutes: IModuleConfig[] = [
     {
       label: "Administration",
       icon: <PrimariesIcon />,
@@ -80,6 +90,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       key: "primaries",
       path: silverPrimariesRoutes.home,
       paths: getAllSilverRoutes(silverPrimariesRoutes),
+      disabled: true,
     },
     {
       label: "Onboarding",
@@ -94,6 +105,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       key: "dataroom",
       path: silverDataRoomRoutes.home,
       paths: getAllSilverRoutes(silverDataRoomRoutes),
+      disabled: true,
     },
     {
       label: "Custody",
@@ -101,6 +113,51 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       key: "custody",
       path: heliumCustodyRoutes.home,
       paths: getAllSilverRoutes(heliumCustodyRoutes),
+    },
+  ];
+
+  const footerRoutes: IModuleConfig[] = [
+    {
+      label: "Log out",
+      icon: <AccountIcon />,
+      key: "Log out",
+      path: "",
+      paths: "",
+      disabled: false,
+      onClick: () => {
+        doLogout();
+      },
+    },
+    {
+      label: "Notification",
+      icon: (
+        <>
+          <SidebarListItemIconWithBadge>
+            <NotificationsIcon />
+            <NotificationsBadge>{}</NotificationsBadge>
+          </SidebarListItemIconWithBadge>
+        </>
+      ),
+      key: "Notification",
+      path: "",
+      paths: "",
+      disabled: true,
+    },
+    {
+      label: "Account",
+      icon: <AccountIcon />,
+      key: "Account",
+      path: "",
+      paths: "",
+      disabled: true,
+    },
+    {
+      label: "Help",
+      icon: <HelpIcon />,
+      key: "Help",
+      path: "",
+      paths: "",
+      disabled: true,
     },
   ];
 
@@ -130,6 +187,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     doLogout,
     currentRole,
     enableRoleMapping: enableRoleMapping,
+    footerRoutes,
   };
 
   return (
