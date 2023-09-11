@@ -16,7 +16,6 @@ import { LoginCode, LoginSchema } from "./Login.schema";
 import { loginUser } from "./Login.services";
 import { ILoginCode, ILoginContext, ILoginFormValues } from "./Login.types";
 
-
 const LoginContext = createContext<ILoginContext | null>(null);
 
 /**
@@ -41,10 +40,10 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
    */
   const initialValues: ILoginFormValues = {
     email: "",
-    password: ""
+    password: "",
   };
   const codeInitial: ILoginCode = {
-    code: ""
+    code: "",
   };
   /**
    * @param values an object containing current form values
@@ -55,23 +54,23 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     // navigateModule("primaries", routes.home);
     doLoginUser(values, {
       onSuccess: (response) => {
-        const user = response.user;
+        const user = response.data.user;
+        console.log(user);
         const MFA = user instanceof Object && "email" in user;
         if (!MFA || !user.mfaEnabled) {
           setMFA?.(response as unknown as IMFA);
           navigate(silverAuthenticationRoutes.completeRegistration);
           return;
         }
-        updateUser({ ...user as IUser });
+        updateUser({ ...(user as IUser) });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
       onError: (response) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        showErrorToast(response?.data?.message ?? "Error appeared during login");
-      }
+        showErrorToast(response?.response?.data?.message ?? "Error appeared during login");
+      },
     });
-
   };
 
   const handleNext = (code: ILoginCode) => {
@@ -80,14 +79,20 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (data) => {
         disable();
         const user: IUser = LoggedUser;
-        const navigateModileRole = silverRoles.find(role => user?.role === role.key);
-        if (!navigateModileRole) {showErrorToast("Module not found"); return;}
-        if (!user) {showErrorToast("User is not found, return to login page"); return;}
-         navigateSilverModule(navigateModileRole?.module, navigateModileRole?.route);
+        const navigateModileRole = silverRoles.find((role) => user?.role === role.key);
+        if (!navigateModileRole) {
+          showErrorToast("Module not found");
+          return;
+        }
+        if (!user) {
+          showErrorToast("User is not found, return to login page");
+          return;
+        }
+        navigateSilverModule(navigateModileRole?.module, navigateModileRole?.route);
       },
       onError: () => {
         showErrorToast("Error while verifing mfa code");
-      }
+      },
     });
     disable();
   };
@@ -100,21 +105,19 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     enable();
   }, []);
 
-
   const form = useFormik<ILoginFormValues>({
     initialValues,
     validateOnMount: true,
     validationSchema: LoginSchema,
-    onSubmit
+    onSubmit,
   });
   const formCode = useFormik<ILoginCode>({
     initialValues: codeInitial,
     validateOnMount: true,
     enableReinitialize: true,
     validationSchema: LoginCode,
-    onSubmit: handleNext
+    onSubmit: handleNext,
   });
-
 
   const state: ILoginContext = {
     form,
@@ -125,8 +128,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     handleNext,
     handleBack,
     isError,
-    error
-
+    error,
   };
 
   return <LoginContext.Provider value={state}>{children}</LoginContext.Provider>;

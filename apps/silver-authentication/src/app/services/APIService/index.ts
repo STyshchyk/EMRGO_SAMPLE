@@ -6,8 +6,10 @@ export const authApi = axios.create({
   baseURL: `${BASE_API_URL}`,
   headers: { "Content-Type": "application/json" },
   //Skip running auth refresh for this instance
-  validateStatus: null,
   withCredentials: true,
+  validateStatus: function (status) {
+    return status < 300;
+  },
 });
 
 authApi.defaults.headers.common["Content-Type"] = "application/json";
