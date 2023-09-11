@@ -20,9 +20,7 @@ export function Select<
 }: Props<Option, IsMulti, Group> & ISelectProps ) {
   const animatedComponents = makeAnimated();
   const { isDarkMode } = useDarkMode();
-
-  console.log(props)
-
+  
   const getOptionStyles = (type: string, state: any) => {
     let styles = {};
 

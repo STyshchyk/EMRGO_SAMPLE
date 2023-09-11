@@ -214,7 +214,7 @@ const ViewSettlementInstructionAuditHistoryDialog = ({
       sorting: false,
       render: (rowData) => {
         if (rowData?.auditColumnLabel) {
-          return constantCase(rowData?.auditColumnLabel);
+          return v.chain(rowData?.auditColumnLabel).snakeCase().upperCase().value();
         }
 
         return "STATUS";
