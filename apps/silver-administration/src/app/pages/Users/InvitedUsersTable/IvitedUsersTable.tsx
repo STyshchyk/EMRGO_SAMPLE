@@ -8,7 +8,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
 
 import { getInvitedUserTypeLabel } from "../../helpers";
@@ -24,7 +24,12 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
   const { mutate: doRemoveUser } = useMutation(removeUser);
   const { mutate: doReset2FA } = useMutation(reset2FA);
   const { mutate: doResendInfo } = useMutation(resendInfo);
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "firstName",
+      desc: true,
+    },
+  ]);
   const client = useQueryClient();
   const { showErrorToast, showSuccessToast } = useToast();
   const columns = [
@@ -139,12 +144,6 @@ export const IvitedUsersTable: FC<IIvitedUsersTableProps> = ({ users }) => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
-    initialState: {
-      sorting: [{
-        id: "firstName",
-        desc: true
-      }]
-    }
   });
   return <Table table={table} />;
 };

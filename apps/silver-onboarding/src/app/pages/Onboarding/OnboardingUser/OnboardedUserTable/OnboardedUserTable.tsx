@@ -1,6 +1,6 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {silverQueryKeys as queryKeys} from "@emrgo-frontend/constants";
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import {
   ActionTooltip,
   Table,
@@ -8,33 +8,34 @@ import {
   TooltipButtonBox,
   useToast,
 } from "@emrgo-frontend/shared-ui";
-import {trimDate} from "@emrgo-frontend/utils";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import { trimDate } from "@emrgo-frontend/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  createColumnHelper, ColumnDef,
-  flexRender,
+  createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
-import {getKycLabel, IEntity, kycType} from "../OnboarderUsers/OnboardedUsers.types";
-import {kycSubmit} from "../OnboarderUsers/OnboardrdedUsers.service";
-import * as Styles from "./OnboardedUserTable.styles";
-import {IOnboardedUserTableProps} from "./OnboardedUserTable.types";
-import {SortingTableState} from "@tanstack/table-core/src/features/Sorting";
+import { getKycLabel, IEntity, kycType } from "../OnboarderUsers/OnboardedUsers.types";
+import { kycSubmit } from "../OnboarderUsers/OnboardrdedUsers.service";
+import { IOnboardedUserTableProps } from "./OnboardedUserTable.types";
 
 const columnHelper = createColumnHelper<IEntity>();
 
-export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({onboarderUsers}) => {
-  const {showErrorToast, showSuccessToast} = useToast();
+export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUsers }) => {
+  const { showErrorToast, showSuccessToast } = useToast();
   const client = useQueryClient();
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const {mutate: doKycSumbit} = useMutation(kycSubmit, {
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "firstName",
+      desc: true,
+    },
+  ]);
+  const { mutate: doKycSumbit } = useMutation(kycSubmit, {
     onSuccess: () => {
-      client.invalidateQueries({queryKey: [queryKeys.onboarding.fetch]}).then(() => {
-      });
+      client.invalidateQueries({ queryKey: [queryKeys.onboarding.fetch] }).then(() => {});
     },
   });
 
@@ -78,9 +79,9 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({onboarderUsers
     columnHelper.display({
       id: "Actions",
       header: () => {
-        return <span style={{marginLeft: "auto"}}>Actions</span>;
+        return <span style={{ marginLeft: "auto" }}>Actions</span>;
       },
-      cell: ({row}) => {
+      cell: ({ row }) => {
         const getRow = row.original;
         const userId = getRow.userId;
         const entityId = getRow.entityId;
@@ -192,12 +193,6 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({onboarderUsers
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
-    initialState: {
-      sorting: [{
-        id: "firstName",
-        desc: true
-      }]
-    }
   });
-  return <Table table={table}/>;
+  return <Table table={table} />;
 };
