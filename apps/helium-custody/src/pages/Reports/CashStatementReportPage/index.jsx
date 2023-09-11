@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -95,7 +95,6 @@ const CashStatementReportPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-
     setFilteredRows(getTableData(transactions));
   }, [transactions]);
 
@@ -144,7 +143,8 @@ const CashStatementReportPage = () => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
+          label: `${acc.accountNo}`,
+          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });

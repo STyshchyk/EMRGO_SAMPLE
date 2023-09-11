@@ -5,10 +5,14 @@ import { useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
-import { accountTypeRenderer, currencyRenderer, reportDateRenderer } from "../../constants/renderers";
+import {
+  accountTypeRenderer,
+  currencyRenderer,
+  reportDateRenderer,
+} from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
@@ -45,7 +49,8 @@ const CashBalancesTable = ({ data, accounts }) => {
   const dispatch = useDispatch();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports"]);
+  const { t } = useTranslation(["reports", "blotter"]);
+  console.log(data, "data");
 
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
@@ -88,7 +93,8 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
+          label: `${acc.accountNo}`,
+          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -204,7 +210,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       customFilterAndSearch: (term, rowData) => {
         if (!term) return true;
         return term === rowData?.account;
-      }
+      },
     },
     {
       id: "currency",
@@ -215,7 +221,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       customFilterAndSearch: (term, rowData) => {
         if (!term) return true;
         return term === rowData?.currency;
-      }
+      },
     },
     {
       id: "balance",
@@ -229,7 +235,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       id: "accountType",
       title: t("Cash Balances.Headers.Account Type"),
       field: "accountType",
-      render: (rowData) => rowData.accountType,
+      render: (rowData) => v.capitalize(rowData.accountType),
       exportConfig: { render: (rowData) => accountTypeRenderer(rowData.accountType), width: 20 },
     },
     {
@@ -272,6 +278,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       },
       accountType: {
         label: t("Cash Balances.Headers.Account Type"),
+
         value: v.capitalize(accountType) || "",
       },
       lastMovement: {
@@ -376,7 +383,13 @@ const CashBalancesTable = ({ data, accounts }) => {
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
-                <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()} disableClear/>
+                <DatePicker
+                  name="date"
+                  label="Date"
+                  defaultFilter={moment()}
+                  maxDate={moment()}
+                  disableClear
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
