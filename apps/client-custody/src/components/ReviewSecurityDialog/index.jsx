@@ -8,24 +8,24 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { StyleSheet, Text,View } from "@react-pdf/renderer";
+import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import { CsvBuilder } from "filefy";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { roundNumber } from "../../helpers/renderers";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
-import { roundNumber } from "../../helpers/renderers";
 import ReportingPDFExporter from "../ReportingPDFExporter";
 import StyledDialogHeader from "../StyledDialogHeader";
 
 const primary = "#23389c";
 
 const pdfStyles = StyleSheet.create({
-  label: { fontSize: "10px", fontFamily: "D-DIN Exp", color: primary, marginTop: "5px"},
+  label: { fontSize: "10px", fontFamily: "D-DIN Exp", color: primary, marginTop: "5px" },
   value: { fontSize: "10px", fontFamily: "D-DIN Exp", fontWeight: 700, color: primary },
-  labelWrapper:{minWidth:'250px'},
-  block:{flexDirection:'row'}
+  labelWrapper: { minWidth: "250px" },
+  block: { flexDirection: "row" },
 });
 
 const SecurityInfoDataGridRow = ({ label, value }) => (
@@ -41,7 +41,7 @@ const SecurityInfoDataGridRow = ({ label, value }) => (
 
 const ReviewSecurityDialog = ({ data, open, handleClose }) => {
   const ref = useRef();
-  const { t } = useTranslation(["agency_services", "termsheet"]);
+  const { t } = useTranslation(["termsheet"]);
 
   const transformSecurityData = (securityData) => {
     if (!securityData) return {};
@@ -68,15 +68,15 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
 
     return {
       denominationName: {
-        label: t("termsheet:Denomination"),
+        label: t("Denomination"),
         value: denominationName?.name,
       },
       profitRate: {
-        label: t("termsheet:Profit Rate"),
-        value: roundNumber(profitRate,4),
+        label: t("Profit Rate"),
+        value: roundNumber(profitRate, 4),
       },
       frequencyName: {
-        label: t("termsheet:Frequency"),
+        label: t("Frequency"),
         value: frequencyName?.name,
       },
       wsn: {
@@ -88,39 +88,39 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
         value: isin,
       },
       ticker: {
-        label: t("termsheet:Ticker"),
+        label: t("Ticker"),
         value: ticker,
       },
       countryOfRisk: {
-        label: t("termsheet:Country of Risk"),
+        label: t("Country of Risk"),
         value: countryOfRisk || country?.name,
       },
       issuanceName: {
-        label: t("termsheet:Issuance Name"),
+        label: t("Issuance Name"),
         value: issuanceName,
       },
       securityLongName: {
-        label: t("termsheet:Security Long Name"),
+        label: t("Security Long Name"),
         value: securityLongName || longName, // !Dev note: certain Wethaq API field names are not always used consistently ¯\_(ツ)_/¯
       },
       securityShortName: {
-        label: t("termsheet:Security Short Name"),
+        label: t("Security Short Name"),
         value: securityShortName || shortName, // !Dev note: certain Wethaq API field names are not always used consistently ¯\_(ツ)_/¯
       },
       issuanceAmount: {
-        label: t("termsheet:Issuance Amount"),
+        label: t("Issuance Amount"),
         value: convertNumberToIntlFormat(issuanceAmount),
       },
       currencyName: {
-        label: t("termsheet:Currency"),
+        label: t("Currency"),
         value: currencyName?.name,
       },
       maturityDate: {
-        label: t("termsheet:Maturity Date"),
+        label: t("Maturity Date"),
         value: dateFormatter(maturityDate, DEFAULT_DATE_FORMAT),
       },
       issueDate: {
-        label: t("termsheet:Issue Date"),
+        label: t("Issue Date"),
         value: dateFormatter(issueDate, DEFAULT_DATE_FORMAT),
       },
     };
@@ -159,10 +159,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <StyledDialogHeader
-          title={"Security Information"}
-          handleClose={handleClose}
-        />
+        <StyledDialogHeader title={"Security Information"} handleClose={handleClose} />
         <DialogContent>
           <Grid container justifyContent="center" alignItems="center">
             {Object.entries(transformedSecurityData).map(([key, { label, value }]) => (
