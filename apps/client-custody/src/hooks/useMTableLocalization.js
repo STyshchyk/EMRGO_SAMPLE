@@ -11,7 +11,7 @@ function useMaterialTableLocalization() {
       previousTooltip: t("Material Table.pagination.Previous Page"),
       nextTooltip: t("Material Table.pagination.Next Page"),
       lastTooltip: t("Material Table.pagination.Last Page"),
-      labelDisplayedRows: t("Material Table.pagination.rows"),
+      labelRowsSelect: t("Material Table.pagination.rows"),
     },
     header: {
       actions: t("Material Table.header.actions"),
