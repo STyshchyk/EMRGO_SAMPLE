@@ -6,7 +6,7 @@ import { colors, typography } from "@emrgo-frontend/theme";
 import { ellipsis, rem } from "polished";
 import { useDarkMode } from "usehooks-ts";
 
-import {ISelectProps} from './Select.types'
+import { ISelectProps } from "./Select.types";
 
 // import * as Styles from "./Select.styles";
 
@@ -14,14 +14,9 @@ export function Select<
   Option,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
->({
-  components:customComponent,
-  ...props
-}: Props<Option, IsMulti, Group> & ISelectProps ) {
+>({ components: customComponent, ...props }: Props<Option, IsMulti, Group> & ISelectProps) {
   const animatedComponents = makeAnimated();
   const { isDarkMode } = useDarkMode();
-
-  console.log(props)
 
   const getOptionStyles = (type: string, state: any) => {
     let styles = {};

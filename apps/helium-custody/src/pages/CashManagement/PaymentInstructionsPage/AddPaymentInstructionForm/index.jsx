@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -41,9 +41,8 @@ const AddPaymentInstructionForm = ({
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
   );
-  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] = useState(
-    allPaymentAccountOptions
-  );
+  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] =
+    useState(allPaymentAccountOptions);
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
@@ -210,7 +209,12 @@ const AddPaymentInstructionForm = ({
                 >
                   {t("Entity Accounts.Cancel")}
                 </Button>
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={!values?.valueDate}
+                >
                   {t("Entity Accounts.Submit")}
                 </Button>
               </Grid>
