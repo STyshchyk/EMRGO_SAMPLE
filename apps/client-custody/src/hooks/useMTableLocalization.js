@@ -6,12 +6,13 @@ function useMaterialTableLocalization() {
 
   const localization = {
     pagination: {
+      //**use one of the two texts */
+      // labelDisplayedRows: t("Material Table.pagination.rows"),
       labelDisplayedRows: t("Material Table.pagination.Displayed Rows"),
       firstTooltip: t("Material Table.pagination.First Page"),
       previousTooltip: t("Material Table.pagination.Previous Page"),
       nextTooltip: t("Material Table.pagination.Next Page"),
       lastTooltip: t("Material Table.pagination.Last Page"),
-      labelRowsSelect: t("Material Table.pagination.rows"),
     },
     header: {
       actions: t("Material Table.header.actions"),
