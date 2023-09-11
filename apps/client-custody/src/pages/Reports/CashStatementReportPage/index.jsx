@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -55,7 +55,7 @@ const CashStatementReportPage = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
   const mtableLocalization = useMaterialTableLocalization();
-  const { t } = useTranslation(["reports", "blotter"]);
+  const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
 
   // selectors
@@ -86,11 +86,9 @@ const CashStatementReportPage = () => {
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
   });
-
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
-
     return () => {
       dispatch(reportsActionCreators.doResetCashTransactions());
     };
@@ -145,7 +143,8 @@ const CashStatementReportPage = () => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
+          label: `${acc.accountNo}`,
+          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -479,7 +478,6 @@ const CashStatementReportPage = () => {
               }
               return true;
             });
-
             return (
               <Fragment>
                 <MaterialTable
