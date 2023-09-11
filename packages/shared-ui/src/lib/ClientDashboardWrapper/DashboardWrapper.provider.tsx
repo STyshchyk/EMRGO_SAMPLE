@@ -113,7 +113,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "primaries",
       path: constants.clientPrimariesRoutes.home,
       paths: constants.getAllRoutes(constants.clientPrimariesRoutes),
-      disabled:false,
+      disabled:true,
     },
     {
       label: "Secondaries",

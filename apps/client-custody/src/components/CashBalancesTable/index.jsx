@@ -5,10 +5,14 @@ import { useDispatch } from "react-redux";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
-import { accountTypeRenderer, currencyRenderer, reportDateRenderer } from "../../constants/renderers";
+import {
+  accountTypeRenderer,
+  currencyRenderer,
+  reportDateRenderer,
+} from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
@@ -89,7 +93,8 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
+          label: `${acc.accountNo}`,
+          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -205,7 +210,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       customFilterAndSearch: (term, rowData) => {
         if (!term) return true;
         return term === rowData?.account;
-      }
+      },
     },
     {
       id: "currency",
@@ -216,7 +221,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       customFilterAndSearch: (term, rowData) => {
         if (!term) return true;
         return term === rowData?.currency;
-      }
+      },
     },
     {
       id: "balance",
@@ -378,7 +383,13 @@ const CashBalancesTable = ({ data, accounts }) => {
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
-                <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()} disableClear/>
+                <DatePicker
+                  name="date"
+                  label="Date"
+                  defaultFilter={moment()}
+                  maxDate={moment()}
+                  disableClear
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
