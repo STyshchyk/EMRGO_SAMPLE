@@ -1,17 +1,17 @@
-import { Fragment, useEffect, useState,forwardRef } from "react";
+import { forwardRef, Fragment, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ErrorMessage,Field, Form, Formik, useFormikContext } from "formik";
+import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
+import moment from "moment";
 import PropTypes from "prop-types";
-import moment from "moment"
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import * as authSelectors from "../../redux/selectors/auth";
@@ -58,9 +58,9 @@ const baseSelectProps = {
   styles: baseSelectStyles,
 };
 
-const CustomCurrencyInputField = forwardRef((props,ref) => {
-  console.log(props)
-  const {onChange, decimals = 2, ...other } = props;
+const CustomCurrencyInputField = forwardRef((props, ref) => {
+  console.log(props);
+  const { onChange, decimals = 2, ...other } = props;
   const { setFieldTouched } = useFormikContext();
 
   return (
@@ -88,9 +88,8 @@ CustomCurrencyInputField.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const CustomNumberInputField = forwardRef(
-  ( props , ref) => {
-  const {onChange, ...other } = props;
+const CustomNumberInputField = forwardRef((props, ref) => {
+  const { onChange, ...other } = props;
   const { setFieldTouched } = useFormikContext();
   return (
     <NumericFormat
@@ -167,7 +166,7 @@ const DependentAmountField = (props) => {
   );
 };
 
-const InlineFormField = ({ label,children }) => (
+const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
       <Typography>{label}</Typography>
@@ -245,10 +244,12 @@ export const generateSettlementInstructionTypeOptionsList = (data) => {
 };
 
 export const generateExternalSecurityOptionsList = (data) => {
+  console.log(data);
   if (Array.isArray(data) && data.length > 0) {
     return data
       .filter((item) => item?.assetTypeName?.name !== "Equity")
       .filter((item) => item?.longName)
+      .filter((item) => item.status === "Active")
       .map((item) => ({
         label: item.longName,
         value: item,
@@ -422,7 +423,10 @@ const RaiseSettlementInstructionForm = ({
                   name="entity"
                   variant="filled"
                   type="text"
-                  value={values?.entityGroup?.entity?.corporateEntityName || currentEntityGroup?.entity?.corporateEntityName}
+                  value={
+                    values?.entityGroup?.entity?.corporateEntityName ||
+                    currentEntityGroup?.entity?.corporateEntityName
+                  }
                   disabled
                 />
               </InlineFormField>
@@ -443,7 +447,7 @@ const RaiseSettlementInstructionForm = ({
                 variant="caption"
                 color="error"
                 className="ml-4"
-                name = 'settlementTypeSelectOption'
+                name="settlementTypeSelectOption"
               />
             </InlineFormField>
 
@@ -467,7 +471,7 @@ const RaiseSettlementInstructionForm = ({
                 variant="caption"
                 color="error"
                 className="ml-4"
-                name = 'externalSecuritySelectOption'
+                name="externalSecuritySelectOption"
               />
             </InlineFormField>
             {inProd && (
@@ -520,7 +524,7 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(date) => {
                   setFieldValue("tradeDate", date);
                 }}
-                value={values.tradeDate? moment(values.tradeDate): null}
+                value={values.tradeDate ? moment(values.tradeDate) : null}
                 format={DEFAULT_DATE_FORMAT}
                 fullWidth
                 inputVariant="filled"
@@ -536,7 +540,7 @@ const RaiseSettlementInstructionForm = ({
                 onChange={(date) => {
                   setFieldValue("settlementDate", date);
                 }}
-                value={values.settlementDate? moment(values.settlementDate): null}
+                value={values.settlementDate ? moment(values.settlementDate) : null}
                 format={DEFAULT_DATE_FORMAT}
                 fullWidth
                 inputVariant="filled"
@@ -662,7 +666,7 @@ const RaiseSettlementInstructionForm = ({
                 variant="caption"
                 color="error"
                 className="ml-4"
-                name='counterpartySelectOption'
+                name="counterpartySelectOption"
               />
             </InlineFormField>
 
@@ -684,7 +688,7 @@ const RaiseSettlementInstructionForm = ({
                 variant="caption"
                 color="error"
                 className="ml-4"
-                name = 'counterpartySSISelectOption'
+                name="counterpartySSISelectOption"
               />
             </InlineFormField>
 
