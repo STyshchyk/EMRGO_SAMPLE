@@ -14,7 +14,7 @@
   },
   "Material Table": {
     "pagination": {
-      "rows": "records",
+      "rows": "{count} records",
       "First Page": "First Page",
       "Previous Page": "Previous Page",
       "Last Page": "Last Page",
