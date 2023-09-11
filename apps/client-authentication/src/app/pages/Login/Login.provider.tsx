@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { clientAuthenticationRoutes as routes,clientCustodyRoutes as custodyRoutes } from "@emrgo-frontend/constants";
 // import { useUser } from "@emrgo-frontend/shared-ui";
 import { useToast } from "@emrgo-frontend/shared-ui";
 // import { IMFA,IUser } from "@emrgo-frontend/types";
@@ -9,7 +9,6 @@ import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useDarkMode } from "usehooks-ts";
-import { a } from "vitest/dist/types-b7007192";
 
 import { useUser } from "../../components/UserContext"; //* using app level user context with further mfa checks
 import { IUser } from "../../components/UserContext/UserContext.types";
@@ -80,7 +79,8 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     if (!code) return;
     doVerifyAuthenticatorMFA(code, {
       onSuccess: (data) => {
-        navigateModule("primaries", routes.home);  //* navigate to custody once dashboard is ready
+        // navigateModule("primaries", routes.home);  
+        navigateModule("custody", custodyRoutes.custody.onboarding.home);  
       },
       onError: () => {
         showErrorToast("Error while verifing mfa code");
