@@ -41,9 +41,9 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
           setVerifyMFA(false);
         }
       },
-      onError: () => {
-        showErrorToast("Error while verifing mfa code");
-      }
+      onError: (response) => {
+        showErrorToast(response?.response?.data?.message ?? "Error while verifing mfa code");
+      },
     });
   };
 
@@ -52,9 +52,9 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (data) => {
         navigate(routes.login);
       },
-      onError: () => {
-        showErrorToast("Error while trying to enable mfa");
-      }
+      onError: (response) => {
+        showErrorToast(response?.response?.data?.message ?? "Error while trying to enable mfa");
+      },
     });
   };
 
@@ -62,13 +62,13 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
     doSetupAuthenticatorMFA(undefined, {
       onSuccess: (data) => {
         setAuthenticatorURL(data?.otpauth_url);
-      }
+      },
     });
   };
 
   useEffect(() => {
     // to get the qr code
-    if (!authenticatorURL)onSetupMFA();
+    if (!authenticatorURL) onSetupMFA();
     // set to dark theme
     enable();
   }, []);
@@ -81,7 +81,7 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
     onVerifyMFA,
 
     isQRCodeLoading,
-    authenticatorURL
+    authenticatorURL,
   };
 
   return <SetupMFAContext.Provider value={state}>{children}</SetupMFAContext.Provider>;

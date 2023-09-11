@@ -39,8 +39,8 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (data) => {
         setVerifyMFA(false);
       },
-      onError: () => {
-        showErrorToast("Error while verifing mfa code");
+      onError: (response) => {
+        showErrorToast(response?.response?.data?.message ?? "Error while verifing mfa code");
       },
     });
   };
@@ -51,8 +51,8 @@ export const SetupMFAProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (data) => {
         navigate(routes.login);
       },
-      onError: () => {
-        showErrorToast("Error while trying to enable mfa");
+      onError: (response) => {
+        showErrorToast(response?.response?.data?.message ?? "Error while trying to enable mfa");
       },
     });
   };
