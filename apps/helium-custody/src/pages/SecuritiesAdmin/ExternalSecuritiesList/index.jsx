@@ -42,13 +42,9 @@ const ExternalSecuritiesList = () => {
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesList
   );
-
-
-
-
   const allExternalSecurities = useSelector(
     externalSecuritiesSelectors.selectAllExternalSecurities
-    );
+  );
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const generatedTableData = allExternalSecurities?.map((i) =>
@@ -69,7 +65,7 @@ const ExternalSecuritiesList = () => {
   };
 
   const buildRequestPayload = (values) => {
-    const requestPayload = values;
+    const requestPayload = { ...values };
 
     // const dateFields = ['issueDate', 'maturityDate'];
 
@@ -79,16 +75,15 @@ const ExternalSecuritiesList = () => {
     //   }
     // });
 
+    requestPayload.profitRate = parseFloat(requestPayload.profitRate, 10);
+
     return requestPayload;
   };
 
-  
   const handleEquitySecStatusChange = (selectedRow, status) => {
     const editEquityExternalSecurity = (payload) =>
       dispatch(externalSecuritiesActionCreators.doAddEquityExternalSecurities(payload));
     const externalSecurityItem = externalSecuritiesList?.find(({ id }) => selectedRow?.id === id);
-
-    
     const requestPayload = buildRequestPayload(externalSecurityItem);
     requestPayload.externalSecurityId = selectedRow?.id;
     requestPayload.status = status;

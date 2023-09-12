@@ -139,7 +139,7 @@ export const DashboardSidebar = () => {
             </SidebarListItem>
           </Tooltip>
           <SidebarListItem>
-            <SidebarListItemSecondaryLink href="#">
+            <SidebarListItemSecondaryLink disabled={true}>
               <Styles.SidebarListItemIconWithBadge>
                 <NotificationsIcon />
                 <Styles.NotificationsBadge>{numberOfNotifications}</Styles.NotificationsBadge>
