@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -179,7 +179,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
   }
 
   useEffect(() => {
-    if(!formvalues?.settings) return
+    if (!formvalues?.settings) return;
     const data = formvalues?.settings[0];
     if (
       !fetchingValues &&
@@ -192,13 +192,13 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
   }, [formvalues, fetchingValues]);
 
   const saveFormValues = (value) => {
-    if (!value)return;
+    if (!value) return;
     const obj = {
       settings: [
         {
           key: "NewFxTransactionForm",
           value: JSON.stringify(value),
-          isActive:false,
+          isActive: false,
         },
       ],
     };
@@ -246,7 +246,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
             requestPayload,
             dateRange: currentlySelectedDateRange,
             successCallback: () => {
-              saveFormValues(null);
+              saveFormValues(values);
               actions.resetForm();
               handleClose();
             },
@@ -605,7 +605,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       fullWidth
                       onClick={() => {
                         setInitialValues(initial);
-                        saveFormValues(null);
+                        saveFormValues(values);
                         handleClose();
                       }}
                       color="primary"

@@ -237,6 +237,7 @@ export const generateSettlementInstructionTypeOptionsList = (data) => {
 };
 
 export const generateExternalSecurityOptionsList = (data) => {
+  console.log(data);
   if (Array.isArray(data) && data.length > 0) {
     return data
       .filter((item) => item?.assetTypeName?.name !== "Equity")

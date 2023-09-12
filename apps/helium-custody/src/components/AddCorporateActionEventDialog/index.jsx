@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
-import moment from 'moment'
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -16,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
+import moment from "moment";
 
 import { useTheme } from "../../context/theme-context";
 import * as CAEventsActionCreators from "../../redux/actionCreators/corporateActionEvents";
@@ -115,15 +115,15 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       keyEvent.preventDefault();
     }
   }
-  const formatParsedValues =(payload) => {
-    const dateFields = ["exDate", "recordDate","paymentDate","responseDeadline"];
+  const formatParsedValues = (payload) => {
+    const dateFields = ["exDate", "recordDate", "paymentDate", "responseDeadline"];
     dateFields.forEach((field) => {
       if (payload[field]) {
         payload[field] = moment(payload[field]);
       }
     });
-    return payload
-  }
+    return payload;
+  };
 
   useEffect(() => {
     if (selectedRow || selectedCorporateActionEvent) {
@@ -163,7 +163,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         responseDeadline: moment(selectedCorporateActionEvent?.clientResponseDeadline),
       });
     } else {
-      if(!formvalues?.settings) return
+      if (!formvalues?.settings) return;
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&
@@ -171,7 +171,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         data?.value !== "null" &&
         data?.key === "AddCorporateActionEventForm"
       ) {
-        const payload = formatParsedValues(JSON.parse(data.value))
+        const payload = formatParsedValues(JSON.parse(data.value));
         setInitialValues(payload);
         // setInitialValues(JSON.parse(data.value));
       }
@@ -179,13 +179,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
   }, [formvalues, fetchingValues, selectedCorporateActionEvent, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value)return;
+    if (!value) return;
     const obj = {
       settings: [
         {
           key: "AddCorporateActionEventForm",
           value: JSON.stringify(value),
-          isActive:false,
+          isActive: false,
         },
       ],
     };
@@ -264,7 +264,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
             requestPayload,
             successCallback: () => {
               actions.setSubmitting(false);
-              saveFormValues(null);
+              saveFormValues(values);
               fetchCorporateActionEventsList();
               handleClose();
               setSelectedRow(null);
@@ -276,7 +276,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
           } else {
             dispatch(CAEventsActionCreators.doAddCAEvent(payload));
           }
-          saveFormValues(null);
+          saveFormValues(values);
         }}
       >
         {({ values, handleSubmit, setFieldValue }) => (
@@ -623,7 +623,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     fullWidth
                     onClick={() => {
                       setInitialValues(initial);
-                      saveFormValues(null);
+                      saveFormValues(values);
                       handleClose();
                     }}
                     color="primary"
