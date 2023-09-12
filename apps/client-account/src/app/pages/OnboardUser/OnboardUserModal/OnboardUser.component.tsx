@@ -12,22 +12,21 @@ const initialValues: INewUser = {
   firstName: "",
   lastName: "",
   email: "",
-  roles: [],
+  roles: null,
 };
 
 export const OnboardUserComponent = () => {
-  const {handleSubmit , rolesList} = ensureNotNull(useEntityManagementContext())
-  
+  const { handleSubmit, rolesList } = ensureNotNull(useEntityManagementContext());
+
   return (
     <Styles.OnboardUser>
       <Formik
         initialValues={initialValues}
         validationSchema={onboardUserSchema}
         onSubmit={(values, formikHelpers) => {
-          handleSubmit(values)
+          handleSubmit(values);
           formikHelpers.setSubmitting(false);
         }}
-        
       >
         {({ values, setFieldValue }) => (
           <Form>
@@ -75,15 +74,13 @@ export const OnboardUserComponent = () => {
                 id={"roles"}
                 isMulti={true}
                 onChange={(selected: any) => {
-                  setFieldValue("roles",selected );
+                  setFieldValue("roles", selected);
                 }}
                 options={rolesList}
                 placeholder="Select role"
               />
             </TwoCol>
-            <Button type="submit">
-              Submit
-            </Button>
+            <Button type="submit">Submit</Button>
           </Form>
         )}
       </Formik>

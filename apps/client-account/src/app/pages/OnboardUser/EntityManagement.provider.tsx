@@ -57,13 +57,15 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   });
 
   useEffect(() => {
-    const roles = roleData.map((role: { name: string; key: string }) => {
-      const roleName = v.camelCase(role.name);
-      return {
-        label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]),
-        value: role.key,
-      };
-    });
+    const roles =
+      roleData &&
+      roleData.map((role: { name: string; key: string }) => {
+        const roleName = v.camelCase(role.name);
+        return {
+          label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]),
+          value: role.key,
+        };
+      });
     setRolesList(roles);
   }, []);
 
@@ -151,13 +153,12 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   };
 
   const handleSubmit = (values: INewUser) => {
-    console.log(values);
+    if (!values.roles) return;
     const roles = values.roles.map((role: any) => role.value);
     const requestPayload = {
       ...values,
       roles,
     };
-
     doOnboardUser(requestPayload, {
       onSuccess: () => {
         showSuccessToast("User invited");
