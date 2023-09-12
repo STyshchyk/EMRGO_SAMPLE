@@ -53,7 +53,12 @@ const AddPaymentInstructionForm = ({
   );
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={addExternalPaymentSchema}
+      enableReinitialize
+    >
       {({ values, setFieldValue, resetForm }) => (
         <Form className={cx(style.formWrapper)}>
           {initial && (
