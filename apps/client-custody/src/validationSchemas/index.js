@@ -39,3 +39,4 @@ export { default as addSettlementInstructionFormSchema } from "./addSettlementIn
 export { default as inviteUserFormSchema } from "./inviteUserFormSchema";
 export { default as submitPrimIssuanceSecForAdmissionFormSchema } from "./submitPrimIssuanceSecForAdmissionFormSchema";
 export { default as entityCustodySettingsFormSchema } from "./entityCustodySettingsFormSchema";
+export { default as addExternalPaymentSchema } from "./addExternalPaymentSchema";

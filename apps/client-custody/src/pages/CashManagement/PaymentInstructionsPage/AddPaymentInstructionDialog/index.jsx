@@ -23,7 +23,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     beneficiaryEntityGroupUser: null,
     paymentAccount: null,
     valueDate: null,
-    paymentAmount: null,
+    paymentAmount: "",
     paymentDetails: null,
     transferPurpose: null,
   };
@@ -125,8 +125,8 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           initial={initial}
           handleSubmit={handleSubmit}
           handleCancel={() => {
-            saveFormValues(values);
-            setInitialValues(initial);
+            saveFormValues(formvalues);
+            setInitialValues({ ...initial, valueDate: null });
             handleClose();
           }}
         />
