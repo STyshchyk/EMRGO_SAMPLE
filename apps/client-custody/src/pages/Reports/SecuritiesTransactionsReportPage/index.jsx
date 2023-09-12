@@ -14,10 +14,10 @@ import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import { CsvBuilder } from "filefy";
 import { Formik } from "formik";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
@@ -277,7 +277,9 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => console.log(rowData, 'ROW'),
       // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
-        rowData?.settlementInsSettlementDate ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+        rowData?.settlementInsSettlementDate
+          ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
+          : "--",
       exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
     },
   ];
@@ -405,7 +407,7 @@ const SecuritiesTransactionsReportPage = () => {
 
                 return {
                   value: securityObject,
-                  label: securityObject.securityShortName || securityObject.name,
+                  label: securityObject.shortName || securityObject.name,
                 };
               });
 
@@ -724,9 +726,13 @@ const SecuritiesTransactionsReportPage = () => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
-                          setFieldValue("security", newValue)
-                        }}
+                        <DropdownFilter
+                          name="security"
+                          label="Security"
+                          options={uniqueSecurities}
+                          customOnChange={(newValue, { action }) => {
+                            setFieldValue("security", newValue);
+                          }}
                         />
                       </Grid>
 

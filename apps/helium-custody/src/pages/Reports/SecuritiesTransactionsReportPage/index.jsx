@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+// import { useNavigate } from "react-router-dom";
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Box from "@mui/material/Box";
@@ -14,10 +14,10 @@ import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import { CsvBuilder } from "filefy";
 import { Formik } from "formik";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
@@ -37,7 +37,6 @@ import * as reportsSelectors from "../../../redux/selectors/reports";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../../utils/formatter";
-import formatAddress from "../../../utils/reports";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
 
@@ -277,7 +276,9 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => console.log(rowData, 'ROW'),
       // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
-        rowData?.settlementInsSettlementDate ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+        rowData?.settlementInsSettlementDate
+          ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
+          : "--",
       exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
     },
   ];
@@ -401,10 +402,10 @@ const SecuritiesTransactionsReportPage = () => {
               const filteredSecurities = rows.map((item) => {
                 // const { sukuk } = security;
                 const securityObject = getSecurityFieldObject(item);
-
+                console.log(securityObject);
                 return {
                   value: securityObject,
-                  label: securityObject.securityShortName || securityObject.name,
+                  label: securityObject.shortName || securityObject.name,
                 };
               });
 
@@ -479,9 +480,7 @@ const SecuritiesTransactionsReportPage = () => {
                 },
                 {
                   label: "Address",
-                  value: values?.securityAccount?.data?.original
-                    ? null
-                    : null,
+                  value: values?.securityAccount?.data?.original ? null : null,
                 },
               ];
 
@@ -650,10 +649,12 @@ const SecuritiesTransactionsReportPage = () => {
                             {t("Security Transactions.Filters.Entity")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("entity")}>
-                            <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
+                            <Typography variant="caption">
+                              {t("Security Transactions.Filters.Clear")}
+                            </Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full" sx={{width: "100%"}}>
+                        <Box my={1} className="w-full" sx={{ width: "100%" }}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -698,10 +699,12 @@ const SecuritiesTransactionsReportPage = () => {
                             {t("Security Transactions.Filters.Securities Account")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("securityAccount")}>
-                            <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
+                            <Typography variant="caption">
+                              {t("Security Transactions.Filters.Clear")}
+                            </Typography>
                           </ButtonBase>
                         </Grid>
-                        <Box my={1} className="w-full" sx={{width: "100%"}}>
+                        <Box my={1} className="w-full" sx={{ width: "100%" }}>
                           <FormControl className={style.input__form_control}>
                             <Select
                               closeMenuOnSelect
@@ -735,10 +738,14 @@ const SecuritiesTransactionsReportPage = () => {
                           </FormControl>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={3} container >
-                        <DropdownFilter name="security" label="Security" options={uniqueSecurities} customOnChange={(newValue, { action })=>{
-                          setFieldValue("security", newValue)
-                        }}
+                      <Grid item xs={12} md={6} lg={3} container>
+                        <DropdownFilter
+                          name="security"
+                          label="Security"
+                          options={uniqueSecurities}
+                          customOnChange={(newValue, { action }) => {
+                            setFieldValue("security", newValue);
+                          }}
                         />
                       </Grid>
 
@@ -757,7 +764,7 @@ const SecuritiesTransactionsReportPage = () => {
                               .
                             </Typography>
                           </Grid>
-                          <Box my={1} className="w-full" sx={{width: "100%"}}>
+                          <Box my={1} className="w-full" sx={{ width: "100%" }}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
@@ -826,7 +833,7 @@ const SecuritiesTransactionsReportPage = () => {
                             </Typography>
                           </Grid>
 
-                          <Box my={1} className="w-full" sx={{width: "100%"}}>
+                          <Box my={1} className="w-full" sx={{ width: "100%" }}>
                             <Grid container spacing={2}>
                               <Grid item xs={12} md={6} lg={6}>
                                 <Button
