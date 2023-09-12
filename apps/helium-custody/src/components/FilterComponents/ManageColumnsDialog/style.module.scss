@@ -5,9 +5,17 @@
     padding: 8px;
     width: 100%;
     height: 100%;
-
+    &__empty{
+      &:empty{
+        &:before{
+          content: "Displayed colums can not be empty";
+          color: red;
+        }
+      }
+    }
     &--active {
       background-color: $gray-color;
+
     }
 
     &--inactive {
@@ -30,6 +38,7 @@
     &--shown {
       background-color: white;
       border: 2px solid white;
+
     }
 
     &--active {

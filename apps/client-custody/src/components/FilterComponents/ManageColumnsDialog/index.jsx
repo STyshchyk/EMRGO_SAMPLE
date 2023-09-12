@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +15,6 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import cx from "classnames";
 
 import { useFilters } from "../../../context/filter-context";
 import style from "./style.module.scss";
@@ -160,7 +159,11 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
               </Grid>
               <Droppable droppableId="hidden">
                 {(provided, snapshot) => (
-                  <DraggableColumnWrapper ref={provided.innerRef} snapshot={snapshot}>
+                  <DraggableColumnWrapper
+                    ref={provided.innerRef}
+                    checkEmpty={false}
+                    snapshot={snapshot}
+                  >
                     {currentHiddenColumns
                       //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
                       .map((item, index) => (
@@ -238,7 +241,11 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
               </Grid>
               <Droppable droppableId="shown">
                 {(provided, snapshot) => (
-                  <DraggableColumnWrapper ref={provided.innerRef} snapshot={snapshot}>
+                  <DraggableColumnWrapper
+                    ref={provided.innerRef}
+                    snapshot={snapshot}
+                    checkEmpty={true}
+                  >
                     {currentShownColumns
                       //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
                       .map((item, index) => (
@@ -289,6 +296,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                 confirmColumns();
                 closeDialog();
               }}
+              disabled={currentShownColumns.length === 0}
               variant="contained"
               color="primary"
             >
