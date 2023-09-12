@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -102,7 +102,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   const buildRequestPayload = (values) => {
     const requestPayload = values;
 
-    const selectFields = ["entity","status"];
+    const selectFields = ["entity", "status"];
     selectFields.forEach((field) => {
       if (requestPayload[field]) {
         requestPayload[field] = requestPayload[field].value;
@@ -138,7 +138,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
       });
     } else {
       let values;
-      if(formvalues?.settings){
+      if (formvalues?.settings) {
         const data = formvalues?.settings[0];
         if (
           !fetchingValues &&
@@ -156,25 +156,24 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
           setInitialValues(values);
         }
       } else if (currentEntityType === "INVESTOR") {
-          values = {
-            ...initialValues,
-            entity: getInitialEntityValue(),
-            status: counterpartyStatusOptionsList[1],
-          };
-          setInitialValues(values);
+        values = {
+          ...initialValues,
+          entity: getInitialEntityValue(),
+          status: counterpartyStatusOptionsList[1],
+        };
+        setInitialValues(values);
       }
-
     }
   }, [formvalues, fetchingValues, selectedCounterparty, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value)return;
+    if (!value) return;
     const obj = {
       settings: [
         {
           key: "CounterpartyForm",
           value: JSON.stringify(value),
-          isActive:false,
+          isActive: false,
         },
       ],
     };
@@ -220,7 +219,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
             requestPayload,
             successCallback: () => {
               actions.setSubmitting(false);
-              saveFormValues(null);
+              saveFormValues(values);
               fetchCounterpartyList();
               handleClose();
               setSelectedRow(null);
@@ -426,7 +425,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                   <Button
                     fullWidth
                     onClick={() => {
-                      saveFormValues(null);
+                      saveFormValues(values);
                       setInitialValues(initial);
                       handleClose();
                     }}
