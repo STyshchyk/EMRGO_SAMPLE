@@ -38,7 +38,9 @@ const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handl
   );
   const isLoading = isFetching || isRequesting;
   const isTableDataEmpty = Array.isArray(tableData) && !tableData.length > 0;
-  const couponId = currentlySelectedRowData?.couponId;
+  // const couponId = currentlySelectedRowData?.couponId;
+  const couponId = currentlySelectedRowData?.coupons?.id;
+
   const hasCouponScheduleDates = couponPaymentSchedule?.couponScheduleDates;
 
   // dispatchers
@@ -135,7 +137,7 @@ const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handl
         op: id ? "update" : "add",
         couponIndex: index,
         calenderDate,
-        notional,
+        notional: parseFloat(notional), // golang expects float value
         couponAllocationStatus,
       }));
 
