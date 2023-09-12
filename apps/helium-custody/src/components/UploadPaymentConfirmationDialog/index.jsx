@@ -13,8 +13,8 @@ import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
 import PropTypes from "prop-types";
 
-import * as securitiesServicesActionCreators from "../../redux/actionCreators/securitiesServices";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
+import * as securitiesServicesActionCreators from "../../redux/actionCreators/securitiesServices";
 import * as securitiesServicesSelectors from "../../redux/selectors/securitiesServices";
 import FileUploadField from "../FileUploadField";
 import LoadingIndicator from "../LoadingIndicator";
@@ -75,7 +75,7 @@ UploadPaymentConfirmationFileForm.propTypes = {
 };
 
 const UploadPaymentConfirmationDialog = ({ open, handleClose, currentlySelectedRowData }) => {
-  const { t } = useTranslation(["custody_and_settlement", ""]);
+  const { t } = useTranslation(["custody_and_settlement"]);
   const dispatch = useDispatch();
 
   // selectors
