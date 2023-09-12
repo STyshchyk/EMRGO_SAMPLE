@@ -17,6 +17,7 @@ import moment from "moment";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
+import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
 
 const AddPaymentInstructionForm = ({
