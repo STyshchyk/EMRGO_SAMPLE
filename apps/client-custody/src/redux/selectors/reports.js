@@ -30,7 +30,7 @@ export const selectCashTransactions = createSelector(
               finalData.push(tr);
             });
         });
-      return transactionsData;
+      return finalData;
     }
     return [];
   }

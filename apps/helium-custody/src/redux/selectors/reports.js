@@ -19,17 +19,17 @@ export const selectCashAccounts = createSelector([selectCashAccountsData], (acco
 export const selectCashTransactions = createSelector(
   [selectCashTransactionsData],
   (transactionsData) => {
-
     if (transactionsData) {
       const finalData = [];
       const summaryRows = transactionsData;
       summaryRows.forEach((row) => {
         const { transactions } = row;
-        transactions.forEach((tr) => {
-          finalData.push(tr);
-        });
+        transactions &&
+          transactions.forEach((tr) => {
+            finalData.push(tr);
+          });
       });
-      return transactionsData;
+      return finalData;
     }
     return [];
   }
