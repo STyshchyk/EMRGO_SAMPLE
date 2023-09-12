@@ -58,6 +58,7 @@ export const selectAllExternalSecurities = createSelector(
         countryOfRisk: item.country,
         securityLongName: item?.longName,
         securityShortName: item?.shortName,
+        coupons:item?.coupons
       }));
 
       return orderby(externalSecuritiesList, ["name"], ["asc"]);

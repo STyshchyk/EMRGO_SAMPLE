@@ -1,8 +1,9 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
@@ -11,7 +12,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
@@ -158,7 +158,7 @@ const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) =
             fullWidth
             closeMenuOnSelect
             isSearchable
-            placeholder="Status"
+            placeholder="ISIN"
             styles={customSelectStyles}
             options={isinOptionsList}
             value={currentlySelectedISINOption}
@@ -218,23 +218,10 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
     })),
 });
 
-// [
-//   {
-//     "identifierId": "9f99d0a8-9b3c-4fa0-ac7d-3dfeb28bf94d",
-//     "value": "XS2348236980",
-//     "securityIdTypeName": "ISIN"
-//   },
-//   {
-//       "identifierId": "ae13131b-c455-4475-9ca4-654bf0c4bf9c",
-//       "value": "ADGB",
-//       "securityIdTypeName": "Ticker"
-//   }
-// ]
-
-const getAttribute = (attrs,fieldName) => {
- const attribute =  attrs.filter((attr) => attr.securityIdTypeName.toLowerCase() === fieldName)[0]
- return attribute?.value ?? FALLBACK_VALUE
-}
+const getAttribute = (attrs, fieldName) => {
+  const attribute = attrs.filter((attr) => attr.securityIdTypeName.toLowerCase() === fieldName)[0];
+  return attribute?.value ?? FALLBACK_VALUE;
+};
 
 const ExternalSecuritiesTable = ({
   anchorEl,
@@ -255,12 +242,16 @@ const ExternalSecuritiesTable = ({
   const [isinFilterValue, setISINFilterValue] = useState("");
   const [statusFilterValue, setStatusFilterValue] = useState("");
   // helium issues airtable ID 259
-  const sortedISIN = Array.from(new Set(data.filter((item)=> item?.status === 'Active').map((item) => item.isin))).sort();
+  const sortedISIN = Array.from(
+    new Set(data.filter((item) => item?.status === "Active").map((item) => item.isin))
+  ).sort();
   // filter out null isins
-  const isinOptionsList = sortedISIN.filter((v) => !!v).map((isin) => ({
-    label: isin,
-    value: isin,
-  }));
+  const isinOptionsList = sortedISIN
+    .filter((v) => !!v)
+    .map((isin) => ({
+      label: isin,
+      value: isin,
+    }));
 
   const statusOptionsList = [
     {
@@ -287,12 +278,12 @@ const ExternalSecuritiesTable = ({
     {
       id: "isin",
       title: t("External Securities.Headers.ISIN"),
-      render: (rowData) => rowData?.isin ?? getAttribute(rowData?.attributes,"isin"),
+      render: (rowData) => rowData?.isin ?? getAttribute(rowData?.attributes, "isin"),
       sorting: false,
       defaultFilter: isinFilterValue,
       customFilterAndSearch: (term, rowData) => {
-        if(!term) return true
-        return term === rowData?.isin
+        if (!term) return true;
+        return term === rowData?.isin;
       },
     },
     {
@@ -305,7 +296,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "ticker",
       title: t("External Securities.Headers.Ticker"),
-      render: (rowData) => rowData?.ticker ?? getAttribute(rowData?.attributes,"ticker"),
+      render: (rowData) => rowData?.ticker ?? getAttribute(rowData?.attributes, "ticker"),
       sorting: false,
     },
     {
@@ -324,7 +315,7 @@ const ExternalSecuritiesTable = ({
           maximumFractionDigits: 2,
         });
 
-        return rowData?.profit ? `${localizedProfitRateStringValue}%` : FALLBACK_VALUE;
+        return rowData?.profitRate ? `${localizedProfitRateStringValue}%` : FALLBACK_VALUE;
       },
       searchable: false,
     },
@@ -347,7 +338,9 @@ const ExternalSecuritiesTable = ({
       title: t("External Securities.Headers.Maturity Date"),
       field: "maturityDate",
       render: (rowData) => {
-        return dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT) ? dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT) : '--'
+        return dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT)
+          ? dateFormatter(rowData?.maturityDate, DEFAULT_DATE_FORMAT)
+          : "--";
       },
     },
     {
@@ -382,8 +375,8 @@ const ExternalSecuritiesTable = ({
       sorting: false,
       defaultFilter: statusFilterValue,
       customFilterAndSearch: (term, rowData) => {
-        if(!term) return true
-        return term === rowData?.status
+        if (!term) return true;
+        return term === rowData?.status;
       },
     },
   ];
@@ -433,17 +426,17 @@ const ExternalSecuritiesTable = ({
                 {t("External Securities.Buttons.New Security")}
               </Button>
             </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={() => {
-                    setOpenAddEquitySecurityDialog(true);
-                  }}
-                >
-                  {t("External Securities.Buttons.New Equity Security")}
-                </Button>
-              </Grid>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  setOpenAddEquitySecurityDialog(true);
+                }}
+              >
+                {t("External Securities.Buttons.New Equity Security")}
+              </Button>
+            </Grid>
           </Grid>
         </Box>
         <TableFiltersWrapper>

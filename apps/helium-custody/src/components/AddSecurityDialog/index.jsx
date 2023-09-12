@@ -261,7 +261,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     }
   }, [open]);
 
-  console.log("initialValues:: ", initialValues);
   return (
     <Dialog
       fullWidth
