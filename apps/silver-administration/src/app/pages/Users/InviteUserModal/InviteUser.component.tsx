@@ -10,7 +10,7 @@ import { TInvitedUserTypes } from "../../Administration.types";
 import { useInviteUserModal } from "../../store";
 import { inviteUser } from "../InviteUser.services";
 import { TFilterType2 } from "../User.types";
-import { inviteUserContext } from "./InviteUser.provider";
+import { useInviteUserContext } from "./InviteUser.provider";
 import * as Styles from "./InviteUser.styles";
 import { IInviteUserProps, UserRoles } from "./InviteUser.types";
 
@@ -33,7 +33,7 @@ const filterTypes2: IDropdownItem<TFilterType2>[] = [
   },
 ];
 export const InviteUserComponent = ({}: IInviteUserProps) => {
-  const { form, validationSchema } = ensureNotNull(inviteUserContext());
+  const { form, validationSchema } = ensureNotNull(useInviteUserContext());
   const { mutate: doInviteUser } = useMutation(inviteUser);
   const { modalActions } = useInviteUserModal();
   const { showErrorToast, showSuccessToast } = useToast();

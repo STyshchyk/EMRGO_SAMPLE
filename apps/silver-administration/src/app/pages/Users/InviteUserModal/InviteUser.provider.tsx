@@ -9,11 +9,11 @@ const InviteUserContext = createContext<IInviteUserContex | null>(null);
 
 const InviteUserSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(5, "First Name is Too Short!")
+    .min(4, "First Name should be 4 or more symbols")
     .max(50, "First Name is Too Long!")
     .required("First Name is Required"),
   lastName: Yup.string()
-    .min(2, "Second Name is Too Short!")
+    .min(4, "Second Name should be 4 or more symbols")
     .max(50, "Second Name is Too Long!")
     .required("Second Name is Required"),
   email: Yup.string().email("Enter valid email").required("Email ID is Required"),
@@ -66,4 +66,4 @@ export const InviteUserProvider = ({ children }: PropsWithChildren) => {
   return <InviteUserContext.Provider value={state}>{children}</InviteUserContext.Provider>;
 };
 
-export const inviteUserContext = () => useContext(InviteUserContext);
+export const useInviteUserContext = () => useContext(InviteUserContext);
