@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +12,7 @@ import * as accountsActionCreators from "../../../../redux/actionCreators/accoun
 import * as formActionCreators from "../../../../redux/actionCreators/form";
 import * as authSelectors from "../../../../redux/selectors/auth";
 import * as selectFormValues from "../../../../redux/selectors/form";
+import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import AddPaymentInstructionForm from "../AddPaymentInstructionForm";
 
 const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) => {
@@ -80,6 +81,11 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     dispatch(formActionCreators.doPostFormRequested(obj));
   };
   const handleSubmit = (values, { resetForm }) => {
+    console.log("🚀 ~ file: index.js ~ line 83 ~ AddPaymentInstrucstinDialog", values);
+    console.log(
+      "🚀 ~ file: index.js ~ line 84 ~ AddPaymentInstrucstinDialog",
+      addExternalPaymentSchema
+    );
     const createPaymentInstruction = (payload) => {
       dispatch(accountsActionCreators.doCreateOutgoingInstructions(payload));
     };

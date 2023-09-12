@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Select } from "@emrgo-frontend/shared-ui";
@@ -17,7 +17,6 @@ import moment from "moment";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
-import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
 
 const AddPaymentInstructionForm = ({
@@ -54,12 +53,7 @@ const AddPaymentInstructionForm = ({
   );
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={addExternalPaymentSchema}
-      enableReinitialize
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue, resetForm }) => (
         <Form className={cx(style.formWrapper)}>
           {initial && (
