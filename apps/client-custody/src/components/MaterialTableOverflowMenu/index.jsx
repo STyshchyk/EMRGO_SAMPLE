@@ -11,31 +11,30 @@ const MaterialTableOverflowMenu = ({ id, actions, anchorEl, setAnchorEl, selecte
     id={id || "simple-menu"}
     data-testid="overflow-menu"
     anchorEl={anchorEl}
-    keepMounted
     open={Boolean(anchorEl)}
     onClose={() => setAnchorEl(null)}
   >
     {actions.map((action) => {
       const isHidden =
         typeof action.hidden === "function" ? action.hidden(selectedRow) : action.hidden;
-      return isHidden ? (
-        ""
-      ) : (
-        <MenuItem
-          onClick={() => {
-            setAnchorEl(null);
-            action.callback(selectedRow);
-          }}
-          key={action.label}
-          className={style.actionicon}
-          disabled={
-            typeof action.disabled === "function" ? action.disabled(selectedRow) : action.disabled
-          }
-          data-testid={action.label}
-        >
-          {action.icon && <ListItemIcon className={style.listItem}>{action.icon}</ListItemIcon>}
-          <Typography variant="inherit">{action.label}</Typography>
-        </MenuItem>
+      return (
+        !isHidden && (
+          <MenuItem
+            onClick={() => {
+              setAnchorEl(null);
+              action.callback(selectedRow);
+            }}
+            key={action.label}
+            className={style.actionicon}
+            disabled={
+              typeof action.disabled === "function" ? action.disabled(selectedRow) : action.disabled
+            }
+            data-testid={action.label}
+          >
+            {action.icon && <ListItemIcon className={style.listItem}>{action.icon}</ListItemIcon>}
+            <Typography variant="inherit">{action.label}</Typography>
+          </MenuItem>
+        )
       );
     })}
   </Menu>
