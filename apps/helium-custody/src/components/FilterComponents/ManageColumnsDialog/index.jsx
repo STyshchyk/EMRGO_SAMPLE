@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 
@@ -245,7 +245,11 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
-                    className={cx(style.columnManager__list, getListStyle(snapshot.isDraggingOver))}
+                    className={cx(
+                      style.columnManager__list,
+                      getListStyle(snapshot.isDraggingOver),
+                      style.columnManager__list__empty
+                    )}
                   >
                     {currentShownColumns
                       //   .filter((column) => !entityTypeFilteredColumns.includes(column.field))
@@ -300,6 +304,7 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
                 confirmColumns();
                 closeDialog();
               }}
+              disabled={currentShownColumns.length === 0}
               variant="contained"
               color="primary"
             >
