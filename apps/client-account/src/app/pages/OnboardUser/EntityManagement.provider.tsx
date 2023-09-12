@@ -1,15 +1,21 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 
 import { queryKeys } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
-import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import v from "voca";
 
-import { archiveUser,cancelInvitation,getOnboardedUsers,getRoles,inviteUser,makeOrRevokeAdmin,resendInvite } from "./EntityManagement.service";
+import {
+  archiveUser,
+  cancelInvitation,
+  getOnboardedUsers,
+  getRoles,
+  inviteUser,
+  makeOrRevokeAdmin,
+  resendInvite,
+} from "./EntityManagement.service";
 import { IEntityManagementContext, INewUser, UserRoles } from "./EntityManagement.types";
 import { getNewUserTypeLabel } from "./helpers";
-
-
 
 const EntityManagementContext = createContext<IEntityManagementContext | null>(null);
 
@@ -26,7 +32,7 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
   const { showErrorToast, showSuccessToast } = useToast();
   const [isOnboardUserModalOpen, setIsOnboardUserModalOpen] = useState(false);
-  const [rolesList, setRolesList] = useState([])
+  const [rolesList, setRolesList] = useState([]);
 
   const { mutate: doOnboardUser } = useMutation(inviteUser);
   const { mutate: doCancelInvitation } = useMutation(cancelInvitation);
@@ -34,32 +40,44 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doResendInvite } = useMutation(resendInvite);
   const { mutate: doMakeOrRevokeAdmin } = useMutation(makeOrRevokeAdmin);
 
+  const { data: roleData } = useQuery({
+    staleTime: Infinity,
+    queryFn: () => getRoles(),
+    queryKey: [queryKeys.account.onboardedUsers.roles],
+    onSuccess: (response) => {
+      const roles = response.map((role: { name: string; key: string }) => {
+        const roleName = v.camelCase(role.name);
+        return {
+          label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]),
+          value: role.key,
+        };
+      });
+      setRolesList(roles);
+    },
+  });
 
-  useQuery({
-      staleTime:Infinity,
-      queryFn: () => getRoles(),
-      queryKey : [queryKeys.account.onboardedUsers.roles],
-      onSuccess: (response) => {
-          const roles = response.map((role: { name: string, key: string}) => {
-          const roleName = v.camelCase(role.name)
-          return {
-            label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]), 
-            value: role.key
-          }
-        });
-        setRolesList(roles);
-      }, 
-    }
-  );
-  
-  const { data: onboardedUsers, isError, isFetched } = useQuery({
-      queryKey: [queryKeys.account.onboardedUsers.fetch],
-      queryFn : () => getOnboardedUsers(),
-      onError: () => {
-        if (isError && isFetched) showErrorToast("Error while fetching invited users");
-      },
-    }
-  );
+  useEffect(() => {
+    const roles = roleData.map((role: { name: string; key: string }) => {
+      const roleName = v.camelCase(role.name);
+      return {
+        label: getNewUserTypeLabel(UserRoles[roleName as keyof typeof UserRoles]),
+        value: role.key,
+      };
+    });
+    setRolesList(roles);
+  }, []);
+
+  const {
+    data: onboardedUsers,
+    isError,
+    isFetched,
+  } = useQuery({
+    queryKey: [queryKeys.account.onboardedUsers.fetch],
+    queryFn: () => getOnboardedUsers(),
+    onError: () => {
+      if (isError && isFetched) showErrorToast("Error while fetching invited users");
+    },
+  });
 
   const onArchiveUser = (id: string) => {
     console.log("Remove user");
@@ -72,7 +90,7 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         showErrorToast("Error while trying to remove user");
       },
     });
-}
+  };
 
   const onCancelInvitation = (id: string) => {
     console.log("Cancel invite");
@@ -85,7 +103,7 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         showErrorToast("Error canceling invitation");
       },
     });
-  }
+  };
 
   const onResendInvitation = (id: string) => {
     console.log("Resend invite");
@@ -98,13 +116,13 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         showErrorToast("Error while trying to Resend Invite");
       },
     });
-  }
+  };
 
-  const onMakeAdmin = (id:string) => {
+  const onMakeAdmin = (id: string) => {
     const requestPayload = {
-      id, 
-      isAdmin:true
-    }
+      id,
+      isAdmin: true,
+    };
     doMakeOrRevokeAdmin(requestPayload, {
       onSuccess: () => {
         showSuccessToast("Assigned Admin role successfully");
@@ -114,13 +132,13 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         showErrorToast("Error making admin");
       },
     });
-  }
+  };
 
-  const onRevokeAdmin = (id:string) => {
+  const onRevokeAdmin = (id: string) => {
     const requestPayload = {
-      id, 
-      isAdmin:false
-    }
+      id,
+      isAdmin: false,
+    };
     doMakeOrRevokeAdmin(requestPayload, {
       onSuccess: () => {
         showSuccessToast("Unassigned Admin role successfully");
@@ -130,50 +148,48 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
         showErrorToast("Error revoking admin");
       },
     });
-  }
+  };
 
-  
   const handleSubmit = (values: INewUser) => {
-    console.log(values)
-    const roles = values.roles.map((role: any) => role.value )
+    console.log(values);
+    const roles = values.roles.map((role: any) => role.value);
     const requestPayload = {
       ...values,
       roles,
-    }
+    };
 
     doOnboardUser(requestPayload, {
       onSuccess: () => {
         showSuccessToast("User invited");
-        setIsOnboardUserModalOpen(false)
-        queryClient
-          .invalidateQueries({ queryKey: [queryKeys.account.onboardedUsers.fetch] })
+        setIsOnboardUserModalOpen(false);
+        queryClient.invalidateQueries({ queryKey: [queryKeys.account.onboardedUsers.fetch] });
       },
       onError: (err: any) => {
         // message from BE is in arabic using messageCode for now
-        const { messageCode } = err.response.data
-        if(messageCode === "ERR_EmailAlreadyExists"){
+        const { messageCode } = err.response.data;
+        if (messageCode === "ERR_EmailAlreadyExists") {
           return showErrorToast("User with this email already exists");
         }
         showErrorToast("Error occured during inviting new user");
       },
     });
-  }
+  };
 
   const onViewPlatformDetails = () => {
-    console.log('go to platform details page')
-  }
+    console.log("go to platform details page");
+  };
 
   const onViewBankingDetails = () => {
-    console.log('go to Client Banking page')
-  }
+    console.log("go to Client Banking page");
+  };
 
   const onViewCashAccounts = () => {
-    console.log('go to Account Opening (Safekeeping & Cash) page')
-  }
+    console.log("go to Account Opening (Safekeeping & Cash) page");
+  };
 
   const onViewAuthRepresentatives = () => {
-    console.log('go to Authorised Representatives page')
-  }
+    console.log("go to Authorised Representatives page");
+  };
 
   const state: IEntityManagementContext = {
     isOnboardUserModalOpen,
@@ -190,11 +206,12 @@ export const EntityManagementProvider = ({ children }: PropsWithChildren) => {
     onCancelInvitation,
     onResendInvitation,
     onMakeAdmin,
-    onRevokeAdmin
+    onRevokeAdmin,
   };
 
-
-  return <EntityManagementContext.Provider value={state}>{children}</EntityManagementContext.Provider>;
+  return (
+    <EntityManagementContext.Provider value={state}>{children}</EntityManagementContext.Provider>
+  );
 };
 
 export const useEntityManagementContext = () => useContext(EntityManagementContext);
