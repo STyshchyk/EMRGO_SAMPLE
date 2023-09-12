@@ -22,12 +22,14 @@ export const selectCashTransactions = createSelector(
     if (transactionsData) {
       const finalData = [];
       const summaryRows = transactionsData;
-      summaryRows.forEach((row) => {
-        const { transactions } = row;
-        transactions.forEach((tr) => {
-          finalData.push(tr);
+      summaryRows &&
+        summaryRows.forEach((row) => {
+          const { transactions } = row;
+          transactions &&
+            transactions.forEach((tr) => {
+              finalData.push(tr);
+            });
         });
-      });
       return transactionsData;
     }
     return [];
