@@ -26,7 +26,7 @@ export const CreatePasswordComponent: FC<ICreatePasswordProps> = (props: ICreate
           id="password"
           type={showPassword ? "text" : "password"}
           valid={form.touched.password && !form.errors.password}
-          helperText="Use 8 or more characters with a mix of letters, numbers & symbols."
+          helperText="Use 10 or more characters with a mix of letters, numbers & symbols."
           {...form.getFieldProps("password")}
           error={form.touched.password && form.errors.password}
         />

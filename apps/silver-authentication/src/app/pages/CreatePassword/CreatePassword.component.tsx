@@ -1,13 +1,10 @@
 import { FC } from "react";
-import { useParams } from "react-router-dom";
 
-import { Button, Checkbox, Input, Logo, useToast } from "@emrgo-frontend/shared-ui";
+import { Button, Checkbox, Input, Logo } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
-import { useMutation } from "@tanstack/react-query";
 
 import { Heading, OneCol, OneColCheck, SubHeading } from "../../components/Form";
 import { useCreatePasswordContext } from "./CreatePassword.provider";
-import { createPassword } from "./CreatePassword.services";
 import * as Styles from "./CreatePassword.styles";
 import { ICreatePasswordProps } from "./CreatePassword.types";
 
@@ -27,7 +24,7 @@ export const CreatePasswordComponent: FC<ICreatePasswordProps> = ({}: ICreatePas
           label="Password"
           id="password"
           type={showPassword ? "text" : "password"}
-          helperText="Use 8 or more characters with a mix of letters, numbers & symbols."
+          helperText="Use 10 or more characters with a mix of letters, numbers & symbols."
           {...form.getFieldProps("password")}
           error={form.touched.password && form.errors.password}
           // TODO: FIX this
