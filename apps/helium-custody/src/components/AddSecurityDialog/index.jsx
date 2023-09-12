@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState,forwardRef } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -38,7 +38,7 @@ import AutoSaveFields from "../AutoSaveFields";
 
 const animatedComponents = makeAnimated();
 
-const CustomNumberInputField = forwardRef((props,ref) => {
+const CustomNumberInputField = forwardRef((props, ref) => {
   const { onChange, ...other } = props;
 
   return (
@@ -122,7 +122,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
-  const { t } = useTranslation(["external_securities","translation"]);
+  const { t } = useTranslation(["external_securities", "translation"]);
   const { theme } = useTheme();
   const { locale } = theme;
   const isEdit = selectedRow !== null;
@@ -153,7 +153,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         requestPayload[field] = requestPayload[field].value;
       }
     });
-    
+
     const countryId = requestPayload.country;
     delete requestPayload.entity;
 
@@ -163,7 +163,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     return { ...requestPayload, countryId };
   };
 
-  const formatParsedValues =(payload) => {
+  const formatParsedValues = (payload) => {
     const dateFields = ["issueDate", "maturityDate"];
     dateFields.forEach((field) => {
       if (payload[field]) {
@@ -171,14 +171,12 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
       }
     });
 
-    return payload
-  }
+    return payload;
+  };
 
   const selectedExternalSecurities = externalSecuritiesList?.find(
     ({ id }) => selectedRow?.id === id
   );
-
-
 
   const getDenominationOptions = (entries) => {
     const options = [];
@@ -216,15 +214,17 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         frequency: selectedRow?.frequency ? selectedExternalSecurities.frequencyName : null,
         country: selectedRow?.country ? selectedExternalSecurities.country : null,
         currency: selectedRow?.currency ? selectedExternalSecurities.currencyName : null,
-        maturityDate: selectedRow?.maturityDate ? moment(selectedExternalSecurities.maturityDate) : null,
-        issueDate:moment(selectedRow?.issueDate) || null,
+        maturityDate: selectedRow?.maturityDate
+          ? moment(selectedExternalSecurities.maturityDate)
+          : null,
+        issueDate: moment(selectedRow?.issueDate) || null,
         denomination: selectedRow?.denomination
           ? selectedExternalSecurities.denominationName
           : null,
         status: selectedRow?.status ? selectedExternalSecurities.status : null,
       });
     } else {
-     if(!formvalues?.settings) return
+      if (!formvalues?.settings) return;
       const data = formvalues?.settings[0];
       if (
         !fetchingValues &&
@@ -232,7 +232,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
         data?.value !== "null" &&
         data?.key === "AddSecurityDialogForm"
       ) {
-        const payload = formatParsedValues(JSON.parse(data.value))
+        const payload = formatParsedValues(JSON.parse(data.value));
         setInitialValues(payload);
 
         // setInitialValues(JSON.parse(data.value));
@@ -241,14 +241,13 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   }, [formvalues, fetchingValues, selectedExternalSecurities, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value)return;
+    if (!value) return;
     const obj = {
       settings: [
         {
           key: "AddSecurityDialogForm",
           value: JSON.stringify(value),
-          isActive:false,
-
+          isActive: false,
         },
       ],
     };
@@ -262,7 +261,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
     }
   }, [open]);
 
-    console.log("initialValues:: ", initialValues);
+  console.log("initialValues:: ", initialValues);
   return (
     <Dialog
       fullWidth
@@ -299,7 +298,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
               fetchExternalSecuritiesList();
               handleClose();
               setSelectedRow(null);
-              saveFormValues(null);
+              saveFormValues(values);
             },
             // rejectCallback: () => {
             //   setSubmitting(false);
@@ -559,8 +558,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                     </Grid>
                   </Grid>
 
-
-
                   <Grid container className="mt-4">
                     <Grid item xs={12} md={6} lg={6}>
                       <Typography className="mt-4">
@@ -741,7 +738,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                   <Button
                     fullWidth
                     onClick={() => {
-                      saveFormValues(null);
+                      saveFormValues(values);
                       setInitialValues(initial);
                       handleClose();
                     }}

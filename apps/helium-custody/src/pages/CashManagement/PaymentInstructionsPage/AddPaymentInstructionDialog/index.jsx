@@ -71,6 +71,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
         {
           key: "AddPaymentInstructionDialogForm",
           value: JSON.stringify(value),
+          isActive: false,
         },
       ],
     };
@@ -93,7 +94,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     createPaymentInstruction(requestPayload);
 
     setTimeout(() => {
-      saveFormValues(null);
+      saveFormValues(values);
       handleClose();
       resetForm();
     }, 1000);
@@ -122,7 +123,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           initial={initial}
           handleSubmit={handleSubmit}
           handleCancel={() => {
-            saveFormValues(null);
+            saveFormValues(values);
             setInitialValues(initial);
             handleClose();
           }}

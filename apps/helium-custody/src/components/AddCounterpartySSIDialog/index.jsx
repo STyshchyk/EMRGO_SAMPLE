@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -236,7 +236,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
       });
     } else {
       let values;
-      if(formvalues?.settings){
+      if (formvalues?.settings) {
         const data = formvalues?.settings[0];
         if (
           !fetchingValues &&
@@ -254,19 +254,20 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
           setInitialValues(values);
         }
       } else if (currentEntityType === "INVESTOR") {
-          values = { ...initialValues, entity: getInitialEntityValue() };
-          setInitialValues(values);
+        values = { ...initialValues, entity: getInitialEntityValue() };
+        setInitialValues(values);
       }
     }
   }, [formvalues, fetchingValues, selectedCounterpartySSI, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value)return;
+    if (!value) return;
     const obj = {
       settings: [
         {
           key: "CounterpartySSIForm",
           value: JSON.stringify(value),
+          isActive: false,
         },
       ],
     };
@@ -313,7 +314,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
             requestPayload,
             successCallback: () => {
               actions.setSubmitting(false);
-              saveFormValues(null);
+              saveFormValues(values);
               fetchCounterpartySSIList();
               handleClose();
               setSelectedRow(null);
@@ -327,7 +328,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
           }
 
           actions.setSubmitting(false);
-          saveFormValues(null);
+          saveFormValues(values);
         }}
       >
         {({ handleSubmit, setFieldValue, values }) => {
@@ -717,7 +718,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                     <Button
                       fullWidth
                       onClick={() => {
-                        saveFormValues(null);
+                        saveFormValues(values);
                         setInitialValues(initial);
                         handleClose();
                       }}
