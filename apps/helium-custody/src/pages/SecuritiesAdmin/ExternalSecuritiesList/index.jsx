@@ -26,6 +26,7 @@ const ExternalSecuritiesList = () => {
 
   const inProd = useIsProduction();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isScheduleAdded, setIsScheduleAdded] = useState(false);
   const [currentlySelectedRowData, setCurrentlySelectedRowData] = useState(null);
   const [openAddSecurityDialog, setOpenAddSecurityDialog] = useState(false);
   const [openEditCouponPaymentScheduleDialog, setOpenEditCouponPaymentScheduleDialog] =
@@ -270,7 +271,10 @@ const ExternalSecuritiesList = () => {
       {openEditCouponPaymentScheduleDialog && (
         <EditCouponPaymentScheduleDialog
           currentlySelectedRowData={currentlySelectedRowData}
+          data={generatedTableData}
           open={openEditCouponPaymentScheduleDialog}
+          isScheduleAdded={isScheduleAdded}
+          setIsScheduleAdded={setIsScheduleAdded}
           handleClose={() => {
             setOpenEditCouponPaymentScheduleDialog(false);
             handleCloseMenu();
