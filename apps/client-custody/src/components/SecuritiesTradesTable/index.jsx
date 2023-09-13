@@ -618,9 +618,7 @@ const SecurityTradesTable = ({
           </div>
           <FilterConsumer>
             {({ filters, filterColumns }) => {
-              const preFilteredData = filters.hasOwnProperty("search")
-                ? tableRef?.current?.dataManager?.getRenderState()?.data
-                : data;
+              const preFilteredData = filters.hasOwnProperty("search") ? data : data;
               const filteredData = preFilteredData
                 .filter((row) => {
                   if (
