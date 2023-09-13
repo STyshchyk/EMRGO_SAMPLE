@@ -1,5 +1,3 @@
-import makeAnimated from "react-select/animated";
-
 import { Select } from "@emrgo-frontend/shared-ui";
 import { selectStyles } from "@emrgo-frontend/theme";
 import Box from "@mui/material/Box";
@@ -9,8 +7,6 @@ import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 import { useFilters } from "../../../context/filter-context";
-
-const animatedComponents = makeAnimated();
 
 const DropdownFilter = ({
   name,
@@ -56,7 +52,7 @@ const DropdownFilter = ({
         <Select
           fullWidth
           closeMenuOnSelect
-          components={customComponent || { ...animatedComponents }}
+          components={customComponent}
           isSearchable
           placeholder={`${label}...`}
           styles={selectStyles()}
