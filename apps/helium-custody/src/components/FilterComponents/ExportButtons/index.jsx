@@ -25,13 +25,25 @@ const ExportButtons = ({ tableRef, name }) => {
   const [dataCount, setDataCount] = useState(
     tableRef?.current?.dataManager?.filteredData.length || 0
   );
+  const filterContext = useFilters();
+  const { filterColumns, filters, allColumns } = filterContext;
   const [tableData, setTableData] = useState(tableRef?.current?.dataManager?.filteredData);
 
   useEffect(() => {
+    const hasSearchFilter = filters.hasOwnProperty("search");
+
+    if (hasSearchFilter) {
+      setTableData(tableRef?.current?.dataManager?.getRenderState()?.data); // for id 187
+      return;
+    }
     setTableData(tableRef?.current?.dataManager?.filteredData);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setTableData, tableRef?.current?.dataManager?.filteredData]);
+  }, [
+    setTableData,
+    tableRef?.current?.dataManager?.filteredData,
+    tableRef?.current?.dataManager?.getRenderState()?.data,
+  ]);
 
   const childRef = useRef();
   const { t } = useTranslation(["miscellaneous"]);
@@ -43,8 +55,6 @@ const ExportButtons = ({ tableRef, name }) => {
   const cashManagementSecuritiesAccounts = useSelector(cashManagementSelectors.selectAccounts);
   const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
 
-  const filterContext = useFilters();
-  const { filterColumns, filters, allColumns } = filterContext;
   const { shownColumns } = filterColumns;
 
   const hashMap = new Map();
@@ -76,7 +86,8 @@ const ExportButtons = ({ tableRef, name }) => {
   };
 
   const processTableData = () => {
-    const rows = [...tableRef?.current?.dataManager?.filteredData]?.map((rowData) => {
+    // const rows = [...tableRef?.current?.dataManager?.filteredData]?.map((rowData) => {
+    const rows = tableData?.map((rowData) => {
       const row = [];
       shownColumns.forEach((column) => {
         const foundData = column?.exportConfig?.render

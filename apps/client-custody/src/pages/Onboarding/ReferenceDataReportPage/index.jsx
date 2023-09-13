@@ -87,18 +87,20 @@ const ReferenceDataReportPage = () => {
       },
     };
   });
-  const externalISINOptionsList = allExternalSecurities.map((item) => {
-    const { id, isin, name } = item;
-    return {
-      label: isin,
-      value: id,
-      meta: {
-        id,
-        name,
-        isin,
-      },
-    };
-  });
+  const externalISINOptionsList = allExternalSecurities
+    .filter((i) => i?.isin)
+    .map((item) => {
+      const { id, isin, name } = item;
+      return {
+        label: isin,
+        value: id,
+        meta: {
+          id,
+          name,
+          isin,
+        },
+      };
+    });
   const isWethaqAdmin = currentEntityGroup?.entityType === "EMRGO_SERVICES";
   const selectedExternalSecurity = allExternalSecurities.find(
     ({ id }) => id === currentlySelectedSecurity?.value

@@ -20,10 +20,18 @@ import CouponPaymentScheduleTable, {
 import SecurityOverview from "../SecurityOverview";
 import StyledDialogHeader from "../StyledDialogHeader";
 
-const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handleClose }) => {
+const EditCouponPaymentScheduleDialog = ({
+  currentlySelectedRowData,
+  open,
+  handleClose,
+  setIsScheduleAdded,
+  isScheduleAdded,
+  data,
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation(["reports"]);
-
+  const storedRowDataId = currentlySelectedRowData?.id;
+  const [updatedCurrentRow, setUpdatedCurrentRow] = useState([]);
   const [tableData, setTableData] = useState([]);
 
   // selectors
@@ -39,7 +47,7 @@ const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handl
   const isLoading = isFetching || isRequesting;
   const isTableDataEmpty = Array.isArray(tableData) && !tableData.length > 0;
   // const couponId = currentlySelectedRowData?.couponId;
-  const couponId = currentlySelectedRowData?.coupons?.id;
+  const couponId = currentlySelectedRowData?.coupons?.id || updatedCurrentRow?.coupons?.id;
 
   const hasCouponScheduleDates = couponPaymentSchedule?.couponScheduleDates;
 
@@ -52,6 +60,17 @@ const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handl
     dispatch(couponsActionCreators.doAddCouponPaymentSchedule(payload));
   const editCouponPaymentSchedule = (payload) =>
     dispatch(couponsActionCreators.doEditCouponPaymentSchedule(payload));
+
+  const getUpdatedCurrentRow = (id) => {
+    return data.filter((item) => item?.id === id.toString())[0];
+  };
+
+  useEffect(() => {
+    if (isScheduleAdded) {
+      const r = getUpdatedCurrentRow(storedRowDataId);
+      setUpdatedCurrentRow(r);
+    }
+  }, [isScheduleAdded]);
 
   useEffect(() => {
     const fetchCouponPaymentScheduleById = (payload) =>
@@ -108,6 +127,7 @@ const EditCouponPaymentScheduleDialog = ({ currentlySelectedRowData, open, handl
       successCallback: () => {
         fetchAllCouponPaymentSchedules();
         fetchExternalSecurities();
+        setIsScheduleAdded(true);
       },
     };
 

@@ -249,9 +249,10 @@ export const generateExternalSecurityOptionsList = (data) => {
     return data
       .filter((item) => item?.assetTypeName?.name !== "Equity")
       .filter((item) => item?.longName)
+      .filter((item) => item?.name)
       .filter((item) => item.status === "Active")
       .map((item) => ({
-        label: item.longName,
+        label: item?.name, // id 663
         value: item,
       }));
   }
