@@ -216,6 +216,7 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
       value: item.value,
       securityIdTypeName: item.match?.name,
     })),
+  coupons: i?.coupons, // for id 634
 });
 
 const getAttribute = (attrs, fieldName) => {

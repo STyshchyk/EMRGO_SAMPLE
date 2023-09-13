@@ -122,7 +122,7 @@ const CashStatementReportPage = () => {
     const pushedEntity = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
           id: acc.group.id,
           label: acc.group.entity.corporateEntityName,
@@ -138,7 +138,7 @@ const CashStatementReportPage = () => {
           });
         }
 
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({

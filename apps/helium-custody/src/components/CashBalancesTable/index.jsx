@@ -70,7 +70,7 @@ const CashBalancesTable = ({ data, accounts }) => {
     const pushedEntity = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
           id: acc.group.id,
           entityId: acc.group.entity.id,
@@ -87,7 +87,7 @@ const CashBalancesTable = ({ data, accounts }) => {
           });
         }
 
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
 
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
