@@ -48,59 +48,105 @@ const rejectStyle = {
 
 const parseCsvData = (csvString) => {
   const { data } = parse(csvString);
+  const maxlength = data.reduce((a, b) => (a.length > b.length ? a : b)).length;
   // 04/10/2022 12:18:15
 
   // const datetime = '04/10/2022 12:18:15';
   // const res1 = moment(datetime, 'DD/MM/YYYY HH:mm:ss');
   // const res2 = res1.toISOString();
-
+  let skippedFirst = false;
   data.splice(0, 1);
-  console.log("Data:: ", data);
   const resultingData = data
     .map((arrItem) => {
-      if (arrItem.length === 32) {
-        const [
-          settlementType,
-          isin,
-          currency,
-          tradeDate,
-          settlementDate,
-          quantity,
-          price,
-          principalAmount,
-          accruedInterest,
-          settlementAmount,
-          counterparty,
-          counterpartySSI,
-          internalTradeRef,
-        ] = arrItem;
+        if (arrItem.length == maxlength){
+            if (!skippedFirst){
+                skippedFirst = true;
+                return null;
+            }
+            const [
+                referenceId,
+                wsn,
+                isin,
+                internalTradeRef,
+                security,
+                securityTradeType,
+                entryDate,
+                tradeDate,
+                settlementDate,
+                issueDate,
+                lastAmended,
+                tradeSettlementOrSettlementInstructionStatus,
+                currency,
+                investorCashAccountNo,
+                investorCashAccountBalance,
+                investorSecuritiesAccountNo,
+                investorSecuritiesAccountBalance,
+                issuerCashAccountNo,
+                issuerCashAccountBalance,
+                issuerSecuritiesAccountNo,
+                issuerSecuritiesAccountBalance,
+                quantity,
+                numCerts,
+                issuer,
+                investor,
+                cashSSI,
+                paymentConfirmationFileId,
+                settlementType,
+                price,
+                principalAmount,
+                accruedInterest,
+                settlementAmount,
+                counterparty,
+                counterpartySSI,
+            ] = arrItem;
 
-        // if (!settlementType || !isin || !currency || !internalTradeRef) return null;
+            // // if (!settlementType || !isin || !currency || !internalTradeRef) return null;
 
-        return {
-          settlementType,
-          isin,
-          currency,
-          tradeDate: moment(tradeDate, "DD/MM/YYYY").toISOString(),
-          settlementDate: moment(settlementDate, "DD/MM/YYYY").toISOString(),
-          quantity,
-          price,
-          principalAmount,
-          accruedInterest,
-          settlementAmount,
-          counterparty,
-          counterpartySSI,
-          internalTradeRef,
-        };
-      }
+            return {
+                referenceId,
+                wsn,
+                isin,
+                internalTradeRef,
+                security,
+                securityTradeType,
+                entryDate: moment(entryDate, "DD/MM/YYYY").toISOString(),
+                tradeDate: moment(tradeDate, "DD/MM/YYYY").toISOString(),
+                settlementDate: moment(settlementDate, "DD/MM/YYYY").toISOString(),
+                issueDate: moment(issueDate, "DD/MM/YYYY").toISOString(),
+                lastAmended: moment(lastAmended, "DD/MM/YYYY").toISOString(),
+                tradeSettlementOrSettlementInstructionStatus,
+                currency,
+                investorCashAccountNo,
+                investorCashAccountBalance,
+                investorSecuritiesAccountNo,
+                investorSecuritiesAccountBalance,
+                issuerCashAccountNo,
+                issuerCashAccountBalance,
+                issuerSecuritiesAccountNo,
+                issuerSecuritiesAccountBalance,
+                quantity,
+                numCerts,
+                issuer,
+                investor,
+                cashSSI,
+                paymentConfirmationFileId,
+                settlementType,
+                price,
+                principalAmount,
+                accruedInterest,
+                settlementAmount,
+                counterparty,
+                counterpartySSI
+            };
+        } else {
+            return null;
+        }
 
-      return null;
     })
     .filter((item) => {
       if (item) {
         return true;
       }
-
       return false;
     });
 
@@ -114,6 +160,7 @@ const ImportSecurityTradesTableDataDialog = ({
   tableData,
   setHasImportedData,
 }) => {
+
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const fileType = file.type;
