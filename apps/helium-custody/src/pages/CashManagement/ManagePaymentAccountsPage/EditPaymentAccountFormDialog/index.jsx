@@ -84,6 +84,9 @@ const EditPaymentAccountFormDialog = ({ accountId, initialValues, open, handleCl
           <AddPaymentAccountForm
             initialValues={initialValues}
             handleSubmit={handleSubmit}
+            handleCloseDialog={() => {
+              handleClose();
+            }}
             disableSelectCurrencyField
           />
         </div>

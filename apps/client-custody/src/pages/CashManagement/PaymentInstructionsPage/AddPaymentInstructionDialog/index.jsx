@@ -81,11 +81,6 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     dispatch(formActionCreators.doPostFormRequested(obj));
   };
   const handleSubmit = (values, { resetForm }) => {
-    console.log("🚀 ~ file: index.js ~ line 83 ~ AddPaymentInstrucstinDialog", values);
-    console.log(
-      "🚀 ~ file: index.js ~ line 84 ~ AddPaymentInstrucstinDialog",
-      addExternalPaymentSchema
-    );
     const createPaymentInstruction = (payload) => {
       dispatch(accountsActionCreators.doCreateOutgoingInstructions(payload));
     };
@@ -131,8 +126,8 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           initial={initial}
           handleSubmit={handleSubmit}
           handleCancel={() => {
-            saveFormValues(formvalues);
-            setInitialValues({ ...initial, valueDate: null });
+            saveFormValues(initialValues?.valueDate);
+            setInitialValues(initial);
             handleClose();
           }}
         />
