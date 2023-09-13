@@ -49,8 +49,6 @@ export function Select<
     return styles;
   };
 
-  console.log(props)
-
   // Create an object that merges customComponent and animatedComponents
 const mergedComponents = {
   ...animatedComponents,
