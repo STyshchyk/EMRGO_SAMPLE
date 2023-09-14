@@ -9,3 +9,11 @@ export interface IDocument {
 export interface ISignedURL {
   url: string;
 }
+
+
+export interface IUploadResponse {
+  fileId: string;
+  filename: string;
+  path: string;
+  url: string;
+}

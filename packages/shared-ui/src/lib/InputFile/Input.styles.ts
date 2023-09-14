@@ -185,10 +185,20 @@ export const Span = styled.span`
   font-weight: 500;
   font-size: ${rem(14)};
   line-height: ${rem(16)};
-  color: ${getTheme("colors.black.100")};
-  caret-color: ${getTheme("colors.green5")};
   position: relative;
   top: -11px;
+  ${({ theme }) => css`
+    ${theme.mode === "light" &&
+    css`
+      color: ${getTheme("colors.black.100")};
+      caret-color: ${getTheme("colors.green3")};
+    `}
+    ${theme.mode === "dark" &&
+    css`
+      color: ${getTheme("colors.white.100")};
+      caret-color: ${getTheme("colors.green5")};
+    `}
+  `}
 `;
 export const HelperText = styled.div`
   /* Layout */

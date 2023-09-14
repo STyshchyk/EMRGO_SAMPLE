@@ -2,7 +2,14 @@ import React, { FC, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { clientPrimariesRoutes as routes } from "@emrgo-frontend/constants";
-import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo } from "@emrgo-frontend/shared-ui";
+import {
+  ArrowBackwardIcon,
+  Button,
+  Checkbox,
+  FormikInput,
+  Logo,
+  TFASupportTicketModal,
+} from "@emrgo-frontend/shared-ui";
 import { ensureNotNull, processAPIErrors } from "@emrgo-frontend/utils";
 
 import { Heading, OneCol, OneColCheck, SubHeading } from "../../components/Form";
@@ -24,65 +31,67 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
     activeStep,
     isError,
     error,
+    isTFAModalOpen,
+    openTFASupportTicketModal,
+    closeTFASupportTicketModal,
   } = ensureNotNull(useLoginContext());
 
   return (
     <>
-      {activeStep === 0 && (<Styles.LoginForm onSubmit={form.handleSubmit}>
-        <Logo />
-        <>
-          <div>
-            <Heading>Login</Heading>
-            <SubHeading>You&apos;re now ready to access Emrgo.</SubHeading>
-          </div>
+      {activeStep === 0 && (
+        <Styles.LoginForm onSubmit={form.handleSubmit}>
+          <Logo />
+          <>
+            <div>
+              <Heading>Login</Heading>
+              <SubHeading>You&apos;re now ready to access Emrgo.</SubHeading>
+            </div>
 
-          <OneCol>
-            <FormikInput<ILoginFormValues>
-              label="Email Address"
-              maxWidth={458}
-              form={form}
-              id="email"
-            />
-          </OneCol>
+            <OneCol>
+              <FormikInput<ILoginFormValues>
+                label="Email Address"
+                maxWidth={458}
+                form={form}
+                id="email"
+              />
+            </OneCol>
 
-          <OneCol>
-            <FormikInput<ILoginFormValues>
-              label="Password"
-              maxWidth={458}
-              form={form}
-              id="password"
-              type={showPassword ? "text" : "password"}
-            />
-          </OneCol>
+            <OneCol>
+              <FormikInput<ILoginFormValues>
+                label="Password"
+                maxWidth={458}
+                form={form}
+                id="password"
+                type={showPassword ? "text" : "password"}
+              />
+            </OneCol>
 
-          <OneColCheck>
-            <Checkbox
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setShowPassword(e.target.checked)}
-            >
-              Show password
-            </Checkbox>
-          </OneColCheck>
+            <OneColCheck>
+              <Checkbox
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setShowPassword(e.target.checked)
+                }
+              >
+                Show password
+              </Checkbox>
+            </OneColCheck>
 
-          <OneCol>
-            <Button
-              size="large"
-              disabled={!form.isValid}
-              type={"submit"}
-            >
-              Submit
-            </Button>
-          </OneCol>
-          {isError && (
-            <Styles.Error>
-              <Styles.ErrorIcon />
-              <span>{processAPIErrors(error)}</span>
-            </Styles.Error>
-          )}
-          <Styles.Spacer />
-          <LoginHelp />
-        </>
-
-      </Styles.LoginForm>)}
+            <OneCol>
+              <Button size="large" disabled={!form.isValid} type={"submit"}>
+                Submit
+              </Button>
+            </OneCol>
+            {isError && (
+              <Styles.Error>
+                <Styles.ErrorIcon />
+                <span>{processAPIErrors(error)}</span>
+              </Styles.Error>
+            )}
+            <Styles.Spacer />
+            <LoginHelp />
+          </>
+        </Styles.LoginForm>
+      )}
       {activeStep === 1 && (
         <Styles.LoginForm onSubmit={formCode.handleSubmit}>
           <Logo />
@@ -105,22 +114,25 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
               />
             </OneCol>
             <OneCol>
-              <Button
-                size="large"
-                disabled={formCode.values.code?.length < 6}
-                type={"submit"}
-              >
+              <Button size="large" disabled={formCode.values.code?.length < 6} type={"submit"}>
                 Submit
               </Button>
             </OneCol>
             <Styles.Spacer />
             <Styles.HelpListItem>
-              <Link to={""}>Raise support ticket</Link>
+              <Button variant="text" type="button" onClick={() => openTFASupportTicketModal()}>
+                Raise support ticket
+              </Button>
             </Styles.HelpListItem>
           </Styles.Form>
           <Styles.Spacer />
           <LoginHelp />
-        </Styles.LoginForm>)}
+          <TFASupportTicketModal
+            isOpen={isTFAModalOpen}
+            onClose={() => closeTFASupportTicketModal()}
+          />
+        </Styles.LoginForm>
+      )}
     </>
   );
 };

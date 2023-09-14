@@ -49,6 +49,22 @@ export const Button = styled.button<{
               opacity: 0.25;
             }
           `;
+
+        case "text":
+          return css`
+            background: transparent;
+            border: none;
+            color: ${getTheme("colors.green3")};
+
+            &:not(:disabled):hover {
+              border: 1px solid ${getTheme("colors.green1")};
+              color: ${getTheme("colors.green1")};
+            }
+
+            &:disabled {
+              opacity: 0.25;
+            }
+          `;
       }
     }
 
@@ -74,6 +90,21 @@ export const Button = styled.button<{
           return css`
             background: transparent;
             border: 1px solid ${getTheme("colors.green5")};
+            color: ${getTheme("colors.green5")};
+
+            &:hover {
+              opacity: 0.7;
+            }
+
+            &:disabled {
+              opacity: 0.25;
+            }
+          `;
+
+        case "text":
+          return css`
+            background: transparent;
+            border: none;
             color: ${getTheme("colors.green5")};
 
             &:hover {
@@ -135,6 +166,16 @@ export const Button = styled.button<{
         &:not(:disabled):hover {
           opacity: 1;
           border-color: ${getTheme("colors.pink")};
+          color: ${getTheme("colors.pink")};
+        }
+      `}
+
+      ${$variant === "text" &&
+      css`
+        color: ${getTheme("colors.red")};
+
+        &:not(:disabled):hover {
+          opacity: 1;
           color: ${getTheme("colors.pink")};
         }
       `}
