@@ -577,7 +577,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.endDate) {
                   qs += `toDate=${values.endDate.toISOString()}&`;
                 } else {
-                  qs += `toDate=${moment().toISOString()}&`;
+                  qs += `toDate=${moment().endOf("day").toISOString()}&`;
                 }
                 if (values.entity) {
                   // qs += `entityId=${values.entity.data.id}&`;
@@ -585,6 +585,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.securityAccount) {
                   qs += `accountId=${values.securityAccount.data.id}`;
                 }
+                console.log(qs);
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
               };
 
