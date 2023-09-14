@@ -43,7 +43,7 @@ const EditPaymentInstructionDialog = ({
     const requestPayload = {
       wethaqAccountId: values?.sourceAccount.value.id,
       transferPurposeTypeId: values.transferPurpose.value,
-      accountId: values.paymentAccount.value.accountId,
+      accountId: values?.paymentAccount.value.accountId,
       amount: values.paymentAmount,
       valueDate: values.valueDate,
       details: values.paymentDetails,
