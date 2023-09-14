@@ -18,9 +18,6 @@ import * as CAEventsSelectors from "../../redux/selectors/corporateActionEvents"
 import { dateFormatter } from "../../utils/formatter";
 import StyledDialogHeader from "../StyledDialogHeader";
 import CorporateActionEventDetail from "./CorporateActionEventDetail";
-import CorporateActionEventsResponses, {
-  generateTableRowData,
-} from "./CorporateActionEventResponses";
 
 const InlineFormField = ({ label, children }) => (
   <Box mb={4}>
@@ -94,23 +91,6 @@ const ViewCorporateActionEventDialog = ({
 
   const validInvestors = corporateActionEvent?.validInvestors;
   const allResponses = corporateActionEvent?.responses;
-
-  useEffect(() => {
-    if (Array.isArray(validInvestors) && validInvestors.length > 0) {
-      const updatedTableData = validInvestors?.map((inv) => {
-        const foundResponse = allResponses?.find(
-          (res) => inv.entityId === res?.entityGroup?.entityId
-        );
-        return generateTableRowData(foundResponse || inv);
-      });
-
-      setTableData(updatedTableData);
-    }
-
-    return () => {
-      setTableData([]);
-    };
-  }, [allResponses, validInvestors, currentlySelectedRowData]);
 
   useEffect(() => {
     const fetchCorporateActionEvent = (payload) =>
@@ -198,13 +178,6 @@ const ViewCorporateActionEventDialog = ({
                   DEFAULT_DATE_FORMAT
                 )}
               />
-
-              {showResponses && (
-                <CorporateActionEventsResponses
-                  tableData={tableData}
-                  isFetchingEvent={isFetchingEvent}
-                />
-              )}
 
               {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
               {isUserInvestor && !isReadOnly && (
