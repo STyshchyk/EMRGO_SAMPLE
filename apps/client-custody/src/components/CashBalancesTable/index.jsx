@@ -71,10 +71,10 @@ const CashBalancesTable = ({ data, accounts }) => {
     accs.forEach((acc) => {
       if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
+          id: acc.group.entity.id,
           entityId: acc.group.entity.id,
           label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          value: acc.group.entity.id,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -125,7 +125,7 @@ const CashBalancesTable = ({ data, accounts }) => {
   const handleEntityChange = (selectedEntity) => {
     const filteredCashAccounts = cashAccountOpts
       .filter((account) =>
-        selectedEntity ? account?.original?.group.id === selectedEntity.value : false
+        selectedEntity ? account?.original?.group.entity.id === selectedEntity.value : false
       )
       .map((account) => ({
         data: account,
@@ -154,7 +154,7 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     const tempSecurityAccountList = securityAccountOpts
       .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.id === selectedEntity.data.id : true
+        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -169,7 +169,7 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
