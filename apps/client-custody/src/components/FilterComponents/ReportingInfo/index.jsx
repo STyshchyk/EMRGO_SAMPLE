@@ -42,9 +42,9 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>
-        <Typography className={classes.accountInfoLabel}>
+        {/* <Typography className={classes.accountInfoLabel}>
           {t("Cash Balances.Address")} :{" "}
-        </Typography>
+        </Typography> */}
         {/* TODO: Need to uncomment when address data is available */}
         {/* <Typography className={classes.accountInfoValue}>{`${
           securityAccount?.data?.original?.group?.addresses
