@@ -203,6 +203,7 @@ const CashStatementPage = () => {
         width: 8,
         render: (rowData) => reportDateRenderer(rowData?.date),
       },
+      defaultSort: "desc",
     },
     {
       id: "transactionType",
@@ -577,6 +578,14 @@ const CashStatementPage = () => {
                 }}
                 columns={filterColumns.shownColumns}
                 data={filteredData}
+                initialState={{
+                  sorting: [
+                    {
+                      id: "date", //sort by age by default on page load
+                      desc: false,
+                    },
+                  ],
+                }}
                 options={{
                   ...tableStyles,
                   toolbar: false,

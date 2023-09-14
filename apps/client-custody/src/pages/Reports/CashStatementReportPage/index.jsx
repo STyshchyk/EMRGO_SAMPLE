@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -18,7 +17,6 @@ import TableFiltersWrapper from "../../../components/FilterComponents/TableFilte
 import PageTitle from "../../../components/PageTitle";
 import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
 import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -271,6 +269,7 @@ const CashStatementReportPage = () => {
         width: 8,
         render: (rowData) => reportDateRenderer(rowData?.date),
       },
+      defaultSort: "desc",
     },
     {
       id: "transactionType",

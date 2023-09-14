@@ -18,7 +18,6 @@ import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../utils/formatter";
-import formatAddress from "../../utils/reports";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
 import DropdownFilter from "../FilterComponents/DropdownFilter";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -52,6 +51,7 @@ const CashBalancesTable = ({ data, accounts }) => {
   const { t } = useTranslation(["reports", "blotter"]);
 
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
+  const [disabledCurrency, setDisabledCurrency] = useState(false);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [currentlySelectedCurrency, setCurrentlySelectedCurrency] = useState(null);
@@ -289,7 +289,14 @@ const CashBalancesTable = ({ data, accounts }) => {
   };
 
   const transformedData = data?.map((d) => transformData(d));
-
+  const matchCashAccCurrencyWithCurrency = (selectedAcccount) => {
+    const currenctSelectedAcc = selectedAcccount?.data?.original?.currency?.id;
+    const filteredCurrency =
+      currencyOptions &&
+      currencyOptions.filter((currency) => currency.value === currenctSelectedAcc);
+    setCurrentlySelectedCurrency(...filteredCurrency);
+    setDisabledCurrency(true);
+  };
   return (
     <Fragment>
       <FilterProvider tableKey="cash_balances">
@@ -311,6 +318,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   name="entity"
                   label="Entity"
                   options={entityOptions}
+                  setClearDisabled={setDisabledCurrency}
                   customOnChange={(selectedEntity) => {
                     if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
                       setIsAllEntitiesOptionSelected(false);
@@ -328,6 +336,7 @@ const CashBalancesTable = ({ data, accounts }) => {
               <Grid item xs={12} md={6} lg={3} container>
                 <DropdownFilter
                   name="securityAccount"
+                  setClearDisabled={setDisabledCurrency}
                   label="Security Account"
                   options={securityAccountOptions}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
@@ -355,9 +364,13 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="account"
                   label="Cash Account"
+                  setClearDisabled={setDisabledCurrency}
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  customOnChange={(selected) => {
+                    matchCashAccCurrencyWithCurrency(selected);
+                  }}
                   customComponent={{
                     Option: (props) =>
                       ReactSelectCurrencyOption({
@@ -376,9 +389,11 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="currency"
                   label="Currency"
+                  setClearDisabled={setDisabledCurrency}
                   options={currencyOptions}
                   currentlySelectedOption={currentlySelectedCurrency}
                   setCurrentlySelectedOption={setCurrentlySelectedCurrency}
+                  isDisabled={disabledCurrency}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
