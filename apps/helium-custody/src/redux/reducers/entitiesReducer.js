@@ -42,7 +42,7 @@ const formatEntities = (data) => {
   });
 };
 
-console.log(formatEntities(dummyData),'here')
+// console.log(formatEntities(dummyData),'here')
 
 const moduleReducer = handleActions(
   {
