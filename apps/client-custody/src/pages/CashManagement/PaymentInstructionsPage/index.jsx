@@ -13,9 +13,9 @@ import SendIcon from "@mui/icons-material/Send";
 import ViewIcon from "@mui/icons-material/ViewList";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import { CsvBuilder } from "filefy";
 import moment from "moment";
+import v from "voca";
 
 import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
@@ -60,9 +60,11 @@ const generateInitialValues = (selectedPaymentInstructionRowData, options) => {
     (i) => i.value.id === selectedPaymentInstructionRowData?.wethaqAccountId
   );
   const sourceEntity = sourceEntityOptions.find((i) => i.value === sourceAccount?.value?.entityId);
-  const paymentAccount = allPaymentAccountOptions &&  allPaymentAccountOptions.find(
-    (i) => i.value.accountId === selectedPaymentInstructionRowData?.accountId
-  );
+  const paymentAccount =
+    allPaymentAccountOptions &&
+    allPaymentAccountOptions.find(
+      (i) => i.value.accountId === selectedPaymentInstructionRowData?.accountId
+    );
   const beneficiaryEntityGroupUser = beneficiaryUserOptions.find(
     (i) => i.value.id === paymentAccount?.value?.userId
   );
@@ -147,7 +149,6 @@ const generatePaymentAccountOptions = (validatedPaymentAccounts) =>
   }));
 
 const PaymentInstructionsPage = () => {
-
   const { theme } = useTheme();
   const { locale } = theme;
 
@@ -607,7 +608,6 @@ const PaymentInstructionsPage = () => {
         setIsModalOpen={setEditModalOpen}
         options={options}
         disabled={
-          (!isWethaqUser && selectedRow?.isAdminInitiated) ||
           ![
             PAYMENT_INSTRUCTION_INTERNAL_STATUS_ENUM.Initiated,
             PAYMENT_INSTRUCTION_INTERNAL_STATUS_ENUM.Rejected,
