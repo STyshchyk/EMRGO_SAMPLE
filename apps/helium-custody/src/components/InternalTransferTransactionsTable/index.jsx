@@ -2,7 +2,11 @@ import React, { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
 import Grid from "@mui/material/Grid";
-import Menu from "@mui/material/Menu";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import MenuList from "@mui/material/MenuList";
+import Popper from '@mui/material/Popper';
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import v from "voca";
@@ -30,27 +34,42 @@ const FALLBACK_VALUE = "--";
 const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
   <Fragment>
     {Boolean(anchorEl) && (
-      <Menu
+    <Popper
         data-testid="internal-transfer-transactions-table-menu-list"
-        anchorEl={anchorEl}
-        keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-      >
-        {actions
-          .filter((action) => !action.hidden)
-          .map((action) => (
-            <MenuItem
-              key={action.id}
-              disabled={action.disabled}
-              onClick={() => {
-                action.onClick();
-              }}
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+        placement="right"
+        sx={{ zIndex: 99 }}
+    >
+        {({ TransitionProps }) => (
+            <Grow
+                {...TransitionProps}
             >
-              <Typography variant="inherit">{action.label}</Typography>
-            </MenuItem>
-          ))}
-      </Menu>
+                <Paper>
+                    <ClickAwayListener onClickAway={handleCloseMenu}>
+                        <MenuList id="split-button-menu">
+                            {actions
+                                .filter((action) => !action.hidden)
+                                .map((action) => (
+                                    <MenuItem
+                                        key={action.id}
+                                        disabled={action.disabled}
+                                        onClick={() => {
+                                            action.onClick();
+                                        }}
+                                    >
+                                        <Typography variant="inherit">{action.label}</Typography>
+                                    </MenuItem>
+                                ))}
+                        </MenuList>
+                    </ClickAwayListener>
+                </Paper>
+            </Grow>
+        )}
+    </Popper>
     )}
   </Fragment>
 );

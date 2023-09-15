@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
 import Grid from "@mui/material/Grid";
-import Menu from "@mui/material/Menu";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import MenuList from "@mui/material/MenuList";
+import Popper from '@mui/material/Popper';
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
@@ -26,19 +30,41 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
   <Fragment>
     {Boolean(anchorEl) && (
-      <Menu
+    <Popper
         data-testid="securities-table-menu-list"
-        anchorEl={anchorEl}
-        keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-      >
-        {actions.map((action) => (
-          <MenuItem key={action.id} disabled={action.disabled} onClick={action.onClick}>
-            <Typography variant="inherit">{action.label}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+        placement="right"
+        sx={{ zIndex: 99 }}
+    >
+        {({ TransitionProps }) => (
+            <Grow
+                {...TransitionProps}
+            >
+                <Paper>
+                    <ClickAwayListener onClickAway={handleCloseMenu}>
+                        <MenuList id="split-button-menu">
+                            {actions
+                                .map((action) => (
+                                    <MenuItem
+                                        key={action.id}
+                                        disabled={action.disabled}
+                                        onClick={() => {
+                                            action.onClick();
+                                        }}
+                                    >
+                                        <Typography variant="inherit">{action.label}</Typography>
+                                    </MenuItem>
+                                ))}
+                        </MenuList>
+                    </ClickAwayListener>
+                </Paper>
+            </Grow>
+        )}
+    </Popper> 
     )}
   </Fragment>
 );
