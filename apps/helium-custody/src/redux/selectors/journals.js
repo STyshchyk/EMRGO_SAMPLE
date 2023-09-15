@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 export const selectInternalTransactions = (state) => state.journals.internalTransactionsData;
-
+export const selectInternalTransactionsIsFetching = (state) => state.journals.isFetching;
 export const selectIsFetching = (state) => state.fxTransactions.isFetching;
 export const selectIsRequesting = (state) => state.fxTransactions.isRequesting;
 
