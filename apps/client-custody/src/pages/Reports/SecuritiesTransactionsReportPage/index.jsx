@@ -108,11 +108,11 @@ const SecuritiesTransactionsReportPage = () => {
     const pushedEntity = [];
     const pushedCashAccount = [];
     accs?.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
+          id: acc.group.entity.id,
           label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          value: acc.group.entity.id,
         });
 
         securityAccountOpts.push({
@@ -122,7 +122,7 @@ const SecuritiesTransactionsReportPage = () => {
           original: acc,
         });
 
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
@@ -603,7 +603,7 @@ const SecuritiesTransactionsReportPage = () => {
                 const tempSecurityAccountList = securityAccountOpts
                   .filter((securityAccount) =>
                     selectedEntity
-                      ? securityAccount.original.group.id === selectedEntity.data.id
+                      ? securityAccount.original.group.entity.id === selectedEntity.data.id
                       : true
                   )
                   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
@@ -619,7 +619,9 @@ const SecuritiesTransactionsReportPage = () => {
                 setFieldValue("securityAccount", selectedAccount);
                 const tempEntitiesList = entityOpts
                   .filter((entity) =>
-                    selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+                    selectedAccount
+                      ? entity.id === selectedAccount.data.original.group.entity.id
+                      : true
                   )
                   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -726,16 +728,7 @@ const SecuritiesTransactionsReportPage = () => {
                           </FormControl>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter
-                          name="security"
-                          label="Security"
-                          options={uniqueSecurities}
-                          customOnChange={(newValue, { action }) => {
-                            setFieldValue("security", newValue);
-                          }}
-                        />
-                      </Grid>
+                      <Grid item xs={12} md={6} lg={3} container></Grid>
 
                       <Grid item xs={12} md={6} lg={3} container justifyContent="flex-end">
                         <Grid
@@ -789,7 +782,18 @@ const SecuritiesTransactionsReportPage = () => {
                         <Divider />
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={3} container>
+                      <Grid item xs={12} md={6} lg={2} container>
+                        <DropdownFilter
+                          name="security"
+                          label="Security"
+                          options={uniqueSecurities}
+                          customOnChange={(newValue, { action }) => {
+                            setFieldValue("security", newValue);
+                          }}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={2} container>
                         <DropdownFilter
                           name="currency"
                           label="Currency"
@@ -805,7 +809,7 @@ const SecuritiesTransactionsReportPage = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={3} container justifyContent="flex-end">
+                      <Grid item xs={12} md={6} lg={2} container justifyContent="flex-end">
                         <Grid
                           item
                           xs={12}

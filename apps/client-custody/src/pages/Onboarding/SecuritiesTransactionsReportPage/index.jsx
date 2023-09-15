@@ -41,6 +41,7 @@ import formatAddress from "../../../utils/reports";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
 
+// not being used
 const ALL_ENTITIES_OPTION = {
   label: "All",
   value: "all",
@@ -736,13 +737,7 @@ const SecuritiesTransactionsReportPage = () => {
                           </FormControl>
                         </Box>
                       </Grid>
-                      <Grid item xs={12} md={6} lg={3} container>
-                        <DropdownFilter
-                          name="security"
-                          label="Security"
-                          options={uniqueSecurities}
-                        />
-                      </Grid>
+                      <Grid item xs={12} md={6} lg={3} container></Grid>
 
                       <Grid item xs={12} md={6} lg={3} container justifyContent="flex-end">
                         <Grid

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
@@ -30,6 +30,7 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
+// not using this component
 const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
 const getTableData = (accs) => {
