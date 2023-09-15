@@ -13,7 +13,6 @@ import * as journalsActionCreators from "../../redux/actionCreators/journals";
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
 import AddInternalTransferForm, {
-  buildAddInternalTransferRequestPayload,
   generateEntityOptionsList,
   generateWethaqAccountOptionsList,
 } from "../AddInternalTransferForm";
@@ -63,7 +62,7 @@ const AmendInternalTransferDialog = ({ open, handleClose, currentlySelectedRowDa
       dispatch(journalsActionCreators.doFetchInternalTransactions());
 
     const requestPayload = {
-      amount: values.transferAmount,
+      amount: parseFloat(values.transferAmount),
       description: values.description,
       sourceAccountId: values.sourceAccount?.value.accountId,
       destinationAccountId: values.destinationAccount?.value.accountId,
