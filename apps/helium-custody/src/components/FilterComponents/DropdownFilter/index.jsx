@@ -1,6 +1,5 @@
 import { Select } from "@emrgo-frontend/shared-ui";
-import makeAnimated from "react-select/animated";
-
+import { selectStyles } from "@emrgo-frontend/theme";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Grid from "@mui/material/Grid";
@@ -8,21 +7,6 @@ import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 import { useFilters } from "../../../context/filter-context";
-
-const animatedComponents = makeAnimated();
-const customSelectStyles = {
-  menu: (styles) => ({
-    ...styles,
-    zIndex: 100,
-  }),
-  control: (styles) => ({
-    ...styles,
-    border: "none",
-    borderRadius: "6px",
-    backgroundColor: "rgba(0, 0, 0, 0.09)",
-    height: "3rem",
-  }),
-};
 
 const DropdownFilter = ({
   name,
@@ -33,6 +17,7 @@ const DropdownFilter = ({
   setCurrentlySelectedOption,
   customComponent,
   isDisabled,
+  setClearDisabled,
 }) => {
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
@@ -41,6 +26,7 @@ const DropdownFilter = ({
 
   const clearFilter = () => {
     setCurrentlySelectedOption(null);
+    if (setClearDisabled) setClearDisabled(false);
     // get filters and then filter out the object with name prooperty
     // const result = Object.fromEntries(Object.entries(filters).filter(([key]) => key !== name));
     // setFilters(result);
@@ -68,10 +54,10 @@ const DropdownFilter = ({
         <Select
           fullWidth
           closeMenuOnSelect
-          components={customComponent || { ...animatedComponents }}
+          components={customComponent}
           isSearchable
           placeholder={`${label}...`}
-          styles={customSelectStyles}
+          styles={selectStyles()}
           options={options}
           value={currentlySelectedOption}
           onChange={(opt) => {

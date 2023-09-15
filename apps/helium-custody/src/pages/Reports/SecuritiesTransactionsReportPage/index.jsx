@@ -478,10 +478,10 @@ const SecuritiesTransactionsReportPage = () => {
                   label: "End Date",
                   value: values?.endDate?.format("DD/MM/YYYY") ?? null,
                 },
-                {
-                  label: "Address",
-                  value: values?.securityAccount?.data?.original ? null : null,
-                },
+                // {
+                //   label: "Address",
+                //   value: values?.securityAccount?.data?.original ? null : null,
+                // },
               ];
 
               const filteredExportFilters = (fields) => fields.filter((v) => !!v.value);
@@ -573,7 +573,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.endDate) {
                   qs += `toDate=${values.endDate.toISOString()}&`;
                 } else {
-                  qs += `toDate=${moment().toISOString()}&`;
+                  qs += `toDate=${moment().endOf("day").toISOString()}&`;
                 }
                 if (values.entity) {
                   // qs += `entityId=${values.entity.data.id}&`;
@@ -882,7 +882,7 @@ const SecuritiesTransactionsReportPage = () => {
                       }`}</Typography>
                     </Grid>
 
-                    <Grid item xs={12} container>
+                    {/* <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
                         {t("Security Transactions.Address")} :{" "}
                       </Typography>
@@ -891,7 +891,7 @@ const SecuritiesTransactionsReportPage = () => {
                           ? null
                           : t("Cash Statement.NA")
                       }`}</Typography>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                       <FilterConsumer>

@@ -1,8 +1,10 @@
 import MaterialTable from "@material-table/core";
+import Typography from "@mui/material/Typography";
 
 import { DEFAULT_DATE_FORMAT } from "../../../constants/datetime";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../../utils/formatter";
+import LoadingIndicator from "../../LoadingIndicator";
 
 const generateTableRowData = (item) => ({
   clientName: item?.entityGroup?.entity?.name ?? item?.entity?.name,
@@ -11,7 +13,6 @@ const generateTableRowData = (item) => ({
 });
 
 const CorporateActionEventsResponses = ({ tableData, isFetchingEvent }) => {
-  console.log(tableData);
   const columns = [
     {
       id: "clientName",
@@ -24,20 +25,29 @@ const CorporateActionEventsResponses = ({ tableData, isFetchingEvent }) => {
       field: "date",
       defaultSort: "asc",
       render: (rowData) =>
-        rowData?.responseDate
-          ? dateFormatter(rowData?.responseDate, DEFAULT_DATE_FORMAT)
-          : "No response",
+        rowData?.responseDate ? dateFormatter(rowData?.responseDate, DEFAULT_DATE_FORMAT) : "--",
     },
     {
       id: "response",
       title: "Response",
-      field: "response",
+      field: "",
+      render: (rowData) =>
+        rowData?.response ? (
+          rowData?.response
+        ) : (
+          <Typography color="primary" variant="subtitle2">
+            NO RESPONSE
+          </Typography>
+        ),
     },
   ];
 
+  if (isFetchingEvent) {
+    return <LoadingIndicator height={100} />;
+  }
+
   return (
     <MaterialTable
-      isLoading={isFetchingEvent}
       size="small"
       title=""
       style={{

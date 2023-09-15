@@ -158,7 +158,7 @@ const CashStatementPage = () => {
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
           id: acc.accountNo,
-          label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
+          label: `${acc.accountNo}`,
           value: acc.accountNo,
           original: acc,
         });
@@ -203,6 +203,7 @@ const CashStatementPage = () => {
       id: "date",
       title: t("Cash Statement.Headers.Date"),
       field: "date",
+      defaultSort: "desc",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
         width: 8,

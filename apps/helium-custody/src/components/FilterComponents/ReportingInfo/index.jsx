@@ -36,12 +36,10 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
           {t("Cash Balances.Account")} :{" "}
         </Typography>
         <Typography className={classes.accountInfoValue}>{`${
-          cashAccount ? cashAccount.data.original.accountNo : '-'
-        } | ${
-          cashAccount ? v.capitalize(cashAccount.data.original.type) : '-'
-        }`}</Typography>
+          cashAccount ? cashAccount.data.original.accountNo : "-"
+        } | ${cashAccount ? v.capitalize(cashAccount.data.original.type) : "-"}`}</Typography>
       </Grid>
-      <Grid item xs={12} container>
+      {/* <Grid item xs={12} container>
         <Typography className={classes.accountInfoLabel}>
           {t("Cash Balances.Address")} :{" "}
         </Typography>
@@ -50,7 +48,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
             ? formatAddress(securityAccount?.data?.original?.group?.addresses)
             : '-'
         }`}</Typography>
-      </Grid>
+      </Grid> */}
     </Root>
   );
 };

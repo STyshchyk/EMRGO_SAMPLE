@@ -1,10 +1,10 @@
-  import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+// import { useNavigate } from "react-router-dom";
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
@@ -87,18 +87,21 @@ const ReferenceDataReportPage = () => {
       },
     };
   });
-  const externalISINOptionsList = allExternalSecurities.map((item) => {
-    const { id, isin, name } = item;
-    return {
-      label: isin,
-      value: id,
-      meta: {
-        id,
-        name,
-        isin,
-      },
-    };
-  });
+  const externalISINOptionsList = allExternalSecurities
+    .filter((i) => i?.isin)
+    .map((item) => {
+      const { id, isin, name } = item;
+      return {
+        label: isin,
+        value: id,
+        meta: {
+          id,
+          name,
+          isin,
+        },
+      };
+    });
+
   const isWethaqAdmin = currentEntityGroup?.entityType === "EMRGO_SERVICES";
   const selectedExternalSecurity = allExternalSecurities.find(
     ({ id }) => id === currentlySelectedSecurity?.value
@@ -309,7 +312,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="w-full" sx={{width: "100%"}}>
+          <Box my={1} className="w-full" sx={{ width: "100%" }}>
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect
@@ -337,7 +340,7 @@ const ReferenceDataReportPage = () => {
               <Typography variant="caption">{t("Security Transactions.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
-          <Box my={1} className="w-full" sx={{width: "100%"}}>
+          <Box my={1} className="w-full" sx={{ width: "100%" }}>
             <FormControl className={style.input__form_control}>
               <Select
                 closeMenuOnSelect

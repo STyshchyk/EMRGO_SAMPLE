@@ -18,7 +18,6 @@ import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../utils/formatter";
-import formatAddress from "../../utils/reports";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
 import DropdownFilter from "../FilterComponents/DropdownFilter";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -50,9 +49,9 @@ const CashBalancesTable = ({ data, accounts }) => {
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter"]);
-  console.log(data, "data");
 
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
+  const [disabledCurrency, setDisabledCurrency] = useState(false);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [currentlySelectedCurrency, setCurrentlySelectedCurrency] = useState(null);
@@ -70,12 +69,12 @@ const CashBalancesTable = ({ data, accounts }) => {
     const pushedEntity = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
+          id: acc.group.entity.id,
           entityId: acc.group.entity.id,
           label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          value: acc.group.entity.id,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -87,7 +86,7 @@ const CashBalancesTable = ({ data, accounts }) => {
           });
         }
 
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
 
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
@@ -126,7 +125,7 @@ const CashBalancesTable = ({ data, accounts }) => {
   const handleEntityChange = (selectedEntity) => {
     const filteredCashAccounts = cashAccountOpts
       .filter((account) =>
-        selectedEntity ? account?.original?.group.id === selectedEntity.value : false
+        selectedEntity ? account?.original?.group.entity.id === selectedEntity.value : false
       )
       .map((account) => ({
         data: account,
@@ -155,7 +154,7 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     const tempSecurityAccountList = securityAccountOpts
       .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.id === selectedEntity.data.id : true
+        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -170,7 +169,7 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -290,7 +289,14 @@ const CashBalancesTable = ({ data, accounts }) => {
   };
 
   const transformedData = data?.map((d) => transformData(d));
-
+  const matchCashAccCurrencyWithCurrency = (selectedAcccount) => {
+    const currenctSelectedAcc = selectedAcccount?.data?.original?.currency?.id;
+    const filteredCurrency =
+      currencyOptions &&
+      currencyOptions.filter((currency) => currency.value === currenctSelectedAcc);
+    setCurrentlySelectedCurrency(...filteredCurrency);
+    setDisabledCurrency(true);
+  };
   return (
     <Fragment>
       <FilterProvider tableKey="cash_balances">
@@ -312,6 +318,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   name="entity"
                   label="Entity"
                   options={entityOptions}
+                  setClearDisabled={setDisabledCurrency}
                   customOnChange={(selectedEntity) => {
                     if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
                       setIsAllEntitiesOptionSelected(false);
@@ -329,6 +336,7 @@ const CashBalancesTable = ({ data, accounts }) => {
               <Grid item xs={12} md={6} lg={3} container>
                 <DropdownFilter
                   name="securityAccount"
+                  setClearDisabled={setDisabledCurrency}
                   label="Security Account"
                   options={securityAccountOptions}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
@@ -356,9 +364,13 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="account"
                   label="Cash Account"
+                  setClearDisabled={setDisabledCurrency}
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  customOnChange={(selected) => {
+                    matchCashAccCurrencyWithCurrency(selected);
+                  }}
                   customComponent={{
                     Option: (props) =>
                       ReactSelectCurrencyOption({
@@ -377,9 +389,11 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="currency"
                   label="Currency"
+                  setClearDisabled={setDisabledCurrency}
                   options={currencyOptions}
                   currentlySelectedOption={currentlySelectedCurrency}
                   setCurrentlySelectedOption={setCurrentlySelectedCurrency}
+                  isDisabled={disabledCurrency}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>

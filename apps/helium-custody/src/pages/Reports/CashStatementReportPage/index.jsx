@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -18,7 +17,6 @@ import TableFiltersWrapper from "../../../components/FilterComponents/TableFilte
 import PageTitle from "../../../components/PageTitle";
 import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
 import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -122,11 +120,11 @@ const CashStatementReportPage = () => {
     const pushedEntity = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.id) === -1) {
+      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
-          id: acc.group.id,
+          id: acc.group.entity.id,
           label: acc.group.entity.corporateEntityName,
-          value: acc.group.id,
+          value: acc.group.entity.id,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -138,7 +136,7 @@ const CashStatementReportPage = () => {
           });
         }
 
-        pushedEntity.push(acc.group.id);
+        pushedEntity.push(acc.group.entity.id);
       }
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
@@ -158,7 +156,7 @@ const CashStatementReportPage = () => {
 
   let filteredCashAccounts = cashAccountOpts
     .filter((account) =>
-      entityFilterValue ? account.original.group.id === entityFilterValue : false
+      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
     )
     .map((acc) => ({
       data: acc,
@@ -180,12 +178,14 @@ const CashStatementReportPage = () => {
   }));
 
   const entityChange = (selectedEntity) => {
-    setEntityFilterValue(selectedEntity.value);
+    setEntityFilterValue(selectedEntity?.value);
     setCurrentlySelectedEntity(selectedEntity);
     setCashAccountFilterValue(null);
 
     filteredCashAccounts = cashAccountOpts
-      .filter((account) => (selectedEntity ? account.original.group.id === selectedEntity : false))
+      .filter((account) =>
+        selectedEntity ? account.original.group.entity.id === selectedEntity.value : false
+      )
       .map((account) => ({
         data: account,
         value: account.id,
@@ -194,12 +194,12 @@ const CashStatementReportPage = () => {
 
     const tempSecurityAccountList = securityAccountOpts
       .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.id === selectedEntity.data.id : true
+        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
     if (selectedEntity) {
-      setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
+      setSecurityAccountFilterValue(tempSecurityAccountList[0]?.value);
       setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
     }
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -211,7 +211,7 @@ const CashStatementReportPage = () => {
 
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
@@ -223,16 +223,16 @@ const CashStatementReportPage = () => {
   };
 
   const cashAccountChange = (selectedAccount) => {
-    setCashAccountFilterValue(selectedAccount.value);
+    setCashAccountFilterValue(selectedAccount?.value);
     setCurrentlySelectedCashAccount(selectedAccount);
     const tempEntitiesList = entityOpts
       .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
     if (selectedAccount) {
-      setEntityFilterValue(tempEntitiesList[0].value);
+      setEntityFilterValue(tempEntitiesList[0]?.value);
       setCurrentlySelectedEntity(tempEntitiesList[0]);
     }
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -266,6 +266,7 @@ const CashStatementReportPage = () => {
       id: "date",
       title: t("Cash Statement.Headers.Date"),
       field: "date",
+      defaultSort: "desc",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
         width: 8,

@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import AllocateCouponDialog from "../../../components/AllocateCouponDialog";
@@ -40,7 +39,7 @@ const CouponAdministration = () => {
   const isFetchingCouponEvents = useSelector(couponsSelectors.selectIsFetching);
 
   const tableData = couponEvents.map((item) => generateCouponEventsTableRowData(item));
-
+  console.log("tableData", tableData);
   const hasAddCouponAllocation = currentListOfACLs.includes("Services/Coupons/Add");
   const hasApproveCouponAllocation = currentListOfACLs.includes("Services/Coupons/Approve");
 

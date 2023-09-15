@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -37,7 +37,7 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
   const { couponEventFiltersState } = useCouponEventsTableFilters();
   const parsedTotalCouponAmount = parseFloat(currentlySelectedRowData?.totalCouponAmount, 10);
   const computedTotalAllocatedCouponAmount = computeTotalAllocatedCouponAmount(tableData);
-
+  console.log("currentlySelectedRowData", currentlySelectedRowData);
   // selectors
   const wethaqOwnedAccounts = useSelector(billingAndPaymentsSelectors.selectWethaqOwnedAccounts);
 

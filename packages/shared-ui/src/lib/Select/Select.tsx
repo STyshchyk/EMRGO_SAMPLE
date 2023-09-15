@@ -49,10 +49,16 @@ export function Select<
     return styles;
   };
 
+  // Create an object that merges customComponent and animatedComponents
+const mergedComponents = {
+  ...animatedComponents,
+  ...(customComponent || {}), // Use customComponent if available
+};
+
   return (
     <ReactSelect
       {...props}
-      components={customComponent || { ...animatedComponents }}
+      components={mergedComponents}
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,

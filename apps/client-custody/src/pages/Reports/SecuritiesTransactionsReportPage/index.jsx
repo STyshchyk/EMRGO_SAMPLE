@@ -480,12 +480,12 @@ const SecuritiesTransactionsReportPage = () => {
                   label: "End Date",
                   value: values?.endDate?.format("DD/MM/YYYY") ?? null,
                 },
-                {
-                  label: "Address",
-                  value: values?.securityAccount?.data?.original
-                    ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
-                    : null,
-                },
+                // {
+                //   label: "Address",
+                //   value: values?.securityAccount?.data?.original
+                //     ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
+                //     : null,
+                // },
               ];
 
               const filteredExportFilters = (fields) => fields.filter((v) => !!v.value);
@@ -577,7 +577,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.endDate) {
                   qs += `toDate=${values.endDate.toISOString()}&`;
                 } else {
-                  qs += `toDate=${moment().toISOString()}&`;
+                  qs += `toDate=${moment().endOf("day").toISOString()}&`;
                 }
                 if (values.entity) {
                   // qs += `entityId=${values.entity.data.id}&`;
@@ -585,6 +585,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.securityAccount) {
                   qs += `accountId=${values.securityAccount.data.id}`;
                 }
+                console.log(qs);
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
               };
 
@@ -869,7 +870,7 @@ const SecuritiesTransactionsReportPage = () => {
                       }`}</Typography>
                     </Grid>
 
-                    <Grid item xs={12} container>
+                    {/* <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
                         {t("Security Transactions.Address")} :{" "}
                       </Typography>
@@ -878,7 +879,7 @@ const SecuritiesTransactionsReportPage = () => {
                           ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
                           : t("Cash Statement.NA")
                       }`}</Typography>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                       <FilterConsumer>

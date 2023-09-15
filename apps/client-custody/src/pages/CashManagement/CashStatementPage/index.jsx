@@ -203,6 +203,7 @@ const CashStatementPage = () => {
         width: 8,
         render: (rowData) => reportDateRenderer(rowData?.date),
       },
+      defaultSort: "desc",
     },
     {
       id: "transactionType",

@@ -2,6 +2,7 @@ import React, { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -28,7 +29,6 @@ import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // TODO: CLEAN UP LATER
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
@@ -210,7 +210,7 @@ const CouponEventsTable = ({
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["custody_and_settlement"]);
-
+  console.log("data", data);
   const dedupedSecuritiesNames = Array.from(new Set(data.map((item) => item.security))).sort();
 
   const securityFilterOptionsList = dedupedSecuritiesNames.map((securityName) => ({
