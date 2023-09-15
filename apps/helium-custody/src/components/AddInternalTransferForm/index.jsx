@@ -1,9 +1,9 @@
 import { createRef } from "react";
 import { useTranslation } from "react-i18next";
-import {NumericFormat} from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import { TextField as TextFieldMui } from "@mui/material";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -115,12 +115,10 @@ const AddInternalTransferForm = ({
   const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectSourceAccounts);
   const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);
-  console.log(sourceOwners, destinationOwners)
   const sourceEntitiesDropdown = generateEntityOptionsList(sourceOwners);
   const destinationEntitiesDropdown = generateEntityOptionsList(destinationOwners);
   let sourceAccountsDropdown = generateWethaqAccountOptionsList(sourceAccounts);
   let destinationAccountsDropdown = generateWethaqAccountOptionsList(destinationAccounts);
-
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue, isSubmitting }) => {

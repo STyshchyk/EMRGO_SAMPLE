@@ -43,18 +43,17 @@ const AmendInternalTransferDialog = ({ open, handleClose, currentlySelectedRowDa
   const destinationAccountsDropdown = generateWethaqAccountOptionsList(destinationAccounts);
 
   generatedInitialValues.sourceEntity = sourceEntitiesDropdown.find(
-    ({ value }) => currentlySelectedRowData?.sourceEntityId === value
+    ({ value }) => currentlySelectedRowData?.sourceEntityId == value
   );
   generatedInitialValues.destinationEntity = destinationEntitiesDropdown.find(
-    ({ value }) => currentlySelectedRowData?.destinationEntityId === value
+    ({ value }) => currentlySelectedRowData?.destinationEntityId == value
   );
   generatedInitialValues.sourceAccount = sourceAccountsDropdown.find(
-    ({ label }) => currentlySelectedRowData?.sourceAccountNumber === label
+    ({ label }) => currentlySelectedRowData?.sourceAccountNumber == label
   );
   generatedInitialValues.destinationAccount = destinationAccountsDropdown.find(
-    ({ label }) => currentlySelectedRowData?.destinationAccountNumber === label
+    ({ label }) => currentlySelectedRowData?.destinationAccountNumber == label
   );
-
   const handleSubmit = (values) => {
     const updateInternalJournal = (payload) =>
       dispatch(journalsActionCreators.doUpdateInternalTransactions(payload));
