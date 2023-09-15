@@ -13,6 +13,7 @@ const MaterialTableOverflowMenu = ({ id, actions, anchorEl, setAnchorEl, selecte
     anchorEl={anchorEl}
     open={Boolean(anchorEl)}
     onClose={() => setAnchorEl(null)}
+    disableScrollLock
   >
     {actions.map((action) => {
       const isHidden =
