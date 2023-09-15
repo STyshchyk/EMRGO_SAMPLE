@@ -32,7 +32,7 @@ const AddInternalTransferDialog = ({ open, handleClose }) => {
     }, 1000);
 
     const requestPayload = {
-      amount: values.transferAmount,
+      amount: parseFloat(values.transferAmount),
       description: values.description,
       sourceAccountId: values.sourceAccount.value.accountId,
       destinationAccountId: values.destinationAccount.value.accountId,

@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,6 +30,9 @@ const InternalTransfersPage = () => {
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityGroupID = currentEntityGroup?.id;
   const internalTransfersList = useSelector(journalsSelectors.selectInternalTransfersList);
+  const internalTrasferListIsFetching = useSelector(
+    journalsSelectors.selectInternalTransactionsIsFetching
+  );
 
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
@@ -163,6 +166,7 @@ const InternalTransfersPage = () => {
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         showAllFilters
+        isLoading={internalTrasferListIsFetching}
       />
       {openAddInternalTransferDialog && (
         <AddInternalTransferDialog

@@ -1,11 +1,11 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -23,7 +23,6 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import ExportTableContent from "../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const FALLBACK_VALUE = "--";
 
@@ -114,7 +113,12 @@ const InternalTransferTransactionsTable = ({
   const tableRef = useRef();
   const ref = useRef();
   const mtableLocalization = useMaterialTableLocalization();
-
+  const [displayTable, setDisplayTable] = useState(isLoading);
+  useEffect(() => {
+    setTimeout(() => {
+      setDisplayTable(true);
+    }, 500);
+  }, []);
   const tableColumns = [
     {
       id: "date",
@@ -307,34 +311,38 @@ const InternalTransferTransactionsTable = ({
 
               return (
                 <div data-testid="security-trades-table">
-                  <MaterialTable
-                    tableRef={tableRef}
-                    size="small"
-                    title=""
-                    style={{
-                      boxShadow: "none",
-                    }}
-                    columns={[...filterColumns.shownColumns]}
-                    data={filteredData}
-                    actions={[
-                      {
-                        icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
-                        onClick: (event, rowData) => {
-                          setAnchorEl(event.currentTarget);
-                          setCurrentlySelectedRowData(rowData);
+                  {displayTable && (
+                    <MaterialTable
+                      tableRef={tableRef}
+                      size="small"
+                      title=""
+                      style={{
+                        boxShadow: "none",
+                      }}
+                      columns={[...filterColumns.shownColumns]}
+                      data={filteredData}
+                      actions={[
+                        {
+                          icon: () => (
+                            <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />
+                          ),
+                          onClick: (event, rowData) => {
+                            setAnchorEl(event.currentTarget);
+                            setCurrentlySelectedRowData(rowData);
+                          },
                         },
-                      },
-                    ]}
-                    options={{
-                      ...tableStyles,
-                      toolbar: false,
-                      pageSize: 15,
-                      search: false,
-                      draggable: false,
-                    }}
-                    localization={mtableLocalization}
-                    isLoading={isLoading}
-                  />
+                      ]}
+                      options={{
+                        ...tableStyles,
+                        toolbar: false,
+                        pageSize: 20,
+                        search: false,
+                        draggable: false,
+                      }}
+                      localization={mtableLocalization}
+                      isLoading={isLoading}
+                    />
+                  )}
                   <TableActionMenu
                     anchorEl={anchorEl}
                     actions={actions}
