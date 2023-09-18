@@ -10,9 +10,9 @@ import { changeDefaultEntityType } from "../helpers/user";
 import * as authActionCreators from "../redux/actionCreators/auth";
 import * as authSelectors from "../redux/selectors/auth";
 
-const CustodyWrapperContext = createContext(null);
+const CustodyContext = createContext(null);
 
-export const CustodyWrapperProvider = ({ children }) => {
+export const CustodyProvider = ({ children }) => {
   const dispatch = useDispatch();
   const authenticatedUserObject = useSelector(authSelectors.selectAuthenticatedUserObject);
 
@@ -30,7 +30,7 @@ export const CustodyWrapperProvider = ({ children }) => {
 
   const state = {};
 
-  return <CustodyWrapperContext.Provider value={state}>{children}</CustodyWrapperContext.Provider>;
+  return <CustodyContext.Provider value={state}>{children}</CustodyContext.Provider>;
 };
 
-export const useCustodyWrapperContext = () => useContext(CustodyWrapperContext);
+export const useCustodyContext = () => useContext(CustodyWrapperContext);

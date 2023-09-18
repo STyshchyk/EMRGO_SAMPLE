@@ -11,7 +11,7 @@ import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
 import { AuthProvider } from "../../context/auth-context";
-import { CustodyWrapperProvider } from "../../context/custody-context";
+import { CustodyProvider } from "../../context/custody-context";
 import { FeatureToggleProvider } from "../../context/feature-toggle-context";
 import { CustomThemeProvider } from "../../context/theme-context";
 import { UserProvider as CustodyUserProvider } from "../../context/user-context";
@@ -35,7 +35,7 @@ const AppProviders = ({ children }) => {
   return (
     <UserProvider>
       <I18nextProvider i18n={i18n}>
-        <CustodyWrapperProvider>
+        <CustodyProvider>
           <AuthProvider>
             <CustodyUserProvider>
               <QueryClientProvider client={queryClient}>
@@ -56,7 +56,7 @@ const AppProviders = ({ children }) => {
               </QueryClientProvider>
             </CustodyUserProvider>
           </AuthProvider>
-        </CustodyWrapperProvider>
+        </CustodyProvider>
       </I18nextProvider>
     </UserProvider>
   );
