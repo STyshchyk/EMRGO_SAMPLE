@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -15,66 +17,79 @@ const RealtimeSecSearchDialog = ({
   handleClose,
   handleSecurityResultItemSelect,
   assetTypeFilterValue,
-}) => (
-  <Dialog
-    scroll="body"
-    maxWidth="lg"
-    disableEscapeKeyDown
-    open={open}
-    onClose={(event, reason) => {
-      if (reason && reason === "backdropClick") return;
+  onSaveClose,
+}) => {
+  const [rowValue, setRowValue] = useState(null);
 
-      handleClose();
-    }}
-    aria-labelledby="security-data-search-form-dialog"
-  >
-    <DialogTitle>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item>
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-            }}
-          >
-            Real-time Security lookup
-          </Typography>
-        </Grid>
-        <Grid item>
-          <IconButton
-            aria-label="close"
-            onClick={() => {
-              handleClose();
-            }}
-            size="large"
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
-    </DialogTitle>
-    <DialogContent>
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
-          <RealtimeSecuritySearch
-            onSecurityResultItemSelect={handleSecurityResultItemSelect}
-            assetTypeFilterValue={assetTypeFilterValue}
-          />
-        </Grid>
-        <Grid item container justifyContent="flex-end">
+  return (
+    <Dialog
+      scroll="body"
+      maxWidth="lg"
+      disableEscapeKeyDown
+      open={open}
+      onClose={(event, reason) => {
+        if (reason && reason === "backdropClick") return;
+
+        handleClose();
+      }}
+      aria-labelledby="security-data-search-form-dialog"
+    >
+      <DialogTitle>
+        <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
-            {
-              // !SAVE BUTTON BASICALLY JUST CLOSES THE DIALOG FOR NOW
-            }
-            <Button variant="contained" color="primary" onClick={handleClose}>
-              Save
-            </Button>
+            <Typography
+              variant="h6"
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Real-time Security lookup
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton
+              aria-label="close"
+              onClick={() => {
+                handleClose();
+              }}
+              size="large"
+            >
+              <CloseIcon />
+            </IconButton>
           </Grid>
         </Grid>
-      </Grid>
-    </DialogContent>
-  </Dialog>
-);
+      </DialogTitle>
+      <DialogContent>
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
+            <RealtimeSecuritySearch
+              onSecurityResultItemSelect={setRowValue}
+              assetTypeFilterValue={assetTypeFilterValue}
+            />
+          </Grid>
+          <Grid item container justifyContent="flex-end">
+            <Grid item>
+              {
+                // !SAVE BUTTON BASICALLY JUST CLOSES THE DIALOG FOR NOW
+              }
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!rowValue}
+                onClick={() => {
+                  handleClose();
+                  handleSecurityResultItemSelect(rowValue);
+                }}
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 RealtimeSecSearchDialog.propTypes = {
   open: PropTypes.bool.isRequired,
