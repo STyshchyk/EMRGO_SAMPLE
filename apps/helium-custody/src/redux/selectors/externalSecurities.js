@@ -55,13 +55,14 @@ export const selectAllExternalSecurities = createSelector(
     if (Array.isArray(externalSecuritiesList) && externalSecuritiesList.length > 0) {
       const fixed = externalSecuritiesList.map((item) => ({
         ...item,
-        countryOfRisk: item.country,
-        securityLongName: item?.longName,
-        securityShortName: item?.shortName,
-        coupons:item?.coupons
+        // countryOfRisk: item.country,
+        // securityLongName: item?.longName,
+        // securityShortName: item?.shortName,
+        // coupons:item?.coupons,
+        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value
       }));
 
-      return orderby(externalSecuritiesList, ["name"], ["asc"]);
+      return orderby(fixed, ["name"], ["asc"]);
     }
 
     return [];
