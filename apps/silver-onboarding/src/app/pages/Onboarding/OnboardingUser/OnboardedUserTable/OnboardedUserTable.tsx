@@ -120,6 +120,9 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                         onError: () => {
                           showErrorToast("Error while trying to approve KYC Profile");
                         },
+                        onSuccess: () => {
+                          showSuccessToast("Successfully approved KYC Profile");
+                        },
                       }
                     );
                   }}
@@ -145,6 +148,9 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                         onError: () => {
                           showErrorToast("Error while trying to approve Client Profile");
                         },
+                        onSuccess: () => {
+                          showSuccessToast("Successfully approved Client Profile");
+                        },
                       }
                     );
                   }}
@@ -169,6 +175,9 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                       {
                         onError: () => {
                           showErrorToast("Error while trying to approve Custody KYC");
+                        },
+                        onSuccess: () => {
+                          showSuccessToast("Successfully approved Custody KYC");
                         },
                       }
                     );

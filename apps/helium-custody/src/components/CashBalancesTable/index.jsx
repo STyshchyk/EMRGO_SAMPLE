@@ -24,8 +24,6 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import ReportingInfo from "../FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
-import ReactSelectCurrencySingleValueContainer from "../ReactSelectCurrencySingleValueContainer";
 
 const ALL_ENTITIES_OPTION = {
   label: "All",
@@ -129,7 +127,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       .map((account) => ({
         data: account,
         value: account.id,
-        label: account.label,
+        label: `${account.label} ${account.original.currency.name}`,
       }));
 
     setCashAccountOptions(filteredCashAccounts);
@@ -365,18 +363,18 @@ const CashBalancesTable = ({ data, accounts }) => {
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
                   }}
-                  customComponent={{
-                    Option: (props) =>
-                      ReactSelectCurrencyOption({
-                        ...props,
-                        currency: props?.data?.data.original.currency.name,
-                      }),
-                    ValueContainer: (props) =>
-                      ReactSelectCurrencySingleValueContainer({
-                        ...props,
-                        currency: props.getValue()[0]?.data?.original.currency.name,
-                      }),
-                  }}
+                  // customComponent={{
+                  //   Option: (props) =>
+                  //     ReactSelectCurrencyOption({
+                  //       ...props,
+                  //       currency: props?.data?.data.original.currency.name,
+                  //     }),
+                  //   ValueContainer: (props) =>
+                  //     ReactSelectCurrencySingleValueContainer({
+                  //       ...props,
+                  //       currency: props.getValue()[0]?.data?.original.currency.name,
+                  //     }),
+                  // }}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>

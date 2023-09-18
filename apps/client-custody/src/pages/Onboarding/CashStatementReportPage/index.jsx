@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
@@ -16,9 +15,6 @@ import FilterButton from "../../../components/FilterComponents/FilterButton";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
-import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
-import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -376,18 +372,18 @@ const CashStatementReportPage = () => {
                   options={filteredCashAccounts}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
-                  customComponent={{
-                    Option: (props) =>
-                      ReactSelectCurrencyOption({
-                        ...props,
-                        currency: props.data.data.original.currency.name,
-                      }),
-                    ValueContainer: (props) =>
-                      ReactSelectCurrencySingleValueContainer({
-                        ...props,
-                        currency: props.getValue()[0]?.data.original.currency.name,
-                      }),
-                  }}
+                  // customComponent={{
+                  //   Option: (props) =>
+                  //     ReactSelectCurrencyOption({
+                  //       ...props,
+                  //       currency: props.data.data.original.currency.name,
+                  //     }),
+                  //   ValueContainer: (props) =>
+                  //     ReactSelectCurrencySingleValueContainer({
+                  //       ...props,
+                  //       currency: props.getValue()[0]?.data.original.currency.name,
+                  //     }),
+                  // }}
                   customOnChange={(selectedAccount) => {
                     cashAccountChange(selectedAccount);
                   }}

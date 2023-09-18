@@ -168,6 +168,7 @@ const AddInternalTransferForm = ({
 
         const destinationEntityChange = (selectedEntity) => {
           setFieldValue("destinationEntity", selectedEntity);
+          setFieldValue("destinationAccount", null);
           destinationAccountsDropdown = generateWethaqAccountOptionsList(
             destinationAccounts
               .filter((account) =>
