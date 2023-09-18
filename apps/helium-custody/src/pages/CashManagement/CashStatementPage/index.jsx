@@ -17,8 +17,6 @@ import ExportButtons from "../../../components/FilterComponents/ExportButtons";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
-import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
-import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -263,7 +261,7 @@ const CashStatementPage = () => {
     .map((acc) => ({
       data: acc,
       value: acc.id,
-      label: acc.label,
+      label: `${acc.label} ${acc.original.currency.name}`,
     }));
 
   const exportCSV = () => {
@@ -436,18 +434,18 @@ const CashStatementPage = () => {
                 options={filteredAccounts}
                 currentlySelectedOption={currentlySelectedAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedAccount}
-                customComponent={{
-                  Option: (props) =>
-                    ReactSelectCurrencyOption({
-                      ...props,
-                      currency: props?.data?.data.original.currency.name,
-                    }),
-                  ValueContainer: (props) =>
-                    ReactSelectCurrencySingleValueContainer({
-                      ...props,
-                      currency: props.getValue()[0]?.data?.original.currency.name,
-                    }),
-                }}
+                // customComponent={{
+                //   Option: (props) =>
+                //     ReactSelectCurrencyOption({
+                //       ...props,
+                //       currency: props?.data?.data.original.currency.name,
+                //     }),
+                //   ValueContainer: (props) =>
+                //     ReactSelectCurrencySingleValueContainer({
+                //       ...props,
+                //       currency: props.getValue()[0]?.data?.original.currency.name,
+                //     }),
+                // }}
                 customOnChange={(selectedAccount) => {
                   accountChange(selectedAccount);
                 }}
