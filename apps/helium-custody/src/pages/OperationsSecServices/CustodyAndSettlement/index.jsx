@@ -249,6 +249,7 @@ const CustodyAndSettlement = () => {
       label: `${t("TableActions.View Payment Evidence")}`,
       onClick: () => {
         setOpenViewPaymentEvidenceDialog(true);
+        handleCloseMenu();
       },
       disabled: !(currentlySelectedRowData?.paymentConfirmationFileId === "Yes"),
     },

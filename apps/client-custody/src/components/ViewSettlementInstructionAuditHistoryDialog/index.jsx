@@ -76,9 +76,10 @@ const generateSIAuditHistoryStatement = (item) => {
 
     if (auditColumnLabel) {
       return `${v
-        .chain(auditColumnLabel)
-        .snakeCase()
-        .upperCase.value()} changed from ${formatSIFieldValue(
+        ?.chain(auditColumnLabel)
+        ?.snakeCase()
+        ?.upperCase()
+        .value()} changed from ${formatSIFieldValue(
         prevStatus,
         auditColumnLabel
       )} to ${formatSIFieldValue(newStatus, auditColumnLabel)} by ${userFullName}`;
