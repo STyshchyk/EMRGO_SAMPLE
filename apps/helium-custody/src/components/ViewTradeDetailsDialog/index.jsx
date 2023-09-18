@@ -45,7 +45,7 @@ const ViewTradeDetailsDialog = ({ open, handleClose, currentlySelectedRowData })
     return [
       {
         label: "Entity",
-        value: entity?.corporateEntityName,
+        value: entity?.name,
       },
       //   {
       //     label: 'Counterparty',

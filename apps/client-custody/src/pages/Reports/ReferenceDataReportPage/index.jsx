@@ -60,7 +60,7 @@ const SecurityReportView = ({ data }) => (
 );
 
 const ReferenceDataReportPage = () => {
-  const { t } = useTranslation(["reports", "blotter", "termsheet"]);
+  const { t } = useTranslation(["reports", "termsheet"]);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -308,7 +308,7 @@ const ReferenceDataReportPage = () => {
               {t("Reference Data.Filters.Security")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Reference Data.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="w-full">
@@ -336,7 +336,7 @@ const ReferenceDataReportPage = () => {
               {t("Reference Data.Filters.ISIN")}
             </Typography>
             <ButtonBase onClick={() => clearSecurity()}>
-              <Typography variant="caption">{t("Filters.Clear")}</Typography>
+              <Typography variant="caption">{t("Reference Data.Filters.Clear")}</Typography>
             </ButtonBase>
           </Grid>
           <Box my={1} className="w-full">

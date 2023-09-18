@@ -114,7 +114,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   externalSecuritiesId: i.externalSecurity?.id,
   externalSecurity: i.externalSecurity,
   id: i.id,
-  investor: i.entityGroup?.entity?.corporateEntityName,
+  investor: i.entityGroup?.entity?.name,
   investorCashAccountBalance: convertNumberToIntlFormat(i.investorCashAccountBalance),
   investorCashAccountNo: i.investorCashAccount,
   investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance),
@@ -122,7 +122,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   isin: i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
   issueDate: i.externalSecurity?.issueDate,
-  issuer: i.issuer?.entity?.corporateEntityName,
+  issuer: i.issuer?.entity?.name,
   issuerCashAccountBalance: i.issuerCashAccount
     ? convertNumberToIntlFormat(i.issuerCashAccountBalance)
     : FALLBACK_VALUE,
