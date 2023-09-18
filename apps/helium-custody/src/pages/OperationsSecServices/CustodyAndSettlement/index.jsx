@@ -251,7 +251,7 @@ const CustodyAndSettlement = () => {
         setOpenViewPaymentEvidenceDialog(true);
         handleCloseMenu();
       },
-      disabled: !(currentlySelectedRowData?.paymentConfirmationFileId === "Yes"),
+      disabled: !currentlySelectedRowData?.paymentConfirmationFileId,
     },
   ];
 

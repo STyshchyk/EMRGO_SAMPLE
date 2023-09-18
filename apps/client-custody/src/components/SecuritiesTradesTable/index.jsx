@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 import { currencyRenderer } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
-import Popper from '@mui/material/Popper';
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -48,42 +49,39 @@ const EMPTY_COLUMN = {
 const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
   <Fragment>
     {Boolean(anchorEl) && (
-        <Popper
-            data-testid="security-trades-table-menu-list"
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            role={undefined}
-            transition
-            disablePortal
-            placement="right"
-            sx={{ zIndex: 99 }}
-        >
-            {({ TransitionProps, placement }) => (
-                <Grow
-                    {...TransitionProps}
-                >
-                    <Paper>
-                        <ClickAwayListener onClickAway={handleCloseMenu}>
-                            <MenuList id="split-button-menu">
-                                {actions
-                                    .filter((action) => !action.hidden)
-                                    .map((action) => (
-                                        <MenuItem
-                                            key={action.id}
-                                            disabled={action.disabled}
-                                            onClick={() => {
-                                                action.onClick();
-                                            }}
-                                        >
-                                            <Typography variant="inherit">{action.label}</Typography>
-                                        </MenuItem>
-                                    ))}
-                            </MenuList>
-                        </ClickAwayListener>
-                    </Paper>
-                </Grow>
-            )}
-        </Popper>  
+      <Popper
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+        placement="right"
+        sx={{ zIndex: 99 }}
+      >
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper>
+              <ClickAwayListener onClickAway={handleCloseMenu}>
+                <MenuList id="split-button-menu">
+                  {actions
+                    .filter((action) => !action.hidden)
+                    .map((action) => (
+                      <MenuItem
+                        key={action.id}
+                        disabled={action.disabled}
+                        onClick={() => {
+                          action.onClick();
+                        }}
+                      >
+                        <Typography variant="inherit">{action.label}</Typography>
+                      </MenuItem>
+                    ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     )}
   </Fragment>
 );
@@ -133,7 +131,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   issuerSecuritiesAccountNo: parseFloat(i.issuerSecuritiesAccount, 10),
   nextCouponDate: dateFormatter(i.nextCouponDate, DEFAULT_DATE_FORMAT),
   numCerts: convertNumberToIntlFormat(i.numOfCertificates),
-  paymentConfirmationFileId: i.paymentConfirmationFileId ? "Yes" : "No",
+  paymentConfirmationFileId: i.paymentConfirmationFileId,
+  paymentEvidenceUploaded: i.paymentConfirmationFileId ? "Yes" : "No",
   price: i.price,
   quantity: i.quantity,
   readyToSettle: i.readyToSettle,
@@ -400,7 +399,7 @@ const SecurityTradesTable = ({
     {
       id: "paymentEvidenceUploaded",
       title: t("Headers.Evidence Uploaded"),
-      field: "paymentConfirmationFileId", // !Dev note: If paymentEvidenceUploaded value is not null then it's assumed that file has been uploaded (Duh!)
+      field: "paymentEvidenceUploaded", // !Dev note: If paymentEvidenceUploaded value is not null then it's assumed that file has been uploaded (Duh!)
       width: 150,
     },
     {
@@ -469,7 +468,7 @@ const SecurityTradesTable = ({
     {
       id: "paymentEvidenceUploaded",
       title: t("Headers.Evidence Uploaded"),
-      field: "paymentConfirmationFileId",
+      field: "paymentEvidenceUploaded",
       width: 150,
     },
   ];
@@ -638,7 +637,7 @@ const SecurityTradesTable = ({
           <FilterConsumer>
             {({ filters, filterColumns }) => {
               const preFilteredData = filters.hasOwnProperty("search") ? data : data;
-              const filteredData = preFilteredData
+              const filteredData = data
                 .filter((row) => {
                   if (
                     filters?.entryDateRange?.value?.startDate &&
@@ -716,7 +715,6 @@ const SecurityTradesTable = ({
                   }
                   return true;
                 });
-
               return (
                 <div data-testid="security-trades-table">
                   <MaterialTable
