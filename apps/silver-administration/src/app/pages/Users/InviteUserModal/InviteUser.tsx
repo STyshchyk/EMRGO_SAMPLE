@@ -1,5 +1,3 @@
-import "./InviteUser.scss";
-
 import React from "react";
 
 import { InviteUserComponent } from "./InviteUser.component";

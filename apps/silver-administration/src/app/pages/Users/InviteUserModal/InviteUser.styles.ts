@@ -7,6 +7,8 @@ export const InviteUser = styled.div`
   /* Element Styles */
   /* Text styles */
   margin-top: 20px;
+  overflow-y: auto;
+
   form.invite-user {
     display: flex;
     flex-direction: column;

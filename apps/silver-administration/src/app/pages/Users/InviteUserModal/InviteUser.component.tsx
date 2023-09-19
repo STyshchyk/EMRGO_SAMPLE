@@ -108,12 +108,13 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
               <Field
                 name="role"
                 component={FormikInputCustom}
+                menuPortalTarget={document.body}
+                menuPosition={"fixed"}
                 type={"select"}
                 id={"role"}
                 error={errors?.role ?? ""}
                 onChange={(selected: TInvitedUserTypes) => {
                   setFieldValue("role", selected);
-                  console.log(errors);
                 }}
                 options={filterTypes2}
                 placeholder="Select role"

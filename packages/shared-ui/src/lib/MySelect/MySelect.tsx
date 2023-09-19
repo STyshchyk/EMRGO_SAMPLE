@@ -34,41 +34,63 @@ export const MySelect = <
       case "select":
         styles = {
           backgroundColor: isDarkMode
-            ? state.isSelected ? colors.dark : "transparent"
-            : state.isSelected ? colors.black[20] : "transparent"
+            ? state.isSelected
+              ? colors.dark
+              : "transparent"
+            : state.isSelected
+            ? colors.black[20]
+            : "transparent",
         };
         break;
       case "controlBackground":
         styles = {
           background: error
-            ? isDarkMode ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)` : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
-            : isDarkMode ? rgba(255, 255, 255, 0.05) : colors.black[5]
+            ? isDarkMode
+              ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)`
+              : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
+            : isDarkMode
+            ? rgba(255, 255, 255, 0.05)
+            : colors.black[5],
         };
         break;
-      case "placeholderColor" :
+      case "placeholderColor":
         styles = {
           color: error
-            ? isDarkMode ? colors.orange : colors.red
-            : isDarkMode ? colors.white[60] : colors.black[60]
+            ? isDarkMode
+              ? colors.orange
+              : colors.red
+            : isDarkMode
+            ? colors.white[60]
+            : colors.black[60],
         };
         break;
       case "controlBorder":
         styles = {
           border: error
-            ? isDarkMode ? `1px solid ${colors.orange}` : `1px solid ${colors.red}`
+            ? isDarkMode
+              ? `1px solid ${colors.orange}`
+              : `1px solid ${colors.red}`
             : state.isFocused
-              ? isDarkMode ? `1px solid ${colors.green5}` : `1px solid ${colors.green3}`
-              : isDarkMode ? `1px solid ${colors.strokes.dark}` : `1px solid ${colors.strokes.light}`
+            ? isDarkMode
+              ? `1px solid ${colors.green5}`
+              : `1px solid ${colors.green3}`
+            : isDarkMode
+            ? `1px solid ${colors.strokes.dark}`
+            : `1px solid ${colors.strokes.light}`,
         };
         break;
       case "controlHover":
         styles = {
           border: error
-            ? isDarkMode ? `1px solid ${colors.orange}` : `1px solid ${colors.red}`
+            ? isDarkMode
+              ? `1px solid ${colors.orange}`
+              : `1px solid ${colors.red}`
             : `1px solid ${colors.green3}`,
           boxShadow: error
-            ? isDarkMode ? `0px 0px 1px ${colors.orange}` : `0px 0px 1px ${colors.red}`
-            : `0px 0px 1px ${colors.green3}`
+            ? isDarkMode
+              ? `0px 0px 1px ${colors.orange}`
+              : `0px 0px 1px ${colors.red}`
+            : `0px 0px 1px ${colors.green3}`,
         };
         break;
       default:
@@ -91,7 +113,7 @@ export const MySelect = <
         styles={{
           menu: (styles, state) => ({
             ...styles,
-            zIndex: 10,
+            zIndex: 9999,
             borderStyle: "solid",
             borderWidth: "1px",
             borderColor: isDarkMode ? colors.green3 : colors.green3,
@@ -127,25 +149,32 @@ export const MySelect = <
             borderRadius: rem(4),
             padding: `${rem(2)} ${rem(4)}`,
             borderColor: isDarkMode
-              ? state.menuIsOpen ? colors.green3 : colors.strokes.dark
-              : state.menuIsOpen ? colors.green3 : colors.strokes.light,
-            boxShadow: "none"
+              ? state.menuIsOpen
+                ? colors.green3
+                : colors.strokes.dark
+              : state.menuIsOpen
+              ? colors.green3
+              : colors.strokes.light,
+            boxShadow: "none",
           }),
           singleValue: (styles, state) => ({
             ...styles,
             color: error
-              ? isDarkMode ? colors.orange : colors.red
-              : isDarkMode ? colors.white[60] : colors.black[60],
+              ? isDarkMode
+                ? colors.orange
+                : colors.red
+              : isDarkMode
+              ? colors.white[60]
+              : colors.black[60],
             ...ellipsis(),
-            ...typography.regular["02Tight"]
+            ...typography.regular["02Tight"],
           }),
           placeholder: (defaultStyles) => {
             return {
               ...defaultStyles,
               ...getOptionStyles("placeholderColor", null, error),
               ...ellipsis(),
-              ...typography.medium["02Tight"]
-
+              ...typography.medium["02Tight"],
             };
           },
           indicatorSeparator: (base) => ({
@@ -155,18 +184,18 @@ export const MySelect = <
           indicatorsContainer: (base, props) => ({
             ...base,
             transform: props.selectProps.menuIsOpen ? "rotate(182deg)" : "none",
-            svg: error ? { fill: isDarkMode ? `${colors.orange}` : `${colors.red}` } : "none"
+            svg: error ? { fill: isDarkMode ? `${colors.orange}` : `${colors.red}` } : "none",
           }),
           multiValue: (base) => ({
             ...base,
             backgroundColor: isDarkMode ? `${colors.strokes.light}` : `${colors.strokes.dark}`,
-            svg: { fill:`${colors.red}`}
+            svg: { fill: `${colors.red}` },
           }),
-          multiValueLabel:(base) =>({
+          multiValueLabel: (base) => ({
             ...base,
             ...typography.medium["02Tight"],
-            color: isDarkMode ? `${colors.strokes.dark}` : `${colors.strokes.light}`
-          })
+            color: isDarkMode ? `${colors.strokes.dark}` : `${colors.strokes.light}`,
+          }),
         }}
       />
       {!!error && (
