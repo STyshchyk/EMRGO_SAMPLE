@@ -84,6 +84,7 @@ const SecuritiesTransactionsReportPage = () => {
       boxes.push([
         row.tradeDate ? reportDateRenderer(row.tradeDate) : "",
         row.wsn || "",
+        row?.externalSecurity?.shortName || "",
         row.issuerName || "",
         row.fromSecurityAccount || "",
         row?.settlementType?.name || "",
@@ -221,6 +222,7 @@ const SecuritiesTransactionsReportPage = () => {
       id: "security",
       title: t("Securities Holdings.Headers.Security"),
       field: "sukuk.securityShortName",
+      exportConfig: { render: (rowData) => rowData?.externalSecurity?.shortName },
     },
     {
       id: "settlementType",
@@ -335,6 +337,10 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Security Transactions.Headers.Net Settle Amt"),
       field: "netSettleAmount",
       type: "numeric",
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.netSettleAmount),
+        align: "right",
+      },
     },
     // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
     {
@@ -342,6 +348,11 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Security Transactions.Headers.Price"),
       field: "price",
       type: "numeric",
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.price),
+        align: "right",
+        width: 5,
+      },
     },
     {
       id: "settleDate",
@@ -509,6 +520,7 @@ const SecuritiesTransactionsReportPage = () => {
               const exportCSV = () => {
                 const tradeColumnName = t("Security Transactions.Headers.Trade Date");
                 const wsnColumnName = t("Security Transactions.Headers.WSN");
+                const securityColumnName = "Security";
                 const issuerNameColumnName = t("Security Transactions.Headers.Issuer Name");
                 const settlementTypeColumnName = t("Security Transactions.Headers.Settlement Type");
                 const fromSecAcctColumnName = t("Security Transactions.Headers.From Sec Acct");
@@ -536,6 +548,7 @@ const SecuritiesTransactionsReportPage = () => {
                   .addRow([
                     tradeColumnName,
                     wsnColumnName,
+                    securityColumnName,
                     issuerNameColumnName,
                     settlementTypeColumnName,
                     fromSecAcctColumnName,
