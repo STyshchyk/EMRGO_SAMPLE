@@ -277,7 +277,12 @@ const EditCouponPaymentScheduleDialog = ({
                     </Grid>
                   ) : (
                     <Grid item>
-                      <Button variant="contained" onClick={handleSubmitSchedule} color="primary">
+                      <Button
+                        variant="contained"
+                        onClick={handleSubmitSchedule}
+                        disabled={isTableDataEmpty}
+                        color="primary"
+                      >
                         <strong>Submit</strong>
                       </Button>
                     </Grid>
