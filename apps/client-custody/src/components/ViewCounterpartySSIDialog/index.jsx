@@ -36,7 +36,7 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
     return [
       {
         label: "Entity",
-        value: entity?.corporateEntityName,
+        value: entity?.name,
       },
       {
         label: "Counterparty",
