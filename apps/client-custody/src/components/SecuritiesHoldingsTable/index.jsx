@@ -70,6 +70,8 @@ const SecuritiesHoldingsTable = ({
   const [entityAddress, setEntityAddress] = useState(null);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
 
+  const [isFetch, setIsFetch] = useState(false);
+
   const { t } = useTranslation(["reports"]);
 
   // selectors
@@ -142,7 +144,7 @@ const SecuritiesHoldingsTable = ({
     if (isAllEntitiesOptionSelected) {
       fetchSecuritiesHoldings({
         params: {
-          date: date?.value.toISOString(), 
+          date: date?.value.toISOString(),
         },
       });
     } else {
@@ -222,7 +224,7 @@ const SecuritiesHoldingsTable = ({
       hidden: ["ISSUER"].includes(entityUserType),
       cellStyle: {
         minWidth: 120,
-      }  
+      },
     },
     {
       id: "instDescription",
@@ -237,7 +239,7 @@ const SecuritiesHoldingsTable = ({
       exportConfig: { render: (rowData) => rowData.lastMovement, width: 8 },
       cellStyle: {
         maxWidth: 100,
-      } 
+      },
     },
   ];
 
@@ -262,7 +264,13 @@ const SecuritiesHoldingsTable = ({
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
-                  <DatePicker name="date" label="Date" defaultFilter={moment()} maxDate={moment()} disableClear/>
+                  <DatePicker
+                    name="date"
+                    label="Date"
+                    defaultFilter={moment()}
+                    maxDate={moment()}
+                    disableClear
+                  />
                 )}
               </Grid>
               <Grid item container xs={12} md={6} lg={3} alignItems="center">
@@ -272,12 +280,14 @@ const SecuritiesHoldingsTable = ({
                   checked={isTradeDateHolding}
                   onChange={(event) => setIsTradeDateHolding(event?.target?.checked)}
                   handleFetch={(filters) => handleFetch(filters)}
+                  isFetch={isFetch}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <FilterButton
                   label="Apply"
                   onClick={(filters) => {
+                    setIsFetch(true);
                     handleFetch(filters);
                   }}
                   disabled={(filters) => !filters.entity}
