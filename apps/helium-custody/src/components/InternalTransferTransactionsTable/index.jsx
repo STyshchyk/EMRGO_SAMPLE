@@ -2,13 +2,13 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
-import Popper from '@mui/material/Popper';
 import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -33,7 +33,7 @@ const FALLBACK_VALUE = "--";
 const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
   <Fragment>
     {Boolean(anchorEl) && (
-    <Popper
+      <Popper
         data-testid="internal-transfer-transactions-table-menu-list"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
@@ -42,33 +42,31 @@ const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
         disablePortal
         placement="right"
         sx={{ zIndex: 99 }}
-    >
+      >
         {({ TransitionProps }) => (
-            <Grow
-                {...TransitionProps}
-            >
-                <Paper>
-                    <ClickAwayListener onClickAway={handleCloseMenu}>
-                        <MenuList id="split-button-menu">
-                            {actions
-                                .filter((action) => !action.hidden)
-                                .map((action) => (
-                                    <MenuItem
-                                        key={action.id}
-                                        disabled={action.disabled}
-                                        onClick={() => {
-                                            action.onClick();
-                                        }}
-                                    >
-                                        <Typography variant="inherit">{action.label}</Typography>
-                                    </MenuItem>
-                                ))}
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Grow>
+          <Grow {...TransitionProps}>
+            <Paper>
+              <ClickAwayListener onClickAway={handleCloseMenu}>
+                <MenuList id="split-button-menu">
+                  {actions
+                    .filter((action) => !action.hidden)
+                    .map((action) => (
+                      <MenuItem
+                        key={action.id}
+                        disabled={action.disabled}
+                        onClick={() => {
+                          action.onClick();
+                        }}
+                      >
+                        <Typography variant="inherit">{action.label}</Typography>
+                      </MenuItem>
+                    ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
         )}
-    </Popper>
+      </Popper>
     )}
   </Fragment>
 );
@@ -161,6 +159,9 @@ const InternalTransferTransactionsTable = ({
       id: "approvedByUser",
       title: "Approved by",
       field: "approvedByUser",
+      render: (rowData) => {
+        return rowData?.approvedByUser ?? FALLBACK_VALUE;
+      },
     },
     {
       id: "currency",

@@ -30,7 +30,9 @@ export const selectInternalTransfersList = createSelector(
             ? `${debitTx?.createdByUser?.firstName} ${creditTx?.createdByUser?.lastName}`
             : null,
           approvedByUser: debitTx?.approvedByUser
-            ? `${debitTx?.approvedByUser?.firstName} ${creditTx?.approvedByUser?.lastName}`
+            ? `${debitTx?.approvedByUser?.firstName ?? "--"} ${
+                creditTx?.approvedByUser?.lastName ?? "--"
+              }`
             : null,
           amendedByUser: debitTx?.amendedByUser
             ? `${debitTx?.amendedByUser?.firstName} ${creditTx?.amendedByUser?.lastName}`
