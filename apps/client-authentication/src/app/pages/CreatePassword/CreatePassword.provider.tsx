@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 
@@ -20,7 +21,9 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") || "";
+  const type = searchParams.get("type") || "";
   const navigate = useNavigate();
+  const { showErrorToast } = useToast();
 
   const { mutate: doCreatePassword } = useMutation(createPassword);
 
@@ -41,12 +44,15 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     delete values.confirmPassword;
     doCreatePassword(values, {
       onSuccess: () => {
-        //* navigate to twofactor auth page instead
-        // navigate(routes.login);
-        navigate(routes.setupTwoFactorAuth);
+        if (type === "reset") {
+          navigate(routes.login);
+        } else {
+          navigate(routes.setupTwoFactorAuth);
+        }
       },
-      onError: () => {
-        // TODO: wire up error message once error UI components are ready
+      onError: (response) => {
+        console.log("🚀 ~ file: CreatePassword.provider.tsx:62 ~ onSubmit ~ response:", response);
+        showErrorToast("Your token has expired. Please try again to get a new reset link");
       },
     });
   };
@@ -62,6 +68,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
     form,
     showPassword,
     setShowPassword,
+    type,
   };
 
   return <CreatePasswordContext.Provider value={state}>{children}</CreatePasswordContext.Provider>;

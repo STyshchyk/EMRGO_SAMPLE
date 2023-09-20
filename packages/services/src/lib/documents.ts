@@ -1,6 +1,7 @@
-import { IDocument, ISignedURL, IUser } from "@emrgo-frontend/types";
+import { IDocument, ISignedURL, IUploadResponse, IUser } from "@emrgo-frontend/types";
 
 import { sharedDashboardApi } from "./instances";
+import axios from "axios";
 
 export const fetchPlatformDocument = async (params: {
   documentType: string;
@@ -52,4 +53,27 @@ export const acceptPlatformTerms = async (): Promise<IUser> => {
   });
   const data = await (await promise).data?.user;
   return data || [];
+};
+
+export const getFileUploadLink = async (file: {
+  filename: string;
+  formData: any;
+}): Promise<IUploadResponse> => {
+  const promise = sharedDashboardApi({
+    url: "/utils/v1/utils/files/create",
+    method: "POST",
+    data: { filename: file.filename },
+  });
+  const response = await (await promise).data.data;
+
+  const uploadFile = axios({
+    method: "put",
+    url: `${response.url}`,
+    data: file.formData,
+    headers: { "Content-Type": `application/xml` },
+  });
+
+
+  console.log("🚀 ~ file: documents.ts:74 ~ uploadFile:", uploadFile);
+  return response;
 };

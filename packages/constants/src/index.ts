@@ -8,6 +8,7 @@ export * from "./lib/roles.silver";
 export * from "./lib/routes";
 export * from "./lib/silver.keys";
 export * from "./lib/silver.routes";
+export * from "./lib/support";
 export * from "./lib/user";
 
 // TEST COMMENT
