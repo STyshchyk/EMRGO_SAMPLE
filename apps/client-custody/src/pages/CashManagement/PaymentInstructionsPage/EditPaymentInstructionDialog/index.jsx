@@ -44,7 +44,7 @@ const EditPaymentInstructionDialog = ({
       wethaqAccountId: values?.sourceAccount.value.id,
       transferPurposeTypeId: values.transferPurpose.value,
       accountId: values.paymentAccount.value.accountId,
-      amount: values.paymentAmount,
+      amount: parseFloat(values.paymentAmount),
       valueDate: values.valueDate,
       details: values.paymentDetails,
     };
@@ -64,7 +64,7 @@ const EditPaymentInstructionDialog = ({
     <Dialog
       open={isModalOpen}
       onClose={(event, reason) => {
-        if (disabled && reason && reason === "backdropClick")     handleClose();
+        if (disabled && reason && reason === "backdropClick") handleClose();
         if (reason && reason === "backdropClick") return;
 
         handleClose();

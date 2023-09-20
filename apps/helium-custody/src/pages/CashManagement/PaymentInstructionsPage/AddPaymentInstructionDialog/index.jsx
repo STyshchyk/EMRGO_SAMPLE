@@ -86,7 +86,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
       wethaqAccountId: values?.sourceAccount?.value.id,
       transferPurposeTypeId: values.transferPurpose.value,
       accountId: values.paymentAccount.value.accountId,
-      amount: values.paymentAmount,
+      amount: parseFloat(values.paymentAmount),
       valueDate: values.valueDate,
       details: values.paymentDetails,
     };
