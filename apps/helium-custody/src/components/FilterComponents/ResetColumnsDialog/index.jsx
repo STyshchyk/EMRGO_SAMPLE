@@ -41,21 +41,21 @@ const ResetColumnsDialog = ({ open, closeDialog }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {t("miscellaneous:Manage Columns Dialogue.Reset Column Configuration?")}
+          {t("Manage Columns Dialogue.Reset Column Configuration?")}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {t(
-              "miscellaneous:Manage Columns Dialogue.This action is non-reversible~ Columns will move back to their default positions and your custom configuration will be lost"
+              "Manage Columns Dialogue.This action is non-reversible~ Columns will move back to their default positions and your custom configuration will be lost"
             )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleResetConfirmCancel} color="primary">
-            {t("miscellaneous:Manage Columns Dialogue.Cancel")}
+            {t("Manage Columns Dialogue.Cancel")}
           </Button>
           <Button onClick={handleResetConfirm} color="primary" autoFocus variant="contained">
-            {t("miscellaneous:Manage Columns Dialogue.Reset Columns")}
+            {t("Manage Columns Dialogue.Reset Columns")}
           </Button>
         </DialogActions>
       </Dialog>
