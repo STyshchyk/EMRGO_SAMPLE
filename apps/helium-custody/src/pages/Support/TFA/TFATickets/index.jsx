@@ -33,6 +33,7 @@ const TFATickets = () => {
   const currentEntityGroupID = currentEntityGroup?.id;
   const isFetchingTFATickets = useSelector(supportSelectors.selectIsFetching);
   const TFATicketsList = useSelector(supportSelectors.selectTFATickets);
+  console.log("🚀 ~ file: index.jsx:36 ~ TFATickets ~ TFATicketsList:", TFATicketsList);
   const isLoading = useSelector(supportSelectors.selectIsLoading);
   const currentTFAVerificationDocument = useSelector(
     supportSelectors.selectCurrentTFAVerificationDocument
@@ -87,21 +88,15 @@ const TFATickets = () => {
               {
                 title: `${t("support:Support.Headers.Name")}`,
                 field: "name",
-                render: (rowData) =>
-                  `${rowData.user.firstName} ${rowData.user.middleName || " "} ${
-                    rowData.user.lastName
-                  }`,
               },
-              { title: `${t("support:Support.Headers.Email")}`, field: "user.email" },
+              { title: `${t("support:Support.Headers.Email")}`, field: "email" },
               {
                 title: `${t("support:Support.Headers.Entity")}`,
-                field: "user.entityGroups[0].group.entity.corporateEntityName",
+                field: "entity",
               },
               {
                 title: `${t("support:Support.Headers.Role")}`,
-                field: "user",
-                render: (rowData) =>
-                  titleRenderer(rowData.user.entityGroups[0]?.group?.entityType ?? "N.A"),
+                field: "role",
               },
               {
                 title: `${t("support:Support.Headers.Type")}`,
@@ -110,7 +105,7 @@ const TFATickets = () => {
               },
               {
                 title: `${t("support:Support.Headers.Date")}`,
-                field: "createdAt",
+                field: "date",
                 type: "date",
               },
               {
@@ -119,7 +114,7 @@ const TFATickets = () => {
                 render: (rowData) => statusRenderer(rowData.approved),
               },
             ]}
-            data={JSON.parse(JSON.stringify(TFATicketsList))}
+            data={TFATicketsList}
             actions={[
               (rowData) => ({
                 icon: "check",

@@ -9,14 +9,14 @@ import * as Styles from "./CreatePassword.styles";
 import { ICreatePasswordProps } from "./CreatePassword.types";
 
 export const CreatePasswordComponent: FC<ICreatePasswordProps> = (props: ICreatePasswordProps) => {
-  const { form, showPassword, setShowPassword } = ensureNotNull(useCreatePasswordContext());
+  const { form, showPassword, setShowPassword, type } = ensureNotNull(useCreatePasswordContext());
 
   return (
     <Styles.CreatePasswordForm onSubmit={form.handleSubmit}>
       <Logo />
 
       <div>
-        <Heading>Create your password</Heading>
+        <Heading>{type === "reset" ? "Reset" : "Create"} your password</Heading>
         <SubHeading>Keep your Emrgo account safe with a secure password.</SubHeading>
       </div>
 

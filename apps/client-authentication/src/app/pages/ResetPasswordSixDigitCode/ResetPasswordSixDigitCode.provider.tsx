@@ -49,9 +49,7 @@ export const ResetPasswordSixDigitCodeProvider = ({
   const onSubmit = (values: IResetPasswordSixDigitCodeValues) => {
     doVerifyOTP(values, {
       onSuccess: (response) => {
-        const token = response.data.verificationToken;
-        const generatedURI = encodeURI(`${routes.createPassword}?token=${token}`);
-        navigate(generatedURI);
+        navigate(routes.resetPasswordEmailConfirmation);
       },
       onError: (error) => {
         if (error instanceof AxiosError) {

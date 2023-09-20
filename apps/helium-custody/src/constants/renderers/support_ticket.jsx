@@ -14,7 +14,7 @@ export const typeRenderer = (value) => {
   let bgColor = grey[300];
   let textColor = grey[800];
   switch (value) {
-    case "MFA reset":
+    case "TFA_SUPPORT_TICKET":
       bgColor = amber["100"];
       textColor = amber["800"];
       break;

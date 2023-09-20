@@ -49,7 +49,8 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
 
           doCreateSupportTicket(requestPayload, {
             onSuccess: (response) => {
-              console.log("🚀 ~ file: TFASupportTicketModal.tsx:52 ~ response:", response);
+              showSuccessToast("Successfully created a support ticket to reset your 2FA.");
+              onClose();
             },
           });
 
