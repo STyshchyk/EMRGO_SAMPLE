@@ -196,12 +196,12 @@ const CashStatementPage = () => {
       id: "date",
       title: t("Cash Statement.Headers.Date"),
       field: "date",
+      defaultSort: "asc",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
         width: 8,
         render: (rowData) => reportDateRenderer(rowData?.date),
       },
-      defaultSort: "desc",
     },
     {
       id: "transactionType",

@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useDarkMode } from "usehooks-ts";
 
@@ -26,12 +26,12 @@ import * as issuanceActionCreators from "../../../../redux/actionCreators/issuan
 import * as authSelectors from "../../../../redux/selectors/auth";
 import * as issuanceSelectors from "../../../../redux/selectors/issuance";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
-// import { addPaymentAccountFormSchema } from '../../../../validationSchemas';
 import { getDropdownValues } from "../../../../utils/form";
+import { addPaymentAccountFormSchema } from "../../../../validationSchemas";
 
 // TODO: SORT OUT THE VALIDATION SCHEMA AND DRY UP THIS MESS
 
-const InlineFormField = ({ label, children }) => (
+const InlineFormField = ({ label, children, name }) => (
   <Grid item container md={12}>
     {label && (
       <Grid item md={4}>
@@ -46,6 +46,15 @@ const InlineFormField = ({ label, children }) => (
       >
         {children}
       </FormControl>
+      {name && (
+        <ErrorMessage
+          component={Typography}
+          variant="caption"
+          color="error"
+          className="ml-4"
+          name={name}
+        />
+      )}
     </Grid>
   </Grid>
 );
@@ -76,6 +85,8 @@ const AddPaymentAccountForm = ({
     name: "",
     postcode: "",
     swift: "",
+    routingNo: null,
+    sortCode: null,
   },
   handleSubmit,
   entitiesList,
@@ -143,7 +154,12 @@ const AddPaymentAccountForm = ({
   }
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={addPaymentAccountFormSchema}
+      enableReinitialize
+    >
       {({ values, setFieldValue, errors }) => {
         const isUSDCurrencySelected = values.currency?.label === "USD";
         const isGBPCurrencySelected = values.currency?.label === "GBP";
@@ -170,30 +186,9 @@ const AddPaymentAccountForm = ({
           <Form noValidate onKeyDown={onKeyDown}>
             <Grid container spacing={2}>
               <Grid item container spacing={2} lg={12}>
-                {isWethaqUser && (
-                  <InlineFormField label={"Entity"}>
-                    <Select
-                      closeMenuOnSelect
-                      placeholder={t("PaymentAccountManagement.AddPaymentAccountForm.Entity")}
-                      isSearchable
-                      styles={selectStyles(true)}
-                      menuPortalTarget={document.body}
-                      value={values.sourceEntity}
-                      isClearable
-                      options={entitiesDropdown}
-                      onChange={(newValue, triggeredAction) => {
-                        setFieldValue("entityGroupId", newValue?.groups[0].id);
-
-                        if (triggeredAction.action === "clear") {
-                          setFieldValue("entityGroupId", null);
-                        }
-                      }}
-                    />
-                  </InlineFormField>
-                )}
-
                 <InlineFormField
                   label={t("PaymentAccountManagement.AddPaymentAccountForm.Currency")}
+                  name="currency"
                 >
                   <Select
                     closeMenuOnSelect
@@ -244,20 +239,6 @@ const AddPaymentAccountForm = ({
                     disabled={!isUSDCurrencySelected && !isGBPCurrencySelected} // !Dev note: Enable an ability to add intermediary bank details only if selected currency is either USD or GBP
                     label="Add Intermediary Bank Details"
                   />
-                  {/*
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={areIntermediaryBankDetailsRequired}
-                        onChange={(event) => {
-                          setAreIntermediaryBankDetailsRequired(event.target.checked);
-                        }}
-                        name="hasIntermediaryBank"
-                      />
-                    }
-                    label="Add Intermediary Bank"
-                  />
-                    */}
                 </InlineFormField>
               </Grid>
 
@@ -271,6 +252,7 @@ const AddPaymentAccountForm = ({
                         <strong>Beneficiary Bank Details</strong>
                       </Typography>
                     </InlineFormField>
+
                     <InlineFormField
                       label={t("PaymentAccountManagement.AddPaymentAccountForm.IBAN")}
                     >
@@ -352,6 +334,7 @@ const AddPaymentAccountForm = ({
 
                     <InlineFormField
                       label={t("PaymentAccountManagement.AddPaymentAccountForm.Country")}
+                      name="country"
                     >
                       <Select
                         closeMenuOnSelect
@@ -537,6 +520,7 @@ const AddPaymentAccountForm = ({
 
                       <InlineFormField
                         label={t("PaymentAccountManagement.AddPaymentAccountForm.Country")}
+                        name="intermediaryBankCountry"
                       >
                         <Select
                           closeMenuOnSelect
