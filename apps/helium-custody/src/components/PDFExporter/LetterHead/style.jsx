@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
   logo_W: {
     height: 40,
-    marginLeft: "35px",
     width: 120,
+    marginLeft: "-15px",
   },
   logo_header: {
     fontSize: "12px",

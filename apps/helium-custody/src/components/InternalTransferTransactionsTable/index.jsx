@@ -25,8 +25,6 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-import ExportTableContent from "../PDFExporter/ExportTableContent";
-import ReportingTablePDFExporter from "../ReportingTablePDFExporter";
 
 const FALLBACK_VALUE = "--";
 
@@ -368,22 +366,6 @@ const InternalTransferTransactionsTable = ({
                     actions={actions}
                     handleCloseMenu={handleCloseMenu}
                   />
-
-                  <ReportingTablePDFExporter
-                    ref={ref}
-                    title="Internal Transfer Transactions"
-                    pageSize="A2"
-                  >
-                    <ExportTableContent
-                      columns={tableColumns}
-                      tableOptions={{
-                        sliceRowCount: 8,
-                        tableOffset: 4,
-                      }}
-                      data={data}
-                      title={`Internal Transfer Transactions Report`}
-                    />
-                  </ReportingTablePDFExporter>
                 </div>
               );
             }}
