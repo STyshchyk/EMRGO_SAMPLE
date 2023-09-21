@@ -24,3 +24,17 @@ export interface IUser {
   entityKycStatus: number;
   entityCustodyKycStatus: number;
 }
+
+export interface IFetchProfileSettings {
+  keys: string[];
+}
+
+export interface IPostProfileSettings {
+  settings: ISettings[];
+}
+
+interface ISettings {
+  isActive: boolean;
+  key: string;
+  value: string;
+}

@@ -1,26 +1,15 @@
-import { Fragment, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
-import {
-  clientAccountRoutes,
-  clientCustodyRoutes,
-  clientModuleURLs,
-  clientPrimariesRoutes,
-  clientSecondariesRoutes,
-  getAllRoutes,
-  roles,
-} from "@emrgo-frontend/constants";
+import { clientAccountRoutes, roles } from "@emrgo-frontend/constants";
+import { useDarkModeCustom } from "@emrgo-frontend/services";
 import {
   AccountIcon,
   ChevronRightIcon,
-  CustodyIcon,
   EyeIcon,
   HelpIcon,
   Logo,
   NotificationsIcon,
-  PrimariesIcon,
-  ResearchIcon,
-  SecondariesIcon,
   SidebarFooter,
   SidebarHeader,
   SidebarList,
@@ -37,13 +26,7 @@ import {
   TooltipTitle,
   useUser,
 } from "@emrgo-frontend/shared-ui";
-import {
-  buildModuleURL,
-  ensureNotNull,
-  navigateModule,
-  useClientMatchedPathSidebar,
-} from "@emrgo-frontend/utils";
-import { useDarkMode } from "usehooks-ts";
+import { buildModuleURL, ensureNotNull, useClientMatchedPathSidebar } from "@emrgo-frontend/utils";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
@@ -53,7 +36,7 @@ export const DashboardSidebar = () => {
   const origin = window.location.origin;
   const { user } = useUser();
   const currentRole = roles.find((role) => role.key === user?.role);
-  const { isDarkMode, toggle } = useDarkMode();
+
   const {
     numberOfNotifications,
     mainRoutes,
@@ -65,9 +48,9 @@ export const DashboardSidebar = () => {
     showTermsModal,
     termsDocumentURL,
   } = ensureNotNull(useDashboardWrapperContext());
-
+  const [value, setvalue] = useState(false);
+  const [isDarkMode, enable, disable, toggle] = useDarkModeCustom();
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
-
   const fullNameInitials = fullName
     .split(" ")
     .map((part) => part[0].toUpperCase())
@@ -86,6 +69,7 @@ export const DashboardSidebar = () => {
           {mainRoutes.map((module) => (
             <Tooltip
               enableTooltip={module.disabled}
+              key={module.key}
               content={
                 module.disabled ? (
                   <Fragment>
@@ -171,7 +155,12 @@ export const DashboardSidebar = () => {
               <SidebarListItemIcon>
                 <EyeIcon />
               </SidebarListItemIcon>
-              <ThemeSwitcher theme={isDarkMode ? "dark" : "light"} onToggle={toggle} />
+              <ThemeSwitcher
+                theme={isDarkMode ? "dark" : "light"}
+                onToggle={() => {
+                  toggle();
+                }}
+              />
             </SidebarListItemContent>
           </SidebarListItem>
         </SidebarList>

@@ -2,6 +2,7 @@ import { include } from "named-urls";
 
 export const queryKeys = {
   auth: include("/auth", {}),
+  profileSettings: include("/profileSettings", {}),
   primaries: include("/primaries", {
     tradeOpportunities: include("trade-opportunities", {
       fetch: "fetch",
@@ -26,8 +27,8 @@ export const queryKeys = {
     }),
     onboardedUsers: include("/onboarder-users", {
       fetch: "fetch",
-      roles:"roles"
-    })
+      roles: "roles",
+    }),
   }),
   miscelleneous: include("/miscelleneous", {
     documents: include("documents", {
