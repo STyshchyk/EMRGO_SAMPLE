@@ -10,13 +10,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { useDarkMode } from "usehooks-ts";
 
-import { useUser } from "../../components/UserContext"; //* using app level user context with further mfa checks
+import { useUser } from "../../components/UserContext";
+//* using app level user context with further mfa checks
 import { IUser } from "../../components/UserContext/UserContext.types";
 import { IMFA, verifyMFA } from "../../services";
 import { LoginCode, LoginSchema } from "./Login.schema";
 import { loginUser } from "./Login.service";
 import { ILoginCode, ILoginContext, ILoginFormValues } from "./Login.types";
-
 
 const LoginContext = createContext<ILoginContext | null>(null);
 
@@ -34,7 +34,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [code, setCode] = useState<string | null>("");
+  const [isTFAModalOpen, setTFAModalOpen] = useState<boolean>(false);
   const { mutate: doLoginUser, isError, error } = useMutation(loginUser);
   const { mutate: doVerifyAuthenticatorMFA } = useMutation(verifyMFA);
   /**
@@ -45,7 +45,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     password: ""
   };
   const codeInitial: ILoginCode = {
-    code: ""
+    code: "",
   };
   /**
    * @param values an object containing current form values
@@ -63,16 +63,15 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
           navigate(routes.setupTwoFactorAuth);
           return;
         }
-        updateUser({ ...user as IUser  });
+        updateUser({ ...(user as IUser) });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       },
       onError: (err) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         showErrorToast(err?.response?.data?.message ?? "Error appeared during login");
-      }
+      },
     });
-
   };
 
   const handleNext = (code: ILoginCode) => {
@@ -84,7 +83,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
       },
       onError: () => {
         showErrorToast("Error while verifing mfa code");
-      }
+      },
     });
     disable();
   };
@@ -93,25 +92,31 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const openTFASupportTicketModal = () => {
+    setTFAModalOpen(true);
+  };
+
+  const closeTFASupportTicketModal = () => {
+    setTFAModalOpen(false);
+  };
+
   useEffect(() => {
     enable();
   }, []);
-
 
   const form = useFormik<ILoginFormValues>({
     initialValues,
     validateOnMount: true,
     validationSchema: LoginSchema,
-    onSubmit
+    onSubmit,
   });
   const formCode = useFormik<ILoginCode>({
     initialValues: codeInitial,
     validateOnMount: true,
     enableReinitialize: true,
     validationSchema: LoginCode,
-    onSubmit: handleNext
+    onSubmit: handleNext,
   });
-
 
   const state: ILoginContext = {
     form,
@@ -122,8 +127,10 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     handleNext,
     handleBack,
     isError,
-    error
-
+    error,
+    isTFAModalOpen,
+    openTFASupportTicketModal,
+    closeTFASupportTicketModal,
   };
 
   return <LoginContext.Provider value={state}>{children}</LoginContext.Provider>;

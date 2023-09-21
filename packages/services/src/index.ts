@@ -10,3 +10,4 @@ export * from "./lib/silver.instance";
 export * from "./lib/silver.opportunities";
 export * from "./lib/silver.sellside";
 export * from "./lib/silver.tradeManagement";
+export * from "./lib/support";

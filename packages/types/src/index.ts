@@ -11,7 +11,7 @@ export * from "./lib/sellside";
 export * from "./lib/silver.entities";
 export * from "./lib/silver.opportunities";
 export * from "./lib/silver.tradeInterest";
+export * from "./lib/support";
 export * from "./lib/theme";
 export * from "./lib/user";
 export * from "./lib/util";
-

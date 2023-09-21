@@ -196,12 +196,12 @@ const CashStatementPage = () => {
       id: "date",
       title: t("Cash Statement.Headers.Date"),
       field: "date",
+      defaultSort: "asc",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
         width: 8,
         render: (rowData) => reportDateRenderer(rowData?.date),
       },
-      defaultSort: "desc",
     },
     {
       id: "transactionType",
@@ -250,9 +250,9 @@ const CashStatementPage = () => {
   ];
 
   let filteredAccounts = accountOpts
-    .filter((account) =>
-      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
-    )
+    .filter((account) => {
+      return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
+    })
     .map((acc) => ({
       data: acc,
       value: acc.id,
@@ -317,9 +317,9 @@ const CashStatementPage = () => {
     setCurrentlySelectedEntity(selectedEntity);
     setAccountFilterValue(null);
     filteredAccounts = accountOpts
-      .filter((account) =>
-        selectedEntity ? account.original.group.id === selectedEntity.value : false
-      )
+      .filter((account) => {
+        return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
+      })
       .map((account) => ({
         data: account,
         value: account.id,
@@ -381,6 +381,8 @@ const CashStatementPage = () => {
     setTransactionTypeValue(selectedTransactionType.value);
     setCurrentlySelectedTransactionType(selectedTransactionType);
   };
+
+  console.log("🚀 ~ file: index.jsx:329 ~ entityChange ~ filteredAccounts:", filteredAccounts);
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (

@@ -18,7 +18,7 @@ export interface IButtonProps extends PropsWithChildren {
   type?: TButtonTypes;
 }
 
-export type TButtonVariants = "primary" | "secondary";
+export type TButtonVariants = "primary" | "secondary" | "text";
 export type TButtonSizes = "small" | "medium" | "large";
 export type TButtonColors = "default" | "error";
 export type TButtonTypes = "submit" | "reset" | "button" | undefined;

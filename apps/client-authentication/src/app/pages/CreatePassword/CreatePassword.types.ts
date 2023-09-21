@@ -5,6 +5,7 @@ export interface ICreatePasswordProps {}
 export interface ICreatePasswordContext {
   form: FormikProps<ICreatePasswordFormValues>;
   showPassword: boolean;
+  type: string;
   setShowPassword: (showPassword: boolean) => void;
 }
 
