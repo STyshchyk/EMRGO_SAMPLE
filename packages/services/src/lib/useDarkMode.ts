@@ -1,23 +1,44 @@
 import { queryKeys } from "@emrgo-frontend/constants";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDarkMode } from "usehooks-ts";
 
 import { fetchProfileSettings, postProfileSettings } from "./profile";
 
 export function useDarkModeCustom(): [
-  isDarkMode: boolean,
+  isDarkModeCustom: boolean,
   enable: () => void,
   disable: () => void,
   toggle: () => void
 ] {
-  const { data: isDarkMode, refetch: refetchProfile } = useQuery([queryKeys.profileSettings], {
+  const { enable: enableDark, disable: disableDark } = useDarkMode();
+
+  const {
+    data: isDarkModeCustom,
+    refetch: refetchProfile,
+    isFetching,
+  } = useQuery([queryKeys.profileSettings], {
     staleTime: Infinity,
+    keepPreviousData: false,
+    cacheTime: Infinity,
     queryFn: () => fetchProfileSettings({ keys: ["dark-mode-settings"] }),
+    onSuccess: (value) => {
+      if (value) enableDark();
+      else disableDark();
+    },
     select: (selectedData) => {
-      if (Array.isArray(selectedData) && selectedData[0]?.value)
-        return selectedData[0].value === "true";
-      return false;
+      const value = selectedData[0]?.value === "true";
+      return value;
     },
   });
+
+  // useEffect(() => {
+  //   //Fire useHooks to write in a local storage current theme value
+  //   if (!isFetching && !isDarkModeCustom) {
+  //     console.log(isFetching, isDarkModeCustom);
+  //     if (isDarkModeCustom) enableDark();
+  //     else disableDark();
+  //   }
+  // }, []);
 
   const { mutate: postSettings } = useMutation({
     mutationFn: postProfileSettings,
@@ -35,6 +56,7 @@ export function useDarkModeCustom(): [
         },
       ],
     });
+    enableDark();
   };
   const disable = () => {
     postSettings({
@@ -46,11 +68,12 @@ export function useDarkModeCustom(): [
         },
       ],
     });
+    disableDark();
   };
   const toggle = () => {
-    if (isDarkMode) disable();
+    if (isDarkModeCustom) disable();
     else enable();
   };
-
-  return [isDarkMode, enable, disable, toggle];
+  console.log(isFetching, isDarkModeCustom);
+  return [isDarkModeCustom, enable, disable, toggle, isFetching];
 }

@@ -27,6 +27,7 @@ import {
   useUser,
 } from "@emrgo-frontend/shared-ui";
 import { buildModuleURL, ensureNotNull, useClientMatchedPathSidebar } from "@emrgo-frontend/utils";
+import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
@@ -49,7 +50,8 @@ export const DashboardSidebar = () => {
     termsDocumentURL,
   } = ensureNotNull(useDashboardWrapperContext());
   const [value, setvalue] = useState(false);
-  const [isDarkMode, enable, disable, toggle] = useDarkModeCustom();
+  const [isDarkModeCustom, enable, disable, toggle] = useDarkModeCustom();
+  const { isDarkMode } = useDarkMode();
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
   const fullNameInitials = fullName
     .split(" ")
