@@ -1,7 +1,14 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
-import { ArrowBackwardIcon, Button, Checkbox, FormikInput, Logo } from "@emrgo-frontend/shared-ui";
+import {
+  ArrowBackwardIcon,
+  Button,
+  Checkbox,
+  FormikInput,
+  Logo,
+  TFASupportTicketModal,
+} from "@emrgo-frontend/shared-ui";
 import { ensureNotNull, processAPIErrors } from "@emrgo-frontend/utils";
 
 import { Heading, OneCol, OneColCheck, SubHeading } from "../../components/Form";
@@ -22,6 +29,9 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
     activeStep,
     isError,
     error,
+    isTFAModalOpen,
+    openTFASupportTicketModal,
+    closeTFASupportTicketModal,
   } = ensureNotNull(useLoginContext());
 
   return (
@@ -108,11 +118,17 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
             </OneCol>
             <Styles.Spacer />
             <Styles.HelpListItem>
-              <Link to={""}>Raise support ticket</Link>
+              <Button variant="text" type="button" onClick={() => openTFASupportTicketModal()}>
+                Raise support ticket
+              </Button>
             </Styles.HelpListItem>
           </Styles.Form>
           <Styles.Spacer />
           <LoginHelp />
+          <TFASupportTicketModal
+            isOpen={isTFAModalOpen}
+            onClose={() => closeTFASupportTicketModal()}
+          />
         </Styles.LoginForm>
       )}
     </>
