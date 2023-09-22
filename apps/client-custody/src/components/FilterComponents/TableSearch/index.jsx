@@ -70,6 +70,10 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
               }}
               onChange={(e) => {
                 onSearchChange(e.target.value);
+                if (e.target.value === "") {
+                  setSearchValue("");
+                  clearSearchFilter("search");
+                }
               }}
               label={t("miscellaneous:Filters.Search")}
               name="searchText"
