@@ -1,6 +1,10 @@
 import { AxiosError } from "axios";
 import { FormikProps } from "formik";
 
+
+
+
+
 export interface ILoginProps {
 }
 
@@ -10,11 +14,13 @@ export interface ILoginContext {
   showPassword: boolean;
   setShowPassword: (showPassword: boolean) => void;
   isError: boolean;
+  isTFAModalOpen: boolean;
   error: Error | AxiosError | unknown;
   activeStep: number;
   handleNext: (code: ILoginCode) => void;
   handleBack: () => void;
-
+  openTFASupportTicketModal: () => void;
+  closeTFASupportTicketModal: () => void;
 }
 
 export interface ILoginFormValues {

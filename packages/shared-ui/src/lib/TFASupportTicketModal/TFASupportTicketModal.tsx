@@ -112,7 +112,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
               </ModalContent>
               <ModalFooter>
                 <Spacer />
-                <Button type="submit" onClick={() => handleSubmit()}>
+                <Button type="submit">
                   Submit Ticket
                 </Button>
               </ModalFooter>
