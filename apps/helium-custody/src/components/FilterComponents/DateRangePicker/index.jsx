@@ -186,6 +186,7 @@ const DateRangePicker = ({
               inputVariant="filled"
               inputProps={{
                 shrink: "false",
+                size: "small",
               }}
               variant="dialog"
               showTodayButton
