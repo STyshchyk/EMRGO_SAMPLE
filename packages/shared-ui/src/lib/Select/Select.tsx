@@ -20,6 +20,7 @@ export function Select<
 }: Props<Option, IsMulti, Group> & ISelectProps ) {
   const animatedComponents = makeAnimated();
   const { isDarkMode } = useDarkMode();
+  console.log("🚀 ~ file: Select.tsx:23 ~ isDarkMode:", isDarkMode)
 
   const getOptionStyles = (type: string, state: any) => {
     let styles = {};

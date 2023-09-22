@@ -1,9 +1,9 @@
 import { createRef } from "react";
 import { useTranslation } from "react-i18next";
-import {NumericFormat} from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import { TextField as TextFieldMui } from "@mui/material";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -277,7 +277,8 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
+                  size="small"
                   value={values.sourceAccount?.value?.accountBalance}
                   InputProps={{
                     inputComponent: CustomNumberInputField,

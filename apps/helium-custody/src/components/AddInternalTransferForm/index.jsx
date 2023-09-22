@@ -275,7 +275,8 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
+                  size="small"
                   value={values.sourceAccount?.value?.accountBalance}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -329,7 +330,8 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                  variant="filled"
+                   variant="outlined"
+                  size="small"
                   value={values.destinationAccount?.value?.accountBalance}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -354,7 +356,8 @@ const AddInternalTransferForm = ({
                   fullWidth
                   component={TextField}
                   name="transferAmount"
-                  variant="filled"
+                   variant="outlined"
+                  size="small"
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -371,7 +374,7 @@ const AddInternalTransferForm = ({
                   rows={4}
                   component={TextField}
                   name="description"
-                  variant="filled"
+                  variant="outlined"
                 />
               </InlineFormField>
 
