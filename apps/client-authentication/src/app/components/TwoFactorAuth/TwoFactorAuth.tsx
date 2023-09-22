@@ -81,9 +81,9 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
                   </Button>
                 </OneCol>
                 <Styles.Spacer />
-                <Styles.HelpListItem>
+                {/* <Styles.HelpListItem>
                   <Link to="">Raise support ticket</Link>
-                </Styles.HelpListItem>
+                </Styles.HelpListItem> */}
               </Styles.RightColumn>
             </Styles.MainWrapper>
           </form>

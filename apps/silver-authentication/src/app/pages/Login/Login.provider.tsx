@@ -32,6 +32,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [isTFAModalOpen, setTFAModalOpen] = useState<boolean>(false);
   const [code, setCode] = useState<string | null>("");
   const { mutate: doLoginUser, isError, error } = useMutation(loginUser);
   const { mutate: doVerifyAuthenticatorMFA } = useMutation(verifyMFA);
@@ -101,6 +102,14 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const openTFASupportTicketModal = () => {
+    setTFAModalOpen(true);
+  };
+
+  const closeTFASupportTicketModal = () => {
+    setTFAModalOpen(false);
+  };
+
   useEffect(() => {
     enable();
   }, []);
@@ -129,6 +138,9 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     handleBack,
     isError,
     error,
+    isTFAModalOpen,
+    openTFASupportTicketModal,
+    closeTFASupportTicketModal,
   };
 
   return <LoginContext.Provider value={state}>{children}</LoginContext.Provider>;
