@@ -49,12 +49,14 @@ export const DashboardSidebar = () => {
     showTermsModal,
     termsDocumentURL,
   } = ensureNotNull(useDashboardWrapperContext());
+
   const [value, setvalue] = useState(false);
   const [isDarkModeCustom, enable, disable, toggle] = useDarkModeCustom();
   const { isDarkMode } = useDarkMode();
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
   const fullNameInitials = fullName
     .split(" ")
+    .filter((part) => part !== "")
     .map((part) => part[0].toUpperCase())
     .join("");
 
