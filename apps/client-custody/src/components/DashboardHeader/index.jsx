@@ -16,9 +16,9 @@ import Popover from "@mui/material/Popover";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import cx from "classnames";
 import PropTypes from "prop-types";
+import v from "voca";
 
 import locales from "../../constants/locales/locales";
 import * as authActionCreators from "../../redux/actionCreators/auth";
@@ -32,7 +32,7 @@ import style from "./style.module.scss";
 
 const TIME_FORMAT = "dddd, MMMM Do, YYYY | HH:mm";
 
-const getInitials = (name, count = 1) =>
+const getInitials = (name = "", count = 1) =>
   name
     .replace(/[^A-Za-z0-9À-ÿ ]/gi, "") // taking care of accented characters as well
     .replace(/ +/gi, " ") // replace multiple spaces to one

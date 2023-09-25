@@ -17,7 +17,7 @@ export function Select<
 >({ components: customComponent, ...props }: Props<Option, IsMulti, Group> & ISelectProps) {
   const animatedComponents = makeAnimated();
   const { isDarkMode } = useDarkMode();
-
+  
   const getOptionStyles = (type: string, state: any) => {
     let styles = {};
 

@@ -74,6 +74,6 @@ export function useDarkModeCustom(): [
     if (isDarkModeCustom) disable();
     else enable();
   };
-  console.log(isFetching, isDarkModeCustom);
+  
   return [isDarkModeCustom, enable, disable, toggle, isFetching];
 }
