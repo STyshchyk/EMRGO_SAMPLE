@@ -102,10 +102,12 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
 
   const handleClickOnDeleteAccount = () => {
     setOpenDeleteAccountDialog(true);
+    handleCloseMenu();
   };
 
   const handleClickOnEditAccount = () => {
     setOpenEditAccountFormDialog(true);
+    handleCloseMenu();
   };
 
   const handleClickOnViewSupportingDocument = () => {

@@ -35,10 +35,17 @@ const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
   const handleSubmit = (values, actions) => {
     const addPaymentAccount = (payload) =>
       dispatch(accountsActionCreators.doAddPaymentAccount(payload));
+
     const requestPayload = generateRequestPayload(values);
     requestPayload.supportingDoc = uploadedFiles?.supportingDoc?.fileIdentifier;
 
-    addPaymentAccount(requestPayload);
+    // close modal
+    addPaymentAccount({
+      requestPayload,
+      successCallback: () => {
+        handleClose();
+      },
+    });
 
     actions.resetForm();
   };
