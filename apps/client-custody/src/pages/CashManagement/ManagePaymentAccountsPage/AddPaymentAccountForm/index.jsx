@@ -157,7 +157,7 @@ const AddPaymentAccountForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={addPaymentAccountFormSchema}
+      // validationSchema={addPaymentAccountFormSchema}
       enableReinitialize
     >
       {({ values, setFieldValue, errors }) => {
