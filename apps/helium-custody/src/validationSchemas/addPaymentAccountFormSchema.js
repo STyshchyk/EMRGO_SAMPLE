@@ -6,13 +6,13 @@ const USALabel = 'United States of America';
 // Define a helper function
 const createConditionalSchema = (condition, errorMessage) =>
   Yup.string().when(condition, {
-    is: true,
+    is:true,
     then: () => Yup.string().nullable().required(errorMessage),
     otherwise:() => Yup.string().nullable(),
-  });
+});
 
-  const createCountryLabelSchema = (name,requiredLabels, errorMessage) =>
-  Yup.string().when(name, {
+const createCountryLabelSchema = (condition,requiredLabels, errorMessage) =>
+  Yup.string().when(condition, {
     is: (label) => requiredLabels.includes(label),
     then: () => Yup.string().nullable().required(errorMessage),
     otherwise: () => Yup.string().nullable(),
@@ -20,7 +20,6 @@ const createConditionalSchema = (condition, errorMessage) =>
 
 
 const addPaymentAccountFormSchema = Yup.object().shape({
-  sourceEntity: Yup.object().nullable().required("Entity is required"),
   address: Yup.string().required("Address is required"),
   bankName: Yup.string().required("Bank Name is required"),
   city: Yup.string().required("City is required"),
@@ -63,9 +62,9 @@ const addPaymentAccountFormSchema = Yup.object().shape({
     "Post Code is required"
   ),
   intermediaryBankCountry: Yup.string().when("hasIntermediaryBank", {
-    is:  true,
+    is:true,
     then: () => Yup.object().nullable().required("Country is required"),
-    otherwise: () => Yup.string().nullable(), 
+    otherwise: () => Yup.object().nullable(), 
   }),
   intermediaryBankAccountNo: createCountryLabelSchema("intermediaryBankCountry.label",[USALabel, UKLabel], "Account number is required"),
   intermediaryBankRouteCode: createCountryLabelSchema("intermediaryBankCountry.label",[USALabel], "Routing number is required"),
