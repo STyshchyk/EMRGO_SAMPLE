@@ -19,6 +19,8 @@ const EditPaymentAccountFormDialog = ({ accountId, initialValues, open, handleCl
   const uploadedFiles = useSelector(accountsSelectors.selectUploadedFiles);
 
   const handleSubmit = (values) => {
+    const UKLabel = "United Kingdom of Great Britain and Northern Ireland";
+    const USALabel = "United States of America";
     const requestPayload = {
       ...values,
       countryId: values.country?.value,
@@ -27,13 +29,20 @@ const EditPaymentAccountFormDialog = ({ accountId, initialValues, open, handleCl
       country: undefined,
       currency: undefined,
       intermediaryBankCountry: undefined,
+      // accountNo:
+      //   values.currency?.label !== "USD" || values.currency?.label !== "GBP"
+      //     ? undefined
+      //     : values.accountNo,
+      // routingNo: values.currency?.label !== "USD" ? undefined : values.routingNo,
+      // sortCode: values.currency?.label !== "GBP" ? undefined : values.sortCode,
+      // id 749
       accountNo:
-        values.currency?.label !== "USD" && values.currency?.label !== "GBP"
-          ? undefined
-          : values.accountNo,
-      routingNo: values.currency?.label !== "USD" ? undefined : values.routingNo,
-      sortCode: values.currency?.label !== "GBP" ? undefined : values.sortCode,
-      ifscCode: values.currency?.label !== "INR" ? undefined : values.ifscCode,
+        values.country?.label === USALabel || values.country?.label === UKLabel
+          ? values.accountNo
+          : undefined,
+      routingNo: values.country?.label === USALabel ? values.routingNo : undefined,
+      sortCode: values.country?.label === UKLabel ? values.sortCode : undefined,
+      ifscCode: values.country?.label !== "INR" ? undefined : values.ifscCode,
       bsbCode:
         values.currency?.label !== "AUD" || values.currency?.label !== "NZD"
           ? undefined

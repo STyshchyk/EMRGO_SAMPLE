@@ -78,7 +78,6 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
     setAnchorEl(null);
   };
 
-
   const handleCloseDeleteAccountDialog = () => {
     setOpenDeleteAccountDialog(false);
     handleCloseMenu();
@@ -96,8 +95,8 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
 
   const handleClickOnDeleteAccount = () => {
     setOpenDeleteAccountDialog(true);
+    handleCloseMenu();
   };
-
 
   const handleClickOnValidate = () => {
     const doValidatePaymentAccount = (payload) =>

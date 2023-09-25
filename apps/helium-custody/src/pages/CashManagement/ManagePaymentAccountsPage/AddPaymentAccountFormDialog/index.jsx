@@ -13,8 +13,8 @@ import PropTypes from "prop-types";
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 import * as accountsActionCreators from "../../../../redux/actionCreators/accounts";
 import * as accountsSelectors from "../../../../redux/selectors/accounts";
-import AddPaymentAccountForm from "../AddPaymentAccountForm";
 import * as authSelectors from "../../../../redux/selectors/auth";
+import AddPaymentAccountForm from "../AddPaymentAccountForm";
 
 const generateRequestPayload = (formikValues) => ({
   ...formikValues,
@@ -37,10 +37,15 @@ const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
   const handleSubmit = (values, actions) => {
     const addPaymentAccount = (payload) =>
       dispatch(accountsActionCreators.doAddPaymentAccount(payload));
-    const requestPayload = generateRequestPayload({...values, currentEntityGroupID});
+    const requestPayload = generateRequestPayload({ ...values, currentEntityGroupID });
     requestPayload.supportingDoc = uploadedFiles?.supportingDoc?.fileIdentifier;
 
-    addPaymentAccount(requestPayload);
+    addPaymentAccount({
+      requestPayload,
+      successCallback: () => {
+        handleClose();
+      },
+    });
 
     actions.resetForm();
   };
