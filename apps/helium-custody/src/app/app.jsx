@@ -9,7 +9,8 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 
 import { ReduxRouter } from "@lagunovsky/redux-react-router";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PersistGate } from "redux-persist/integration/react";
 
 import appConfig from "../appConfig";
@@ -17,13 +18,9 @@ import AccessDeniedDialog from "../components/AccessDeniedDialog";
 import AppProviders from "../components/AppProviders";
 import AppRoutes from "../components/AppRoutes";
 import SessionTimeoutDialog from "../components/SessionTimeoutDialog";
-import routes from "../constants/routes";
-import * as authActionCreators from "../redux/actionCreators/auth";
 import history from "../redux/configs/history";
 import configureStore from "../redux/configureStore";
-import * as wethaqAPIService from "../services/wethaqAPIService";
 import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
-import useIsProduction from "../utils/useIsProduction";
 
 const { store, persistor } = configureStore();
 
@@ -67,11 +64,25 @@ export const App = () => (
   </>
 );
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+      retry: 3,
+      staleTime: 5 * 1000,
+    },
+  },
+});
 const ConnectedApp = () => (
   <ReduxProvider>
-    <AppProviders>
-      <App />
-    </AppProviders>
+    <QueryClientProvider client={queryClient}>
+      <AppProviders>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AppProviders>
+    </QueryClientProvider>
   </ReduxProvider>
 );
 

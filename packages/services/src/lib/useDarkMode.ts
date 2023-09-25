@@ -4,12 +4,7 @@ import { useDarkMode } from "usehooks-ts";
 
 import { fetchProfileSettings, postProfileSettings } from "./profile";
 
-export function useDarkModeCustom(): [
-  isDarkModeCustom: boolean,
-  enable: () => void,
-  disable: () => void,
-  toggle: () => void
-] {
+export function useDarkModeCustom(): [boolean, () => void, () => void, () => void, boolean] {
   const { enable: enableDark, disable: disableDark } = useDarkMode();
 
   const {
@@ -74,6 +69,6 @@ export function useDarkModeCustom(): [
     if (isDarkModeCustom) disable();
     else enable();
   };
-  
+
   return [isDarkModeCustom, enable, disable, toggle, isFetching];
 }
