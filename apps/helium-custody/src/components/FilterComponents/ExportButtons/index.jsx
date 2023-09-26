@@ -179,14 +179,6 @@ const ExportButtons = ({ tableRef, name }) => {
   const processMeta = () => {
     const inputString = "emrgo_services";
 
-    const result = v
-      .chain(inputString)
-      .replaceAll("_", " ") // Remove underscores
-      .upperCase() // Capitalize the string
-      .value(); // Get the final result
-
-    console.log(result);
-
     const exportFilters = processFilters();
     const exportConfig = [
       {

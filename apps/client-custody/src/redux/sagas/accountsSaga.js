@@ -76,11 +76,14 @@ function* fetchPaymentAccountsSaga() {
 
 function* addPaymentAccountSaga({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.accountsAPI.addPaymentAccount, payload);
+    const response = yield call(wethaqAPIService.accountsAPI.addPaymentAccount, payload?.requestPayload);
     const { data } = response;
     yield put(accountsActionCreators.doAddPaymentAccountSuccess({ data }));
     yield call(toast.success, data.message);
     yield put(accountsActionCreators.doFetchPaymentAccounts());
+    if (typeof payload?.successCallback === "function") {
+      payload.successCallback();
+    }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
