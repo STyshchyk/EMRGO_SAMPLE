@@ -10,19 +10,12 @@ interface IRouteObject {
 }
 
 export const silverModuleURLs: IMap = {
-  authentication:
-    import.meta.env["VITE_INTERNAL_AUTH_URL"],
-  administration:
-    import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"],
-  primaries:
-    import.meta.env["VITE_INTERNAL_PRIMARIES_URL"],
-  onboarding:
-    import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
-  dataroom:
-    import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
-  custody:
-    import.meta.env["VITE_INTERNAL_CUSTODY_URL"], // ! recheck URL once its deployed
-
+  authentication: import.meta.env["VITE_INTERNAL_AUTH_URL"],
+  administration: import.meta.env["VITE_INTERNAL_ADMINISTRATION_URL"],
+  primaries: import.meta.env["VITE_INTERNAL_PRIMARIES_URL"],
+  onboarding: import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
+  dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
+  custody: import.meta.env["VITE_INTERNAL_CUSTODY_URL"], // ! recheck URL once its deployed
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);
@@ -30,20 +23,20 @@ console.debug("DEBUG silverModuleURLs: ", silverModuleURLs);
 
 export const silverAuthenticationRoutes = {
   home: "/",
-  createPassword: "create-password",
-  signUp: "signup",
-  login: "login",
-  resetPassword: "reset-password",
-  resetPasswordOptions: "reset-password-options",
-  resetPasswordCodeFromAuth: "reset-password-code-from-auth",
-  resetPasswordCodeFromText: "reset-password-code-from-text",
-  resetPasswordEmailConfirmation: "reset-password-email-confirmation",
-  registrationSucess: "registration-success",
+  createPassword: "/create-password",
+  signUp: "/signup",
+  login: "/login",
+  resetPassword: "/reset-password",
+  resetPasswordOptions: "/reset-password-options",
+  resetPasswordCodeFromAuth: "/reset-password-code-from-auth",
+  resetPasswordCodeFromText: "/reset-password-code-from-text",
+  resetPasswordEmailConfirmation: "/reset-password-email-confirmation",
+  registrationSucess: "/registration-success",
   completeRegistration: "/complete-registration",
-  verification: "verification",
-  investorProfile: "investor-profile",
-  troubleSigningIn: "trouble-signing-in",
-  troubleSigningInThanks: "trouble-signing-in-thanks",
+  verification: "/verification",
+  investorProfile: "/investor-profile",
+  troubleSigningIn: "/trouble-signing-in",
+  troubleSigningInThanks: "/trouble-signing-in-thanks",
 };
 export const silverCustodyRoutes = include("/dashboard", {
   home: "",

@@ -1,3 +1,5 @@
+import { silverAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import localForage from "localforage";
 
 const asyncDataStore = localForage.createInstance({
@@ -7,7 +9,7 @@ const asyncDataStore = localForage.createInstance({
 
 export const clearAsyncDataStore = async () => {
   await asyncDataStore.clear();
-  window.location.reload();
+  navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.login);
 };
 
 export default asyncDataStore;
