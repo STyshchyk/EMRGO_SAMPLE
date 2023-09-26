@@ -257,7 +257,10 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Security Transactions.Headers.Net Settle Amt"),
       field: "netSettleAmount",
       type: "numeric",
-      exportConfig: { align: "right" },
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.netSettleAmount),
+        align: "right",
+      },
     },
     // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
     {
