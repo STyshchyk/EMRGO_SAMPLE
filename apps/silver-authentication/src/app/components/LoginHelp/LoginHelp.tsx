@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
-
 import * as Styles from "./LoginHelp.styles";
 import { ILoginHelpProps } from "./LoginHelp.types";
 

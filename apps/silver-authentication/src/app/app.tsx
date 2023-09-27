@@ -1,11 +1,11 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
+import { silverAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
-import routes from "./constants/routes";
 import { CreatePassword } from "./pages/CreatePassword";
 import { Login } from "./pages/Login";
 import { ResetPassword } from "./pages/ResetPassword";
@@ -17,40 +17,40 @@ import { TroubleSigningInThanks } from "./pages/TroubleSigningInThanks";
 
 const router = createBrowserRouter([
   {
-    path: routes.auth.home,
-    element: <Login/>,
+    path: routes.home,
+    element: <Login />,
   },
   {
-    path: routes.auth.login,
-    element: <Login/>,
+    path: routes.login,
+    element: <Login />,
   },
   {
-    path: routes.auth.createPassword,
-    element: <CreatePassword/>,
+    path: routes.createPassword,
+    element: <CreatePassword />,
   },
   {
-    path: routes.auth.resetPassword,
-    element: <ResetPassword/>,
+    path: routes.resetPassword,
+    element: <ResetPassword />,
   },
   {
-    path: routes.auth.resetPasswordOptions,
-    element: <ResetPasswordOptions/>,
+    path: routes.resetPasswordOptions,
+    element: <ResetPasswordOptions />,
   },
   {
-    path: routes.auth.completeRegistration,
-    element: <SetupMFA/>,
+    path: routes.completeRegistration,
+    element: <SetupMFA />,
   },
   {
-    path: routes.auth.resetPasswordEmailConfirmation,
-    element: <ResetPasswordEmailConfirmation/>,
+    path: routes.resetPasswordEmailConfirmation,
+    element: <ResetPasswordEmailConfirmation />,
   },
   {
-    path: routes.auth.troubleSigningIn,
-    element: <TroubleSigningIn/>,
+    path: routes.troubleSigningIn,
+    element: <TroubleSigningIn />,
   },
   {
-    path: routes.auth.troubleSigningInThanks,
-    element: <TroubleSigningInThanks/>,
+    path: routes.troubleSigningInThanks,
+    element: <TroubleSigningInThanks />,
   },
   {
     path: "/*",
@@ -58,21 +58,21 @@ const router = createBrowserRouter([
   },
   {
     index: true,
-    element: <Navigate to={`${routes.auth.login}`} replace/>,
+    element: <Navigate to={`${routes.login}`} replace />,
   },
 ]);
 
 function App() {
-  const {isDarkMode} = useDarkMode();
+  const { isDarkMode } = useDarkMode();
 
   return (
     // eslint-disable-next-line react/jsx-no-undef
     <ThemeProvider theme={darkTheme}>
-      <GlobalStyles/>
+      <GlobalStyles />
       <UserProvider>
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </UserProvider>
-      <ToastProvider/>
+      <ToastProvider />
     </ThemeProvider>
   );
 }

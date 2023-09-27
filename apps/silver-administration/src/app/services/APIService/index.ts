@@ -36,7 +36,7 @@ dashboardApi.interceptors.response.use(
           refreshError.response.status === 502
         ) {
           // useUserStore.getState().removeUser();
-          navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
+          navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.login);
         }
       }
     }

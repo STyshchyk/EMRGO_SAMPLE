@@ -1,14 +1,12 @@
-import {IUser} from "@emrgo-frontend/types";
+import { silverAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { IUser } from "@emrgo-frontend/types";
 import { produce } from "immer";
 import store from "store";
 import { create } from "zustand";
 
-import routes from "../constants/routes";
 import { IMFA } from "../services";
 
 const hydratedUser = store.get("user");
-
-
 
 export interface IUserData {
   user: IUser | null;
@@ -49,7 +47,7 @@ export const useUserStore = create<IUserData>()((set) => ({
       produce((state) => {
         state.user = null;
         store.set("user", null);
-        window.location.assign(routes.auth.login);
+        window.location.assign(routes.login);
       })
     ),
   setVerifyMFA: (flag) =>

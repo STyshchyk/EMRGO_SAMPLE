@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { silverAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 import { useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
 import { useDarkMode } from "usehooks-ts";
