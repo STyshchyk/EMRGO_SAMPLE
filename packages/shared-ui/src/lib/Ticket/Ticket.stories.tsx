@@ -96,8 +96,8 @@ export const PurchaseTicket: Story = {
             </Property>
           </TicketProperties>
           <TicketText>
-            Disclaimer: By executing you enter into a binding trade with Emergo DIFC as matched
-            principal. Emergo DIFC does not charge you a trade execution fee.
+            Disclaimer: By executing you enter into a binding trade with Emrgo DIFC as matched
+            principal. Emrgo DIFC does not charge you a trade execution fee.
           </TicketText>
         </TicketContent>
         <TicketFooter>
@@ -226,7 +226,7 @@ export const StandardSettlementInstruction: Story = {
           <TicketProperties>
             <Property>
               <PropertyKey>Custodian</PropertyKey>
-              <PropertyValue>EMERGO DIFC</PropertyValue>
+              <PropertyValue>EMRGO DIFC</PropertyValue>
             </Property>
 
             <Property>

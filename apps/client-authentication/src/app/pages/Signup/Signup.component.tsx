@@ -71,7 +71,7 @@ export const SignupComponent: FC<ISignupProps> = (props: ISignupProps) => {
 
       <OneColCheck>
         <Checkbox id="hasAcceptedPrivacyPolicy" {...form.getFieldProps("hasAcceptedPrivacyPolicy")}>
-          I consent to the use of my personal information according to the Emergo Privacy Policy
+          I consent to the use of my personal information according to the Emrgo Privacy Policy
         </Checkbox>
       </OneColCheck>
 
