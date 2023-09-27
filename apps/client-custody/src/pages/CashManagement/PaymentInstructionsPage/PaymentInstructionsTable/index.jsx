@@ -3,14 +3,15 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import LoadingPage from "../../../../components/LoadingPage";
 import MaterialTableOverflowMenu from "../../../../components/MaterialTableOverflowMenu";
 import { currencyRenderer, dateRenderer } from "../../../../constants/paymentAndStatuses/renderers";
+import { floatRenderer } from "../../../../helpers/renderers";
 import useMaterialTableLocalization from "../../../../hooks/useMTableLocalization";
 import * as accountsSelectors from "../../../../redux/selectors/accounts";
 import tableStyles from "../../../../styles/cssInJs/materialTable";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }) => {
   const mtableLocalization = useMaterialTableLocalization();
@@ -39,7 +40,7 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
             id: "clientBalance",
             title: t("Payment Instructions.Headers.Client Balance"),
             field: "clientBalance",
-            render: (rowData) => currencyRenderer(rowData.clientBalance),
+            render: (rowData) => floatRenderer(rowData.clientBalance),
           },
           {
             id: "createdAt",
