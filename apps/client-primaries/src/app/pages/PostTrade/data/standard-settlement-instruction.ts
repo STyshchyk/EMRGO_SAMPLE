@@ -2,7 +2,7 @@ import { IStandardSettlementInstruction } from "../PostTrade.types";
 
 const standardSettlementInstruction: IStandardSettlementInstruction = {
   id: 1,
-  custodian: "EMERGO DIFC",
+  custodian: "EMRGO DIFC",
   clientName: "EFG-Hermes FI Ltd",
   clientId: "EFG",
   currency: "USD",
