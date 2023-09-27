@@ -7,7 +7,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
@@ -551,7 +550,7 @@ const SecurityTradesTable = ({
     label: item,
     value: item,
   }));
-
+  console.log("listOfEntityNames", listOfIssuerCorporateNames, listOfInvestorCorporateNames);
   return (
     <Fragment>
       <div
@@ -610,21 +609,15 @@ const SecurityTradesTable = ({
 
                     <Grid item xs={12} md={6} lg={3}>
                       <DropdownFilter
-                        name="entity"
-                        label="Entity"
-                        options={entityNameOptionsList}
+                        name="status"
+                        label="Status"
+                        options={settlementStatusOptionsList}
+                        isMulti
                       />
                     </Grid>
                   </Fragment>
                 )}
-                <Grid item xs={12} md={6} lg={3}>
-                  <DropdownFilter
-                    name="status"
-                    label="Status"
-                    options={settlementStatusOptionsList}
-                    isMulti
-                  />
-                </Grid>
+                <Grid item xs={12} md={6} lg={3}></Grid>
 
                 {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>}
 
