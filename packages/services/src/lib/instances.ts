@@ -37,6 +37,7 @@ sharedDashboardApi.interceptors.response.use(
           refreshError.response.status === 500 ||
           refreshError.response.status === 502
         ) {
+          console.log("silver navigate ");
           navigateModule("authentication", clientAuthenticationRoutes.home);
         }
       }
