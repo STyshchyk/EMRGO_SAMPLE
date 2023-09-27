@@ -138,8 +138,11 @@ const CashStatementPage = () => {
       if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
         entityOpts.push({
           id: acc.group.entity.id,
-          label: v.capitalize(acc.group.entity.corporateEntityName),
+          label: acc.group.entity.corporateEntityName,
           value: acc.group.entity.id,
+          //* # 784 hold off on capitalizing
+          // label: v.capitalize(acc.group.entity.corporateEntityName),
+          // originalLabel: acc.group.entity.corporateEntityName,
         });
 
         if (acc.group.clientSecuritiesAccount) {
@@ -309,7 +312,9 @@ const CashStatementPage = () => {
       qs += `endDate=${endDate.toISOString()}&`;
     }
     if (currentlySelectedEntity) {
-      qs += `entityName=${currentlySelectedEntity.label}&`;
+      qs += `entityName=${currentlySelectedEntity?.label}&`;
+      // if labels are capitalized
+      // qs += `entityName=${currentlySelectedEntity?.data?.originalLabel}&`;
     }
     if (currentlySelectedAccount) {
       qs += `accountNo=${currentlySelectedAccount.value}`;

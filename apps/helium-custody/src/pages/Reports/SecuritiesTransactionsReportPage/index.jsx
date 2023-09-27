@@ -257,7 +257,10 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Security Transactions.Headers.Net Settle Amt"),
       field: "netSettleAmount",
       type: "numeric",
-      exportConfig: { align: "right" },
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.netSettleAmount),
+        align: "right",
+      },
     },
     // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
     {
@@ -913,9 +916,10 @@ const SecuritiesTransactionsReportPage = () => {
                                 filters?.settlementDateRange?.value?.endDate
                               ) {
                                 const { startDate, endDate } = filters?.settlementDateRange?.value;
-                                return row.settleDate
-                                  ? moment(row.settleDate).isBetween(startDate, endDate)
-                                  : null;
+                                const isInRange =
+                                  moment(row.settleDate).isSameOrAfter(startDate) &&
+                                  moment(row.settleDate).isSameOrBefore(endDate);
+                                return row.settleDate ? isInRange : null;
                               }
                               return true;
                             })

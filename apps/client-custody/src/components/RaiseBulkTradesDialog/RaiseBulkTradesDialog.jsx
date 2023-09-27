@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -17,6 +18,7 @@ import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecu
 
 const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
   const dispatch = useDispatch();
+  const [hasError, setHasError] = useState(false);
 
   // selectors
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
@@ -39,11 +41,13 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
     )[0];
 
     if (!selectedCounterparty?.id) {
+      setHasError(true);
       toast.error(`Counterparty doesn't exist`);
       return null;
     }
 
     if (!selectedSSI?.id) {
+      setHasError(true);
       toast.error(`SSI doesn't exist`);
       return null;
     }
@@ -57,6 +61,7 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
     )[0];
 
     if (!selectedExtSecurity?.id) {
+      setHasError(true);
       toast.error(`External Security doesn't exist`);
       return null;
     }
@@ -179,6 +184,7 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
             }}
             variant="contained"
             color="primary"
+            disabled={hasError}
           >
             Submit
           </Button>
