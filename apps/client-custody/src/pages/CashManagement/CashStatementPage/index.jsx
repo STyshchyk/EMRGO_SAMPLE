@@ -328,7 +328,7 @@ const CashStatementPage = () => {
 
     const tempSecurityAccountList = securityAccountOpts
       .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.id === selectedEntity.data.id : true
+        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 

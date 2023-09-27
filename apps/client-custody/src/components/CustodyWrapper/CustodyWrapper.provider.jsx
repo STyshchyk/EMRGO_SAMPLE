@@ -35,10 +35,13 @@ export const CustodyWrapperProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      if (!user?.hasAcceptedSilverTnc) {
-        setShowTermsModal("tnc");
-      }
+      // We've already checked this condition in the clientDashboard wrapper.
+      // The shared provider and component handle the display of the platform's (TNC) modal.
+      // if (!user?.hasAcceptedSilverTnc) {
+      //   setShowTermsModal("tnc");
+      // }
 
+      // custody wrapper component takes care of rendering the modal instead of shared clientDashboard wrapper.
       if (
         user?.hasAcceptedSilverTnc &&
         !user?.hasAcceptedClientTerms &&

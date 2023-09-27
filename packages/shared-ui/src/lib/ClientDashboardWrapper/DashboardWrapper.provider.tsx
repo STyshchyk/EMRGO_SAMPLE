@@ -48,9 +48,9 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
         setShowTermsModal("tnc");
       }
 
-      if (user?.hasAcceptedSilverTnc && !user?.hasAcceptedClientTerms) {
-        setShowTermsModal("client_terms");
-      }
+      // if (user?.hasAcceptedSilverTnc && !user?.hasAcceptedClientTerms) {
+      //   setShowTermsModal("client_terms");
+      // }
     }
   }, [user]);
 
