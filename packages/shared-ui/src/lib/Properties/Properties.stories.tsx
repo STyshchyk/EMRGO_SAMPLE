@@ -19,7 +19,7 @@ export const Primary: Story = {
       <>
         <Property>
           <PropertyKey>Custodian</PropertyKey>
-          <PropertyValue>EMERGO DIFC</PropertyValue>
+          <PropertyValue>EMRGO DIFC</PropertyValue>
         </Property>
 
         <Property>
