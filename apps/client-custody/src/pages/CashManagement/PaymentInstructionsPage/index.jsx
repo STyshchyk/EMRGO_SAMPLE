@@ -69,8 +69,7 @@ const generateInitialValues = (selectedPaymentInstructionRowData, options) => {
     (i) => i.value.id === paymentAccount?.value?.userId
   );
 
-  // Value date should be reset to null value in order to force the user to set a new valid value date when modifying the payment instruction
-  const valueDate = null;
+  const valueDate = selectedPaymentInstructionRowData.valueDate;
   const paymentAmount = selectedPaymentInstructionRowData?.payment;
   const paymentDetails = selectedPaymentInstructionRowData?.details;
   const transferPurpose = options.paymentTransferPurposeOptions.find(
