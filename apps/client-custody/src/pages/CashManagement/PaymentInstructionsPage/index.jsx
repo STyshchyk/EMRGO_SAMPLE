@@ -69,7 +69,7 @@ const generateInitialValues = (selectedPaymentInstructionRowData, options) => {
     (i) => i.value.id === paymentAccount?.value?.userId
   );
 
-  const valueDate = selectedPaymentInstructionRowData.valueDate;
+  const valueDate = selectedPaymentInstructionRowData?.valueDate;
   const paymentAmount = selectedPaymentInstructionRowData?.payment;
   const paymentDetails = selectedPaymentInstructionRowData?.details;
   const transferPurpose = options.paymentTransferPurposeOptions.find(
