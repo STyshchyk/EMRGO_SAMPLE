@@ -902,9 +902,10 @@ const SecuritiesTransactionsReportPage = () => {
                                 filters?.settlementDateRange?.value?.endDate
                               ) {
                                 const { startDate, endDate } = filters?.settlementDateRange?.value;
-                                return row.settleDate
-                                  ? moment(row.settleDate).isBetween(startDate, endDate)
-                                  : null;
+                                const isInRange =
+                                  moment(row.settleDate).isSameOrAfter(startDate) &&
+                                  moment(row.settleDate).isSameOrBefore(endDate);
+                                return row.settleDate ? isInRange : null;
                               }
                               return true;
                             })
