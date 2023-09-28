@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SecuritiesHoldingsTable, {
@@ -12,16 +12,26 @@ import * as reportsSelectors from "../../../redux/selectors/reports";
 const SecurityHoldings = () => {
   const dispatch = useDispatch();
 
+  const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
+
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  const currentEntityGroupID = currentEntityGroup?.id;
-
+  const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const securitiesAccounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
-  const securitiesHoldingsData = useSelector(reportsSelectors.selectSecuritiesHoldingsData);
-
-  const generatedTableData = securitiesHoldingsData?.map((i) =>
-    generateSecuritiesHoldingsTableRowData(i)
+  const settlementDatedSecuritiesHoldingsData = useSelector(
+    reportsSelectors.selectSecuritiesHoldingsData
   );
+  const tradeDatedSecuritiesHoldingsData = useSelector(
+    reportsSelectors.selectTradeDatedSecuritiesHoldingsData
+  );
+  const isFetching = useSelector(reportsSelectors.selectIsFetching);
+  const securitiesHoldingsData = isTradeDateHolding
+    ? tradeDatedSecuritiesHoldingsData
+    : settlementDatedSecuritiesHoldingsData;
+  const currentEntityGroupID = currentEntityGroup?.id;
+  const generatedTableData = securitiesHoldingsData
+    ?.map((i) => generateSecuritiesHoldingsTableRowData(i))
+    .filter((row) => row.quantity !== "--");
 
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
@@ -40,7 +50,12 @@ const SecurityHoldings = () => {
 
   return (
     <Fragment>
-      <SecuritiesHoldingsTable data={generatedTableData} securitiesAccounts={securitiesAccounts} />
+      <SecuritiesHoldingsTable
+        data={generatedTableData}
+        securitiesAccounts={securitiesAccounts}
+        isTradeDateHolding={isTradeDateHolding}
+        setIsTradeDateHolding={setIsTradeDateHolding}
+      />
     </Fragment>
   );
 };
