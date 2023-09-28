@@ -12,7 +12,6 @@ import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
-import moment from "moment";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
@@ -26,9 +25,9 @@ import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
-// import TableFiltersWrapper from '../TableFiltersWrapper';
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
+import { dateWithinRange } from "../../utils/dates";
 import { dateFormatter } from "../../utils/formatter";
 import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
@@ -637,7 +636,8 @@ const SecurityTradesTable = ({
                     filters?.entryDateRange?.value?.endDate
                   ) {
                     const { startDate, endDate } = filters?.entryDateRange.value;
-                    return moment(row.entryDate).isBetween(startDate, endDate);
+                    const isInRange = dateWithinRange(row?.entryDate, startDate, endDate);
+                    return row.entryDate ? isInRange : null;
                   }
                   return true;
                 })
@@ -648,7 +648,8 @@ const SecurityTradesTable = ({
                     filters?.tradeDateRange?.value?.endDate
                   ) {
                     const { startDate, endDate } = filters?.tradeDateRange.value;
-                    return moment(row.tradeDate).isBetween(startDate, endDate);
+                    const isInRange = dateWithinRange(row?.tradeDate, startDate, endDate);
+                    return row.tradeDate ? isInRange : null;
                   }
                   return true;
                 })
@@ -659,7 +660,8 @@ const SecurityTradesTable = ({
                     filters?.settlementDateRange?.value?.endDate
                   ) {
                     const { startDate, endDate } = filters?.settlementDateRange.value;
-                    return moment(row.settlementDate).isBetween(startDate, endDate);
+                    const isInRange = dateWithinRange(row?.settlementDate, startDate, endDate);
+                    return row.settlementDate ? isInRange : null;
                   }
                   return true;
                 })
@@ -694,9 +696,6 @@ const SecurityTradesTable = ({
                     const multiStatusKeys = [];
                     const result = filters?.status?.value.map((v) => {
                       multiStatusKeys.push(v.value);
-                      // console.log(statusValues);
-                      // console.log(statusValues.includes(row.tradeSettlementOrSettlementInstructionStatus), row.tradeSettlementOrSettlementInstructionStatus);
-
                       return multiStatusKeys.includes(
                         row.tradeSettlementOrSettlementInstructionStatus
                       );
@@ -748,18 +747,6 @@ const SecurityTradesTable = ({
                     actions={actions}
                     handleCloseMenu={handleCloseMenu}
                   />
-
-                  {/* <ReportingTablePDFExporter ref={ref} title="Custody and Settlement" pageSize="A2">
-                    <ExportTableContent
-                      columns={tableColumns}
-                      tableOptions={{
-                        sliceRowCount: 8,
-                        tableOffset: 4,
-                      }}
-                      data={data}
-                      title={`Custody and Settlement Report`}
-                    />
-                  </ReportingTablePDFExporter> */}
                 </div>
               );
             }}

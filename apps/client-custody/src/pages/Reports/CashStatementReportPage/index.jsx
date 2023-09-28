@@ -23,6 +23,7 @@ import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as reportsSelectors from "../../../redux/selectors/reports";
 import tableStyles from "../../../styles/cssInJs/materialTable";
+import { dateWithinRange } from "../../../utils/dates";
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
@@ -423,7 +424,7 @@ const CashStatementReportPage = () => {
 
               <Grid item xs={12} md={12} lg={6}>
                 <DateRangePicker
-                  name="daterange"
+                  name="entryDate"
                   label="Entry Date"
                   defaultFilter="none"
                   setStartDateValue={setStartDateValue}
@@ -454,11 +455,14 @@ const CashStatementReportPage = () => {
         <FilterConsumer>
           {({ filters, filterColumns }) => {
             const filteredData = filteredRows.filter((row) => {
-              // // Entry Date range Filter
-              // if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
-              //   const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-              //   return moment(row.date).isBetween(fromDate, toDate);
-              // }
+              //  Entry Date range Filter
+              if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
+                const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
+                const isInRange = dateWithinRange(date, fromDate, toDate);
+                return row.date ? isInRange : null;
+
+                // return moment(row.date).isBetween(fromDate, toDate);
+              }
               if (filters?.transactionType) {
                 let returnValue = false;
 
