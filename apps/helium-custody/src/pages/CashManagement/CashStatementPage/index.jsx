@@ -491,7 +491,7 @@ const CashStatementPage = () => {
 
             <Grid item xs={12} md={12} lg={6}>
               <DateRangePicker
-                name="daterange"
+                name="entryDate"
                 label="Entry Date"
                 defaultFilter="none"
                 setStartDateValue={setStartDateValue}
@@ -553,11 +553,16 @@ const CashStatementPage = () => {
         <FilterConsumer>
           {({ filterColumns, filters }) => {
             const filteredData = filteredRows.filter((row) => {
-              // // Entry Date range Filter
-              // if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
-              //   const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-              //   return moment(row.date).isBetween(fromDate, toDate);
-              // }
+              //  Entry Date range Filter
+              if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
+                const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
+                const isInRange =
+                  moment(row.date).isSameOrAfter(fromDate) &&
+                  moment(row.date).isSameOrBefore(toDate);
+                return row.date ? isInRange : null;
+
+                // return moment(row.date).isBetween(fromDate, toDate);
+              }
               if (filters?.transactionType) {
                 let returnValue = false;
 
