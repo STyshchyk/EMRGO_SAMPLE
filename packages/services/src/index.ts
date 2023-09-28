@@ -1,3 +1,4 @@
+export { useDarkModeCustomSilver } from "../../services/src/lib/silver.useDarkMode";
 export { useDarkModeCustom } from "../../services/src/lib/useDarkMode";
 export * from "./lib/account";
 export * from "./lib/documents";
@@ -5,6 +6,7 @@ export * from "./lib/hooks";
 export * from "./lib/instances";
 export * from "./lib/issuances";
 export * from "./lib/profile";
+export * from "./lib/silver.account";
 export * from "./lib/silver.entities";
 export * from "./lib/silver.instance";
 export * from "./lib/silver.opportunities";

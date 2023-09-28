@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
 
-import { useDarkModeCustom } from "@emrgo-frontend/services";
+import { useDarkModeCustomSilver } from "@emrgo-frontend/services";
 import { UserProvider } from "@emrgo-frontend/shared-ui";
 import { lightTheme } from "@emrgo-frontend/theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -18,7 +18,7 @@ import i18n from "../../i18n";
 
 const AppProviders = ({ children }) => {
   const { isDarkMode, disable } = useDarkMode(false);
-  const [isDarkModeCustom, enableCustom, disableCustom] = useDarkModeCustom();
+  const [isDarkModeCustom, enableCustom, disableCustom] = useDarkModeCustomSilver();
   if (isDarkMode === true) {
     disable();
   }

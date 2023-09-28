@@ -1,12 +1,12 @@
 import { queryKeys } from "@emrgo-frontend/constants";
-import { IUserResponse } from "@emrgo-frontend/types";
+import { IUser } from "@emrgo-frontend/types";
 import { useQuery } from "@tanstack/react-query";
 
 import { sharedDashboardApi } from "../instances";
 
 const QUERY_KEY = [queryKeys.account.profile.fetch];
 
-const fetchUser = async (): Promise<IUserResponse> => {
+const fetchUser = async (): Promise<IUser> => {
   const { data } = await sharedDashboardApi({
     method: "get",
     url: `/auth/v2/profile`,
@@ -15,5 +15,5 @@ const fetchUser = async (): Promise<IUserResponse> => {
 };
 
 export const useFetchUser = () => {
-  return useQuery<IUserResponse, Error>(QUERY_KEY, () => fetchUser());
+  return useQuery<IUser, Error>(QUERY_KEY, () => fetchUser());
 };

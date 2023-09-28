@@ -18,7 +18,7 @@ import {
   silverOnboardingRoutes,
   silverPrimariesRoutes,
 } from "@emrgo-frontend/constants";
-import { fetchUserProfile, logoutUser } from "@emrgo-frontend/services";
+import { fetchUserProfileSilver, logoutUserSilver } from "@emrgo-frontend/services";
 import {
   AccountIcon,
   HelpIcon,
@@ -61,14 +61,14 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     disable();
   }, []);
   const { mutate: doLogout } = useMutation({
-    mutationFn: logoutUser,
+    mutationFn: logoutUserSilver,
     onSuccess: () => {
       navigateSilverModule(silverModule.authentication, silverAuthenticationRoutes.home);
     },
   });
 
   const { data: userData } = useQuery([constants.queryKeys.account.profile.fetch], {
-    queryFn: () => fetchUserProfile(),
+    queryFn: () => fetchUserProfileSilver(),
     keepPreviousData: false,
     refetchOnMount: true,
     onSuccess: (response) => {
