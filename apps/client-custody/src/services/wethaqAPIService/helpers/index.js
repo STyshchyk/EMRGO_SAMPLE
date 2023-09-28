@@ -1,10 +1,9 @@
+import { clientAuthenticationRoutes } from "@emrgo-frontend/constants";
+import { navigateModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 import store from "store";
 
 import appConfig from "../../../appConfig";
-import { clientAuthenticationRoutes } from "@emrgo-frontend/constants";
-import { navigateModule } from "@emrgo-frontend/utils";
-
 
 const axiosParams = {
   baseURL: appConfig.baseAPIURL,
@@ -47,8 +46,8 @@ baseAxiosInstance.interceptors.response.use(
           refreshError.response.status === 502
         ) {
           console.log("redirect to client-auth login");
-          navigateModule("authentication", clientAuthenticationRoutes.home);
         }
+        navigateModule("authentication", clientAuthenticationRoutes.home);
       }
     }
 

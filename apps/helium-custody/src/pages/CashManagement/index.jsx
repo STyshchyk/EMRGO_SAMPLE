@@ -16,6 +16,7 @@ const AccountTransferPage = lazy(() => import("./AccountTransferPage"));
 const PaymentInstructionsPage = lazy(() => import("./PaymentInstructionsPage"));
 const IncomingPaymentsPage = lazy(() => import("./IncomingPaymentsPage"));
 const InternalTransfersPage = lazy(() => import("./InternalTransfersPage"));
+const EntityAccountManagement = lazy(() => import("./EntityAccountManagement"));
 
 const BillingAndPayments = () => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
@@ -66,6 +67,13 @@ const BillingAndPayments = () => {
       // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
     },
+    {
+      path: routes.dashboard.custody.cashManagement.entityAccounts,
+      link: routes.dashboard.custody.cashManagement.entityAccounts,
+      text: "Minor Navigation.Cash Management.Entity Accounts",
+      // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
+      disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
+    },
   ];
 
   const nextAccessibleRoutePath = findTheFirstAccessibleRoutePath(PILL_ROUTE_CONFIGS);
@@ -93,6 +101,7 @@ const BillingAndPayments = () => {
         ></Route>
         <Route exact path="/payment-instructions" element={<PaymentInstructionsPage />}></Route>
         <Route exact path="/incoming-payments" element={<IncomingPaymentsPage />}></Route>
+        <Route exact path="/entity-account-management" element={<EntityAccountManagement />}></Route>
         {/*
           <Route exact path={routes.dashboard.custody.cashManagement.noAccess}>
             <NoAccessPage />

@@ -65,7 +65,6 @@ const ManagePaymentAccountsPage = () => {
   const paymentAccounts = useSelector(accountsSelectors.selectPaymentAccounts);
   const entitiesList = useSelector(entitiesSelectors.selectEntities);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  console.log("entity list", entitiesList);
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
   const data = paymentAccounts.map((account) => createPaymentAccountTableDataRow(account));

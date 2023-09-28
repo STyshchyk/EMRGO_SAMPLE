@@ -3,7 +3,13 @@ import { navigateSilverModule } from "@emrgo-frontend/utils";
 import axios from "axios";
 import store from "store";
 
+
+
 import appConfig from "../../../appConfig";
+
+
+
+
 
 const axiosParams = {
   baseURL: appConfig.baseAPIURL,
@@ -45,8 +51,8 @@ baseAxiosInstance.interceptors.response.use(
           refreshError.response.status === 502
         ) {
           console.log("go back to login");
-          navigateSilverModule("authentication", silverAuthenticationRoutes.home);
         }
+        navigateSilverModule("authentication", silverAuthenticationRoutes.home);
       }
     }
 

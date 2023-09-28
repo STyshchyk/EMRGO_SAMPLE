@@ -63,8 +63,8 @@ export const SignupComponent: FC<ISignupProps> = (props: ISignupProps) => {
 
       <OneColCheck>
         <Checkbox id="hasConfirmedClientType" {...form.getFieldProps("hasConfirmedClientType")}>
-          I confirm that I am a <Link to="">Professional Client</Link> or a{" "}
-          <Link to="">Market Counterparty</Link> as defined by the Dubai Financial Services
+          I confirm that I am a <Link target="_blank" to="https://dfsaen.thomsonreuters.com/rulebook/cob-233">Professional Client</Link> or a{" "}
+          <Link target="_blank" to="https://dfsaen.thomsonreuters.com/rulebook/cob-239">Market Counterparty</Link> as defined by the Dubai Financial Services
           Authority (DFSA)
         </Checkbox>
       </OneColCheck>
