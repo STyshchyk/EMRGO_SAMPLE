@@ -1,5 +1,9 @@
 import { baseAxiosInstance } from "../wethaqAPIService/helpers";
 
+
+
+
+
 export const createInvestmentFormSession = async (requestPayload: any) => {
   const promise = baseAxiosInstance({
     method: "post",
@@ -15,7 +19,7 @@ export const submitCustodyKYCForms = async () => {
     method: "put",
     url: `/auth/v2/client/kyc/submit`,
     params: {
-      kycType: "entityCustody",
+      kycType: "entity",
     },
   });
   const data = await (await promise).data;
@@ -27,7 +31,7 @@ export const fetchKYCForms = async () => {
     method: "get",
     url: `/auth/v2/client/kyc/forms`,
     params: {
-      kycType: "entityCustody",
+      kycType: "entity",
     },
   });
   const data = await (await promise).data;
