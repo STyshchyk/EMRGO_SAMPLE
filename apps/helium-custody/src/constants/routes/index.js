@@ -1,5 +1,9 @@
 import { include } from "named-urls";
 
+
+
+
+
 const publicUrls = include("/", {
   home: "",
   login: "login",
@@ -37,6 +41,7 @@ const dashboardUrls = include("/dashboard", {
       accountTransfer: "internal-transfer",
       paymentInstructions: "payment-instructions",
       incomingPayments: "incoming-payments",
+      entityAccounts: "entity-account-management",
     }),
     reports: include("reports", {
       home: "",

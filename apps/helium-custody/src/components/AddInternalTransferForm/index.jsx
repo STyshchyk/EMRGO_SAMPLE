@@ -404,6 +404,7 @@ const AddInternalTransferForm = ({
                   <Button
                     disabled={
                       isSubmitting ||
+                      values.sourceEntity === undefined ||
                       values.sourceAccount === null ||
                       values.destinationAccount === null ||
                       values.transferAmount === 0
