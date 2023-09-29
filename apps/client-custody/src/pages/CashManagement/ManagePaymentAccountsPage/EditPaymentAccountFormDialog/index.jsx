@@ -42,7 +42,7 @@ const EditPaymentAccountFormDialog = ({ accountId, initialValues, open, handleCl
           : undefined,
       routingNo: values.country?.label === USALabel ? values.routingNo : undefined,
       sortCode: values.country?.label === UKLabel ? values.sortCode : undefined,
-      ifscCode: values.country?.label !== "INR" ? undefined : values.ifscCode,
+      ifscCode: values.country?.label !== "India" ? undefined : values.ifscCode,
       bsbCode:
         values.currency?.label !== "AUD" || values.currency?.label !== "NZD"
           ? undefined
