@@ -5,8 +5,9 @@ export const selectTransactionsData = (state) => state.billingAndPayments.transa
 export const selectIsFetching = (state) => state.billingAndPayments.isFetching;
 export const selectIsSubmitting = (state) => state.billingAndPayments.isSubmitting;
 export const selectIsRequesting = (state) => state.billingAndPayments.isRequesting;
-export const selectSourceOwners = (state) => state.billingAndPayments.sourceOwners;
-export const selectDestinationOwners = (state) => state.billingAndPayments.destinationOwners;
+export const selectSourceOwnersInitial = (state) => state.billingAndPayments.sourceOwners;
+export const selectEmrgoOwners = (state) => state.billingAndPayments.emrgoOwners;
+export const selectDestinationOwnersInitial = (state) => state.billingAndPayments.destinationOwners;
 export const selectSourceAccounts = (state) => state.billingAndPayments.sourceAccounts;
 export const selectDestinationAccounts = (state) => state.billingAndPayments.destinationAccounts;
 export const selectFetchingTransfers = (state) => state.billingAndPayments.isFetchingTransfers;
@@ -14,6 +15,22 @@ export const selectExternalPaymentsAuditData = (state) =>
   state.billingAndPayments.externalPaymentsAuditData;
 export const selectIsFetchingExternalPaymentsAuditData = (state) =>
   state.billingAndPayments.isFetchingExternalPaymentsAuditData;
+
+export const selectSourceOwners = createSelector(
+  [selectSourceOwnersInitial, selectEmrgoOwners],
+  (ownersData, emrgoData) => {
+    const result = [...ownersData, ...emrgoData];
+    return result;
+  }
+);
+
+export const selectDestinationOwners = createSelector(
+  [selectDestinationOwnersInitial, selectEmrgoOwners],
+  (destinationOwner, emrgoData) => {
+    const result = [...destinationOwner, ...emrgoData];
+    return result;
+  }
+);
 
 export const selectAccounts = createSelector([selectAccountsData], (accountsData) => {
   if (accountsData?.data) {

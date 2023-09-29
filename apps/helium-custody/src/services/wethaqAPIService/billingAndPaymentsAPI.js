@@ -1,9 +1,5 @@
 import { baseAxiosInstance } from "./helpers";
 
-
-
-
-
 const getTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
@@ -21,6 +17,12 @@ const getOwners = () =>
   baseAxiosInstance({
     method: "GET",
     url: `/auth/v2/internal/entities`,
+  });
+
+const getEmrgoOwners = () =>
+  baseAxiosInstance({
+    method: "GET",
+    url: `/auth/v2/internal/entities/emrgo`,
   });
 
 const transferMoney = (payload) =>
@@ -47,6 +49,7 @@ const billingAndPaymentsAPI = {
   getTransactions,
   getAccounts,
   getOwners,
+  getEmrgoOwners,
   transferMoney,
   transferMoneyInternal,
   getExternalPaymentsAuditDataById,

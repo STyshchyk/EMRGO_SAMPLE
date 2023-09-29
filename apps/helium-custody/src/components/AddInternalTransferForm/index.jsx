@@ -112,6 +112,7 @@ const AddInternalTransferForm = ({
   const formattedDate = moment().format("DD/MM/YYYY");
 
   const sourceOwners = useSelector(billingAndPaymentsSelectors.selectSourceOwners);
+  const emrgoOwners = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectSourceAccounts);
   const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);
@@ -330,7 +331,7 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                   variant="outlined"
+                  variant="outlined"
                   size="small"
                   value={values.destinationAccount?.value?.accountBalance}
                   InputProps={{
@@ -356,7 +357,7 @@ const AddInternalTransferForm = ({
                   fullWidth
                   component={TextField}
                   name="transferAmount"
-                   variant="outlined"
+                  variant="outlined"
                   size="small"
                   InputProps={{
                     inputComponent: CustomNumberInputField,

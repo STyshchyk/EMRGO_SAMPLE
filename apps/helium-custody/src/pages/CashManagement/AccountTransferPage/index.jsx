@@ -1,21 +1,20 @@
 import { createRef, Fragment, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
+import v from "voca";
 
 import PageTitle from "../../../components/PageTitle";
 import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
-import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -52,6 +51,10 @@ const AccountTransferPage = () => {
     (payload) => dispatch(billingAndPaymentsActionCreators.doFetchSourceOwners(payload)),
     [dispatch]
   );
+  const fetchEmrgoOwners = useCallback(
+    (payload) => dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners(payload)),
+    [dispatch]
+  );
   const fetchDestinationOwners = useCallback(
     (payload) => dispatch(billingAndPaymentsActionCreators.doFetchDestinationOwners(payload)),
     [dispatch]
@@ -67,10 +70,17 @@ const AccountTransferPage = () => {
 
   useEffect(() => {
     fetchSourceOwners();
+    fetchEmrgoOwners();
     fetchDestinationOwners();
     fetchSourceAccounts();
     fetchDestinationAccounts();
-  }, [fetchSourceOwners, fetchDestinationOwners, fetchSourceAccounts, fetchDestinationAccounts]);
+  }, [
+    fetchSourceOwners,
+    fetchDestinationOwners,
+    fetchSourceAccounts,
+    fetchDestinationAccounts,
+    fetchEmrgoOwners,
+  ]);
 
   const sourceEntitiesDropdown = sourceOwners.map((entity) => ({
     value: entity.id,
@@ -281,9 +291,7 @@ const AccountTransferPage = () => {
 
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>
-                      {t("Internal Transfer.Source Account Owner")}
-                    </Typography>
+                    <Typography>{t("Internal Transfer.Source Account Owner")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl className={style.input__form_control}>
@@ -342,9 +350,7 @@ const AccountTransferPage = () => {
 
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>
-                      {t("Internal Transfer.Destination Account Owner")}
-                    </Typography>
+                    <Typography>{t("Internal Transfer.Destination Account Owner")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl className={style.input__form_control}>
@@ -369,9 +375,7 @@ const AccountTransferPage = () => {
 
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>
-                      {t("Internal Transfer.Destination Account")}
-                    </Typography>
+                    <Typography>{t("Internal Transfer.Destination Account")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl className={style.input__form_control}>
@@ -405,9 +409,7 @@ const AccountTransferPage = () => {
 
                 <Grid item container xs={12} md={12} lg={8}>
                   <Grid item xs={6} container direction="column" justifyContent="center">
-                    <Typography>
-                      {t("Internal Transfer.Transfer Amount")}
-                    </Typography>
+                    <Typography>{t("Internal Transfer.Transfer Amount")}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Field

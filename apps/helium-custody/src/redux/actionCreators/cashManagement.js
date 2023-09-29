@@ -14,6 +14,10 @@ export const doFetchSourceOwners = createAction(actionTypes.FETCH_SOURCE_OWNERS_
 export const doFetchSourceOwnersSuccess = createAction(actionTypes.FETCH_SOURCE_OWNERS_SUCCEEDED);
 export const doFetchSourceOwnersFailure = createAction(actionTypes.FETCH_SOURCE_OWNERS_FAILED);
 
+export const doFetchEmrgoOwners = createAction(actionTypes.FETCH_EMRGO_OWNERS_REQUESTED);
+export const doFetchEmrgoOwnersSuccess = createAction(actionTypes.FETCH_EMRGO_OWNERS_SUCCEEDED);
+export const doFetchEmrgoOwnersFailure = createAction(actionTypes.FETCH_EMRGO_OWNERS_FAILED);
+
 export const doFetchDestinationOwners = createAction(
   actionTypes.FETCH_DESTINATION_OWNERS_REQUESTED
 );

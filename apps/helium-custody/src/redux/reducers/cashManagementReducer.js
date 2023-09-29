@@ -12,6 +12,7 @@ const defaultState = {
   message: null,
   accounts: null,
   sourceOwners: [],
+  emrgoOwners: [],
   destinationOwners: [],
   sourceAccounts: [],
   destinationAccounts: [],
@@ -57,6 +58,19 @@ const billingAndPaymentsReducer = handleActions(
       draft.sourceOwners = data.entities;
     }),
     [actionCreators.doFetchSourceOwnersFailure]: produce((draft, { payload }) => {
+      draft.isFetching = false;
+      draft.errorMessage = payload;
+    }),
+
+    [actionCreators.doFetchEmrgoOwners]: produce((draft) => {
+      draft.errorMessage = null;
+      draft.isFetching = true;
+    }),
+    [actionCreators.doFetchEmrgoOwnersSuccess]: produce((draft, { payload: { data } }) => {
+      draft.isFetching = false;
+      draft.emrgoOwners = data.entities;
+    }),
+    [actionCreators.doFetchEmrgoOwnersFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
     }),

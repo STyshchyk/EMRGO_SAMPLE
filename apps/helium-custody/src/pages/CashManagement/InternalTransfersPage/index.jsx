@@ -43,6 +43,9 @@ const InternalTransfersPage = () => {
       dispatch(journalsActionCreators.doFetchInternalTransactions());
     const fetchSourceOwners = (payload) =>
       dispatch(billingAndPaymentsActionCreators.doFetchSourceOwners(payload));
+
+    const fetchEmrgoOwners = (payload) =>
+      dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners(payload));
     const fetchDestinationOwners = (payload) =>
       dispatch(billingAndPaymentsActionCreators.doFetchDestinationOwners(payload));
     const fetchSourceAccounts = (payload) =>
@@ -51,6 +54,7 @@ const InternalTransfersPage = () => {
       dispatch(billingAndPaymentsActionCreators.doFetchDestinationAccounts(payload));
 
     fetchSourceOwners();
+    fetchEmrgoOwners();
     fetchDestinationOwners();
     fetchSourceAccounts();
     fetchDestinationAccounts();

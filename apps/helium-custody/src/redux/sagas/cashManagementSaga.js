@@ -31,6 +31,19 @@ function* fetchAccounts({ payload }) {
   }
 }
 
+function* fetchEmrgoOwners() {
+  try {
+    const response = yield call(wethaqAPIService.billingAndPaymentsAPI.getEmrgoOwners);
+    const { data } = response;
+    yield put(actionCreators.doFetchEmrgoOwnersSuccess({ data }));
+  } catch (error) {
+    const errorMessage = extractErrorMessage(error);
+    console.log("saga error", error);
+    showToastErrorNotification(error, errorMessage);
+    yield put(actionCreators.doFetchEmrgoOwnersFailure(errorMessage));
+  }
+}
+
 function* fetchSourceOwners() {
   try {
     const response = yield call(wethaqAPIService.billingAndPaymentsAPI.getOwners);
@@ -212,6 +225,7 @@ const billingAndPaymentsSaga = [
   takeLatest(actionTypes.FETCH_TRANSACTIONS_REQUESTED, fetchTransations),
   takeLatest(actionTypes.FETCH_ACCOUNTS_REQUESTED, fetchAccounts),
   takeLatest(actionTypes.FETCH_SOURCE_OWNERS_REQUESTED, fetchSourceOwners),
+  takeLatest(actionTypes.FETCH_EMRGO_OWNERS_REQUESTED, fetchEmrgoOwners),
   takeLatest(actionTypes.FETCH_DESTINATION_OWNERS_REQUESTED, fetchDestinationOwners),
   takeLatest(actionTypes.FETCH_SOURCE_ACCOUNTS_REQUESTED, fetchSourceAccounts),
   takeLatest(actionTypes.FETCH_DESTINATION_ACCOUNTS_REQUESTED, doFetchDestinationAccounts),
