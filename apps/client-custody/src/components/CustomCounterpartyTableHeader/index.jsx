@@ -1,81 +1,80 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-
+import { colors } from "@emrgo-frontend/theme";
 import { MTableHeader } from "@material-table/core";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useDarkMode } from "usehooks-ts";
 
-import style from "./style.module.scss";
+function setColSpan(arr) {
+  let result = [];
 
-// const useStyles = makeStyles({
-//   tableCell: {
-//     padding: '0px 8px',
-//   },
-// });
+  for (let i = 0; i < arr.length; i++) {
+    const currentFieldType = arr[i].fieldType;
+    const previousFieldType = arr[i - 1]?.fieldType;
+
+    if (currentFieldType && currentFieldType !== previousFieldType) {
+      result.push({ ...arr[i], colSpan: 1 });
+    } else if (result.length && Object.keys(arr[i]).length !== 0) {
+      result[result.length - 1].colSpan = 2;
+    }
+  }
+
+  return result;
+}
 
 const CustomCounterpartyTableHeader = (props) => {
   const { columns } = props;
-  const { t } = useTranslation(["counterparty"]);
+  const { isDarkMode } = useDarkMode();
 
-  const map = new Map();
-  columns?.map(({ field }) => map.set(field, field));
+  const cellStyle = {
+    padding: "16px 8px",
+    fontSize: "0.9rem",
+    fontWeight: 700,
+    color: isDarkMode ? colors.white[100] : colors.green3,
+  };
 
-  // Improve this - repetitive on table.js
-  // used on ui table
-  const content = columns?.map(({ field }) => {
-    if (field === "deliveryOrReceiveAgentIdType") {
-      if (map.has("deliveryOrReceiveIdentifier")) {
-        return (
-          <TableCell key={field} className={style.tableCell} colSpan={2}>
-            {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
-          </TableCell>
-        );
-      }
+  const groupByTypes = {
+    deliveryOrReceiveAgentIdType: "delivery",
+    deliveryOrReceiveIdentifier: "delivery",
+    sellerOrBuyerIdType: "seller",
+    sellerOrBuyerIdentifier: "seller",
+  };
+
+  const headerTitles = {
+    deliveryOrReceiveAgentIdType: "Delivery/Receive Agent",
+    deliveryOrReceiveIdentifier: "Delivery/Receive Agent",
+    sellerOrBuyerIdType: "Seller/Buyer",
+    sellerOrBuyerIdentifier: "Seller/Buyer",
+  };
+
+  const orderOfColumns = [];
+
+  columns?.map(({ field }, index) => {
+    if (groupByTypes[field]) {
+      orderOfColumns.push({ position: index, fieldType: groupByTypes[field] });
+    } else {
+      orderOfColumns.push({});
+    }
+  });
+
+  const formatedColumns = setColSpan(orderOfColumns);
+
+  let skipTableCell = false;
+  const contentView = columns?.map(({ field }, index) => {
+    const includesIndex = formatedColumns.findIndex((x) => x.position === index);
+
+    if (includesIndex !== -1) {
+      skipTableCell = formatedColumns[includesIndex]?.colSpan === 2;
       return (
-        <TableCell key={field} className={style.tableCell} colSpan={1}>
-          {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
+        <TableCell key={field} style={cellStyle} colSpan={formatedColumns[includesIndex]?.colSpan}>
+          {headerTitles[field]}
         </TableCell>
       );
     }
 
-    if (field === "deliveryOrReceiveIdentifier") {
-      if (map.has("deliveryOrReceiveAgentIdType")) {
-        return null;
-      }
-      return (
-        <TableCell key={field} className={style.tableCell} colSpan={1}>
-          {t("Counterparty SSI.Headers.DeliveryOrReceive Agent")}
-        </TableCell>
-      );
-    }
-
-    if (field === "sellerOrBuyerIdType") {
-      if (map.has("sellerOrBuyerIdentifier")) {
-        return (
-          <TableCell key={field} className={style.tableCell} colSpan={2}>
-            {t("Counterparty SSI.Headers.SellerOrBuyer")}
-          </TableCell>
-        );
-      }
-
-      return (
-        <TableCell key={field} className={style.tableCell} colSpan={1}>
-          {t("Counterparty SSI.Headers.SellerOrBuyer")}
-        </TableCell>
-      );
-    }
-
-    if (field === "sellerOrBuyerIdentifier") {
-      if (map.has("sellerOrBuyerIdType")) {
-        return null;
-      }
-
-      return (
-        <TableCell key={field} className={style.tableCell} colSpan={1}>
-          {t("Counterparty SSI.Headers.SellerOrBuyer")}
-        </TableCell>
-      );
+    if (skipTableCell) {
+      skipTableCell = false;
+      return null;
     }
 
     return <TableCell key={field} />;
@@ -84,10 +83,7 @@ const CustomCounterpartyTableHeader = (props) => {
   return (
     <>
       <TableHead>
-        <TableRow>
-          {content}
-          <TableCell />
-        </TableRow>
+        <TableRow>{contentView}</TableRow>
       </TableHead>
       <MTableHeader {...props} />
     </>
