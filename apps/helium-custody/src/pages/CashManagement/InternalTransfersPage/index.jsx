@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -34,32 +34,50 @@ const InternalTransfersPage = () => {
     journalsSelectors.selectInternalTransactionsIsFetching
   );
 
+  const fetchInternalTransactions = useCallback(
+    () => dispatch(journalsActionCreators.doFetchInternalTransactions()),
+    [dispatch]
+  );
+  const fetchSourceOwners = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchSourceOwners()),
+    [dispatch]
+  );
+  const fetchEmrgoOwners = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners()),
+    [dispatch]
+  );
+  const fetchDestinationOwners = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchDestinationOwners()),
+    [dispatch]
+  );
+  const fetchSourceAccounts = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchSourceAccounts()),
+    [dispatch]
+  );
+  const fetchDestinationAccounts = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchDestinationAccounts()),
+    [dispatch]
+  );
+
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
   });
 
   useEffect(() => {
-    const fetchInternalTransactions = () =>
-      dispatch(journalsActionCreators.doFetchInternalTransactions());
-    const fetchSourceOwners = (payload) =>
-      dispatch(billingAndPaymentsActionCreators.doFetchSourceOwners(payload));
-
-    const fetchEmrgoOwners = (payload) =>
-      dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners(payload));
-    const fetchDestinationOwners = (payload) =>
-      dispatch(billingAndPaymentsActionCreators.doFetchDestinationOwners(payload));
-    const fetchSourceAccounts = (payload) =>
-      dispatch(billingAndPaymentsActionCreators.doFetchSourceAccounts(payload));
-    const fetchDestinationAccounts = (payload) =>
-      dispatch(billingAndPaymentsActionCreators.doFetchDestinationAccounts(payload));
-
     fetchSourceOwners();
     fetchEmrgoOwners();
     fetchDestinationOwners();
     fetchSourceAccounts();
     fetchDestinationAccounts();
     fetchInternalTransactions();
-  }, [dispatch]);
+  }, [
+    fetchSourceOwners,
+    fetchEmrgoOwners,
+    fetchDestinationOwners,
+    fetchSourceAccounts,
+    fetchDestinationAccounts,
+    fetchInternalTransactions,
+  ]);
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,8 +105,6 @@ const InternalTransfersPage = () => {
       onClick: () => {
         const updateInternalJournal = (payload) =>
           dispatch(journalsActionCreators.doUpdateInternalTransactions(payload));
-        const fetchInternalTransactions = () =>
-          dispatch(journalsActionCreators.doFetchInternalTransactions());
 
         const requestPayload = {
           status: internalTransferStatusEnum.DONE,
@@ -102,6 +118,11 @@ const InternalTransfersPage = () => {
           successCallback: () => {
             handleCloseMenu();
             fetchInternalTransactions();
+            fetchSourceOwners();
+            fetchEmrgoOwners();
+            fetchDestinationOwners();
+            fetchSourceAccounts();
+            fetchDestinationAccounts();
           },
         });
       },
@@ -115,8 +136,6 @@ const InternalTransfersPage = () => {
       onClick: () => {
         const updateInternalJournal = (payload) =>
           dispatch(journalsActionCreators.doUpdateInternalTransactions(payload));
-        const fetchInternalTransactions = () =>
-          dispatch(journalsActionCreators.doFetchInternalTransactions());
 
         const requestPayload = {
           status: internalTransferStatusEnum.CANCELLED,
