@@ -407,7 +407,8 @@ const AddInternalTransferForm = ({
                       values.sourceEntity === undefined ||
                       values.sourceAccount === null ||
                       values.destinationAccount === null ||
-                      values.transferAmount === 0
+                      values.transferAmount === 0 ||
+                      !values.transferAmount
                     }
                     type="submit"
                     variant="contained"
