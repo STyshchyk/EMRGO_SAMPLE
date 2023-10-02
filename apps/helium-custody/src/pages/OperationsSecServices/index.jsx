@@ -19,7 +19,6 @@ const CouponAdministration = lazy(() => import("./CouponAdministration"));
 const CustodyAndSettlement = lazy(() => import("./CustodyAndSettlement"));
 const FXTransactionList = lazy(() => import("./FXTransactionList"));
 const Registrar = lazy(() => import("./Registrar"));
-const SecuritiesRegistration = lazy(() => import("./SecuritiesRegistration"));
 const CorporateActionEvents = lazy(() => import("./CorporateActionEvents"));
 // const TrusteeServices = lazy(() => import('./TrusteeServices'));
 
@@ -35,14 +34,6 @@ const OperationsSecServices = () => {
   );
 
   const PILL_ROUTE_CONFIGS = [
-    {
-      path: routes.dashboard.custody.opsSecServices.securitiesRegistration,
-      link: routes.dashboard.custody.opsSecServices.securitiesRegistration,
-      text: "Minor Navigation.Issuer Services.Securities Registration",
-      disabled: !authorizeRouteAccess(currentListOfAcls, [
-        accessControlsList.SECURITIES_SERVICES_OPS.view.key,
-      ]),
-    },
     {
       path: routes.dashboard.custody.opsSecServices.custodyAndSettlement,
       link: routes.dashboard.custody.opsSecServices.custodyAndSettlement,
@@ -122,20 +113,6 @@ const OperationsSecServices = () => {
   return (
     <Routes>
       <Route exact path="" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
-
-      <Route
-        path="securities-registration"
-        element={
-          <Fragment>
-            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
-
-            <PageWrapper>
-              <SecuritiesRegistration />
-            </PageWrapper>
-          </Fragment>
-        }
-      ></Route>
-
       <Route
         path="custody-and-settlement"
         element={
