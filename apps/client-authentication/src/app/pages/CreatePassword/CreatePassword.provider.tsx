@@ -1,10 +1,12 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useLayoutEffect,
+useState,  } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { useDarkMode } from "usehooks-ts";
 
 import { CreatePasswordSchema } from "./CreatePassword.schema";
 import { createPassword } from "./CreatePassword.service";
@@ -18,12 +20,17 @@ const CreatePasswordContext = createContext<ICreatePasswordContext | null>(null)
  * @returns {JSX.Element}
  */
 export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
+  const { disable } = useDarkMode();
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") || "";
   const type = searchParams.get("type") || "";
   const navigate = useNavigate();
   const { showErrorToast } = useToast();
+
+  useLayoutEffect(() => {
+    disable();
+  }, []);
 
   const { mutate: doCreatePassword } = useMutation(createPassword);
 
