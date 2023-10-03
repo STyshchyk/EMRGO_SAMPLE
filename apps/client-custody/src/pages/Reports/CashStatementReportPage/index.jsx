@@ -265,7 +265,7 @@ const CashStatementReportPage = () => {
       id: "date",
       title: t("Cash Statement.Headers.Date"),
       field: "date",
-      defaultSort: "desc",
+      defaultSort: "asc",
       render: (rowData) => dateFormatter(rowData?.date, "DD/MM/YYYY"),
       exportConfig: {
         width: 8,
