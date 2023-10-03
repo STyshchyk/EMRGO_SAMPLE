@@ -1,12 +1,12 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
-import moment from 'moment'
 
 import MaterialTable, { MTableAction } from "@material-table/core";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CsvBuilder } from "filefy";
+import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
@@ -65,28 +65,20 @@ const CouponPaymentScheduleTable = ({
   };
 
   const handleOnRowUpdate = async (newData, oldData) => {
-    const dataUpdate = [...tableData];
-    // const index = oldData.tableData.id; // wasn't updating the value(notional) on editing so changed to use tableData index
+    const updatedData = tableData.map((item) => {
+      if (item.id === oldData.id) {
+        return { ...item, ...newData };
+      }
+      return item;
+    });
 
-    // const newDataUpdate = dataUpdate.map((el) => {
-    //   if (el.id === elId) {
-    //     const returnedTarget = Object.assign(el, newData);
-    //     return returnedTarget;
-    //   }
-    //   return el;
-    // });
-
-    const { index } = oldData.tableData;
-    dataUpdate[index] = newData;
-    setTableData([...dataUpdate]);
+    setTableData(updatedData);
   };
 
   const handleOnRowDelete = async (oldData) => {
     const dataDelete = [...tableData];
-    // const index = oldData.tableData.id;
-    const { index } = oldData.tableData;
-    dataDelete.splice(index, 1);
-    setTableData([...dataDelete]);
+    const updatedData = dataDelete.filter((item) => item.id !== oldData?.id);
+    setTableData([...updatedData]);
   };
 
   const validateDateField = (rowData) => {
@@ -204,24 +196,24 @@ const CouponPaymentScheduleTable = ({
             validate: validateDateField,
             render: (rowData) => dateFormatter(rowData?.calenderDate, DEFAULT_DATE_FORMAT),
             editComponent: (props) => (
-                <Fragment>
-                  <DatePicker
-                    format={DEFAULT_DATE_FORMAT}
-                    value={props.value? moment(props.value): null}
-                    onChange={(e) => {
-                      props.onChange(e.toDate());
-                    }}
-                    disablePast
-                    shouldDisableDate={disableDay}
-                    className={
-                      "MuiInputBase-root MuiInput-root MuiInput-underline Mui-error MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
-                    }
-                  />
-                  {props.error && (
-                    <div className="MuiFormHelperText-root Mui-error">{props.helperText}</div>
-                  )}
-                </Fragment>
-              ),     
+              <Fragment>
+                <DatePicker
+                  format={DEFAULT_DATE_FORMAT}
+                  value={props.value ? moment(props.value) : null}
+                  onChange={(e) => {
+                    props.onChange(e.toDate());
+                  }}
+                  disablePast
+                  shouldDisableDate={disableDay}
+                  className={
+                    "MuiInputBase-root MuiInput-root MuiInput-underline Mui-error MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+                  }
+                />
+                {props.error && (
+                  <div className="MuiFormHelperText-root Mui-error">{props.helperText}</div>
+                )}
+              </Fragment>
+            ),
           },
           {
             id: "notionalAmount",
@@ -286,7 +278,7 @@ const CouponPaymentScheduleTable = ({
           },
 
           Toolbar: (props) => {
-            const { actions, originalData: data} = props;
+            const { actions, originalData: data } = props;
             const addActionItem = actions.find((i) => i.tooltip === "Add");
 
             const handleAddClick = () => {

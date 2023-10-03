@@ -1,8 +1,7 @@
-import {FC} from "react";
+import {FC,useState} from "react";
 import QRCode from "react-qr-code";
-import {Link} from "react-router-dom";
 
-import {Button} from "@emrgo-frontend/shared-ui";
+import {Button,  TFASupportTicketModal} from "@emrgo-frontend/shared-ui";
 import {Formik} from "formik";
 import * as Yup from "yup";
 
@@ -13,6 +12,15 @@ import {MFATYPE} from "./TwoFactorAuth.types";
 import {ITwoFactorAuthProps} from "./TwoFactorAuth.types";
 
 export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth_url,isQRCodeLoading,onEnableMFA,onVerifyMFA }) => {
+  const [isTFAModalOpen, setTFAModalOpen] = useState<boolean>(false);
+
+  const openTFASupportTicketModal = () => {
+    setTFAModalOpen(true);
+  };
+
+  const closeTFASupportTicketModal = () => {
+    setTFAModalOpen(false);
+  };
 
   return (
     <Styles.TwoFactorAuth position={position}>
@@ -81,15 +89,21 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
                   </Button>
                 </OneCol>
                 <Styles.Spacer />
-                {/* <Styles.HelpListItem>
-                  <Link to="">Raise support ticket</Link>
-                </Styles.HelpListItem> */}
+                <Styles.HelpListItem>
+                  <Button variant="text" type="button" onClick={() => openTFASupportTicketModal()}>
+                    Raise support ticket
+                  </Button>                
+                </Styles.HelpListItem>
               </Styles.RightColumn>
             </Styles.MainWrapper>
           </form>
         )}
 
       </Formik>
+      <TFASupportTicketModal
+          isOpen={isTFAModalOpen}
+          onClose={() => closeTFASupportTicketModal()}
+      />
     </Styles.TwoFactorAuth>
   );
 };

@@ -20,7 +20,7 @@ const CreatePasswordContext = createContext<ICreatePasswordContext | null>(null)
  * @returns {JSX.Element}
  */
 export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
-  const { disable } = useDarkMode();
+  const { disable,enable } = useDarkMode();
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") || "";
@@ -29,7 +29,7 @@ export const CreatePasswordProvider = ({ children }: PropsWithChildren) => {
   const { showErrorToast } = useToast();
 
   useLayoutEffect(() => {
-    disable();
+    enable();
   }, []);
 
   const { mutate: doCreatePassword } = useMutation(createPassword);
