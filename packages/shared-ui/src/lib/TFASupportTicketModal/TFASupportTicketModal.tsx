@@ -34,92 +34,95 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} width={"25%"}>
-      <Formik
-        initialValues={{
-          type: supportTypes.TFA_SUPPORT_TICKET,
-          email: email || "",
-          file: null,
-        }}
-        validationSchema={TFASupportTicketModalFormSchema}
-        onSubmit={(values, formikHelpers) => {
-          const requestPayload = {
-            ...values,
-            file: values.file ? values.file?.path : "",
-          };
+      <div style={{overflowY:'auto'}}>
+        <Formik
+          initialValues={{
+            type: supportTypes.TFA_SUPPORT_TICKET,
+            email: email || "",
+            file: null,
+          }}
+          validationSchema={TFASupportTicketModalFormSchema}
+          onSubmit={(values, formikHelpers) => {
+            const requestPayload = {
+              ...values,
+              file: values.file ? values.file?.path : "",
+            };
 
-          doCreateSupportTicket(requestPayload, {
-            onSuccess: (response) => {
-              showSuccessToast("Successfully created a support ticket to reset your 2FA.");
-              onClose();
-            },
-          });
+            doCreateSupportTicket(requestPayload, {
+              onSuccess: (response) => {
+                showSuccessToast("Successfully created a support ticket to reset your 2FA.");
+                onClose();
+              },
+            });
 
-          formikHelpers.setSubmitting(false);
-        }}
-      >
-        {({ handleSubmit, setFieldValue }) => {
-          const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            const file = event.target.files && event.target.files[0];
-            if (!file) return;
-            const formData: any = new FormData();
-            formData.append("file", file);
-            doUploadFile(
-              { filename: file.name, formData },
-              {
-                onSuccess: (res) => {
-                  setFieldValue("file", { name: file.name, path: res.path });
-                  // doUpdateDocument({ id, name, path: res.path });
-                },
-                onError: () => {
-                  showErrorToast("Error while creating/posting file to oracle");
-                },
-              }
+            formikHelpers.setSubmitting(false);
+          }}
+        >
+          {({ handleSubmit, setFieldValue }) => {
+            const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+              const file = event.target.files && event.target.files[0];
+              if (!file) return;
+              const formData: any = new FormData();
+              formData.append("file", file);
+              doUploadFile(
+                { filename: file.name, formData },
+                {
+                  onSuccess: (res) => {
+                    setFieldValue("file", { name: file.name, path: res.path });
+                    // doUpdateDocument({ id, name, path: res.path });
+                  },
+                  onError: () => {
+                    showErrorToast("Error while creating/posting file to oracle");
+                  },
+                }
+              );
+              // @ts-ignore
+              event.target.value = null;
+            };
+
+            return (
+              <Form>
+                <ModalHeader onClose={onClose}>
+                  <ModalTitle>Raise Support Ticket</ModalTitle>
+                  <ModalSubtitle>
+                    Do you want to raise a ticket to Emrgo support to reset your 2 Factor
+                    Authentication credentials. Only do this when you have lost access to your
+                    authenticator app. Our team will use the file you upload to verify your account
+                  </ModalSubtitle>
+                </ModalHeader>
+                <ModalContent>
+                  <OneCol>
+                    <Field
+                      id="email"
+                      name="email"
+                      type={"email"}
+                      label={"Enter Email ID"}
+                      component={FormikInputCustom}
+                    />
+                  </OneCol>
+                  <OneCol>
+                    <Field
+                      id="file"
+                      name="file"
+                      type={"file"}
+                      label={"ID Proof"}
+                      component={FormikInputCustom}
+                      onChange={handleFileChange}
+                    />
+                  </OneCol>
+                </ModalContent>
+                <ModalFooter>
+                  <Spacer />
+                  <Button type="submit">
+                    Submit Ticket
+                  </Button>
+                </ModalFooter>
+              </Form>
             );
-            // @ts-ignore
-            event.target.value = null;
-          };
+          }}
+        </Formik>
+      </div>
 
-          return (
-            <Form>
-              <ModalHeader onClose={onClose}>
-                <ModalTitle>Raise Support Ticket</ModalTitle>
-                <ModalSubtitle>
-                  Do you want to raise a ticket to Emrgo support to reset your 2 Factor
-                  Authentication credentials. Only do this when you have lost access to your
-                  authenticator app. Our team will use the file you upload to verify your account
-                </ModalSubtitle>
-              </ModalHeader>
-              <ModalContent>
-                <OneCol>
-                  <Field
-                    id="email"
-                    name="email"
-                    type={"email"}
-                    label={"Enter Email ID"}
-                    component={FormikInputCustom}
-                  />
-                </OneCol>
-                <OneCol>
-                  <Field
-                    id="file"
-                    name="file"
-                    type={"file"}
-                    label={"ID Proof"}
-                    component={FormikInputCustom}
-                    onChange={handleFileChange}
-                  />
-                </OneCol>
-              </ModalContent>
-              <ModalFooter>
-                <Spacer />
-                <Button type="submit">
-                  Submit Ticket
-                </Button>
-              </ModalFooter>
-            </Form>
-          );
-        }}
-      </Formik>
     </Modal>
   );
 };
