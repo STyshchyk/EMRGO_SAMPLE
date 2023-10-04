@@ -231,6 +231,12 @@ const SecuritiesTransactionsReportPage = () => {
       exportConfig: { render: (rowData) => rowData?.settlementType?.name },
     },
     {
+        id: "currency",
+        title: t("Security Transactions.Headers.Currency"),
+        field: "currency",
+        exportConfig: { render: (rowData) => rowData?.externalSecurity?.currencyName?.name },
+    },
+    {
       id: "issuerName",
       title: t("Security Transactions.Headers.Issuer Name"),
       field: "issuerName",
@@ -334,6 +340,12 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Security Transactions.Headers.Settlement Type"),
       field: "settlementType",
       exportConfig: { width: 8 },
+    },
+    {
+        id: "currency",
+        title: t("Security Transactions.Headers.Currency"),
+        field: "currency",
+        exportConfig: { width: 8 },
     },
     {
       id: "netSettleAmount",
