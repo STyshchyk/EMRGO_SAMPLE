@@ -335,7 +335,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="securityAccount"
                   setClearDisabled={setDisabledCurrency}
-                  label="Security Account"
+                  label="Safekeeping Account"
                   options={securityAccountOptions}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}

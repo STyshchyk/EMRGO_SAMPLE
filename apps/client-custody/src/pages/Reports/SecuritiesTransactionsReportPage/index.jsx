@@ -37,7 +37,6 @@ import * as reportsSelectors from "../../../redux/selectors/reports";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../../utils/formatter";
-import formatAddress from "../../../utils/reports";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
 
@@ -694,7 +693,7 @@ const SecuritiesTransactionsReportPage = () => {
                       <Grid item xs={12} md={6} lg={3} container>
                         <Grid container justifyContent="space-between" alignItems="flex-start">
                           <Typography variant="body1" className="bold">
-                            {t("Security Transactions.Filters.Securities Account")}
+                            {t("Security Transactions.Filters.Safekeeping Account")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("securityAccount")}>
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>

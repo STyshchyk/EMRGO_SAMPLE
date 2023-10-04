@@ -1,12 +1,10 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
@@ -17,7 +15,6 @@ import * as reportsSelectors from "../../redux/selectors/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
-import formatAddress from "../../utils/reports";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -263,6 +260,9 @@ const SecuritiesHoldingsTable = ({
                 <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
+                <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
                   <DatePicker
                     name="date"
@@ -273,7 +273,8 @@ const SecuritiesHoldingsTable = ({
                   />
                 )}
               </Grid>
-              <Grid item container xs={12} md={6} lg={3} alignItems="center">
+
+              <Grid item container xs={12} md={6} lg={2} alignItems="center">
                 <FilterCheckbox
                   label="Trade Date Holding"
                   name="tradeDateHolding"
@@ -283,7 +284,7 @@ const SecuritiesHoldingsTable = ({
                   isFetch={isFetch}
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={3}>
+              <Grid item xs={12} md={6} lg={1}>
                 <FilterButton
                   label="Apply"
                   onClick={(filters) => {

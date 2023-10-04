@@ -357,7 +357,7 @@ const CashStatementReportPage = () => {
               <Grid item xs={12} md={6} lg={3} container>
                 <DropdownFilter
                   name="securityAccount"
-                  label="Security Account"
+                  label="Safekeeping Account"
                   options={filteredSecurityAccounts}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
