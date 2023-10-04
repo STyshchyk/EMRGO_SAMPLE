@@ -5,5 +5,5 @@ export const TFASupportTicketModalFormSchema = Yup.object().shape({
   file: Yup.object().shape({
     name: Yup.string().required(),
     path: Yup.string().required(),
-  }).required("ID Proof is Required"),
+  }).nullable().required("ID Proof is Required"),
 });

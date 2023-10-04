@@ -77,7 +77,7 @@ const InputComponent: ForwardRefRenderFunction<
             }}
             onBlur={(e: FocusEvent<HTMLInputElement>) => {
               blur();
-              onBlur && onBlur(e);
+              // onBlur && onBlur(e);
             }}
             type={type}
           />
