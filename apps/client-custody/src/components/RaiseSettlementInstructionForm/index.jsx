@@ -385,82 +385,80 @@ const RaiseSettlementInstructionForm = ({
                     />
                   </InlineFormField>
 
-                <InlineFormField label={"Entity Group"}>
-                  <Select
-                    {...baseSelectProps}
-                    placeholder={"Select Entity Group"}
-                    value={selectedEntityGroupOption}
-                    options={generateEntityGroupsOptionsList(selectedEntityOption?.value?.groups)}
-                    onChange={(newValue) => {
-                      setFieldValue("entityGroupId", newValue?.value?.id);
-                      setSelectedEntityGroupOption(newValue);
-                      setSelectedEntityGroupUserOption(null);
-                    }}
-                    isDisabled={!selectedEntityOption}
+                  <InlineFormField label={"Entity Group"}>
+                    <Select
+                      {...baseSelectProps}
+                      placeholder={"Select Entity Group"}
+                      value={selectedEntityGroupOption}
+                      options={generateEntityGroupsOptionsList(selectedEntityOption?.value?.groups)}
+                      onChange={(newValue) => {
+                        setFieldValue("entityGroupId", newValue?.value?.id);
+                        setSelectedEntityGroupOption(newValue);
+                        setSelectedEntityGroupUserOption(null);
+                      }}
+                      isDisabled={!selectedEntityOption}
+                    />
+                  </InlineFormField>
+                  <InlineFormField label={"Entity Group User"}>
+                    <Select
+                      {...baseSelectProps}
+                      placeholder={"Select Entity Group User"}
+                      value={selectedEntityGroupUserOption}
+                      options={generateEntityGroupUserOptionsList(
+                        selectedEntityGroupOption?.value?.users
+                      )}
+                      onChange={(newValue) => {
+                        setFieldValue("entityGroupUserId", newValue?.value?.id);
+                        setSelectedEntityGroupUserOption(newValue);
+                      }}
+                      isDisabled={!selectedEntityOption}
+                    />
+                  </InlineFormField>
+                </Fragment>
+              ) : (
+                <InlineFormField label={"Entity"}>
+                  <Field
+                    fullWidth
+                    placeholder="Entity"
+                    component={CustomTextField}
+                    name="entity"
+                    variant="filled"
+                    type="text"
+                    value={
+                      values?.entityGroup?.entity?.corporateEntityName ||
+                      currentEntityGroup?.entity?.corporateEntityName
+                    }
+                    disabled
                   />
                 </InlineFormField>
-                <InlineFormField label={"Entity Group User"}>
-                  <Select
-                    {...baseSelectProps}
-                    placeholder={"Select Entity Group User"}
-                    value={selectedEntityGroupUserOption}
-                    options={generateEntityGroupUserOptionsList(
-                      selectedEntityGroupOption?.value?.users
-                    )}
-                    onChange={(newValue) => {
-                      setFieldValue("entityGroupUserId", newValue?.value?.id);
-                      setSelectedEntityGroupUserOption(newValue);
-                    }}
-                    isDisabled={!selectedEntityOption}
-                  />
-                </InlineFormField>
-              </Fragment>
-            ) : (
-              <InlineFormField label={"Entity"}>
-                <Field
-                  fullWidth
-                  placeholder="Entity"
-                  component={CustomTextField}
-                  name="entity"
-                  variant="filled"
-                  type="text"
-                  value={
-                    values?.entityGroup?.entity?.corporateEntityName ||
-                    currentEntityGroup?.entity?.corporateEntityName
-                  }
-                  disabled
+              )}
+              <InlineFormField label={"Safekeeping Account"}>
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Safekeeping Account"}
+                  value={{}}
+                  options={[{}]}
+                  onChange={(newValue) => {}}
                 />
               </InlineFormField>
-            )}
-            <InlineFormField label={"Safekeeping Account"}>
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Safekeeping Account"}
-                value={values.settlementTypeSelectOption}
-                options={settlementInstructionTypeOptionsList}
-                onChange={(newValue) => {
-                  setFieldValue("settlementTypeSelectOption", newValue);
-                }}
-              />
-            </InlineFormField>
-            <InlineFormField label="Settlement Type">
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Settlement Type"}
-                value={values.settlementTypeSelectOption}
-                options={settlementInstructionTypeOptionsList}
-                onChange={(newValue) => {
-                  setFieldValue("settlementTypeSelectOption", newValue);
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="settlementTypeSelectOption"
-              />
-            </InlineFormField>
+              <InlineFormField label="Settlement Type">
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Settlement Type"}
+                  value={values.settlementTypeSelectOption}
+                  options={settlementInstructionTypeOptionsList}
+                  onChange={(newValue) => {
+                    setFieldValue("settlementTypeSelectOption", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="settlementTypeSelectOption"
+                />
+              </InlineFormField>
 
               <InlineFormField label="Security">
                 <Select
@@ -504,66 +502,66 @@ const RaiseSettlementInstructionForm = ({
               </Grid>
               {/* )} */}
 
-            <InlineFormField label={"ISIN"}>
-              <Field
-                className={classes.input}
-                fullWidth
-                component={CustomTextField}
-                label="ISIN"
-                name="isin"
-                variant="filled"
-                type="text"
-                value={values.externalSecuritySelectOption?.value?.isin ?? ""}
-                disabled
-              />
-            </InlineFormField>
+              <InlineFormField label={"ISIN"}>
+                <Field
+                  className={classes.input}
+                  fullWidth
+                  component={CustomTextField}
+                  label="ISIN"
+                  name="isin"
+                  variant="filled"
+                  type="text"
+                  value={values.externalSecuritySelectOption?.value?.isin ?? ""}
+                  disabled
+                />
+              </InlineFormField>
 
-            <InlineFormField label={"Currency"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                label="Currency"
-                name="currencyName"
-                variant="filled"
-                type="text"
-                value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
-                disabled
-              />
-            </InlineFormField>
+              <InlineFormField label={"Currency"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  label="Currency"
+                  name="currencyName"
+                  variant="filled"
+                  type="text"
+                  value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
+                  disabled
+                />
+              </InlineFormField>
 
-            <InlineFormField label="Trade Date">
-              <Field
-                component={DatePicker}
-                onChange={(date) => {
-                  setFieldValue("tradeDate", date);
-                }}
-                value={values.tradeDate ? moment(values.tradeDate) : null}
-                format={DEFAULT_DATE_FORMAT}
-                fullWidth
-                inputVariant="filled"
-                label={DEFAULT_DATE_FORMAT}
-                name="tradeDate"
-                variant="dialog"
-              />
-            </InlineFormField>
+              <InlineFormField label="Trade Date">
+                <Field
+                  component={DatePicker}
+                  onChange={(date) => {
+                    setFieldValue("tradeDate", date);
+                  }}
+                  value={values.tradeDate ? moment(values.tradeDate) : null}
+                  format={DEFAULT_DATE_FORMAT}
+                  fullWidth
+                  inputVariant="filled"
+                  label={DEFAULT_DATE_FORMAT}
+                  name="tradeDate"
+                  variant="dialog"
+                />
+              </InlineFormField>
 
-            <InlineFormField label="Settlement Date">
-              <Field
-                component={DatePicker}
-                onChange={(date) => {
-                  setFieldValue("settlementDate", date);
-                }}
-                value={values.settlementDate ? moment(values.settlementDate) : null}
-                format={DEFAULT_DATE_FORMAT}
-                fullWidth
-                inputVariant="filled"
-                label={DEFAULT_DATE_FORMAT}
-                minDate={moment(values.tradeDate)}
-                name="settlementDate"
-                variant="dialog"
-                disabled={!values.tradeDate}
-              />
-            </InlineFormField>
+              <InlineFormField label="Settlement Date">
+                <Field
+                  component={DatePicker}
+                  onChange={(date) => {
+                    setFieldValue("settlementDate", date);
+                  }}
+                  value={values.settlementDate ? moment(values.settlementDate) : null}
+                  format={DEFAULT_DATE_FORMAT}
+                  fullWidth
+                  inputVariant="filled"
+                  label={DEFAULT_DATE_FORMAT}
+                  minDate={moment(values.tradeDate)}
+                  name="settlementDate"
+                  variant="dialog"
+                  disabled={!values.tradeDate}
+                />
+              </InlineFormField>
 
               <InlineFormField label={"Quantity"}>
                 <Field
@@ -679,100 +677,101 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-            <InlineFormField label="Counterparty">
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Counterparty"}
-                value={values.counterpartySelectOption}
-                options={counterpartyOptionsList}
-                onChange={(newValue) => {
-                  setFieldValue("counterpartySelectOption", newValue);
-                  setFieldValue("counterpartySSISelectOption", null);
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="counterpartySelectOption"
-              />
-            </InlineFormField>
+              <InlineFormField label="Counterparty">
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Counterparty"}
+                  value={values.counterpartySelectOption}
+                  options={counterpartyOptionsList}
+                  onChange={(newValue) => {
+                    setFieldValue("counterpartySelectOption", newValue);
+                    setFieldValue("counterpartySSISelectOption", null);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="counterpartySelectOption"
+                />
+              </InlineFormField>
 
-            <InlineFormField label="Counterparty SSI">
-              <Select
-                {...baseSelectProps}
-                isDisabled={!values.counterpartySelectOption}
-                placeholder={"Select Counterparty SSI"}
-                value={values.counterpartySSISelectOption}
-                options={generateCounterpartySSIOptionsList(
-                  values.counterpartySelectOption?.value?.counterpartySSI
-                )}
-                onChange={(newValue) => {
-                  setFieldValue("counterpartySSISelectOption", newValue);
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="counterpartySSISelectOption"
-              />
-            </InlineFormField>
+              <InlineFormField label="Counterparty SSI">
+                <Select
+                  {...baseSelectProps}
+                  isDisabled={!values.counterpartySelectOption}
+                  placeholder={"Select Counterparty SSI"}
+                  value={values.counterpartySSISelectOption}
+                  options={generateCounterpartySSIOptionsList(
+                    values.counterpartySelectOption?.value?.counterpartySSI
+                  )}
+                  onChange={(newValue) => {
+                    setFieldValue("counterpartySSISelectOption", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="counterpartySSISelectOption"
+                />
+              </InlineFormField>
 
-            <InlineFormField label={"Internal Trade Ref"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                label="Internal Trade Ref"
-                name="internalTradeRef"
-                variant="filled"
-                type="text"
-                value={values.internalTradeRef ?? ""}
-                onChange={(newValue) => {
-                  setFieldValue("internalTradeRef", newValue);
-                }}
-              />
-            </InlineFormField>
+              <InlineFormField label={"Internal Trade Ref"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  label="Internal Trade Ref"
+                  name="internalTradeRef"
+                  variant="filled"
+                  type="text"
+                  value={values.internalTradeRef ?? ""}
+                  onChange={(newValue) => {
+                    setFieldValue("internalTradeRef", newValue);
+                  }}
+                />
+              </InlineFormField>
 
-            <Grid item container spacing={2} justifyContent="flex-end">
-              <Grid item>
-                <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                  disabled={isSubmitting || (isWethaqUser && !selectedEntityOption && !editable)}
-                >
-                  Submit
-                </Button>
+              <Grid item container spacing={2} justifyContent="flex-end">
+                <Grid item>
+                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting || (isWethaqUser && !selectedEntityOption && !editable)}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          {openRealtimeSecuritySearchDialog && (
-            <RealtimeSecSearchDialog
-              open={openRealtimeSecuritySearchDialog}
-              handleClose={() => {
-                setOpenRealtimeSecuritySearchDialog(false);
-              }}
-              handleSecurityResultItemSelect={(row) => {
-                const found = externalSecurityOptionsList.find(
-                  (item) => item.value.id === row?.externalSecurityId
-                );
+            {openRealtimeSecuritySearchDialog && (
+              <RealtimeSecSearchDialog
+                open={openRealtimeSecuritySearchDialog}
+                handleClose={() => {
+                  setOpenRealtimeSecuritySearchDialog(false);
+                }}
+                handleSecurityResultItemSelect={(row) => {
+                  const found = externalSecurityOptionsList.find(
+                    (item) => item.value.id === row?.externalSecurityId
+                  );
 
-                if (found) {
-                  setFieldValue("externalSecuritySelectOption", found);
-                }
-              }}
-            />
-          )}
-        </Form>
-      )}
+                  if (found) {
+                    setFieldValue("externalSecuritySelectOption", found);
+                  }
+                }}
+              />
+            )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
