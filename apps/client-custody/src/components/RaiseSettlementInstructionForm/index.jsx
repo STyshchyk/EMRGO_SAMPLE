@@ -240,7 +240,6 @@ export const generateExternalSecurityOptionsList = (data) => {
   console.log(data);
   if (Array.isArray(data) && data.length > 0) {
     return data
-      .filter((item) => item?.assetTypeName?.name !== "Equity")
       .filter((item) => item?.longName)
       .filter((item) => item?.name)
       .filter((item) => item.status === "Active")
@@ -327,7 +326,6 @@ const RaiseSettlementInstructionForm = ({
   options,
 }) => {
   const inProd = useIsProduction();
-
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
   const dropdownOptions = useSelector(dropdownSelectors.selectDropdownOptions);
   const externalSecuritiesList = useSelector(
@@ -378,6 +376,7 @@ const RaiseSettlementInstructionForm = ({
                     }}
                   />
                 </InlineFormField>
+
                 <InlineFormField label={"Entity Group"}>
                   <Select
                     {...baseSelectProps}
@@ -425,7 +424,17 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
             )}
-
+            <InlineFormField label={"Safekeeping Account"}>
+              <Select
+                {...baseSelectProps}
+                placeholder={"Select Safekeeping Account"}
+                value={values.settlementTypeSelectOption}
+                options={settlementInstructionTypeOptionsList}
+                onChange={(newValue) => {
+                  setFieldValue("settlementTypeSelectOption", newValue);
+                }}
+              />
+            </InlineFormField>
             <InlineFormField label="Settlement Type">
               <Select
                 {...baseSelectProps}
@@ -734,7 +743,6 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("externalSecuritySelectOption", found);
                 }
               }}
-              assetTypeFilterValue="Fixed Income"
             />
           )}
         </Form>
