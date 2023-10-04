@@ -413,7 +413,7 @@ const PaymentInstructionsPage = () => {
         currency: paymentInstruction.providerCurrency,
         details: paymentInstruction.details,
         iban: paymentInstruction.account?.iban,
-        investor: paymentInstruction.account?.group?.entity?.corporateEntityName,
+        investor: paymentInstruction.account?.group?.entity?.name,
         payment: paymentInstruction.amount,
         // referenceNo: paymentInstruction.providerTransactionReferenceNumber,
         referenceNo: paymentInstruction.sequenceNumber,
