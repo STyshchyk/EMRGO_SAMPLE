@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
+import useSafeAccount from "../../hooks/useSafeAccount";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
@@ -35,7 +36,8 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
-
+  const { data } = useSafeAccount();
+  console.log("safe account data", data);
   const handleSubmit = (values) => {
     const raiseSettlementInstruction = (payload) =>
       dispatch(paymentAndSettlementActionCreators.doRaiseSettlementInstruction(payload));

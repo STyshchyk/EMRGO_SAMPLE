@@ -30,6 +30,7 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constant
 import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
+import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -57,7 +58,8 @@ const SecuritiesTransactionsReportPage = () => {
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
-
+  const { data } = useSafeAccount();
+  console.log("safe account data", data);
   // selectors
   const userFullName = useSelector(authSelectors.selectUserFullName);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);

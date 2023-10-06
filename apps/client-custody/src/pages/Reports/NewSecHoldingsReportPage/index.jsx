@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import SecuritiesHoldingsTable, {
   generateSecuritiesHoldingsTableRowData,
 } from "../../../components/SecuritiesHoldingsTable";
+import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -19,7 +19,8 @@ const NewSecuritiesHoldingsReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
-
+  const { data } = useSafeAccount();
+  console.log("safe account data", data);
   const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
 
   // selectors
