@@ -89,6 +89,7 @@
       "Net Settle Amt": "Net Settle Amt",
       "Inst Description": "Inst Description",
       "Price": "Price",
+      "Currency": "Currency",
       "Settle Date": "Settle Date",
       "Settlement Type": "Settlement Type"
     },

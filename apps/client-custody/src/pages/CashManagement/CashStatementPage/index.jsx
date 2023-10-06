@@ -106,6 +106,12 @@ const CashStatementPage = () => {
     setFilteredRows(getTableData(transactions));
   }, [transactions]);
 
+  useEffect(() => {
+      if (!currentlySelectedEntity || !currentlySelectedSecurityAccount || !currentlySelectedAccount){
+          setFilteredRows([]);
+      }
+  }, [currentlySelectedEntity, currentlySelectedSecurityAccount, currentlySelectedAccount]);
+  
   const getRowsForCSV = () => {
     const boxes = [];
     filteredRows.forEach((row) => {

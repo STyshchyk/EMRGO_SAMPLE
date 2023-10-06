@@ -89,6 +89,7 @@
       "Net Settle Amt": "صافي مبلغ التسوية",
       "Inst Description": "وصف التعليمات",
       "Price": "السعر",
+      "Currency": "العملة",
       "Settle Date": "تاريخ التسوية",
       "Settlement Type": "Settlement Type"
     },

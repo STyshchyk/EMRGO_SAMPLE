@@ -458,8 +458,8 @@ const CashStatementReportPage = () => {
               //  Entry Date range Filter
               if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
                 const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-                const isInRange = dateWithinRange(date, fromDate, toDate);
-                return row.date ? isInRange : null;
+                const isInRange = dateWithinRange(row?.date, fromDate, toDate);
+                return row?.date ? isInRange : null;
 
                 // return moment(row.date).isBetween(fromDate, toDate);
               }
