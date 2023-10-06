@@ -29,6 +29,11 @@ const baseSelectProps = {
   styles: selectStyles,
 };
 
+const errorWaringMsg = {
+  insufficentBalance:
+    "Warning: Selected source account has insufficient balance for requested action",
+  negativeBalance: "Warning: Selected source account has negative balance",
+};
 const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
     <Grid item md={5} xs={12} container direction="column">
@@ -64,7 +69,7 @@ const CustomNumberInputField = (props) => {
       }}
       thousandSeparator
       decimalScale={20}
-      allowNegative={false}
+      allowNegative={true}
     />
   );
 };
@@ -238,6 +243,39 @@ const AddInternalTransferForm = ({
 
           return hasSufficientBalance;
         };
+        const validateSourceAccountTransfer = () => {
+          let hasSufficientBalance = "";
+          // if either source account or transfer amount is not set in the form then skip the checking logic
+          if (!values.sourceAccount || !values.transferAmount) {
+            return "";
+          }
+
+          const parsedtransferAmount = parseFloat(values.transferAmount, 10);
+          const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
+          if (parsedAccountBalance < 0) return "negativeBalance";
+          const difference = parsedAccountBalance - parsedtransferAmount;
+
+          if (difference < 0) {
+            hasSufficientBalance = "insufficentBalance";
+          }
+
+          return hasSufficientBalance;
+        };
+        const checkIfSourceAccBalanceIsNegative = () => {
+          let hasSufficientBalance = true;
+
+          // if either source account or transfer amount is not set in the form then skip the checking logic
+          if (!values.sourceAccount) {
+            return hasSufficientBalance;
+          }
+          const sourceAccountBanace = values.sourceAccount?.value?.accountBalance;
+          console.log("sourceAccountBanace", sourceAccountBanace);
+          if (sourceAccountBanace < 0) {
+            hasSufficientBalance = false;
+          }
+
+          return hasSufficientBalance;
+        };
         return (
           <Form>
             <Grid container spacing={2}>
@@ -380,7 +418,7 @@ const AddInternalTransferForm = ({
               </InlineFormField>
 
               <Grid container item justifyContent="center">
-                {!checkIfSourceWethaqAccountHasSufficientBalance() && (
+                {errorWaringMsg[`${validateSourceAccountTransfer()}`] && (
                   <Typography
                     color="error"
                     variant="body2"
@@ -388,9 +426,7 @@ const AddInternalTransferForm = ({
                       fontWeight: "Bold",
                     }}
                   >
-                    {
-                      "Warning: Selected source account has insufficient balance for requested action"
-                    }
+                    {errorWaringMsg[`${validateSourceAccountTransfer()}`]}
                   </Typography>
                 )}
               </Grid>
