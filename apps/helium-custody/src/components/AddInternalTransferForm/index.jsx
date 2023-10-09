@@ -33,6 +33,7 @@ const errorWaringMsg = {
   insufficentBalance:
     "Warning: Selected source account has insufficient balance for requested action",
   negativeBalance: "Warning: Selected source account has negative balance",
+  similarAccountBalance: "Warning: Destination Account can not be same sa Selected Account ",
 };
 const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
@@ -224,32 +225,20 @@ const AddInternalTransferForm = ({
           return currency;
         };
 
-        const checkIfSourceWethaqAccountHasSufficientBalance = () => {
-          let hasSufficientBalance = true;
-
-          // if either source account or transfer amount is not set in the form then skip the checking logic
-          if (!values.sourceAccount || !values.transferAmount) {
-            return hasSufficientBalance;
-          }
-
-          const parsedtransferAmount = parseFloat(values.transferAmount, 10);
-          const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
-
-          const difference = parsedAccountBalance - parsedtransferAmount;
-
-          if (difference < 0) {
-            hasSufficientBalance = false;
-          }
-
-          return hasSufficientBalance;
-        };
         const validateSourceAccountTransfer = () => {
           let hasSufficientBalance = "";
+          console.log("logs", values.sourceAccount, values.destinationAccount);
+          if (
+            values.sourceAccount &&
+            values.destinationAccount &&
+            values.destinationAccount.label === values.sourceAccount.label
+          ) {
+            return "similarAccountBalance";
+          }
           // if either source account or transfer amount is not set in the form then skip the checking logic
           if (!values.sourceAccount || !values.transferAmount) {
             return "";
           }
-
           const parsedtransferAmount = parseFloat(values.transferAmount, 10);
           const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
           if (parsedAccountBalance < 0) return "negativeBalance";
@@ -444,7 +433,8 @@ const AddInternalTransferForm = ({
                       values.sourceAccount === null ||
                       values.destinationAccount === null ||
                       values.transferAmount === 0 ||
-                      !values.transferAmount
+                      !values.transferAmount ||
+                      errorWaringMsg[`${validateSourceAccountTransfer()}`]
                     }
                     type="submit"
                     variant="contained"
