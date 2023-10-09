@@ -7,7 +7,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
@@ -121,7 +120,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin: i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
-  issueDate: i.externalSecurity?.issueDate,
+  issueDate: i.settlementDate,
   issuer: i.issuer?.entity?.name,
   issuerCashAccountBalance: i.issuerCashAccount
     ? convertNumberToIntlFormat(i.issuerCashAccountBalance)
@@ -260,8 +259,8 @@ const SecurityTradesTable = ({
       id: "valueDate",
       title: t("Headers.Value Date"),
       field: "issueDate",
-      render: (rowData) => dateFormatter(rowData?.issueDate, DEFAULT_DATE_FORMAT),
-      exportConfig: { render: (rowData) => dateRenderer(rowData.issueDate) },
+      render: (rowData) => dateFormatter(rowData?.settlementDate, DEFAULT_DATE_FORMAT),
+      exportConfig: { render: (rowData) => dateRenderer(rowData.settlementDate) },
       width: 150,
     },
     {
