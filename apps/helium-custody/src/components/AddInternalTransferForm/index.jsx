@@ -227,7 +227,6 @@ const AddInternalTransferForm = ({
 
         const validateSourceAccountTransfer = () => {
           let hasSufficientBalance = "";
-          console.log("logs", values.sourceAccount, values.destinationAccount);
           if (
             values.sourceAccount &&
             values.destinationAccount &&
