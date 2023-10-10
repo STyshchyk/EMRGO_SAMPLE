@@ -118,13 +118,13 @@ const TFATickets = () => {
             actions={[
               (rowData) => ({
                 icon: "check",
-                tooltip: `${t("support:Support.Action.ApproveTicket")}`,
+                tooltip: `${t("support:Support.Actions.ApproveTicket")}`,
                 disabled: rowData.approved,
                 onClick: () => approveTicket(rowData),
               }),
               {
                 icon: "delete",
-                tooltip: `${t("support:Support.Action.DeleteTicket")}`,
+                tooltip: `${t("support:Support.Actions.DeleteTicket")}`,
                 onClick: (event, rowData) => deleteTicket(rowData),
               },
             ]}

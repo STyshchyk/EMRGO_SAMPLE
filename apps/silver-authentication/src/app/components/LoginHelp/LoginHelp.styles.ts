@@ -1,6 +1,6 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import {rem} from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const HelpList = styled.ul`
   display: flex;
@@ -17,6 +17,23 @@ export const HelpListItem = styled.li`
   padding: 0;
 
   list-style: none;
-
   ${getTheme("typography.regular.02")}
+  color: ${getTheme("colors.white.100")};
+
+
+  
+  /* ${({ theme }) =>
+    css`
+      ${getTheme("typography.regular.02")}
+
+      ${theme.mode === "light" &&
+      css`
+        color: ${getTheme("colors.black.100")};
+      `}
+
+      ${theme.mode === "dark" &&
+      css`
+        color: ${getTheme("colors.white.100")};
+      `}
+    `} */
 `;
