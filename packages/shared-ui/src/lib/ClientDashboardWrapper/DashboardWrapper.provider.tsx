@@ -42,7 +42,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const [termsDocumentURL, setTermsDocumentURL] = useState("");
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
-  useEffect(() => {
+  useEffect(() => { 
     if (user) {
       if (!user?.hasAcceptedSilverTnc) {
         setShowTermsModal("tnc");
@@ -144,8 +144,6 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes);
 
   const onRejectPlatformTerms = () => {
-    // resetTermsModal();
-    // revert change for ID 491
     onLogOut();
   };
 
@@ -154,8 +152,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
         refreshProfile();
         setTimeout(() => {
-          showSuccessToast("Successfully accepted platform terms and conditions");
-          resetTermsModal();
+         showSuccessToast("Successfully accepted platform terms and conditions");
         }, 1000);
       },
     });

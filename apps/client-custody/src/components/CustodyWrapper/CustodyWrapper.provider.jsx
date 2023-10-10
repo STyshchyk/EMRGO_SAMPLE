@@ -30,8 +30,10 @@ export const CustodyWrapperProvider = ({ children }) => {
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
 
+  //** A:Custody terms is displayed to the Client after KYC is Approved */
   const hasCompletedInvestorProfileIdentification =
-    user?.clientKycStatus === constants.accountIdentification.KYC_STATUS_APPROVED;
+    // user?.clientKycStatus === constants.accountIdentification.KYC_STATUS_APPROVED &&
+    user?.entityKycStatus === constants.accountIdentification.KYC_STATUS_APPROVED;
 
   useEffect(() => {
     if (user) {

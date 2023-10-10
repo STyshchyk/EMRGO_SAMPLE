@@ -39,7 +39,6 @@ const CouponAdministration = () => {
   const isFetchingCouponEvents = useSelector(couponsSelectors.selectIsFetching);
 
   const tableData = couponEvents.map((item) => generateCouponEventsTableRowData(item));
-  console.log("tableData", tableData);
   const hasAddCouponAllocation = currentListOfACLs.includes("Services/Coupons/Add");
   const hasApproveCouponAllocation = currentListOfACLs.includes("Services/Coupons/Approve");
 

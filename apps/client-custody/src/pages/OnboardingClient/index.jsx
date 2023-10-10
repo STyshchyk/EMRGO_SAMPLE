@@ -119,17 +119,16 @@ const OnboardingClient = () => {
 
   const incompleteKYC =
     entityKycStatus !== accountIdentification?.KYC_STATUS_APPROVED ||
-    entityCustodyKycStatus !== accountIdentification?.KYC_STATUS_APPROVED ||
     clientKycStatus !== accountIdentification?.KYC_STATUS_APPROVED;
 
   const pending =
     entityKycStatus === accountIdentification?.KYC_STATUS_PENDING ||
-    entityCustodyKycStatus === accountIdentification?.KYC_STATUS_PENDING ||
     clientKycStatus === accountIdentification?.KYC_STATUS_PENDING;
+
+  const pendingClientKYC = clientKycStatus === accountIdentification?.KYC_STATUS_PENDING;
 
   const review =
     entityKycStatus === accountIdentification?.KYC_STATUS_SUBMITTED ||
-    entityCustodyKycStatus === accountIdentification?.KYC_STATUS_SUBMITTED ||
     clientKycStatus === accountIdentification?.KYC_STATUS_SUBMITTED;
 
   const redirectToKYC = () => {
@@ -188,7 +187,7 @@ const OnboardingClient = () => {
             {incompleteKYC && (
               <div className="mt-8">
                 <Styles.Text>
-                  {pending && (
+                  {pendingClientKYC && (
                     <React.Fragment>
                       Please complete User Profiling to use the custody module.{" "}
                       <a className="cursor-pointer" onClick={() => redirectToKYC()}>
