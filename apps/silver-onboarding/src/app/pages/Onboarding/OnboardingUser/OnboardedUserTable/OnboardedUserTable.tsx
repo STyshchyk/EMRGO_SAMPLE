@@ -24,7 +24,7 @@ import { IOnboardedUserTableProps } from "./OnboardedUserTable.types";
 
 const columnHelper = createColumnHelper<IEntity>();
 
-export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUsers }) => {
+export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboardedUsers }) => {
   const { showErrorToast, showSuccessToast } = useToast();
   const client = useQueryClient();
   const [sorting, setSorting] = React.useState<SortingState>([
@@ -68,12 +68,17 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
       header: "KYC TS",
       cell: (props) => (props.getValue() ? trimDate(props.getValue()) : "N/A"),
     }),
-    columnHelper.accessor("entityCustodyKycStatus", {
-      header: "Custody KYC",
-      cell: (props) => getKycLabel(props.getValue()),
+    // columnHelper.accessor("entityCustodyKycStatus", {
+    //   header: "Custody KYC",
+    //   cell: (props) => getKycLabel(props.getValue()),
+    // }),
+    columnHelper.accessor("hasAcceptedClientTerms", {
+      header: "Custody Terms",
+      cell: (props) => props.getValue()? 'Accepted' : "Pending",
     }),
+    // timestamp for when client terms is accepted
     columnHelper.accessor("entityCustodyKycSubmissionDate", {
-      header: "Custody KYC TS",
+      header: "Custody Terms TS",
       cell: (props) => (props.getValue() ? trimDate(props.getValue()) : "N/A"),
     }),
     columnHelper.display({
@@ -85,8 +90,8 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
         const getRow = row.original;
         const userId = getRow.userId;
         const entityId = getRow.entityId;
-        const allowApproveKYC = getKycLabel(getRow.userKycStatus);
-        const allowApproveCP = getKycLabel(getRow.entityKycStatus);
+        const allowApproveCP = getKycLabel(getRow.userKycStatus); // client profile 
+        const allowApproveKYC = getKycLabel(getRow.entityKycStatus); // kyc
         const allowApproveCustody = getKycLabel(getRow.entityCustodyKycStatus);
 
         return (
@@ -101,11 +106,11 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   Open Typeform
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={allowApproveCP !== "Submitted"}
+                  $disabled={allowApproveKYC !== "Submitted"}
                   onClick={() => {
-                    if (allowApproveCP !== "Submitted") {
+                    if (allowApproveKYC !== "Submitted") {
                       showErrorToast(
-                        `Error while trying to approve KYC Profile with status ${allowApproveCP}`
+                        `Error while trying to approve KYC Profile with status ${allowApproveKYC}`
                       );
                       return;
                     }
@@ -130,11 +135,11 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                   Approve KYC
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={allowApproveKYC !== "Submitted"}
+                  $disabled={allowApproveCP !== "Submitted"}
                   onClick={() => {
-                    if (allowApproveKYC !== "Submitted") {
+                    if (allowApproveCP !== "Submitted") {
                       showErrorToast(
-                        `Error while trying to approve Client Profile with status ${allowApproveKYC}`
+                        `Error while trying to approve Client Profile with status ${allowApproveCP}`
                       );
                       return;
                     }
@@ -157,8 +162,11 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
                 >
                   Approve Client Profile
                 </TooltipButtonActions>
+
+
                 <TooltipButtonActions
-                  $disabled={allowApproveCustody !== "Submitted"}
+                  // $disabled={allowApproveCustody !== "Submitted"}
+                  $disabled={true}
                   onClick={() => {
                     if (allowApproveCustody !== "Submitted") {
                       showErrorToast(
@@ -194,7 +202,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboarderUser
   ];
   const table = useReactTable({
     columns,
-    data: onboarderUsers,
+    data: onboardedUsers,
     state: {
       sorting,
     },
