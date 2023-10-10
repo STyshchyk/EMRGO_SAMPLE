@@ -113,7 +113,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "primaries",
       path: constants.clientPrimariesRoutes.home,
       paths: constants.getAllRoutes(constants.clientPrimariesRoutes),
-      disabled:true,
+      disabled: true,
     },
     {
       label: "Secondaries",
@@ -129,7 +129,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "custody",
       path: constants.clientCustodyRoutes.custody.onboarding.home,
       paths: constants.getAllRoutes(constants.clientCustodyRoutes),
-      disabled:false,
+      disabled: false,
     },
     {
       label: "Research",
@@ -146,6 +146,11 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const onRejectPlatformTerms = () => {
     // resetTermsModal();
     // revert change for ID 491
+    if (user?.hasAcceptedSilverTnc) {
+      // According to Bug ID 838: Even if terms modal shows, clicking on close button won't log out user
+      setShowTermsModal("");
+      return;
+    }
     onLogOut();
   };
 
