@@ -2,6 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+import moment from "moment";
+
 import CorporateActionEventsTable, {
   generateCAEventsTableRowData,
 } from "../../../components/CorporateActionEventsTable";
@@ -30,6 +32,9 @@ const CorporateActionEvents = () => {
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
 
   const tableData = corporateActionEvents?.map((item) => generateCAEventsTableRowData(item));
+
+  const currentDate = moment().format("DD/MM/YYYY"); // Get the current date in 'DD/MM/YYYY' format
+  const currentDateParsed = moment(currentDate, "DD/MM/YYYY");
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -65,7 +70,9 @@ const CorporateActionEvents = () => {
         setIsReadOnly(false);
         setOpenViewCorporateActionEventDialog(true);
       },
-      disabled: currentlySelectedRowData?.mandatoryOrVoluntary === "M", // this action is enabled only for voluntary CA events inv
+      disabled:
+        currentlySelectedRowData?.mandatoryOrVoluntary === "M" ||
+        moment(currentlySelectedRowData?.responseDeadline).isBefore(currentDateParsed),
     },
   ];
 
