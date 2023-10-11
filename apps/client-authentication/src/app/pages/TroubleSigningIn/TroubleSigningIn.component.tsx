@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Button, Logo } from "@emrgo-frontend/shared-ui";
+import { Button, Input,Logo } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { Heading, OneCol, SubHeading } from "../../components/Form";
@@ -11,10 +11,10 @@ import { ITroubleSigningInProps } from "./TroubleSigningIn.types";
 export const TroubleSigningInComponent: FC<ITroubleSigningInProps> = (
   props: ITroubleSigningInProps
 ) => {
-  const { onSubmit } = ensureNotNull(useTroubleSigningInContext());
+  const { form } = ensureNotNull(useTroubleSigningInContext());
 
   return (
-    <Styles.TroubleSigningIn onSubmit={onSubmit}>
+    <Styles.TroubleSigningIn onSubmit={form.handleSubmit}>
       <Logo />
 
       <div>
@@ -26,10 +26,27 @@ export const TroubleSigningInComponent: FC<ITroubleSigningInProps> = (
         </SubHeading>
       </div>
 
-      <Styles.TextBox rows={9} placeholder="Describe your login issue in a few words here..." />
+      <OneCol>
+        <Input
+          label="Email Address"
+          id="email"
+          valid={form.touched.email && !form.errors.email}
+          {...form.getFieldProps("email")}
+          error={form.touched.email && form.errors.email}
+        />
+      </OneCol>
 
       <OneCol>
-        <Button size="large">Raise support ticket</Button>
+        <Styles.TextBox 
+          id="desc"           
+          {...form.getFieldProps("desc")}
+          rows={9}
+          placeholder="Describe your login issue in a few words here..." 
+        />
+      </OneCol>
+
+      <OneCol>
+        <Button type='submit' size="large">Raise support ticket</Button>
       </OneCol>
     </Styles.TroubleSigningIn>
   );

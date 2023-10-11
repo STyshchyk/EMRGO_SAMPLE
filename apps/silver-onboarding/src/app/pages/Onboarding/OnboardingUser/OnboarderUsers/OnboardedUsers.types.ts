@@ -13,7 +13,7 @@ export interface IEntity {
   userKycSubmissionDate: string;
   entityCustodyKycSubmissionDate: string;
   entityCustodyKycStatus: kycStatusType;
-
+  hasAcceptedClientTerms:boolean;
 
 }
 
