@@ -134,33 +134,35 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
           <Grid container spacing={2}>
             {!currentlySelectedRowData?.isPrimaryIssuance && (
               <Grid item md={12} container spacing={2}>
-                <Select
-                  aria-label="source-accounts-menu"
-                  closeMenuOnSelect
-                  isSearchable
-                  components={{ Option: ReactSelectCurrencyOption }}
-                  onChange={(newValue) => {
-                    setSelectedWethaqSourceAccountOption(newValue);
-                  }}
-                  options={accountOptionsList}
-                  placeholder="Set Source Account"
-                  value={selectedWethaqSourceAccountOption}
-                  styles={{
-                    menu: (styles) => ({
-                      ...styles,
-                      zIndex: 100,
-                    }),
-                    control: (styles) => ({
-                      ...styles,
-                      border: "none",
-                      borderRadius: "6px",
-                      backgroundColor: "rgba(0, 0, 0, 0.09)",
-                      height: "3rem",
-                      width: 400,
-                    }),
-                  }}
-                  isClearable
-                />
+                <Box mt={4} ml={2}>
+                  <Select
+                    aria-label="source-accounts-menu"
+                    closeMenuOnSelect
+                    isSearchable
+                    components={{ Option: ReactSelectCurrencyOption }}
+                    onChange={(newValue) => {
+                      setSelectedWethaqSourceAccountOption(newValue);
+                    }}
+                    options={accountOptionsList}
+                    placeholder="Set Source Account"
+                    value={selectedWethaqSourceAccountOption}
+                    styles={{
+                      menu: (styles) => ({
+                        ...styles,
+                        zIndex: 100,
+                      }),
+                      control: (styles) => ({
+                        ...styles,
+                        border: "none",
+                        borderRadius: "6px",
+                        backgroundColor: "rgba(0, 0, 0, 0.09)",
+                        height: "3rem",
+                        width: 600,
+                      }),
+                    }}
+                    isClearable
+                  />
+                </Box>
 
                 <Grid item container md={12} justifyContent="space-between">
                   <Grid item>
@@ -273,6 +275,7 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                   color="primary"
                   variant="contained"
                   disabled={
+                    !selectedWethaqSourceAccountOption ||
                     !totalCouponAmount ||
                     !(totalCouponAmount - computedTotalAllocatedCouponAmount === 0)
                   }
