@@ -198,9 +198,9 @@ const AddPaymentAccountForm = ({
                       isClearable
                       options={entitiesDropdown}
                       onChange={(newValue, triggeredAction) => {
-                        setFieldValue("entityGroupId", newValue?.groups);
+                        setFieldValue("sourceEntity", newValue);
                         if (triggeredAction.action === "clear") {
-                          setFieldValue("entityGroupId", null);
+                          setFieldValue("sourceEntity", null);
                         }
                       }}
                     />
