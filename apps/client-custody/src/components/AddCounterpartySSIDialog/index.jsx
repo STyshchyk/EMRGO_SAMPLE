@@ -135,7 +135,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
   };
 
   const buildRequestPayload = (values) => {
-    const requestPayload = values;
+    const requestPayload = { ...values };
 
     const selectFields = [
       "entity",
