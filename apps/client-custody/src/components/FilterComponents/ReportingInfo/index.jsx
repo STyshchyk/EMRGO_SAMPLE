@@ -5,8 +5,6 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import v from "voca";
 
-import formatAddress from "../../../utils/reports";
-
 const PREFIX = "ReportingInfo";
 
 const classes = {
@@ -42,15 +40,22 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>
-        {/* <Typography className={classes.accountInfoLabel}>
+        <Typography className={classes.accountInfoLabel}>
           {t("Cash Balances.Address")} :{" "}
-        </Typography> */}
-        {/* TODO: Need to uncomment when address data is available */}
-        {/* <Typography className={classes.accountInfoValue}>{`${
-          securityAccount?.data?.original?.group?.addresses
-            ? formatAddress(securityAccount?.data?.original?.group?.addresses)
-            : t("Cash Balances.NA")
-        }`}</Typography> */}
+        </Typography>
+        <Typography className={classes.accountInfoValue}>
+          {`${
+            securityAccount
+              ? securityAccount.data.original.group.clientSecuritiesAccount.accountNumber
+              : t("Security Transactions.NA")
+          } | ${
+            securityAccount
+              ? v.capitalize(
+                  securityAccount.data.original.group.clientSecuritiesAccount.type || "N.A"
+                )
+              : t("Security Transactions.NA")
+          }`}
+        </Typography>
       </Grid>
     </Root>
   );

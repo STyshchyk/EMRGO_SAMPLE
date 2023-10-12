@@ -67,6 +67,7 @@ const CashStatementReportPage = () => {
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [cashAccountFilterValue, setCashAccountFilterValue] = useState(null);
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
+  const [cashAccountOptions, setCashAccountOptions] = useState([]);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedTransactionType, setCurrentlySelectedTransactionType] = useState({
     label: "All",
@@ -119,6 +120,7 @@ const CashStatementReportPage = () => {
     const cashAccountOpts = [];
     const securityAccountOpts = [];
     const pushedEntity = [];
+    const pushedSecAccount = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
       if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
@@ -128,17 +130,18 @@ const CashStatementReportPage = () => {
           value: acc.group.entity.id,
         });
 
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
-
         pushedEntity.push(acc.group.entity.id);
       }
+      if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
+        securityAccountOpts.push({
+          id: acc.group.clientSecuritiesAccount?.id,
+          label: acc.group.clientSecuritiesAccount?.accountNumber,
+          value: acc.group.clientSecuritiesAccount?.id,
+          original: acc,
+        });
+        pushedSecAccount.push(acc.group.clientSecuritiesAccount.id);
+      }
+
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
@@ -154,16 +157,6 @@ const CashStatementReportPage = () => {
   };
 
   const { entityOpts, cashAccountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-  console.log(cashAccountOpts);
-  let filteredCashAccounts = cashAccountOpts
-    .filter((account) =>
-      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
-    )
-    .map((acc) => ({
-      data: acc,
-      value: acc.id,
-      label: `${acc.label} ${acc.original.currency.name}`,
-    }));
 
   const filteredEntity = entityOpts.map((entity) => ({
     data: entity,
@@ -183,26 +176,26 @@ const CashStatementReportPage = () => {
     setCurrentlySelectedEntity(selectedEntity);
     setCashAccountFilterValue(null);
 
-    filteredCashAccounts = cashAccountOpts
-      .filter((account) =>
-        selectedEntity ? account.original.group.entity.id === selectedEntity.value : false
-      )
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: account.label,
-      }));
+    // filteredCashAccounts = cashAccountOpts
+    //   .filter((account) =>
+    //     selectedEntity ? account.original.group.entity.id === selectedEntity.value : false
+    //   )
+    //   .map((account) => ({
+    //     data: account,
+    //     value: account.id,
+    //     label: account.label,
+    //   }));
 
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+    // const tempSecurityAccountList = securityAccountOpts
+    //   .filter((securityAccount) =>
+    //     selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
+    //   )
+    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedEntity) {
-      setSecurityAccountFilterValue(tempSecurityAccountList[0]?.value);
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
-    }
+    // if (selectedEntity) {
+    //   setSecurityAccountFilterValue(tempSecurityAccountList[0]?.value);
+    //   setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
+    // }
     dispatch(reportsActionCreators.doResetCashTransactions());
   };
 
@@ -215,6 +208,20 @@ const CashStatementReportPage = () => {
         selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+
+    const filteredCashAccounts = cashAccountOpts
+      .filter((account) =>
+        selectedAccount
+          ? account?.original?.group.clientSecuritiesAccount.id === selectedAccount.data.id
+          : false
+      )
+      .map((account) => ({
+        data: account,
+        value: account.id,
+        label: `${account.label}  ${account?.original?.currency?.name}`,
+      }));
+
+    setCashAccountOptions(filteredCashAccounts);
 
     if (selectedAccount) {
       setEntityFilterValue(tempEntitiesList[0].value);
@@ -255,6 +262,9 @@ const CashStatementReportPage = () => {
     }
     if (currentlySelectedEntity) {
       qs += `entityName=${currentlySelectedEntity.label}&`;
+    }
+    if (currentlySelectedSecurityAccount && false) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.group.clientSecuritiesAccount.portfolioId}&`;
     }
     if (cashAccountFilterValue) {
       qs += `accountNo=${cashAccountFilterValue}`;
@@ -373,7 +383,7 @@ const CashStatementReportPage = () => {
                 <DropdownFilter
                   name="account"
                   label="Cash Account"
-                  options={filteredCashAccounts}
+                  options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
                   // customComponent={{
