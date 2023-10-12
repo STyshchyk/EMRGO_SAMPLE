@@ -22,6 +22,7 @@ import * as formActionCreators from "../../../../redux/actionCreators/form";
 import * as selectFormValues from "../../../../redux/selectors/form";
 // import { addAccountSchema } from '../../validationSchemas';
 import style from "./style.module.scss";
+import addEntityAccountFormSchema from "apps/helium-custody/src/validationSchemas/addEntityAccountFormSchema";
 
 const initial = {
   entityGroupId: "",
@@ -97,12 +98,12 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
     label: entity.corporateEntityName,
     groupId: entity.groupId,
   }));
-
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      validateOnMount={false}
+    // validateOnMount={false}
+      validationSchema={addEntityAccountFormSchema}
       onSubmit={(values, { resetForm }) => {
         onSubmit(
           {
