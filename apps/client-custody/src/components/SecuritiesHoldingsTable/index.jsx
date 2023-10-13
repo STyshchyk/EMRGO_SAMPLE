@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import { Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
@@ -66,6 +67,7 @@ const SecuritiesHoldingsTable = ({
   const mtableLocalization = useMaterialTableLocalization();
   const [entityAddress, setEntityAddress] = useState(null);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
+  const [selectedSecAccount, setSelectedSecAccount] = useState(false);
 
   const [isFetch, setIsFetch] = useState(false);
 
@@ -142,6 +144,7 @@ const SecuritiesHoldingsTable = ({
       fetchSecuritiesHoldings({
         params: {
           date: date?.value.toISOString(),
+          portfolio_id: selectedSecAccount?.portfolio_id,
         },
       });
     } else {
@@ -150,6 +153,7 @@ const SecuritiesHoldingsTable = ({
           entityId: entity?.value?.value,
           // accountId: selectedSecuritiesAccountOption?.value,
           date: date?.value?.toISOString() ?? moment().toISOString(),
+          portfolio_id: selectedSecAccount?.portfolio_id,
         },
       });
     }
@@ -260,7 +264,16 @@ const SecuritiesHoldingsTable = ({
                 <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
+                <DropdownFilter
+                  name="safekeepingAccount"
+                  label="Safekeeping Account"
+                  options={securitiesAccounts}
+                  getOptionLabel={(options) => options.accountNumber}
+                  getOptionValue={(options) => options}
+                  onChange={(newValue) => {
+                    setSelectedSecAccount(newValue);
+                  }}
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
@@ -314,16 +327,16 @@ const SecuritiesHoldingsTable = ({
                 <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
               </Grid>
 
-              {/* <Grid item xs={12} container>
+              <Grid item xs={12} container>
                 <Typography variant="subtitle1">
-                  <Box fontWeight="bold">{t("Cash Balances.Address")} : </Box>{" "}
+                  <Box fontWeight="bold">{` Safekeeping Account`} : </Box>{" "}
                 </Typography>
-                <Typography variant="subtitle1">{` ${
-                  entityAddress?.group?.addresses && !allEntitiesOptionSelected
-                    ? formatAddress(entityAddress?.group?.addresses)
-                    : t("Cash Balances.NA")
-                }`}</Typography>
-              </Grid> */}
+                <Typography variant="subtitle1" sx={{ marginLeft: `0.5rem` }}>
+                  {selectedSecAccount
+                    ? ` ${selectedSecAccount.accountNumber} | ${selectedSecAccount.type}`
+                    : ` N.A | N.A`}
+                </Typography>
+              </Grid>
             </Grid>
           </TableFiltersWrapper>
         </div>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 
 import AmendSettlementInstructionDialog from "../../../components/AmendSettlementInstructionDialog";
 import CancelSettlementInstructionDialog from "../../../components/CancelSettlementInstructionDialog";
@@ -91,6 +90,8 @@ const CustodyAndSettlement = () => {
 
     const fetchSecuritiyReferenceData = () =>
       dispatch(reportsActionCreators.doFetchReferenceData());
+    const fetchSafeAcounts = (payload) =>
+      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
     const fetchPaymentAccounts = () => dispatch(accountsActionCreators.doFetchPaymentAccounts());
     const fetchSettlementInstructionTypeOptions = () =>
       dispatch(
@@ -111,7 +112,7 @@ const CustodyAndSettlement = () => {
     fetchCounterpartyList();
     fetchPaymentsList();
     fetchExternalSecuritiesList();
-
+    fetchSafeAcounts({ entityId: "c7121ee3-1872-4e1e-acc4-71da9f8471cc" }); //FIX THIS
     return () => {
       const resetDropdownState = () => dispatch(dropdownActionCreators.doResetDropdownState());
 

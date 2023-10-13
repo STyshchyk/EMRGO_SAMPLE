@@ -695,7 +695,7 @@ const SecuritiesTransactionsReportPage = () => {
                       <Grid item xs={12} md={6} lg={3} container>
                         <Grid container justifyContent="space-between" alignItems="flex-start">
                           <Typography variant="body1" className="bold">
-                            {t("Security Transactions.Filters.Safekeeping Account")}
+                            {"Safekeeping Account"}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("securityAccount")}>
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
@@ -706,9 +706,7 @@ const SecuritiesTransactionsReportPage = () => {
                             <Select
                               closeMenuOnSelect
                               isSearchable
-                              placeholder={`${t(
-                                "Security Transactions.Filters.Securities Account"
-                              )}...`}
+                              placeholder={`Safekeeping Account`}
                               components={{
                                 ...animatedComponents,
                               }}
@@ -863,24 +861,23 @@ const SecuritiesTransactionsReportPage = () => {
                           </Box>
                         </Grid>
                       </Grid>
+                      <Grid item xs={12} md={12} lg={12} container>
+                        <Typography className={style.accountInfo__label}>
+                          {`Safekeeping Account`} :{" "}
+                        </Typography>
+                        <Typography className={style.accountInfo__value}>{`${
+                          values.securityAccount
+                            ? values.securityAccount.data.original.accountNumber
+                            : t("Security Transactions.NA")
+                        } | ${
+                          values.securityAccount
+                            ? v.capitalize(values.securityAccount.data.original.type || "N.A")
+                            : t("Security Transactions.NA")
+                        }`}</Typography>
+                      </Grid>
                     </Grid>
                   </TableFiltersWrapper>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} container>
-                      <Typography className={style.accountInfo__label}>
-                        {t("Security Transactions.Account")} :{" "}
-                      </Typography>
-                      <Typography className={style.accountInfo__value}>{`${
-                        values.securityAccount
-                          ? values.securityAccount.data.original.accountNumber
-                          : t("Security Transactions.NA")
-                      } | ${
-                        values.securityAccount
-                          ? v.capitalize(values.securityAccount.data.original.type || "N.A")
-                          : t("Security Transactions.NA")
-                      }`}</Typography>
-                    </Grid>
-
                     {/* <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
                         {t("Security Transactions.Address")} :{" "}

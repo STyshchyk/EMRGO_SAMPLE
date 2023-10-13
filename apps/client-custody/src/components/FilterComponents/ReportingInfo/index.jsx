@@ -40,9 +40,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
         }`}</Typography>
       </Grid>
       <Grid item xs={12} container>
-        <Typography className={classes.accountInfoLabel}>
-          {t("Cash Balances.Address")} :{" "}
-        </Typography>
+        <Typography className={classes.accountInfoLabel}>{` Safekeeping Account`} : </Typography>
         <Typography className={classes.accountInfoValue}>
           {`${
             securityAccount

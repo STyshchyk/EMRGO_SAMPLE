@@ -190,6 +190,10 @@ const CashBalancesTable = ({ data, accounts }) => {
     if (currentlySelectedEntity.value !== "all") {
       qs += `entityId=${currentlySelectedEntity?.data.entityId}`;
     }
+    if (currentlySelectedSecurityAccount && false) {
+      // FIX THIS
+      qs += `portfolio_id=${currentlySelectedSecurityAccount?.original.group.clientSecuritiesAccount.portfolioId}`;
+    }
 
     dispatch(reportsActionCreators.doFetchCashBalances({ qs }));
   };
@@ -398,7 +402,7 @@ const CashBalancesTable = ({ data, accounts }) => {
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
               </Grid>
-              <Grid>
+              <Grid item xs={12}>
                 <ReportingInfo
                   cashAccount={currentlySelectedCashAccount}
                   securityAccount={currentlySelectedSecurityAccount}
