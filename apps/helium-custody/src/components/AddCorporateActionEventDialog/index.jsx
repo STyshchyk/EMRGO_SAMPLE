@@ -231,6 +231,12 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       voluntary: formikValues?.mandatoryOrVoluntary?.value === "voluntary",
       clientResponseDeadline: formikValues?.responseDeadline,
     };
+
+    // id 933 if mandatory remove clientResponseDeadline
+    if (!requestPayload.voluntary) {
+      delete requestPayload.clientResponseDeadline;
+    }
+
     return { ...requestPayload };
   };
 
@@ -450,6 +456,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           setFieldValue("exDate", date);
                         }}
                       />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="exDate"
+                      />
                     </Grid>
                   </Grid>
 
@@ -472,6 +485,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           setFieldValue("recordDate", date);
                         }}
                       />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="recordDate"
+                      />
                     </Grid>
                   </Grid>
 
@@ -493,6 +513,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         onChange={(date) => {
                           setFieldValue("paymentDate", date);
                         }}
+                      />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="paymentDate"
                       />
                     </Grid>
                   </Grid>
@@ -629,6 +656,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         onChange={(date) => {
                           setFieldValue("responseDeadline", date);
                         }}
+                      />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="responseDeadline"
                       />
                     </Grid>
                   </Grid>

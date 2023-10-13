@@ -1,6 +1,7 @@
 import React, { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
 
@@ -13,7 +14,6 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const generateCAEventsTableRowData = (i) => ({
   id: i?.id,
@@ -102,7 +102,10 @@ const CorporateActionEventsTable = ({
     {
       id: "responseDeadline",
       title: "Response Deadline",
-      render: (rowData) => dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT),
+      render: (rowData) =>
+        rowData?.responseDeadline
+          ? dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT)
+          : "N/A",
     },
   ];
 

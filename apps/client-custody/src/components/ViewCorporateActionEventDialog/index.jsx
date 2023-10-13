@@ -172,14 +172,15 @@ const ViewCorporateActionEventDialog = ({
                 </>
               )}
 
-              <DataGridRow
-                label={"Client Response Deadline"}
-                value={
-                  isVoluntaryEvent
-                    ? dateFormatter(currentlySelectedRowData?.responseDeadline, DEFAULT_DATE_FORMAT)
-                    : "N/A"
-                }
-              />
+              {isVoluntaryEvent && (
+                <DataGridRow
+                  label={"Client Response Deadline"}
+                  value={dateFormatter(
+                    currentlySelectedRowData?.responseDeadline,
+                    DEFAULT_DATE_FORMAT
+                  )}
+                />
+              )}
 
               {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
               {isUserInvestor && !isReadOnly && (
