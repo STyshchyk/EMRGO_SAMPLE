@@ -1,6 +1,9 @@
 import { createContext, lazy, useContext } from "react";
 import { useSelector } from "react-redux";
 
+import { accountIdentification } from "@emrgo-frontend/constants";
+import { useUser } from "@emrgo-frontend/shared-ui";
+
 import featureFlags from "../constants/featureFlags";
 import routes from "../constants/routes";
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -41,6 +44,7 @@ const RouterMappingContext = createContext();
 RouterMappingContext.displayName = "RouterMappingContext";
 
 const RouterMappingProvider = ({ children }) => {
+  const { user } = useUser();
   const inProd = useIsProduction();
 
   const { checkFeatureFlag } = useFeatureToggle();
@@ -49,7 +53,10 @@ const RouterMappingProvider = ({ children }) => {
     featureFlags.intlSecTradeSettlementWorkflow
   );
   const isReconciliationFeatureEnabled = checkFeatureFlag(featureFlags.reconciliationFeature);
-  const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
+  // const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
+  const kycApprovalStatus =
+    user?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
+    user?.clientKycStatus === accountIdentification.KYC_STATUS_APPROVED;
 
   const value = {
     publicRouteConfigs: [
