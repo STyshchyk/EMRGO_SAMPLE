@@ -18,6 +18,7 @@ import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
 import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecurities";
+import * as reportsSelectors from "../../redux/selectors/reports";
 import useIsProduction from "../../utils/useIsProduction";
 import { addSettlementInstructionFormSchema } from "../../validationSchemas";
 import CustomTextField from "../CustomTextField";
@@ -205,7 +206,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     settlementTypeId: formikValues.settlementTypeSelectOption?.value,
     settlementTypeSelectOption: undefined,
     entityGroupId: formikValues?.entityGroupId,
-    userId: formikValues?.entityGroupUserId,
+    userId: formikValues?.entityGroupUserId, // FIX THIS
     entityId: undefined,
     entityGroupUserId: undefined,
     principalAmount: !formikValues.principalAmount
@@ -323,6 +324,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    portfolioId: "",
   },
   isSubmitting,
   handleCloseDialog,
@@ -335,6 +337,7 @@ const RaiseSettlementInstructionForm = ({
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityType === "EMRGO_SERVICES";
@@ -436,9 +439,21 @@ const RaiseSettlementInstructionForm = ({
                 <Select
                   {...baseSelectProps}
                   placeholder={"Select Safekeeping Account"}
-                  value={{}}
-                  options={[{}]}
-                  onChange={(newValue) => {}}
+                  options={currentSafeAccounts}
+                  getOptionLabel={(option) =>
+                    `${option.name} | ${option.securitiesAccount.accountNumber}`
+                  }
+                  getOptionValue={(option) => option}
+                  onChange={(newValue) => {
+                    setFieldValue("portfolioId", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="portfolioId"
                 />
               </InlineFormField>
               <InlineFormField label="Settlement Type">
