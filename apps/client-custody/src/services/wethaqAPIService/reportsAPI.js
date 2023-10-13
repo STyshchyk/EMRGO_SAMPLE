@@ -54,6 +54,13 @@ const getReferenceData = (payload) =>
     params: payload || null,
   });
 
+const getSafeAccounts = (payload) =>
+  baseAxiosInstance({
+    method: "GET",
+    url: `/accounts/v1/safeKeepingAccounts`,
+    params: payload || null,
+  });
+
 const reportsAPI = {
   getCashAccounts,
   getCashTransactions,
@@ -63,6 +70,7 @@ const reportsAPI = {
   getSecuritiesHoldings,
   getTradeDateSecuritiesHoldings,
   getReferenceData,
+  getSafeAccounts,
 };
 
 export default reportsAPI;

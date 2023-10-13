@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 export const selectCashAccountsData = (state) => state.reports.cashAccounts;
 export const selectCashTransactionsData = (state) => state.reports.cashTransactions;
 const rowData = [
+  // FIX THIS
   {
     id: "fc8177cb-8799-41e9-9356-83a9c34ded6211",
     accountBalance: "0",
@@ -281,6 +282,7 @@ export const selectCashTransactions = createSelector(
 );
 
 export const selectSecuritiesAccountsData = (state) => state.reports.securitiesAccounts;
+export const selectSafeAccountsData = (state) => state.reports.safekeepingAccount;
 export const selectSecuritiesTransactionsData = (state) => state.reports.securitiesTransactions;
 
 export const selectSecuritiesAccounts = createSelector(
