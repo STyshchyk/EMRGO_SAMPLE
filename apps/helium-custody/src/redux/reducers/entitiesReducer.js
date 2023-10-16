@@ -5,6 +5,7 @@ import * as actionCreators from "../actionCreators/entities";
 
 const defaultState = {
   entitiesList: [],
+  emrgoEntities:[],
   legacyEntitiesList: [],
   entityUsersList: [],
   errorMessage: null,
@@ -53,6 +54,19 @@ const moduleReducer = handleActions(
       entitiesList: formatEntities(data.entities),
     }),
     [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
+      ...state,
+      isLoading: false,
+      message,
+    }),
+
+    // emrgo entities
+    [actionCreators.doFetchEmrgoEntities]: (state) => ({ ...state, isLoading: true }),
+    [actionCreators.doFetchEmrgoEntitiesSuccess]: (state, { payload: { data } }) => ({
+      ...state,
+      isLoading: false,
+      emrgoEntities: formatEntities(data.entities),
+    }),
+    [actionCreators.doFetchEmrgoEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
       isLoading: false,
       message,
