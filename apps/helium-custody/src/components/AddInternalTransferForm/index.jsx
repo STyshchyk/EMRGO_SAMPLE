@@ -118,7 +118,6 @@ const AddInternalTransferForm = ({
   const formattedDate = moment().format("DD/MM/YYYY");
 
   const sourceOwners = useSelector(billingAndPaymentsSelectors.selectSourceOwners);
-  const emrgoOwners = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectSourceAccounts);
   const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);
@@ -126,6 +125,15 @@ const AddInternalTransferForm = ({
   const destinationEntitiesDropdown = generateEntityOptionsList(destinationOwners);
   let sourceAccountsDropdown = generateWethaqAccountOptionsList(sourceAccounts);
   let destinationAccountsDropdown = generateWethaqAccountOptionsList(destinationAccounts);
+
+  const validateAccountType = (account) => {
+    if (!account) return false;
+    const filterAccount = sourceAccounts.filter((acc) => {
+      return account.value.accountId === acc.id;
+    });
+    const type = Array.isArray(filterAccount) && filterAccount[0]?.type;
+    return type && (type === "CLIENT_BALANCE_CONTROL" || type === "CUSTODY_WASH_ACCOUNT");
+  };
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
       {({ values, setFieldValue, isSubmitting }) => {
@@ -238,32 +246,20 @@ const AddInternalTransferForm = ({
           if (!values.sourceAccount || !values.transferAmount) {
             return "";
           }
+          const validatedAccoutType = validateAccountType(values.sourceAccount);
+          console.log(validatedAccoutType);
           const parsedtransferAmount = parseFloat(values.transferAmount, 10);
           const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
-          if (parsedAccountBalance < 0) return "negativeBalance";
+          if (parsedAccountBalance < 0 && !validatedAccoutType) return "negativeBalance";
           const difference = parsedAccountBalance - parsedtransferAmount;
 
-          if (difference < 0) {
-            hasSufficientBalance = "insufficentBalance";
+          if (difference < 0 && !validatedAccoutType) {
+            return (hasSufficientBalance = "insufficentBalance");
           }
 
           return hasSufficientBalance;
         };
-        const checkIfSourceAccBalanceIsNegative = () => {
-          let hasSufficientBalance = true;
 
-          // if either source account or transfer amount is not set in the form then skip the checking logic
-          if (!values.sourceAccount) {
-            return hasSufficientBalance;
-          }
-          const sourceAccountBanace = values.sourceAccount?.value?.accountBalance;
-          console.log("sourceAccountBanace", sourceAccountBanace);
-          if (sourceAccountBanace < 0) {
-            hasSufficientBalance = false;
-          }
-
-          return hasSufficientBalance;
-        };
         return (
           <Form>
             <Grid container spacing={2}>
