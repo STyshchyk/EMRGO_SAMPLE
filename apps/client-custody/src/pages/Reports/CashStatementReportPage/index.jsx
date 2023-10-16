@@ -454,33 +454,37 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
-            const filteredData = filteredRows.filter((row) => {
-              //  Entry Date range Filter
-              if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
-                const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-                const isInRange = dateWithinRange(row?.date, fromDate, toDate);
-                return row?.date ? isInRange : null;
+            const filteredData = filteredRows
+              .filter((row) => {
+                //  Entry Date range Filter
+                if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
+                  const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
+                  const isInRange = dateWithinRange(row?.date, fromDate, toDate);
+                  return row?.date ? isInRange : null;
 
-                // return moment(row.date).isBetween(fromDate, toDate);
-              }
-              if (filters?.transactionType) {
-                let returnValue = false;
-
-                switch (transactionTypeValue) {
-                  case "credit":
-                    returnValue = row.credit !== "";
-                    break;
-                  case "debit":
-                    returnValue = row.debit !== "";
-                    break;
-                  default:
-                    returnValue = true;
+                  // return moment(row.date).isBetween(fromDate, toDate);
                 }
+                return true;
+              })
+              .filter((row) => {
+                if (filters?.transactionType) {
+                  let returnValue = false;
 
-                return returnValue;
-              }
-              return true;
-            });
+                  switch (transactionTypeValue) {
+                    case "credit":
+                      returnValue = row.credit !== "";
+                      break;
+                    case "debit":
+                      returnValue = row.debit !== "";
+                      break;
+                    default:
+                      returnValue = true;
+                  }
+
+                  return returnValue;
+                }
+                return true;
+              });
             return (
               <Fragment>
                 <MaterialTable
