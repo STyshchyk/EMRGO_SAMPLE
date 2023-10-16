@@ -25,6 +25,7 @@ import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as billingAndPaymentsSelectors from "../../../redux/selectors/cashManagement";
 import tableStyles from "../../../styles/cssInJs/materialTable";
+import { dateWithinRange } from "../../../utils/dates";
 import { dateFormatter } from "../../../utils/formatter";
 
 const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
@@ -107,11 +108,15 @@ const CashStatementPage = () => {
   }, [transactions]);
 
   useEffect(() => {
-      if (!currentlySelectedEntity || !currentlySelectedSecurityAccount || !currentlySelectedAccount){
-          setFilteredRows([]);
-      }
+    if (
+      !currentlySelectedEntity ||
+      !currentlySelectedSecurityAccount ||
+      !currentlySelectedAccount
+    ) {
+      setFilteredRows([]);
+    }
   }, [currentlySelectedEntity, currentlySelectedSecurityAccount, currentlySelectedAccount]);
-  
+
   const getRowsForCSV = () => {
     const boxes = [];
     filteredRows.forEach((row) => {
@@ -549,35 +554,37 @@ const CashStatementPage = () => {
 
         <FilterConsumer>
           {({ filterColumns, filters }) => {
-            const filteredData = filteredRows.filter((row) => {
-              //  Entry Date range Filter
-              if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
-                const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-                const isInRange =
-                  moment(row.date).isSameOrAfter(fromDate) &&
-                  moment(row.date).isSameOrBefore(toDate);
-                return row.date ? isInRange : null;
+            const filteredData = filteredRows
+              .filter((row) => {
+                //  Entry Date range Filter
+                if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
+                  const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
+                  const isInRange = dateWithinRange(row?.date, fromDate, toDate);
+                  return row?.date ? isInRange : null;
 
-                // return moment(row.date).isBetween(fromDate, toDate);
-              }
-              if (filters?.transactionType) {
-                let returnValue = false;
-
-                switch (transactionTypeValue) {
-                  case "credit":
-                    returnValue = row.credit !== "";
-                    break;
-                  case "debit":
-                    returnValue = row.debit !== "";
-                    break;
-                  default:
-                    returnValue = true;
+                  // return moment(row.date).isBetween(fromDate, toDate);
                 }
+                return true;
+              })
+              .filter((row) => {
+                if (filters?.transactionType) {
+                  let returnValue = false;
 
-                return returnValue;
-              }
-              return true;
-            });
+                  switch (transactionTypeValue) {
+                    case "credit":
+                      returnValue = row.credit !== "";
+                      break;
+                    case "debit":
+                      returnValue = row.debit !== "";
+                      break;
+                    default:
+                      returnValue = true;
+                  }
+
+                  return returnValue;
+                }
+                return true;
+              });
 
             return (
               <MaterialTable

@@ -19,6 +19,19 @@ function* fetchEntitiesSaga({ payload }) {
   }
 }
 
+function* fetchEmrgoEntitiesSaga({ payload }) {
+  try {
+    const response = yield call(wethaqAPIService.entitiesAPI.getEmrgoEntities, payload);
+    const { data } = response;
+    yield put(entitiesActionCreators.doFetchEmrgoEntitiesSuccess({ data }));
+  } catch (error) {
+    const errorMessage = extractErrorMessage(error);
+    showToastErrorNotification(error, errorMessage);
+    yield put(entitiesActionCreators.doFetchEmrgoEntitiesFailure(errorMessage));
+  }
+}
+
+
 function* fetchLegacyEntitiesSaga({ payload }) {
   try {
     const response = yield call(wethaqAPIService.entitiesAPI.getLegacyEntities, payload);
@@ -186,6 +199,7 @@ function* editEntityCustodySetting({ payload }) {
 
 const entitiesSaga = [
   takeLatest(actionTypes.ENTITIES_REQUESTED, fetchEntitiesSaga),
+  takeLatest(actionTypes.EMRGO_ENTITIES_REQUESTED, fetchEmrgoEntitiesSaga),
   takeLatest(actionTypes.LEGACY_ENTITIES_REQUESTED, fetchLegacyEntitiesSaga),
   takeLatest(actionTypes.ENTITY_USERS_REQUESTED, fetchEntityUsersSaga),
   takeLatest(actionTypes.FETCH_PARENT_ENTITIES_REQUESTED, fetchParentEntitiesSaga),

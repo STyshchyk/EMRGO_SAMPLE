@@ -7,6 +7,12 @@ export const getEntities = (payload) =>
     url: `/auth/v2/internal/entities`,
   });
 
+export const getEmrgoEntities = () =>
+  baseAxiosInstance({
+    method: "GET",
+    url: `/auth/v2/internal/entities/emrgo`,
+  });
+
 export const getLegacyEntities = (payload) =>
   baseAxiosInstance({
     method: "GET",
@@ -98,6 +104,7 @@ const editEntityCustodySettings = (payload) =>
 
 const entitiesAPI = {
   getEntities,
+  getEmrgoEntities,
   getLegacyEntities,
   getUsersByEntityID,
   getEntityGroupsByEntityID,
