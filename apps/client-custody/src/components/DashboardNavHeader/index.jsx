@@ -146,8 +146,6 @@ const DashboardNavHeader = () => {
     user.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
     user.clientKycStatus === accountIdentification.KYC_STATUS_APPROVED;
 
-  console.log(kycApprovalStatus);
-
   // const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
   const custodykycApprovalStatus =
     user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED;

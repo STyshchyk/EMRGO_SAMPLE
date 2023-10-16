@@ -84,13 +84,14 @@ const ViewCorporateActionEventDialog = ({
   const [tableData, setTableData] = useState([]);
   const dispatch = useDispatch();
   const fetchCorporateActionEventsList = () => dispatch(CAEventsActionCreators.doFetchCAEvents());
-
   // selectors
   const corporateActionEvent = useSelector(CAEventsSelectors.selectCorporateActionEvent);
   const isFetchingEvent = useSelector(CAEventsSelectors.selectIsFetchingEvent);
 
   const validInvestors = corporateActionEvent?.validInvestors;
   const allResponses = corporateActionEvent?.responses;
+
+  const isVoluntaryEvent = currentlySelectedRowData?.mandatoryOrVoluntary === "V";
 
   useEffect(() => {
     const fetchCorporateActionEvent = (payload) =>
@@ -171,13 +172,15 @@ const ViewCorporateActionEventDialog = ({
                 </>
               )}
 
-              <DataGridRow
-                label={"Client Response Deadline"}
-                value={dateFormatter(
-                  currentlySelectedRowData?.responseDeadline,
-                  DEFAULT_DATE_FORMAT
-                )}
-              />
+              {isVoluntaryEvent && (
+                <DataGridRow
+                  label={"Client Response Deadline"}
+                  value={dateFormatter(
+                    currentlySelectedRowData?.responseDeadline,
+                    DEFAULT_DATE_FORMAT
+                  )}
+                />
+              )}
 
               {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
               {isUserInvestor && !isReadOnly && (

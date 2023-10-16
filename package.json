@@ -1,6 +1,6 @@
 {
   "name": "emrgo-frontend",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "dev:all": "nx run-many -t serve --parallel=true --maxParallel=100 --skip-nx-cache",

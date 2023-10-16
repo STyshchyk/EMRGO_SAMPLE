@@ -150,7 +150,11 @@ const AddPaymentInstructionForm = ({
                   isSearchable
                   styles={selectStyles}
                   menuPortalTarget={document.body}
-                  value={values.paymentAccount}
+                  value={
+                    filteredPaymentAccountOptions?.length === 1
+                      ? filteredPaymentAccountOptions[0]
+                      : values.paymentAccount
+                  }
                   isClearable
                   options={filteredPaymentAccountOptions}
                   onChange={(selectedOption, triggeredAction) => {

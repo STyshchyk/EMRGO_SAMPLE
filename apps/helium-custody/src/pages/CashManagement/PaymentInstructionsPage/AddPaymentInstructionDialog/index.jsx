@@ -123,7 +123,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           initial={initial}
           handleSubmit={handleSubmit}
           handleCancel={() => {
-            saveFormValues(initialValues?.valueDate);
+            saveFormValues("clear");
             setInitialValues(initial);
             handleClose();
           }}

@@ -72,7 +72,7 @@ const updateSettlementInstructionStatusById = (payload) =>
 const getPaymentsList = () =>
   baseAxiosInstance({
     method: "GET",
-    url: "/payments/v1/payment/list",
+    url: "/payments/v2/payment/list",
   });
 
 const getSettlementInstructionAuditDataById = (payload) =>

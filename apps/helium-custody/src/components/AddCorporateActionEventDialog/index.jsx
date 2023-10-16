@@ -11,6 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -32,6 +33,18 @@ import AutoSaveFields from "../AutoSaveFields";
 import RealtimeSecSearchDialog from "../RealtimeSecSearchDialog";
 
 const animatedComponents = makeAnimated();
+
+const PREFIX = "AddCounterpartySSIDialog";
+
+const classes = {
+  disabledText: `${PREFIX}-disabledText`,
+};
+
+const StyledDialog = styled(Dialog)(() => ({
+  [`& .${classes.disabledText}`]: {
+    color: "#979797",
+  },
+}));
 
 const initial = {
   eventType: null,
@@ -218,6 +231,12 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       voluntary: formikValues?.mandatoryOrVoluntary?.value === "voluntary",
       clientResponseDeadline: formikValues?.responseDeadline,
     };
+
+    // id 933 if mandatory remove clientResponseDeadline
+    if (!requestPayload.voluntary) {
+      delete requestPayload.clientResponseDeadline;
+    }
+
     return { ...requestPayload };
   };
 
@@ -229,7 +248,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
   }, [open]);
 
   return (
-    <Dialog
+    <StyledDialog
       fullWidth
       open={open}
       onClose={(event, reason) => {
@@ -437,6 +456,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           setFieldValue("exDate", date);
                         }}
                       />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="exDate"
+                      />
                     </Grid>
                   </Grid>
 
@@ -459,6 +485,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           setFieldValue("recordDate", date);
                         }}
                       />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="recordDate"
+                      />
                     </Grid>
                   </Grid>
 
@@ -480,6 +513,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         onChange={(date) => {
                           setFieldValue("paymentDate", date);
                         }}
+                      />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="paymentDate"
                       />
                     </Grid>
                   </Grid>
@@ -594,7 +634,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
 
                   <Grid container className="mt-4">
                     <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Client Response Deadline</Typography>
+                      <Typography
+                        className={`mt-4 ${
+                          values.mandatoryOrVoluntary?.value === "mandatory" && classes.disabledText
+                        }`}
+                      >
+                        Client Response Deadline
+                      </Typography>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
                       <Field
@@ -604,11 +650,19 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
                         name="responseDeadline"
                         value={values.responseDeadline}
                         onChange={(date) => {
                           setFieldValue("responseDeadline", date);
                         }}
+                      />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="responseDeadline"
                       />
                     </Grid>
                   </Grid>
@@ -660,7 +714,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
           </form>
         )}
       </Formik>
-    </Dialog>
+    </StyledDialog>
   );
 };
 

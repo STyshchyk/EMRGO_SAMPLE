@@ -23,8 +23,8 @@ const addCounterpartySSIFormSchema = Yup.object().shape({
     .nullable()
     .required("Delivery/Receive Identifier is required"),
   sellerOrBuyerIdType: Yup.object().shape({
-    label:Yup.string(),
-    value:Yup.string()
+      label:Yup.string().nullable(),
+      value:Yup.string().nullable()
   }).nullable(),
   sellerOrBuyerIdentifier: Yup.string().nullable(),
   safekeepingAccount: Yup.string().nullable(),
