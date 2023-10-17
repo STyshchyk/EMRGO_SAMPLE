@@ -185,6 +185,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
       // !! Improve this maybe as O(n)
       const options = counterpartyList
         .filter((item) => item?.entityId?.value === entityId?.toString())
+        .filter((item) => item?.status?.value === "Active")
         .map((item) => ({ label: item?.counterpartyId, value: item?.id }));
       return options;
     }
