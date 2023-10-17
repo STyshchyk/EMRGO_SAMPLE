@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
+import * as Yup from "yup";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import * as CAEventsActionCreators from "../../redux/actionCreators/corporateActionEvents";
@@ -18,6 +19,10 @@ import * as CAEventsSelectors from "../../redux/selectors/corporateActionEvents"
 import { dateFormatter } from "../../utils/formatter";
 import StyledDialogHeader from "../StyledDialogHeader";
 import CorporateActionEventDetail from "./CorporateActionEventDetail";
+
+const validationSchema = Yup.object().shape({
+  clientResponse: Yup.string().required("Client Response is required"),
+});
 
 const InlineFormField = ({ label, children }) => (
   <Box mb={4}>
@@ -131,6 +136,7 @@ const ViewCorporateActionEventDialog = ({
       <Formik
         initialValues={{ clientResponse: null }}
         enableReinitialize
+        validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           const formObject = {
             requestPayload: { response: values?.clientResponse },
