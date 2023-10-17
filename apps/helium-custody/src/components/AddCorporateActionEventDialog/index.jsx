@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
 
@@ -192,7 +192,6 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
   }, [formvalues, fetchingValues, selectedCorporateActionEvent, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {

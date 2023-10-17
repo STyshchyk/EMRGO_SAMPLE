@@ -11,13 +11,12 @@ const AutoSaveFields = ({ selectedRow, initial, formKey }) => {
   const { values } = useFormikContext();
 
   const saveFormValues = (value) => {
-    if (!value)return;
     const obj = {
       settings: [
         {
           key: formKey,
           value: JSON.stringify(value),
-          isActive:true,
+          isActive: true,
         },
       ],
     };

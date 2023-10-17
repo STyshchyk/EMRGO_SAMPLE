@@ -262,7 +262,6 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
   }, [formvalues, fetchingValues, selectedCounterpartySSI, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {
