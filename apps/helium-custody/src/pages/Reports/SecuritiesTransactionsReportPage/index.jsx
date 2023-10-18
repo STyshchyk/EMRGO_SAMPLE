@@ -86,11 +86,11 @@ const SecuritiesTransactionsReportPage = () => {
         row.wsn || "",
         row?.externalSecurity?.shortName || "",
         row.issuerName || "",
-        row.fromSecurityAccount || "",
         row?.settlementType?.name || "",
+        row.fromSecurityAccount || "",
         row.investorName || "",
         row.toSecurityAccount || "",
-        currencyRenderer(row.netSettleAmount) || "",
+        convertNumberToIntlFormat(row.netSettleAmount) || "", // amount of sec. settled
         row.instDescription || "",
         currencyRenderer(row.price) || "",
         row?.sukuk?.issueDate
@@ -231,10 +231,10 @@ const SecuritiesTransactionsReportPage = () => {
       exportConfig: { render: (rowData) => rowData?.settlementType?.name },
     },
     {
-        id: "currency",
-        title: t("Security Transactions.Headers.Currency"),
-        field: "currency",
-        exportConfig: { render: (rowData) => rowData?.externalSecurity?.currencyName?.name },
+      id: "currency",
+      title: t("Security Transactions.Headers.Currency"),
+      field: "currency",
+      exportConfig: { render: (rowData) => rowData?.externalSecurity?.currencyName?.name },
     },
     {
       id: "issuerName",
@@ -342,10 +342,10 @@ const SecuritiesTransactionsReportPage = () => {
       exportConfig: { width: 8 },
     },
     {
-        id: "currency",
-        title: t("Security Transactions.Headers.Currency"),
-        field: "currency",
-        exportConfig: { width: 8 },
+      id: "currency",
+      title: t("Security Transactions.Headers.Currency"),
+      field: "currency",
+      exportConfig: { width: 8 },
     },
     {
       id: "netSettleAmount",
