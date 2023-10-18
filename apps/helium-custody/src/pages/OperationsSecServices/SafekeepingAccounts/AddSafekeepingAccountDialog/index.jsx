@@ -1,8 +1,4 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-
-
 
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
@@ -21,17 +17,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import PropTypes from "prop-types";
 
-
-
-import * as safekeepingActionCreators from "../../../../redux/actionCreators/safekeeping";
-import * as authSelectors from "../../../../redux/selectors/auth";
-import * as safekeepingSelectors from "../../../../redux/selectors/safekeeping";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
-
-
-
-
 
 const generateRequestPayload = (formikValues) => ({
   ...formikValues,
@@ -43,10 +30,15 @@ const generateRequestPayload = (formikValues) => ({
   intermediaryBankCountry: undefined,
 });
 
-const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, statuses }) => {
-  const dispatch = useDispatch();
+const AddSafekeepingAccountDialog = ({
+  open,
+  handleClose,
+  entities,
+  currencies,
+  statuses,
+  handleAddSafekeepingAccount,
+}) => {
   const { t } = useTranslation(["safekeeping_accounts", "miscellaneous"]);
-  const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
 
   const entityList = entities.map((entity) => {
     return {
@@ -65,8 +57,6 @@ const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, 
     };
   });
 
-  const currentEntityGroupID = currentEntityGroup?.id;
-
   const initialValues = {
     entity: null,
     baseCurrency: null,
@@ -80,7 +70,7 @@ const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, 
     currencyListForMaterialTable[currency.id] = currency.name;
   });
 
-  const [columns, setColumns] = useState([
+  const columns = [
     {
       title: "Currency",
       field: "currency",
@@ -92,26 +82,7 @@ const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, 
       field: "account",
       editable: "never",
     },
-  ]);
-
-  const [data, setData] = useState([]);
-
-  const handleSubmit = (values, actions) => {
-    console.log("🚀 ~ file: index.jsx:75 ~ handleSubmit ~ values:", values);
-    // const addPaymentAccount = (payload) =>
-    //   dispatch(accountsActionCreators.doAddPaymentAccount(payload));
-    // const requestPayload = generateRequestPayload({ ...values, currentEntityGroupID });
-    // requestPayload.supportingDoc = uploadedFiles?.supportingDoc?.fileIdentifier;
-
-    // addPaymentAccount({
-    //   requestPayload,
-    //   successCallback: () => {
-    //     handleClose();
-    //   },
-    // });
-
-    // actions.resetForm();
-  };
+  ];
 
   return (
     <Dialog
@@ -140,7 +111,7 @@ const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, 
         <Box pb={2}>
           <Formik
             initialValues={initialValues}
-            onSubmit={handleSubmit}
+            onSubmit={handleAddSafekeepingAccount}
             // validationSchema={addPaymentAccountFormSchema}
             enableReinitialize
           >
@@ -259,7 +230,6 @@ const AddSafekeepingAccountDialog = ({ open, handleClose, entities, currencies, 
                             }),
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
-                        
                               const index = oldData.currency;
                               setTimeout(() => {
                                 const dataDelete = [...values.currencies].filter(

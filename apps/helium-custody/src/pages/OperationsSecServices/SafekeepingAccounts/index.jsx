@@ -2,6 +2,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import MaterialTable from "@material-table/core";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,6 +13,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
+
+
 
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
@@ -28,6 +32,10 @@ import * as miscellaneousSelectors from "../../../redux/selectors/miscellaneous"
 import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import AddSafekeepingAccountDialog from "./AddSafekeepingAccountDialog";
+
+
+
+
 
 const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
@@ -300,6 +308,19 @@ const SafekeepingAccounts = () => {
     setOpenSafekeepingAccountDialog(true);
   };
 
+  const handleAddSafekeepingAccount = (values, actions) => {
+    const requestPayload = {
+      entityId: values.entity.id,
+      baseCurrencyId: values.baseCurrency.value,
+      name: values.name,
+      status: values.status.value,
+      currencies: values.currencies.map((currency) => currency.currency.value),
+    };
+    dispatch(safekeepingActionCreators.doCreateAccount(requestPayload));
+
+    actions.resetForm();
+  };
+
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (
     <Fragment>
@@ -440,6 +461,7 @@ const SafekeepingAccounts = () => {
           entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
           currencies={currencies || []}
           statuses={statuses}
+          handleAddSafekeepingAccount={handleAddSafekeepingAccount}
         />
       ) : null}
     </Fragment>
