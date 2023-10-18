@@ -5,11 +5,12 @@ const selectDocumentLink = (state) => state.miscellaneous.documentLink;
 const selectDocumentName = (state) => state.miscellaneous.documentName;
 const selectStaticFileLink = (state) => state.miscellaneous.fileLink;
 const selectAllTableConfig = (state) => state.miscellaneous.tableConfig;
+const selectDropdowns = (state) => state.miscellaneous.dropdowns;
 
 const selectTableConfig = createSelector(
   [selectAllTableConfig, (state, tableKey) => tableKey],
   // Output selector gets (`items, category)` as args
-  (items, tableKey) => items && items.find((item) => item.key === tableKey) || null
+  (items, tableKey) => (items && items.find((item) => item.key === tableKey)) || null
 );
 
 export default selectDocumentLink;
@@ -20,4 +21,5 @@ export {
   selectStaticFileLink,
   selectAllTableConfig,
   selectTableConfig,
+  selectDropdowns,
 };

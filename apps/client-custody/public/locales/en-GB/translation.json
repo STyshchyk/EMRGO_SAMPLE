@@ -135,7 +135,8 @@
       "Trustee Services": "Trustee Services",
       "Securities List": "Securities List",
       "Payment Administration": "Payment Administration",
-      "FX Transaction List": "FX Transaction List"
+      "FX Transaction List": "FX Transaction List",
+      "Safekeeping Accounts": "Safekeeping Accounts"
     },
     "Securities Admin": {
       "Securities List": "Securities List"

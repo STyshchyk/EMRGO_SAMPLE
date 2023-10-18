@@ -129,7 +129,8 @@
       "Trustee Services": "Trustee Services",
       "Securities List": "Securities List",
       "Payment Administration": "Payment Administration",
-      "FX Transaction List": "FX Transaction List"
+      "FX Transaction List": "FX Transaction List",
+      "Safekeeping Accounts": "Safekeeping Accounts"
     },
     "Securities Admin": {
       "Securities List": "Securities List"
@@ -205,9 +206,9 @@
     "BROKER": "BROKER",
     "Default Group": "Default Group",
     "Default Entity Group": "Default Entity Group",
-    "finance":"finance",
-    "operations":"operations",
-    "relationship_manager":"relationship manager"
+    "finance": "finance",
+    "operations": "operations",
+    "relationship_manager": "relationship manager"
   },
   "EntityGroupType": {
     "ARRANGER": "ARRANGER",
@@ -220,11 +221,9 @@
     "EMRGO_SERVICES": "EMRGO_SERVICES",
     "ADMINISTRATOR": "ADMINISTRATOR",
     "CO_ARRANGER": "CO_ARRANGER",
-    "BROKER": "BROKER",    
-    "finance":"finance",
-    "operations":"operations",
-    "relationship_manager":"relationship manager"
-
-
+    "BROKER": "BROKER",
+    "finance": "finance",
+    "operations": "operations",
+    "relationship_manager": "relationship manager"
   }
 }

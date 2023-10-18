@@ -30,6 +30,7 @@ import paymentAndSettlementSaga from "./paymentAndSettlementSaga";
 import preferencesSaga from "./preferencesSaga";
 import quotesSaga from "./quotesSaga";
 import reportsSaga from "./reportsSaga";
+import safekeepingSaga from "./safekeepingSaga";
 import securitiesServicesSaga from "./securitiesServicesSaga";
 import serviceProvidersSaga from "./serviceProvidersSaga";
 import supportSaga from "./supportSaga";
@@ -72,6 +73,7 @@ function* watchAll() {
     ...billingSaga,
     ...formValuesSaga,
     ...corporateActionEventsSaga,
+    ...safekeepingSaga,
   ]);
 }
 

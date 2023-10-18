@@ -1,12 +1,20 @@
 import { toast } from "react-toastify";
 
+
+
 import { call, put, takeLatest } from "redux-saga/effects";
+
+
 
 import i18n from "../../i18n";
 import * as wethaqAPIService from "../../services/wethaqAPIService";
 import * as miscellaneousActionCreators from "../actionCreators/miscellaneous";
 import * as actionTypes from "../actionTypes/miscellaneous";
 import { extractErrorMessage, showToastErrorNotification } from "../helpers";
+
+
+
+
 
 function* fetchDocumentLink({ payload }) {
   try {
@@ -70,11 +78,24 @@ function* updateTableConfig({ payload }) {
   }
 }
 
+function* fetchDropdowns({ payload }) {
+  try {
+    const response = yield call(wethaqAPIService.dropdownAPI.getDropDownValues, payload);
+    const { data } = response;
+    yield put(miscellaneousActionCreators.doFetchDropdownValuesSuccess({ data }));
+  } catch (error) {
+    const errorMessage = extractErrorMessage(error);
+    showToastErrorNotification(error, errorMessage);
+    yield put(miscellaneousActionCreators.doFetchDropdownValuesFailure(errorMessage));
+  }
+}
+
 const miscellaneousSaga = [
   takeLatest(actionTypes.DOCUMENT_LINK_FETCH_REQUESTED, fetchDocumentLink),
   takeLatest(actionTypes.STATIC_FILE_REQUESTED, fetchStaticFileLink),
   takeLatest(actionTypes.READ_TABLE_CONFIG_REQUESTED, readTableConfig),
   takeLatest(actionTypes.UPDATE_TABLE_CONFIG_REQUESTED, updateTableConfig),
+  takeLatest(actionTypes.FETCH_DROPDOWN_VALUES_REQUESTED, fetchDropdowns),
 ];
 
 export default miscellaneousSaga;

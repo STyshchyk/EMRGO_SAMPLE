@@ -34,3 +34,4 @@ export { default as fxTransactionsAPI } from "./fxTransactionsAPI";
 export { default as journalsAPI } from "./journalsAPI";
 export { default as billingAPI } from "./billingAPI";
 export { default as corporateActionEventsAPI } from "./corporateActionEventsAPI";
+export { default as safekeepingAPI } from "./safekeepingAPI";

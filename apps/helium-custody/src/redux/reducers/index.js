@@ -34,6 +34,7 @@ import paymentAndSettlementReducer from "./paymentAndSettlementReducer";
 import preferencesReducer from "./preferencesReducer";
 import quotesReducer from "./quotesReducer";
 import reportsReducer from "./reportsReducer";
+import safekeepingReducer from "./safekeepingReducer";
 import securitiesServicesReducer from "./securitiesServicesReducer";
 import serviceProvidersReducer from "./serviceProvidersReducer";
 import sukukReducer from "./sukukReducer";
@@ -65,6 +66,7 @@ const rootPersistConfig = {
     "documents",
     "billing",
     "billingAndPayments",
+    "safekeeping",
   ],
 };
 
@@ -137,6 +139,7 @@ const appReducer = combineReducers({
   journals: journalsReducer,
   billing: billingReducer,
   CAEvents: corporateActionEventsReducer,
+  safekeeping: safekeepingReducer,
 });
 
 export const rootReducer = (state, action) => {

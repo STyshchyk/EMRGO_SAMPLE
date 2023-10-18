@@ -11,6 +11,7 @@ import { useFeatureToggle } from "../../context/feature-toggle-context";
 import authorizeRouteAccess from "../../helpers/authorizeRouteAccess";
 import findTheFirstAccessibleRoutePath from "../../helpers/findTheFirstAccessibleRoutePath";
 import * as authSelectors from "../../redux/selectors/auth";
+import SafekeepingAccounts from "./SafekeepingAccounts";
 
 const AgencyServices = lazy(() => import("./AgencyServices"));
 const CounterpartyList = lazy(() => import("../SettlementAdmin/CounterpartyList"));
@@ -110,6 +111,15 @@ const OperationsSecServices = () => {
       path: routes.dashboard.custody.opsSecServices.counterpartySSIList,
       link: routes.dashboard.custody.opsSecServices.counterpartySSIList,
       text: "Minor Navigation.Settlement Admin.Counterparty SSI List",
+      disabled:
+        !authorizeRouteAccess(currentListOfAcls, [
+          accessControlsList.SECURITIES_SERVICES_OPS.view.key,
+        ]) || !isIntlSecTradeSettlementWorkflowEnabled,
+    },
+    {
+      path: routes.dashboard.custody.opsSecServices.safekeepingAcccounts,
+      link: routes.dashboard.custody.opsSecServices.safekeepingAcccounts,
+      text: "Minor Navigation.Securities Services.Safekeeping Accounts",
       disabled:
         !authorizeRouteAccess(currentListOfAcls, [
           accessControlsList.SECURITIES_SERVICES_OPS.view.key,
@@ -247,6 +257,19 @@ const OperationsSecServices = () => {
 
             <PageWrapper>
               <CounterpartySSIList />
+            </PageWrapper>
+          </Fragment>
+        }
+      ></Route>
+
+      <Route
+        path="safekeeping-accounts"
+        element={
+          <Fragment>
+            <MinorNavbar routes={PILL_ROUTE_CONFIGS} />
+
+            <PageWrapper>
+              <SafekeepingAccounts />
             </PageWrapper>
           </Fragment>
         }

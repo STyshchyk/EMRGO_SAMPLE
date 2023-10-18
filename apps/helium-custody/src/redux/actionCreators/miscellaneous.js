@@ -1,6 +1,12 @@
 import { createAction } from "redux-actions";
 
+
+
 import * as actionTypes from "../actionTypes/miscellaneous";
+
+
+
+
 
 export const doFetchDocumentLinkRequest = createAction(actionTypes.DOCUMENT_LINK_FETCH_REQUESTED);
 export const doFetchDocumentLinkSuccess = createAction(actionTypes.DOCUMENT_LINK_FETCH_SUCCEEDED);
@@ -17,3 +23,9 @@ export const doReadTableConfigFailure = createAction(actionTypes.READ_TABLE_CONF
 export const doUpdateTableConfigRequest = createAction(actionTypes.UPDATE_TABLE_CONFIG_REQUESTED);
 export const doUpdateTableConfigSuccess = createAction(actionTypes.UPDATE_TABLE_CONFIG_SUCCEEDED);
 export const doUpdateTableConfigFailure = createAction(actionTypes.UPDATE_TABLE_CONFIG_FAILED);
+
+export const doFetchDropdownValues = createAction(actionTypes.FETCH_DROPDOWN_VALUES_REQUESTED);
+export const doFetchDropdownValuesSuccess = createAction(
+  actionTypes.FETCH_DROPDOWN_VALUES_SUCCEEDED
+);
+export const doFetchDropdownValuesFailure = createAction(actionTypes.FETCH_DROPDOWN_VALUES_FAILED);
