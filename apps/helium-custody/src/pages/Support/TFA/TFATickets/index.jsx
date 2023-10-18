@@ -4,6 +4,7 @@ import Iframe from "react-iframe";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import FileOpenIcon from "@mui/icons-material/FileOpen";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -94,10 +95,10 @@ const TFATickets = () => {
                 title: `${t("support:Support.Headers.Entity")}`,
                 field: "entity",
               },
-              {
-                title: `${t("support:Support.Headers.Role")}`,
-                field: "role",
-              },
+              // {
+              //   title: `${t("support:Support.Headers.Role")}`,
+              //   field: "role",
+              // },
               {
                 title: `${t("support:Support.Headers.Type")}`,
                 field: "type",
@@ -117,6 +118,12 @@ const TFATickets = () => {
             data={TFATicketsList}
             actions={[
               (rowData) => ({
+                icon: () => <FileOpenIcon />,
+                tooltip: `View File`,
+                disabled: !rowData.file,
+                onClick: () => viewTFADocument(rowData),
+              }),
+              (rowData) => ({
                 icon: "check",
                 tooltip: `${t("support:Support.Actions.ApproveTicket")}`,
                 disabled: rowData.approved,
@@ -132,7 +139,7 @@ const TFATickets = () => {
               actionsColumnIndex: -1,
               pageSize: 10,
             }}
-            onRowClick={(event, rowData) => viewTFADocument(rowData)}
+            // onRowClick={(event, rowData) => viewTFADocument(rowData)}
             localization={mtableLocalization}
           />
 
