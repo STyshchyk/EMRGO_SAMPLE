@@ -66,6 +66,7 @@ const CashStatementPage = () => {
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
+  const [cashAccountOptions, setCashAccountOptions] = useState([]);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [currentlySelectedTransactionType, setCurrentlySelectedTransactionType] = useState({
     label: "All",
@@ -128,6 +129,7 @@ const CashStatementPage = () => {
     const accountOpts = [];
     const securityAccountOpts = [];
     const pushedEntity = [];
+    const pushedSecurityAccountOpts = [];
     const pushedAccount = [];
     accs.forEach((acc) => {
       if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
@@ -136,16 +138,16 @@ const CashStatementPage = () => {
           label: acc.group.entity.corporateEntityName,
           value: acc.group.entity.id,
         });
-
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
         pushedEntity.push(acc.group.entity.id);
+      }
+      if (pushedSecurityAccountOpts.indexOf(acc.group.clientSecuritiesAccount?.id) === -1) {
+        securityAccountOpts.push({
+          id: acc.group.clientSecuritiesAccount?.id,
+          label: `${acc.portfolio.name} | ${acc.group.clientSecuritiesAccount?.accountNumber}`,
+          value: acc.group.clientSecuritiesAccount?.id,
+          original: acc,
+        });
+        pushedSecurityAccountOpts.push(acc.group.clientSecuritiesAccount?.id);
       }
       if (pushedAccount.indexOf(acc.accountNo) === -1) {
         accountOpts.push({
@@ -157,7 +159,7 @@ const CashStatementPage = () => {
         pushedAccount.push(acc.accountNo);
       }
     });
-
+    console.log("accountOpts", accountOpts);
     return { entityOpts, accountOpts, securityAccountOpts };
   };
 
@@ -249,15 +251,15 @@ const CashStatementPage = () => {
     },
   ];
 
-  let filteredAccounts = accountOpts
-    .filter((account) => {
-      return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
-    })
-    .map((acc) => ({
-      data: acc,
-      value: acc.id,
-      label: acc.label,
-    }));
+  // let filteredAccounts = accountOpts
+  //   .filter((account) => {
+  //     return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
+  //   })
+  //   .map((acc) => ({
+  //     data: acc,
+  //     value: acc.id,
+  //     label: acc.label,
+  //   }));
 
   const exportCSV = () => {
     new CsvBuilder("cash_statement.csv")
@@ -303,12 +305,16 @@ const CashStatementPage = () => {
     if (endDate) {
       qs += `endDate=${endDate.toISOString()}&`;
     }
+    if (currentlySelectedSecurityAccount) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
+    }
     if (currentlySelectedEntity) {
       qs += `entityName=${currentlySelectedEntity.label}&`;
     }
     if (currentlySelectedAccount) {
       qs += `accountNo=${currentlySelectedAccount.value}`;
     }
+
     dispatch(billingAndPaymentsActionCreators.doFetchTransactions({ qs }));
   };
 
@@ -316,30 +322,30 @@ const CashStatementPage = () => {
     setEntityFilterValue(selectedEntity.value);
     setCurrentlySelectedEntity(selectedEntity);
     setAccountFilterValue(null);
-    filteredAccounts = accountOpts
-      .filter((account) => {
-        return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
-      })
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: account.label,
-      }));
+    // filteredAccounts = accountOpts
+    //   .filter((account) => {
+    //     return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
+    //   })
+    //   .map((account) => ({
+    //     data: account,
+    //     value: account.id,
+    //     label: account.label,
+    //   }));
 
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+    // const tempSecurityAccountList = securityAccountOpts
+    //   .filter((securityAccount) =>
+    //     selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
+    //   )
+    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (
-      selectedEntity &&
-      Array.isArray(tempSecurityAccountList) &&
-      tempSecurityAccountList.length > 0
-    ) {
-      setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
-    }
+    // if (
+    //   selectedEntity &&
+    //   Array.isArray(tempSecurityAccountList) &&
+    //   tempSecurityAccountList.length > 0
+    // ) {
+    //   setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
+    //   setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
+    // }
 
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
@@ -347,28 +353,42 @@ const CashStatementPage = () => {
   const accountChange = (selectedAccount) => {
     setAccountFilterValue(selectedAccount.value);
     setCurrentlySelectedAccount(selectedAccount);
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
-      setEntityFilterValue(tempEntitiesList[0].value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
+    // const tempEntitiesList = entityOpts
+    //   .filter((entity) =>
+    //     selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
+    //   )
+    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+    //
+    // if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
+    //   setEntityFilterValue(tempEntitiesList[0].value);
+    //   setCurrentlySelectedEntity(tempEntitiesList[0]);
+    // }
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
 
   const securityAccountChange = (selectedAccount) => {
     setSecurityAccountFilterValue(selectedAccount.value);
     setCurrentlySelectedSecurityAccount(selectedAccount);
+    setCurrentlySelectedAccount(null);
 
     const tempEntitiesList = entityOpts
       .filter((entity) =>
         selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+    const filteredCashAccounts = accountOpts
+      .filter((account) =>
+        selectedAccount
+          ? account?.original?.group.clientSecuritiesAccount.id === selectedAccount.data.id
+          : false
+      )
+      .map((account) => ({
+        data: account,
+        value: account.id,
+        label: `${account.label}`,
+      }));
+
+    setCashAccountOptions(filteredCashAccounts);
 
     if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
       setEntityFilterValue(tempEntitiesList[0].value);
@@ -382,7 +402,7 @@ const CashStatementPage = () => {
     setCurrentlySelectedTransactionType(selectedTransactionType);
   };
 
-  console.log("🚀 ~ file: index.jsx:329 ~ entityChange ~ filteredAccounts:", filteredAccounts);
+  // console.log("🚀 ~ file: index.jsx:329 ~ entityChange ~ filteredAccounts:", filteredAccounts);
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (
@@ -428,7 +448,7 @@ const CashStatementPage = () => {
               <DropdownFilter
                 name="account"
                 label=" Cash Account"
-                options={filteredAccounts}
+                options={cashAccountOptions}
                 currentlySelectedOption={currentlySelectedAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedAccount}
                 // customComponent={{

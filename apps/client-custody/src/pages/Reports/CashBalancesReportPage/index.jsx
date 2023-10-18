@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import CashBalancesTable, { generateTransactions } from "../../../components/CashBalancesTable";
 import PageTitle from "../../../components/PageTitle";
-import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -16,8 +15,6 @@ const CashBalancesReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
-  const { data } = useSafeAccount();
-  console.log("safe account data", data);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);

@@ -44,15 +44,14 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
       dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
 
     const requestPayload = buildRaiseSIRequestPayload(values);
-    // FIX THIS
-    console.log(requestPayload);
-    // raiseSettlementInstruction({
-    //   requestPayload,
-    //   successCallback: () => {
-    //     fetchPaymentsList();
-    //     handleClose();
-    //   },
-    // });
+
+    raiseSettlementInstruction({
+      requestPayload,
+      successCallback: () => {
+        fetchPaymentsList();
+        handleClose();
+      },
+    });
   };
 
   const entityOptionsList = generateEntityOptionsList(entities);

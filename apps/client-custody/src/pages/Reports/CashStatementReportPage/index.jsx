@@ -18,7 +18,6 @@ import PageTitle from "../../../components/PageTitle";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
-import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -55,8 +54,6 @@ const CashStatementReportPage = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
-  const { data } = useSafeAccount();
-  console.log("safe account data", data);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const transactions = useSelector(reportsSelectors.selectCashTransactions);
@@ -263,8 +260,9 @@ const CashStatementReportPage = () => {
     if (currentlySelectedEntity) {
       qs += `entityName=${currentlySelectedEntity.label}&`;
     }
-    if (currentlySelectedSecurityAccount && false) {
-      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.group.clientSecuritiesAccount.portfolioId}&`;
+
+    if (currentlySelectedSecurityAccount) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
     }
     if (cashAccountFilterValue) {
       qs += `accountNo=${cashAccountFilterValue}`;

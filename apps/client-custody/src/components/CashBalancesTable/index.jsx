@@ -186,13 +186,11 @@ const CashBalancesTable = ({ data, accounts }) => {
     const { date } = filters;
 
     qs += `date=${date?.value?.toISOString()}&`;
-
+    if (currentlySelectedSecurityAccount) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount?.original.portfolioId}&`;
+    }
     if (currentlySelectedEntity.value !== "all") {
       qs += `entityId=${currentlySelectedEntity?.data.entityId}`;
-    }
-    if (currentlySelectedSecurityAccount && false) {
-      // FIX THIS
-      qs += `portfolio_id=${currentlySelectedSecurityAccount?.original.group.clientSecuritiesAccount.portfolioId}`;
     }
 
     dispatch(reportsActionCreators.doFetchCashBalances({ qs }));

@@ -30,7 +30,6 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constant
 import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
-import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -58,15 +57,16 @@ const SecuritiesTransactionsReportPage = () => {
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
-  const { data } = useSafeAccount();
-  console.log("safe account data", data);
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   // selectors
   const userFullName = useSelector(authSelectors.selectUserFullName);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const currentCorporateEntityName = useSelector(authSelectors.selectCurrentCorporateEntityName);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const transactions = useSelector(reportsSelectors.selectSecuritiesTransactions);
   const accounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
+  const [selectedSecSer, setSelectedSecSer] = useState(null);
 
   const currentEntityGroupID = currentEntityGroup?.id;
 
@@ -138,14 +138,17 @@ const SecuritiesTransactionsReportPage = () => {
     });
     return { entityOpts, cashAccountOpts, securityAccountOpts };
   };
-
+  console.log("acc", accounts);
   const { entityOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
 
   useEffect(() => {
     const fetchAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
-    fetchAccounts();
+    const fetchSafeAcounts = (payload) =>
+      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
 
+    fetchAccounts();
+    fetchSafeAcounts({ entityId: currentEntityGroupId });
     return () => {
       dispatch(reportsActionCreators.doResetSecuritiesTransactions());
     };
@@ -161,11 +164,11 @@ const SecuritiesTransactionsReportPage = () => {
     filteredEntity.unshift(ALL_ENTITIES_OPTION);
   }
 
-  const filteredSecurityAccounts = securityAccountOpts.map((account) => ({
+  const filteredSecurityAccounts = currentSafeAccounts.map((account) => ({
     data: account,
     value: account.id,
-    label: account.label,
-    original: account.original,
+    label: account.name,
+    original: account,
   }));
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
@@ -469,9 +472,9 @@ const SecuritiesTransactionsReportPage = () => {
                 },
                 {
                   label: "Account Name",
-                  value: ` ${
-                    values?.securityAccount?.label ? `${values?.securityAccount?.label} |` : "N.A"
-                  }  ${v.capitalize(values?.securityAccount?.data.original.type || "N.A") ?? null}`,
+                  // value: ` ${
+                  //   values?.securityAccount?.label ? `${values?.securityAccount?.label} |` : "N.A"
+                  // }  ${v.capitalize(values?.securityAccount?.data.original.type || "N.A") ?? null}`,
                 },
                 {
                   label: "Currency",
@@ -577,6 +580,7 @@ const SecuritiesTransactionsReportPage = () => {
               const handleFilter = () => {
                 let qs = "";
                 if (values.startDate) {
+                  //Fix dates
                   qs += `fromDate=${values.startDate.toISOString()}&`;
                 } else {
                   qs += `fromDate=${moment([1970, 1, 1]).toISOString()}&`;
@@ -590,9 +594,11 @@ const SecuritiesTransactionsReportPage = () => {
                   // qs += `entityId=${values.entity.data.id}&`;
                 }
                 if (values.securityAccount) {
+                  qs += `portfolio_id=${values.securityAccount.original.securitiesAccount.portfolioId}&`;
+                }
+                if (values.securityAccount) {
                   qs += `accountId=${values.securityAccount.data.id}`;
                 }
-                console.log(qs);
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
               };
 
@@ -607,34 +613,34 @@ const SecuritiesTransactionsReportPage = () => {
                 setFieldValue("entity", selectedEntity);
                 setFieldValue("security", null);
 
-                const tempSecurityAccountList = securityAccountOpts
-                  .filter((securityAccount) =>
-                    selectedEntity
-                      ? securityAccount.original.group.entity.id === selectedEntity.data.id
-                      : true
-                  )
-                  .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-                if (selectedEntity) {
-                  setFieldValue("securityAccount", tempSecurityAccountList[0]);
-                }
+                // const tempSecurityAccountList = securityAccountOpts
+                //   .filter((securityAccount) =>
+                //     selectedEntity
+                //       ? securityAccount.original.group.entity.id === selectedEntity.data.id
+                //       : true
+                //   )
+                //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+                //
+                // if (selectedEntity) {
+                //   setFieldValue("securityAccount", tempSecurityAccountList[0]);
+                // }
                 dispatch(reportsActionCreators.doResetCashTransactions());
                 submitForm();
               };
 
               const securityAccountChange = (selectedAccount) => {
                 setFieldValue("securityAccount", selectedAccount);
-                const tempEntitiesList = entityOpts
-                  .filter((entity) =>
-                    selectedAccount
-                      ? entity.id === selectedAccount.data.original.group.entity.id
-                      : true
-                  )
-                  .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-                if (selectedAccount) {
-                  setFieldValue("entity", tempEntitiesList[0]);
-                }
+                // const tempEntitiesList = entityOpts
+                //   .filter((entity) =>
+                //     selectedAccount
+                //       ? entity.id === selectedAccount.data.original.group.entity.id
+                //       : true
+                //   )
+                //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+                //
+                // if (selectedAccount) {
+                //   setFieldValue("entity", tempEntitiesList[0]);
+                // }
                 dispatch(reportsActionCreators.doResetCashTransactions());
                 submitForm();
               };
@@ -726,6 +732,7 @@ const SecuritiesTransactionsReportPage = () => {
                               value={values.securityAccount}
                               options={filteredSecurityAccounts}
                               onChange={(selectedAccount, triggeredAction) => {
+                                setSelectedSecSer(selectedAccount);
                                 securityAccountChange(selectedAccount);
                               }}
                               isDisabled={isAllEntitiesOptionSelected}
@@ -867,11 +874,11 @@ const SecuritiesTransactionsReportPage = () => {
                         </Typography>
                         <Typography className={style.accountInfo__value}>{`${
                           values.securityAccount
-                            ? values.securityAccount.data.original.accountNumber
+                            ? values?.securityAccount?.original?.securitiesAccount.accountNumber
                             : t("Security Transactions.NA")
                         } | ${
                           values.securityAccount
-                            ? v.capitalize(values.securityAccount.data.original.type || "N.A")
+                            ? v.capitalize(values?.securityAccount?.original?.name || "N.A")
                             : t("Security Transactions.NA")
                         }`}</Typography>
                       </Grid>

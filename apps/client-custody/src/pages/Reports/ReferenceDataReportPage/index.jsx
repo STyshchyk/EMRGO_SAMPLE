@@ -17,7 +17,6 @@ import PageTitle from "../../../components/PageTitle";
 // import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import ViewCouponPaymentScheduleDialog from "../../../components/ViewCouponPaymentScheduleDialog";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
-import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as externalSecuritiesActionCreators from "../../../redux/actionCreators/externalSecurities";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -64,8 +63,6 @@ const ReferenceDataReportPage = () => {
   const { t } = useTranslation(["reports", "termsheet"]);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data } = useSafeAccount();
-  console.log("safe account data", data);
   const [currentlySelectedSecurity, setCurrentlySelectedSecurity] = useState(null);
   const [currentlySelectedISIN, setCurrentlySelectedISIN] = useState(null);
   const [openViewCouponScheduleDialog, setOpenViewCouponScheduleDialog] = useState(false);

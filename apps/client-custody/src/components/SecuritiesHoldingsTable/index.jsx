@@ -68,7 +68,7 @@ const SecuritiesHoldingsTable = ({
   const [entityAddress, setEntityAddress] = useState(null);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
   const [selectedSecAccount, setSelectedSecAccount] = useState(false);
-
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const [isFetch, setIsFetch] = useState(false);
 
   const { t } = useTranslation(["reports"]);
@@ -144,7 +144,7 @@ const SecuritiesHoldingsTable = ({
       fetchSecuritiesHoldings({
         params: {
           date: date?.value.toISOString(),
-          portfolio_id: selectedSecAccount?.portfolio_id,
+          portfolio_id: selectedSecAccount?.securitiesAccount.portfolioId,
         },
       });
     } else {
@@ -153,7 +153,7 @@ const SecuritiesHoldingsTable = ({
           entityId: entity?.value?.value,
           // accountId: selectedSecuritiesAccountOption?.value,
           date: date?.value?.toISOString() ?? moment().toISOString(),
-          portfolio_id: selectedSecAccount?.portfolio_id,
+          portfolio_id: selectedSecAccount?.securitiesAccount.portfolioId,
         },
       });
     }
@@ -267,8 +267,11 @@ const SecuritiesHoldingsTable = ({
                 <DropdownFilter
                   name="safekeepingAccount"
                   label="Safekeeping Account"
-                  options={securitiesAccounts}
-                  getOptionLabel={(options) => options.accountNumber}
+                  options={currentSafeAccounts}
+                  value={selectedSecAccount}
+                  getOptionLabel={(options) =>
+                    `${options.name} | ${options.securitiesAccount.accountNumber}`
+                  }
                   getOptionValue={(options) => options}
                   onChange={(newValue) => {
                     setSelectedSecAccount(newValue);
@@ -333,7 +336,7 @@ const SecuritiesHoldingsTable = ({
                 </Typography>
                 <Typography variant="subtitle1" sx={{ marginLeft: `0.5rem` }}>
                   {selectedSecAccount
-                    ? ` ${selectedSecAccount.accountNumber} | ${selectedSecAccount.type}`
+                    ? ` ${selectedSecAccount.name} | ${selectedSecAccount.securitiesAccount.accountNumber}`
                     : ` N.A | N.A`}
                 </Typography>
               </Grid>

@@ -8,7 +8,6 @@ import PageTitle from "../../../components/PageTitle";
 import SecuritiesHoldingsTable, {
   generateSecuritiesHoldingsTableRowData,
 } from "../../../components/SecuritiesHoldingsTable";
-import useSafeAccount from "../../../hooks/useSafeAccount";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -19,14 +18,13 @@ const NewSecuritiesHoldingsReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
-  const { data } = useSafeAccount();
-  console.log("safe account data", data);
   const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const securitiesAccounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
+  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const settlementDatedSecuritiesHoldingsData = useSelector(
     reportsSelectors.selectSecuritiesHoldingsData
   );
@@ -50,7 +48,12 @@ const NewSecuritiesHoldingsReportPage = () => {
     const fetchSecuritiesAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
 
-    fetchSecuritiesAccounts();
+    const fetchSafeAcounts = (payload) =>
+      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
+
+    fetchSafeAcounts({ entityId: currentEntityGroupId });
+
+    //fetchSecuritiesAccounts();
 
     return () => {
       dispatch(reportsActionCreators.doResetSecuritiesHoldings());

@@ -68,7 +68,7 @@ const CustodyAndSettlement = () => {
   const paymentAccounts = useSelector(accountsSelectors.selectPaymentAccounts);
   const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
   const currentListOfACLs = useSelector(authSelectors.selectCurrentListOfAcls);
-
+  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const hasViewSIAuditHistoryACL = currentListOfACLs.includes("Services/Audit/View");
 
   // const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
@@ -112,7 +112,7 @@ const CustodyAndSettlement = () => {
     fetchCounterpartyList();
     fetchPaymentsList();
     fetchExternalSecuritiesList();
-    fetchSafeAcounts({ entityId: "c7121ee3-1872-4e1e-acc4-71da9f8471cc" }); //FIX THIS
+    fetchSafeAcounts({ entityId: currentEntityGroupId });
     return () => {
       const resetDropdownState = () => dispatch(dropdownActionCreators.doResetDropdownState());
 
