@@ -110,6 +110,12 @@ const TFATickets = () => {
                 type: "date",
               },
               {
+                title: `Reason`,
+                field: "description",
+                render: (rowData) =>
+                  rowData?.description || !rowData?.description === "" ? rowData.description : "--",
+              },
+              {
                 title: `${t("support:Support.Headers.Status")}`,
                 field: "type",
                 render: (rowData) => statusRenderer(rowData.approved),
