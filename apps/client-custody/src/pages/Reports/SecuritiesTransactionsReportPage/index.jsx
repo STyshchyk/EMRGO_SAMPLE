@@ -87,11 +87,11 @@ const SecuritiesTransactionsReportPage = () => {
         row.wsn || "",
         row?.externalSecurity?.shortName || "",
         row.issuerName || "",
-        row.fromSecurityAccount || "",
         row?.settlementType?.name || "",
+        row.fromSecurityAccount || "",
         row.investorName || "",
         row.toSecurityAccount || "",
-        currencyRenderer(row.netSettleAmount) || "",
+        convertNumberToIntlFormat(row.netSettleAmount) || "", // amount of sec. settled
         row.instDescription || "",
         currencyRenderer(row.price) || "",
         row?.sukuk?.issueDate
