@@ -35,11 +35,9 @@ function* createAccount({ payload }) {
 
 function* updateAccount({ payload }) {
   try {
-    const { cb } = payload;
     const response = yield call(wethaqAPIService.safekeepingAPI.updateAccount, payload);
     const { data } = response;
     yield put(actionCreators.doUpdateAccountSuccess({ data }));
-    cb();
     yield put(actionCreators.doReadAccounts());
   } catch (error) {
     const errorMessage = extractErrorMessage(error);

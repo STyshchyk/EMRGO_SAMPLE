@@ -33,6 +33,7 @@ import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import AddSafekeepingAccountDialog from "./AddSafekeepingAccountDialog";
 import EditSafekeepingAccountDialog from "./EditSafekeepingAccountDialog";
+import ViewSafekeepingAccountDialog from "./ViewSafekeepingAccountDialog";
 
 
 
@@ -54,14 +55,13 @@ const SafekeepingAccounts = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
-  const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
   const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
   const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
-  console.log("🚀 ~ file: index.jsx:63 ~ SafekeepingAccounts ~ openAmendSafekeepingAccountDialog:", openAmendSafekeepingAccountDialog)
+  const [openViewSafekeepingAccountDialog, setOpenViewSafekeepingAccountDialog] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
 
@@ -89,7 +89,9 @@ const SafekeepingAccounts = () => {
   const handleAmendAccountClick = () => {
     handleOpenAmendSafekeepingAccountDialog();
   };
-  const handleViewAccountClick = () => {};
+  const handleViewAccountClick = () => {
+    handleOpenViewSafekeepingAccountDialog();
+  };
   const handleViewAuditHistoryClick = () => {};
 
   const actions = [
@@ -121,7 +123,7 @@ const SafekeepingAccounts = () => {
       if (pushedEntity.indexOf(acc?.entity?.id) === -1) {
         entityOpts.push({
           id: acc?.entity?.id,
-          label: acc?.entity?.corporateEntityName,
+          label: acc?.entity?.name,
           value: acc?.entity?.id,
         });
 
@@ -159,7 +161,7 @@ const SafekeepingAccounts = () => {
     {
       id: "entity",
       title: t("Headers.Entity"),
-      field: "entity_id",
+      field: "entity.name",
     },
     {
       id: "portfolio",
@@ -178,100 +180,6 @@ const SafekeepingAccounts = () => {
     },
   ];
 
-  let filteredAccounts = accountOpts
-    .filter((account) =>
-      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
-    )
-    .map((acc) => ({
-      data: acc,
-      value: acc.id,
-      label: `${acc.label} ${acc.original.currency.name}`,
-    }));
-
-  const handleFilter = () => {
-    let qs = "";
-    if (startDate) {
-      qs += `startDate=${startDate.toISOString()}&`;
-    }
-    if (endDate) {
-      qs += `endDate=${endDate.toISOString()}&`;
-    }
-    if (currentlySelectedEntity) {
-      qs += `entityName=${currentlySelectedEntity?.label}&`;
-      // if labels are capitalized
-      // qs += `entityName=${currentlySelectedEntity?.data?.originalLabel}&`;
-    }
-    if (currentlySelectedAccount) {
-      qs += `accountNo=${currentlySelectedAccount.value}`;
-    }
-    dispatch(billingAndPaymentsActionCreators.doFetchTransactions({ qs }));
-  };
-
-  const entityChange = (selectedEntity) => {
-    setEntityFilterValue(selectedEntity.value);
-    setCurrentlySelectedEntity(selectedEntity);
-    setAccountFilterValue(null);
-    filteredAccounts = accountOpts
-      .filter((account) =>
-        selectedEntity !== null ? account.original.group.entity.id === selectedEntity.value : false
-      )
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: account.label,
-      }));
-
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (
-      selectedEntity &&
-      Array.isArray(tempSecurityAccountList) &&
-      tempSecurityAccountList.length > 0
-    ) {
-      setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
-    }
-
-    dispatch(billingAndPaymentsActionCreators.doResetTransactions());
-  };
-
-  const accountChange = (selectedAccount) => {
-    setAccountFilterValue(selectedAccount.value);
-    setCurrentlySelectedAccount(selectedAccount);
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
-      setEntityFilterValue(tempEntitiesList[0].value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
-    dispatch(billingAndPaymentsActionCreators.doResetTransactions());
-  };
-
-  const securityAccountChange = (selectedAccount) => {
-    setSecurityAccountFilterValue(selectedAccount.value);
-    setCurrentlySelectedSecurityAccount(selectedAccount);
-
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
-      setEntityFilterValue(tempEntitiesList[0].value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
-    dispatch(billingAndPaymentsActionCreators.doResetTransactions());
-  };
-
   const handleCloseAddSafekeepingAccountDialog = () => {
     setOpenAddSafekeepingAccountDialog(false);
   };
@@ -289,6 +197,8 @@ const SafekeepingAccounts = () => {
       currencies: values.currencies.map((currency) => currency.currency.value),
     };
     dispatch(safekeepingActionCreators.doCreateAccount(requestPayload));
+
+    handleCloseAddSafekeepingAccountDialog();
   };
 
   const handleCloseAmendSafekeepingAccountDialog = () => {
@@ -296,10 +206,8 @@ const SafekeepingAccounts = () => {
   };
 
   const handleOpenAmendSafekeepingAccountDialog = () => {
-    
     setOpenAmendSafekeepingAccountDialog(true);
   };
-  
 
   const handleAmendSafekeepingAccount = (values, actions) => {
     const requestPayload = {
@@ -307,9 +215,19 @@ const SafekeepingAccounts = () => {
       baseCurrencyId: values.baseCurrency.value,
       name: values.name,
       status: values.status.value,
-      currencies: values.currencies.map((currency) => currency.currency.value),
+      currencies: values.currencies.map((account) => account.currency),
     };
-    dispatch(safekeepingActionCreators.doUpdateAccount(requestPayload));
+    dispatch(safekeepingActionCreators.doUpdateAccount({ requestPayload, id: values.id }));
+
+    handleCloseAmendSafekeepingAccountDialog();
+  };
+
+  const handleCloseViewSafekeepingAccountDialog = () => {
+    setOpenViewSafekeepingAccountDialog(false);
+  };
+
+  const handleOpenViewSafekeepingAccountDialog = () => {
+    setOpenViewSafekeepingAccountDialog(true);
   };
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
@@ -351,9 +269,6 @@ const SafekeepingAccounts = () => {
                 options={filteredEntity}
                 currentlySelectedOption={currentlySelectedEntity}
                 setCurrentlySelectedOption={setCurrentlySelectedEntity}
-                customOnChange={(selectedEntity) => {
-                  entityChange(selectedEntity);
-                }}
               />
             </Grid>
 
@@ -364,9 +279,6 @@ const SafekeepingAccounts = () => {
                 options={filteredSecurityAccounts}
                 currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
-                customOnChange={(selectedAccount) => {
-                  securityAccountChange(selectedAccount);
-                }}
               />
             </Grid>
             <Grid item xs={12} md={6} lg={3}></Grid>
@@ -374,36 +286,20 @@ const SafekeepingAccounts = () => {
         </TableFiltersWrapper>
 
         <FilterConsumer>
-          {({ filterColumns, filters }) => {
-            const filteredData = accounts.filter((row) => {
-              //  Entry Date range Filter
-              if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
-                const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
-                const isInRange =
-                  moment(row.date).isSameOrAfter(fromDate) &&
-                  moment(row.date).isSameOrBefore(toDate);
-                return row.date ? isInRange : null;
-
-                // return moment(row.date).isBetween(fromDate, toDate);
-              }
-              if (filters?.transactionType) {
-                let returnValue = false;
-
-                switch (transactionTypeValue) {
-                  case "credit":
-                    returnValue = row.credit !== "";
-                    break;
-                  case "debit":
-                    returnValue = row.debit !== "";
-                    break;
-                  default:
-                    returnValue = true;
+          {({ filterColumns, filters, setFilterValue }) => {
+            const filteredData = accounts
+              .filter((row) => {
+                if (filters?.entity) {
+                  return row.entity_id === filters?.entity?.value?.value;
                 }
-
-                return returnValue;
-              }
-              return true;
-            });
+                return true;
+              })
+              .filter((row) => {
+                if (filters?.safekeepingAccount) {
+                  return row.securitiesAccount.id === filters?.safekeepingAccount?.value?.value;
+                }
+                return true;
+              });
 
             return (
               <div>
@@ -465,6 +361,17 @@ const SafekeepingAccounts = () => {
           currencies={currencies || []}
           statuses={statuses}
           handleAddSafekeepingAccount={handleAmendSafekeepingAccount}
+        />
+      ) : null}
+
+      {openViewSafekeepingAccountDialog ? (
+        <ViewSafekeepingAccountDialog
+          open={openViewSafekeepingAccountDialog}
+          handleClose={handleCloseViewSafekeepingAccountDialog}
+          account={selectedRow}
+          entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
+          currencies={currencies || []}
+          statuses={statuses}
         />
       ) : null}
     </Fragment>

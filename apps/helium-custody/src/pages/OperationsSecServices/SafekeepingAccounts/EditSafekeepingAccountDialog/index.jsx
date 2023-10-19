@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-
-
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,14 +17,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import PropTypes from "prop-types";
 
-
-
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
-
-
-
-
 
 const EditSafekeepingAccountDialog = ({
   open,
@@ -37,7 +29,6 @@ const EditSafekeepingAccountDialog = ({
   statuses,
   handleAddSafekeepingAccount,
 }) => {
-  console.log("🚀 ~ file: index.jsx:32 ~ account:", account);
   const { t } = useTranslation(["safekeeping_accounts", "miscellaneous"]);
 
   const entityList = entities.map((entity) => {
@@ -70,7 +61,12 @@ const EditSafekeepingAccountDialog = ({
     accountNo: account.securitiesAccount.accountNumber,
     name: account.name || "",
     status: statusList[0],
-    currencies: [],
+    currencies: account.wethaqAccounts.map((account) => {
+      return {
+        account: account.accountNo,
+        currency: account.currencyId,
+      };
+    }),
   };
   // console.log("🚀 ~ file: index.jsx:63 ~ initialValues:", account.securitiesAccount);
 
@@ -124,12 +120,6 @@ const EditSafekeepingAccountDialog = ({
             enableReinitialize
           >
             {({ values, setFieldValue, errors }) => {
-              const tableValues = values.currencies.map((currencyAccount) => {
-                return {
-                  currency: currencyAccount.currency.value,
-                  account: currencyAccount.currency.account || "-",
-                };
-              });
               return (
                 <Form noValidate>
                   <Grid container spacing={2}>
@@ -218,7 +208,7 @@ const EditSafekeepingAccountDialog = ({
                       <MaterialTable
                         title="Associated Currencies"
                         columns={columns}
-                        data={tableValues}
+                        data={values.currencies}
                         components={{
                           Container: (props) => <Paper {...props} elevation={0} />,
                         }}
@@ -231,10 +221,13 @@ const EditSafekeepingAccountDialog = ({
                           onRowAdd: (newData) =>
                             new Promise((resolve, reject) => {
                               setTimeout(() => {
-                                setFieldValue("currencies", [...values.currencies, newData]);
+                                setFieldValue("currencies", [
+                                  ...values.currencies,
+                                  { currency: newData.currency.value, account: "-" },
+                                ]);
 
                                 resolve();
-                              }, 1000);
+                              }, 500);
                             }),
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
@@ -245,7 +238,7 @@ const EditSafekeepingAccountDialog = ({
                                 );
                                 setFieldValue("currencies", [...dataDelete]);
                                 resolve();
-                              }, 1000);
+                              }, 500);
                             }),
                         }}
                       />
@@ -257,7 +250,7 @@ const EditSafekeepingAccountDialog = ({
                           color="primary"
                           variant="outlined"
                           onClick={() => {
-                            handleCloseDialog();
+                            handleClose();
                           }}
                         >
                           {t("miscellaneous:Buttons.Cancel")}
