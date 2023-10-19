@@ -268,14 +268,10 @@ const SecuritiesHoldingsTable = ({
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={currentSafeAccounts}
-                  value={selectedSecAccount}
                   getOptionLabel={(options) =>
                     `${options.securitiesAccount.accountNumber} | ${options.name} `
                   }
                   getOptionValue={(options) => options}
-                  onChange={(newValue) => {
-                    setSelectedSecAccount(newValue);
-                  }}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>

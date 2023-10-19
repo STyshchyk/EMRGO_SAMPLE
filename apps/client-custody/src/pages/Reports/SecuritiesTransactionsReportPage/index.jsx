@@ -66,7 +66,6 @@ const SecuritiesTransactionsReportPage = () => {
   const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const transactions = useSelector(reportsSelectors.selectSecuritiesTransactions);
   const accounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
-  const [selectedSecSer, setSelectedSecSer] = useState(null);
 
   const currentEntityGroupID = currentEntityGroup?.id;
 
@@ -138,7 +137,6 @@ const SecuritiesTransactionsReportPage = () => {
     });
     return { entityOpts, cashAccountOpts, securityAccountOpts };
   };
-  console.log("acc", accounts);
   const { entityOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
 
   useEffect(() => {
@@ -630,17 +628,13 @@ const SecuritiesTransactionsReportPage = () => {
 
               const securityAccountChange = (selectedAccount) => {
                 setFieldValue("securityAccount", selectedAccount);
-                // const tempEntitiesList = entityOpts
-                //   .filter((entity) =>
-                //     selectedAccount
-                //       ? entity.id === selectedAccount.data.original.group.entity.id
-                //       : true
-                //   )
-                //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-                //
-                // if (selectedAccount) {
-                //   setFieldValue("entity", tempEntitiesList[0]);
-                // }
+                if (
+                  selectedAccount &&
+                  Array.isArray(filteredEntity) &&
+                  filteredEntity.length >= 1
+                ) {
+                  setFieldValue("entity", filteredEntity[0]);
+                }
                 dispatch(reportsActionCreators.doResetCashTransactions());
                 submitForm();
               };
@@ -732,7 +726,6 @@ const SecuritiesTransactionsReportPage = () => {
                               value={values.securityAccount}
                               options={filteredSecurityAccounts}
                               onChange={(selectedAccount, triggeredAction) => {
-                                setSelectedSecSer(selectedAccount);
                                 securityAccountChange(selectedAccount);
                               }}
                               isDisabled={isAllEntitiesOptionSelected}

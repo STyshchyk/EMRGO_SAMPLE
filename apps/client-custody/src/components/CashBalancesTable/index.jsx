@@ -346,6 +346,10 @@ const CashBalancesTable = ({ data, accounts }) => {
                   options={securityAccountOptions}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                  setCustomClear={() => {
+                    setCashAccountOptions([]);
+                    setCurrentlySelectedCashAccount(null);
+                  }}
                   customOnChange={(selectedAccount) => {
                     handleSecurityAccountChange(selectedAccount);
                   }}
@@ -373,6 +377,9 @@ const CashBalancesTable = ({ data, accounts }) => {
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  setCustomClear={() => {
+                    setCurrentlySelectedCurrency(null);
+                  }}
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
                   }}

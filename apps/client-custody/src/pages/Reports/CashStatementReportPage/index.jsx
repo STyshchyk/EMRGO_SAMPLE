@@ -260,7 +260,6 @@ const CashStatementReportPage = () => {
     if (currentlySelectedEntity) {
       qs += `entityName=${currentlySelectedEntity.label}&`;
     }
-
     if (currentlySelectedSecurityAccount) {
       qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
     }
@@ -371,6 +370,10 @@ const CashStatementReportPage = () => {
                   options={filteredSecurityAccounts}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                  setCustomClear={() => {
+                    setCashAccountOptions([]);
+                    setCurrentlySelectedCashAccount(null);
+                  }}
                   customOnChange={(selectedAccount) => {
                     securityAccountChange(selectedAccount);
                   }}

@@ -53,7 +53,7 @@ const NewSecuritiesHoldingsReportPage = () => {
 
     fetchSafeAcounts({ entityId: currentEntityGroupId });
 
-    //fetchSecuritiesAccounts();
+    fetchSecuritiesAccounts();
 
     return () => {
       dispatch(reportsActionCreators.doResetSecuritiesHoldings());

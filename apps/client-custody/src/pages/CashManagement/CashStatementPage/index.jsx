@@ -159,7 +159,6 @@ const CashStatementPage = () => {
         pushedAccount.push(acc.accountNo);
       }
     });
-    console.log("accountOpts", accountOpts);
     return { entityOpts, accountOpts, securityAccountOpts };
   };
 
@@ -305,16 +304,15 @@ const CashStatementPage = () => {
     if (endDate) {
       qs += `endDate=${endDate.toISOString()}&`;
     }
-    if (currentlySelectedSecurityAccount) {
-      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
-    }
     if (currentlySelectedEntity) {
       qs += `entityName=${currentlySelectedEntity.label}&`;
+    }
+    if (currentlySelectedSecurityAccount) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
     }
     if (currentlySelectedAccount) {
       qs += `accountNo=${currentlySelectedAccount.value}`;
     }
-
     dispatch(billingAndPaymentsActionCreators.doFetchTransactions({ qs }));
   };
 
@@ -371,11 +369,6 @@ const CashStatementPage = () => {
     setCurrentlySelectedSecurityAccount(selectedAccount);
     setCurrentlySelectedAccount(null);
 
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
     const filteredCashAccounts = accountOpts
       .filter((account) =>
         selectedAccount
@@ -389,10 +382,8 @@ const CashStatementPage = () => {
       }));
 
     setCashAccountOptions(filteredCashAccounts);
-
-    if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
-      setEntityFilterValue(tempEntitiesList[0].value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
+    if (selectedAccount) {
+      setCurrentlySelectedEntity(filteredEntity[0]);
     }
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
@@ -438,6 +429,10 @@ const CashStatementPage = () => {
                 options={filteredSecurityAccounts}
                 currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                setCustomClear={() => {
+                  setCashAccountOptions([]);
+                  setCurrentlySelectedAccount(null);
+                }}
                 customOnChange={(selectedAccount) => {
                   securityAccountChange(selectedAccount);
                 }}
