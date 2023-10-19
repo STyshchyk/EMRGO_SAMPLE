@@ -143,7 +143,7 @@ const CashStatementPage = () => {
       if (pushedSecurityAccountOpts.indexOf(acc.group.clientSecuritiesAccount?.id) === -1) {
         securityAccountOpts.push({
           id: acc.group.clientSecuritiesAccount?.id,
-          label: `${acc.portfolio.name} | ${acc.group.clientSecuritiesAccount?.accountNumber}`,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc.portfolio.name}`,
           value: acc.group.clientSecuritiesAccount?.id,
           original: acc,
         });

@@ -45,7 +45,7 @@ const approveTrade = (payload) =>
 const raiseSettlementInstruction = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: "/payments/v1/payment/external/settlement-instructions",
+    url: "/payments/v2/payment/external/settlement-instructions",
     data: payload.requestPayload,
   });
 

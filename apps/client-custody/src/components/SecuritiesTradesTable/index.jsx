@@ -155,6 +155,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
   entityGroup: i?.entityGroup,
   userId: i?.userId,
+  portfolioAccountNumber: i.portfolio?.accountNumber ?? "3000008",
+  portfolioName: i.portfolio?.name ?? FALLBACK_VALUE,
 });
 
 const SecurityTradesTable = ({
@@ -464,6 +466,18 @@ const SecurityTradesTable = ({
       width: 150,
     },
     {
+      id: "portfolioAccountNumber",
+      title: "Account Number",
+      field: "portfolioAccountNumber",
+      width: 150,
+    },
+    {
+      id: "portfolioName",
+      title: "Portfolio Name",
+      field: "portfolioName",
+      width: 150,
+    },
+    {
       id: "paymentEvidenceUploaded",
       title: t("Headers.Evidence Uploaded"),
       field: "paymentEvidenceUploaded",
@@ -707,6 +721,7 @@ const SecurityTradesTable = ({
                   }
                   return true;
                 });
+              console.log(filterColumns.shownColumns);
               return (
                 <div data-testid="security-trades-table">
                   <MaterialTable

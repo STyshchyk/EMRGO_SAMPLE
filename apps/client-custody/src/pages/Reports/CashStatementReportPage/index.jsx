@@ -132,7 +132,7 @@ const CashStatementReportPage = () => {
       if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
         securityAccountOpts.push({
           id: acc.group.clientSecuritiesAccount?.id,
-          label: acc.group.clientSecuritiesAccount?.accountNumber,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc.portfolio.name}`,
           value: acc.group.clientSecuritiesAccount?.id,
           original: acc,
         });
@@ -199,7 +199,7 @@ const CashStatementReportPage = () => {
   const securityAccountChange = (selectedAccount) => {
     setSecurityAccountFilterValue(selectedAccount.value);
     setCurrentlySelectedSecurityAccount(selectedAccount);
-
+    setCurrentlySelectedCashAccount(null);
     const tempEntitiesList = entityOpts
       .filter((entity) =>
         selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true

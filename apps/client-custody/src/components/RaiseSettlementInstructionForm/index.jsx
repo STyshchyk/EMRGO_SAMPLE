@@ -194,7 +194,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
 
   const requestPayload = {
     ...formikValues,
-    portfolio_id: formikValues.portfolioId.securitiesAccount.portfolioId,
+    portfolio_id: formikValues.portfolio_id.securitiesAccount.portfolioId,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
     quantity: parseFloat(formikValues.quantity, 10),
@@ -219,7 +219,6 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     entityGroup: undefined,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
   };
-  delete requestPayload.portfolioId;
 
   if (isFreeOfPayment) {
     requestPayload.price = undefined;
@@ -326,7 +325,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
-    portfolioId: "",
+    portfolio_id: "",
   },
   isSubmitting,
   handleCloseDialog,
@@ -447,7 +446,7 @@ const RaiseSettlementInstructionForm = ({
                   }
                   getOptionValue={(option) => option}
                   onChange={(newValue) => {
-                    setFieldValue("portfolioId", newValue);
+                    setFieldValue("portfolio_id", newValue);
                   }}
                 />
                 <ErrorMessage

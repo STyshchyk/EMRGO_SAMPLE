@@ -163,11 +163,11 @@ const SecuritiesTransactionsReportPage = () => {
   if (Array.isArray(filteredEntity) && filteredEntity.length > 1) {
     filteredEntity.unshift(ALL_ENTITIES_OPTION);
   }
-
+  console.log(currentSafeAccounts);
   const filteredSecurityAccounts = currentSafeAccounts.map((account) => ({
     data: account,
     value: account.id,
-    label: account.name,
+    label: `${account.securitiesAccount.accountNumber} | ${account.name}`,
     original: account,
   }));
 

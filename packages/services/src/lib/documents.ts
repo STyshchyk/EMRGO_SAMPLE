@@ -1,7 +1,7 @@
 import { IDocument, ISignedURL, IUploadResponse, IUser } from "@emrgo-frontend/types";
+import axios from "axios";
 
 import { sharedDashboardApi } from "./instances";
-import axios from "axios";
 
 export const fetchPlatformDocument = async (params: {
   documentType: string;
@@ -72,7 +72,6 @@ export const getFileUploadLink = async (file: {
     data: file.formData,
     headers: { "Content-Type": `application/xml` },
   });
-
 
   console.log("🚀 ~ file: documents.ts:74 ~ uploadFile:", uploadFile);
   return response;

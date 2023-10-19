@@ -17,7 +17,7 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   }),
   settlementDate: Yup.date().nullable().required("Settlement date is required"),
   settlementTypeSelectOption: Yup.object().nullable().required("Settlement type is required"),
-  portfolioId: Yup.object().nullable().required("Safekeeping Account is required"),
+  portfolio_id: Yup.object().nullable().required("Safekeeping Account is required"),
   tradeDate: Yup.date().nullable().required("Trade date is required"),
   // new fields
   internalTradeRef: Yup.string().nullable(),

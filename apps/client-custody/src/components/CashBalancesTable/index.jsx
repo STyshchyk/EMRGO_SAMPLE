@@ -81,7 +81,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
         securityAccountOpts.push({
           id: acc.group.clientSecuritiesAccount?.id,
-          label: acc.group.clientSecuritiesAccount?.accountNumber,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc.portfolio.name}`,
           value: acc.group.clientSecuritiesAccount?.id,
           original: acc,
         });
@@ -136,7 +136,8 @@ const CashBalancesTable = ({ data, accounts }) => {
 
   const handleSecurityAccountChange = (selectedAccount) => {
     setCurrentlySelectedSecurityAccount(selectedAccount);
-
+    setCurrentlySelectedCashAccount(null);
+    setCurrentlySelectedCurrency(null);
     const tempEntitiesList = entityOpts
       .filter((entity) =>
         selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true

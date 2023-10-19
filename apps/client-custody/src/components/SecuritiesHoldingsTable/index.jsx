@@ -270,7 +270,7 @@ const SecuritiesHoldingsTable = ({
                   options={currentSafeAccounts}
                   value={selectedSecAccount}
                   getOptionLabel={(options) =>
-                    `${options.name} | ${options.securitiesAccount.accountNumber}`
+                    `${options.securitiesAccount.accountNumber} | ${options.name} `
                   }
                   getOptionValue={(options) => options}
                   onChange={(newValue) => {
@@ -336,7 +336,7 @@ const SecuritiesHoldingsTable = ({
                 </Typography>
                 <Typography variant="subtitle1" sx={{ marginLeft: `0.5rem` }}>
                   {selectedSecAccount
-                    ? ` ${selectedSecAccount.name} | ${selectedSecAccount.securitiesAccount.accountNumber}`
+                    ? ` ${selectedSecAccount.securitiesAccount.accountNumber} | ${selectedSecAccount.name} `
                     : ` N.A | N.A`}
                 </Typography>
               </Grid>

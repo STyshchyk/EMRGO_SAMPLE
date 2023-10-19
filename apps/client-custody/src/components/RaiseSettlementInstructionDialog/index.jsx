@@ -44,7 +44,6 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
       dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
 
     const requestPayload = buildRaiseSIRequestPayload(values);
-
     raiseSettlementInstruction({
       requestPayload,
       successCallback: () => {

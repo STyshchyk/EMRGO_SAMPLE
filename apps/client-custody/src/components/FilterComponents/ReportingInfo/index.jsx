@@ -26,7 +26,7 @@ const Root = styled("div")(() => ({
 
 const ReportingInfo = ({ cashAccount, securityAccount }) => {
   const { t } = useTranslation(["reports"]);
-
+  console.log(securityAccount);
   return (
     <Root>
       <Grid item xs={12} container>
@@ -48,9 +48,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
               : t("Security Transactions.NA")
           } | ${
             securityAccount
-              ? v.capitalize(
-                  securityAccount.data.original.group.clientSecuritiesAccount.type || "N.A"
-                )
+              ? v.capitalize(securityAccount.data.original.portfolio.name || "N.A")
               : t("Security Transactions.NA")
           }`}
         </Typography>
