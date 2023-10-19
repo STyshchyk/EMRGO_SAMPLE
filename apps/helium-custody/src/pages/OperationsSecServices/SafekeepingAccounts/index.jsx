@@ -32,30 +32,11 @@ import * as miscellaneousSelectors from "../../../redux/selectors/miscellaneous"
 import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import AddSafekeepingAccountDialog from "./AddSafekeepingAccountDialog";
+import EditSafekeepingAccountDialog from "./EditSafekeepingAccountDialog";
 
 
 
 
-
-const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
-
-const getTableData = (accs) => {
-  const entries = [];
-  accs.forEach((acc) => {
-    entries.push({
-      id: acc.id,
-      date: acc.date,
-      transactionType: getFormattedBalanceType(acc.activityType),
-      refNo: acc.sourceReference,
-      isin: acc.isin,
-      narrative: acc?.description ?? "",
-      debit: acc.transactionType === "D" ? acc.amount : "",
-      credit: acc.transactionType === "C" ? acc.amount : "",
-      balance: acc.balance,
-    });
-  });
-  return entries;
-};
 
 const SafekeepingAccounts = () => {
   const dispatch = useDispatch();
@@ -73,27 +54,16 @@ const SafekeepingAccounts = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
-
-  const [entityFilterValue, setEntityFilterValue] = useState(null);
-
-  const [accountFilterValue, setAccountFilterValue] = useState(null);
   const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
-  const [openSafekeepingAccountDialog, setOpenSafekeepingAccountDialog] = useState(false);
+  const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
+  const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
+  console.log("🚀 ~ file: index.jsx:63 ~ SafekeepingAccounts ~ openAmendSafekeepingAccountDialog:", openAmendSafekeepingAccountDialog)
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
-  const [currentlySelectedTransactionType, setCurrentlySelectedTransactionType] = useState({
-    label: "All",
-    value: "all",
-  });
-  const [startDateValue, setStartDateValue] = useState(null);
-  const [endDateValue, setEndDateValue] = useState(null);
-
-  const startDate = startDateValue ?? null;
-  const endDate = endDateValue ?? null;
 
   // const entities = useSelector(authSelectors.selectOwnEntityNames);
 
@@ -116,7 +86,9 @@ const SafekeepingAccounts = () => {
     fetchEntities();
   }, [dispatch]);
 
-  const handleAmendAccountClick = () => {};
+  const handleAmendAccountClick = () => {
+    handleOpenAmendSafekeepingAccountDialog();
+  };
   const handleViewAccountClick = () => {};
   const handleViewAuditHistoryClick = () => {};
 
@@ -300,12 +272,12 @@ const SafekeepingAccounts = () => {
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
 
-  const handleCloseSafekeepingAccountDialog = () => {
-    setOpenSafekeepingAccountDialog(false);
+  const handleCloseAddSafekeepingAccountDialog = () => {
+    setOpenAddSafekeepingAccountDialog(false);
   };
 
-  const handleOpenSafekeepingAccountDialog = () => {
-    setOpenSafekeepingAccountDialog(true);
+  const handleOpenAddSafekeepingAccountDialog = () => {
+    setOpenAddSafekeepingAccountDialog(true);
   };
 
   const handleAddSafekeepingAccount = (values, actions) => {
@@ -317,8 +289,27 @@ const SafekeepingAccounts = () => {
       currencies: values.currencies.map((currency) => currency.currency.value),
     };
     dispatch(safekeepingActionCreators.doCreateAccount(requestPayload));
+  };
 
-    // actions.resetForm();
+  const handleCloseAmendSafekeepingAccountDialog = () => {
+    setOpenAmendSafekeepingAccountDialog(false);
+  };
+
+  const handleOpenAmendSafekeepingAccountDialog = () => {
+    
+    setOpenAmendSafekeepingAccountDialog(true);
+  };
+  
+
+  const handleAmendSafekeepingAccount = (values, actions) => {
+    const requestPayload = {
+      entityId: values.entity.id,
+      baseCurrencyId: values.baseCurrency.value,
+      name: values.name,
+      status: values.status.value,
+      currencies: values.currencies.map((currency) => currency.currency.value),
+    };
+    dispatch(safekeepingActionCreators.doUpdateAccount(requestPayload));
   };
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
@@ -335,7 +326,7 @@ const SafekeepingAccounts = () => {
               color="primary"
               variant="contained"
               onClick={() => {
-                handleOpenSafekeepingAccountDialog();
+                handleOpenAddSafekeepingAccountDialog();
               }}
             >
               {t("Add Safekeeping Accounts")}
@@ -454,14 +445,26 @@ const SafekeepingAccounts = () => {
           }}
         </FilterConsumer>
       </FilterProvider>
-      {openSafekeepingAccountDialog ? (
+      {openAddSafekeepingAccountDialog ? (
         <AddSafekeepingAccountDialog
-          open={openSafekeepingAccountDialog}
-          handleClose={handleCloseSafekeepingAccountDialog}
+          open={openAddSafekeepingAccountDialog}
+          handleClose={handleCloseAddSafekeepingAccountDialog}
           entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
           currencies={currencies || []}
           statuses={statuses}
           handleAddSafekeepingAccount={handleAddSafekeepingAccount}
+        />
+      ) : null}
+
+      {openAmendSafekeepingAccountDialog ? (
+        <EditSafekeepingAccountDialog
+          open={openAmendSafekeepingAccountDialog}
+          handleClose={handleCloseAmendSafekeepingAccountDialog}
+          account={selectedRow}
+          entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
+          currencies={currencies || []}
+          statuses={statuses}
+          handleAddSafekeepingAccount={handleAmendSafekeepingAccount}
         />
       ) : null}
     </Fragment>
