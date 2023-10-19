@@ -318,7 +318,7 @@ const SafekeepingAccounts = () => {
     };
     dispatch(safekeepingActionCreators.doCreateAccount(requestPayload));
 
-    actions.resetForm();
+    // actions.resetForm();
   };
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];

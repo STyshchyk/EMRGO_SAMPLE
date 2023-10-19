@@ -21,11 +21,10 @@ function* readAccounts({ payload }) {
 
 function* createAccount({ payload }) {
   try {
-    const { cb, requestPayload } = payload;
-    const response = yield call(wethaqAPIService.safekeepingAPI.createAccount, requestPayload);
+    
+    const response = yield call(wethaqAPIService.safekeepingAPI.createAccount, payload);
     const { data } = response;
     yield put(actionCreators.doCreateAccountSuccess({ data }));
-    cb();
     yield put(actionCreators.doReadAccounts());
   } catch (error) {
     const errorMessage = extractErrorMessage(error);

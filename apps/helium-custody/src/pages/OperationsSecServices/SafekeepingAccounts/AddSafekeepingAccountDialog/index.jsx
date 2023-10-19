@@ -20,16 +20,6 @@ import PropTypes from "prop-types";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
 
-const generateRequestPayload = (formikValues) => ({
-  ...formikValues,
-  countryId: formikValues.country?.value,
-  currencyId: formikValues.currency?.value,
-  intermediaryBankCountryId: formikValues.intermediaryBankCountry?.value,
-  country: undefined,
-  currency: undefined,
-  intermediaryBankCountry: undefined,
-});
-
 const AddSafekeepingAccountDialog = ({
   open,
   handleClose,
