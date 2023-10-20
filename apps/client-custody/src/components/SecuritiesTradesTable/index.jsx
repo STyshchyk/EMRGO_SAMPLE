@@ -1,5 +1,6 @@
 import { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { currencyRenderer } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
@@ -25,6 +26,7 @@ import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
+import * as reportsSelectors from "../../redux/selectors/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateWithinRange } from "../../utils/dates";
@@ -175,7 +177,7 @@ const SecurityTradesTable = ({
   const ref = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { checkFeatureFlag } = useFeatureToggle();
-
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const isIntlSecTradeSettlementWorkflowEnabled = checkFeatureFlag(
     featureFlags.intlSecTradeSettlementWorkflow
   );
@@ -467,13 +469,13 @@ const SecurityTradesTable = ({
     },
     {
       id: "portfolioAccountNumber",
-      title: "Account Number",
+      title: "Settlement Account",
       field: "portfolioAccountNumber",
       width: 150,
     },
     {
       id: "portfolioName",
-      title: "Portfolio Name",
+      title: "Portfolio",
       field: "portfolioName",
       width: 150,
     },
@@ -630,7 +632,17 @@ const SecurityTradesTable = ({
                     </Grid>
                   </Fragment>
                 )}
-                <Grid item xs={12} md={6} lg={3}></Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <DropdownFilter
+                    name="safekeepingAcount"
+                    label="Safekeeping Account"
+                    options={currentSafeAccounts}
+                    getOptionLabel={(options) =>
+                      `${options.securitiesAccount.accountNumber} | ${options.name}`
+                    }
+                    getOptionValue={(options) => options}
+                  />
+                </Grid>
 
                 {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>}
 
@@ -700,6 +712,16 @@ const SecurityTradesTable = ({
                     return (
                       row.investor === filters?.entity?.value?.value ||
                       row.issuer === filters?.entity?.value?.value
+                    );
+                  }
+                  return true;
+                })
+                .filter((row) => {
+                  // Safekeeping Filter
+                  if (filters?.safekeepingAcount) {
+                    return (
+                      row.portfolioAccountNumber ===
+                      filters?.safekeepingAcount?.value?.securitiesAccount?.accountNumber
                     );
                   }
                   return true;
