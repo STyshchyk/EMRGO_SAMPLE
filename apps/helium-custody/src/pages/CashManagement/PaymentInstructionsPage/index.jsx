@@ -138,6 +138,7 @@ const generatePaymentAccountOptions = (validatedPaymentAccounts) =>
   validatedPaymentAccounts.map((paymentAccount) => ({
     value: {
       accountId: paymentAccount.id,
+      entityId: paymentAccount.entity.id,
       entityGroupId: validatedPaymentAccounts.entityGroupId,
       currencyId: paymentAccount.currency.id,
       currency: paymentAccount.currency.name,
