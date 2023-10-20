@@ -4,11 +4,15 @@ import Iframe from "react-iframe";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import CloseIcon from "@mui/icons-material/Close";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 import {
@@ -155,7 +159,31 @@ const TFATickets = () => {
             maxWidth="lg"
             fullWidth
           >
-            <DialogTitle id="alert-dialog-title">{currentTicket.title}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+              <Grid container justifyContent="space-between">
+                <Grid item>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {currentTicket.title}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    aria-label="close"
+                    onClick={() => {
+                      setIsDocumentModalOpen(false);
+                    }}
+                    size="large"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </DialogTitle>
             <DialogContent
               className={style.document_dialogue__content}
               dir={locale.rtl ? "rtl" : "ltr"}
