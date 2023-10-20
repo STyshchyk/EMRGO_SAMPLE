@@ -42,11 +42,17 @@ const AddPaymentInstructionForm = ({
   const [selectedCurrencyName, setSelectedCurrencyName] = useState(
     initialValues.paymentAccount?.value?.currency ?? ""
   );
+
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
   );
-  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] =
-    useState(allPaymentAccountOptions);
+  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] = useState(
+    isWethaqUser
+      ? allPaymentAccountOptions.filter(
+          (i) => initialValues.sourceEntity?.value === i.value.entityId
+        )
+      : allPaymentAccountOptions
+  );
 
   return (
     <Formik
@@ -56,7 +62,6 @@ const AddPaymentInstructionForm = ({
       validationSchema={addExternalPaymentSchema}
     >
       {({ values, setFieldValue, resetForm }) => {
-        console.log(values);
         return (
           <Form className={cx(style.formWrapper)}>
             {initial && (
@@ -88,6 +93,12 @@ const AddPaymentInstructionForm = ({
                           setFieldValue("sourceEntity", selectedOption);
                           setFilteredSourceAccountOptions(
                             allSourceAccountOptions.filter(
+                              (i) => i.value.entityId === selectedOption.value
+                            )
+                          );
+                          // id-1018
+                          setFilteredPaymentAccountOptions(
+                            allPaymentAccountOptions.filter(
                               (i) => i.value.entityId === selectedOption.value
                             )
                           );
@@ -150,11 +161,7 @@ const AddPaymentInstructionForm = ({
                   isSearchable
                   styles={selectStyles}
                   menuPortalTarget={document.body}
-                  value={
-                    filteredPaymentAccountOptions?.length === 1
-                      ? filteredPaymentAccountOptions[0]
-                      : values.paymentAccount
-                  }
+                  value={values.paymentAccount}
                   isClearable
                   options={filteredPaymentAccountOptions}
                   onChange={(selectedOption, triggeredAction) => {
