@@ -67,7 +67,7 @@ const SecuritiesHoldingsTable = ({
   const mtableLocalization = useMaterialTableLocalization();
   const [entityAddress, setEntityAddress] = useState(null);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
-  const [selectedSecAccount, setSelectedSecAccount] = useState(false);
+  const [selectedSecAccount, setSelectedSecAccount] = useState(null);
   const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const [isFetch, setIsFetch] = useState(false);
 
@@ -130,7 +130,7 @@ const SecuritiesHoldingsTable = ({
 
       setEntityAddress(addrs);
     }
-
+    console.log("selectedSecAccount", selectedSecAccount);
     const settlementDatedSecuritiesHoldings = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesHoldings(payload));
     const tradeDatedSecuritiesHoldings = (payload) =>
@@ -268,6 +268,9 @@ const SecuritiesHoldingsTable = ({
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={currentSafeAccounts}
+                  customOnChange={(newValue) => {
+                    setSelectedSecAccount(newValue);
+                  }}
                   getOptionLabel={(options) =>
                     `${options.securitiesAccount.accountNumber} | ${options.name} `
                   }
