@@ -83,20 +83,21 @@ const SecuritiesTransactionsReportPage = () => {
     const boxes = [];
     filteredRows.forEach((row) => {
       boxes.push([
-        row.tradeDate ? reportDateRenderer(row.tradeDate) : "",
+        row.tradeDate ? dateFormatter(row.settlementInsTradeDate, DEFAULT_DATE_FORMAT) : "",
         row.wsn || "",
+        row.isin || "",
         row?.externalSecurity?.shortName || "",
         row.issuerName || "",
-        row?.settlementType?.name || "",
         row.fromSecurityAccount || "",
         row.investorName || "",
         row.toSecurityAccount || "",
+        row?.settlementType?.name || "",
         convertNumberToIntlFormat(row.netSettleAmount) || "", // amount of sec. settled
-        row.instDescription || "",
+        // row.instDescription || "",
         currencyRenderer(row.price) || "",
-        row?.sukuk?.issueDate
-          ? dateRenderer(row.sukuk?.issueDate)
-          : dateRenderer(row?.externalSecurity?.issueDate),
+        row?.settlementInsSettlementDate
+          ? dateFormatter(row?.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
+          : "",
       ]);
     });
     return boxes;
@@ -174,6 +175,8 @@ const SecuritiesTransactionsReportPage = () => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     };
+
+    console.log(i?.settlementInsSettlementDate);
 
     // const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;
 
@@ -524,6 +527,7 @@ const SecuritiesTransactionsReportPage = () => {
 
               const exportCSV = () => {
                 const tradeColumnName = t("Security Transactions.Headers.Trade Date");
+                const isinColumnName = "ISIN";
                 const wsnColumnName = t("Security Transactions.Headers.WSN");
                 const securityColumnName = "Security";
                 const issuerNameColumnName = t("Security Transactions.Headers.Issuer Name");
@@ -552,15 +556,16 @@ const SecuritiesTransactionsReportPage = () => {
                 csv
                   .addRow([
                     tradeColumnName,
+                    isinColumnName,
                     wsnColumnName,
                     securityColumnName,
                     issuerNameColumnName,
-                    settlementTypeColumnName,
                     fromSecAcctColumnName,
                     investorNameColumnName,
                     toSecAccountColumnName,
+                    settlementTypeColumnName,
                     netSettleAmtColumnName,
-                    InstDescriptionColumnName,
+                    // InstDescriptionColumnName,
                     priceDateColumnName,
                     settleDateColumnName,
                   ])
