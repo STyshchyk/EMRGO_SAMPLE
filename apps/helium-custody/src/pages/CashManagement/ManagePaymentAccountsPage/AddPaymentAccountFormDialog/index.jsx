@@ -18,6 +18,7 @@ import AddPaymentAccountForm from "../AddPaymentAccountForm";
 
 const generateRequestPayload = (formikValues) => ({
   ...formikValues,
+  entityGroupId: formikValues.sourceEntity?.groups,
   countryId: formikValues.country?.value,
   currencyId: formikValues.currency?.value,
   intermediaryBankCountryId: formikValues.intermediaryBankCountry?.value,

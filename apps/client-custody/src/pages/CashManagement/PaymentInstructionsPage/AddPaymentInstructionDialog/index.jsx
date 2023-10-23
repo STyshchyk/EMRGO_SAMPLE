@@ -12,7 +12,6 @@ import * as accountsActionCreators from "../../../../redux/actionCreators/accoun
 import * as formActionCreators from "../../../../redux/actionCreators/form";
 import * as authSelectors from "../../../../redux/selectors/auth";
 import * as selectFormValues from "../../../../redux/selectors/form";
-import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import AddPaymentInstructionForm from "../AddPaymentInstructionForm";
 
 const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) => {
@@ -68,7 +67,6 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   }, [formvalues, fetchingValues]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {
@@ -126,7 +124,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           initial={initial}
           handleSubmit={handleSubmit}
           handleCancel={() => {
-            saveFormValues(initialValues?.valueDate);
+            saveFormValues("clear");
             setInitialValues(initial);
             handleClose();
           }}

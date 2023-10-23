@@ -17,7 +17,6 @@ import moment from "moment";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
-import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
 
 const AddPaymentInstructionForm = ({
@@ -29,7 +28,7 @@ const AddPaymentInstructionForm = ({
   initial,
 }) => {
   const { t } = useTranslation(["cash_management", "components"]);
-
+  console.log(initialValues);
   const {
     allSourceAccountOptions,
     allPaymentAccountOptions,
@@ -37,7 +36,6 @@ const AddPaymentInstructionForm = ({
     beneficiaryUserOptions,
     paymentTransferPurposeOptions,
   } = options;
-
   // local states
   const [selectedCurrencyName, setSelectedCurrencyName] = useState(
     initialValues.paymentAccount?.value?.currency ?? ""
@@ -55,9 +53,13 @@ const AddPaymentInstructionForm = ({
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        ...initialValues,
+        paymentAccount:
+          filteredPaymentAccountOptions.lenght !== 0 ? filteredPaymentAccountOptions[0] : null,
+      }}
       onSubmit={handleSubmit}
-      validationSchema={addExternalPaymentSchema}
+      // validationSchema={addExternalPaymentSchema}
       enableReinitialize
     >
       {({ values, setFieldValue, resetForm }) => (

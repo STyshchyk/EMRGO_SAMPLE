@@ -13,6 +13,8 @@ import { ISignupProps } from "./Signup.types";
 export const SignupComponent: FC<ISignupProps> = (props: ISignupProps) => {
   const { form, onVerify } = ensureNotNull(useSignupContext());
 
+  const allFieldsCompleted = form.isValid && form?.values?.hasConfirmedClientType && form?.values?.hasAcceptedPrivacyPolicy
+
   return (
     <Styles.SignupForm onSubmit={form.handleSubmit}>
       <Logo />
@@ -59,7 +61,7 @@ export const SignupComponent: FC<ISignupProps> = (props: ISignupProps) => {
         />
       </OneCol>
 
-      <GoogleReCaptcha onVerify={onVerify} />
+     {allFieldsCompleted && <GoogleReCaptcha onVerify={onVerify} />}
 
       <OneColCheck>
         <Checkbox id="hasConfirmedClientType" {...form.getFieldProps("hasConfirmedClientType")}>

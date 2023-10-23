@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
+import * as Yup from "yup";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import * as CAEventsActionCreators from "../../redux/actionCreators/corporateActionEvents";
@@ -18,6 +19,10 @@ import * as CAEventsSelectors from "../../redux/selectors/corporateActionEvents"
 import { dateFormatter } from "../../utils/formatter";
 import StyledDialogHeader from "../StyledDialogHeader";
 import CorporateActionEventDetail from "./CorporateActionEventDetail";
+
+const validationSchema = Yup.object().shape({
+  clientResponse: Yup.string().required("Client Response is required"),
+});
 
 const InlineFormField = ({ label, children }) => (
   <Box mb={4}>
@@ -84,13 +89,14 @@ const ViewCorporateActionEventDialog = ({
   const [tableData, setTableData] = useState([]);
   const dispatch = useDispatch();
   const fetchCorporateActionEventsList = () => dispatch(CAEventsActionCreators.doFetchCAEvents());
-
   // selectors
   const corporateActionEvent = useSelector(CAEventsSelectors.selectCorporateActionEvent);
   const isFetchingEvent = useSelector(CAEventsSelectors.selectIsFetchingEvent);
 
   const validInvestors = corporateActionEvent?.validInvestors;
   const allResponses = corporateActionEvent?.responses;
+
+  const isVoluntaryEvent = currentlySelectedRowData?.mandatoryOrVoluntary === "V";
 
   useEffect(() => {
     const fetchCorporateActionEvent = (payload) =>
@@ -130,6 +136,7 @@ const ViewCorporateActionEventDialog = ({
       <Formik
         initialValues={{ clientResponse: null }}
         enableReinitialize
+        validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           const formObject = {
             requestPayload: { response: values?.clientResponse },
@@ -171,13 +178,15 @@ const ViewCorporateActionEventDialog = ({
                 </>
               )}
 
-              <DataGridRow
-                label={"Client Response Deadline"}
-                value={dateFormatter(
-                  currentlySelectedRowData?.responseDeadline,
-                  DEFAULT_DATE_FORMAT
-                )}
-              />
+              {isVoluntaryEvent && (
+                <DataGridRow
+                  label={"Client Response Deadline"}
+                  value={dateFormatter(
+                    currentlySelectedRowData?.responseDeadline,
+                    DEFAULT_DATE_FORMAT
+                  )}
+                />
+              )}
 
               {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
               {isUserInvestor && !isReadOnly && (

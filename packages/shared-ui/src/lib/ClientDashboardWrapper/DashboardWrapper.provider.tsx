@@ -144,8 +144,11 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes);
 
   const onRejectPlatformTerms = () => {
-    // resetTermsModal();
-    // revert change for ID 491
+       if (user?.hasAcceptedSilverTnc) {
+      // According to Bug ID 838: Even if terms modal shows, clicking on close button won't log out user
+      setShowTermsModal("");
+      return;
+    }
     onLogOut();
   };
 
@@ -154,8 +157,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
         refreshProfile();
         setTimeout(() => {
-          showSuccessToast("Successfully accepted platform terms and conditions");
-          resetTermsModal();
+         showSuccessToast("Successfully accepted platform terms and conditions");
         }, 1000);
       },
     });

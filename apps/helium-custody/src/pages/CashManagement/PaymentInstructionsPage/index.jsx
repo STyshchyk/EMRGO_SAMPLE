@@ -138,6 +138,7 @@ const generatePaymentAccountOptions = (validatedPaymentAccounts) =>
   validatedPaymentAccounts.map((paymentAccount) => ({
     value: {
       accountId: paymentAccount.id,
+      entityId: paymentAccount.entity.id,
       entityGroupId: validatedPaymentAccounts.entityGroupId,
       currencyId: paymentAccount.currency.id,
       currency: paymentAccount.currency.name,
@@ -422,7 +423,7 @@ const PaymentInstructionsPage = () => {
         currency: paymentInstruction.providerCurrency,
         details: paymentInstruction.details,
         iban: paymentInstruction.account?.iban,
-        investor: paymentInstruction.account?.group?.entity?.corporateEntityName,
+        investor: paymentInstruction.account?.group?.entity?.name,
         payment: paymentInstruction.amount,
         // referenceNo: paymentInstruction.providerTransactionReferenceNumber,
         referenceNo: paymentInstruction.sequenceNumber,

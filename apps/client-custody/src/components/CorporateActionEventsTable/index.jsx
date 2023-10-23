@@ -1,19 +1,19 @@
 import React, { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
-import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
+import { dateWithinRange } from "../../utils/dates";
 import { dateFormatter } from "../../utils/formatter";
 import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const generateCAEventsTableRowData = (i) => ({
   id: i?.id,
@@ -102,7 +102,10 @@ const CorporateActionEventsTable = ({
     {
       id: "responseDeadline",
       title: "Response Deadline",
-      render: (rowData) => dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT),
+      render: (rowData) =>
+        rowData?.responseDeadline
+          ? dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT)
+          : "N/A",
     },
   ];
 
@@ -163,7 +166,8 @@ const CorporateActionEventsTable = ({
                   filters?.exDateRange?.value?.endDate
                 ) {
                   const { startDate, endDate } = filters?.exDateRange.value;
-                  return moment(row.exDate).isBetween(startDate, endDate);
+                  const isInRange = dateWithinRange(row?.exDate, startDate, endDate);
+                  return row.exDate ? isInRange : null;
                 }
                 return true;
               })
@@ -174,7 +178,8 @@ const CorporateActionEventsTable = ({
                   filters?.recordDateRange?.value?.endDate
                 ) {
                   const { startDate, endDate } = filters?.recordDateRange.value;
-                  return moment(row.recordDate).isBetween(startDate, endDate);
+                  const isInRange = dateWithinRange(row?.recordDate, startDate, endDate);
+                  return row.recordDate ? isInRange : null;
                 }
                 return true;
               })
@@ -185,7 +190,8 @@ const CorporateActionEventsTable = ({
                   filters?.paymentDateRange?.value?.endDate
                 ) {
                   const { startDate, endDate } = filters?.paymentDateRange.value;
-                  return moment(row.paymentDate).isBetween(startDate, endDate);
+                  const isInRange = dateWithinRange(row?.paymentDate, startDate, endDate);
+                  return row.paymentDate ? isInRange : null;
                 }
                 return true;
               });

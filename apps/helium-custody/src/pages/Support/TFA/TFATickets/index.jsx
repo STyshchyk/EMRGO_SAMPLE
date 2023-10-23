@@ -4,10 +4,15 @@ import Iframe from "react-iframe";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import CloseIcon from "@mui/icons-material/Close";
+import FileOpenIcon from "@mui/icons-material/FileOpen";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 import {
@@ -94,10 +99,10 @@ const TFATickets = () => {
                 title: `${t("support:Support.Headers.Entity")}`,
                 field: "entity",
               },
-              {
-                title: `${t("support:Support.Headers.Role")}`,
-                field: "role",
-              },
+              // {
+              //   title: `${t("support:Support.Headers.Role")}`,
+              //   field: "role",
+              // },
               {
                 title: `${t("support:Support.Headers.Type")}`,
                 field: "type",
@@ -109,6 +114,12 @@ const TFATickets = () => {
                 type: "date",
               },
               {
+                title: `Reason`,
+                field: "description",
+                render: (rowData) =>
+                  rowData?.description || !rowData?.description === "" ? rowData.description : "--",
+              },
+              {
                 title: `${t("support:Support.Headers.Status")}`,
                 field: "type",
                 render: (rowData) => statusRenderer(rowData.approved),
@@ -117,14 +128,20 @@ const TFATickets = () => {
             data={TFATicketsList}
             actions={[
               (rowData) => ({
+                icon: () => <FileOpenIcon />,
+                tooltip: `View File`,
+                disabled: !rowData.file,
+                onClick: () => viewTFADocument(rowData),
+              }),
+              (rowData) => ({
                 icon: "check",
-                tooltip: `${t("support:Support.Action.ApproveTicket")}`,
+                tooltip: `${t("support:Support.Actions.ApproveTicket")}`,
                 disabled: rowData.approved,
                 onClick: () => approveTicket(rowData),
               }),
               {
                 icon: "delete",
-                tooltip: `${t("support:Support.Action.DeleteTicket")}`,
+                tooltip: `${t("support:Support.Actions.DeleteTicket")}`,
                 onClick: (event, rowData) => deleteTicket(rowData),
               },
             ]}
@@ -132,7 +149,7 @@ const TFATickets = () => {
               actionsColumnIndex: -1,
               pageSize: 10,
             }}
-            onRowClick={(event, rowData) => viewTFADocument(rowData)}
+            // onRowClick={(event, rowData) => viewTFADocument(rowData)}
             localization={mtableLocalization}
           />
 
@@ -142,7 +159,31 @@ const TFATickets = () => {
             maxWidth="lg"
             fullWidth
           >
-            <DialogTitle id="alert-dialog-title">{currentTicket.title}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+              <Grid container justifyContent="space-between">
+                <Grid item>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {currentTicket.title}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    aria-label="close"
+                    onClick={() => {
+                      setIsDocumentModalOpen(false);
+                    }}
+                    size="large"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </DialogTitle>
             <DialogContent
               className={style.document_dialogue__content}
               dir={locale.rtl ? "rtl" : "ltr"}

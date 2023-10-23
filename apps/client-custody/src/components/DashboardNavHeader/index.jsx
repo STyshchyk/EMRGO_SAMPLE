@@ -142,13 +142,15 @@ const DashboardNavHeader = () => {
   const { user } = useUser();
   // const kycApprovalStatus = useSelector(kycSelectors.selectKYCApprovalStatus);
   if (!user) return <LoadingIndicator />;
-  const kycApprovalStatus = user.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED;
+  const kycApprovalStatus =
+    user.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
+    user.clientKycStatus === accountIdentification.KYC_STATUS_APPROVED;
 
   // const custodykycApprovalStatus = useSelector(kycSelectors.selectCustodyKYCApprovalStatus);
   const custodykycApprovalStatus =
-    user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
-      && user.clientKycStatus === accountIdentification.KYC_STATUS_APPROVED
-  ;
+    user.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED;
+
+  const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
 
   const { checkFeatureFlag } = useFeatureToggle();
 
@@ -170,7 +172,9 @@ const DashboardNavHeader = () => {
 
   // const displayCustody = !kycCustodyFilled && user?.entityCustodyKycStatus === accountIdentification.KYC_STATUS_APPROVED
   // TODO uncomment this once KYC is fixed
-  const displayCustody = custodykycApprovalStatus;
+
+  //* A:What enables Custody module is the acceptance of the Custody Terms.
+  const displayCustody = hasAcceptedClientTerms;
 
   const initialRoutingConfigs = {
     onboarding,
@@ -199,7 +203,7 @@ const DashboardNavHeader = () => {
 
   return (
     <Fragment>
-      {kycApprovalStatus && custodykycApprovalStatus ? (
+      {kycApprovalStatus && hasAcceptedClientTerms ? (
         <NavLinkList routingConfigs={RoutingConfigs} />
       ) : (
         <NavLinkList routingConfigs={initialRoutingConfigs} />

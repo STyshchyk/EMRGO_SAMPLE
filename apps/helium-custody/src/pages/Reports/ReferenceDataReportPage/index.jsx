@@ -171,7 +171,7 @@ const ReferenceDataReportPage = () => {
     },
     {
       label: t("Issuance Name"),
-      value: selectedExternalSecurity?.name,
+      value: selectedExternalSecurity?.issuanceName,
     },
     {
       label: t("Security Long Name"),
@@ -179,7 +179,7 @@ const ReferenceDataReportPage = () => {
     },
     {
       label: t("Security Short Name"),
-      value: selectedExternalSecurity?.securityShortName,
+      value: selectedExternalSecurity?.shortName,
     },
     {
       label: t("Issuance Amount"),

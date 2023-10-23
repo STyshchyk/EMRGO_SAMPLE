@@ -1,7 +1,7 @@
 import { IEntity } from "../OnboarderUsers/OnboardedUsers.types";
 
 export interface IOnboardedUserTableProps {
-  onboarderUsers: IEntity[];
+  onboardedUsers: IEntity[];
 }
 
 export interface IOnboarderUser {

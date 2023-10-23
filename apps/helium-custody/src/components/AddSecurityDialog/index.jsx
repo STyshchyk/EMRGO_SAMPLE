@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
@@ -241,7 +241,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
   }, [formvalues, fetchingValues, selectedExternalSecurities, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {

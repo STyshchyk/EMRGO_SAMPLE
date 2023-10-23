@@ -167,7 +167,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
   }, [formvalues, fetchingValues, selectedCounterparty, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {

@@ -174,7 +174,7 @@ export const DashboardSidebar = () => {
         title="Platform Terms"
         subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
         documentURL={termsDocumentURL}
-        isOpen={showTermsModal === "tnc"}
+        isOpen={!user?.hasAcceptedSilverTnc && showTermsModal === "tnc"}
         onAccept={onAcceptPlatformTerms}
         onReject={onRejectPlatformTerms}
         hasAccepted={hasAcceptedPlatformTerms}

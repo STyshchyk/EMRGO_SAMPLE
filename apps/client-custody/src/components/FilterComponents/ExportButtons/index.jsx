@@ -85,8 +85,7 @@ const ExportButtons = ({ tableRef, name }) => {
   };
 
   const processTableData = () => {
-    // const rows = [...tableRef?.current?.dataManager?.filteredData]?.map((rowData) => {
-    const rows = tableData?.map((rowData) => {
+    const rows = [...tableRef?.current?.dataManager?.searchedData]?.map((rowData) => {
       const row = [];
       shownColumns.forEach((column) => {
         const foundData = column?.exportConfig?.render

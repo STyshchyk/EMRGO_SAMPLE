@@ -31,7 +31,7 @@ const fetchBulletinDocument = (payload) =>
   baseAxiosInstance({
     method: "PUT",
     data: payload,
-    url: `/files//v1/files/view`,
+    url: `/files/v1/files/view`,
   });
 
 const updateBulletin = (payload) =>

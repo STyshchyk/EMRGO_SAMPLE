@@ -65,7 +65,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
               const formData: any = new FormData();
               formData.append("file", file);
               doUploadFile(
-                { filename: file.name, formData },
+                { filename: file.name, file },
                 {
                   onSuccess: (res) => {
                     setFieldValue("file", { name: file.name, path: res.path });

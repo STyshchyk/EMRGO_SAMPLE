@@ -95,6 +95,8 @@ const ViewCorporateActionEventDialog = ({
   const validInvestors = corporateActionEvent?.validInvestors;
   const allResponses = corporateActionEvent?.responses;
 
+  const isVoluntaryEvent = currentlySelectedRowData?.mandatoryOrVoluntary === "V";
+
   useEffect(() => {
     if (Array.isArray(validInvestors) && validInvestors.length > 0) {
       const updatedTableData = validInvestors?.map((inv) => {
@@ -191,13 +193,15 @@ const ViewCorporateActionEventDialog = ({
                 </>
               )}
 
-              <DataGridRow
-                label={"Client Response Deadline"}
-                value={dateFormatter(
-                  currentlySelectedRowData?.responseDeadline,
-                  DEFAULT_DATE_FORMAT
-                )}
-              />
+              {isVoluntaryEvent && (
+                <DataGridRow
+                  label={"Client Response Deadline"}
+                  value={dateFormatter(
+                    currentlySelectedRowData?.responseDeadline,
+                    DEFAULT_DATE_FORMAT
+                  )}
+                />
+              )}
 
               {showResponses && (
                 <CorporateActionEventsResponses

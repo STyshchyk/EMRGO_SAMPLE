@@ -185,6 +185,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
       // !! Improve this maybe as O(n)
       const options = counterpartyList
         .filter((item) => item?.entityId?.value === entityId?.toString())
+        .filter((item) => item?.status?.value === "Active")
         .map((item) => ({ label: item?.counterpartyId, value: item?.id }));
       return options;
     }
@@ -261,7 +262,6 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
   }, [formvalues, fetchingValues, selectedCounterpartySSI, selectedRow]);
 
   const saveFormValues = (value) => {
-    if (!value) return;
     const obj = {
       settings: [
         {

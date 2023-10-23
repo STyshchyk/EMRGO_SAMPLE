@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { accountIdentification } from "@emrgo-frontend/constants";
 import { Button, DashboardContent, TermsModal } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
@@ -28,6 +29,13 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
 
   const hasAcceptedPlatformTerms = user?.hasAcceptedSilverTnc;
   const hasAcceptedClientTerms = user?.hasAcceptedClientTerms;
+  const clientKycStatus = user?.clientKycStatus;
+  const entityKycStatus = user?.entityKycStatus;
+
+  const awaitingKYCApproval =
+    entityKycStatus !== accountIdentification?.KYC_STATUS_APPROVED ||
+    clientKycStatus !== accountIdentification?.KYC_STATUS_APPROVED;  ;
+
 
   return (
     <>
@@ -57,6 +65,7 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
             </AccountPanelFooter>
           </AccountPanel>
 
+        {!awaitingKYCApproval && (
           <AccountPanel>
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Client Terms & Conditions</AccountPanelHeaderTitle>
@@ -80,6 +89,7 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
               )}
             </AccountPanelFooter>
           </AccountPanel>
+        )}
         </Styles.Container>
       </DashboardContent>
 
