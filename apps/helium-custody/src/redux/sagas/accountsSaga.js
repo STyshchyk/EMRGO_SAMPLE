@@ -244,10 +244,13 @@ function* fetchOutgoingInstructions({ payload }) {
 
 function* createOutgoingInstructions({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.accountsAPI.createOutgoingInstructions, payload);
+    const response = yield call(wethaqAPIService.accountsAPI.createOutgoingInstructions, payload?.requestPayload);
     const { data } = response;
     yield put(accountsActionCreators.doFetchOutgoingInstructions());
     yield put(accountsActionCreators.doCreateOutgoingInstructionsSuccess({ data }));
+    if (typeof payload?.successCallback === "function") {
+      payload.successCallback();
+    }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);

@@ -26,6 +26,7 @@ const AddPaymentInstructionForm = ({
   isWethaqUser,
   options,
   initial,
+  isSubmitting,
 }) => {
   const { t } = useTranslation(["cash_management", "components"]);
   console.log(initialValues);
@@ -211,7 +212,7 @@ const AddPaymentInstructionForm = ({
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disabled={!values?.valueDate}
+                  disabled={!values?.valueDate || isSubmitting}
                 >
                   {t("Entity Accounts.Submit")}
                 </Button>
