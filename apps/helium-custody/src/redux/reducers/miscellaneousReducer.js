@@ -10,6 +10,7 @@ const defaultState = {
   fileLink: "",
   isLoading: false,
   tableConfig: [],
+  dropdowns: [],
 };
 
 const miscellaneousReducer = handleActions(
@@ -65,6 +66,18 @@ const miscellaneousReducer = handleActions(
     }),
     [actionCreators.doUpdateTableConfigFailure]: produce((draft) => {
       draft.isLoading = false;
+    }),
+    [actionCreators.doFetchDropdownValues]: produce((draft) => {
+      draft.errorMessage = null;
+      draft.isFetching = true;
+    }),
+    [actionCreators.doFetchDropdownValuesSuccess]: produce((draft, { payload: { data } }) => {
+      draft.isFetching = false;
+      draft.dropdowns = data;
+    }),
+    [actionCreators.doFetchDropdownValuesFailure]: produce((draft, { payload }) => {
+      draft.isFetching = false;
+      draft.errorMessage = payload;
     }),
   },
   defaultState

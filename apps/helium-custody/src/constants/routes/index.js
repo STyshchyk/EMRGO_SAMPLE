@@ -1,9 +1,5 @@
 import { include } from "named-urls";
 
-
-
-
-
 const publicUrls = include("/", {
   home: "",
   login: "login",
@@ -83,6 +79,7 @@ const dashboardUrls = include("/dashboard", {
       counterpartySSIList: "counterparty-ssi-list",
       couponAdministration: "coupon-administration",
       corporateActionEvents: "corporate-action-events",
+      safekeepingAcccounts: "safekeeping-accounts",
     }),
     securitiesAdmin: include("securities-admin", {
       home: "",
