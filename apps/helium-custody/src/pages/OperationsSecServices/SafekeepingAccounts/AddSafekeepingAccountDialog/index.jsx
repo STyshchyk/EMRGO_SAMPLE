@@ -206,7 +206,7 @@ const AddSafekeepingAccountDialog = ({
                     </Grid>
                     <Grid item xs>
                       <MaterialTable
-                        title="Associated Currencies"
+                        title="Associated Accounts"
                         columns={columns}
                         data={tableValues}
                         components={{

@@ -14,12 +14,13 @@ const createAccount = (payload) =>
     url: `/accounts/v1/safeKeepingAccounts`,
   });
 
-const updateAccount = (payload) =>
-  baseAxiosInstance({
+const updateAccount = (payload) => {
+  return baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
     url: `/accounts/v1/safeKeepingAccounts/${payload.accountId}`,
   });
+};
 
 const safekeepingAPI = {
   readAccounts,

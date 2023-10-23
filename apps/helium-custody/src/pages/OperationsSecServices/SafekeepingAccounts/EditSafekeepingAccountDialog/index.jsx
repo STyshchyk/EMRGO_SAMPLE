@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-
-
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,14 +17,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import PropTypes from "prop-types";
 
-
-
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
-
-
-
-
 
 const EditSafekeepingAccountDialog = ({
   open,
@@ -37,7 +29,6 @@ const EditSafekeepingAccountDialog = ({
   statuses,
   handleAddSafekeepingAccount,
 }) => {
-  console.log("🚀 ~ file: index.jsx:32 ~ account:", account);
   const { t } = useTranslation(["safekeeping_accounts", "miscellaneous"]);
 
   const entityList = entities.map((entity) => {
@@ -63,6 +54,16 @@ const EditSafekeepingAccountDialog = ({
     };
   });
 
+  const foundCurrencies = account?.wethaqAccounts?.map((account) => {
+    return {
+      currency: {
+        value: account.currencyId,
+        account: account.accountNo,
+        balance: account.accountBalance,
+      },
+    };
+  });
+  
   const initialValues = {
     entity: foundEntity,
     baseCurrency: foundCurrency,
@@ -70,7 +71,7 @@ const EditSafekeepingAccountDialog = ({
     accountNo: account.securitiesAccount.accountNumber,
     name: account.name || "",
     status: statusList[0],
-    currencies: [],
+    currencies: foundCurrencies || [],
   };
   // console.log("🚀 ~ file: index.jsx:63 ~ initialValues:", account.securitiesAccount);
 
@@ -91,6 +92,11 @@ const EditSafekeepingAccountDialog = ({
       field: "account",
       editable: "never",
     },
+    // {
+    //   title: "Balance",
+    //   field: "balance",
+    //   editable: "never",
+    // },
   ];
 
   return (
@@ -216,7 +222,7 @@ const EditSafekeepingAccountDialog = ({
                     </Grid>
                     <Grid item xs>
                       <MaterialTable
-                        title="Associated Currencies"
+                        title="Associated Accounts"
                         columns={columns}
                         data={tableValues}
                         components={{
@@ -257,7 +263,7 @@ const EditSafekeepingAccountDialog = ({
                           color="primary"
                           variant="outlined"
                           onClick={() => {
-                            handleCloseDialog();
+                            handleClose();
                           }}
                         >
                           {t("miscellaneous:Buttons.Cancel")}
