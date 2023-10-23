@@ -54,6 +54,7 @@ const SafekeepingAccounts = () => {
   const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
   const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
   const [openViewSafekeepingAccountDialog, setOpenViewSafekeepingAccountDialog] = useState(false);
+
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
 
@@ -83,7 +84,7 @@ const SafekeepingAccounts = () => {
     handleOpenAmendSafekeepingAccountDialog();
   };
   const handleViewAccountClick = () => {
-    handleOpenViewSafekeepingAccountDialog();
+    handleOpenViewSafekeepingAccountDialog(true);
   };
   const handleViewAuditHistoryClick = () => {};
 
@@ -107,10 +108,8 @@ const SafekeepingAccounts = () => {
 
   const getEntityAndAccounts = (accs) => {
     const entityOpts = [];
-    const accountOpts = [];
     const securityAccountOpts = [];
     const pushedEntity = [];
-    const pushedAccount = [];
 
     accs.forEach((acc) => {
       if (pushedEntity.indexOf(acc?.entity?.id) === -1) {
@@ -132,10 +131,10 @@ const SafekeepingAccounts = () => {
       }
     });
 
-    return { entityOpts, accountOpts, securityAccountOpts };
+    return { entityOpts, securityAccountOpts };
   };
 
-  const { entityOpts, accountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
+  const { entityOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
 
   const filteredEntity = entityOpts.map((entity) => ({
     data: entity,
@@ -222,6 +221,14 @@ const SafekeepingAccounts = () => {
     dispatch(safekeepingActionCreators.doUpdateAccount(payload));
   };
 
+  const handleCloseViewSafekeepingAccountDialog = () => {
+    setOpenViewSafekeepingAccountDialog(false);
+  };
+
+  const handleOpenViewSafekeepingAccountDialog = () => {
+    setOpenViewSafekeepingAccountDialog(true);
+  };
+
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (
     <Fragment>
@@ -239,7 +246,7 @@ const SafekeepingAccounts = () => {
                 handleOpenAddSafekeepingAccountDialog();
               }}
             >
-              {t("Add Safekeeping Accounts")}
+              {t("Add Safekeeping Account")}
             </Button>
           </Grid>
         </Grid>

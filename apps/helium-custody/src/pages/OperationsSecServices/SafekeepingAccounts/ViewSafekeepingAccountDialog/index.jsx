@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
@@ -24,9 +25,7 @@ const InlineLabel = ({ label, value }) => {
         <Typography>{label}</Typography>
       </Grid>
       <Grid item md={7} xs={12}>
-        <Typography variant="body1">
-          {value}
-        </Typography>
+        <Typography variant="body1">{value}</Typography>
       </Grid>
     </Grid>
   );
@@ -79,7 +78,7 @@ const ViewSafekeepingAccountDialog = ({
       };
     }),
   };
-  
+
   const currencyListForMaterialTable = {};
   currencies.forEach((currency) => {
     currencyListForMaterialTable[currency.id] = currency.name;
@@ -153,23 +152,15 @@ const ViewSafekeepingAccountDialog = ({
                 fullWidth
               />
             </Grid>
-
-            <Grid item container justifyContent="flex-end" spacing={2}>
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    handleClose();
-                  }}
-                >
-                  {t("miscellaneous:Buttons.Close")}
-                </Button>
-              </Grid>
-            </Grid>
           </Grid>
         </Box>
       </DialogContent>
+      <DialogActions>
+        <Button variant="outlined" onClick={handleClose}>
+          {" "}
+          {t("miscellaneous:Buttons.Close")}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };
