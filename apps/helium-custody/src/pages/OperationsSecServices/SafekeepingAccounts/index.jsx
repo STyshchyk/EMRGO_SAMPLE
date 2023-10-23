@@ -29,6 +29,7 @@ import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import AddSafekeepingAccountDialog from "./AddSafekeepingAccountDialog";
 import EditSafekeepingAccountDialog from "./EditSafekeepingAccountDialog";
+import ViewSafekeepingAccountDialog from "./ViewSafekeepingAccountDialog";
 
 const SafekeepingAccounts = () => {
   const dispatch = useDispatch();
@@ -46,13 +47,13 @@ const SafekeepingAccounts = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
-  const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
   const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
   const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
+  const [openViewSafekeepingAccountDialog, setOpenViewSafekeepingAccountDialog] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
 
@@ -81,7 +82,9 @@ const SafekeepingAccounts = () => {
   const handleAmendAccountClick = () => {
     handleOpenAmendSafekeepingAccountDialog();
   };
-  const handleViewAccountClick = () => {};
+  const handleViewAccountClick = () => {
+    handleOpenViewSafekeepingAccountDialog();
+  };
   const handleViewAuditHistoryClick = () => {};
 
   const actions = [
@@ -170,20 +173,6 @@ const SafekeepingAccounts = () => {
     },
   ];
 
-  let filteredAccounts = accountOpts
-    .filter((account) =>
-      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
-    )
-    .map((acc) => ({
-      data: acc,
-      value: acc.id,
-      label: `${acc.label} ${acc.original.currency.name}`,
-    }));
-
-  const entityChange = (selectedEntity) => {
-    setCurrentlySelectedEntity(selectedEntity);
-  };
-
   const handleCloseAddSafekeepingAccountDialog = () => {
     setOpenAddSafekeepingAccountDialog(false);
   };
@@ -201,6 +190,8 @@ const SafekeepingAccounts = () => {
       currencies: values.currencies.map((currency) => currency.currency.value),
     };
     dispatch(safekeepingActionCreators.doCreateAccount(requestPayload));
+
+    handleCloseAddSafekeepingAccountDialog();
   };
 
   const handleCloseAmendSafekeepingAccountDialog = () => {
@@ -212,7 +203,6 @@ const SafekeepingAccounts = () => {
   };
 
   const handleAmendSafekeepingAccount = (values, actions) => {
-    console.log("🚀 ~ file: index.jsx:62 ~ SafekeepingAccounts ~ selectedRow:", actions);
     const payload = {
       accountId: selectedRow.id,
       requestPayload: {
@@ -363,6 +353,17 @@ const SafekeepingAccounts = () => {
           currencies={currencies || []}
           statuses={statuses}
           handleAddSafekeepingAccount={handleAmendSafekeepingAccount}
+        />
+      ) : null}
+
+      {openViewSafekeepingAccountDialog ? (
+        <ViewSafekeepingAccountDialog
+          open={openViewSafekeepingAccountDialog}
+          handleClose={handleCloseViewSafekeepingAccountDialog}
+          account={selectedRow}
+          entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
+          currencies={currencies || []}
+          statuses={statuses}
         />
       ) : null}
     </Fragment>

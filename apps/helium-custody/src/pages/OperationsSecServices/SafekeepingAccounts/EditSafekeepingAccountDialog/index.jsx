@@ -130,12 +130,6 @@ const EditSafekeepingAccountDialog = ({
             enableReinitialize
           >
             {({ values, setFieldValue, errors }) => {
-              const tableValues = values.currencies.map((currencyAccount) => {
-                return {
-                  currency: currencyAccount.currency.value,
-                  account: currencyAccount.currency.account || "-",
-                };
-              });
               return (
                 <Form noValidate>
                   <Grid container spacing={2}>
@@ -224,7 +218,7 @@ const EditSafekeepingAccountDialog = ({
                       <MaterialTable
                         title="Associated Accounts"
                         columns={columns}
-                        data={tableValues}
+                        data={values.currencies}
                         components={{
                           Container: (props) => <Paper {...props} elevation={0} />,
                         }}
@@ -237,10 +231,13 @@ const EditSafekeepingAccountDialog = ({
                           onRowAdd: (newData) =>
                             new Promise((resolve, reject) => {
                               setTimeout(() => {
-                                setFieldValue("currencies", [...values.currencies, newData]);
+                                setFieldValue("currencies", [
+                                  ...values.currencies,
+                                  { currency: newData.currency.value, account: "-" },
+                                ]);
 
                                 resolve();
-                              }, 1000);
+                              }, 500);
                             }),
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
@@ -251,7 +248,7 @@ const EditSafekeepingAccountDialog = ({
                                 );
                                 setFieldValue("currencies", [...dataDelete]);
                                 resolve();
-                              }, 1000);
+                              }, 500);
                             }),
                         }}
                       />

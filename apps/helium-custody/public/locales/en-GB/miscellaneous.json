@@ -33,6 +33,7 @@
     "This action is non-reversible~ Columns will move back to their default positions and your custom configuration will be lost": "This action is non-reversible. Columns will move back to their default positions and your custom configuration will be lost"
   },
   "Buttons": {
+    "Close": "Close",
     "Cancel": "Cancel",
     "Submit": "Submit",
     "Approve": "Approve",

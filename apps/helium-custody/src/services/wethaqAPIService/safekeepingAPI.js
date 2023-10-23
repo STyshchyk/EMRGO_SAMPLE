@@ -18,7 +18,7 @@ const updateAccount = (payload) => {
   return baseAxiosInstance({
     method: "PATCH",
     data: payload.requestPayload,
-    url: `/accounts/v1/safeKeepingAccounts/${payload.accountId}`,
+    url: `/accounts/v1/safeKeepingAccounts/${payload.id}`,
   });
 };
 
