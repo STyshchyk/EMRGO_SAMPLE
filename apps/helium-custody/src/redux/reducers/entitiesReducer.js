@@ -34,17 +34,21 @@ const dummyData = [{
   entityCustodyKycSubmissionDate: null
 }]
 
-// 1019/1033 filter entities if kyc isnt approved from both internal entities and legacy entities
-const isKYCApproved = (entity) => {
-  return (
-   entity.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED  &&
-   (entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED || entity?.groups[0]?.users[0].userKycStatus === accountIdentification.KYC_STATUS_APPROVED)
-  );
-};
+// 1019/1033 filter entities if kyc isnt approved 
+const isKYCApproved = (entity) => (
+  entity?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
+  (
+    entity?.userKycStatus
+      ? entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for internal entity api
+      : entity?.groups[0]?.users[0]?.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for legacy entity api
+  )
+);
+
+
 
 // new migrated v2 endpoint doesnt return key corporateEntityName
 const formatEntities = (data) => {
-  return data.filter(isKYCApproved).map((entity) => {
+  return data?.filter(isKYCApproved)?.map((entity) => {
       return {
         ...entity,
         corporateEntityName: entity.entityName,
@@ -87,7 +91,7 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      legacyEntitiesList: data.entities.filter(isKYCApproved),
+      legacyEntitiesList: data.entities?.filter(isKYCApproved),
     }),
     [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
