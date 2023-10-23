@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import useWethaqAPIParams from "../../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../../redux/actionCreators/accounts";
 import * as formActionCreators from "../../../../redux/actionCreators/form";
+import * as accountSelectors from "../../../../redux/selectors/accounts";
 import * as authSelectors from "../../../../redux/selectors/auth";
 import * as selectFormValues from "../../../../redux/selectors/form";
 import AddPaymentInstructionForm from "../AddPaymentInstructionForm";
@@ -32,6 +33,8 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   const dispatch = useDispatch();
 
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const isSubmitting = useSelector(accountSelectors.selectIsSubmitting);
+
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityGroupEntityType === "EMRGO_SERVICES";
@@ -92,11 +95,17 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
 
     createPaymentInstruction(requestPayload);
 
-    setTimeout(() => {
-      saveFormValues(values);
-      handleClose();
-      resetForm();
-    }, 1000);
+    setSubmitting(true);
+
+    createPaymentInstruction({
+      requestPayload,
+      successCallback: () => {
+        setSubmitting(false);
+        saveFormValues(values);
+        handleClose();
+        resetForm();
+      },
+    });
   };
 
   return (
@@ -121,6 +130,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
           isWethaqUser={isWethaqUser}
           initial={initial}
           handleSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
           handleCancel={() => {
             saveFormValues("clear");
             setInitialValues(initial);

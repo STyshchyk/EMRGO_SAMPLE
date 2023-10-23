@@ -27,6 +27,7 @@ const AddPaymentInstructionForm = ({
   isWethaqUser,
   options,
   initial,
+  isSubmitting,
 }) => {
   const { t } = useTranslation(["cash_management", "components"]);
 
@@ -298,7 +299,7 @@ const AddPaymentInstructionForm = ({
                   >
                     {t("Entity Accounts.Cancel")}
                   </Button>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
                     {t("Entity Accounts.Submit")}
                   </Button>
                 </Grid>
