@@ -262,6 +262,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
         {({
           values,
           handleSubmit,
+          isSubmitting,
           setFieldValue,
           setValues,
           setFieldTouched,
@@ -315,7 +316,11 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
 
           return (
             <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
-              <AutoSaveFields formKey="NewFxTransactionForm" initial={initial} />
+              <AutoSaveFields
+                formKey="NewFxTransactionForm"
+                initial={initial}
+                isSubmitting={isSubmitting}
+              />
               <DialogTitle id="form-dialog-title">{t("Fx Modal.New Fx Transaction")}</DialogTitle>
 
               <DialogContent>
