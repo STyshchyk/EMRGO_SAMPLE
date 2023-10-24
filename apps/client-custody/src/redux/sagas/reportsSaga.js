@@ -53,18 +53,6 @@ function* fetchSecuritesAccounts({ payload }) {
   }
 }
 
-function* fetchSafeAccounts({ payload }) {
-  try {
-    const response = yield call(wethaqAPIService.reportsAPI.getSafeAccounts, payload);
-    const { data } = response;
-    yield put(actionCreators.doFetchSafeAccountsSuccess({ data }));
-  } catch (error) {
-    const errorMessage = extractErrorMessage(error);
-    showToastErrorNotification(error, errorMessage);
-    yield put(actionCreators.doFetchSafeAccountsFailure(errorMessage));
-  }
-}
-
 function* fetchSecuritiesTransations({ payload }) {
   try {
     const response = yield call(wethaqAPIService.reportsAPI.getSecuritiesTransactions, payload);
@@ -118,7 +106,6 @@ function* fetchReferenceData({ payload }) {
 
 const reportsSaga = [
   takeLatest(actionTypes.FETCH_CASH_ACCOUNTS_REQUESTED, fetchCashAccounts),
-  takeLatest(actionTypes.FETCH_SAFE_ACCOUNTS_REQUESTED, fetchSafeAccounts),
   takeLatest(actionTypes.FETCH_CASH_TRANSACTIONS_REQUESTED, fetchCashTransations),
   takeLatest(actionTypes.FETCH_CASH_BALANCES_REQUESTED, fetchCashBalances),
   takeLatest(actionTypes.FETCH_SECURITIES_ACCOUNTS_REQUESTED, fetchSecuritesAccounts),

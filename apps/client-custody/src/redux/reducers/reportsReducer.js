@@ -12,7 +12,6 @@ const defaultState = {
   securitiesAccounts: null,
   securitiesTransactions: null,
   securitiesHoldings: null,
-  safekeepingAccount: [],
   tradeDatedSecuritiesHoldings: null,
   referenceData: null,
   isFetchingSecuritiesHoldings: false,
@@ -30,19 +29,6 @@ const reportsReducer = handleActions(
       draft.cashAccounts = data.data;
     }),
     [actionCreators.doFetchCashAccountsFailure]: produce((draft, { payload }) => {
-      draft.isFetching = false;
-      draft.errorMessage = payload;
-    }),
-
-    [actionCreators.doFetchSafeAccounts]: produce((draft) => {
-      draft.errorMessage = null;
-      draft.isFetching = true;
-    }),
-    [actionCreators.doFetchSafeAccountsSuccess]: produce((draft, { payload: { data } }) => {
-      draft.isFetching = false;
-      draft.safekeepingAccount = data.data;
-    }),
-    [actionCreators.doFetchSafeAccountsFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
       draft.errorMessage = payload;
     }),

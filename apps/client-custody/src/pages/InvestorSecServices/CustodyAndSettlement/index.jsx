@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 import AmendSettlementInstructionDialog from "../../../components/AmendSettlementInstructionDialog";
 import CancelSettlementInstructionDialog from "../../../components/CancelSettlementInstructionDialog";
@@ -68,7 +69,7 @@ const CustodyAndSettlement = () => {
   const paymentAccounts = useSelector(accountsSelectors.selectPaymentAccounts);
   const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
   const currentListOfACLs = useSelector(authSelectors.selectCurrentListOfAcls);
-  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
+
   const hasViewSIAuditHistoryACL = currentListOfACLs.includes("Services/Audit/View");
 
   // const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
@@ -90,8 +91,6 @@ const CustodyAndSettlement = () => {
 
     const fetchSecuritiyReferenceData = () =>
       dispatch(reportsActionCreators.doFetchReferenceData());
-    const fetchSafeAcounts = (payload) =>
-      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
     const fetchPaymentAccounts = () => dispatch(accountsActionCreators.doFetchPaymentAccounts());
     const fetchSettlementInstructionTypeOptions = () =>
       dispatch(
@@ -112,7 +111,7 @@ const CustodyAndSettlement = () => {
     fetchCounterpartyList();
     fetchPaymentsList();
     fetchExternalSecuritiesList();
-    fetchSafeAcounts({ entityId: currentEntityGroupId });
+
     return () => {
       const resetDropdownState = () => dispatch(dropdownActionCreators.doResetDropdownState());
 

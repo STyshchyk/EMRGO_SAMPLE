@@ -37,6 +37,7 @@ import * as reportsSelectors from "../../../redux/selectors/reports";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../../utils/formatter";
+import formatAddress from "../../../utils/reports";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
 
@@ -57,13 +58,12 @@ const SecuritiesTransactionsReportPage = () => {
   const childRef = useRef();
 
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
-  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
+
   // selectors
   const userFullName = useSelector(authSelectors.selectUserFullName);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const currentCorporateEntityName = useSelector(authSelectors.selectCurrentCorporateEntityName);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const transactions = useSelector(reportsSelectors.selectSecuritiesTransactions);
   const accounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
 
@@ -138,16 +138,14 @@ const SecuritiesTransactionsReportPage = () => {
     });
     return { entityOpts, cashAccountOpts, securityAccountOpts };
   };
+
   const { entityOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
 
   useEffect(() => {
     const fetchAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
-    const fetchSafeAcounts = (payload) =>
-      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
-
     fetchAccounts();
-    fetchSafeAcounts({ entityId: currentEntityGroupId });
+
     return () => {
       dispatch(reportsActionCreators.doResetSecuritiesTransactions());
     };
@@ -162,12 +160,12 @@ const SecuritiesTransactionsReportPage = () => {
   if (Array.isArray(filteredEntity) && filteredEntity.length > 1) {
     filteredEntity.unshift(ALL_ENTITIES_OPTION);
   }
-  console.log(currentSafeAccounts);
-  const filteredSecurityAccounts = currentSafeAccounts.map((account) => ({
+
+  const filteredSecurityAccounts = securityAccountOpts.map((account) => ({
     data: account,
     value: account.id,
-    label: `${account.securitiesAccount.accountNumber} | ${account.name}`,
-    original: account,
+    label: account.label,
+    original: account.original,
   }));
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
@@ -473,9 +471,9 @@ const SecuritiesTransactionsReportPage = () => {
                 },
                 {
                   label: "Account Name",
-                  // value: ` ${
-                  //   values?.securityAccount?.label ? `${values?.securityAccount?.label} |` : "N.A"
-                  // }  ${v.capitalize(values?.securityAccount?.data.original.type || "N.A") ?? null}`,
+                  value: ` ${
+                    values?.securityAccount?.label ? `${values?.securityAccount?.label} |` : "N.A"
+                  }  ${v.capitalize(values?.securityAccount?.data.original.type || "N.A") ?? null}`,
                 },
                 {
                   label: "Currency",
@@ -583,7 +581,6 @@ const SecuritiesTransactionsReportPage = () => {
               const handleFilter = () => {
                 let qs = "";
                 if (values.startDate) {
-                  //Fix dates
                   qs += `fromDate=${values.startDate.toISOString()}&`;
                 } else {
                   qs += `fromDate=${moment([1970, 1, 1]).toISOString()}&`;
@@ -597,11 +594,9 @@ const SecuritiesTransactionsReportPage = () => {
                   // qs += `entityId=${values.entity.data.id}&`;
                 }
                 if (values.securityAccount) {
-                  qs += `portfolio_id=${values.securityAccount.original.securitiesAccount.portfolioId}&`;
-                }
-                if (values.securityAccount) {
                   qs += `accountId=${values.securityAccount.data.id}`;
                 }
+                console.log(qs);
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
               };
 
@@ -616,29 +611,33 @@ const SecuritiesTransactionsReportPage = () => {
                 setFieldValue("entity", selectedEntity);
                 setFieldValue("security", null);
 
-                // const tempSecurityAccountList = securityAccountOpts
-                //   .filter((securityAccount) =>
-                //     selectedEntity
-                //       ? securityAccount.original.group.entity.id === selectedEntity.data.id
-                //       : true
-                //   )
-                //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-                //
-                // if (selectedEntity) {
-                //   setFieldValue("securityAccount", tempSecurityAccountList[0]);
-                // }
+                const tempSecurityAccountList = securityAccountOpts
+                  .filter((securityAccount) =>
+                    selectedEntity
+                      ? securityAccount.original.group.entity.id === selectedEntity.data.id
+                      : true
+                  )
+                  .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+
+                if (selectedEntity) {
+                  setFieldValue("securityAccount", tempSecurityAccountList[0]);
+                }
                 dispatch(reportsActionCreators.doResetCashTransactions());
                 submitForm();
               };
 
               const securityAccountChange = (selectedAccount) => {
                 setFieldValue("securityAccount", selectedAccount);
-                if (
-                  selectedAccount &&
-                  Array.isArray(filteredEntity) &&
-                  filteredEntity.length >= 1
-                ) {
-                  setFieldValue("entity", filteredEntity[0]);
+                const tempEntitiesList = entityOpts
+                  .filter((entity) =>
+                    selectedAccount
+                      ? entity.id === selectedAccount.data.original.group.entity.id
+                      : true
+                  )
+                  .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+
+                if (selectedAccount) {
+                  setFieldValue("entity", tempEntitiesList[0]);
                 }
                 dispatch(reportsActionCreators.doResetCashTransactions());
                 submitForm();
@@ -700,7 +699,7 @@ const SecuritiesTransactionsReportPage = () => {
                       <Grid item xs={12} md={6} lg={3} container>
                         <Grid container justifyContent="space-between" alignItems="flex-start">
                           <Typography variant="body1" className="bold">
-                            {"Safekeeping Account"}
+                            {t("Security Transactions.Filters.Securities Account")}
                           </Typography>
                           <ButtonBase onClick={() => clearFilter("securityAccount")}>
                             <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
@@ -711,7 +710,9 @@ const SecuritiesTransactionsReportPage = () => {
                             <Select
                               closeMenuOnSelect
                               isSearchable
-                              placeholder={`Safekeeping Account`}
+                              placeholder={`${t(
+                                "Security Transactions.Filters.Securities Account"
+                              )}...`}
                               components={{
                                 ...animatedComponents,
                               }}
@@ -866,23 +867,24 @@ const SecuritiesTransactionsReportPage = () => {
                           </Box>
                         </Grid>
                       </Grid>
-                      <Grid item xs={12} md={12} lg={12} container>
-                        <Typography className={style.accountInfo__label}>
-                          {`Safekeeping Account`} :{" "}
-                        </Typography>
-                        <Typography className={style.accountInfo__value}>{`${
-                          values.securityAccount
-                            ? values?.securityAccount?.original?.securitiesAccount.accountNumber
-                            : t("Security Transactions.NA")
-                        } | ${
-                          values.securityAccount
-                            ? v.capitalize(values?.securityAccount?.original?.name || "N.A")
-                            : t("Security Transactions.NA")
-                        }`}</Typography>
-                      </Grid>
                     </Grid>
                   </TableFiltersWrapper>
                   <Grid container spacing={2}>
+                    <Grid item xs={12} container>
+                      <Typography className={style.accountInfo__label}>
+                        {t("Security Transactions.Account")} :{" "}
+                      </Typography>
+                      <Typography className={style.accountInfo__value}>{`${
+                        values.securityAccount
+                          ? values.securityAccount.data.original.accountNumber
+                          : t("Security Transactions.NA")
+                      } | ${
+                        values.securityAccount
+                          ? v.capitalize(values.securityAccount.data.original.type || "N.A")
+                          : t("Security Transactions.NA")
+                      }`}</Typography>
+                    </Grid>
+
                     {/* <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
                         {t("Security Transactions.Address")} :{" "}
