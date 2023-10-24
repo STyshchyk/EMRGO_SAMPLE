@@ -47,7 +47,7 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
               : t("Security Transactions.NA")
           } | ${
             securityAccount
-              ? v.capitalize(securityAccount.data.original.portfolio.name || "N.A")
+              ? v.capitalize(securityAccount.data?.original?.portfolio?.name || "N.A")
               : t("Security Transactions.NA")
           }`}
         </Typography>
