@@ -81,7 +81,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
         securityAccountOpts.push({
           id: acc.group.clientSecuritiesAccount?.id,
-          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc.portfolio.name}`,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc?.portfolio?.name}`,
           value: acc.group.clientSecuritiesAccount?.id,
           original: acc,
         });
@@ -171,7 +171,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       ).values(),
     ].map((currency) => {
       const currencyObject = {
-        label: currency.data?.original?.currency.name,
+        label: currency.data?.original?.currency?.name,
         value: currency.data?.original?.currency.id,
       };
       return currencyObject;
