@@ -66,7 +66,7 @@ export const getFileUploadLink = async (uploadedData: {
     data: { filename: uploadedData.filename },
   });
   const response = await (await promise).data.data;
-  
+
   const fileBlob = await readFileAsArrayBuffer(uploadedData.file);
 
   const uploadFile = axios({

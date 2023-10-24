@@ -235,7 +235,7 @@ function* settleSettlementInstruction({ payload }) {
 
 function* fetchPaymentsList({ payload }) {
   try {
-    const response = yield call(wethaqAPIService.paymentsAPI.getPaymentsList);
+    const response = yield call(wethaqAPIService.paymentsAPI.getPaymentsList, payload);
     const { data } = response;
 
     yield put(actionCreators.doFetchPaymentsListSuccess({ data }));
