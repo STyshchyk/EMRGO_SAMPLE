@@ -22,7 +22,7 @@
     - docker info
     - ls -al $PWD
     # !PREPARE AND SUBST ENV VARS AND DOCKER-COMPOSE FILE
-    - envsubst < $PWD/.env.production > $PWD/.env
+    - envsubst < $PWD/.gitlab/ci/static_configs/.env.${CI_ENVIRONMENT_NAME} > $PWD/.env
     - envsubst < $PWD/docker-compose.prod.template.yml > $PWD/docker-compose.${TARGET_APP_NAME}.yml
     - cat $PWD/.env
     - cat $PWD/docker-compose.${TARGET_APP_NAME}.yml
