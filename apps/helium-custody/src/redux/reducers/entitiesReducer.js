@@ -1,13 +1,12 @@
 import { produce } from "immer";
 import { handleActions } from "redux-actions";
-import { accountIdentification } from "../../constants/user";
- 
 
+import { accountIdentification } from "../../constants/user";
 import * as actionCreators from "../actionCreators/entities";
 
 const defaultState = {
   entitiesList: [],
-  emrgoEntities:[],
+  emrgoEntities: [],
   legacyEntitiesList: [],
   entityUsersList: [],
   errorMessage: null,
@@ -19,41 +18,38 @@ const defaultState = {
   entityUsers: [],
 };
 
-const dummyData = [{
-  entityId: "97363395-7c87-40b6-a0fe-d9202e98aa93",
-  userId: "61a78463-30ea-49ac-8ab1-a7512765b8cd",
-  firstName: "Albus",
-  lastName: "Boris",
-  email: "mgopalan+1@solutions.emrgo.com",
-  entityName: "Andy LLC",
-  userKycStatus: 1,
-  userKycSubmissionDate: null,
-  entityKycStatus: 1,
-  entityCustodyKycStatus: 1,
-  entityKycSubmissionDate: null,
-  entityCustodyKycSubmissionDate: null
-}]
+const dummyData = [
+  {
+    entityId: "97363395-7c87-40b6-a0fe-d9202e98aa93",
+    userId: "61a78463-30ea-49ac-8ab1-a7512765b8cd",
+    firstName: "Albus",
+    lastName: "Boris",
+    email: "mgopalan+1@solutions.emrgo.com",
+    entityName: "Andy LLC",
+    userKycStatus: 1,
+    userKycSubmissionDate: null,
+    entityKycStatus: 1,
+    entityCustodyKycStatus: 1,
+    entityKycSubmissionDate: null,
+    entityCustodyKycSubmissionDate: null,
+  },
+];
 
-// 1019/1033 filter entities if kyc isnt approved 
-const isKYCApproved = (entity) => (
+// 1019/1033 filter entities if kyc isnt approved
+const isKYCApproved = (entity) =>
   entity?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
-  (
-    entity?.userKycStatus
-      ? entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for internal entity api
-      : entity?.groups[0]?.users[0]?.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for legacy entity api
-  )
-);
-
-
+  (entity?.userKycStatus
+    ? entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for internal entity api
+    : entity?.groups[0]?.users[0]?.userKycStatus === accountIdentification.KYC_STATUS_APPROVED); // for legacy entity api
 
 // new migrated v2 endpoint doesnt return key corporateEntityName
 const formatEntities = (data) => {
-  return data?.filter(isKYCApproved)?.map((entity) => {
-      return {
-        ...entity,
-        corporateEntityName: entity.entityName,
-        id:entity.entityId
-      };
+  return data?.map((entity) => {
+    return {
+      ...entity,
+      corporateEntityName: entity.entityName,
+      id: entity.entityId,
+    };
   });
 };
 

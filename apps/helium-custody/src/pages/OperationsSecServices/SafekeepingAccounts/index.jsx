@@ -2,6 +2,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import MaterialTable from "@material-table/core";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,6 +13,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
+
+
 
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
@@ -29,7 +33,12 @@ import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import AddSafekeepingAccountDialog from "./AddSafekeepingAccountDialog";
 import EditSafekeepingAccountDialog from "./EditSafekeepingAccountDialog";
+import ViewSafekeepingAccountAuditLogsDialog from "./ViewSafekeepingAccountAuditLogsDialog";
 import ViewSafekeepingAccountDialog from "./ViewSafekeepingAccountDialog";
+
+
+
+
 
 const SafekeepingAccounts = () => {
   const dispatch = useDispatch();
@@ -42,6 +51,7 @@ const SafekeepingAccounts = () => {
   const dropdowns = useSelector(miscellaneousSelectors.selectDropdowns);
   const currencies = dropdowns.currency;
   const accounts = useSelector(safekeepingSelectors.readAccounts);
+  const accountAuditLogs = useSelector(safekeepingSelectors.readAccountAuditLogs);
   const entities = useSelector(entitiesSelectors.selectEntities);
   const statuses = ["Active", "Inactive"];
 
@@ -51,9 +61,12 @@ const SafekeepingAccounts = () => {
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
+  console.log("🚀 ~ file: index.jsx:64 ~ SafekeepingAccounts ~ selectedRow:", selectedRow)
   const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
   const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
   const [openViewSafekeepingAccountDialog, setOpenViewSafekeepingAccountDialog] = useState(false);
+  const [openViewSafekeepingAccountAuditLogsDialog, setOpenViewSafekeepingAccountAuditLogsDialog] =
+    useState(false);
 
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
@@ -65,19 +78,21 @@ const SafekeepingAccounts = () => {
   });
 
   const fetchAccounts = (payload) => dispatch(safekeepingActionCreators.doReadAccounts(payload));
+  const fetchAccountAuditLogs = (payload) =>
+    dispatch(safekeepingActionCreators.doReadAccountAuditLogs(payload));
+  const fetchFormOptions = (payload) =>
+    dispatch(miscellaneousActionCreators.doFetchDropdownValues(payload));
+  const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchEntities(payload));
 
   useEffect(() => {
-    const fetchFormOptions = (payload) =>
-      dispatch(miscellaneousActionCreators.doFetchDropdownValues(payload));
-
     fetchFormOptions({
       options: ["currency"],
     });
 
     fetchAccounts();
 
-    const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchEntities(payload));
     fetchEntities();
+
   }, [dispatch]);
 
   const handleAmendAccountClick = () => {
@@ -86,7 +101,10 @@ const SafekeepingAccounts = () => {
   const handleViewAccountClick = () => {
     handleOpenViewSafekeepingAccountDialog(true);
   };
-  const handleViewAuditHistoryClick = () => {};
+  const handleViewAuditHistoryClick = () => {
+    fetchAccountAuditLogs({ id: selectedRow.id });
+    handleOpenViewSafekeepingAccountAuditLogDialog()
+  };
 
   const actions = [
     {
@@ -170,6 +188,11 @@ const SafekeepingAccounts = () => {
       title: t("Headers.Base Currency"),
       field: "currency.name",
     },
+    {
+      id: "status",
+      title: t("Headers.Status"),
+      field: "status",
+    },
   ];
 
   const handleCloseAddSafekeepingAccountDialog = () => {
@@ -203,13 +226,13 @@ const SafekeepingAccounts = () => {
 
   const handleAmendSafekeepingAccount = (values, actions) => {
     const payload = {
-      accountId: selectedRow.id,
+      id: values.id,
       requestPayload: {
         entityId: values.entity.id,
         baseCurrencyId: values.baseCurrency.value,
         name: values.name,
         status: values.status.value,
-        currencies: values.currencies.map((currency) => currency.currency.value),
+        currencies: values.currencies.map((currency) => currency.currency),
       },
       cb: () => {
         actions.setSubmitting(false);
@@ -227,6 +250,14 @@ const SafekeepingAccounts = () => {
 
   const handleOpenViewSafekeepingAccountDialog = () => {
     setOpenViewSafekeepingAccountDialog(true);
+  };
+
+  const handleCloseViewSafekeepingAccountAuditLogDialog = () => {
+    setOpenViewSafekeepingAccountAuditLogsDialog(false);
+  };
+
+  const handleOpenViewSafekeepingAccountAuditLogDialog = () => {
+    setOpenViewSafekeepingAccountAuditLogsDialog(true);
   };
 
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
@@ -371,6 +402,14 @@ const SafekeepingAccounts = () => {
           entities={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entities : null}
           currencies={currencies || []}
           statuses={statuses}
+        />
+      ) : null}
+
+      {openViewSafekeepingAccountAuditLogsDialog ? (
+        <ViewSafekeepingAccountAuditLogsDialog
+          open={openViewSafekeepingAccountAuditLogsDialog}
+          handleClose={handleCloseViewSafekeepingAccountAuditLogDialog}
+          logs={accountAuditLogs}
         />
       ) : null}
     </Fragment>

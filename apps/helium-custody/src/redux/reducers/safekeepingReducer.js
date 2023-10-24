@@ -1,7 +1,13 @@
 import { produce } from "immer";
 import { handleActions } from "redux-actions";
 
+
+
 import * as actionCreators from "../actionCreators/safekeeping";
+
+
+
+
 
 const defaultState = {
   errorMessage: null,
@@ -10,6 +16,7 @@ const defaultState = {
   isSubmitting: false,
   message: null,
   accounts: [],
+  accountAuditLogs: [],
 };
 
 const safekeepingReducer = handleActions(
@@ -46,6 +53,18 @@ const safekeepingReducer = handleActions(
     }),
     [actionCreators.doUpdateAccountFailure]: produce((draft, { payload }) => {
       draft.isSubmitting = false;
+      draft.errorMessage = payload;
+    }),
+    [actionCreators.doReadAccountAuditLogs]: produce((draft) => {
+      draft.errorMessage = null;
+      draft.isFetching = true;
+    }),
+    [actionCreators.doReadAccountAuditLogsSuccess]: produce((draft, { payload: { data } }) => {
+      draft.isFetching = false;
+      draft.accountAuditLogs = data.data;
+    }),
+    [actionCreators.doReadAccountAuditLogsFailure]: produce((draft, { payload }) => {
+      draft.isFetching = false;
       draft.errorMessage = payload;
     }),
   },

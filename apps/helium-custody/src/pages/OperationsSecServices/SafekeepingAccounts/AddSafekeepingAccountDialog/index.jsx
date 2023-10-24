@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
@@ -75,45 +77,45 @@ const AddSafekeepingAccountDialog = ({
   ];
 
   return (
-    <Dialog
-      open={open}
-      onClose={(event, reason) => {
-        if (reason && reason === "backdropClick") return;
-
-        handleClose();
-      }}
-      aria-labelledby="form-dialog-title"
-      fullWidth
-      maxWidth="md"
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleAddSafekeepingAccount}
+      // validationSchema={addPaymentAccountFormSchema}
+      enableReinitialize
     >
-      <DialogTitle id="add-payment-account-form-dialog-title">
-        <Grid container justifyContent="space-between">
-          <Grid item xs container alignContent="center">
-            <Typography variant="h6">{t("Modal.Add Safekeeping Account")}</Typography>
-          </Grid>
+      {({ values, setFieldValue, errors }) => {
+        const tableValues = values.currencies.map((currencyAccount) => {
+          return {
+            currency: currencyAccount.currency.value,
+            account: currencyAccount.currency.account || "-",
+          };
+        });
+        return (
+          <Form noValidate>
+            <Dialog
+              open={open}
+              onClose={(event, reason) => {
+                if (reason && reason === "backdropClick") return;
 
-          <IconButton aria-label="close" onClick={handleClose} size="large">
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </DialogTitle>
-      <DialogContent>
-        <Box pb={2}>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleAddSafekeepingAccount}
-            // validationSchema={addPaymentAccountFormSchema}
-            enableReinitialize
-          >
-            {({ values, setFieldValue, errors }) => {
-              const tableValues = values.currencies.map((currencyAccount) => {
-                return {
-                  currency: currencyAccount.currency.value,
-                  account: currencyAccount.currency.account || "-",
-                };
-              });
-              return (
-                <Form noValidate>
+                handleClose();
+              }}
+              aria-labelledby="form-dialog-title"
+              fullWidth
+              maxWidth="md"
+            >
+              <DialogTitle id="add-payment-account-form-dialog-title">
+                <Grid container justifyContent="space-between">
+                  <Grid item xs container alignContent="center">
+                    <Typography variant="h6">{t("Modal.Add Safekeeping Account")}</Typography>
+                  </Grid>
+
+                  <IconButton aria-label="close" onClick={handleClose} size="large">
+                    <CloseIcon />
+                  </IconButton>
+                </Grid>
+              </DialogTitle>
+              <DialogContent>
+                <Box pb={2}>
                   <Grid container spacing={2}>
                     <Grid item container spacing={2}>
                       <InlineFormField label={"Entity"} name="sourceEntity">
@@ -232,33 +234,34 @@ const AddSafekeepingAccountDialog = ({
                         }}
                       />
                     </Grid>
-
-                    <Grid item container justifyContent="flex-end" spacing={2}>
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          onClick={() => {
-                            handleClose();
-                          }}
-                        >
-                          {t("miscellaneous:Buttons.Cancel")}
-                        </Button>
-                      </Grid>
-                      <Grid item>
-                        <Button type="submit" variant="contained" data-testid="submit">
-                          {t("miscellaneous:Buttons.Submit")}
-                        </Button>
-                      </Grid>
-                    </Grid>
                   </Grid>
-                </Form>
-              );
-            }}
-          </Formik>
-        </Box>
-      </DialogContent>
-    </Dialog>
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Grid item container justifyContent="flex-end" spacing={2}>
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => {
+                        handleClose();
+                      }}
+                    >
+                      {t("miscellaneous:Buttons.Cancel")}
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button type="submit" variant="contained" data-testid="submit">
+                      {t("miscellaneous:Buttons.Submit")}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </DialogActions>
+            </Dialog>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
