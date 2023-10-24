@@ -1,8 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-
-
-import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { Typography } from "@mui/material";
@@ -18,13 +15,7 @@ import Paper from "@mui/material/Paper";
 import MaterialTableCustomDropdownRenderer from "apps/helium-custody/src/components/MaterialTableCustomDropdownRenderer";
 import PropTypes from "prop-types";
 
-
-
 import { getDropdownValues } from "../../../../utils/form";
-
-
-
-
 
 const InlineLabel = ({ label, value }) => {
   return (
@@ -138,7 +129,10 @@ const ViewSafekeepingAccountDialog = ({
 
               <InlineLabel label={t("Modal.Portfolio Identifier")} value={initialValues?.name} />
 
-              <InlineLabel label={t("Modal.Safekeeping Account")} value={initialValues?.accountNo} />
+              <InlineLabel
+                label={t("Modal.Safekeeping Account")}
+                value={initialValues?.accountNo}
+              />
 
               <InlineLabel
                 label={t("Modal.Base Currency")}
