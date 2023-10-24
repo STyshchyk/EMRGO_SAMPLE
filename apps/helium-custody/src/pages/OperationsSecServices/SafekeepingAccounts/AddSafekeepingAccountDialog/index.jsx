@@ -21,7 +21,6 @@ import PropTypes from "prop-types";
 
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
-import { Typography } from "@mui/material";
 
 const AddSafekeepingAccountDialog = ({
   open,
