@@ -128,7 +128,6 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
             }),
           }}
           data={generatedTableRowData}
-          isLoading={isRequesting}
           onRowClick={handleClick}
         />
       </Grid>
