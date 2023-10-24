@@ -13,3 +13,7 @@ export const doReadAccountsFailure = createAction(actionTypes.READ_ACCOUNTS_FAIL
 export const doUpdateAccount = createAction(actionTypes.UPDATE_ACCOUNT_REQUESTED);
 export const doUpdateAccountSuccess = createAction(actionTypes.UPDATE_ACCOUNT_SUCCEEDED);
 export const doUpdateAccountFailure = createAction(actionTypes.UPDATE_ACCOUNT_FAILED);
+
+export const doReadAccountAuditLogs = createAction(actionTypes.READ_ACCOUNT_AUDIT_LOGS_REQUESTED);
+export const doReadAccountAuditLogsSuccess = createAction(actionTypes.READ_ACCOUNT_AUDIT_LOGS_SUCCEEDED);
+export const doReadAccountAuditLogsFailure = createAction(actionTypes.READ_ACCOUNT_AUDIT_LOGS_FAILED);

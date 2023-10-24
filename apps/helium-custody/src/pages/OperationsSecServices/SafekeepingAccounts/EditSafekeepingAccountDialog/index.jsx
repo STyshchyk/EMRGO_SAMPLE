@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
@@ -54,23 +55,24 @@ const EditSafekeepingAccountDialog = ({
     };
   });
 
+  const foundStatus = statusList.find((currency) => currency.value === account.status);
+
   const foundCurrencies = account?.wethaqAccounts?.map((account) => {
     return {
-      currency: {
-        value: account.currencyId,
-        account: account.accountNo,
-        balance: account.accountBalance,
-      },
+      id: account.id,
+      currency: account.currencyId,
+      account: account.accountNo,
+      balance: account.accountBalance,
     };
   });
-  
+
   const initialValues = {
     entity: foundEntity,
     baseCurrency: foundCurrency,
     id: account.id,
     accountNo: account.securitiesAccount.accountNumber,
     name: account.name || "",
-    status: statusList[0],
+    status: foundStatus,
     currencies: foundCurrencies || [],
   };
   // console.log("🚀 ~ file: index.jsx:63 ~ initialValues:", account.securitiesAccount);
@@ -100,38 +102,38 @@ const EditSafekeepingAccountDialog = ({
   ];
 
   return (
-    <Dialog
-      open={open}
-      onClose={(event, reason) => {
-        // if (reason && reason === "backdropClick") return;
-        handleClose();
-      }}
-      aria-labelledby="form-dialog-title"
-      fullWidth
-      maxWidth="md"
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleAddSafekeepingAccount}
+      // validationSchema={addPaymentAccountFormSchema}
+      enableReinitialize
     >
-      <DialogTitle id="add-payment-account-form-dialog-title">
-        <Grid container justifyContent="space-between">
-          <Grid item xs container alignContent="center">
-            <strong>{t("Modal.Amend Safekeeping Account")}</strong>
-          </Grid>
+      {({ values, setFieldValue, errors }) => {
+        return (
+          <Form noValidate>
+            <Dialog
+              open={open}
+              onClose={(event, reason) => {
+                // if (reason && reason === "backdropClick") return;
+                handleClose();
+              }}
+              aria-labelledby="form-dialog-title"
+              fullWidth
+              maxWidth="md"
+            >
+              <DialogTitle id="add-payment-account-form-dialog-title">
+                <Grid container justifyContent="space-between">
+                  <Grid item xs container alignContent="center">
+                    <strong>{t("Modal.Amend Safekeeping Account")}</strong>
+                  </Grid>
 
-          <IconButton aria-label="close" onClick={handleClose} size="large">
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </DialogTitle>
-      <DialogContent>
-        <Box pb={2}>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleAddSafekeepingAccount}
-            // validationSchema={addPaymentAccountFormSchema}
-            enableReinitialize
-          >
-            {({ values, setFieldValue, errors }) => {
-              return (
-                <Form noValidate>
+                  <IconButton aria-label="close" onClick={handleClose} size="large">
+                    <CloseIcon />
+                  </IconButton>
+                </Grid>
+              </DialogTitle>
+              <DialogContent>
+                <Box pb={2}>
                   <Grid container spacing={2}>
                     <Grid item container spacing={2}>
                       <InlineFormField label={"Entity"} name="sourceEntity">
@@ -244,7 +246,7 @@ const EditSafekeepingAccountDialog = ({
                               const index = oldData.currency;
                               setTimeout(() => {
                                 const dataDelete = [...values.currencies].filter(
-                                  (currency) => currency.currency.value !== index
+                                  (currency) => currency.currency !== index
                                 );
                                 setFieldValue("currencies", [...dataDelete]);
                                 resolve();
@@ -253,33 +255,34 @@ const EditSafekeepingAccountDialog = ({
                         }}
                       />
                     </Grid>
-
-                    <Grid item container justifyContent="flex-end" spacing={2}>
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          onClick={() => {
-                            handleClose();
-                          }}
-                        >
-                          {t("miscellaneous:Buttons.Cancel")}
-                        </Button>
-                      </Grid>
-                      <Grid item>
-                        <Button type="submit" variant="contained" data-testid="submit">
-                          {t("miscellaneous:Buttons.Submit")}
-                        </Button>
-                      </Grid>
-                    </Grid>
                   </Grid>
-                </Form>
-              );
-            }}
-          </Formik>
-        </Box>
-      </DialogContent>
-    </Dialog>
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Grid item container justifyContent="flex-end" spacing={2}>
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => {
+                        handleClose();
+                      }}
+                    >
+                      {t("miscellaneous:Buttons.Cancel")}
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button type="submit" variant="contained" data-testid="submit">
+                      {t("miscellaneous:Buttons.Submit")}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </DialogActions>
+            </Dialog>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
