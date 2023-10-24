@@ -19,6 +19,12 @@
       "All": "All"
     }
   },
+  "Buttons":{
+    "Cancel": "Cancel",
+    "Submit": "Submit",
+    "Approve": "Approve",
+    "Save": "Save"
+  },
   "Manage Columns Dialogue": {
     "Manage Columns": "Manage Columns",
     "Hidden Columns": "Hidden Columns",

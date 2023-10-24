@@ -60,7 +60,7 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
         </Grid>
       )}
 
-      <Box my={1} className="w-full">
+      <Grid item xs={11} my={1} className="w-full">
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -78,7 +78,8 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
               label={t("miscellaneous:Filters.Search")}
               name="searchText"
               value={searchValue}
-              variant="filled"
+              size="small"
+              variant="outlined"
               InputProps={{
                 endAdornment: !toolbar && (
                   <InputAdornment position="end">
@@ -99,7 +100,7 @@ const TableSearch = ({ name, label, tableRef, toolbar = false }) => {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Grid>
     </Grid>
   );
 };

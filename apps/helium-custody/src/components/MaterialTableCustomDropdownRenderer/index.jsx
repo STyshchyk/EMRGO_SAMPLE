@@ -1,6 +1,6 @@
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import FormControl from "@mui/material/FormControl";
 
 import selectStyles from "../../styles/cssInJs/reactSelect";
@@ -22,7 +22,7 @@ const MaterialTableCustomDropdownRenderer = (props) => {
   const found = options.find((option) => option.value === value);
 
   return (
-    <FormControl className="w-full">
+    <FormControl fullWidth>
       <Select
         closeMenuOnSelect
         placeholder="Select.."
@@ -37,6 +37,7 @@ const MaterialTableCustomDropdownRenderer = (props) => {
         onChange={(selected) => {
           props.onChange(selected);
         }}
+        fullWidth
       />
     </FormControl>
   );
