@@ -22,10 +22,17 @@ const updateAccount = (payload) => {
   });
 };
 
+const readAccountAuditLogs = (payload) =>
+  baseAxiosInstance({
+    method: "GET",
+    url: `/accounts/v1/safeKeepingAccounts/${payload.id}/audit`,
+  });
+
 const safekeepingAPI = {
   readAccounts,
   createAccount,
   updateAccount,
+  readAccountAuditLogs,
 };
 
 export default safekeepingAPI;

@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+
+
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,7 +18,13 @@ import Paper from "@mui/material/Paper";
 import MaterialTableCustomDropdownRenderer from "apps/helium-custody/src/components/MaterialTableCustomDropdownRenderer";
 import PropTypes from "prop-types";
 
+
+
 import { getDropdownValues } from "../../../../utils/form";
+
+
+
+
 
 const InlineLabel = ({ label, value }) => {
   return (
@@ -64,13 +72,15 @@ const ViewSafekeepingAccountDialog = ({
     };
   });
 
+  const foundStatus = statusList.find((currency) => currency.value === account.status);
+
   const initialValues = {
     entity: foundEntity,
     baseCurrency: foundCurrency,
     id: account.id,
     accountNo: account.securitiesAccount.accountNumber,
     name: account.name || "",
-    status: statusList[0],
+    status: foundStatus,
     currencies: account.wethaqAccounts.map((account) => {
       return {
         account: account.accountNo,
@@ -124,24 +134,24 @@ const ViewSafekeepingAccountDialog = ({
         <Box pb={2}>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <InlineLabel label={t("Modal.Entity")} value={initialValues.entity.label} />
+              <InlineLabel label={t("Modal.Entity")} value={initialValues?.entity.label} />
 
-              <InlineLabel label={t("Modal.Portfolio Identifier")} value={initialValues.name} />
+              <InlineLabel label={t("Modal.Portfolio Identifier")} value={initialValues?.name} />
 
-              <InlineLabel label={t("Modal.Safekeeping Account")} value={initialValues.accountNo} />
+              <InlineLabel label={t("Modal.Safekeeping Account")} value={initialValues?.accountNo} />
 
               <InlineLabel
                 label={t("Modal.Base Currency")}
-                value={initialValues.baseCurrency.label}
+                value={initialValues?.baseCurrency?.label}
               />
 
-              <InlineLabel label={t("Modal.Status")} value={initialValues.status.label} />
+              <InlineLabel label={t("Modal.Status")} value={initialValues?.status.label} />
             </Grid>
             <Grid item xs>
               <MaterialTable
                 title="Associated Currencies"
                 columns={columns}
-                data={initialValues.currencies}
+                data={initialValues?.currencies}
                 components={{
                   Container: (props) => <Paper {...props} elevation={0} />,
                 }}

@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+
+
 import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,8 +19,14 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import PropTypes from "prop-types";
 
+
+
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
+
+
+
+
 
 const EditSafekeepingAccountDialog = ({
   open,
@@ -54,23 +62,24 @@ const EditSafekeepingAccountDialog = ({
     };
   });
 
+   const foundStatus = statusList.find((currency) => currency.value === account.status);
+
   const foundCurrencies = account?.wethaqAccounts?.map((account) => {
     return {
-      currency: {
-        value: account.currencyId,
-        account: account.accountNo,
-        balance: account.accountBalance,
-      },
+      id: account.id,
+      currency: account.currencyId,
+      account: account.accountNo,
+      balance: account.accountBalance,
     };
   });
-  
+
   const initialValues = {
     entity: foundEntity,
     baseCurrency: foundCurrency,
     id: account.id,
     accountNo: account.securitiesAccount.accountNumber,
     name: account.name || "",
-    status: statusList[0],
+    status: foundStatus,
     currencies: foundCurrencies || [],
   };
   // console.log("🚀 ~ file: index.jsx:63 ~ initialValues:", account.securitiesAccount);
@@ -244,7 +253,7 @@ const EditSafekeepingAccountDialog = ({
                               const index = oldData.currency;
                               setTimeout(() => {
                                 const dataDelete = [...values.currencies].filter(
-                                  (currency) => currency.currency.value !== index
+                                  (currency) => currency.currency !== index
                                 );
                                 setFieldValue("currencies", [...dataDelete]);
                                 resolve();
