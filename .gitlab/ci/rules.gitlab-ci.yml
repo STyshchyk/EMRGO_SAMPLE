@@ -147,7 +147,7 @@
 
 .silver-dataroom_build_rules:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "develop-phase-1")
       when: always
       changes:
         paths:
