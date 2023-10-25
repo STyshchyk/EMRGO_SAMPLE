@@ -3,7 +3,7 @@ import { baseAxiosInstance } from "./helpers";
 const getTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/payments/v1/accounts/transactions?${payload.qs}`,
+    url: `/payments/v2/accounts/transactions?${payload.qs}`,
   });
 
 const getAccounts = (payload) =>

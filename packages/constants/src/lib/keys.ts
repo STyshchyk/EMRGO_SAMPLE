@@ -2,6 +2,7 @@ import { include } from "named-urls";
 
 export const queryKeys = {
   auth: include("/auth", {}),
+  safeAccounts: include("/safekeepingAccount", {}),
   profileSettings: include("/profileSettings", {}),
   primaries: include("/primaries", {
     tradeOpportunities: include("trade-opportunities", {

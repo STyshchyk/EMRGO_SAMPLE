@@ -2,7 +2,6 @@ import { createSelector } from "reselect";
 
 export const selectCashAccountsData = (state) => state.reports.cashAccounts;
 export const selectCashTransactionsData = (state) => state.reports.cashTransactions;
-
 export const selectCashAccounts = createSelector([selectCashAccountsData], (accountsData) => {
   if (accountsData) {
     return accountsData.map((account) => {
@@ -37,6 +36,7 @@ export const selectCashTransactions = createSelector(
 );
 
 export const selectSecuritiesAccountsData = (state) => state.reports.securitiesAccounts;
+export const selectSafeAccountsData = (state) => state.reports.safekeepingAccount;
 export const selectSecuritiesTransactionsData = (state) => state.reports.securitiesTransactions;
 
 export const selectSecuritiesAccounts = createSelector(

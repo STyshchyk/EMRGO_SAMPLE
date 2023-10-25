@@ -8,16 +8,12 @@ const BooleanCheckbox = ({ name, label, defaultFilter = false }) => {
   const [currentState, setCurrentState] = useState(defaultFilter);
 
   const filterContext = useFilters();
-  const { setFilterValue, clearFilterValue } = filterContext;
+  const { setFilterValue } = filterContext;
 
   const handleChange = (event) => {
     const isChecked = event.target.checked;
     setCurrentState(isChecked);
     setFilterValue(isChecked, name, label, "boolean");
-
-    if (!isChecked) {
-      clearFilterValue(name);
-    }
   };
 
   return (

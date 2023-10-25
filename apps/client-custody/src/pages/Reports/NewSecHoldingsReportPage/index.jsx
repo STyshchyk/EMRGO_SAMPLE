@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
-import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import SecuritiesHoldingsTable, {
   generateSecuritiesHoldingsTableRowData,
 } from "../../../components/SecuritiesHoldingsTable";
@@ -19,13 +18,13 @@ const NewSecuritiesHoldingsReportPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["reports", "blotter"]);
-
   const [isTradeDateHolding, setIsTradeDateHolding] = useState(false);
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const securitiesAccounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
+  const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const settlementDatedSecuritiesHoldingsData = useSelector(
     reportsSelectors.selectSecuritiesHoldingsData
   );
@@ -48,6 +47,11 @@ const NewSecuritiesHoldingsReportPage = () => {
   useEffect(() => {
     const fetchSecuritiesAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
+
+    const fetchSafeAcounts = (payload) =>
+      dispatch(reportsActionCreators.doFetchSafeAccounts(payload));
+
+    fetchSafeAcounts({ entityId: currentEntityGroupId });
 
     fetchSecuritiesAccounts();
 
