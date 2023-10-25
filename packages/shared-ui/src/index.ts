@@ -1,4 +1,5 @@
 export * from "./lib/ActionTooltip";
+export * from "./lib/AuditLogs";
 export * from "./lib/Badge/";
 export * from "./lib/Banner";
 export * from "./lib/Breadcrumbs";

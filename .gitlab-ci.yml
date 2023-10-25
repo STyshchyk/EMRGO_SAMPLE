@@ -6,6 +6,7 @@
 include:
   - local: .gitlab/ci/build_and_deploy.gitlab-ci.yml
   - local: .gitlab/ci/rules.gitlab-ci.yml
+  - local: .gitlab/ci/rules.gitlab-ci_phase_one.yml
 
 variables:
   DOCKER_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE
@@ -116,7 +117,7 @@ Deploy:silver-dataroom-EXP-DIFC:
     name: exp-difc
   extends:
     - .build_and_deploy_config
-    - .silver-dataroom_build_rules_develop
+    - .silver-dataroom_build_rules
 
 Deploy:silver-onboarding-EXP-DIFC:
   variables:
@@ -139,3 +140,137 @@ Deploy:silver-prim-EXP-DIFC:
   extends:
     - .build_and_deploy_config
     - .silver-prim_build_rules_develop
+
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+# =============================================================================================================
+
+Deploy:client-custody-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-custody"
+    APP_SUBDOMAIN: "app"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_custody_build_rules_develop_phase_one
+
+Deploy:helium-custody-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "helium-custody"
+    APP_SUBDOMAIN: "app-internal"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .helium_custody_build_rules_develop_phase_one
+
+Deploy:client-authentication-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-authentication"
+    APP_SUBDOMAIN: "auth" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_auth_build_rules_develop_phase_one
+
+Deploy:client-primaries-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-primaries"
+    APP_SUBDOMAIN: "primaries" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_primaries_build_rules_develop_phase_one
+
+Deploy:client-secondaries-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-secondaries"
+    APP_SUBDOMAIN: "secondaries" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_secondaries_build_rules_develop_phase_one
+
+Deploy:client-account-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "client-account"
+    APP_SUBDOMAIN: "account" # !SHOULD THE PREFIX BE "client-" instead?
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .client_account_build_rules_develop_phase_one
+
+Deploy:silver-admin-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-administration"
+    APP_SUBDOMAIN: "internal-admin"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-admin_build_rules_develop_phase_one
+
+Deploy:silver-auth-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-authentication"
+    APP_SUBDOMAIN: "internal-auth"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-auth_build_rules_develop_phase_one
+
+Deploy:silver-dataroom-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-dataroom"
+    APP_SUBDOMAIN: "internal-dataroom"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-dataroom_build_rules_develop_phase_one
+
+Deploy:silver-onboarding-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-onboarding"
+    APP_SUBDOMAIN: "internal-onboarding"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-onboarding_build_rules_develop_phase_one
+
+Deploy:silver-prim-DEV-DIFC:
+  variables:
+    TARGET_APP_NAME: "silver-primaries"
+    APP_SUBDOMAIN: "internal-prim"
+  stage: deploy
+  environment:
+    name: dev-difc
+  extends:
+    - .build_and_deploy_config
+    - .silver-prim_build_rules_develop_phase_one

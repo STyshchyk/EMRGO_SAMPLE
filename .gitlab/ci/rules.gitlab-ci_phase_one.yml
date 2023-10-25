@@ -1,7 +1,7 @@
 # !REMINDER: There's no way to DRY UP those rules as array merging is not supported by GitLab CI/CD parser.
 
 # !THIS MERGING TECHNIQUE DOESNT WORK. TODO: TRY ANOTHER WAY (CUSTOM YAML TAG PROVIDED BY GITLAB CI/CD -> !REFERENCE)
-#.default_develop_rules: &develop_rules
+#.default_develop_phase_one_rules: &develop_rules
 #  - when: always
 #    changes:
 #      paths:
@@ -17,9 +17,10 @@
 #.app_specific_paths: &app_specific_paths
 #  client-account: apps/client-account/**/*
 #
-.client_custody_build_rules_develop:
+
+.client_custody_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -33,9 +34,9 @@
           - packages/**/*
           - .env.production
 
-.helium_custody_build_rules_develop:
+.helium_custody_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -49,9 +50,9 @@
           - packages/**/*
           - .env.production
 
-.client_account_build_rules_develop:
+.client_account_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -65,9 +66,9 @@
           - packages/**/*
           - .env.production
 
-.client_auth_build_rules_develop:
+.client_auth_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -81,9 +82,9 @@
           - packages/**/*
           - .env.production
 
-.client_primaries_build_rules_develop:
+.client_primaries_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -97,9 +98,9 @@
           - packages/**/*
           - .env.production
 
-.client_secondaries_build_rules_develop:
+.client_secondaries_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -113,9 +114,9 @@
           - packages/**/*
           - .env.production
 
-.silver-admin_build_rules_develop:
+.silver-admin_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -129,9 +130,9 @@
           - packages/**/*
           - .env.production
 
-.silver-auth_build_rules_develop:
+.silver-auth_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -145,9 +146,9 @@
           - packages/**/*
           - .env.production
 
-.silver-dataroom_build_rules:
+.silver-dataroom_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -161,9 +162,9 @@
           - packages/**/*
           - .env.production
 
-.silver-onboarding_build_rules_develop:
+.silver-onboarding_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:
@@ -177,9 +178,9 @@
           - packages/**/*
           - .env.production
 
-.silver-prim_build_rules_develop:
+.silver-prim_build_rules_develop_phase_one:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "develop-phase-1"
       when: always
       changes:
         paths:

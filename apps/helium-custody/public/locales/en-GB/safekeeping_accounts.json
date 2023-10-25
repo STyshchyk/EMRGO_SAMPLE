@@ -9,7 +9,8 @@
     "Entity": "Entity",
     "Portfolio": "Portfolio",
     "Safekeeping Account": "Safekeeping Account",
-    "Base Currency": "Base Currency"
+    "Base Currency": "Base Currency",
+    "Status": "Status"
   },
   "Actions": {
     "Amend": "Amend",
