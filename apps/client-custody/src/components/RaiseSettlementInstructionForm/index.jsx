@@ -191,9 +191,12 @@ const InlineFormField = ({ label, children }) => (
 
 export const buildRaiseSIRequestPayload = (formikValues) => {
   const isFreeOfPayment = ["DFOP", "RFOP"].includes(formikValues.settlementTypeSelectOption?.label);
+  const isEquityType =
+    formikValues.externalSecuritySelectOption?.value?.assetTypeName?.key === "equity";
 
   const requestPayload = {
     ...formikValues,
+    commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
     portfolio_id: formikValues.portfolio_id.securitiesAccount.portfolioId,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
@@ -213,7 +216,9 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     principalAmount: !formikValues.principalAmount
       ? 0
       : parseFloat(formikValues.principalAmount, 10),
-    accruedInterest: !formikValues.accruedInterest
+    accruedInterest: isEquityType
+      ? undefined
+      : !formikValues.accruedInterest
       ? 0
       : parseFloat(formikValues.accruedInterest, 10),
     entityGroup: undefined,
@@ -354,9 +359,9 @@ const RaiseSettlementInstructionForm = ({
   );
 
   /*
-      Note that if Settlement Type is set to DFOP or RFOP then
-      the Price and Settlement Amount fields should be greyed out and not populated by the user
-    */
+              Note that if Settlement Type is set to DFOP or RFOP then
+              the Price and Settlement Amount fields should be greyed out and not populated by the user
+            */
   return (
     <Formik
       initialValues={initialValues}

@@ -157,8 +157,10 @@ const generateSecurityTradesTableRowData = (i) => ({
   internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
   entityGroup: i?.entityGroup,
   userId: i?.userId,
-  portfolioAccountNumber: i.portfolio?.accountNumber ?? "3000008",
+  commission: i?.commission,
+  portfolioAccountNumber: i.portfolio?.accountNumber,
   portfolioName: i.portfolio?.name ?? FALLBACK_VALUE,
+  isEquityType: i.externalSecurity?.assetTypeName?.key === "equity",
 });
 
 const SecurityTradesTable = ({
@@ -435,10 +437,27 @@ const SecurityTradesTable = ({
       id: "accruedInterest",
       title: t("Headers.Accrued Interest"),
       field: "accruedInterest",
-      render: (rowData) => floatRenderer(rowData.accruedInterest),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.accruedInterest) },
+      render: (rowData) =>
+        rowData.isEquityType ? FALLBACK_VALUE : floatRenderer(rowData.accruedInterest),
+      exportConfig: {
+        render: (rowData) =>
+          rowData.isEquityType ? FALLBACK_VALUE : floatRenderer(rowData.accruedInterest),
+      },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
+      width: 150,
+    },
+    {
+      id: "commission",
+      title: t("Headers.Commission"),
+      field: "commission",
+      render: (rowData) =>
+        rowData.isEquityType ? floatRenderer(rowData.commission) : FALLBACK_VALUE,
+      exportConfig: {
+        render: (rowData) =>
+          rowData.isEquityType ? floatRenderer(rowData.commission) : FALLBACK_VALUE,
+      },
+      type: "numeric",
       width: 150,
     },
     {
