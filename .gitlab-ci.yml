@@ -251,7 +251,7 @@ Deploy:silver-dataroom-DEV-DIFC:
     name: dev-difc
   extends:
     - .build_and_deploy_config
-    - .silver-dataroom_build_rules
+    - .silver-dataroom_build_rules_develop_phase_one
 
 Deploy:silver-onboarding-DEV-DIFC:
   variables:
