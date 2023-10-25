@@ -108,7 +108,7 @@ const EditSafekeepingAccountDialog = ({
       // validationSchema={addPaymentAccountFormSchema}
       enableReinitialize
     >
-      {({ values, setFieldValue, errors }) => {
+      {({ values, setFieldValue, errors, handleSubmit }) => {
         return (
           <Form noValidate>
             <Dialog
@@ -272,7 +272,12 @@ const EditSafekeepingAccountDialog = ({
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button type="submit" variant="contained" data-testid="submit">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      data-testid="submit"
+                      onClick={() => handleSubmit()}
+                    >
                       {t("miscellaneous:Buttons.Submit")}
                     </Button>
                   </Grid>

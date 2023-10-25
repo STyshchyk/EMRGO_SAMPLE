@@ -83,7 +83,7 @@ const AddSafekeepingAccountDialog = ({
       // validationSchema={addPaymentAccountFormSchema}
       enableReinitialize
     >
-      {({ values, setFieldValue, errors }) => {
+      {({ values, setFieldValue, errors, handleSubmit }) => {
         const tableValues = values.currencies.map((currencyAccount) => {
           return {
             currency: currencyAccount.currency.value,
@@ -251,7 +251,12 @@ const AddSafekeepingAccountDialog = ({
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button type="submit" variant="contained" data-testid="submit">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      data-testid="submit"
+                      onClick={() => handleSubmit()}
+                    >
                       {t("miscellaneous:Buttons.Submit")}
                     </Button>
                   </Grid>
