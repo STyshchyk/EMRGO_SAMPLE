@@ -6,9 +6,10 @@ import debounce from "lodash.debounce";
 
 import * as formActionCreators from "../../redux/actionCreators/form";
 
-const AutoSaveFields = ({ selectedRow, initial, formKey, isSubmitting }) => {
+const AutoSaveFields = ({ selectedRow, initial, formKey }) => {
   const dispatch = useDispatch();
   const { values } = useFormikContext();
+
   const saveFormValues = (value) => {
     const obj = {
       settings: [
@@ -26,8 +27,7 @@ const AutoSaveFields = ({ selectedRow, initial, formKey, isSubmitting }) => {
   useEffect(() => {
     const equal = JSON.stringify(values) === JSON.stringify(initial);
 
-    // to prevent saving values while form is submitting. Add a flag isSubmitting to a AutoSaveFields component
-    if (!equal && !selectedRow && (isSubmitting === undefined || !isSubmitting)) {
+    if (!equal && !selectedRow) {
       debouncedHandleSaveValues(values);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

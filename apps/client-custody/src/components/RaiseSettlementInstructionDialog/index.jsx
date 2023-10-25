@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
+import * as reportsSelectors from "../../redux/selectors/reports";
 import RaiseSettlementInstructionForm, {
   buildRaiseSIRequestPayload,
 } from "../RaiseSettlementInstructionForm";
@@ -35,7 +36,7 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
-
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const handleSubmit = (values) => {
     const raiseSettlementInstruction = (payload) =>
       dispatch(paymentAndSettlementActionCreators.doRaiseSettlementInstruction(payload));
@@ -43,7 +44,6 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
       dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
 
     const requestPayload = buildRaiseSIRequestPayload(values);
-
     raiseSettlementInstruction({
       requestPayload,
       successCallback: () => {
