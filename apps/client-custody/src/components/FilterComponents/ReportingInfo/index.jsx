@@ -5,6 +5,8 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import v from "voca";
 
+import formatAddress from "../../../utils/reports";
+
 const PREFIX = "ReportingInfo";
 
 const classes = {
@@ -26,6 +28,7 @@ const Root = styled("div")(() => ({
 
 const ReportingInfo = ({ cashAccount, securityAccount }) => {
   const { t } = useTranslation(["reports"]);
+
   return (
     <Root>
       <Grid item xs={12} container>

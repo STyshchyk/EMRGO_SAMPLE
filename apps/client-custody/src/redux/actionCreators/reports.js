@@ -6,10 +6,6 @@ export const doFetchCashAccounts = createAction(actionTypes.FETCH_CASH_ACCOUNTS_
 export const doFetchCashAccountsSuccess = createAction(actionTypes.FETCH_CASH_ACCOUNTS_SUCCEEDED);
 export const doFetchCashAccountsFailure = createAction(actionTypes.FETCH_CASH_ACCOUNTS_FAILED);
 
-export const doFetchSafeAccounts = createAction(actionTypes.FETCH_SAFE_ACCOUNTS_REQUESTED);
-export const doFetchSafeAccountsSuccess = createAction(actionTypes.FETCH_SAFE_ACCOUNTS_SUCCEEDED);
-export const doFetchSafeAccountsFailure = createAction(actionTypes.FETCH_SAFE_ACCOUNTS_FAILED);
-
 export const doFetchCashTransactions = createAction(actionTypes.FETCH_CASH_TRANSACTIONS_REQUESTED);
 export const doFetchCashTransactionsSuccess = createAction(
   actionTypes.FETCH_CASH_TRANSACTIONS_SUCCEEDED

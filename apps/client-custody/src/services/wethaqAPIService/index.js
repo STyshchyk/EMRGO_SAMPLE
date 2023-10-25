@@ -6,7 +6,6 @@ export { default as dropdownAPI } from "./dropdownAPI";
 export { default as engagementsAPI } from "./engagementsAPI";
 export { default as entitiesAPI } from "./entitiesAPI";
 export { default as entityGroupsAPI } from "./entityGroupsAPI";
-export { default as safeAccountApi } from "./safeAccountAPI";
 export { default as sukukAPI } from "./sukukAPI";
 export { default as kycAPI } from "./kycAPI";
 export { default as messagingAPI } from "./messagingAPI";

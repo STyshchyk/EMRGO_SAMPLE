@@ -741,6 +741,7 @@ const RaiseSettlementInstructionForm = ({
                   setFieldValue("externalSecuritySelectOption", found);
                 }
               }}
+              assetTypeFilterValue="Fixed Income"
             />
           )}
         </Form>

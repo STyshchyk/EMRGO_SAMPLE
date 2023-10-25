@@ -15,6 +15,7 @@ import { useFilters } from "../../../context/filter-context";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as cashManagementSelectors from "../../../redux/selectors/cashManagement";
 import * as reportsSelectors from "../../../redux/selectors/reports";
+import formatAddress from "../../../utils/reports";
 import ExportTableContent from "../../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../../ReportingTablePDFExporter";
 
@@ -74,8 +75,8 @@ const ExportButtons = ({ tableRef, name }) => {
 
   const generateCashAccountName = () => {
     const { account: cashAccount } = filters;
-    const caccount = cashAccount?.value?.data?.original?.accountNo ?? null;
-    const cname = cashAccount?.value?.data?.original?.type ?? null;
+    const caccount = cashAccount?.value?.data?.original.accountNo ?? null;
+    const cname = cashAccount?.value?.data?.original.type ?? null;
 
     if (caccount || cname) {
       const accountNameValue = `${caccount} | ${cname}`;

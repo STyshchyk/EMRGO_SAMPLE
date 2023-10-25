@@ -12,6 +12,7 @@ import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
+import moment from "moment";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
@@ -30,6 +31,7 @@ import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateWithinRange } from "../../utils/dates";
 import { dateFormatter } from "../../utils/formatter";
+import BooleanCheckbox from "../FilterComponents/BooleanCheckbox";
 import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -586,7 +588,6 @@ const SecurityTradesTable = ({
                     defaultFilter="none"
                   />
                 </Grid>
-
                 <Grid item xs={12} md={12} lg={6}>
                   <DateRangePicker
                     name="settlementDateRange"
@@ -625,8 +626,11 @@ const SecurityTradesTable = ({
                   />
                 </Grid>
 
-                {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>}
-
+                {/* entry date > trade date */}
+                <Grid item xs={12} md={6} lg={3}>
+                  <BooleanCheckbox name="lateTrades" label="Late Trades" />
+                </Grid>
+                {/* {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>} */}
                 <Grid item xs={12} md={6} lg={3}>
                   <ExportButtons tableRef={tableRef} name="Securities Registration Report" />
                 </Grid>
@@ -712,6 +716,20 @@ const SecurityTradesTable = ({
                     // console.log(result);
 
                     return result.includes(true);
+                  }
+                  return true;
+                })
+                .filter((row) => {
+                  // Status Filter
+                  if (filters?.lateTrades) {
+                    // ED > TD dates only
+                    const entryStr = moment(row?.createdAt).format("DD/MM/YYYY");
+                    const tradeStr = moment(row?.tradeDate).format("DD/MM/YYYY");
+
+                    const entryDate = moment(entryStr, "DD/MM/YYYY");
+                    const tradeDate = moment(tradeStr, "DD/MM/YYYY");
+
+                    return entryDate.isAfter(tradeDate);
                   }
                   return true;
                 });
