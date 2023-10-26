@@ -137,6 +137,16 @@ const CashStatementReportPage = () => {
 
         pushedEntity.push(acc.group.entity.id);
       }
+      if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
+        securityAccountOpts.push({
+          id: acc.group.clientSecuritiesAccount?.id,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc.portfolio?.name}`,
+          value: acc.group.clientSecuritiesAccount?.id,
+          original: acc,
+        });
+        pushedSecAccount.push(acc.group.clientSecuritiesAccount.id);
+      }
+
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
         cashAccountOpts.push({
           id: acc.accountNo,
