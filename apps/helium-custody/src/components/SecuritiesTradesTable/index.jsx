@@ -23,6 +23,7 @@ import {
 } from "../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 // import TableFiltersWrapper from '../TableFiltersWrapper';
@@ -118,7 +119,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorCashAccountNo: i.investorCashAccount,
   investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
-  isin: i.externalSecurity?.isin,
+  isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
   issueDate: i.settlementDate,
   issuer: i.issuer?.entity?.name,

@@ -76,6 +76,7 @@ const CustodyAndSettlement = () => {
   const isFetching = useSelector(paymentAndSettlementSelectors.selectIsFetching);
 
   const currentEntityGroupID = currentEntityGroup?.id;
+  // BE needs to return info on attrs in ext sec obj on payments/v2/payment/list
   const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
   const hasApproveTradeACL = currentListOfACLs.includes("Blotter/Approve");
   const hasSettleTradeACL = currentListOfACLs.includes("Blotter/Settle");
