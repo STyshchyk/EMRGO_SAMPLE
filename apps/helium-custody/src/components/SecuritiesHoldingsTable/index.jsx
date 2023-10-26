@@ -2,12 +2,16 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
+
+
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
@@ -24,6 +28,10 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import FilterCheckbox from "../FilterComponents/FilterCheckbox";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+
+
+
+
 
 const FALLBACK_VALUE = "--";
 
@@ -85,13 +93,15 @@ const SecuritiesHoldingsTable = ({
     ? isFetchingTradeDatedSecuritiesHoldings
     : isFetchingSecuritiesHoldings;
 
-  const entityOptionsList = [
+  const entityList = [
     ...securitiesAccounts.map((i) => ({
       label: i.group?.entity?.corporateEntityName,
       value: i.group?.entity?.id,
     })),
   ];
 
+  const entityOptionsList = [...new Map(entityList.map((item) => [item.value, item])).values()];
+  
   if (Array.isArray(securitiesAccounts) && securitiesAccounts.length > 1) {
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
@@ -262,6 +272,13 @@ const SecuritiesHoldingsTable = ({
                 <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
+                <DropdownFilter
+                  name="safekeepingAccount"
+                  label="Safekeeping Account"
+                  options={entityOptionsList}
+                />
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
                 {!disableDateFilter && (
                   <DatePicker
                     name="date"
@@ -271,16 +288,6 @@ const SecuritiesHoldingsTable = ({
                     disableClear
                   />
                 )}
-              </Grid>
-              <Grid item container xs={12} md={6} lg={3} alignItems="center">
-                <FilterCheckbox
-                  label="Trade Date Holding"
-                  name="tradeDateHolding"
-                  checked={isTradeDateHolding}
-                  onChange={(event) => setIsTradeDateHolding(event?.target?.checked)}
-                  handleFetch={(filters) => handleFetch(filters)}
-                  isFetch={isFetch}
-                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <FilterButton
@@ -292,6 +299,17 @@ const SecuritiesHoldingsTable = ({
                   disabled={(filters) => !filters.entity}
                 />
               </Grid>
+              <Grid item container xs={12} md={6} lg={3} alignItems="center">
+                <FilterCheckbox
+                  label="Trade Date Holding"
+                  name="tradeDateHolding"
+                  checked={isTradeDateHolding}
+                  onChange={(event) => setIsTradeDateHolding(event?.target?.checked)}
+                  handleFetch={(filters) => handleFetch(filters)}
+                  isFetch={isFetch}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <Divider />
               </Grid>
