@@ -20,6 +20,8 @@ export interface IDashboardWrapperContext {
   onAcceptPlatformTerms: () => void;
   onRejectPlatformTerms: () => void;
   onLogOut: () => void;
+  setHelpDeskOpen: (flag: boolean) => void;
+  isHelpDeskOpen: boolean;
 }
 
 export interface IRoleSelector {

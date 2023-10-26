@@ -8,6 +8,7 @@ import {
   ChevronRightIcon,
   EyeIcon,
   HelpIcon,
+  HelpModal,
   Logo,
   NotificationsIcon,
   SidebarFooter,
@@ -48,6 +49,8 @@ export const DashboardSidebar = () => {
     onRejectPlatformTerms,
     showTermsModal,
     termsDocumentURL,
+    setHelpDeskOpen,
+    isHelpDeskOpen,
   } = ensureNotNull(useDashboardWrapperContext());
 
   const [value, setvalue] = useState(false);
@@ -147,7 +150,11 @@ export const DashboardSidebar = () => {
             </SidebarListItemSecondaryLink>
           </SidebarListItem>
           <SidebarListItem>
-            <SidebarListItemSecondaryLink href="#">
+            <SidebarListItemSecondaryLink
+              onClick={() => {
+                setHelpDeskOpen(true);
+              }}
+            >
               <SidebarListItemIcon>
                 <HelpIcon />
               </SidebarListItemIcon>
@@ -180,6 +187,8 @@ export const DashboardSidebar = () => {
         hasAccepted={hasAcceptedPlatformTerms}
         type={showTermsModal}
       />
+
+      <HelpModal isOpen={isHelpDeskOpen} onClose={() => setHelpDeskOpen(false)} />
     </Styles.DashboardSidebar>
   );
 };

@@ -13,6 +13,7 @@ export * from "./lib/Drawer/";
 export * from "./lib/Dropdown";
 export * from "./lib/EmrgoBackgroundAnimation";
 export * from "./lib/FormikInput";
+export * from "./lib/Help Desk";
 export * from "./lib/Helpers";
 export * from "./lib/Hooks";
 export * from "./lib/Hyperlink";

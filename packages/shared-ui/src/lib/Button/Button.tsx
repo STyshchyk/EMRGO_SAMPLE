@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 import * as Styles from "./Button.styles";
 import { IButtonProps } from "./Button.types";
@@ -11,7 +11,9 @@ export const Button: FC<IButtonProps> = ({
   color = "default",
   onClick,
   type,
+  ...rest
 }: IButtonProps) => {
+  console.log(rest);
   return (
     <Styles.Button
       $variant={variant}
@@ -20,6 +22,7 @@ export const Button: FC<IButtonProps> = ({
       onClick={onClick}
       $color={color}
       type={type}
+      {...rest}
     >
       {children}
     </Styles.Button>

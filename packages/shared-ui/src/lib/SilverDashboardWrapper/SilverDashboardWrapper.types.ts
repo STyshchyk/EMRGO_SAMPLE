@@ -12,6 +12,8 @@ export interface ISilverDashboardWrapperContext {
   doLogout: () => void;
   currentRole: any;
   footerRoutes: IModuleConfig[];
+  setHelpDeskOpen: (flag: boolean) => void;
+  isHelpDeskOpen: boolean;
 }
 
 export interface IRoleSelector {
