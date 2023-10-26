@@ -188,6 +188,12 @@ const DateRangePicker = ({
                 shrink: "false",
                 size: "small",
               }}
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
               variant="dialog"
               showTodayButton
               minDate={minDate}
@@ -223,6 +229,12 @@ const DateRangePicker = ({
               showTodayButton
               minDate={pickerValues.startDate ?? moment()}
               maxDate={maxDate}
+              slotProps={{
+                textField: {
+                  size: "small",
+                  fullWidth: true,
+                },
+              }}
               placeholder="DD/MM/YYYY"
               name="endDate"
               value={pickerValues.endDate ?? null}

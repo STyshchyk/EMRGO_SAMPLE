@@ -31,7 +31,8 @@ const getSecuritiesAccounts = (payload) =>
 const getSecuritiesTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/reports/v2/reports/securitiesTransactions?${payload.qs}`,
+    url: `/reports/v2/reports/securitiesTransactions`,
+    params: payload?.params,
   });
 
 //
