@@ -2,16 +2,12 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
-
-
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
@@ -29,10 +25,6 @@ import FilterButton from "../FilterComponents/FilterButton";
 import FilterCheckbox from "../FilterComponents/FilterCheckbox";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 
-
-
-
-
 const FALLBACK_VALUE = "--";
 
 const ALL_ENTITIES_OPTION = {
@@ -44,7 +36,6 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
   const csd = i.sukuk?.csdName?.name;
   const primaryIssuanceName = i.sukuk?.name;
   const externalSecurityName = i.externalSecurity?.longName;
-
   return {
     id: i.id,
     corporateEntityName: i.corporateEntityName ?? FALLBACK_VALUE,
@@ -55,6 +46,8 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     isin: i.externalSecurity?.isin ?? FALLBACK_VALUE,
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
     portfolioId: i.portfolioId ?? FALLBACK_VALUE,
+    portfolio: i.portfolio.name,
+    securityAccount: i.portfolio.name,
     positionType: i?.positionType ?? FALLBACK_VALUE,
     quantity: (i.quantity && convertNumberToIntlFormat(i.quantity)) || FALLBACK_VALUE,
     security: primaryIssuanceName || externalSecurityName || FALLBACK_VALUE,
@@ -67,6 +60,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
 const SecuritiesHoldingsTable = ({
   data,
   securitiesAccounts,
+  safekeepingAccounts,
   disableDateFilter = false,
   entityUserType,
   setIsTradeDateHolding,
@@ -77,6 +71,7 @@ const SecuritiesHoldingsTable = ({
   const mtableLocalization = useMaterialTableLocalization();
   const [entityAddress, setEntityAddress] = useState(null);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
+  const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   const [isFetch, setIsFetch] = useState(false);
 
   const { t } = useTranslation(["reports"]);
@@ -101,10 +96,18 @@ const SecuritiesHoldingsTable = ({
   ];
 
   const entityOptionsList = [...new Map(entityList.map((item) => [item.value, item])).values()];
-  
+
   if (Array.isArray(securitiesAccounts) && securitiesAccounts.length > 1) {
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
+
+  const safeekingAccountList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+      value: i.id,
+      entityId: i.entity_id,
+    })),
+  ];
 
   const listOfUniqueSecurities = [...new Set(data?.map(({ security }) => security))];
 
@@ -128,7 +131,7 @@ const SecuritiesHoldingsTable = ({
   }));
 
   const handleFetch = (filters) => {
-    const { entity, date } = filters;
+    const { entity, date, safekeepingAccount } = filters;
 
     const isAllEntitiesOptionSelected = entity?.value.value === "all";
     if (isAllEntitiesOptionSelected) {
@@ -160,10 +163,21 @@ const SecuritiesHoldingsTable = ({
       fetchSecuritiesHoldings({
         params: {
           entityId: entity?.value?.value,
-          // accountId: selectedSecuritiesAccountOption?.value,
+          portfolio_id: safekeepingAccount?.value?.value,
           date: date?.value?.toISOString() ?? moment().toISOString(),
         },
       });
+    }
+  };
+
+  const handleEntityChange = (selectedEntity) => {
+    if (selectedEntity && selectedEntity.value !== "all") {
+      const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
+        selectedEntity ? account?.entityId === selectedEntity.value : false
+      );
+      setSafeAccountOptions(filteredSafekeepingAccounts);
+    } else {
+      setSafeAccountOptions(safeekingAccountList);
     }
   };
 
@@ -190,6 +204,18 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Security"),
       field: "security",
       defaultSort: "asc",
+      exportConfig: { width: 15 },
+    },
+    {
+      id: "portfolio",
+      title: t("Securities Holdings.Headers.Portfolio"),
+      field: "portfolio",
+      exportConfig: { width: 15 },
+    },
+    {
+      id: "safekeepingAccount",
+      title: t("Securities Holdings.Headers.Safekeeping Account"),
+      field: "securityAccount",
       exportConfig: { width: 15 },
     },
     {
@@ -269,13 +295,23 @@ const SecuritiesHoldingsTable = ({
           >
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
+                <DropdownFilter
+                  name="entity"
+                  label="Entity"
+                  options={entityOptionsList}
+                  customOnChange={(selectedEntity) => {
+                    handleEntityChange(selectedEntity);
+                  }}
+                  customClearChange={() => {
+                    handleEntityChange();
+                  }}
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter
                   name="safekeepingAccount"
                   label="Safekeeping Account"
-                  options={entityOptionsList}
+                  options={safekeepingAccountOptions || safeekingAccountList}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
@@ -296,7 +332,7 @@ const SecuritiesHoldingsTable = ({
                     setIsFetch(true);
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.entity}
+                  disabled={(filters) => !filters.entity && !filters.safekeepingAccount}
                 />
               </Grid>
               <Grid item container xs={12} md={6} lg={3} alignItems="center">
@@ -367,6 +403,8 @@ const SecuritiesHoldingsTable = ({
                 }
                 return true;
               });
+
+            console.log("🚀 ~ file: index.jsx:372 ~ filteredData:", filteredData);
 
             return (
               <MaterialTable

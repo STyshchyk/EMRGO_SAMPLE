@@ -123,6 +123,8 @@
       "WSN": "WSN",
       "ISIN": "ISIN",
       "Security": "Security",
+      "Portfolio": "Portfolio",
+      "Safekeeping Account": "Safekeeping Account",
       "Currency": "Currency",
       "Registrar": "Registrar",
       "Quantity": "Quantity",

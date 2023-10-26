@@ -29,7 +29,7 @@ const NewSecuritiesHoldingsReportPage = () => {
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const securitiesAccounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
   const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
-
+  
   const settlementDatedSecuritiesHoldingsData = useSelector(
     reportsSelectors.selectSecuritiesHoldingsData
   );
@@ -80,6 +80,7 @@ const NewSecuritiesHoldingsReportPage = () => {
       <SecuritiesHoldingsTable
         data={generatedTableData}
         securitiesAccounts={securitiesAccounts}
+        safekeepingAccounts={safekeepingAccounts}
         entityUserType={currentEntityType}
         isTradeDateHolding={isTradeDateHolding}
         setIsTradeDateHolding={setIsTradeDateHolding}
