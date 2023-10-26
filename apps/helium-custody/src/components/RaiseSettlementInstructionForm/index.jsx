@@ -204,7 +204,6 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
   const requestPayload = {
     // ...formikValues,
     //! add porfolio_id
-    // portfolio_id: "b2a90085-8229-48ca-9d85-98c7ff845e88",
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
     quantity: parseFloat(formikValues.quantity, 10),
