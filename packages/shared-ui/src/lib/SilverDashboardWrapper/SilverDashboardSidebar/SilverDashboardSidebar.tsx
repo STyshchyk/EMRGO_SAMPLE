@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import {
+  HelpModal,
   Logo,
   SidebarFooter,
   SidebarHeader,
@@ -25,8 +26,17 @@ import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.prov
 import * as Styles from "./SilverDashboardSidebar.styles";
 
 export const SilverDashboardSidebar = () => {
-  const { mainRoutes, roles, user, doLogout, currentRole, enableRoleMapping, footerRoutes } =
-    ensureNotNull(useSilverDashboardWrapperContext());
+  const {
+    mainRoutes,
+    roles,
+    user,
+    doLogout,
+    currentRole,
+    enableRoleMapping,
+    footerRoutes,
+    isHelpDeskOpen,
+    setHelpDeskOpen,
+  } = ensureNotNull(useSilverDashboardWrapperContext());
 
   return (
     <Styles.DashboardSidebar>
@@ -154,6 +164,7 @@ export const SilverDashboardSidebar = () => {
           {/*</SidebarListItem>*/}
         </SidebarList>
       </SidebarFooter>
+      <HelpModal isOpen={isHelpDeskOpen} onClose={() => setHelpDeskOpen(false)} />
     </Styles.DashboardSidebar>
   );
 };

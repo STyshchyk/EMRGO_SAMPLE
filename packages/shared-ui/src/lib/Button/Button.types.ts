@@ -1,7 +1,9 @@
-import { MouseEventHandler, PropsWithChildren } from "react";
+import React, { MouseEventHandler, PropsWithChildren } from "react";
 
 // TODO: This should extend the HTML button element
-export interface IButtonProps extends PropsWithChildren {
+export interface IButtonProps
+  extends PropsWithChildren,
+    React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** The type of button */
   variant?: TButtonVariants;
   /** The size of the button */

@@ -57,6 +57,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
   const [enableRoleMapping, setRoleMapping] = useState(true);
+  const [isHelpDeskOpen, setHelpDeskOpen] = useState(false);
   useLayoutEffect(() => {
     disable();
   }, []);
@@ -157,7 +158,10 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       key: "Help",
       path: "",
       paths: "",
-      disabled: true,
+      disabled: false,
+      onClick: () => {
+        setHelpDeskOpen(true);
+      },
     },
   ];
 
@@ -188,6 +192,8 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
     currentRole,
     enableRoleMapping: enableRoleMapping,
     footerRoutes,
+    isHelpDeskOpen,
+    setHelpDeskOpen,
   };
 
   return (
