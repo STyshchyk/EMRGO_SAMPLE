@@ -53,7 +53,6 @@ const formatEntities = (data) => {
   });
 };
 
-// console.log(formatEntities(dummyData),'here')
 
 const moduleReducer = handleActions(
   {
@@ -87,7 +86,9 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      legacyEntitiesList: data.entities?.filter(isKYCApproved),
+      // legacyEntitiesList: data.entities?.filter(isKYCApproved), //* BE airtable 1033 changes not pushed to dev env
+      legacyEntitiesList: data.entities,
+
     }),
     [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
