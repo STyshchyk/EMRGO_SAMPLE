@@ -229,6 +229,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     tradeDate: formikValues?.tradeDate,
     settlementDate: formikValues?.settlementDate,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
+    portfolio: undefined,
   };
 
   if (isFreeOfPayment) {
@@ -311,6 +312,17 @@ const generateEntityGroupsOptionsList = (data) => {
   return [];
 };
 
+const generateSafekeepingAccountOptionsList = (data) => {
+  if (Array.isArray(data) && data.length > 0) {
+    return data.map((i) => ({
+      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+      value: i,
+    }));
+  }
+
+  return [];
+};
+
 const generateEntityGroupUserOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
@@ -345,6 +357,7 @@ const RaiseSettlementInstructionForm = ({
   editable,
   options,
 }) => {
+  console.log("🚀 ~ file: index.jsx:345 ~ initialValues:", initialValues);
   const inProd = useIsProduction();
 
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
@@ -352,12 +365,31 @@ const RaiseSettlementInstructionForm = ({
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
+  const entity = initialValues?.entityGroup?.entity;
+  const foundEntity = options.entityOptionsList.find((entityOption) => {
+    return entityOption?.value?.id === entity?.id;
+  });
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityType === "EMRGO_SERVICES";
-  const [selectedEntityOption, setSelectedEntityOption] = useState(null);
+  const [selectedEntityOption, setSelectedEntityOption] = useState(foundEntity || null);
   const [selectedEntityGroupOption, setSelectedEntityGroupOption] = useState(null);
   const [selectedEntityGroupUserOption, setSelectedEntityGroupUserOption] = useState(null);
+
+  const safekeepingOptions = generateSafekeepingAccountOptionsList(
+    selectedEntityOption?.value?.safekeepingAccounts
+  );
+  const foundSafekeepingAccount = safekeepingOptions.find((safekeepingOption) => {
+    return safekeepingOption.value.id === initialValues?.portfolio?.id;
+  });
+  console.log(
+    "🚀 ~ file: index.jsx:370 ~ foundSafekeepingAccount ~ foundSafekeepingAccount:",
+    foundSafekeepingAccount
+  );
+
+  const [selectedSafekeepingAccountOption, setSelectedSafekeepingAccountOption] =
+    useState(foundSafekeepingAccount);
+
   const [openRealtimeSecuritySearchDialog, setOpenRealtimeSecuritySearchDialog] = useState(false);
 
   const counterpartyOptionsList = generateCounterpartyOptionsList(counterpartiesList);
@@ -443,12 +475,27 @@ const RaiseSettlementInstructionForm = ({
                     type="text"
                     value={
                       values?.entityGroup?.entity?.corporateEntityName ||
+                      values?.entityGroup?.entity?.name ||
                       currentEntityGroup?.entity?.corporateEntityName
                     }
                     disabled
                   />
                 </InlineFormField>
               )}
+
+              <InlineFormField label={"Safekeeping Account"}>
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Safekeeping Account"}
+                  value={selectedSafekeepingAccountOption}
+                  options={safekeepingOptions}
+                  onChange={(newValue) => {
+                    setFieldValue("portfolio_id", newValue?.value?.id);
+                    setSelectedSafekeepingAccountOption(newValue);
+                  }}
+                  isDisabled={!selectedEntityOption}
+                />
+              </InlineFormField>
 
               <InlineFormField label="Settlement Type">
                 <Select

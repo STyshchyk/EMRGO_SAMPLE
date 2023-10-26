@@ -1,7 +1,5 @@
 import { FC } from "react";
 
-
-
 import { dateFormatter } from "@emrgo-frontend/utils";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -12,20 +10,16 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineOppositeContent, { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent";
+import TimelineOppositeContent, {
+  timelineOppositeContentClasses,
+} from "@mui/lab/TimelineOppositeContent";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import { Typography } from "@mui/material";
 
-
-
 import { IAuditLogItem, IAuditLogsProps } from "./AuditLogs.types";
 
-
-
-
-
 const AuditItem = ({ log, isFirst, isLast }: IAuditLogItem) => {
-  console.log("🚀 ~ file: AuditLogs.tsx:26 ~ AuditItem ~ log:", log)
+  console.log("🚀 ~ file: AuditLogs.tsx:26 ~ AuditItem ~ log:", log);
   let color = "error";
   let icon = null;
   let auditHistoryStatement = "";
@@ -73,9 +67,7 @@ const AuditItem = ({ log, isFirst, isLast }: IAuditLogItem) => {
         <TimelineDot color={color} variant="outlined">
           {icon}
         </TimelineDot>
-        {!isLast && (
-          <TimelineConnector />
-        )}
+        {!isLast && <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent sx={{ py: "12px", px: 2 }}>
         <Typography variant="h6" component="span">

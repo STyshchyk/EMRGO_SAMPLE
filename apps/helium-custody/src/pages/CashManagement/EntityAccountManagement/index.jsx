@@ -2,8 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import MaterialTable from "@material-table/core";
 // import Menu from '@mui/material/Menu';
 // import MenuItem from '@mui/material/MenuItem';
@@ -15,8 +13,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import v from "voca";
-
-
 
 import MaterialTableOverflowMenu from "../../../components/MaterialTableOverflowMenu";
 import PageTitle from "../../../components/PageTitle";
@@ -31,10 +27,6 @@ import tableStyles from "../../../styles/cssInJs/materialTable";
 // import EntityAccountsTable from './EntityAccountsTable';
 import AddEntityAccountModal from "./AddEntityAccountModal";
 import EditEntityAccountModal from "./EditEntityAccountModal";
-
-
-
-
 
 // * TODO: CLEANUP
 
@@ -53,11 +45,17 @@ const EntityAccountManagement = () => {
   // selectors
   const accounts = useSelector(billingAndPaymentsSelectors.selectAccounts);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+
   const entities = useSelector(entitiesSelectors.selectEntities);
 
   const currentEntityGroupID = currentEntityGroup?.id;
+  const currentEntityID = currentEntityGroup?.entity?.id;
 
-  const securitiesAccounts = accounts.map(
+  const filteredAccounts = accounts.filter((account) => {
+    return account.group.entity.id === currentEntityID;
+  });
+
+  const securitiesAccounts = filteredAccounts.map(
     ({
       group: {
         clientSecuritiesAccount,
@@ -139,9 +137,9 @@ const EntityAccountManagement = () => {
     return entries;
   };
 
-  const cashAccounts = getTableData(accounts);
+  const cashAccounts = getTableData(filteredAccounts);
   const rows = [...cashAccounts, ...uniqueSecuritiesAccounts];
-  
+
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
   });
@@ -149,7 +147,8 @@ const EntityAccountManagement = () => {
   useEffect(() => {
     const fetchAccounts = (payload) =>
       dispatch(billingAndPaymentsActionCreators.doFetchAccounts(payload));
-    fetchAccounts();
+
+    fetchAccounts({ entityId: currentEntityID });
 
     const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchEntities(payload));
     fetchEntities();
@@ -174,12 +173,12 @@ const EntityAccountManagement = () => {
     //   field: "wethaqEntityId",
     //   defaultSort: "asc",
     // },
-    {
-      id: "entityName",
-      title: t("EntityAccountManagement.EntityAccountsTable.Headers.Entity Name"),
-      field: "entityName",
-      defaultSort: "asc",
-    },
+    // {
+    //   id: "entityName",
+    //   title: t("EntityAccountManagement.EntityAccountsTable.Headers.Entity Name"),
+    //   field: "entityName",
+    //   defaultSort: "asc",
+    // },
     {
       id: "accountType",
       title: t("EntityAccountManagement.EntityAccountsTable.Headers.Account Type"),
@@ -220,7 +219,7 @@ const EntityAccountManagement = () => {
     <Fragment>
       <Grid container>
         <Grid item xs={9}>
-          <PageTitle title={t("EntityAccountManagement.Entity Accounts")} />
+          <PageTitle title={t("EntityAccountManagement.Emrgo Accounts")} />
         </Grid>
         <Grid item xs={3} container justifyContent="flex-end" alignItems="flex-start">
           <Button

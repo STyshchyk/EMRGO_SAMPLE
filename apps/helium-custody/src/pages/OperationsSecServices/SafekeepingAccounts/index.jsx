@@ -2,8 +2,6 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import MaterialTable from "@material-table/core";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
@@ -13,8 +11,6 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
-
-
 
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
@@ -36,10 +32,6 @@ import EditSafekeepingAccountDialog from "./EditSafekeepingAccountDialog";
 import ViewSafekeepingAccountAuditLogsDialog from "./ViewSafekeepingAccountAuditLogsDialog";
 import ViewSafekeepingAccountDialog from "./ViewSafekeepingAccountDialog";
 
-
-
-
-
 const SafekeepingAccounts = () => {
   const dispatch = useDispatch();
   const tableRef = useRef();
@@ -57,11 +49,8 @@ const SafekeepingAccounts = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
-  const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
-  const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
-  console.log("🚀 ~ file: index.jsx:64 ~ SafekeepingAccounts ~ selectedRow:", selectedRow)
   const [openAddSafekeepingAccountDialog, setOpenAddSafekeepingAccountDialog] = useState(false);
   const [openAmendSafekeepingAccountDialog, setOpenAmendSafekeepingAccountDialog] = useState(false);
   const [openViewSafekeepingAccountDialog, setOpenViewSafekeepingAccountDialog] = useState(false);
@@ -92,7 +81,6 @@ const SafekeepingAccounts = () => {
     fetchAccounts();
 
     fetchEntities();
-
   }, [dispatch]);
 
   const handleAmendAccountClick = () => {
@@ -103,7 +91,7 @@ const SafekeepingAccounts = () => {
   };
   const handleViewAuditHistoryClick = () => {
     fetchAccountAuditLogs({ id: selectedRow.id });
-    handleOpenViewSafekeepingAccountAuditLogDialog()
+    handleOpenViewSafekeepingAccountAuditLogDialog();
   };
 
   const actions = [
