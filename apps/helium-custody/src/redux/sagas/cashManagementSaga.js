@@ -20,6 +20,7 @@ function* fetchTransations({ payload }) {
 }
 
 function* fetchAccounts({ payload }) {
+  console.log("🚀 ~ file: cashManagementSaga.js:23 ~ function*fetchAccounts ~ payload:", payload)
   try {
     const response = yield call(wethaqAPIService.billingAndPaymentsAPI.getAccounts, payload);
     const { data } = response;

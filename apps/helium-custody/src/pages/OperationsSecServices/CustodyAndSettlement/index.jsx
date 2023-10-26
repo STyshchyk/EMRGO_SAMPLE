@@ -33,6 +33,7 @@ import * as dropdownActionCreators from "../../../redux/actionCreators/dropdown"
 import * as entitiesActionCreators from "../../../redux/actionCreators/entities";
 import * as externalSecuritiesActionCreators from "../../../redux/actionCreators/externalSecurities";
 import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
+import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as securitiesServicesActionCreators from "../../../redux/actionCreators/securitiesServices";
 import * as accountsSelectors from "../../../redux/selectors/accounts";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -77,6 +78,7 @@ const CustodyAndSettlement = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
   const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
+  console.log("🚀 ~ file: index.jsx:86 ~ CustodyAndSettlement ~ paymentsList:", paymentsList);
   const hasApproveTradeACL = currentListOfACLs.includes("Blotter/Approve");
   const hasSettleTradeACL = currentListOfACLs.includes("Blotter/Settle");
   const hasViewSIAuditHistoryACL = currentListOfACLs.includes("Services/Audit/View");
@@ -121,6 +123,8 @@ const CustodyAndSettlement = () => {
       dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
     const resetFilesState = (payload) =>
       dispatch(securitiesServicesActionCreators.doResetFilesState(payload));
+    const fetchSafekeepingAccounts = (payload) =>
+      dispatch(safekeepingActionCreators.doReadAccounts(payload));
 
     if (currentEntityGroupEntityType === "EMRGO_SERVICES") {
       fetchEntities();
@@ -134,6 +138,7 @@ const CustodyAndSettlement = () => {
 
     fetchExternalSecuritiesList();
     fetchCounterpartyList();
+    fetchSafekeepingAccounts();
 
     return () => {
       resetFilesState();
