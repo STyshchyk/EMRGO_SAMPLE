@@ -70,7 +70,7 @@ const BillingAndPayments = () => {
     {
       path: routes.dashboard.custody.cashManagement.entityAccounts,
       link: routes.dashboard.custody.cashManagement.entityAccounts,
-      text: "Minor Navigation.Cash Management.Entity Accounts",
+      text: "Minor Navigation.Cash Management.Emrgo Accounts",
       // disabled: !['INVESTOR', 'ISSUER'].includes(entityType),
       disabled: !authorizeRouteAccess(currentListOfAcls, [accessControlsList.ACCOUNT.manage.key]),
     },

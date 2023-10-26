@@ -44,7 +44,7 @@ const isKYCApproved = (entity) =>
 
 // new migrated v2 endpoint doesnt return key corporateEntityName
 const formatEntities = (data) => {
-  return data?.map((entity) => {
+  return data?.filter(isKYCApproved)?.map((entity) => {
     return {
       ...entity,
       corporateEntityName: entity.entityName,
@@ -87,7 +87,8 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      legacyEntitiesList: data.entities?.filter(isKYCApproved),
+      // legacyEntitiesList: data.entities?.filter(isKYCApproved),
+      legacyEntitiesList: data.entities,
     }),
     [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,

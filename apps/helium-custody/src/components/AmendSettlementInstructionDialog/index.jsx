@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
+import * as safekeepingSelectors from "../../redux/selectors/safekeeping";
 import RaiseSettlementInstructionForm, {
   buildRaiseSIRequestPayload,
 } from "../RaiseSettlementInstructionForm";
@@ -60,11 +61,21 @@ const generateInitialValues = (rowData) => ({
   entityGroup: rowData?.entityGroup,
   entityGroupId: rowData?.entityGroupId,
   userId: rowData?.userId,
+  portfolio: rowData?.portfolio,
 });
 
 const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelectedRowData }) => {
   const dispatch = useDispatch();
-  const entities = useSelector(entitiesSelectors.selectLegacyEntities);
+  let entities = useSelector(entitiesSelectors.selectLegacyEntities);
+
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+
+  entities = entities.map((entity) => {
+    const foundSafekeepingAccount = safekeepingAccounts.filter((safekeepingAccount) => {
+      return safekeepingAccount.entity_id === entity.id;
+    });
+    return { ...entity, safekeepingAccounts: foundSafekeepingAccount || [] };
+  });
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
@@ -90,9 +101,8 @@ const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelected
     });
   };
 
-  console.log("entities:: ", entities);
   const entityOptionsList = generateEntityOptionsList(entities);
-    console.log("entityOptionsList:: ", entityOptionsList);
+
   return (
     <Dialog
       disableEscapeKeyDown
