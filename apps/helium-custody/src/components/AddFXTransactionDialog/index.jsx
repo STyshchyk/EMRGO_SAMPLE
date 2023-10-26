@@ -620,7 +620,13 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                 </Grid>
 
                 <Grid item lg={4}>
-                  <Button fullWidth type="submit" variant="contained" color="primary">
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={isSubmitting}
+                  >
                     {t("translation:Miscellaneous.Submit")}
                   </Button>
                 </Grid>
