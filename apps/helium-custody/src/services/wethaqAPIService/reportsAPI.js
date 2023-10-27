@@ -12,7 +12,8 @@ const getCashAccounts = (payload) =>
 const getCashTransactions = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/payments/v1/accounts/transactions?${payload.qs}`,
+    url: `/payments/v2/accounts/transactions`,
+    params: payload?.params || null,
   });
 
 const getCashBalances = (payload) =>

@@ -75,8 +75,8 @@ const ExportButtons = ({ tableRef, name }) => {
 
   const generateCashAccountName = () => {
     const { account: cashAccount } = filters;
-    const caccount = cashAccount?.value?.data?.original.accountNo ?? null;
-    const cname = cashAccount?.value?.data?.original.type ?? null;
+    const caccount = cashAccount?.value?.data?.accountNo ?? null;
+    const cname = cashAccount?.value?.data?.type ?? null;
 
     if (caccount || cname) {
       const accountNameValue = `${caccount} | ${cname}`;
