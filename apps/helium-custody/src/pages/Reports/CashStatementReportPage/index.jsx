@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
-import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
+import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../../../components/FilterComponents/ExportButtons";
 import FilterButton from "../../../components/FilterComponents/FilterButton";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
@@ -20,8 +21,10 @@ import { FilterConsumer, FilterProvider } from "../../../context/filter-context"
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
+import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as reportsSelectors from "../../../redux/selectors/reports";
+import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 import { dateWithinRange } from "../../../utils/dates";
 import { dateFormatter } from "../../../utils/formatter";
@@ -58,27 +61,15 @@ const CashStatementReportPage = () => {
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const transactions = useSelector(reportsSelectors.selectCashTransactions);
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
   // console.log('🚀 ~ file: index.js ~ line 61 ~ CashStatementReportPage ~ transactions', transactions);
-  const [entityFilterValue, setEntityFilterValue] = useState(null);
-  const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
-  const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
-  const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
-  const [cashAccountFilterValue, setCashAccountFilterValue] = useState(null);
-  const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
-  const [currentlySelectedTransactionType, setCurrentlySelectedTransactionType] = useState({
-    label: "All",
-    value: "all",
-  });
-  const [startDateValue, setStartDateValue] = useState(null);
-  const [endDateValue, setEndDateValue] = useState(null);
+  const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
+  const [cashAccountOptions, setCashAccountOptions] = useState(null);
+
   const [filteredRows, setFilteredRows] = useState([]);
 
-  const startDate = startDateValue ?? null;
-  const endDate = endDateValue ?? null;
-
   const currentEntityGroupID = currentEntityGroup?.id;
-  const accounts = useSelector(reportsSelectors.selectCashAccounts);
 
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
@@ -86,6 +77,11 @@ const CashStatementReportPage = () => {
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
+
+    const fetchSafekeepingAccounts = (payload) =>
+      dispatch(safekeepingActionCreators.doReadAccounts(payload));
+    fetchSafekeepingAccounts();
+
     return () => {
       dispatch(reportsActionCreators.doResetCashTransactions());
     };
@@ -112,152 +108,73 @@ const CashStatementReportPage = () => {
 
   const rows = getTableData(transactions);
 
-  const getEntityAndAccounts = (accs) => {
-    const entityOpts = [];
-    const cashAccountOpts = [];
-    const securityAccountOpts = [];
-    const pushedEntity = [];
-    const pushedCashAccount = [];
-    accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
-        entityOpts.push({
-          id: acc.group.entity.id,
-          label: acc.group.entity.corporateEntityName,
-          value: acc.group.entity.id,
-        });
+  const entityList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: i.entity?.name,
+      value: i.entity?.id,
+      data: i.entity,
+    })),
+  ];
 
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
+  const entityOptions = [...new Map(entityList.map((item) => [item.value, item])).values()];
 
-        pushedEntity.push(acc.group.entity.id);
-      }
-      if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
-        cashAccountOpts.push({
-          id: acc.accountNo,
-          label: `${acc.accountNo}`,
-          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
-          value: acc.accountNo,
-          original: acc,
-        });
-        pushedCashAccount.push(acc.accountNo);
-      }
-    });
-    return { entityOpts, cashAccountOpts, securityAccountOpts };
-  };
+  const safeekingAccountList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+      value: i.id,
+      entityId: i.entity_id,
+      account: i,
+    })),
+  ];
 
-  const { entityOpts, cashAccountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-
-  let filteredCashAccounts = cashAccountOpts
-    .filter((account) =>
-      entityFilterValue ? account.original.group.entity.id === entityFilterValue : false
-    )
-    .map((acc) => ({
-      data: acc,
-      value: acc.id,
-      label: `${acc.label} ${acc.original.currency.name}`,
-    }));
-
-  const filteredEntity = entityOpts.map((entity) => ({
-    data: entity,
-    value: entity.id,
-    label: entity.label,
-  }));
-
-  const filteredSecurityAccounts = securityAccountOpts.map((account) => ({
-    data: account,
-    value: account.id,
-    label: account.label,
-    original: account.original,
-  }));
-
-  const entityChange = (selectedEntity) => {
-    setEntityFilterValue(selectedEntity?.value);
-    setCurrentlySelectedEntity(selectedEntity);
-    setCashAccountFilterValue(null);
-
-    filteredCashAccounts = cashAccountOpts
-      .filter((account) =>
-        selectedEntity ? account.original.group.entity.id === selectedEntity.value : false
-      )
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: account.label,
-      }));
-
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedEntity) {
-      setSecurityAccountFilterValue(tempSecurityAccountList[0]?.value);
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
+  const handleEntityChange = (selectedEntity) => {
+    if (selectedEntity && selectedEntity.value !== "all") {
+      const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
+        selectedEntity ? account?.entityId === selectedEntity.value : false
+      );
+      setSafeAccountOptions(filteredSafekeepingAccounts);
+    } else {
+      setSafeAccountOptions(safeekingAccountList);
     }
+
     dispatch(reportsActionCreators.doResetCashTransactions());
   };
 
-  const securityAccountChange = (selectedAccount) => {
-    setSecurityAccountFilterValue(selectedAccount.value);
-    setCurrentlySelectedSecurityAccount(selectedAccount);
-
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount) {
-      setEntityFilterValue(tempEntitiesList[0].value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
+  const handleSafekeepingAccountChange = (selectedSafekeepingAccount) => {
+    if (selectedSafekeepingAccount && selectedSafekeepingAccount.value !== "all") {
+      const filteredCashAccounts = selectedSafekeepingAccount.account.wethaqAccounts.map(
+        (account) => ({
+          label: `${account?.currency?.name} ( ${account?.accountNo} )`,
+          value: account?.id,
+          data: account,
+        })
+      );
+      setCashAccountOptions(filteredCashAccounts);
+    } else {
+      setCashAccountOptions([]);
     }
+
     dispatch(reportsActionCreators.doResetCashTransactions());
   };
 
-  const cashAccountChange = (selectedAccount) => {
-    setCashAccountFilterValue(selectedAccount?.value);
-    setCurrentlySelectedCashAccount(selectedAccount);
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+  const handleFetch = (filters) => {
+    const { entity, safekeepingAccount, account, entryDate } = filters;
 
-    if (selectedAccount) {
-      setEntityFilterValue(tempEntitiesList[0]?.value);
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
-    dispatch(reportsActionCreators.doResetCashTransactions());
-  };
+    const startDate = entryDate ? entryDate?.value?.startDate : null;
+    const endDate = entryDate ? entryDate?.value?.endDate : null;
 
-  const transactionTypeChange = (selectedTransactionType) => {
-    setTransactionTypeValue(selectedTransactionType.value);
-    setCurrentlySelectedTransactionType(selectedTransactionType);
-  };
+    const params = {
+      startDate: startDate ? startDate.toISOString() : moment([1970, 1, 1]).toISOString(),
+      endDate: endDate ? endDate.toISOString() : moment().endOf("day").toISOString(),
+      portfolio_id: safekeepingAccount?.value?.value,
+      entityName: entity?.value?.label,
+      accountNo: account?.value?.data?.accountNo,
+    };
 
-  const handleFetch = () => {
-    let qs = "";
+    const fetchCashTransactions = (payload) =>
+      dispatch(reportsActionCreators.doFetchCashTransactions(payload));
 
-    if (startDate) {
-      qs += `startDate=${startDate.toISOString()}&`;
-    }
-    if (endDate) {
-      qs += `endDate=${endDate.toISOString()}&`;
-    }
-    if (currentlySelectedEntity) {
-      qs += `entityName=${currentlySelectedEntity.label}&`;
-    }
-    if (cashAccountFilterValue) {
-      qs += `accountNo=${cashAccountFilterValue}`;
-    }
-    dispatch(reportsActionCreators.doFetchCashTransactions({ qs }));
+    fetchCashTransactions({ params });
   };
 
   const columns = [
@@ -345,51 +262,29 @@ const CashStatementReportPage = () => {
                 <DropdownFilter
                   name="entity"
                   label="Entity"
-                  options={filteredEntity}
-                  currentlySelectedOption={currentlySelectedEntity}
-                  setCurrentlySelectedOption={setCurrentlySelectedEntity}
+                  options={entityOptions}
                   customOnChange={(selectedEntity) => {
-                    entityChange(selectedEntity);
+                    handleEntityChange(selectedEntity);
                   }}
                 />
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
                 <DropdownFilter
-                  name="securityAccount"
-                  label="Security Account"
-                  options={filteredSecurityAccounts}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
-                  setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
-                  customOnChange={(selectedAccount) => {
-                    securityAccountChange(selectedAccount);
+                  name="safekeepingAccount"
+                  label="Safekeeping Account"
+                  options={safekeepingAccountOptions || safeekingAccountList}
+                  customOnChange={(selectedSafekeepingAccount) => {
+                    handleSafekeepingAccountChange(selectedSafekeepingAccount);
+                  }}
+                  customClearChange={() => {
+                    handleSafekeepingAccountChange();
                   }}
                 />
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter
-                  name="account"
-                  label="Cash Account"
-                  options={filteredCashAccounts}
-                  currentlySelectedOption={currentlySelectedCashAccount}
-                  setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
-                  // customComponent={{
-                  //   Option: (props) =>
-                  //     ReactSelectCurrencyOption({
-                  //       ...props,
-                  //       currency: props.data.data.original.currency.name,
-                  //     }),
-                  //   ValueContainer: (props) =>
-                  //     ReactSelectCurrencySingleValueContainer({
-                  //       ...props,
-                  //       currency: props.getValue()[0]?.data.original.currency.name,
-                  //     }),
-                  // }}
-                  customOnChange={(selectedAccount) => {
-                    cashAccountChange(selectedAccount);
-                  }}
-                />
+                <DropdownFilter name="account" label="Cash Account" options={cashAccountOptions} />
               </Grid>
 
               {/* <Grid item xs={12} lg={1} container></Grid> */}
@@ -414,39 +309,15 @@ const CashStatementReportPage = () => {
                   name="transactionType"
                   label="Credit/Debit"
                   options={transactionTypeOptionsList}
-                  currentlySelectedOption={currentlySelectedTransactionType}
-                  setCurrentlySelectedOption={setCurrentlySelectedTransactionType}
-                  customOnChange={(selectedType) => {
-                    transactionTypeChange(selectedType);
-                  }}
                 />
               </Grid>
 
               <Grid item xs={12} md={12} lg={6}>
-                <DateRangePicker
-                  name="entryDate"
-                  label="Entry Date"
-                  defaultFilter="none"
-                  setStartDateValue={setStartDateValue}
-                  setEndDateValue={setEndDateValue}
-                />
+                <DateRangePicker name="entryDate" label="Entry Date" defaultFilter="none" />
               </Grid>
 
               <Grid item xs={12} md={6} lg={3}>
-                {/* <Grid container>
-                  <Typography variant="body1" className="white-text">
-                    .
-                  </Typography>
-                </Grid> */}
-
                 <ExportButtons tableRef={tableRef} name="Cash Statement Report" />
-              </Grid>
-
-              <Grid item xs={12}>
-                <ReportingInfo
-                  cashAccount={currentlySelectedCashAccount}
-                  securityAccount={currentlySelectedSecurityAccount}
-                />
               </Grid>
             </Grid>
           </TableFiltersWrapper>
@@ -454,6 +325,7 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
+            console.log("🚀 ~ file: index.jsx:328 ~ CashStatementReportPage ~ filters:", filters);
             const filteredData = filteredRows
               .filter((row) => {
                 //  Entry Date range Filter
@@ -461,15 +333,13 @@ const CashStatementReportPage = () => {
                   const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
                   const isInRange = dateWithinRange(row?.date, fromDate, toDate);
                   return row?.date ? isInRange : null;
-
-                  // return moment(row.date).isBetween(fromDate, toDate);
                 }
                 return true;
               })
               .filter((row) => {
                 if (filters?.transactionType) {
                   let returnValue = false;
-
+                  const transactionTypeValue = filters?.transactionType.value.value;
                   switch (transactionTypeValue) {
                     case "credit":
                       returnValue = row.credit !== "";
@@ -480,13 +350,18 @@ const CashStatementReportPage = () => {
                     default:
                       returnValue = true;
                   }
-
                   return returnValue;
                 }
                 return true;
               });
             return (
               <Fragment>
+                <Grid item xs={12}>
+                  <ReportingInfo
+                    cashAccount={filters?.account}
+                    securityAccount={filters?.safekeepingAccount}
+                  />
+                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"

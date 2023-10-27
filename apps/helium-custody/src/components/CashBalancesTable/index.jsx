@@ -2,17 +2,17 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
-
-
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
 
-
-
-import { accountTypeRenderer, currencyRenderer, reportDateRenderer } from "../../constants/renderers";
+import {
+  accountTypeRenderer,
+  currencyRenderer,
+  reportDateRenderer,
+} from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
@@ -24,10 +24,6 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import ReportingInfo from "../FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-
-
-
-
 
 const ALL_ENTITIES_OPTION = {
   label: "All",
@@ -63,57 +59,15 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
   const [cashAccountOptions, setCashAccountOptions] = useState(null);
   const [currencyOptions, setCurrencyOptions] = useState(null);
 
-  const [dateFilterValue, setDateFilterValue] = useState(moment());
-  const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
+  const entityList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: i.entity?.name,
+      value: i.entity?.id,
+      data: i.entity,
+    })),
+  ];
 
-  const getEntityAndAccounts = (accs) => {
-    const entityOpts = [];
-    const cashAccountOpts = [];
-    const securityAccountOpts = [];
-    const pushedEntity = [];
-    const pushedCashAccount = [];
-    accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
-        entityOpts.push({
-          id: acc.group.entity.id,
-          entityId: acc.group.entity.id,
-          label: acc.group.entity.corporateEntityName,
-          value: acc.group.entity.id,
-        });
-
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
-
-        pushedEntity.push(acc.group.entity.id);
-      }
-
-      if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
-        cashAccountOpts.push({
-          id: acc.accountNo,
-          label: `${acc.accountNo}`,
-          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
-          value: acc.accountNo,
-          original: acc,
-        });
-        pushedCashAccount.push(acc.accountNo);
-      }
-    });
-    return { entityOpts, cashAccountOpts, securityAccountOpts };
-  };
-
-  const { entityOpts, cashAccountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-
-  const entityOptions = entityOpts.map((entity) => ({
-    data: entity,
-    value: entity.id,
-    label: entity.label,
-  }));
+  const entityOptions = [...new Map(entityList.map((item) => [item.value, item])).values()];
 
   if (Array.isArray(entityOptions) && entityOptions.length > 1) {
     entityOptions.unshift(ALL_ENTITIES_OPTION);
@@ -137,6 +91,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
     } else {
       setSafeAccountOptions(safeekingAccountList);
     }
+    dispatch(reportsActionCreators.doResetCashTransactions());
   };
 
   const handleFetch = (filters) => {
@@ -342,12 +297,6 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
               </Grid>
-              {/* <Grid>
-                <ReportingInfo
-                  cashAccount={currentlySelectedCashAccount}
-                  securityAccount={currentlySelectedSecurityAccount}
-                />
-              </Grid> */}
             </Grid>
           </TableFiltersWrapper>
         </div>
@@ -370,6 +319,12 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
 
             return (
               <Fragment>
+                <Grid>
+                  <ReportingInfo
+                    cashAccount={filters?.account}
+                    securityAccount={filters?.safekeepingAccount}
+                  />
+                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"

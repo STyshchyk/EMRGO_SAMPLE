@@ -3,16 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-
-
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import v from "voca";
-
-
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
@@ -36,10 +32,6 @@ import convertNumberToIntlFormat from "../../../utils/convertNumberToIntlFormat"
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 import style from "./style.module.scss";
-
-
-
-
 
 const ALL_ENTITIES_OPTION = {
   label: "All",
@@ -112,7 +104,9 @@ const SecuritiesTransactionsReportPage = () => {
     value: security.currencyName.id,
   }));
 
-  currencyOptionsList = [...new Map(currencyOptionsList.map((item) => [item.value, item])).values()];
+  currencyOptionsList = [
+    ...new Map(currencyOptionsList.map((item) => [item.value, item])).values(),
+  ];
 
   useEffect(() => {
     const fetchAccounts = (payload) =>
