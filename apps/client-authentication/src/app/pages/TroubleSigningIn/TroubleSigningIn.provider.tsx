@@ -2,7 +2,6 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { supportTypes } from "@emrgo-frontend/constants";
-import { createSupportTicket } from "@emrgo-frontend/services";
 import {
   useToast
 } from "@emrgo-frontend/shared-ui";
@@ -11,6 +10,7 @@ import { useFormik } from "formik";
 
 import { TroubleSigningInSchema } from "./TroubleSigningIn.schema";
 import { ITroubleSigningInContext,ITroubleSigningInFormValues } from "./TroubleSigningIn.types";
+import { createSupportTicket } from "./TroubleSigninIn.services";
 
 const TroubleSigningInContext = createContext<ITroubleSigningInContext | null>(null);
 
