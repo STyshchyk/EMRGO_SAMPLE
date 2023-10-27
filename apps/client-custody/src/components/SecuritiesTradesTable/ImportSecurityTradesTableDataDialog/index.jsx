@@ -100,7 +100,7 @@ const parseCsvData = (csvString) => {
                 counterpartySSI,
             ] = arrItem;
 
-            // // if (!settlementType || !isin || !currency || !internalTradeRef) return null;
+            if (settlementType==="NULL" || isin==="NULL" || currency==="NULL" || internalTradeRef==="NULL") return null;
 
             return {
                 referenceId,

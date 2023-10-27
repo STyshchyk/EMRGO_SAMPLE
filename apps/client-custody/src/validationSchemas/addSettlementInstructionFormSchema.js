@@ -6,10 +6,31 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   externalSecuritySelectOption: Yup.object().required("Security is required"),
   price: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: () => Yup.string(),
-    otherwise: () => Yup.string().required(),
+    then: () =>
+      Yup.string().test("maxValue", "Maximum value is 100", (value) => {
+        if (!isNaN(Number(value))) {
+          return Number(value) <= 100;
+        }
+        return true;
+      }),
+    otherwise: () =>
+      Yup.string()
+        .required("Price is required")
+        .test("maxValue", "Maximum value is 100", (value) => {
+          if (!isNaN(Number(value))) {
+            return Number(value) <= 100;
+          }
+          return true;
+        }),
   }),
-  quantity: Yup.string().required(),
+  quantity: Yup.string()
+    .required("Quantity is required")
+    .test("maxValue", "Maximum value is 1000000000", (value) => {
+      if (!isNaN(Number(value))) {
+        return Number(value) <= 1000000000;
+      }
+      return true;
+    }),
   settlementAmount: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () => Yup.string(),
@@ -17,7 +38,6 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   }),
   settlementDate: Yup.date().nullable().required("Settlement date is required"),
   settlementTypeSelectOption: Yup.object().nullable().required("Settlement type is required"),
-  portfolio_id: Yup.object().nullable().required("Safekeeping Account is required"),
   tradeDate: Yup.date().nullable().required("Trade date is required"),
   // new fields
   internalTradeRef: Yup.string().nullable(),
@@ -29,7 +49,15 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   accruedInterest: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () => Yup.string(),
-    otherwise: () => Yup.string().required(),
+    otherwise: () =>
+      Yup.string()
+        .required("Accrued Interest is required")
+        .test("maxValue", "Maximum value is 1000000000", (value) => {
+          if (!isNaN(Number(value))) {
+            return Number(value) <= 1000000000;
+          }
+          return true;
+        }),
   }),
 });
 

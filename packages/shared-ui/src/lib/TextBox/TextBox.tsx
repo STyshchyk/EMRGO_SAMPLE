@@ -7,7 +7,18 @@ export const TextBox: FC<ITextBoxProps> = ({
   maxWidth,
   className,
   rows,
+  error,
   ...rest
 }: ITextBoxProps) => {
-  return <Styles.Textarea $maxWidth={maxWidth} rows={rows} className={className} {...rest} />;
+  return (
+   <Styles.Wrapper> 
+    <Styles.Textarea $maxWidth={maxWidth} rows={rows} className={className} {...rest} />
+    {!!error && (
+      <Styles.Error>
+        <Styles.ErrorIcon />
+        <span>{error}</span>
+      </Styles.Error>
+    )}
+  </Styles.Wrapper>
+  )
 };

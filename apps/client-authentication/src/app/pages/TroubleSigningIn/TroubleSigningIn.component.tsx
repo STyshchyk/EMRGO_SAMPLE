@@ -42,6 +42,7 @@ export const TroubleSigningInComponent: FC<ITroubleSigningInProps> = (
           {...form.getFieldProps("desc")}
           rows={9}
           placeholder="Describe your login issue in a few words here..." 
+          error={form.touched.desc && form.errors.desc}
         />
       </OneCol>
 

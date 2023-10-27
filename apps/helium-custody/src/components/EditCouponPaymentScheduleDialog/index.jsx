@@ -135,11 +135,14 @@ const EditCouponPaymentScheduleDialog = ({
   };
 
   const handleUpdateCouponSchedule = () => {
-    const originalListOfDateIds = couponPaymentSchedule?.couponScheduleDates.map(({ id }) => id);
-    const deletedIds = originalListOfDateIds.filter(
-      (i) => !tableData.map(({ id }) => id).includes(i)
-    );
+    const originalListOfDateIds =
+      Array.isArray(couponPaymentSchedule?.couponScheduleDates) &&
+      couponPaymentSchedule?.couponScheduleDates.map(({ id }) => id);
 
+    const deletedIds =
+      (Array.isArray(originalListOfDateIds) &&
+        originalListOfDateIds.filter((i) => !tableData.map(({ id }) => id).includes(i))) ||
+      [];
     const couponDateObject = tableData
       .filter(
         ({ couponAllocationStatus }) =>
@@ -265,7 +268,7 @@ const EditCouponPaymentScheduleDialog = ({
                     </Button>
                   </Grid>
 
-                  {couponPaymentSchedule?.id && hasCouponScheduleDates ? (
+                  {couponPaymentSchedule?.id ? (
                     <Grid item>
                       <Button
                         variant="contained"
