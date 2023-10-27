@@ -13,3 +13,9 @@ export interface ITroubleSigningInFormValues {
   email: string;
   desc: string;
 }
+
+export interface ITFASupportTicketData {
+  type: string;
+  email: string;
+  file?: string;
+}

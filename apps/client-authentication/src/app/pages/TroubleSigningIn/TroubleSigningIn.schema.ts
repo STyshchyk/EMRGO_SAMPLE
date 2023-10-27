@@ -1,5 +1,6 @@
-import { verifyEmailExists } from "@emrgo-frontend/services";
 import * as Yup from "yup";
+
+import { verifyEmailExists } from "./TroubleSigninIn.services";
 
 export const TroubleSigningInSchema = Yup.object().shape({
   email: Yup.string().email("Enter valid email").required("Email ID is Required").test(
@@ -18,7 +19,8 @@ export const TroubleSigningInSchema = Yup.object().shape({
           });
       });
     }
-  ),  desc: Yup.string().required("Required"),
+  ),  
+  desc: Yup.string().required("Description is Required"),
 });
 
 
