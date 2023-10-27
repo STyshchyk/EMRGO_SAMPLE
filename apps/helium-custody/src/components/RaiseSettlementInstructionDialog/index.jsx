@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
+import * as safekeepingSelectors from "../../redux/selectors/safekeeping";
 import RaiseSettlementInstructionForm, {
   buildRaiseSIRequestPayload,
 } from "../RaiseSettlementInstructionForm";
@@ -31,7 +32,16 @@ const generateEntityOptionsList = (data) =>
 
 const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
   const dispatch = useDispatch();
-  const entities = useSelector(entitiesSelectors.selectLegacyEntities);
+  let entities = useSelector(entitiesSelectors.selectLegacyEntities);
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+
+  entities = entities.map((entity) => {
+    const foundSafekeepingAccount = safekeepingAccounts.filter((safekeepingAccount) => {
+      return safekeepingAccount.entity_id === entity.id;
+    });
+    return { ...entity, safekeepingAccounts: foundSafekeepingAccount || [] };
+  });
+  // console.log("🚀 ~ file: index.jsx:45 ~ entities=entities.map ~ entities:", entities)
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
@@ -52,6 +62,7 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
       },
     });
   };
+  
 
   const entityOptionsList = generateEntityOptionsList(entities);
 
@@ -61,7 +72,6 @@ const RaiseSettlementInstructionDialog = ({ open, handleClose }) => {
       open={open}
       onClose={(event, reason) => {
         if (reason && reason === "backdropClick") return;
-
         handleClose();
       }}
       aria-labelledby="add-settlement-instruction-form-dialog"

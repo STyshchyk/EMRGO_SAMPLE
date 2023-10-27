@@ -18,6 +18,7 @@ import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
 import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecurities";
+import * as reportsSelectors from "../../redux/selectors/reports";
 import useIsProduction from "../../utils/useIsProduction";
 import { addSettlementInstructionFormSchema } from "../../validationSchemas";
 import CustomTextField from "../CustomTextField";
@@ -59,8 +60,7 @@ const baseSelectProps = {
 };
 
 const CustomCurrencyInputField = forwardRef((props, ref) => {
-  console.log(props);
-  const { onChange, decimals = 2, ...other } = props;
+  const { onChange, decimals, ...other } = props;
   const { setFieldTouched } = useFormikContext();
 
   return (
@@ -89,7 +89,7 @@ CustomCurrencyInputField.propTypes = {
 };
 
 const CustomNumberInputField = forwardRef((props, ref) => {
-  const { onChange, ...other } = props;
+  const { onChange, decimals = 0, ...other } = props;
   const { setFieldTouched } = useFormikContext();
   return (
     <NumericFormat
@@ -105,7 +105,7 @@ const CustomNumberInputField = forwardRef((props, ref) => {
         setFieldTouched(props.name);
       }}
       thousandSeparator
-      decimalScale={0}
+      decimalScale={decimals}
     />
   );
 });
@@ -121,7 +121,6 @@ const DependentAmountField = (props) => {
   const { valueA, valueB } = props;
   const touchedFieldA = touched[valueA?.key];
   const touchedFieldB = touched[valueB?.key];
-
   useEffect(() => {
     if (valueA && valueB) {
       if (valueA?.value?.toString().trim() !== "" && valueB?.value?.toString().trim() !== "") {
@@ -133,7 +132,7 @@ const DependentAmountField = (props) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueA?.value, valueB?.value, setFieldValue, props.name]);
+  }, [valueA?.value, valueB?.value, setFieldValue, props.name, props.calculatedValue]);
 
   return (
     <Field
@@ -166,6 +165,13 @@ const DependentAmountField = (props) => {
   );
 };
 
+const clearFormCalculation = (setFieldValue, values) => {
+  if (values?.quantity) setFieldValue("quantity", "");
+  if (values?.price) setFieldValue("price", "");
+  if (values?.principalAmount) setFieldValue("principalAmount", "");
+  if (values?.accruedInterest) setFieldValue("accruedInterest", "");
+  if (values?.settlementAmount) setFieldValue("settlementAmount", "");
+};
 const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
@@ -185,9 +191,13 @@ const InlineFormField = ({ label, children }) => (
 
 export const buildRaiseSIRequestPayload = (formikValues) => {
   const isFreeOfPayment = ["DFOP", "RFOP"].includes(formikValues.settlementTypeSelectOption?.label);
+  const isEquityType =
+    formikValues.externalSecuritySelectOption?.value?.assetTypeName?.key === "equity";
 
   const requestPayload = {
     ...formikValues,
+    commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
+    portfolio_id: formikValues.portfolio_id.securitiesAccount.portfolioId,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
     quantity: parseFloat(formikValues.quantity, 10),
@@ -200,13 +210,15 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     settlementTypeId: formikValues.settlementTypeSelectOption?.value,
     settlementTypeSelectOption: undefined,
     entityGroupId: formikValues?.entityGroupId,
-    userId: formikValues?.entityGroupUserId,
+    userId: formikValues?.entityGroupUserId, // FIX THIS
     entityId: undefined,
     entityGroupUserId: undefined,
     principalAmount: !formikValues.principalAmount
       ? 0
       : parseFloat(formikValues.principalAmount, 10),
-    accruedInterest: !formikValues.accruedInterest
+    accruedInterest: isEquityType
+      ? undefined
+      : !formikValues.accruedInterest
       ? 0
       : parseFloat(formikValues.accruedInterest, 10),
     entityGroup: undefined,
@@ -237,10 +249,8 @@ export const generateSettlementInstructionTypeOptionsList = (data) => {
 };
 
 export const generateExternalSecurityOptionsList = (data) => {
-  console.log(data);
   if (Array.isArray(data) && data.length > 0) {
     return data
-      .filter((item) => item?.assetTypeName?.name !== "Equity")
       .filter((item) => item?.longName)
       .filter((item) => item?.name)
       .filter((item) => item.status === "Active")
@@ -320,6 +330,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    portfolio_id: "",
   },
   isSubmitting,
   handleCloseDialog,
@@ -327,14 +338,13 @@ const RaiseSettlementInstructionForm = ({
   options,
 }) => {
   const inProd = useIsProduction();
-
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
   const dropdownOptions = useSelector(dropdownSelectors.selectDropdownOptions);
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  console.log(currentEntityGroup);
   const currentEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityType === "EMRGO_SERVICES";
   const [selectedEntityOption, setSelectedEntityOption] = useState(null);
@@ -349,9 +359,9 @@ const RaiseSettlementInstructionForm = ({
   );
 
   /*
-    Note that if Settlement Type is set to DFOP or RFOP then
-    the Price and Settlement Amount fields should be greyed out and not populated by the user
-  */
+              Note that if Settlement Type is set to DFOP or RFOP then
+              the Price and Settlement Amount fields should be greyed out and not populated by the user
+            */
   return (
     <Formik
       initialValues={initialValues}
@@ -359,407 +369,430 @@ const RaiseSettlementInstructionForm = ({
       enableReinitialize
       validationSchema={addSettlementInstructionFormSchema}
     >
-      {({ values, setFieldValue, resetForm }) => (
-        <Form>
-          <Grid container spacing={2}>
-            {isWethaqUser && !editable ? (
-              <Fragment>
+      {({ values, setFieldValue, resetForm }) => {
+        let curSetType = values.externalSecuritySelectOption?.value?.assetTypeName?.key;
+        let isEqutyType = curSetType === "equity";
+        let settlementType = values.settlementTypeSelectOption?.label ?? "";
+
+        return (
+          <Form>
+            <Grid container spacing={2}>
+              {isWethaqUser && !editable ? (
+                <Fragment>
+                  <InlineFormField label={"Entity"}>
+                    <Select
+                      {...baseSelectProps}
+                      placeholder={"Select Entity"}
+                      value={selectedEntityOption}
+                      options={options.entityOptionsList}
+                      onChange={(newValue) => {
+                        setFieldValue("entityId", newValue?.value?.id);
+                        setSelectedEntityOption(newValue);
+                        setSelectedEntityGroupOption(null);
+                        setSelectedEntityGroupUserOption(null);
+                      }}
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={"Entity Group"}>
+                    <Select
+                      {...baseSelectProps}
+                      placeholder={"Select Entity Group"}
+                      value={selectedEntityGroupOption}
+                      options={generateEntityGroupsOptionsList(selectedEntityOption?.value?.groups)}
+                      onChange={(newValue) => {
+                        setFieldValue("entityGroupId", newValue?.value?.id);
+                        setSelectedEntityGroupOption(newValue);
+                        setSelectedEntityGroupUserOption(null);
+                      }}
+                      isDisabled={!selectedEntityOption}
+                    />
+                  </InlineFormField>
+                  <InlineFormField label={"Entity Group User"}>
+                    <Select
+                      {...baseSelectProps}
+                      placeholder={"Select Entity Group User"}
+                      value={selectedEntityGroupUserOption}
+                      options={generateEntityGroupUserOptionsList(
+                        selectedEntityGroupOption?.value?.users
+                      )}
+                      onChange={(newValue) => {
+                        setFieldValue("entityGroupUserId", newValue?.value?.id);
+                        setSelectedEntityGroupUserOption(newValue);
+                      }}
+                      isDisabled={!selectedEntityOption}
+                    />
+                  </InlineFormField>
+                </Fragment>
+              ) : (
                 <InlineFormField label={"Entity"}>
-                  <Select
-                    {...baseSelectProps}
-                    placeholder={"Select Entity"}
-                    value={selectedEntityOption}
-                    options={options.entityOptionsList}
-                    onChange={(newValue) => {
-                      setFieldValue("entityId", newValue?.value?.id);
-                      setSelectedEntityOption(newValue);
-                      setSelectedEntityGroupOption(null);
-                      setSelectedEntityGroupUserOption(null);
-                    }}
+                  <Field
+                    fullWidth
+                    placeholder="Entity"
+                    component={CustomTextField}
+                    name="entity"
+                    variant="filled"
+                    type="text"
+                    value={
+                      values?.entityGroup?.entity?.corporateEntityName ||
+                      currentEntityGroup?.entity?.corporateEntityName
+                    }
+                    disabled
                   />
                 </InlineFormField>
-                <InlineFormField label={"Entity Group"}>
-                  <Select
-                    {...baseSelectProps}
-                    placeholder={"Select Entity Group"}
-                    value={selectedEntityGroupOption}
-                    options={generateEntityGroupsOptionsList(selectedEntityOption?.value?.groups)}
-                    onChange={(newValue) => {
-                      setFieldValue("entityGroupId", newValue?.value?.id);
-                      setSelectedEntityGroupOption(newValue);
-                      setSelectedEntityGroupUserOption(null);
+              )}
+              <InlineFormField label={"Safekeeping Account"}>
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Safekeeping Account"}
+                  options={currentSafeAccounts}
+                  getOptionLabel={(option) =>
+                    `${option.name} | ${option.securitiesAccount.accountNumber}`
+                  }
+                  getOptionValue={(option) => option}
+                  onChange={(newValue) => {
+                    setFieldValue("portfolio_id", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="portfolioId"
+                />
+              </InlineFormField>
+              <InlineFormField label="Settlement Type">
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Settlement Type"}
+                  value={values.settlementTypeSelectOption}
+                  options={settlementInstructionTypeOptionsList}
+                  onChange={(newValue) => {
+                    setFieldValue("settlementTypeSelectOption", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="settlementTypeSelectOption"
+                />
+              </InlineFormField>
+
+              <InlineFormField label="Security">
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Security"}
+                  value={values.externalSecuritySelectOption}
+                  options={externalSecurityOptionsList}
+                  onChange={(newValue, triggeredAction) => {
+                    setFieldValue("externalSecuritySelectOption", newValue);
+                    let curValue = newValue?.value?.assetTypeName?.key;
+                    if (curValue && curSetType && curValue !== curSetType)
+                      clearFormCalculation(setFieldValue, values); //Reset form if security type is changed to avoid miscalculation
+                    if (triggeredAction.action === "clear") {
+                      resetForm();
+                    }
+                  }}
+                  isDisabled={editable}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="externalSecuritySelectOption"
+                />
+              </InlineFormField>
+              {/* {inProd && ( */}
+              <Grid container item justifyContent="flex-end">
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      setOpenRealtimeSecuritySearchDialog(true);
                     }}
-                    isDisabled={!selectedEntityOption}
-                  />
-                </InlineFormField>
-                <InlineFormField label={"Entity Group User"}>
-                  <Select
-                    {...baseSelectProps}
-                    placeholder={"Select Entity Group User"}
-                    value={selectedEntityGroupUserOption}
-                    options={generateEntityGroupUserOptionsList(
-                      selectedEntityGroupOption?.value?.users
-                    )}
-                    onChange={(newValue) => {
-                      setFieldValue("entityGroupUserId", newValue?.value?.id);
-                      setSelectedEntityGroupUserOption(newValue);
-                    }}
-                    isDisabled={!selectedEntityOption}
-                  />
-                </InlineFormField>
-              </Fragment>
-            ) : (
-              <InlineFormField label={"Entity"}>
+                    disabled={editable}
+                  >
+                    <Typography variant="caption">Security lookup</Typography>
+                  </Button>
+                </Grid>
+              </Grid>
+              {/* )} */}
+
+              <InlineFormField label={"ISIN"}>
                 <Field
+                  className={classes.input}
                   fullWidth
-                  placeholder="Entity"
                   component={CustomTextField}
-                  name="entity"
+                  label="ISIN"
+                  name="isin"
                   variant="filled"
                   type="text"
-                  value={
-                    values?.entityGroup?.entity?.corporateEntityName ||
-                    currentEntityGroup?.entity?.corporateEntityName
-                  }
+                  value={values.externalSecuritySelectOption?.value?.isin ?? ""}
                   disabled
                 />
               </InlineFormField>
-            )}
 
-            <InlineFormField label="Settlement Type">
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Settlement Type"}
-                value={values.settlementTypeSelectOption}
-                options={settlementInstructionTypeOptionsList}
-                onChange={(newValue) => {
-                  setFieldValue("settlementTypeSelectOption", newValue);
+              <InlineFormField label={"Currency"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  label="Currency"
+                  name="currencyName"
+                  variant="filled"
+                  type="text"
+                  value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
+                  disabled
+                />
+              </InlineFormField>
+
+              <InlineFormField label="Trade Date">
+                <Field
+                  component={DatePicker}
+                  onChange={(date) => {
+                    setFieldValue("tradeDate", date);
+                  }}
+                  value={values.tradeDate ? moment(values.tradeDate) : null}
+                  format={DEFAULT_DATE_FORMAT}
+                  fullWidth
+                  inputVariant="filled"
+                  label={DEFAULT_DATE_FORMAT}
+                  name="tradeDate"
+                  variant="dialog"
+                />
+              </InlineFormField>
+
+              <InlineFormField label="Settlement Date">
+                <Field
+                  component={DatePicker}
+                  onChange={(date) => {
+                    setFieldValue("settlementDate", date);
+                  }}
+                  value={values.settlementDate ? moment(values.settlementDate) : null}
+                  format={DEFAULT_DATE_FORMAT}
+                  fullWidth
+                  inputVariant="filled"
+                  label={DEFAULT_DATE_FORMAT}
+                  minDate={moment(values.tradeDate)}
+                  name="settlementDate"
+                  variant="dialog"
+                  disabled={!values.tradeDate}
+                />
+              </InlineFormField>
+
+              <InlineFormField label={"Quantity"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
+                  label="Quantity"
+                  name="quantity"
+                  variant="filled"
+                  value={values.quantity}
+                  InputProps={{
+                    inputComponent: CustomNumberInputField,
+                  }}
+                  inputProps={{
+                    decimals: isEqutyType ? "6" : 0,
+                  }}
+                />
+              </InlineFormField>
+
+              <InlineFormField label={`Price ${isEqutyType ? "" : "%"}`}>
+                <Field
+                  component={CustomTextField}
+                  disabled={
+                    !values.externalSecuritySelectOption?.value?.currencyName ||
+                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
+                  }
+                  fullWidth
+                  label="Price"
+                  name="price"
+                  value={values.price}
+                  variant="filled"
+                  InputProps={{
+                    inputComponent: CustomCurrencyInputField,
+                    endAdornment: (
+                      <InputAdornment disableTypography position="end">
+                        <span
+                          style={{
+                            fontSize: "0.75em",
+                            padding: "0 1rem",
+                          }}
+                        >
+                          {values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
+                        </span>
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    decimals: 5,
+                  }}
+                />
+              </InlineFormField>
+
+              <InlineFormField label={"Principal Amount"}>
+                <DependentAmountField
+                  label="Principal Amount"
+                  name="principalAmount"
+                  valueA={{ key: "quantity", value: values?.quantity }}
+                  valueB={{ key: "price", value: values?.price }}
+                  calculatedValue={
+                    isEqutyType
+                      ? values.price * Number(values?.quantity)
+                      : (values.price / 100) * Number(values?.quantity)
+                  }
+                />
+              </InlineFormField>
+
+              <InlineFormField label={isEqutyType ? "Commission / Charges" : "Accrued Interest"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  label="Accrued Interest"
+                  name="accruedInterest"
+                  variant="filled"
+                  value={values.accruedInterest}
+                  disabled={
+                    !values.externalSecuritySelectOption?.value?.currencyName ||
+                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
+                  }
+                  InputProps={{
+                    inputComponent: CustomCurrencyInputField,
+                    endAdornment: (
+                      <InputAdornment disableTypography position="end">
+                        <span
+                          style={{
+                            fontSize: "0.75em",
+                            padding: "0 1rem",
+                          }}
+                        >
+                          {values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
+                        </span>
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    decimals: 2,
+                  }}
+                />
+              </InlineFormField>
+
+              <InlineFormField label={"Settlement Amount"}>
+                <DependentAmountField
+                  label="Settlement Amount"
+                  name="settlementAmount"
+                  valueA={{ key: "principalAmount", value: values?.principalAmount }}
+                  valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
+                  calculatedValue={
+                    isEqutyType
+                      ? settlementType === "DVP"
+                        ? Number(values?.principalAmount) - Number(values?.accruedInterest)
+                        : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                      : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                  }
+                />
+              </InlineFormField>
+
+              <InlineFormField label="Counterparty">
+                <Select
+                  {...baseSelectProps}
+                  placeholder={"Select Counterparty"}
+                  value={values.counterpartySelectOption}
+                  options={counterpartyOptionsList}
+                  onChange={(newValue) => {
+                    setFieldValue("counterpartySelectOption", newValue);
+                    setFieldValue("counterpartySSISelectOption", null);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="counterpartySelectOption"
+                />
+              </InlineFormField>
+
+              <InlineFormField label="Counterparty SSI">
+                <Select
+                  {...baseSelectProps}
+                  isDisabled={!values.counterpartySelectOption}
+                  placeholder={"Select Counterparty SSI"}
+                  value={values.counterpartySSISelectOption}
+                  options={generateCounterpartySSIOptionsList(
+                    values.counterpartySelectOption?.value?.counterpartySSI
+                  )}
+                  onChange={(newValue) => {
+                    setFieldValue("counterpartySSISelectOption", newValue);
+                  }}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="counterpartySSISelectOption"
+                />
+              </InlineFormField>
+
+              <InlineFormField label={"Internal Trade Ref"}>
+                <Field
+                  fullWidth
+                  component={CustomTextField}
+                  label="Internal Trade Ref"
+                  name="internalTradeRef"
+                  variant="filled"
+                  type="text"
+                  value={values.internalTradeRef ?? ""}
+                  onChange={(newValue) => {
+                    setFieldValue("internalTradeRef", newValue);
+                  }}
+                />
+              </InlineFormField>
+
+              <Grid item container spacing={2} justifyContent="flex-end">
+                <Grid item>
+                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting || (isWethaqUser && !selectedEntityOption && !editable)}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            {openRealtimeSecuritySearchDialog && (
+              <RealtimeSecSearchDialog
+                open={openRealtimeSecuritySearchDialog}
+                handleClose={() => {
+                  setOpenRealtimeSecuritySearchDialog(false);
                 }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="settlementTypeSelectOption"
-              />
-            </InlineFormField>
+                handleSecurityResultItemSelect={(row) => {
+                  const found = externalSecurityOptionsList.find(
+                    (item) => item.value.id === row?.externalSecurityId
+                  );
 
-            <InlineFormField label="Security">
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Security"}
-                value={values.externalSecuritySelectOption}
-                options={externalSecurityOptionsList}
-                onChange={(newValue, triggeredAction) => {
-                  setFieldValue("externalSecuritySelectOption", newValue);
-
-                  if (triggeredAction.action === "clear") {
-                    resetForm();
+                  if (found) {
+                    setFieldValue("externalSecuritySelectOption", found);
                   }
                 }}
-                isDisabled={editable}
               />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="externalSecuritySelectOption"
-              />
-            </InlineFormField>
-            {/* {inProd && ( */}
-            <Grid container item justifyContent="flex-end">
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setOpenRealtimeSecuritySearchDialog(true);
-                  }}
-                  disabled={editable}
-                >
-                  <Typography variant="caption">Security lookup</Typography>
-                </Button>
-              </Grid>
-            </Grid>
-            {/* )} */}
-
-            <InlineFormField label={"ISIN"}>
-              <Field
-                className={classes.input}
-                fullWidth
-                component={CustomTextField}
-                label="ISIN"
-                name="isin"
-                variant="filled"
-                type="text"
-                value={values.externalSecuritySelectOption?.value?.isin ?? ""}
-                disabled
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Currency"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                label="Currency"
-                name="currencyName"
-                variant="filled"
-                type="text"
-                value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
-                disabled
-              />
-            </InlineFormField>
-
-            <InlineFormField label="Trade Date">
-              <Field
-                component={DatePicker}
-                onChange={(date) => {
-                  setFieldValue("tradeDate", date);
-                }}
-                value={values.tradeDate ? moment(values.tradeDate) : null}
-                format={DEFAULT_DATE_FORMAT}
-                fullWidth
-                inputVariant="filled"
-                label={DEFAULT_DATE_FORMAT}
-                name="tradeDate"
-                variant="dialog"
-              />
-            </InlineFormField>
-
-            <InlineFormField label="Settlement Date">
-              <Field
-                component={DatePicker}
-                onChange={(date) => {
-                  setFieldValue("settlementDate", date);
-                }}
-                value={values.settlementDate ? moment(values.settlementDate) : null}
-                format={DEFAULT_DATE_FORMAT}
-                fullWidth
-                inputVariant="filled"
-                label={DEFAULT_DATE_FORMAT}
-                minDate={moment(values.tradeDate)}
-                name="settlementDate"
-                variant="dialog"
-                disabled={!values.tradeDate}
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Quantity"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
-                label="Quantity"
-                name="quantity"
-                variant="filled"
-                value={values.quantity}
-                InputProps={{
-                  inputComponent: CustomNumberInputField,
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="quantity"
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Price %"}>
-              <Field
-                component={CustomTextField}
-                disabled={
-                  !values.externalSecuritySelectOption?.value?.currencyName ||
-                  ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                }
-                fullWidth
-                label="Price"
-                name="price"
-                value={values.price}
-                variant="filled"
-                InputProps={{
-                  inputComponent: CustomCurrencyInputField,
-                  endAdornment: (
-                    <InputAdornment disableTypography position="end">
-                      <span
-                        style={{
-                          fontSize: "0.75em",
-                          padding: "0 1rem",
-                        }}
-                      >
-                        {values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
-                      </span>
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{
-                  decimals: 5,
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="price"
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Principal Amount"}>
-              <DependentAmountField
-                label="Principal Amount"
-                name="principalAmount"
-                valueA={{ key: "quantity", value: values?.quantity }}
-                valueB={{ key: "price", value: values?.price }}
-                calculatedValue={(values.price / 100) * Number(values?.quantity)}
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Accrued Interest"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                label="Accrued Interest"
-                name="accruedInterest"
-                variant="filled"
-                value={values.accruedInterest}
-                disabled={
-                  !values.externalSecuritySelectOption?.value?.currencyName ||
-                  ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                }
-                InputProps={{
-                  inputComponent: CustomCurrencyInputField,
-                  endAdornment: (
-                    <InputAdornment disableTypography position="end">
-                      <span
-                        style={{
-                          fontSize: "0.75em",
-                          padding: "0 1rem",
-                        }}
-                      >
-                        {values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
-                      </span>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="accruedInterest"
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Settlement Amount"}>
-              <DependentAmountField
-                label="Settlement Amount"
-                name="settlementAmount"
-                valueA={{ key: "principalAmount", value: values?.principalAmount }}
-                valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
-                calculatedValue={Number(values?.principalAmount) + Number(values?.accruedInterest)}
-              />
-            </InlineFormField>
-
-            <InlineFormField label="Counterparty">
-              <Select
-                {...baseSelectProps}
-                placeholder={"Select Counterparty"}
-                value={values.counterpartySelectOption}
-                options={counterpartyOptionsList}
-                onChange={(newValue) => {
-                  setFieldValue("counterpartySelectOption", newValue);
-                  setFieldValue("counterpartySSISelectOption", null);
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="counterpartySelectOption"
-              />
-            </InlineFormField>
-
-            <InlineFormField label="Counterparty SSI">
-              <Select
-                {...baseSelectProps}
-                isDisabled={!values.counterpartySelectOption}
-                placeholder={"Select Counterparty SSI"}
-                value={values.counterpartySSISelectOption}
-                options={generateCounterpartySSIOptionsList(
-                  values.counterpartySelectOption?.value?.counterpartySSI
-                )}
-                onChange={(newValue) => {
-                  setFieldValue("counterpartySSISelectOption", newValue);
-                }}
-              />
-              <ErrorMessage
-                component={Typography}
-                variant="caption"
-                color="error"
-                className="ml-4"
-                name="counterpartySSISelectOption"
-              />
-            </InlineFormField>
-
-            <InlineFormField label={"Internal Trade Ref"}>
-              <Field
-                fullWidth
-                component={CustomTextField}
-                label="Internal Trade Ref"
-                name="internalTradeRef"
-                variant="filled"
-                type="text"
-                value={values.internalTradeRef ?? ""}
-                onChange={(newValue) => {
-                  setFieldValue("internalTradeRef", newValue);
-                }}
-              />
-            </InlineFormField>
-
-            <Grid item container spacing={2} justifyContent="flex-end">
-              <Grid item>
-                <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                  disabled={isSubmitting || (isWethaqUser && !selectedEntityOption && !editable)}
-                >
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-          {openRealtimeSecuritySearchDialog && (
-            <RealtimeSecSearchDialog
-              open={openRealtimeSecuritySearchDialog}
-              handleClose={() => {
-                setOpenRealtimeSecuritySearchDialog(false);
-              }}
-              handleSecurityResultItemSelect={(row) => {
-                const found = externalSecurityOptionsList.find(
-                  (item) => item.value.id === row?.externalSecurityId
-                );
-
-                if (found) {
-                  setFieldValue("externalSecuritySelectOption", found);
-                }
-              }}
-              assetTypeFilterValue="Fixed Income"
-            />
-          )}
-        </Form>
-      )}
+            )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

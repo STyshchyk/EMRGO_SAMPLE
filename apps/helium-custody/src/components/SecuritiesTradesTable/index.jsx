@@ -24,6 +24,7 @@ import {
 } from "../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 // import TableFiltersWrapper from '../TableFiltersWrapper';
@@ -120,7 +121,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorCashAccountNo: i.investorCashAccount,
   investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
-  isin: i.externalSecurity?.isin,
+  isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
   issueDate: i.settlementDate,
   issuer: i.issuer?.entity?.name,
@@ -158,6 +159,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
   entityGroup: i?.entityGroup,
   userId: i?.userId,
+  portfolio: i?.portfolio,
 });
 
 const SecurityTradesTable = ({
@@ -229,6 +231,18 @@ const SecurityTradesTable = ({
       id: "securityTradeType",
       title: t("Headers.Trade Type"),
       field: "securityTradeType",
+      width: 150,
+    },
+    {
+      id: "investorSecuritiesAccountNo",
+      title: t("Headers.Settlement Account"),
+      field: "portfolio.accountNumber",
+      width: 150,
+    },
+    {
+      id: "portfolio",
+      title: t("Headers.Portfolio"),
+      field: "portfolio.name",
       width: 150,
     },
     {
@@ -588,6 +602,7 @@ const SecurityTradesTable = ({
                     defaultFilter="none"
                   />
                 </Grid>
+
                 <Grid item xs={12} md={12} lg={6}>
                   <DateRangePicker
                     name="settlementDateRange"
@@ -626,11 +641,13 @@ const SecurityTradesTable = ({
                   />
                 </Grid>
 
+                {/* {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>} */}
+
                 {/* entry date > trade date */}
                 <Grid item xs={12} md={6} lg={3}>
                   <BooleanCheckbox name="lateTrades" label="Late Trades" />
                 </Grid>
-                {/* {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>} */}
+
                 <Grid item xs={12} md={6} lg={3}>
                   <ExportButtons tableRef={tableRef} name="Securities Registration Report" />
                 </Grid>
@@ -720,7 +737,7 @@ const SecurityTradesTable = ({
                   return true;
                 })
                 .filter((row) => {
-                  // Status Filter
+                  // Late Trades Filter
                   if (filters?.lateTrades) {
                     // ED > TD dates only
                     const entryStr = moment(row?.createdAt).format("DD/MM/YYYY");
@@ -733,6 +750,7 @@ const SecurityTradesTable = ({
                   }
                   return true;
                 });
+
               return (
                 <div data-testid="security-trades-table">
                   <MaterialTable

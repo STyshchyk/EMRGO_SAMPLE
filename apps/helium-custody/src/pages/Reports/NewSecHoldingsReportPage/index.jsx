@@ -11,8 +11,10 @@ import SecuritiesHoldingsTable, {
 } from "../../../components/SecuritiesHoldingsTable";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
+import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as reportsSelectors from "../../../redux/selectors/reports";
+import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
 const NewSecuritiesHoldingsReportPage = () => {
@@ -26,6 +28,8 @@ const NewSecuritiesHoldingsReportPage = () => {
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const securitiesAccounts = useSelector(reportsSelectors.selectSecuritiesAccounts);
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+  
   const settlementDatedSecuritiesHoldingsData = useSelector(
     reportsSelectors.selectSecuritiesHoldingsData
   );
@@ -49,7 +53,12 @@ const NewSecuritiesHoldingsReportPage = () => {
     const fetchSecuritiesAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
 
+    const fetchSafekeepingAccounts = (payload) =>
+      dispatch(safekeepingActionCreators.doReadAccounts(payload));
+
     fetchSecuritiesAccounts();
+
+    fetchSafekeepingAccounts();
 
     return () => {
       dispatch(reportsActionCreators.doResetSecuritiesHoldings());
@@ -71,6 +80,7 @@ const NewSecuritiesHoldingsReportPage = () => {
       <SecuritiesHoldingsTable
         data={generatedTableData}
         securitiesAccounts={securitiesAccounts}
+        safekeepingAccounts={safekeepingAccounts}
         entityUserType={currentEntityType}
         isTradeDateHolding={isTradeDateHolding}
         setIsTradeDateHolding={setIsTradeDateHolding}

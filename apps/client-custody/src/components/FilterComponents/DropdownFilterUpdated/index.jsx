@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Chip from "@mui/material/Chip";
@@ -44,9 +44,16 @@ const customSelectStyles = {
   }),
 };
 
-const DropdownFilter = ({ name, label, customOnChange, options, defaultFilter, isMulti }) => {
+const DropdownFilter = ({
+  name,
+  label,
+  customOnChange,
+  options,
+  defaultFilter,
+  isMulti,
+  ...props
+}) => {
   const [currentlySelectedOption, setCurrentlySelectedOption] = useState([]);
-
   const filterContext = useFilters();
   const { setFilterValue, clearFilterValue } = filterContext;
   // console.log(filters, 'dropdownfilter updated');
@@ -64,7 +71,7 @@ const DropdownFilter = ({ name, label, customOnChange, options, defaultFilter, i
       clearFilter();
       return;
     }
-    if (customOnChange)customOnChange(newValue, {action});
+    if (customOnChange) customOnChange(newValue, { action });
     setCurrentlySelectedOption(newValue);
     setFilterValue(newValue, name, label, "dropdown");
   };
@@ -98,6 +105,7 @@ const DropdownFilter = ({ name, label, customOnChange, options, defaultFilter, i
           options={options}
           value={currentlySelectedOption}
           onChange={handleChange}
+          {...props}
         />
       </Box>
     </>
@@ -109,7 +117,7 @@ DropdownFilter.propTypes = {
   title: PropTypes.string,
   options: PropTypes.array.isRequired,
   setDefaultFilterValue: PropTypes.func,
-  customOnChange: PropTypes.func
+  customOnChange: PropTypes.func,
 };
 
 DropdownFilter.defaultProps = {

@@ -10,6 +10,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
+import addEntityAccountFormSchema from "apps/helium-custody/src/validationSchemas/addEntityAccountFormSchema";
 import cx from "classnames";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
@@ -20,9 +21,9 @@ import Checkbox from "../../../../components/Checkbox";
 import { useTheme } from "../../../../context/theme-context";
 import * as formActionCreators from "../../../../redux/actionCreators/form";
 import * as selectFormValues from "../../../../redux/selectors/form";
+import * as authSelectors from "../../../../redux/selectors/auth";
 // import { addAccountSchema } from '../../validationSchemas';
 import style from "./style.module.scss";
-import addEntityAccountFormSchema from "apps/helium-custody/src/validationSchemas/addEntityAccountFormSchema";
 
 const initial = {
   entityGroupId: "",
@@ -37,7 +38,12 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
-  const [initialValues, setInitialValues] = useState(initial);
+  const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const currentEntityGroupID = currentEntityGroup?.id;
+  const [initialValues, setInitialValues] = useState({
+    ...initial,
+    entityGroupId: currentEntityGroupID,
+  });
   const { t } = useTranslation(["administration"]);
   const { theme } = useTheme();
   const { locale } = theme;
@@ -102,7 +108,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
     <Formik
       enableReinitialize
       initialValues={initialValues}
-    // validateOnMount={false}
+      // validateOnMount={false}
       validationSchema={addEntityAccountFormSchema}
       onSubmit={(values, { resetForm }) => {
         onSubmit(
@@ -110,7 +116,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
             ...values,
             accountTypeId: values.accountTypeId.value.id,
             currencyId: values.currencyId.value.id,
-            entityGroupId: values.entityGroupId.groupId,
+            // entityGroupId: values.entityGroupId.groupId,
             externalAccountNumber: values.externalAccountNumber,
             isVirtualIBAN: values.isVirtualIBAN === true,
           },
@@ -141,7 +147,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
             </DialogTitle>
             <DialogContent>
               <Box mb={2}>
-                <Box my={1} className="full-width">
+                {/* <Box my={1} className="full-width">
                   <FormControl className={style.input__form_control}>
                     <Select
                       closeMenuOnSelect
@@ -166,15 +172,11 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                       value={values.entityGroupId}
                       options={entitiesDropdown}
                       onChange={(entityGroupId) => {
-                        console.log(
-                          "🚀 ~ file: index.jsx:169 ~ AddEntityAccountModal ~ entityGroupId:",
-                          entityGroupId
-                        );
                         setFieldValue("entityGroupId", entityGroupId, false);
                       }}
                     />
                   </FormControl>
-                </Box>
+                </Box> */}
                 <Box my={1} className="full-width">
                   <FormControl className={style.input__form_control}>
                     <Select

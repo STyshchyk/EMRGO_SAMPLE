@@ -145,7 +145,7 @@
           - packages/**/*
           - .env.production
 
-.silver-dataroom_build_rules_develop:
+.silver-dataroom_build_rules:
   rules:
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always

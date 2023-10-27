@@ -17,16 +17,18 @@ export const selectIsFetchingExternalPaymentsAuditData = (state) =>
 
 export const selectAccounts = createSelector([selectAccountsData], (accountsData) => {
   if (accountsData?.data) {
-    return accountsData.data.map((account, index) => {
-      const securityAccount = account.group.entity.securityAccount || {
-        id: `89de871a-76ae-4b23-9679-c3c18448310${index}`,
-        accountNumber: `1122334455-${index}`,
-      };
-      return {
-        ...account,
-        group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
-      };
-    });
+    return accountsData.data
+      .map((account, index) => {
+        const securityAccount = account.group.entity.securityAccount || {
+          id: `89de871a-76ae-4b23-9679-c3c18448310${index}`,
+          accountNumber: `1122334455-${index}`,
+        };
+        return {
+          ...account,
+          group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
+        };
+      })
+      .filter((account) => account.isActive);
   }
   return [];
 });

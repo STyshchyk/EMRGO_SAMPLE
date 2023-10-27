@@ -10,9 +10,11 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
+import * as safekeepingSelectors from "../../redux/selectors/safekeeping";
 import RaiseSettlementInstructionForm, {
   buildRaiseSIRequestPayload,
 } from "../RaiseSettlementInstructionForm";
@@ -39,8 +41,11 @@ const generateInitialValues = (rowData) => ({
     value: rowData?.counterpartySSIObject,
   },
   externalSecuritySelectOption: {
-    label: rowData?.externalSecurity?.isin,
-    value: rowData?.externalSecurity,
+    label: rowData?.externalSecurity?.name,
+    value: {
+      ...rowData?.externalSecurity,
+      isin: getAttribute(rowData?.attributes, "isin") ?? rowData?.externalSecurity?.isin,
+    },
   },
   price: rowData?.price,
   // price: parseFloat(rowData?.price.replace(',', ''), 10),
@@ -60,16 +65,28 @@ const generateInitialValues = (rowData) => ({
   entityGroup: rowData?.entityGroup,
   entityGroupId: rowData?.entityGroupId,
   userId: rowData?.userId,
+  portfolio: rowData?.portfolio,
 });
 
 const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelectedRowData }) => {
   const dispatch = useDispatch();
-  const entities = useSelector(entitiesSelectors.selectLegacyEntities);
+  let entities = useSelector(entitiesSelectors.selectLegacyEntities);
+
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+
+  entities = entities.map((entity) => {
+    const foundSafekeepingAccount = safekeepingAccounts.filter((safekeepingAccount) => {
+      return safekeepingAccount.entity_id === entity.id;
+    });
+    return { ...entity, safekeepingAccounts: foundSafekeepingAccount || [] };
+  });
 
   // selectors
   const isSubmitting = useSelector(paymentAndSettlementSelectors.selectIsSubmitting);
+  console.log(currentlySelectedRowData, "row");
 
   const generatedInitialValues = generateInitialValues(currentlySelectedRowData);
+  console.log(generatedInitialValues);
 
   const handleSubmit = (values) => {
     const updateSettlementInstruction = (payload) =>
@@ -90,9 +107,8 @@ const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelected
     });
   };
 
-  console.log("entities:: ", entities);
   const entityOptionsList = generateEntityOptionsList(entities);
-    console.log("entityOptionsList:: ", entityOptionsList);
+
   return (
     <Dialog
       disableEscapeKeyDown

@@ -26,3 +26,8 @@ export function convertDateModify(date1: string | undefined): string {
 export function trimDate(date: string): string {
   return date.substring(0, 16).replace("T", " ");
 }
+
+export const dateFormatter = (date: Date, format?: string) => {
+  if (!date) return "";
+  return dayjs(date).format(format || "DD/MM/YYYY");
+};

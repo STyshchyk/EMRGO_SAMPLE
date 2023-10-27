@@ -8,8 +8,10 @@ import PageTitle from "../../../components/PageTitle";
 import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
+import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as reportsSelectors from "../../../redux/selectors/reports";
+import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import ReportingDisclaimer from "../ReportingDisclaimer";
 
 const CashBalancesReportPage = () => {
@@ -22,7 +24,7 @@ const CashBalancesReportPage = () => {
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const transactions = useSelector(reportsSelectors.selectCashBalances);
   const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
-  console.log(cashAccounts);
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
 
   const currentEntityGroupID = currentEntityGroup?.id;
 
@@ -35,6 +37,10 @@ const CashBalancesReportPage = () => {
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
+
+    const fetchSafekeepingAccounts = (payload) =>
+      dispatch(safekeepingActionCreators.doReadAccounts(payload));
+    fetchSafekeepingAccounts();
 
     return () => {
       dispatch(reportsActionCreators.doResetCashBalances());
@@ -56,6 +62,7 @@ const CashBalancesReportPage = () => {
         data={generatedTableData}
         accounts={cashAccounts}
         entityUserType={currentEntityType}
+        safekeepingAccounts={safekeepingAccounts}
       />
 
       <ReportingDisclaimer />

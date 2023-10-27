@@ -5,13 +5,15 @@ export const selectCashTransactionsData = (state) => state.reports.cashTransacti
 
 export const selectCashAccounts = createSelector([selectCashAccountsData], (accountsData) => {
   if (accountsData) {
-    return accountsData.map((account) => {
-      const securityAccount = { id: account.id, accountNumber: account.accountNo };
-      return {
-        ...account,
-        group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
-      };
-    });
+    return accountsData
+      .map((account) => {
+        const securityAccount = { id: account.id, accountNumber: account.accountNo };
+        return {
+          ...account,
+          group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
+        };
+      })
+      .filter((account) => account.isActive);
   }
   return [];
 });

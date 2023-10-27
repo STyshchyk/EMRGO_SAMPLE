@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
@@ -19,7 +19,7 @@ import * as reportsActionCreators from "../../redux/actionCreators/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../utils/formatter";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
-import DropdownFilter from "../FilterComponents/DropdownFilter";
+import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import ReportingInfo from "../FilterComponents/ReportingInfo";
@@ -36,158 +36,109 @@ const generateTransactions = (acc) => ({
   // transactionType: getFormattedBalanceType(acc.activityType),
   entity: acc.entity,
   account: acc.account,
+  safekeepingAccount: acc.portfolio.accountNumber,
+  portfolio: acc.portfolio.name,
   currency: acc?.currency?.name ?? "",
   balance: acc.balance,
   accountType: acc.accountType,
   lastMovement: acc.lastMovement,
 });
 
-const CashBalancesTable = ({ data, accounts }) => {
+const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
   const dispatch = useDispatch();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter"]);
   const [disabledCurrency, setDisabledCurrency] = useState(false);
-  const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
-  const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
+  const [currentlySelectedSafekeepingAccount, setCurrentlySelectedSafekeepingAccount] =
+    useState(null);
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [currentlySelectedCurrency, setCurrentlySelectedCurrency] = useState(null);
+  const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
 
   const [cashAccountOptions, setCashAccountOptions] = useState(null);
   const [currencyOptions, setCurrencyOptions] = useState(null);
 
-  const [dateFilterValue, setDateFilterValue] = useState(moment());
-  const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
+  const entityList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: i.entity?.name,
+      value: i.entity?.id,
+      data: i.entity,
+    })),
+  ];
 
-  const getEntityAndAccounts = (accs) => {
-    const entityOpts = [];
-    const cashAccountOpts = [];
-    const securityAccountOpts = [];
-    const pushedEntity = [];
-    const pushedCashAccount = [];
-    accs.forEach((acc) => {
-      if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
-        entityOpts.push({
-          id: acc.group.entity.id,
-          entityId: acc.group.entity.id,
-          label: acc.group.entity.corporateEntityName,
-          value: acc.group.entity.id,
-        });
-
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
-
-        pushedEntity.push(acc.group.entity.id);
-      }
-
-      if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
-        cashAccountOpts.push({
-          id: acc.accountNo,
-          label: `${acc.accountNo}`,
-          // label: `${acc.accountNo} ${v.capitalize(acc.type)}`,
-          value: acc.accountNo,
-          original: acc,
-        });
-        pushedCashAccount.push(acc.accountNo);
-      }
-    });
-    return { entityOpts, cashAccountOpts, securityAccountOpts };
-  };
-
-  const { entityOpts, cashAccountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
-
-  const entityOptions = entityOpts.map((entity) => ({
-    data: entity,
-    value: entity.id,
-    label: entity.label,
-  }));
+  const entityOptions = [...new Map(entityList.map((item) => [item.value, item])).values()];
 
   if (Array.isArray(entityOptions) && entityOptions.length > 1) {
     entityOptions.unshift(ALL_ENTITIES_OPTION);
   }
 
-  const securityAccountOptions = securityAccountOpts.map((account) => ({
-    data: account,
-    value: account.id,
-    label: account.label,
-    original: account.original,
-  }));
+  const safeekingAccountList = [
+    ...safekeepingAccounts.map((i) => ({
+      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+      value: i.id,
+      entityId: i.entity_id,
+      account: i,
+    })),
+  ];
 
   const handleEntityChange = (selectedEntity) => {
-    const filteredCashAccounts = cashAccountOpts
-      .filter((account) =>
-        selectedEntity ? account?.original?.group.entity.id === selectedEntity.value : false
-      )
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: `${account.label} ${account.original.currency.name}`,
-      }));
-
-    setCashAccountOptions(filteredCashAccounts);
-
-    const filteredCurrencies = [
-      ...new Map(
-        filteredCashAccounts?.map((cashAccount) => [
-          cashAccount?.data?.original?.currency.id,
-          cashAccount,
-        ])
-      ).values(),
-    ].map((currency) => {
-      const currencyObject = {
-        label: currency.data?.original?.currency.name,
-        value: currency.data?.original?.currency.id,
-      };
-      return currencyObject;
-    });
-
-    setCurrencyOptions(filteredCurrencies);
-
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedEntity) {
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
+    if (selectedEntity && selectedEntity.value !== "all") {
+      const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
+        selectedEntity ? account?.entityId === selectedEntity.value : false
+      );
+      setSafeAccountOptions(filteredSafekeepingAccounts);
+    } else {
+      setSafeAccountOptions(safeekingAccountList);
     }
-    dispatch(reportsActionCreators.doResetCashBalances());
-  };
-
-  const handleSecurityAccountChange = (selectedAccount) => {
-    setCurrentlySelectedSecurityAccount(selectedAccount);
-
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount) {
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
-    dispatch(reportsActionCreators.doResetCashBalances());
+    dispatch(reportsActionCreators.doResetCashTransactions());
   };
 
   const handleFetch = (filters) => {
-    let qs = "";
-    const { date } = filters;
+    const { date, entity, safekeepingAccount } = filters;
+    const params = {
+      date: date ? date.value.toISOString() : moment().endOf("day").toISOString(),
+      portfolio_id: safekeepingAccount?.value?.value,
+      entityId: entity?.value?.value,
+    };
 
-    qs += `date=${date?.value?.toISOString()}&`;
+    const fetchCashBalances = (payload) =>
+      dispatch(reportsActionCreators.doFetchCashBalances(payload));
 
-    if (currentlySelectedEntity.value !== "all") {
-      qs += `entityId=${currentlySelectedEntity?.data.entityId}`;
-    }
-
-    dispatch(reportsActionCreators.doFetchCashBalances({ qs }));
+    fetchCashBalances({ params });
   };
+
+  useEffect(() => {
+    if (data?.length > 0 || data !== null) {
+      const cashAccountOptions = data?.map((cashAccount) => {
+        return {
+          data: cashAccount,
+          value: cashAccount.account,
+          label: `${cashAccount.currency} ( ${cashAccount.account} )`,
+        };
+      });
+
+      const filteredCashAccounts = [
+        ...new Map(cashAccountOptions?.map((item) => [item.value, item])).values(),
+      ];
+
+      setCashAccountOptions(filteredCashAccounts);
+
+      const currencyOptions = data?.map((cashAccount) => {
+        return {
+          data: cashAccount,
+          value: cashAccount.currency,
+          label: `${cashAccount.currency}`,
+        };
+      });
+
+      const filteredCurrencies = [
+        ...new Map(currencyOptions?.map((item) => [item.value, item])).values(),
+      ];
+
+      setCurrencyOptions(filteredCurrencies);
+    }
+  }, [data]);
 
   const columns = [
     {
@@ -199,25 +150,32 @@ const CashBalancesTable = ({ data, accounts }) => {
     { id: "entity", title: t("Cash Balances.Headers.Entity"), field: "entity" },
     {
       id: "account",
-      title: t("Cash Balances.Headers.Account"),
+      title: t("Cash Balances.Headers.Cash Account"),
       field: "account",
       exportConfig: { width: 7 },
-      defaultFilter: currentlySelectedSecurityAccount,
-      customFilterAndSearch: (term, rowData) => {
-        if (!term) return true;
-        return term === rowData?.account;
-      },
+    },
+    {
+      id: "portfolio",
+      title: t("Cash Balances.Headers.Portfolio"),
+      field: "portfolio",
+      exportConfig: { width: 7 },
+    },
+    {
+      id: "safekeepingAccount",
+      title: t("Cash Balances.Headers.Safekeeping Account"),
+      field: "safekeepingAccount",
+      exportConfig: { width: 7 },
     },
     {
       id: "currency",
       title: t("Cash Balances.Headers.Currency"),
       field: "currency",
       exportConfig: { width: 6 },
-      defaultFilter: currentlySelectedCurrency,
-      customFilterAndSearch: (term, rowData) => {
-        if (!term) return true;
-        return term === rowData?.currency;
-      },
+      // defaultFilter: currentlySelectedCurrency,
+      // customFilterAndSearch: (term, rowData) => {
+      //   if (!term) return true;
+      //   return term === rowData?.currency;
+      // },
     },
     {
       id: "balance",
@@ -243,49 +201,6 @@ const CashBalancesTable = ({ data, accounts }) => {
     },
   ];
 
-  const transformData = (originalData) => {
-    if (!originalData) return {};
-
-    const { date, entity, account, currency, balance, accountType, lastMovement } = originalData;
-
-    return {
-      date: {
-        label: t("Cash Balances.Headers.Date"),
-        value: date || "",
-      },
-      entity: {
-        label: t("Cash Balances.Headers.Entity"),
-        value: entity || "",
-      },
-      account: {
-        label: t("Cash Balances.Headers.Account"),
-
-        value: account || "",
-      },
-      currency: {
-        label: t("Cash Balances.Headers.Currency"),
-
-        value: currency || "",
-      },
-      balance: {
-        label: t("Cash Balances.Headers.Balance"),
-
-        value: balance || "",
-      },
-      accountType: {
-        label: t("Cash Balances.Headers.Account Type"),
-
-        value: v.capitalize(accountType) || "",
-      },
-      lastMovement: {
-        label: t("Cash Balances.Headers.Last Movement"),
-
-        value: reportDateRenderer(lastMovement) || "",
-      },
-    };
-  };
-
-  const transformedData = data?.map((d) => transformData(d));
   const matchCashAccCurrencyWithCurrency = (selectedAcccount) => {
     setDisabledCurrency(true);
   };
@@ -305,38 +220,40 @@ const CashBalancesTable = ({ data, accounts }) => {
             hideExportButtons
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6} lg={3} container>
+              <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter
-                  setClearDisabled={setDisabledCurrency}
                   name="entity"
                   label="Entity"
                   options={entityOptions}
                   customOnChange={(selectedEntity) => {
-                    if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
-                      setIsAllEntitiesOptionSelected(false);
-                      handleEntityChange(selectedEntity);
-                      return;
-                    }
-
-                    setIsAllEntitiesOptionSelected(true);
-                    setCurrentlySelectedEntity(ALL_ENTITIES_OPTION);
+                    handleEntityChange(selectedEntity);
                   }}
-                  currentlySelectedOption={currentlySelectedEntity}
-                  setCurrentlySelectedOption={setCurrentlySelectedEntity}
+                  customClearChange={() => {
+                    handleEntityChange();
+                  }}
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={3} container>
+              <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter
-                  setClearDisabled={setDisabledCurrency}
-                  name="securityAccount"
-                  label="Security Account"
-                  options={securityAccountOptions}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
-                  setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
-                  customOnChange={(selectedAccount) => {
-                    handleSecurityAccountChange(selectedAccount);
+                  name="safekeepingAccount"
+                  label="Safekeeping Account"
+                  options={safekeepingAccountOptions || safeekingAccountList}
+                  customOnChange={(selectedEntity) => {
+                    setCurrentlySelectedSafekeepingAccount(selectedEntity);
                   }}
-                  isDisabled={isAllEntitiesOptionSelected}
+                  customClearChange={() => {
+                    setCurrentlySelectedSafekeepingAccount();
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6} lg={3}>
+                <DatePicker
+                  name="date"
+                  label="Date"
+                  defaultFilter={moment()}
+                  maxDate={moment()}
+                  disableClear
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
@@ -355,7 +272,7 @@ const CashBalancesTable = ({ data, accounts }) => {
               <Grid item xs={12} md={6} lg={3} container>
                 <DropdownFilter
                   setClearDisabled={setDisabledCurrency}
-                  name="account"
+                  name="cashAccount"
                   label="Cash Account"
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
@@ -363,18 +280,6 @@ const CashBalancesTable = ({ data, accounts }) => {
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
                   }}
-                  // customComponent={{
-                  //   Option: (props) =>
-                  //     ReactSelectCurrencyOption({
-                  //       ...props,
-                  //       currency: props?.data?.data.original.currency.name,
-                  //     }),
-                  //   ValueContainer: (props) =>
-                  //     ReactSelectCurrencySingleValueContainer({
-                  //       ...props,
-                  //       currency: props.getValue()[0]?.data?.original.currency.name,
-                  //     }),
-                  // }}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
@@ -388,23 +293,9 @@ const CashBalancesTable = ({ data, accounts }) => {
                   isDisabled={disabledCurrency}
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={3} container>
-                <DatePicker
-                  name="date"
-                  label="Date"
-                  defaultFilter={moment()}
-                  maxDate={moment()}
-                  disableClear
-                />
-              </Grid>
+              <Grid item xs={12} md={6} lg={3} container></Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
-              </Grid>
-              <Grid>
-                <ReportingInfo
-                  cashAccount={currentlySelectedCashAccount}
-                  securityAccount={currentlySelectedSecurityAccount}
-                />
               </Grid>
             </Grid>
           </TableFiltersWrapper>
@@ -414,8 +305,8 @@ const CashBalancesTable = ({ data, accounts }) => {
           {({ filterColumns, filters }) => {
             const filteredData = data
               ?.filter((row) => {
-                if (filters?.account) {
-                  return row.account === filters?.account?.value?.value;
+                if (filters?.cashAccount) {
+                  return row.account === filters?.cashAccount?.value?.value;
                 }
                 return true;
               })
@@ -428,6 +319,12 @@ const CashBalancesTable = ({ data, accounts }) => {
 
             return (
               <Fragment>
+                <Grid>
+                  <ReportingInfo
+                    cashAccount={filters?.account}
+                    securityAccount={filters?.safekeepingAccount}
+                  />
+                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"

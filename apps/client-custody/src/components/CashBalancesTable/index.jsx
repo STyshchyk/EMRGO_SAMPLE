@@ -54,8 +54,8 @@ const CashBalancesTable = ({ data, accounts }) => {
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [currentlySelectedCurrency, setCurrentlySelectedCurrency] = useState(null);
 
-  const [cashAccountOptions, setCashAccountOptions] = useState(null);
-  const [currencyOptions, setCurrencyOptions] = useState(null);
+  const [cashAccountOptions, setCashAccountOptions] = useState([]);
+  const [currencyOptions, setCurrencyOptions] = useState([]);
 
   const [dateFilterValue, setDateFilterValue] = useState(moment());
   const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
@@ -65,6 +65,7 @@ const CashBalancesTable = ({ data, accounts }) => {
     const cashAccountOpts = [];
     const securityAccountOpts = [];
     const pushedEntity = [];
+    const pushedSecAccount = [];
     const pushedCashAccount = [];
     accs.forEach((acc) => {
       if (pushedEntity.indexOf(acc.group.entity.id) === -1) {
@@ -75,16 +76,16 @@ const CashBalancesTable = ({ data, accounts }) => {
           value: acc.group.entity.id,
         });
 
-        if (acc.group.clientSecuritiesAccount) {
-          securityAccountOpts.push({
-            id: acc.group.clientSecuritiesAccount?.id,
-            label: acc.group.clientSecuritiesAccount?.accountNumber,
-            value: acc.group.clientSecuritiesAccount?.id,
-            original: acc,
-          });
-        }
-
         pushedEntity.push(acc.group.entity.id);
+      }
+      if (pushedSecAccount.indexOf(acc.group.clientSecuritiesAccount.id) === -1) {
+        securityAccountOpts.push({
+          id: acc.group.clientSecuritiesAccount?.id,
+          label: `${acc.group.clientSecuritiesAccount?.accountNumber} | ${acc?.portfolio?.name}`,
+          value: acc.group.clientSecuritiesAccount?.id,
+          original: acc,
+        });
+        pushedSecAccount.push(acc.group.clientSecuritiesAccount.id);
       }
 
       if (pushedCashAccount.indexOf(acc.accountNo) === -1) {
@@ -121,9 +122,37 @@ const CashBalancesTable = ({ data, accounts }) => {
   }));
 
   const handleEntityChange = (selectedEntity) => {
+    // const tempSecurityAccountList = securityAccountOpts
+    //   .filter((securityAccount) =>
+    //     selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
+    //   )
+    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+    //
+    //  if (selectedEntity) {
+    //    setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
+    //  }
+    dispatch(reportsActionCreators.doResetCashBalances());
+  };
+
+  const handleSecurityAccountChange = (selectedAccount) => {
+    setCurrentlySelectedSecurityAccount(selectedAccount);
+    setCurrentlySelectedCashAccount(null);
+    setCurrentlySelectedCurrency(null);
+    const tempEntitiesList = entityOpts
+      .filter((entity) =>
+        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
+      )
+      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
+
+    if (selectedAccount) {
+      setCurrentlySelectedEntity(tempEntitiesList[0]);
+    }
+
     const filteredCashAccounts = cashAccountOpts
       .filter((account) =>
-        selectedEntity ? account?.original?.group.entity.id === selectedEntity.value : false
+        selectedAccount
+          ? account?.original?.group.clientSecuritiesAccount.id === selectedAccount.data.id
+          : false
       )
       .map((account) => ({
         data: account,
@@ -142,7 +171,7 @@ const CashBalancesTable = ({ data, accounts }) => {
       ).values(),
     ].map((currency) => {
       const currencyObject = {
-        label: currency.data?.original?.currency.name,
+        label: currency.data?.original?.currency?.name,
         value: currency.data?.original?.currency.id,
       };
       return currencyObject;
@@ -150,30 +179,6 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     setCurrencyOptions(filteredCurrencies);
 
-    const tempSecurityAccountList = securityAccountOpts
-      .filter((securityAccount) =>
-        selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedEntity) {
-      setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
-    }
-    dispatch(reportsActionCreators.doResetCashBalances());
-  };
-
-  const handleSecurityAccountChange = (selectedAccount) => {
-    setCurrentlySelectedSecurityAccount(selectedAccount);
-
-    const tempEntitiesList = entityOpts
-      .filter((entity) =>
-        selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
-      )
-      .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    if (selectedAccount) {
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
     dispatch(reportsActionCreators.doResetCashBalances());
   };
 
@@ -182,7 +187,9 @@ const CashBalancesTable = ({ data, accounts }) => {
     const { date } = filters;
 
     qs += `date=${date?.value?.toISOString()}&`;
-
+    if (currentlySelectedSecurityAccount) {
+      qs += `portfolio_id=${currentlySelectedSecurityAccount?.original.portfolioId}&`;
+    }
     if (currentlySelectedEntity.value !== "all") {
       qs += `entityId=${currentlySelectedEntity?.data.entityId}`;
     }
@@ -335,10 +342,14 @@ const CashBalancesTable = ({ data, accounts }) => {
                 <DropdownFilter
                   name="securityAccount"
                   setClearDisabled={setDisabledCurrency}
-                  label="Security Account"
+                  label="Safekeeping Account"
                   options={securityAccountOptions}
                   currentlySelectedOption={currentlySelectedSecurityAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                  setCustomClear={() => {
+                    setCashAccountOptions([]);
+                    setCurrentlySelectedCashAccount(null);
+                  }}
                   customOnChange={(selectedAccount) => {
                     handleSecurityAccountChange(selectedAccount);
                   }}
@@ -366,21 +377,12 @@ const CashBalancesTable = ({ data, accounts }) => {
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  setCustomClear={() => {
+                    setCurrentlySelectedCurrency(null);
+                  }}
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
                   }}
-                  // customComponent={{
-                  //   Option: (props) =>
-                  //     ReactSelectCurrencyOption({
-                  //       ...props,
-                  //       currency: props?.data?.data.original.currency.name,
-                  //     }),
-                  //   ValueContainer: (props) =>
-                  //     ReactSelectCurrencySingleValueContainer({
-                  //       ...props,
-                  //       currency: props.getValue()[0]?.data?.original.currency.name,
-                  //     }),
-                  // }}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
@@ -406,7 +408,7 @@ const CashBalancesTable = ({ data, accounts }) => {
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
               </Grid>
-              <Grid>
+              <Grid item xs={12}>
                 <ReportingInfo
                   cashAccount={currentlySelectedCashAccount}
                   securityAccount={currentlySelectedSecurityAccount}
