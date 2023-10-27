@@ -20,7 +20,6 @@ const CashBalancesReportPage = () => {
   const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
   const transactions = useSelector(reportsSelectors.selectCashBalances);
   const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
-  console.log(cashAccounts);
 
   const currentEntityGroupID = currentEntityGroup?.id;
 
