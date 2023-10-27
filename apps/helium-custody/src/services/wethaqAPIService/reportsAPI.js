@@ -18,7 +18,8 @@ const getCashTransactions = (payload) =>
 const getCashBalances = (payload) =>
   baseAxiosInstance({
     method: "GET",
-    url: `/reports/v2/reports/cashBalances?${payload.qs}`,
+    url: `/reports/v2/reports/cashBalances`,
+    params: payload?.params || null,
   });
 
 const getSecuritiesAccounts = (payload) =>

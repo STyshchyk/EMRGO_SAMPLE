@@ -2,12 +2,16 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
+
+
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
@@ -24,6 +28,10 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import FilterCheckbox from "../FilterComponents/FilterCheckbox";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+
+
+
+
 
 const FALLBACK_VALUE = "--";
 
@@ -47,7 +55,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
     portfolioId: i.portfolioId ?? FALLBACK_VALUE,
     portfolio: i.portfolio.name,
-    securityAccount: i.portfolio.name,
+    securityAccount: i.portfolio.accountNumber,
     positionType: i?.positionType ?? FALLBACK_VALUE,
     quantity: (i.quantity && convertNumberToIntlFormat(i.quantity)) || FALLBACK_VALUE,
     security: primaryIssuanceName || externalSecurityName || FALLBACK_VALUE,
@@ -56,6 +64,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     csd: csd ?? FALLBACK_VALUE,
   };
 };
+
 
 const SecuritiesHoldingsTable = ({
   data,
@@ -404,7 +413,6 @@ const SecuritiesHoldingsTable = ({
                 return true;
               });
 
-            console.log("🚀 ~ file: index.jsx:372 ~ filteredData:", filteredData);
 
             return (
               <MaterialTable

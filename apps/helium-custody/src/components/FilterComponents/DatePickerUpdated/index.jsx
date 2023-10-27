@@ -57,7 +57,7 @@ const DatePicker = ({ name, defaultFilter, label,maxDate, disableClear = false, 
         }
       </Grid>
 
-      <Box my={1} className="w-full">
+      <Box my={1}  sx={{ width: "100%" }}>
         <MuiDatePicker
           fullWidth
           format="DD/MM/YYYY"
