@@ -4,6 +4,8 @@
     "WSN": "WSN",
     "Security": "Security",
     "Trade Type": "Trade Type",
+    "Settlement Account": "Settlement Account",
+    "Portfolio": "Portfolio",
     "Entry Date": "Entry Date",
     "Trade Date": "Trade Date",
     "Settlement Date": "Settlement Date",
@@ -33,6 +35,7 @@
     "Last Amended": "Last Amended",
     "Principal Amount": "Principal Amount",
     "Accrued Interest": "Accrued Interest",
+    "Commission": "Commission",
     "Internal Trade Ref": "Internal Trade Ref"
   },
   "TableActions": {

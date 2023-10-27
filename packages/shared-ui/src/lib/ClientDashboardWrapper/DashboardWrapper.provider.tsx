@@ -32,6 +32,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const { showWarningToast, showInfoToast } = useToast();
   const currentRole = constants.roles.find((role) => role.key === user?.role);
   const fullName = user ? `${user?.firstName} ${user?.lastName}` : "N.A";
+  const [isHelpDeskOpen, setHelpDeskOpen] = useState(false);
 
   const origin = window.location.origin;
   const { mutate: doRefreshToken } = useMutation(refreshToken);
@@ -113,7 +114,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "primaries",
       path: constants.clientPrimariesRoutes.home,
       paths: constants.getAllRoutes(constants.clientPrimariesRoutes),
-      disabled:true,
+      disabled: true,
     },
     {
       label: "Secondaries",
@@ -129,7 +130,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       key: "custody",
       path: constants.clientCustodyRoutes.custody.onboarding.home,
       paths: constants.getAllRoutes(constants.clientCustodyRoutes),
-      disabled:false,
+      disabled: false,
     },
     {
       label: "Research",
@@ -144,7 +145,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes);
 
   const onRejectPlatformTerms = () => {
-       if (user?.hasAcceptedSilverTnc) {
+    if (user?.hasAcceptedSilverTnc) {
       // According to Bug ID 838: Even if terms modal shows, clicking on close button won't log out user
       setShowTermsModal("");
       return;
@@ -157,7 +158,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
         refreshProfile();
         setTimeout(() => {
-         showSuccessToast("Successfully accepted platform terms and conditions");
+          showSuccessToast("Successfully accepted platform terms and conditions");
         }, 1000);
       },
     });
@@ -206,6 +207,8 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     onLogOut,
     onAcceptPlatformTerms,
     onRejectPlatformTerms,
+    isHelpDeskOpen,
+    setHelpDeskOpen,
   };
 
   return (

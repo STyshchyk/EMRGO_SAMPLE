@@ -62,10 +62,7 @@ const CashStatementPage = () => {
   const accounts = useSelector(billingAndPaymentsSelectors.selectAccounts);
 
   const [entityFilterValue, setEntityFilterValue] = useState(null);
-  console.log(
-    "🚀 ~ file: index.jsx:66 ~ CashStatementPage ~ entityFilterValue:",
-    entityFilterValue
-  );
+
   const [accountFilterValue, setAccountFilterValue] = useState(null);
   const [securityAccountFilterValue, setSecurityAccountFilterValue] = useState(null);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
