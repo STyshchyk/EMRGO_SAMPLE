@@ -559,6 +559,13 @@ const RaiseSettlementInstructionForm = ({
                   inputComponent: CustomNumberInputField,
                 }}
               />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name="quantity"
+              />
             </InlineFormField>
 
             <InlineFormField label={"Price %"}>
@@ -591,6 +598,13 @@ const RaiseSettlementInstructionForm = ({
                 inputProps={{
                   decimals: 5,
                 }}
+              />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name="price"
               />
             </InlineFormField>
 
@@ -631,6 +645,13 @@ const RaiseSettlementInstructionForm = ({
                     </InputAdornment>
                   ),
                 }}
+              />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name="accruedInterest"
               />
             </InlineFormField>
 
