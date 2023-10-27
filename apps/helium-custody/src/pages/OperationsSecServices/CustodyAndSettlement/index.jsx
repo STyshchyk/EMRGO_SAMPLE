@@ -79,7 +79,6 @@ const CustodyAndSettlement = () => {
   const currentEntityGroupID = currentEntityGroup?.id;
   // BE needs to return info on attrs in ext sec obj on payments/v2/payment/list
   const generatedTableData = paymentsList?.map((i) => generateSecurityTradesTableRowData(i));
-  console.log("🚀 ~ file: index.jsx:86 ~ CustodyAndSettlement ~ paymentsList:", paymentsList);
   const hasApproveTradeACL = currentListOfACLs.includes("Blotter/Approve");
   const hasSettleTradeACL = currentListOfACLs.includes("Blotter/Settle");
   const hasViewSIAuditHistoryACL = currentListOfACLs.includes("Services/Audit/View");
