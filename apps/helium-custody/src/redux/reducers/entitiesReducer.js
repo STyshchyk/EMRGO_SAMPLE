@@ -87,8 +87,8 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      // legacyEntitiesList: data.entities?.filter(isKYCApproved),
-      legacyEntitiesList: data.entities,
+      legacyEntitiesList: data.entities?.filter(isKYCApproved),
+      // legacyEntitiesList: data.entities,
     }),
     [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,

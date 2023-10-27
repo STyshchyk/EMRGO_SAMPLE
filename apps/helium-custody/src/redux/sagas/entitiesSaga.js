@@ -36,7 +36,6 @@ function* fetchLegacyEntitiesSaga({ payload }) {
   try {
     const response = yield call(wethaqAPIService.entitiesAPI.getLegacyEntities, payload);
     const { data } = response;
-    console.log("🚀 ~ file: entitiesSaga.js:39 ~ function*fetchLegacyEntitiesSaga ~ data:", data)
     yield put(entitiesActionCreators.doFetchLegacyEntitiesSuccess({ data }));
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
