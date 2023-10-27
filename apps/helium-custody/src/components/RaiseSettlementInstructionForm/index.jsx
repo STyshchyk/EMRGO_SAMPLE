@@ -2,6 +2,8 @@ import { forwardRef, Fragment, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 
+
+
 import { Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -13,6 +15,8 @@ import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import moment from "moment";
 import PropTypes from "prop-types";
 
+
+
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as authSelectors from "../../redux/selectors/auth";
@@ -23,6 +27,10 @@ import useIsProduction from "../../utils/useIsProduction";
 import { addSettlementInstructionFormSchema } from "../../validationSchemas";
 import CustomTextField from "../CustomTextField";
 import RealtimeSecSearchDialog from "../RealtimeSecSearchDialog";
+
+
+
+
 
 const PREFIX = "RaiseSettlementInstructionForm";
 
@@ -229,7 +237,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     tradeDate: formikValues?.tradeDate,
     settlementDate: formikValues?.settlementDate,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
-    portfolio: undefined,
+    portfolio_id: formikValues.portfolio_id,
   };
 
   if (isFreeOfPayment) {
@@ -357,7 +365,6 @@ const RaiseSettlementInstructionForm = ({
   editable,
   options,
 }) => {
-  console.log("🚀 ~ file: index.jsx:345 ~ initialValues:", initialValues);
   const inProd = useIsProduction();
 
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
@@ -382,10 +389,6 @@ const RaiseSettlementInstructionForm = ({
   const foundSafekeepingAccount = safekeepingOptions.find((safekeepingOption) => {
     return safekeepingOption.value.id === initialValues?.portfolio?.id;
   });
-  console.log(
-    "🚀 ~ file: index.jsx:370 ~ foundSafekeepingAccount ~ foundSafekeepingAccount:",
-    foundSafekeepingAccount
-  );
 
   const [selectedSafekeepingAccountOption, setSelectedSafekeepingAccountOption] =
     useState(foundSafekeepingAccount);
@@ -394,7 +397,6 @@ const RaiseSettlementInstructionForm = ({
 
   const counterpartyOptionsList = generateCounterpartyOptionsList(counterpartiesList);
   const externalSecurityOptionsList = generateExternalSecurityOptionsList(externalSecuritiesList);
-  console.log(externalSecurityOptionsList);
   const settlementInstructionTypeOptionsList = generateSettlementInstructionTypeOptionsList(
     dropdownOptions?.settlementInstructionType
   );
@@ -490,6 +492,7 @@ const RaiseSettlementInstructionForm = ({
                   value={selectedSafekeepingAccountOption}
                   options={safekeepingOptions}
                   onChange={(newValue) => {
+                    console.log("onChange", newValue);
                     setFieldValue("portfolio_id", newValue?.value?.id);
                     setSelectedSafekeepingAccountOption(newValue);
                   }}
