@@ -32,8 +32,8 @@ export const verifyEntityExists = (requestObject: { entityName : string }) => {
 export const verifyEmailExists = (requestObject: { email: string }) => {
   const promise = sharedDashboardApi({
     method: "get",
-    params: requestObject,
-    url: `/auth/v2/client/email/exists`,
+    params: {...requestObject, userType:'client'},
+    url: `/auth/v2/email/exists`,
   });
   return promise;
 };
