@@ -268,6 +268,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
           setTouched,
           touched,
           handleBlur,
+          isSubmitting,
         }) => {
           const toCurrencyOptionsList = generateToCurrencyOptionsList(values?.fromCurrency?.value);
           const fromAccountOptionsList = generateAccountOptionsList(
