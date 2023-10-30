@@ -118,35 +118,17 @@ const AddInternalTransferForm = ({
   const formattedDate = moment().format("DD/MM/YYYY");
 
   const sourceOwners = useSelector(billingAndPaymentsSelectors.selectSourceOwners);
-  // const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners); // Uses same API as sourceOwners
+  const destinationOwners = useSelector(billingAndPaymentsSelectors.selectDestinationOwners);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectSourceAccounts);
-  // const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);// Uses same API as sourceAccounts
+  const destinationAccounts = useSelector(billingAndPaymentsSelectors.selectDestinationAccounts);
+  const sourceEntitiesDropdown = generateEntityOptionsList(sourceOwners);
+  const destinationEntitiesDropdown = generateEntityOptionsList(destinationOwners);
+  let sourceAccountsDropdown = generateWethaqAccountOptionsList(sourceAccounts);
+  let destinationAccountsDropdown = generateWethaqAccountOptionsList(destinationAccounts);
 
-  const filteredSourceOwners =
-    Array.isArray(sourceOwners) &&
-    sourceOwners.filter((owner) => {
-      return (
-        (owner.entityCustodyKycStatus >= 3 &&
-          owner.entityKycStatus >= 3 &&
-          owner.userKycStatus >= 3) ||
-        owner.entityCustodyKycStatus === 0 // EMRGO USER
-      );
-    });
-
-  const filteredSourceAccounts =
-    Array.isArray(sourceAccounts) &&
-    sourceAccounts.filter((account) => {
-      const entityId = account.group.entity.id;
-      return filteredSourceOwners.findIndex((x) => x.id === entityId) >= 0;
-    });
-
-  const sourceEntitiesDropdown = generateEntityOptionsList(filteredSourceOwners);
-  const destinationEntitiesDropdown = generateEntityOptionsList(filteredSourceOwners);
-  let sourceAccountsDropdown = generateWethaqAccountOptionsList(filteredSourceAccounts);
-  let destinationAccountsDropdown = generateWethaqAccountOptionsList(filteredSourceAccounts);
   const validateAccountType = (account) => {
     if (!account) return false;
-    const filterAccount = filteredSourceAccounts.filter((acc) => {
+    const filterAccount = sourceAccounts.filter((acc) => {
       return account.value.accountId === acc.id;
     });
     const type = Array.isArray(filterAccount) && filterAccount[0]?.type;
@@ -159,7 +141,7 @@ const AddInternalTransferForm = ({
           setFieldValue("sourceEntity", selectedEntity);
           setFieldValue("sourceAccount", null);
           sourceAccountsDropdown = generateWethaqAccountOptionsList(
-            filteredSourceAccounts.filter((account) =>
+            sourceAccounts.filter((account) =>
               selectedEntity ? account.group.entity.id === selectedEntity.value : true
             )
           );
@@ -168,7 +150,7 @@ const AddInternalTransferForm = ({
         const sourceAccountChange = (selectedAccount) => {
           setFieldValue("sourceAccount", selectedAccount);
           const tempEntitiesList = generateEntityOptionsList(
-            filteredSourceOwners.filter((entity) =>
+            sourceOwners.filter((entity) =>
               selectedAccount ? entity.id === selectedAccount.value.entityId : true
             )
           );
@@ -179,7 +161,7 @@ const AddInternalTransferForm = ({
 
           if (selectedAccount) {
             destinationAccountsDropdown = generateWethaqAccountOptionsList(
-              filteredSourceAccounts
+              destinationAccounts
                 .filter((account) =>
                   values.destinationEntity
                     ? account.group.entity.id === values.destinationEntity.value
@@ -203,7 +185,7 @@ const AddInternalTransferForm = ({
           setFieldValue("destinationEntity", selectedEntity);
           setFieldValue("destinationAccount", null);
           destinationAccountsDropdown = generateWethaqAccountOptionsList(
-            filteredSourceAccounts
+            destinationAccounts
               .filter((account) =>
                 selectedEntity ? account.group.entity.id === selectedEntity.value : true
               )
@@ -218,14 +200,14 @@ const AddInternalTransferForm = ({
         const destinationAccountChange = (selectedAccount) => {
           setFieldValue("destinationAccount", selectedAccount);
           const tempEntities = generateEntityOptionsList(
-            filteredSourceOwners.filter((entity) =>
+            destinationOwners.filter((entity) =>
               selectedAccount ? entity.id === selectedAccount.value.entityId : true
             )
           );
 
           if (selectedAccount) {
             sourceAccountsDropdown = generateWethaqAccountOptionsList(
-              filteredSourceAccounts
+              sourceAccounts
                 .filter((account) =>
                   values.sourceEntity ? account.group.entity.id === values.sourceEntity.value : true
                 )
@@ -265,6 +247,7 @@ const AddInternalTransferForm = ({
             return "";
           }
           const validatedAccoutType = validateAccountType(values.sourceAccount);
+          console.log(validatedAccoutType);
           const parsedtransferAmount = parseFloat(values.transferAmount, 10);
           const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
           if (parsedAccountBalance < 0 && !validatedAccoutType) return "negativeBalance";
