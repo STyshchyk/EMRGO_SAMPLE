@@ -1,5 +1,7 @@
 import { produce } from "immer";
 import { handleActions } from "redux-actions";
+import { accountIdentification } from "../../constants/user";
+
 
 import * as actionCreators from "../actionCreators/cashManagement";
 
@@ -21,6 +23,10 @@ const defaultState = {
   isFetchingExternalPaymentsAuditData: false,
   externalPaymentsAuditData: null,
 };
+
+const isKYCApproved = (entity) =>
+  entity?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
+     entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for internal entity api
 
 const billingAndPaymentsReducer = handleActions(
   {
@@ -55,7 +61,7 @@ const billingAndPaymentsReducer = handleActions(
     }),
     [actionCreators.doFetchSourceOwnersSuccess]: produce((draft, { payload: { data } }) => {
       draft.isFetching = false;
-      draft.sourceOwners = data.entities;
+      draft.sourceOwners = data.entities?.filter(isKYCApproved);
     }),
     [actionCreators.doFetchSourceOwnersFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
@@ -80,7 +86,7 @@ const billingAndPaymentsReducer = handleActions(
     }),
     [actionCreators.doFetchDestinationOwnersSuccess]: produce((draft, { payload: { data } }) => {
       draft.isFetching = false;
-      draft.destinationOwners = data.entities;
+      draft.destinationOwners = data.entities?.filter(isKYCApproved);
     }),
     [actionCreators.doFetchDestinationOwnersFailure]: produce((draft, { payload }) => {
       draft.isFetching = false;
