@@ -599,9 +599,7 @@ const SecuritiesTransactionsReportPage = () => {
                 if (values.securityAccount) {
                   qs += `portfolio_id=${values.securityAccount.original.securitiesAccount.portfolioId}&`;
                 }
-                if (values.securityAccount) {
-                  qs += `accountId=${values.securityAccount.data.id}`;
-                }
+
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
               };
 
