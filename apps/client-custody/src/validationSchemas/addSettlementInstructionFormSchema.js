@@ -7,18 +7,18 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   price: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () =>
-      Yup.string().test("maxValue", "Maximum value is 100", (value) => {
-        if (!isNaN(Number(value))) {
-          return Number(value) <= 100;
-        }
+      Yup.string().test("maxValue", "Must be at most 10 digits", (value) => {
+        if (typeof value === 'string' && !isNaN(Number(value))) {
+          return value.length <= 10;
+        } 
         return true;
       }),
     otherwise: () =>
       Yup.string()
         .required("Price is required")
-        .test("maxValue", "Maximum value is 100", (value) => {
-          if (!isNaN(Number(value))) {
-            return Number(value) <= 100;
+        .test("maxValue", "Must be at most 10 digits", (value) => {
+          if (typeof value === 'string' && !isNaN(Number(value))) {
+            return value.length <= 10;
           }
           return true;
         }),
