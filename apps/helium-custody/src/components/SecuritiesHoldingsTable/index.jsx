@@ -110,13 +110,13 @@ const SecuritiesHoldingsTable = ({
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
 
-  const safeekingAccountList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
-      value: i.id,
-      entityId: i.entity_id,
-    })),
-  ];
+    const safeekingAccountList = safekeepingAccounts
+        ? safekeepingAccounts.map((i) => ({
+            label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+            value: i.id,
+            entityId: i.entity_id,
+        }))
+        : [];
 
   const listOfUniqueSecurities = [...new Set(data?.map(({ security }) => security))];
 
