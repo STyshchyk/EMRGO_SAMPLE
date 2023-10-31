@@ -1,4 +1,5 @@
 import { blacklistedDomains } from "@emrgo-frontend/constants";
+import { userTypes } from "@emrgo-frontend/constants";
 import { verifyEmailExists, verifyEntityExists } from "@emrgo-frontend/services";
 import * as Yup from "yup";
 
@@ -31,7 +32,7 @@ export const SignupSchema = Yup.object().shape({
       "A user with the same email id already exists on the platform",
       (value) => {
         return new Promise((resolve) => {
-          verifyEmailExists({ email: value })
+          verifyEmailExists({ email: value, userType: userTypes.EXTERNAL })
             .then(() => {
               // Does not exists
               resolve(true);

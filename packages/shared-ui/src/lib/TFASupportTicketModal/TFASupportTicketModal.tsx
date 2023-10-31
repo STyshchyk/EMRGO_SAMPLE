@@ -27,6 +27,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
   isOpen,
   onClose,
   email,
+  userType
 }) => {
   const fileInputRef = useRef(null);
   const { mutate: doUploadFile } = useMutation(getFileUploadLink);
@@ -42,7 +43,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
             email: email || "",
             file: null,
           }}
-          validationSchema={TFASupportTicketModalFormSchema}
+          validationSchema={TFASupportTicketModalFormSchema(userType)}
           onSubmit={(values, formikHelpers) => {
             const requestPayload = {
               ...values,
