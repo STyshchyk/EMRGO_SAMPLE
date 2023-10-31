@@ -2,6 +2,7 @@ import React, { FC, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { clientPrimariesRoutes as routes } from "@emrgo-frontend/constants";
+import { userTypes } from "@emrgo-frontend/constants";
 import {
   ArrowBackwardIcon,
   Button,
@@ -130,6 +131,7 @@ export const LoginComponent: FC<ILoginProps> = (props: ILoginProps) => {
           <TFASupportTicketModal
             isOpen={isTFAModalOpen}
             onClose={() => closeTFASupportTicketModal()}
+            userType={userTypes.EXTERNAL}
           />
         </Styles.LoginForm>
       )}

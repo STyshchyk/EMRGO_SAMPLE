@@ -4,3 +4,8 @@ export const accountIdentification = {
   KYC_STATUS_APPROVED: 3,
   KYC_STATUS_REJECTED: 4,
 };
+
+export const userTypes = {
+  INTERNAL: 'internal',
+  EXTERNAL: 'client',
+}

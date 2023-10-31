@@ -21,11 +21,13 @@ import { Field, Form, Formik } from "formik";
 
 import { ITFASupportTicketModalProps } from "./TFASupportTicketModal.types";
 import { TFASupportTicketModalFormSchema } from "./TFASupportTikcetModal.schema";
+import { AxiosError } from "axios";
 
 export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
   isOpen,
   onClose,
   email,
+  userType
 }) => {
   const fileInputRef = useRef(null);
   const { mutate: doUploadFile } = useMutation(getFileUploadLink);
@@ -41,7 +43,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
             email: email || "",
             file: null,
           }}
-          validationSchema={TFASupportTicketModalFormSchema}
+          validationSchema={TFASupportTicketModalFormSchema(userType)}
           onSubmit={(values, formikHelpers) => {
             const requestPayload = {
               ...values,
@@ -52,6 +54,12 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
               onSuccess: (response) => {
                 showSuccessToast("Successfully created a support ticket to reset your 2FA.");
                 onClose();
+              },
+                onError: (error) => {
+                  if (error instanceof AxiosError && error.response?.status === 412) {
+                    showErrorToast(error.response?.data?.message);
+                  }        
+                  return error 
               },
             });
 
