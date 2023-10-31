@@ -79,7 +79,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     };
     dispatch(formActionCreators.doPostFormRequested(obj));
   };
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     const createPaymentInstruction = (payload) => {
       dispatch(accountsActionCreators.doCreateOutgoingInstructions(payload));
     };
