@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import InlineFormField from "apps/helium-custody/src/components/InlineFormField";
 import MaterialTableCustomDropdownRenderer from "apps/helium-custody/src/components/MaterialTableCustomDropdownRenderer";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import PropTypes from "prop-types";
 
@@ -58,10 +58,10 @@ const AddSafekeepingAccountDialog = ({
   };
 
   const currencyListForMaterialTable = {};
-  currencies.forEach((currency) => {
-    currencyListForMaterialTable[currency.id] = currency.name;
+  const filteredCurrenciesForMaterialTable = getDropdownValues(currencies);
+  filteredCurrenciesForMaterialTable.forEach((currency) => {
+    currencyListForMaterialTable[currency.value] = currency.label;
   });
-
   const columns = [
     {
       title: "Currency",
