@@ -56,6 +56,10 @@ export const TooltipButtonActions = styled.button<{ $disabled?: boolean }>`
   background-color: transparent;
   border: none;
   font-size: ${rem(12)};
+  pointer-events: ${(props) => (props.$disabled ? 'none' : 'auto')};
+
+  /* ${(props) => props.$disabled && `disabled: true`} */
+
 
   ${(props) =>
     props.theme.mode === "light" &&
