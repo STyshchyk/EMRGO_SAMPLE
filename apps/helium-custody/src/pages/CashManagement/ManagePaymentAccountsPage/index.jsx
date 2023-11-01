@@ -6,6 +6,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
+import moment from "moment";
 
 import PageTitle from "../../../components/PageTitle";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
@@ -53,6 +54,7 @@ const createPaymentAccountTableDataRow = (account) => ({
   intermediaryBankRouteCode: account?.intermediaryBankRouteCode,
   intermediaryBankSortCode: account?.intermediaryBankSortCode,
   intermediaryBankCountry: account?.intermediaryBankCountry?.name,
+  createdAt: account?.createdAt,
 });
 
 const ManagePaymentAccountsPage = () => {
@@ -104,6 +106,7 @@ const ManagePaymentAccountsPage = () => {
       intermediaryBankAccountNo,
       intermediaryBankRouteCode,
       intermediaryBankSortCode,
+      createdAt,
     } = originalData;
 
     return {
@@ -180,10 +183,6 @@ const ManagePaymentAccountsPage = () => {
         label: "Intermediary Bank Name",
         value: intermediaryBankName,
       },
-      intermediaryBankAccountNo: {
-        label: "Intermediary Bank Account No",
-        value: intermediaryBankAccountNo,
-      },
       intermediaryBankIBAN: {
         label: "Intermediary Bank IBAN",
         value: intermediaryBankIBAN,
@@ -208,13 +207,20 @@ const ManagePaymentAccountsPage = () => {
         label: "Intermediary Bank Post Code",
         value: intermediaryBankPostCode,
       },
+      intermediaryBankAccountNo: {
+        label: "Intermediary Bank Account No",
+        value: intermediaryBankAccountNo,
+      },
       intermediaryBankRouteCode: {
-        label: "Intermediary Bank Route Code",
+        label: "Intermediary Routing Code",
         value: intermediaryBankRouteCode,
       },
       intermediaryBankSortCode: {
-        label: "Intermediary Bank Sort Code",
+        label: "Intermediary Sort No",
         value: intermediaryBankSortCode,
+      },
+      createdAt: {
+        value: createdAt,
       },
     };
   };
@@ -223,6 +229,8 @@ const ManagePaymentAccountsPage = () => {
 
   const listOfRowValues = [];
   const listOfColumnNames = [];
+
+  transformedData.sort((a, b) => moment(b.createdAt?.value) - moment(a.createdAt?.value));
 
   transformedData.forEach((td) => {
     const rows = [];

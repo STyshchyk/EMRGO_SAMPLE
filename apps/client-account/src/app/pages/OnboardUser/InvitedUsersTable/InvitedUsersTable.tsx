@@ -72,7 +72,10 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
               <TooltipButtonBox>
                 <TooltipButtonActions
                   $disabled={status === UserStatus.onboarded}
-                  onClick={() => onResendInvitation(id)}
+                  onClick={() => {
+                    // if(status === UserStatus.onboarded) return;
+                    onResendInvitation(id)
+                  }}
                 >
                   Resend Invitation
                 </TooltipButtonActions>

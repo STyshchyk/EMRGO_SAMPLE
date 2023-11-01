@@ -182,6 +182,11 @@ const PaymentAccountsTable = ({ tableData }) => {
           render: (rowData) => <PaymentAccountsTableActionMenu rowData={rowData} />,
           ...sharedColumnOptions,
         },
+        {
+          field: "createdAt",
+          hidden: true, // Hide this column
+          defaultSort: "desc", // Set the default sorting direction (desc for the latest created items)
+        },
         /*
         {
           title: t('PaymentAccountManagement.PaymentAccountsTable.Balance'),
