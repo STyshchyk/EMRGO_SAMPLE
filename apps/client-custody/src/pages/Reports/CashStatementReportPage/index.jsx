@@ -29,6 +29,11 @@ import ReportingDisclaimer from "../ReportingDisclaimer";
 
 const getFormattedBalanceType = (accType) => v.capitalize(accType.split("_").join(" "));
 
+const decimalFormat = {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+};
+
 const getTableData = (accs) => {
   const entries = [];
   accs.forEach((acc) => {
@@ -298,9 +303,10 @@ const CashStatementReportPage = () => {
       id: "debit",
       title: t("Cash Statement.Headers.Debit"),
       field: "debit",
-      render: (rowData) => currencyRenderer(rowData.debit),
+      render: (rowData) => currencyRenderer(rowData.debit, decimalFormat),
       exportConfig: {
-        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.debit) : "--"),
+        render: (rowData) =>
+          rowData.debit !== "-" ? currencyRenderer(rowData.debit, decimalFormat) : "--",
         align: "right",
       },
       // type: 'numeric',
@@ -309,9 +315,10 @@ const CashStatementReportPage = () => {
       id: "credit",
       title: t("Cash Statement.Headers.Credit"),
       field: "credit",
-      render: (rowData) => currencyRenderer(rowData.credit),
+      render: (rowData) => currencyRenderer(rowData.credit, decimalFormat),
       exportConfig: {
-        render: (rowData) => (rowData.debit !== "-" ? currencyRenderer(rowData.credit) : "--"),
+        render: (rowData) =>
+          rowData.debit !== "-" ? currencyRenderer(rowData.credit, decimalFormat) : "--",
         align: "right",
       },
       // type: 'numeric',
@@ -320,8 +327,11 @@ const CashStatementReportPage = () => {
       id: "balance",
       title: t("Cash Statement.Headers.Balance"),
       field: "balance",
-      render: (rowData) => currencyRenderer(rowData.balance),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.balance), align: "right" },
+      render: (rowData) => currencyRenderer(rowData.balance, decimalFormat),
+      exportConfig: {
+        render: (rowData) => currencyRenderer(rowData.balance, decimalFormat),
+        align: "right",
+      },
       // type: 'numeric',
     },
   ];
