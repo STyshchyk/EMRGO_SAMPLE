@@ -82,7 +82,8 @@ const ViewCouponAllocationDialog = ({ open, handleClose, currentlySelectedRowDat
                 <TextField
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
+                  size="small"
                   value={totalCouponAmount}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -92,7 +93,6 @@ const ViewCouponAllocationDialog = ({ open, handleClose, currentlySelectedRowDat
                         <span
                           style={{
                             fontSize: "0.75em",
-                            padding: "0 1rem",
                           }}
                         >
                           {currentlySelectedRowData?.externalSecurity?.currencyName?.name}

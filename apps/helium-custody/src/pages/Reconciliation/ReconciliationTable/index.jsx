@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import MaterialTable from "@material-table/core";
 import PropTypes from "prop-types";
 
-import { dateRenderer, floatRenderer } from "../../../constants/paymentAndStatuses/renderers";
+import { dateRenderer, floatRenderer } from "../../../constants/renderers";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import tableStyles from "../../../styles/cssInJs/materialTable";
 

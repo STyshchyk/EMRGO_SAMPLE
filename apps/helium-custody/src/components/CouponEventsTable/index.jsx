@@ -1,25 +1,30 @@
 import React, { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+
+
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
-import Popper from '@mui/material/Popper';
 import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 
+
+
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import { useCouponEventsTableFilters } from "../../context/coupon-events-table-filters-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
@@ -30,13 +35,17 @@ import { dateFormatter } from "../../utils/formatter";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 
+
+
+
+
 // TODO: CLEAN UP LATER
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 
 const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
   <Fragment>
     {Boolean(anchorEl) && (
-    <Popper
+      <Popper
         data-testid="coupon-events-table-menu-list"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
@@ -45,32 +54,29 @@ const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => (
         disablePortal
         placement="right"
         sx={{ zIndex: 99 }}
-    >
+      >
         {({ TransitionProps }) => (
-            <Grow
-                {...TransitionProps}
-            >
-                <Paper>
-                    <ClickAwayListener onClickAway={handleCloseMenu}>
-                        <MenuList id="split-button-menu">
-                            {actions
-                                .map((action) => (
-                                    <MenuItem
-                                        key={action.id}
-                                        disabled={action.disabled}
-                                        onClick={() => {
-                                            action.onClick();
-                                        }}
-                                    >
-                                        <Typography variant="inherit">{action.label}</Typography>
-                                    </MenuItem>
-                                ))}
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Grow>
+          <Grow {...TransitionProps}>
+            <Paper>
+              <ClickAwayListener onClickAway={handleCloseMenu}>
+                <MenuList id="split-button-menu">
+                  {actions.map((action) => (
+                    <MenuItem
+                      key={action.id}
+                      disabled={action.disabled}
+                      onClick={() => {
+                        action.onClick();
+                      }}
+                    >
+                      <Typography variant="inherit">{action.label}</Typography>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
         )}
-    </Popper> 
+      </Popper>
     )}
   </Fragment>
 );
@@ -99,10 +105,9 @@ const CouponEventsTableFiltering = () => {
             </Typography>
           </Grid>
 
-          <Box my={1} className="w-full">
+          <Box my={1} className="w-full" sx={{ width: "100%" }}>
             <DatePicker
               placeholder="From"
-              fullWidth
               inputVariant="filled"
               format={DEFAULT_DATE_FORMAT}
               value={
@@ -116,6 +121,7 @@ const CouponEventsTableFiltering = () => {
                   payload: date.toDate(),
                 });
               }}
+              slotProps={{ textField: { size: "small", fullWidth: true } }}
             />
           </Box>
         </Grid>
@@ -126,11 +132,10 @@ const CouponEventsTableFiltering = () => {
             </Typography>
           </Grid>
 
-          <Box my={1} className="w-full">
+          <Box my={1} className="w-full" sx={{ width: "100%" }}>
             <DatePicker
               placeholder="To"
-              fullWidth
-              inputVariant="filled"
+              inputVariant="outlined"
               format={DEFAULT_DATE_FORMAT}
               value={
                 couponEventFiltersState.toDate ? moment(couponEventFiltersState.toDate) : undefined
@@ -146,6 +151,7 @@ const CouponEventsTableFiltering = () => {
                   payload: date.toDate(),
                 });
               }}
+              slotProps={{ textField: { size: "small", fullWidth: true } }}
             />
           </Box>
         </Grid>
@@ -256,21 +262,14 @@ const CouponEventsTable = ({
       title: "Coupon Rate",
       field: "couponRate",
       type: "numeric",
-      render: (rowData) => {
-        if (!rowData?.couponRate) return "--";
-
-        return `${convertNumberToIntlFormat(rowData.couponRate, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}%`;
-      },
+      render: (rowData) => `${currencyRenderer(rowData.couponRate, 6)}%`,
     },
     {
       id: "totalBalance",
       title: "Balance",
       type: "numeric",
       field: "totalBalance", // !DEV NOTES: Total balance of all Platform holdings of that security on COUPON DATE, else 0,
-      render: (rowData) => convertNumberToIntlFormat(rowData.totalBalance),
+      render: (rowData) => currencyRenderer(rowData.totalBalance),
     },
     {
       id: "couponAllocationStatus",
