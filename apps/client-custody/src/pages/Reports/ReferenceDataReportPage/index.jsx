@@ -147,8 +147,8 @@ const ReferenceDataReportPage = () => {
       value:
         selectedExternalSecurity &&
         convertNumberToIntlFormat(selectedExternalSecurity?.profitRate, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6,
         }),
     },
     {
@@ -182,7 +182,11 @@ const ReferenceDataReportPage = () => {
     {
       label: t("Issuance Amount"),
       value:
-        currentlySelectedSecurity && currencyRenderer(selectedExternalSecurity?.issuanceAmount),
+        currentlySelectedSecurity &&
+        currencyRenderer(selectedExternalSecurity?.issuanceAmount, {
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6,
+        }),
     },
     {
       label: t("Currency"),
