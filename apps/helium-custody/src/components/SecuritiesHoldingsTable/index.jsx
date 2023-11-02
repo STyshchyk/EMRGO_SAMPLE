@@ -2,16 +2,12 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import MaterialTable from "@material-table/core";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
-
-
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
@@ -29,10 +25,6 @@ import FilterButton from "../FilterComponents/FilterButton";
 import FilterCheckbox from "../FilterComponents/FilterCheckbox";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 
-
-
-
-
 const FALLBACK_VALUE = "--";
 
 const ALL_ENTITIES_OPTION = {
@@ -44,6 +36,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
   const csd = i.sukuk?.csdName?.name;
   const primaryIssuanceName = i.sukuk?.name;
   const externalSecurityName = i.externalSecurity?.longName;
+
   return {
     id: i.id,
     corporateEntityName: i.corporateEntityName ?? FALLBACK_VALUE,
@@ -57,14 +50,19 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     portfolio: i.portfolio.name,
     securityAccount: i.portfolio.accountNumber,
     positionType: i?.positionType ?? FALLBACK_VALUE,
-    quantity: (i.quantity && convertNumberToIntlFormat(i.quantity)) || FALLBACK_VALUE,
+    quantity:
+      (i.quantity &&
+        convertNumberToIntlFormat(i.quantity, {
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6,
+        })) ||
+      FALLBACK_VALUE,
     security: primaryIssuanceName || externalSecurityName || FALLBACK_VALUE,
     sukukId: i.sukukId,
     wsn: i.wsn ?? FALLBACK_VALUE,
     csd: csd ?? FALLBACK_VALUE,
   };
 };
-
 
 const SecuritiesHoldingsTable = ({
   data,
@@ -96,6 +94,8 @@ const SecuritiesHoldingsTable = ({
   const isLoading = isTradeDateHolding
     ? isFetchingTradeDatedSecuritiesHoldings
     : isFetchingSecuritiesHoldings;
+
+  console.log(securitiesAccounts);
 
   const entityList = [
     ...securitiesAccounts.map((i) => ({
@@ -412,7 +412,6 @@ const SecuritiesHoldingsTable = ({
                 }
                 return true;
               });
-
 
             return (
               <MaterialTable
