@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { useToast } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useFormik } from "formik";
@@ -30,8 +31,8 @@ export const ResetPasswordSixDigitCodeProvider = ({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const email = searchParams.get("email") || "";
-
-  const { mutate: doVerifyOTP } = useMutation(verifyOTP);
+  const { showErrorToast } = useToast();
+  const { mutate: doVerifyOTP, error } = useMutation(verifyOTP);
 
   /**
    * Initial values for the form.
@@ -53,8 +54,8 @@ export const ResetPasswordSixDigitCodeProvider = ({
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
-          // const errorResponse = error?.response?.data.message;
-          // TODO: wire up error message once error UI components are ready
+          const errorResponse = error?.response?.data.message;
+          showErrorToast(errorResponse);
         }
       },
     });

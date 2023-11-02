@@ -6,6 +6,7 @@ import {
   useToast
 } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useFormik } from "formik";
 
 import { TroubleSigningInSchema } from "./TroubleSigningIn.schema";
@@ -23,6 +24,7 @@ const TroubleSigningInContext = createContext<ITroubleSigningInContext | null>(n
  *
  * TODO: Implement this code.
  */
+
 export const TroubleSigningInProvider = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
   const { showErrorToast, showSuccessToast } = useToast();
@@ -40,6 +42,12 @@ export const TroubleSigningInProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (response) => {
         showSuccessToast("Successfully created a support ticket.");
         navigate("/trouble-signing-in-thanks");
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError && error.response?.status === 412) {
+          showErrorToast(error.response?.data?.message);
+        }        
+        return error 
       },
     });
   };

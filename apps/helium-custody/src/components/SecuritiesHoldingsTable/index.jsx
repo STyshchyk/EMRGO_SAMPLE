@@ -1,12 +1,10 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
-import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
@@ -17,7 +15,6 @@ import * as reportsSelectors from "../../redux/selectors/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
-import formatAddress from "../../utils/reports";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -110,13 +107,13 @@ const SecuritiesHoldingsTable = ({
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
 
-  const safeekingAccountList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
-      value: i.id,
-      entityId: i.entity_id,
-    })),
-  ];
+  const safeekingAccountList = safekeepingAccounts
+    ? safekeepingAccounts.map((i) => ({
+        label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+        value: i.id,
+        entityId: i.entity_id,
+      }))
+    : [];
 
   const listOfUniqueSecurities = [...new Set(data?.map(({ security }) => security))];
 
@@ -166,6 +163,7 @@ const SecuritiesHoldingsTable = ({
       fetchSecuritiesHoldings({
         params: {
           date: date?.value.toISOString(),
+          entityId: entity?.value?.value,
         },
       });
     } else {

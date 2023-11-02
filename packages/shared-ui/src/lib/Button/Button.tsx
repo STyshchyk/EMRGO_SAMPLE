@@ -13,7 +13,6 @@ export const Button: FC<IButtonProps> = ({
   type,
   ...rest
 }: IButtonProps) => {
-  console.log(rest);
   return (
     <Styles.Button
       $variant={variant}
