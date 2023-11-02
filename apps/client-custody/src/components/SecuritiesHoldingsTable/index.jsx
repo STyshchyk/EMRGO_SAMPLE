@@ -46,7 +46,13 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
     portfolioId: i.portfolioId ?? FALLBACK_VALUE,
     positionType: i?.positionType ?? FALLBACK_VALUE,
-    quantity: (i.quantity && convertNumberToIntlFormat(i.quantity)) || FALLBACK_VALUE,
+    quantity:
+      (i.quantity &&
+        convertNumberToIntlFormat(i.quantity, {
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6,
+        })) ||
+      FALLBACK_VALUE,
     security: primaryIssuanceName || externalSecurityName || FALLBACK_VALUE,
     sukukId: i.sukukId,
     wsn: i.wsn ?? FALLBACK_VALUE,

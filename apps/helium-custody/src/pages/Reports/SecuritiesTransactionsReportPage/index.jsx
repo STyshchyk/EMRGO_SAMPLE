@@ -127,8 +127,8 @@ const SecuritiesTransactionsReportPage = () => {
 
   const generateSecuritiesTransactionsTableRowData = (i) => {
     const intlFormatOpts = {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      minimumFractionDigits: 6,
+      maximumFractionDigits: 6,
     };
 
     // const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;

@@ -2,8 +2,8 @@ import Chip from "@mui/material/Chip";
 import { amber, green, grey, red } from "@mui/material/colors";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
 import tableStyles from "../../styles/cssInJs/materialTable";
 
@@ -64,15 +64,23 @@ export const reportDateRenderer = (date) => {
 };
 
 export const accountTypeRenderer = (value) => {
-  const accountType =  value == '-' ? '-' : v.capitalize(value) || ""
+  const accountType = value == "-" ? "-" : v.capitalize(value) || "";
   return accountType;
 };
 
-export const currencyRenderer = (value) =>
-  new Intl.NumberFormat("en", {
+export const currencyRenderer = (
+  value,
+  opts = {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(value);
+  }
+) => {
+  if (value !== "0") {
+    return new Intl.NumberFormat("en", opts).format(value);
+  } else {
+    return "-";
+  }
+};
 
 export const floatRenderer = (value) =>
   new Intl.NumberFormat("en", {

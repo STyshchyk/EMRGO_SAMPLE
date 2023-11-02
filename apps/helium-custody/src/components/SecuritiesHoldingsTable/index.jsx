@@ -33,6 +33,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
   const csd = i.sukuk?.csdName?.name;
   const primaryIssuanceName = i.sukuk?.name;
   const externalSecurityName = i.externalSecurity?.longName;
+
   return {
     id: i.id,
     corporateEntityName: i.corporateEntityName ?? FALLBACK_VALUE,
@@ -46,7 +47,13 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     portfolio: i.portfolio.name,
     securityAccount: i.portfolio.accountNumber,
     positionType: i?.positionType ?? FALLBACK_VALUE,
-    quantity: (i.quantity && convertNumberToIntlFormat(i.quantity)) || FALLBACK_VALUE,
+    quantity:
+      (i.quantity &&
+        convertNumberToIntlFormat(i.quantity, {
+          minimumFractionDigits: 6,
+          maximumFractionDigits: 6,
+        })) ||
+      FALLBACK_VALUE,
     security: primaryIssuanceName || externalSecurityName || FALLBACK_VALUE,
     sukukId: i.sukukId,
     wsn: i.wsn ?? FALLBACK_VALUE,
@@ -84,6 +91,8 @@ const SecuritiesHoldingsTable = ({
   const isLoading = isTradeDateHolding
     ? isFetchingTradeDatedSecuritiesHoldings
     : isFetchingSecuritiesHoldings;
+
+  console.log(securitiesAccounts);
 
   const entityList = [
     ...securitiesAccounts.map((i) => ({
