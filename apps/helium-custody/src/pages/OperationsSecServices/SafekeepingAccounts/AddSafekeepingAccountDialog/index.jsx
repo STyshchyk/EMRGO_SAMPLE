@@ -255,6 +255,9 @@ const AddSafekeepingAccountDialog = ({
                       type="submit"
                       variant="contained"
                       data-testid="submit"
+                      disabled={
+                        !values?.entity || !values?.name || !values?.baseCurrency || !values?.status
+                      }
                       onClick={() => handleSubmit()}
                     >
                       {t("miscellaneous:Buttons.Submit")}

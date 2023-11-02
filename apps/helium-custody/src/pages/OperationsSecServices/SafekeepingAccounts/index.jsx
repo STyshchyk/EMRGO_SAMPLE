@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import MaterialTable from "@material-table/core";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -9,8 +10,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import moment from "moment";
-import v from "voca";
 
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
@@ -192,6 +191,10 @@ const SafekeepingAccounts = () => {
   };
 
   const handleAddSafekeepingAccount = (values, actions) => {
+    if (values.currencies.length === 0) {
+      toast.warning("Add at least one Associated Account", 1000);
+      return;
+    }
     const requestPayload = {
       entityId: values.entity.id,
       baseCurrencyId: values.baseCurrency.value,
