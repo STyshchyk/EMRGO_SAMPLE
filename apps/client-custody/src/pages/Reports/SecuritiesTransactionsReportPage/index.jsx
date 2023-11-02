@@ -174,8 +174,8 @@ const SecuritiesTransactionsReportPage = () => {
 
   const generateSecuritiesTransactionsTableRowData = (i) => {
     const intlFormatOpts = {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      minimumFractionDigits: 6,
+      maximumFractionDigits: 6,
     };
 
     console.log(i?.settlementInsSettlementDate);
