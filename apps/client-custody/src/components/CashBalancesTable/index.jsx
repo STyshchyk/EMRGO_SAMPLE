@@ -17,6 +17,7 @@ import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
+import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
 import DropdownFilter from "../FilterComponents/DropdownFilter";
@@ -37,7 +38,10 @@ const generateTransactions = (acc) => ({
   entity: acc.entity,
   account: acc.account,
   currency: acc?.currency?.name ?? "",
-  balance: acc.balance,
+  balance: convertNumberToIntlFormat(acc?.balance, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }),
   accountType: acc.accountType,
   lastMovement: acc.lastMovement,
 });
