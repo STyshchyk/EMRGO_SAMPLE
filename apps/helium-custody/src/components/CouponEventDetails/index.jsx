@@ -3,23 +3,16 @@ import Typography from "@mui/material/Typography";
 import v from "voca";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
+import { currencyRenderer } from "../../constants/renderers";
 import { dateFormatter } from "../../utils/formatter";
-
-const numberIntlFormatOps = {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-};
 
 const CouponEventDetails = ({ couponEventData }) => {
   const isPrimaryIssuance = couponEventData?.isPrimaryIssuance;
   const securityName = couponEventData?.security;
   const formattedCouponDate = dateFormatter(couponEventData?.couponDate, DEFAULT_DATE_FORMAT);
   const securityShortName = couponEventData?.shortName; // TODO: FIX MISSING SHORTNAME API DATA FIELD
-  const totalHolding = convertNumberToIntlFormat(couponEventData?.externalSecurity?.issuanceAmount);
-  const formattedCouponRate = `${convertNumberToIntlFormat(couponEventData?.couponRate, {
-    ...numberIntlFormatOps,
-  })}%`;
+  const totalHolding = currencyRenderer(couponEventData?.externalSecurity?.issuanceAmount, 6);
+  const formattedCouponRate = `${currencyRenderer(couponEventData?.couponRate, 6)}%`;
   const dayCountConvention = couponEventData?.dayCountConventionName;
   const frequency = couponEventData?.frequencyName;
   const issuanceCCY = couponEventData?.currencyName;
@@ -28,9 +21,8 @@ const CouponEventDetails = ({ couponEventData }) => {
   const issuerCorporateEntityName = couponEventData?.issuer?.corporateEntityName;
   const issuerAccountNo = couponEventData?.issuer?.wethaqAccount?.accountNo;
   const issuerAccountName = "Issuer Cash Account";
-  const issuerAccountBalance = convertNumberToIntlFormat(
-    couponEventData?.issuer?.wethaqAccount?.accountBalance,
-    numberIntlFormatOps
+  const issuerAccountBalance = currencyRenderer(
+    couponEventData?.issuer?.wethaqAccount?.accountBalance
   );
 
   const csdSourceAccountNo = couponEventData?.wethaqDebitAccount?.accountNo;
@@ -249,11 +241,7 @@ const CouponEventDetails = ({ couponEventData }) => {
             </Grid>
             <Grid item>
               <Typography>
-                {csdSourceAccountBalance &&
-                  convertNumberToIntlFormat(csdSourceAccountBalance, {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}
+                {csdSourceAccountBalance && currencyRenderer(csdSourceAccountBalance)}
               </Typography>
             </Grid>
           </Grid>

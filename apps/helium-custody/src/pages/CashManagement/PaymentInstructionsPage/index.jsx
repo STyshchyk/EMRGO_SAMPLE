@@ -19,7 +19,7 @@ import v from "voca";
 
 import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
-import { dateRenderer } from "../../../constants/paymentAndStatuses/renderers";
+import { dateRenderer } from "../../../constants/renderers";
 import { useTheme } from "../../../context/theme-context";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";

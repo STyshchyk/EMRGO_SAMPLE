@@ -25,7 +25,7 @@ const CustomTextField = (props) => {
     helperText: t(fieldToTextFieldProps.helperText?.transKey) ?? " ",
   };
 
-  return <MuiTextField {...customTextFieldProps} onChange={onChange} />;
+  return <MuiTextField {...customTextFieldProps} size="small" onChange={onChange} />;
 };
 
 export default CustomTextField;

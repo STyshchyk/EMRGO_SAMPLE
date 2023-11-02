@@ -51,7 +51,7 @@ const CustomNumberInputField = (props) => {
         });
       }}
       thousandSeparator
-      decimalScale={3}
+      decimalScale={2}
     />
   );
 };

@@ -9,6 +9,7 @@ import { CsvBuilder } from "filefy";
 import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
@@ -132,11 +133,8 @@ const CouponPaymentScheduleTable = ({
 
     const transformed = data.map(({ calenderDate, notional }) => ({
       date: new Date(calenderDate).toLocaleDateString(),
-      notionalAmount: notional,
-      couponRate: convertNumberToIntlFormat(hardcodedCouponRate, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      notionalAmount: currencyRenderer(notional, 6),
+      couponRate: currencyRenderer(hardcodedCouponRate, 6),
     }));
 
     const listOfColumnNames = ["date", "notional_amount", "coupon_rate"];
@@ -220,11 +218,7 @@ const CouponPaymentScheduleTable = ({
             title: t("Coupon Payment Schedule.Headers.Notional"),
             field: "notional",
             type: "numeric",
-            render: (rowData) =>
-              convertNumberToIntlFormat(rowData.notional, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }),
+            render: (rowData) => currencyRenderer(rowData.notional, 6),
             validate: validateNotionalAmountField,
           },
           {
@@ -241,10 +235,7 @@ const CouponPaymentScheduleTable = ({
                   color: "gray",
                 }}
               >
-                {`${convertNumberToIntlFormat(hardcodedCouponRate, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}%`}
+                {`${currencyRenderer(hardcodedCouponRate, 6)}%`}
               </span>
             ),
           },

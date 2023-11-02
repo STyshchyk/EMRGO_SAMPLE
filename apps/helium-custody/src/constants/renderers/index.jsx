@@ -76,7 +76,14 @@ export const currencyRenderer = (
   }
 ) => {
   if (value !== "0") {
-    return new Intl.NumberFormat("en", opts).format(value);
+    if (typeof opts === "object") {
+      return new Intl.NumberFormat("en", opts).format(value);
+    } else {
+      return new Intl.NumberFormat("en", {
+        minimumFractionDigits: opts,
+        maximumFractionDigits: opts,
+      }).format(value);
+    }
   } else {
     return "-";
   }

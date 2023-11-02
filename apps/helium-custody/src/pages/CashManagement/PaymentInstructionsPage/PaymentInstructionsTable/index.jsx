@@ -7,8 +7,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import LoadingPage from "../../../../components/LoadingPage";
 import MaterialTableOverflowMenu from "../../../../components/MaterialTableOverflowMenu";
-import { currencyRenderer, dateRenderer } from "../../../../constants/paymentAndStatuses/renderers";
-import { floatRenderer } from "../../../../helpers/renderers";
+import { currencyRenderer, dateRenderer } from "../../../../constants/renderers";
 import useMaterialTableLocalization from "../../../../hooks/useMTableLocalization";
 import * as accountsSelectors from "../../../../redux/selectors/accounts";
 import tableStyles from "../../../../styles/cssInJs/materialTable";
@@ -40,7 +39,7 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
             id: "clientBalance",
             title: t("Payment Instructions.Headers.Client Balance"),
             field: "clientBalance",
-            render: (rowData) => floatRenderer(rowData.clientBalance),
+            render: (rowData) => currencyRenderer(rowData.clientBalance),
           },
           {
             id: "createdAt",

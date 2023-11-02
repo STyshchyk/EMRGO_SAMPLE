@@ -11,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+import { currencyRenderer } from "../../constants/renderers";
 import { useCouponEventsTableFilters } from "../../context/coupon-events-table-filters-context";
 import * as couponsActionCreators from "../../redux/actionCreators/coupons";
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
@@ -37,7 +38,7 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
   const { couponEventFiltersState } = useCouponEventsTableFilters();
   const parsedTotalCouponAmount = parseFloat(currentlySelectedRowData?.totalCouponAmount, 10);
   const computedTotalAllocatedCouponAmount = computeTotalAllocatedCouponAmount(tableData);
-  console.log("currentlySelectedRowData", currentlySelectedRowData);
+
   // selectors
   const wethaqOwnedAccounts = useSelector(billingAndPaymentsSelectors.selectWethaqOwnedAccounts);
 
@@ -174,9 +175,8 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                   </Grid>
                   <Grid item>
                     {selectedWethaqSourceAccountOption?.value?.accountBalance &&
-                      convertNumberToIntlFormat(
-                        selectedWethaqSourceAccountOption?.value?.accountBalance,
-                        { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                      currencyRenderer(
+                        selectedWethaqSourceAccountOption?.value?.accountBalance
                       )}{" "}
                   </Grid>
                 </Grid>
@@ -196,7 +196,8 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
               <Grid item>
                 <TextField
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
+                  size="small"
                   value={totalCouponAmount}
                   onChange={handleTotalCouponAmountChange}
                   InputProps={{
@@ -234,7 +235,8 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                 <TextField
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
+                  size="small"
                   value={totalCouponAmount - computedTotalAllocatedCouponAmount}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
