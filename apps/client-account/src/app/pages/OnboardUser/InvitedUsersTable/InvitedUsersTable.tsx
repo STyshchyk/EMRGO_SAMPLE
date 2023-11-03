@@ -27,6 +27,23 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
   const { onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin } =
     ensureNotNull(useEntityManagementContext());
 
+  const hasSingleAdminRole = (users:INewUser[])  =>{
+    let adminCount = 0; 
+    for (const user of users) {
+      if (user.roles?.includes(UserRoles.superUser)) {
+        adminCount++;
+      }
+  
+      if (adminCount > 1) {
+        return false; // If more than one "admin" role is found, you should be able to revoke
+      }
+    }
+  
+    return adminCount === 1; // disable revoking cta
+  }
+    
+ 
+
   const columns = [
     columnHelper.accessor("firstName", {
       header: "First Name",
@@ -44,7 +61,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
           <Styles.InvitedUserTypeLabel>
             {info
               .getValue()
-              .map((r) => getNewUserTypeLabel(r as TNewUserTypes))
+              ?.map((r) => getNewUserTypeLabel(r as TNewUserTypes))
               .join(` , `)}
           </Styles.InvitedUserTypeLabel>
         );
@@ -89,13 +106,13 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   Archive User
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={roles.includes(UserRoles.superUser)}
+                  $disabled={roles?.includes(UserRoles.superUser)}
                   onClick={() => onMakeAdmin(id)}
                 >
                   Make Admin
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={!roles.includes(UserRoles.superUser)}
+                  $disabled={!roles?.includes(UserRoles.superUser) || hasSingleAdminRole(users)}
                   onClick={() => onRevokeAdmin(id)}
                 >
                   Revoke Admin

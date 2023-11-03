@@ -18,6 +18,7 @@ const DropdownFilter = ({
   customComponent,
   isDisabled,
   setClearDisabled,
+  setCustomClear,
 }) => {
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
@@ -27,9 +28,8 @@ const DropdownFilter = ({
   const clearFilter = () => {
     setCurrentlySelectedOption(null);
     if (setClearDisabled) setClearDisabled(false);
-    // get filters and then filter out the object with name prooperty
-    // const result = Object.fromEntries(Object.entries(filters).filter(([key]) => key !== name));
-    // setFilters(result);
+    if (setCustomClear) setCustomClear();
+
     clearFilterValue(name);
   };
 
