@@ -4,9 +4,8 @@
 #   silver-administration, silver-authentication, silver-dataroom, silver-onboarding, silver-primaries
 
 include:
-  - local: .gitlab/ci/build_and_deploy.gitlab-ci.yml
-  - local: .gitlab/ci/rules.gitlab-ci.yml
-  - local: .gitlab/ci/rules.gitlab-ci_phase_one.yml
+  - local: .gitlab/ci/downstream_pipelines.gitlab-ci.yml
+  - local: .gitlab/ci/triggers.gitlab-ci.yml
 
 variables:
   DOCKER_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE
@@ -18,171 +17,112 @@ services:
   - "docker:dind"
 
 stages:
+  - pre-deploy
   - deploy
 
-Deploy:client-custody-EXP-DIFC:
+Pre-Deploy:Exp:
+  stage: pre-deploy
   variables:
-    TARGET_APP_NAME: "client-custody"
-    APP_SUBDOMAIN: "helium"
-  stage: deploy
-  environment:
-    name: exp-difc
+    TARGET_ENVIRONMENT: "exp-difc"
+    SOURCE_BRANCH: "develop"
   extends:
-    - .build_and_deploy_config
-    - .client_custody_build_rules_develop
+    - .trigger_downstream_deploy_pipelines_config
 
-Deploy:helium-custody-EXP-DIFC:
+Pre-Deploy:Dev:
+  stage: pre-deploy
   variables:
-    TARGET_APP_NAME: "helium-custody"
-    APP_SUBDOMAIN: "helium-internal"
-  stage: deploy
-  environment:
-    name: exp-difc
+    TARGET_ENVIRONMENT: "dev-difc"
+    SOURCE_BRANCH: "develop"
   extends:
-    - .build_and_deploy_config
-    - .helium_custody_build_rules_develop
+    - .trigger_downstream_deploy_pipelines_config
+  when: manual
 
-Deploy:client-authentication-EXP-DIFC:
+.Pre-Deploy:UAT:
+  stage: pre-deploy
   variables:
-    TARGET_APP_NAME: "client-authentication"
-    APP_SUBDOMAIN: "silver-auth" # !SHOULD THE PREFIX BE "client-" instead?
-  stage: deploy
-  environment:
-    name: exp-difc
+    TARGET_ENVIRONMENT: "uat-difc"
+    SOURCE_BRANCH: "develop"
   extends:
-    - .build_and_deploy_config
-    - .client_auth_build_rules_develop
+    - .trigger_downstream_deploy_pipelines_config
+  when: manual
 
-Deploy:client-account-EXP-DIFC:
+Pre-Deploy:Staging:
+  stage: pre-deploy
   variables:
-    TARGET_APP_NAME: "client-account"
-    APP_SUBDOMAIN: "silver-account" # !SHOULD THE PREFIX BE "client-" instead?
-  stage: deploy
-  environment:
-    name: exp-difc
+    TARGET_ENVIRONMENT: "staging-difc"
+    SOURCE_BRANCH: "master"
   extends:
-    - .build_and_deploy_config
-    - .client_account_build_rules_develop
+    - .trigger_downstream_deploy_pipelines_config
+  when: manual
 
-Deploy:silver-admin-EXP-DIFC:
+Pre-Deploy:Prod:
+  stage: pre-deploy
   variables:
-    TARGET_APP_NAME: "silver-administration"
-    APP_SUBDOMAIN: "internal-silver-admin"
-  stage: deploy
-  environment:
-    name: exp-difc
+    TARGET_ENVIRONMENT: "prod-difc"
+    SOURCE_BRANCH: "production"
   extends:
-    - .build_and_deploy_config
-    - .silver-admin_build_rules_develop
+    - .trigger_downstream_deploy_pipelines_config
+  when: manual
 
-Deploy:silver-auth-EXP-DIFC:
-  variables:
-    TARGET_APP_NAME: "silver-authentication"
-    APP_SUBDOMAIN: "internal-silver-auth"
-  stage: deploy
-  environment:
-    name: exp-difc
-  extends:
-    - .build_and_deploy_config
-    - .silver-auth_build_rules_develop
-
-Deploy:silver-onboarding-EXP-DIFC:
-  variables:
-    TARGET_APP_NAME: "silver-onboarding"
-    APP_SUBDOMAIN: "internal-silver-onboarding"
-  stage: deploy
-  environment:
-    name: exp-difc
-  extends:
-    - .build_and_deploy_config
-    - .silver-onboarding_build_rules_develop
-
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-# =============================================================================================================
-
-Deploy:client-custody-DEV-DIFC:
-  variables:
-    TARGET_APP_NAME: "client-custody"
-    APP_SUBDOMAIN: "app"
-  stage: deploy
-  environment:
-    name: dev-difc
-  extends:
-    - .build_and_deploy_config
-    - .client_custody_build_rules_develop_phase_one
-
-Deploy:helium-custody-DEV-DIFC:
-  variables:
-    TARGET_APP_NAME: "helium-custody"
-    APP_SUBDOMAIN: "app-internal"
-  stage: deploy
-  environment:
-    name: dev-difc
-  extends:
-    - .build_and_deploy_config
-    - .helium_custody_build_rules_develop_phase_one
-
-Deploy:client-authentication-DEV-DIFC:
-  variables:
-    TARGET_APP_NAME: "client-authentication"
-    APP_SUBDOMAIN: "auth" # !SHOULD THE PREFIX BE "client-" instead?
-  stage: deploy
-  environment:
-    name: dev-difc
-  extends:
-    - .build_and_deploy_config
-    - .client_auth_build_rules_develop_phase_one
-
-Deploy:client-account-DEV-DIFC:
+Deploy:Client_Account:
   variables:
     TARGET_APP_NAME: "client-account"
-    APP_SUBDOMAIN: "account" # !SHOULD THE PREFIX BE "client-" instead?
-  stage: deploy
-  environment:
-    name: dev-difc
+    APP_SUBDOMAIN: "account"
   extends:
-    - .build_and_deploy_config
-    - .client_account_build_rules_develop_phase_one
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_CLIENT_ACCOUNT
 
-Deploy:silver-admin-DEV-DIFC:
+Deploy:Client_Authentication:
+  variables:
+    TARGET_APP_NAME: "client-authentication"
+    APP_SUBDOMAIN: "auth"
+  extends:
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_CLIENT_AUTHENTICATION
+
+Deploy:Client_Custody:
+  variables:
+    TARGET_APP_NAME: "client-custody"
+    APP_SUBDOMAIN: "custody" # !IDK WHY THIS IS NEEDED AT ALL...¯\_(ツ)_/¯
+  extends:
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_CLIENT_CUSTODY
+
+Deploy:Internal_Admin:
   variables:
     TARGET_APP_NAME: "silver-administration"
     APP_SUBDOMAIN: "internal-admin"
-  stage: deploy
-  environment:
-    name: dev-difc
   extends:
-    - .build_and_deploy_config
-    - .silver-admin_build_rules_develop_phase_one
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_SILVER_ADMINISTRATION
 
-Deploy:silver-auth-DEV-DIFC:
+Deploy:Internal_Auth:
   variables:
     TARGET_APP_NAME: "silver-authentication"
     APP_SUBDOMAIN: "internal-auth"
-  stage: deploy
-  environment:
-    name: dev-difc
   extends:
-    - .build_and_deploy_config
-    - .silver-auth_build_rules_develop_phase_one
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_SILVER_AUTHENTICATION
 
-Deploy:silver-onboarding-DEV-DIFC:
+Deploy:Internal_Custody:
+  variables:
+    TARGET_APP_NAME: "helium-custody"
+    APP_SUBDOMAIN: "internal-custody" # !IDK WHY THIS IS NEEDED AT ALL...¯\_(ツ)_/¯
+  extends:
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_HELIUM_CUSTODY
+
+Deploy:Internal_Onboarding:
   variables:
     TARGET_APP_NAME: "silver-onboarding"
     APP_SUBDOMAIN: "internal-onboarding"
-  stage: deploy
-  environment:
-    name: dev-difc
   extends:
-    - .build_and_deploy_config
-    - .silver-onboarding_build_rules_develop_phase_one
+    - .downstream_deploy_pipeline_config
+  rules:
+    - if: $CI_IS_DEPLOYABLE_GLOBAL || $CI_IS_DEPLOYABLE_SILVER_ONBOARDING
