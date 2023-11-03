@@ -7,18 +7,19 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonBase from "@mui/material/ButtonBase";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
-import Popper from '@mui/material/Popper';
 import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import { externalSecurityStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
@@ -52,39 +53,36 @@ const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => {
     <Fragment>
       {Boolean(anchorEl) && (
         <Popper
-            id="ss-table-action-menu"
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            role={undefined}
-            transition
-            disablePortal
-            placement="right"
-            sx={{ zIndex: 99 }}
+          id="ss-table-action-menu"
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          role={undefined}
+          transition
+          disablePortal
+          placement="right"
+          sx={{ zIndex: 99 }}
         >
-            {({ TransitionProps }) => (
-                <Grow
-                    {...TransitionProps}
-                >
-                    <Paper>
-                        <ClickAwayListener onClickAway={handleCloseMenu}>
-                            <MenuList id="split-button-menu">
-                                {actions
-                                    .map((action) => (
-                                        <MenuItem
-                                            key={action.id}
-                                            disabled={action.disabled}
-                                            onClick={() => {
-                                                action.onClick();
-                                            }}
-                                        >
-                                            <Typography variant="inherit">{action.label}</Typography>
-                                        </MenuItem>
-                                    ))}
-                            </MenuList>
-                        </ClickAwayListener>
-                    </Paper>
-                </Grow>
-            )}
+          {({ TransitionProps }) => (
+            <Grow {...TransitionProps}>
+              <Paper>
+                <ClickAwayListener onClickAway={handleCloseMenu}>
+                  <MenuList id="split-button-menu">
+                    {actions.map((action) => (
+                      <MenuItem
+                        key={action.id}
+                        disabled={action.disabled}
+                        onClick={() => {
+                          action.onClick();
+                        }}
+                      >
+                        <Typography variant="inherit">{action.label}</Typography>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
         </Popper>
       )}
     </Fragment>
@@ -335,10 +333,7 @@ const ExternalSecuritiesTable = ({
       title: t("External Securities.Headers.Rate"),
       customSort: (a, b) => parseFloat(a.profitRate) - parseFloat(b.profitRate),
       render: (rowData) => {
-        const localizedProfitRateStringValue = convertNumberToIntlFormat(rowData?.profitRate, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+        const localizedProfitRateStringValue = currencyRenderer(rowData?.profitRate, 6);
 
         return rowData?.profitRate ? `${localizedProfitRateStringValue}%` : FALLBACK_VALUE;
       },
@@ -380,7 +375,7 @@ const ExternalSecuritiesTable = ({
       customSort: (a, b) => parseFloat(a.issuanceAmount) - parseFloat(b.issuanceAmount),
       render: (rowData) => {
         if (rowData?.issuanceAmount) {
-          return convertNumberToIntlFormat(rowData?.issuanceAmount);
+          return currencyRenderer(rowData?.issuanceAmount, 6);
         }
 
         return FALLBACK_VALUE;
