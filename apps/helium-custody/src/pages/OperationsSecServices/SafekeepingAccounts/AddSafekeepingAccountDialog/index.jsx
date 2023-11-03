@@ -62,12 +62,18 @@ const AddSafekeepingAccountDialog = ({
   filteredCurrenciesForMaterialTable.forEach((currency) => {
     currencyListForMaterialTable[currency.value] = currency.label;
   });
+
   const columns = [
     {
       title: "Currency",
       field: "currency",
       lookup: currencyListForMaterialTable,
       editComponent: (props) => <MaterialTableCustomDropdownRenderer {...props} />,
+      validate: (rowData) => {
+        if (!rowData) return false;
+        if (rowData.currency?.value) return true;
+        return false;
+      },
     },
     {
       title: "Account Identifier",
@@ -217,8 +223,8 @@ const AddSafekeepingAccountDialog = ({
                               setTimeout(() => {
                                 if (newData.currency) {
                                   setFieldValue("currencies", [...values.currencies, newData]);
-                                }else{
-                                  reject()
+                                } else {
+                                  reject();
                                 }
                                 resolve();
                               }, 1000);
