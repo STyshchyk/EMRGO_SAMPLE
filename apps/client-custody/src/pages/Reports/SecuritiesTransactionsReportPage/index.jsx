@@ -504,7 +504,7 @@ const SecuritiesTransactionsReportPage = () => {
                   case "range":
                     setFieldValue("startDate", null, false);
                     setFieldValue("endDate", null, false);
-                    dispatch(reportsActionCreators.doResetCashTransactions());
+                    dispatch(reportsActionCreators.doResetSecuritiesTransactions());
                     break;
                   case "entity":
                   case "securityAccount":
@@ -513,7 +513,7 @@ const SecuritiesTransactionsReportPage = () => {
                     setFieldValue("securityAccount", null, false);
                     setFieldValue("security", null, false);
                     setFieldValue("currency", null, false);
-                    dispatch(reportsActionCreators.doResetCashTransactions());
+                    dispatch(reportsActionCreators.doResetSecuritiesTransactions());
 
                     break;
                   case "security":
@@ -625,7 +625,7 @@ const SecuritiesTransactionsReportPage = () => {
                 // if (selectedEntity) {
                 //   setFieldValue("securityAccount", tempSecurityAccountList[0]);
                 // }
-                dispatch(reportsActionCreators.doResetCashTransactions());
+                dispatch(reportsActionCreators.doResetSecuritiesTransactions());
                 submitForm();
               };
 
@@ -638,14 +638,13 @@ const SecuritiesTransactionsReportPage = () => {
                 ) {
                   setFieldValue("entity", filteredEntity[0]);
                 }
-                dispatch(reportsActionCreators.doResetCashTransactions());
+                dispatch(reportsActionCreators.doResetSecuritiesTransactions());
                 submitForm();
               };
 
               const generatedTableData = rows.map((i) =>
                 generateSecuritiesTransactionsTableRowData(i)
               );
-
               return (
                 <div
                   style={{
@@ -686,7 +685,6 @@ const SecuritiesTransactionsReportPage = () => {
                                   entityChange(selectedEntity);
                                   return;
                                 }
-
                                 setIsAllEntitiesOptionSelected(true);
                                 setFieldValue("entity", ALL_ENTITIES_OPTION);
                                 setFieldValue("securityAccount", null, false);
@@ -921,23 +919,6 @@ const SecuritiesTransactionsReportPage = () => {
                                 return row.securityShortName === filters?.security?.value?.label;
                               }
                               return true;
-                            })
-                            ?.filter((row) => {
-                              if (filters?.entity) {
-                                return row.entity !== filters?.entity?.value?.label;
-                              }
-
-                              return false;
-                            })
-                            ?.filter((row) => {
-                              if (filters?.safekeepingAccount) {
-                                return (
-                                  row.safekeepingAccount !==
-                                  filters?.safekeepingAccount?.value?.label
-                                );
-                              }
-
-                              return false;
                             });
 
                           return (
