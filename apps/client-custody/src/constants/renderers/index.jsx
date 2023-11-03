@@ -76,7 +76,7 @@ export const currencyRenderer = (
   }
 ) => {
   if (value !== "0") {
-    return new Intl.NumberFormat("en", opts).format(value);
+    return new Intl.NumberFormat("en", opts).format(value.toString().split(",").join(""));
   } else {
     return "-";
   }

@@ -215,8 +215,11 @@ const AddSafekeepingAccountDialog = ({
                           onRowAdd: (newData) =>
                             new Promise((resolve, reject) => {
                               setTimeout(() => {
-                                setFieldValue("currencies", [...values.currencies, newData]);
-
+                                if (newData.currency) {
+                                  setFieldValue("currencies", [...values.currencies, newData]);
+                                }else{
+                                  reject()
+                                }
                                 resolve();
                               }, 1000);
                             }),

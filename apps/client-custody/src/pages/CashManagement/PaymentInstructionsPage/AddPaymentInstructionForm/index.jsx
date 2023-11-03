@@ -150,6 +150,12 @@ const AddPaymentInstructionForm = ({
                   variant="filled"
                   type="number"
                   min="0"
+                  onChange={(event) => {
+                    const regexTwoDecimal = /^[0-9]*(\.[0-9]{0,2})?$/;
+                    if (regexTwoDecimal.test(event.target.value)) {
+                      setFieldValue("paymentAmount", event.target.value);
+                    }
+                  }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>

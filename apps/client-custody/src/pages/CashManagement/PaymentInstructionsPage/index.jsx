@@ -20,6 +20,7 @@ import v from "voca";
 import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
 import { dateRenderer } from "../../../constants/paymentAndStatuses/renderers";
+import { currencyRenderer } from "../../../constants/renderers";
 import { useTheme } from "../../../context/theme-context";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
@@ -465,7 +466,7 @@ const PaymentInstructionsPage = () => {
       },
       clientBalance: {
         label: t("Payment Instructions.Headers.Client Balance"),
-        value: clientBalance,
+        value: currencyRenderer(clientBalance),
       },
       createdAt: {
         label: t("Payment Instructions.Headers.Created At Date"),
@@ -481,7 +482,7 @@ const PaymentInstructionsPage = () => {
       },
       payment: {
         label: t("Payment Instructions.Headers.Payment Amount"),
-        value: payment,
+        value: currencyRenderer(payment),
       },
       currency: {
         label: t("Payment Instructions.Headers.CCY"),
