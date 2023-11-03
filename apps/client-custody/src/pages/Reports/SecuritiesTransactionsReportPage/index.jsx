@@ -896,7 +896,7 @@ const SecuritiesTransactionsReportPage = () => {
                       <FilterConsumer>
                         {({ filterColumns, filters }) => {
                           const filteredData = generatedTableData
-                            .filter((row, i) => {
+                            ?.filter((row, i) => {
                               // Settlement Date range Filter
                               if (
                                 filters?.settlementDateRange?.value?.startDate &&
@@ -910,17 +910,34 @@ const SecuritiesTransactionsReportPage = () => {
                               }
                               return true;
                             })
-                            .filter((row) => {
+                            ?.filter((row) => {
                               if (filters?.currency) {
                                 return row.currency === filters?.currency?.value?.label;
                               }
                               return true;
                             })
-                            .filter((row) => {
+                            ?.filter((row) => {
                               if (filters?.security) {
                                 return row.securityShortName === filters?.security?.value?.label;
                               }
                               return true;
+                            })
+                            ?.filter((row) => {
+                              if (filters?.entity) {
+                                return row.entity !== filters?.entity?.value?.label;
+                              }
+
+                              return false;
+                            })
+                            ?.filter((row) => {
+                              if (filters?.safekeepingAccount) {
+                                return (
+                                  row.safekeepingAccount !==
+                                  filters?.safekeepingAccount?.value?.label
+                                );
+                              }
+
+                              return false;
                             });
 
                           return (

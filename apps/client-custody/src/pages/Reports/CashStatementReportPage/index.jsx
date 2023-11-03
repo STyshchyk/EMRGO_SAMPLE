@@ -424,7 +424,9 @@ const CashStatementReportPage = () => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.account}
+                  disabled={(filters) =>
+                    !filters.entity || !filters.securityAccount || !filters.account
+                  }
                 />
               </Grid>
 
@@ -507,6 +509,26 @@ const CashStatementReportPage = () => {
                   return returnValue;
                 }
                 return true;
+              })
+              ?.filter((row) => {
+                if (filters?.account) {
+                  return row.account !== filters?.account?.value?.label;
+                }
+                return false;
+              })
+              ?.filter((row) => {
+                if (filters?.securityAccount) {
+                  return row.securityAccount !== filters?.securityAccount?.value?.label;
+                }
+
+                return false;
+              })
+              ?.filter((row) => {
+                if (filters?.entity) {
+                  return row.entity !== filters?.entity?.value?.label;
+                }
+
+                return false;
               });
             return (
               <Fragment>

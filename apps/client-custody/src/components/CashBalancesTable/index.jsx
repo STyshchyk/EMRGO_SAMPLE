@@ -366,7 +366,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !(filters.entity || filters.securityAccount)}
+                  disabled={(filters) => !(filters.entity && filters.securityAccount)}
                 />
               </Grid>
               <Grid item xs={12} lg={2} container></Grid>
@@ -431,11 +431,25 @@ const CashBalancesTable = ({ data, accounts }) => {
                 }
                 return true;
               })
-              .filter((row) => {
+              ?.filter((row) => {
                 if (filters?.currency) {
                   return row.currency === filters?.currency?.value?.label;
                 }
                 return true;
+              })
+              ?.filter((row) => {
+                if (filters?.securityAccount) {
+                  return row.securityAccount !== filters?.securityAccount?.value?.label;
+                }
+
+                return false;
+              })
+              ?.filter((row) => {
+                if (filters?.entity) {
+                  return row.entity === filters?.entity?.value?.label;
+                }
+
+                return false;
               });
 
             return (
