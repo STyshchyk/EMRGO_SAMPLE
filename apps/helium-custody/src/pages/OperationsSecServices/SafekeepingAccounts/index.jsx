@@ -46,6 +46,8 @@ const SafekeepingAccounts = () => {
   const entities = useSelector(entitiesSelectors.selectEntities);
   const statuses = ["Active", "Inactive"];
 
+  const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
+
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
@@ -255,6 +257,16 @@ const SafekeepingAccounts = () => {
     setOpenViewSafekeepingAccountAuditLogsDialog(true);
   };
 
+  const handleEntityChange = (selectedEntity) => {
+    if (selectedEntity) {
+      const filteredSafekeepingAccounts = securityAccountOpts.filter((account) =>
+        selectedEntity ? account?.original?.entity_id === selectedEntity.value : false
+      );
+      setSafeAccountOptions(filteredSafekeepingAccounts);
+    } else {
+      setSafeAccountOptions(null);
+    }
+  };
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
   return (
     <Fragment>
@@ -294,6 +306,12 @@ const SafekeepingAccounts = () => {
                 options={filteredEntity}
                 currentlySelectedOption={currentlySelectedEntity}
                 setCurrentlySelectedOption={setCurrentlySelectedEntity}
+                customOnChange={(selectedEntity) => {
+                  handleEntityChange(selectedEntity);
+                }}
+                setCustomClear={() => {
+                  handleEntityChange();
+                }}
               />
             </Grid>
 
@@ -301,7 +319,7 @@ const SafekeepingAccounts = () => {
               <DropdownFilter
                 name="safekeepingAccount"
                 label="Safekeeping Account"
-                options={filteredSecurityAccounts}
+                options={safekeepingAccountOptions ?? filteredSecurityAccounts}
                 currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
               />
