@@ -90,6 +90,16 @@ const EditSafekeepingAccountDialog = ({
       field: "currency",
       lookup: currencyListForMaterialTable,
       editComponent: (props) => <MaterialTableCustomDropdownRenderer {...props} />,
+      validate: (rowData) => {
+        const isDeleteTooltip = rowData.tableData?.editing === "delete";
+        const isValidCurrency = rowData.currency?.label;
+
+        if (isDeleteTooltip || isValidCurrency) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       title: "Account Identifier",
