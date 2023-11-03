@@ -1,4 +1,6 @@
-.build_and_deploy_config:
+.downstream_deploy_pipeline_config:
+  stage: deploy
+  environment: $CI_TARGET_ENVIRONMENT # !SHOULD BE SET BY THE PARENT PIPELINE IN A PIPELINE TRIGGER API CALL
   before_script:
     - echo $TARGET_APP_NAME
     - echo $APP_SUBDOMAIN

@@ -1,0 +1,18 @@
+.trigger_downstream_deploy_pipelines_config:
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 1000 # !important to avoid triggering a git diff bad object error when the number of changes is too large (e.g. 100+)
+  image: node:alpine3.18
+  before_script:
+    - apk update && apk upgrade -q && apk add git
+    - echo $CI_PIPELINE_SOURCE
+    - node -v
+    - touch .env
+    - echo $TARGET_ENVIRONMENT
+  script:
+    - npx tsx ./.gitlab/ci/scripts/node/check-deployable.ts
+  rules:
+    - if: $CI_COMMIT_BRANCH == $SOURCE_BRANCH && ($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web")
+  artifacts:
+    reports:
+      dotenv: .env
