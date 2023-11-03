@@ -97,7 +97,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
     } else {
       setSafeAccountOptions(safeekingAccountList);
     }
-    dispatch(reportsActionCreators.doResetCashTransactions());
+    dispatch(reportsActionCreators.doResetCashBalances());
   };
 
   const handleFetch = (filters) => {
@@ -322,20 +322,6 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
                 }
                 return true;
               })
-              ?.filter((row) => {
-                if (filters?.safekeepingAccount) {
-                  return row.safekeepingAccount !== filters?.safekeepingAccount?.value?.label;
-                }
-
-                return false;
-              })
-              ?.filter((row) => {
-                if (filters?.entity) {
-                  return row.entity === filters?.entity?.value?.label;
-                }
-
-                return false;
-              });
 
             return (
               <Fragment>

@@ -190,6 +190,7 @@ const SecuritiesTransactionsReportPage = () => {
     } else {
       setSafeAccountOptions(safeekingAccountList);
     }
+    dispatch(reportsActionCreators.doResetSecuritiesTransactions());
   };
 
   const columns = [
@@ -314,8 +315,7 @@ const SecuritiesTransactionsReportPage = () => {
                     handleEntityChange(selectedEntity);
                   }}
                   customClearChange={() => {
-                    setIsAllEntitiesOptionSelected(false);
-                    entityChange(selectedEntity);
+                    handleEntityChange();
                   }}
                 />
               </Grid>
@@ -391,20 +391,6 @@ const SecuritiesTransactionsReportPage = () => {
                         return row.securityShortName === filters?.security?.value?.label;
                       }
                       return true;
-                    })
-                    ?.filter((row) => {
-                      if (filters?.safekeepingAccount) {
-                        return row.safekeepingAccount !== filters?.safekeepingAccount?.value?.label;
-                      }
-
-                      return false;
-                    })
-                    ?.filter((row) => {
-                      if (filters?.entity) {
-                        return row.entity !== filters?.entity?.value?.label;
-                      }
-
-                      return false;
                     });
 
                   return (
