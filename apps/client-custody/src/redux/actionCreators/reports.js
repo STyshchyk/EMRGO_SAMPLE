@@ -69,7 +69,9 @@ export const doFetchTradeDatedSecuritiesHoldingsSuccess = createAction(
 export const doFetchTradeDatedSecuritiesHoldingsFailure = createAction(
   actionTypes.FETCH_TRADE_DATED_SECURITIES_HOLDINGS_FAILED
 );
-
+export const doResetTradeDatedSecuritiesHoldings = createAction(
+  actionTypes.RESET_TRADE_DATED_SECURITIES_HOLDINGS
+);
 export const doResetSecuritiesHoldings = createAction(actionTypes.RESET_SECURITIES_HOLDINGS);
 
 export const doFetchReferenceData = createAction(actionTypes.FETCH_REFERENCE_DATA_REQUESTED);
