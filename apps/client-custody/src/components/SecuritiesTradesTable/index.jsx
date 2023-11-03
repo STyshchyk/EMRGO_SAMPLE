@@ -17,7 +17,11 @@ import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import featureFlags from "../../constants/featureFlags";
-import { dateRenderer, reportDateRenderer } from "../../constants/renderers";
+import {
+  dateRenderer,
+  currencyRenderer as renderCurrency,
+  reportDateRenderer,
+} from "../../constants/renderers";
 import {
   securityTradeSettlementStatusEnum,
   settlementInstructionStatusEnum,
@@ -38,7 +42,10 @@ import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 const FALLBACK_VALUE = "--";
-
+const decimalFormat6 = {
+  minimumFractionDigits: 6,
+  maximumFractionDigits: 6,
+};
 const EMPTY_COLUMN = {
   id: "",
   title: "",
@@ -315,6 +322,10 @@ const SecurityTradesTable = ({
       id: "investorSecuritiesAccountBalance",
       title: t("Headers.Inv Sec Acc Bal"),
       field: "investorSecuritiesAccountBalance",
+      render: (rowData) =>
+        rowData?.investorSecuritiesAccountBalance
+          ? renderCurrency(rowData.investorSecuritiesAccountBalance, decimalFormat6)
+          : FALLBACK_VALUE,
       type: "numeric",
       hidden: ["ISSUER"].includes(entityUserType),
       exportConfig: { width: 5 },
@@ -357,16 +368,17 @@ const SecurityTradesTable = ({
       type: "numeric",
       hidden: ["INVESTOR"].includes(entityUserType),
       render: (rowData) =>
-        (rowData?.issuerSecuritiesAccountBalance &&
-          convertNumberToIntlFormat(rowData?.issuerSecuritiesAccountBalance)) ||
-        FALLBACK_VALUE,
+        rowData?.issuerSecuritiesAccountBalance
+          ? renderCurrency(rowData?.issuerSecuritiesAccountBalance, decimalFormat6)
+          : FALLBACK_VALUE,
       width: 150,
     },
     {
       id: "quantity",
       title: t("Headers.Qty"),
-      render: (rowData) => convertNumberToIntlFormat(rowData.quantity),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
+      render: (rowData) =>
+        rowData?.quantity ? renderCurrency(rowData?.quantity, decimalFormat6) : FALLBACK_VALUE,
+      exportConfig: { render: (rowData) => renderCurrency(rowData.quantity, decimalFormat6) },
       field: "quantity",
       type: "numeric",
       width: 150,
@@ -417,8 +429,9 @@ const SecurityTradesTable = ({
       id: "price",
       title: t("Headers.Price"),
       field: "price",
-      render: (rowData) => rowData?.price && floatRenderer(rowData?.price, 0, 5),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.price) },
+      render: (rowData) =>
+        rowData?.price ? renderCurrency(rowData?.price, decimalFormat6) : FALLBACK_VALUE,
+      exportConfig: { render: (rowData) => renderCurrency(rowData.price, decimalFormat6) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -427,8 +440,8 @@ const SecurityTradesTable = ({
       id: "principalAmount",
       title: t("Headers.Principal Amount"),
       field: "principalAmount",
-      render: (rowData) => floatRenderer(rowData.principalAmount),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.principalAmount) },
+      render: (rowData) => renderCurrency(rowData?.principalAmount),
+      exportConfig: { render: (rowData) => renderCurrency(rowData?.principalAmount) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -438,10 +451,10 @@ const SecurityTradesTable = ({
       title: t("Headers.Accrued Interest"),
       field: "accruedInterest",
       render: (rowData) =>
-        rowData.isEquityType ? FALLBACK_VALUE : floatRenderer(rowData.accruedInterest),
+        rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.principalAmount),
       exportConfig: {
         render: (rowData) =>
-          rowData.isEquityType ? FALLBACK_VALUE : floatRenderer(rowData.accruedInterest),
+          rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.principalAmount),
       },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
@@ -464,9 +477,11 @@ const SecurityTradesTable = ({
       id: "settlementAmount",
       title: t("Headers.Settle Amount"),
       field: "settlementAmount",
-      render: (rowData) => floatRenderer(rowData.settlementAmount) ?? FALLBACK_VALUE,
+      render: (rowData) =>
+        rowData?.settlementAmount ? renderCurrency(rowData?.settlementAmount) : FALLBACK_VALUE,
       exportConfig: {
-        render: (rowData) => currencyRenderer(rowData.settlementAmount) ?? FALLBACK_VALUE,
+        render: (rowData) =>
+          rowData?.settlementAmount ? renderCurrency(rowData?.settlementAmount) : FALLBACK_VALUE,
       },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,

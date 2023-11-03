@@ -14,6 +14,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
@@ -146,6 +147,9 @@ const DependentAmountField = (props) => {
         !values.externalSecuritySelectOption?.value?.currencyName ||
         ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
       }
+      inputProps={{
+        decimals: props.decimal ?? "2",
+      }}
       InputProps={{
         inputComponent: CustomCurrencyInputField,
         endAdornment: (
@@ -606,7 +610,7 @@ const RaiseSettlementInstructionForm = ({
                     inputComponent: CustomNumberInputField,
                   }}
                   inputProps={{
-                    decimals: isEqutyType ? "6" : 0,
+                    decimals: "6",
                   }}
                 />
               </InlineFormField>
@@ -639,7 +643,7 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: 5,
+                    decimals: 6,
                   }}
                 />
               </InlineFormField>
@@ -652,8 +656,8 @@ const RaiseSettlementInstructionForm = ({
                   valueB={{ key: "price", value: values?.price }}
                   calculatedValue={
                     isEqutyType
-                      ? values.price * Number(values?.quantity)
-                      : (values.price / 100) * Number(values?.quantity)
+                      ? currencyRenderer(values.price * Number(values?.quantity))
+                      : currencyRenderer((values.price / 100) * Number(values?.quantity))
                   }
                 />
               </InlineFormField>
@@ -700,9 +704,18 @@ const RaiseSettlementInstructionForm = ({
                   calculatedValue={
                     isEqutyType
                       ? settlementType === "DVP"
-                        ? Number(values?.principalAmount) - Number(values?.accruedInterest)
-                        : Number(values?.principalAmount) + Number(values?.accruedInterest)
-                      : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                        ? currencyRenderer(
+                            Number(values?.principalAmount.split(",").join("")) -
+                              Number(values?.accruedInterest.split(",").join(""))
+                          )
+                        : currencyRenderer(
+                            Number(values?.principalAmount.split(",").join("")) +
+                              Number(values?.accruedInterest.split(",").join(""))
+                          )
+                      : currencyRenderer(
+                          Number(values?.principalAmount.split(",").join("")) +
+                            Number(values?.accruedInterest.split(",").join(""))
+                        )
                   }
                 />
               </InlineFormField>
