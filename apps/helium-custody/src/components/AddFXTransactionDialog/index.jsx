@@ -366,7 +366,8 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           fullWidth
                           component={TextField}
                           name="fromAmount"
-                          variant="filled"
+                          variant="outlined"
+                          size="small"
                           // type="number"
                           value={values.fromAmount}
                           InputProps={{
@@ -439,6 +440,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
                     <CalculationField
                       fieldLabel={t("Fx Table.Markup Rate %")}
@@ -447,6 +449,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
                     <CalculationField
                       fieldLabel={t("Fx Table.Client FX Rate %")}
@@ -455,6 +458,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
                     <CalculationField
                       fieldLabel={t("Fx Table.Bank Amount")}
@@ -586,7 +590,8 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           name="narrative"
                           multiline
                           rows={2}
-                          variant="filled"
+                          variant="outlined"
+                          size="small"
                           type="text"
                           inputProps={{
                             maxLength: 100,

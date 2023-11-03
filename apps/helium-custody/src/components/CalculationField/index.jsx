@@ -11,6 +11,8 @@ import Typography from "@mui/material/Typography";
 import { Field } from "formik";
 import { TextField } from "formik-mui";
 
+import CustomNumberInputField from "../CustomNumberInputField";
+
 const CalculationField = ({
   fieldLabel,
   fieldKey,
@@ -18,6 +20,7 @@ const CalculationField = ({
   touched,
   values,
   handleFieldReset,
+  decimalScale = 2,
 }) => {
   const { t } = useTranslation(["fx_transactions"]);
   const [isHovered, setIsHovered] = useState(false);
@@ -35,11 +38,13 @@ const CalculationField = ({
           component={TextField}
           name={fieldKey}
           // type="number"
-          variant="filled"
+          variant="outlined"
+          size="small"
           value={fieldValue}
           onBlur={(e) => handleOnBlur(e, fieldKey)}
           inputProps={{
             min: 0,
+            decimalScale: decimalScale,
           }}
           onKeyPress={(e) => {
             if (e.which === 13) {
@@ -47,6 +52,7 @@ const CalculationField = ({
             }
           }}
           InputProps={{
+            inputComponent: CustomNumberInputField,
             endAdornment: isTouched && (
               <InputAdornment position="end">
                 <Tooltip placement="left" title={t("Fx Modal.Buttons.Reset User Input")}>
