@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 
@@ -49,15 +50,11 @@ const transformSecurityInfo = (securityInfoData) => {
     },
     totalIssuanceAmount: {
       label: "Total Issuance Amount",
-      value: issuanceAmount ?? fallbackStringValue,
+      value: currencyRenderer(issuanceAmount, 6) ?? fallbackStringValue,
     },
     profitRate: {
       label: "Profit Rate",
-      value:
-        `${convertNumberToIntlFormat(profitRate, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}%` ?? fallbackStringValue,
+      value: `${currencyRenderer(profitRate, 6)}%` ?? fallbackStringValue,
     },
     frequencyName: {
       label: "Frequency",

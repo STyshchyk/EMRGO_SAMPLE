@@ -18,6 +18,7 @@ import PropTypes from "prop-types";
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
+import CustomNumberInputField from "../CustomNumberInputField";
 
 // !INTERNAL TRANSFER PAGE COMPONENT
 
@@ -51,35 +52,6 @@ const InlineFormField = ({ label, children }) => (
     </Grid>
   </Grid>
 );
-
-const CustomNumberInputField = (props) => {
-  const { inputRef, onChange, ...other } = props;
-  const { setFieldTouched } = useFormikContext();
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: parseFloat(values.value, 10),
-          },
-        });
-        setFieldTouched(props.name);
-      }}
-      thousandSeparator
-      decimalScale={20}
-      allowNegative={true}
-    />
-  );
-};
-
-CustomNumberInputField.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 export const buildAddInternalTransferRequestPayload = {};
 
@@ -355,9 +327,11 @@ const AddInternalTransferForm = ({
                   fullWidth
                   variant="outlined"
                   size="small"
+                  decimalScale={2}
                   value={values.destinationAccount?.value?.accountBalance}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
+
                     endAdornment: (
                       <InputAdornment disableTypography position="end">
                         <span

@@ -1,20 +1,19 @@
 import React, { Fragment, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+
+
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import PropTypes from "prop-types";
 
-import {
-  BANK_AMOUNT_DP,
-  BANK_RATE_DP,
-  CLIENT_AMOUNT_DP,
-  CLIENT_RATE_DP,
-  MARKUP_AMOUNT_DP,
-  MARKUP_RATE_DP,
-} from "../../constants/currency/availableCurrencies";
+
+
+import { BANK_AMOUNT_DP, BANK_RATE_DP, CLIENT_AMOUNT_DP, CLIENT_RATE_DP, MARKUP_AMOUNT_DP, MARKUP_RATE_DP } from "../../constants/currency/availableCurrencies";
+import { currencyRenderer } from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import findDateRange from "../../helpers/dates";
 import { dateRenderer, roundNumber } from "../../helpers/renderers";
@@ -24,7 +23,10 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import FilterButton from "../FilterComponents/FilterButton";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+
+
+
 
 const generateFXTransactionTableRowData = (i) => ({
   id: i.id,
@@ -81,6 +83,7 @@ const FXTransactionTable = ({
       id: "fromAmount",
       title: t("Fx Table.From Amount"),
       field: "fromAmount",
+      render: (rowData) => currencyRenderer(rowData.fromAmount, BANK_AMOUNT_DP),
     },
     {
       id: "fromCurrency",
@@ -96,31 +99,31 @@ const FXTransactionTable = ({
       id: "bankRate",
       title: t("Fx Table.Bank FX Rate %"),
       field: "bankRate",
-      render: (rowData) => roundNumber(rowData.bankRate, BANK_RATE_DP),
+      render: (rowData) => currencyRenderer(rowData.bankRate, BANK_RATE_DP),
     },
     {
       id: "markupRate",
       title: t("Fx Table.Markup Rate %"),
       field: "markupRate",
-      render: (rowData) => roundNumber(rowData.markupRate, MARKUP_RATE_DP),
+      render: (rowData) => currencyRenderer(rowData.markupRate, MARKUP_RATE_DP),
     },
     {
       id: "clientRate",
       title: t("Fx Table.Client FX Rate %"),
       field: "clientRate",
-      render: (rowData) => roundNumber(rowData.clientRate, CLIENT_RATE_DP),
+      render: (rowData) => currencyRenderer(rowData.clientRate, CLIENT_RATE_DP),
     },
     {
       id: "bankAmount",
       title: t("Fx Table.Bank Amount"),
       field: "bankAmount",
-      render: (rowData) => roundNumber(rowData.bankAmount, BANK_AMOUNT_DP),
+      render: (rowData) => currencyRenderer(rowData.bankAmount, BANK_AMOUNT_DP),
     },
     {
       id: "markupAmount",
       title: t("Fx Table.Markup Amount"),
       field: "markupAmount",
-      render: (rowData) => roundNumber(rowData.markupAmount, MARKUP_AMOUNT_DP),
+      render: (rowData) => currencyRenderer(rowData.markupAmount, MARKUP_AMOUNT_DP),
     },
     {
       id: "clientAmount",

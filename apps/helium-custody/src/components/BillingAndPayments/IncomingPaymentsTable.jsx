@@ -2,17 +2,25 @@ import React, { useState } from "react";
 // import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
 
+
+
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
-import { dateRenderer, floatRenderer } from "../../constants/paymentAndStatuses/renderers";
+
+
+import { currencyRenderer, dateRenderer } from "../../constants/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+
+
+
 
 const IncomingPaymentsTable = ({
   data,
@@ -56,7 +64,7 @@ const IncomingPaymentsTable = ({
       id: "amount",
       title: t("Incoming Payments.Headers.Amount"),
       field: "amount",
-      render: (rowData) => floatRenderer(rowData.amount),
+      render: (rowData) => currencyRenderer(rowData.amount),
       type: "numeric",
     },
     {

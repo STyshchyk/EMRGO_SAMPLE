@@ -536,6 +536,7 @@ const EditFXTransactionDialog = ({
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
 
                     <CalculationField
@@ -545,6 +546,7 @@ const EditFXTransactionDialog = ({
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
 
                     <CalculationField
@@ -554,6 +556,7 @@ const EditFXTransactionDialog = ({
                       touched={touched}
                       values={values}
                       handleFieldReset={resetFieldValue}
+                      decimalScale={6}
                     />
 
                     <CalculationField

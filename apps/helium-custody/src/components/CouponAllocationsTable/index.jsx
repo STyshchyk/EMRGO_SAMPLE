@@ -1,8 +1,8 @@
 import MaterialTable from "@material-table/core";
 
+import { currencyRenderer } from "../../constants/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 
@@ -57,17 +57,13 @@ const CouponAllocationsTable = ({ isLoading, tableData, setTableData, editable }
           field: "securitiesHolding",
           type: "numeric",
           editable: false,
-          render: (rowData) => convertNumberToIntlFormat(rowData.securitiesHolding),
+          render: (rowData) => currencyRenderer(rowData.securitiesHolding),
         },
         {
           id: "couponAllocation",
           title: "Coupon Allocation",
           field: "couponAllocation",
-          render: (rowData) =>
-            convertNumberToIntlFormat(rowData.couponAllocation, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }),
+          render: (rowData) => currencyRenderer(rowData.couponAllocation),
           validate: validateCouponAllocationField,
         },
         {

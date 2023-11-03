@@ -2,8 +2,6 @@ import { forwardRef, Fragment, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 
-
-
 import { Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -15,8 +13,6 @@ import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-
-
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as authSelectors from "../../redux/selectors/auth";
@@ -25,12 +21,9 @@ import * as dropdownSelectors from "../../redux/selectors/dropdown";
 import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecurities";
 import useIsProduction from "../../utils/useIsProduction";
 import { addSettlementInstructionFormSchema } from "../../validationSchemas";
+import CustomNumberInputField from "../CustomNumberInputField";
 import CustomTextField from "../CustomTextField";
 import RealtimeSecSearchDialog from "../RealtimeSecSearchDialog";
-
-
-
-
 
 const PREFIX = "RaiseSettlementInstructionForm";
 
@@ -96,33 +89,6 @@ CustomCurrencyInputField.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const CustomNumberInputField = forwardRef((props, ref) => {
-  const { onChange, decimals = 0, ...other } = props;
-  const { setFieldTouched } = useFormikContext();
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-        setFieldTouched(props.name);
-      }}
-      thousandSeparator
-      decimalScale={decimals}
-    />
-  );
-});
-
-CustomNumberInputField.propTypes = {
-  inputRef: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 const DependentAmountField = (props) => {
   const { values, touched, setFieldValue } = useFormikContext();
@@ -149,14 +115,14 @@ const DependentAmountField = (props) => {
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant="filled"
+      variant="outlined"
       value={values[props.name]}
       disabled={
         !values.externalSecuritySelectOption?.value?.currencyName ||
         ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
       }
       InputProps={{
-        inputComponent: CustomCurrencyInputField,
+        inputComponent: CustomNumberInputField,
         endAdornment: (
           <InputAdornment disableTypography position="end">
             <span
@@ -473,7 +439,7 @@ const RaiseSettlementInstructionForm = ({
                     placeholder="Entity"
                     component={CustomTextField}
                     name="entity"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                     value={
                       values?.entityGroup?.entity?.corporateEntityName ||
@@ -575,7 +541,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="ISIN"
                   name="isin"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.externalSecuritySelectOption?.value?.isin ?? ""}
                   disabled
@@ -588,7 +554,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Currency"
                   name="currencyName"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
                   disabled
@@ -604,10 +570,11 @@ const RaiseSettlementInstructionForm = ({
                   value={values.tradeDate ? moment(values.tradeDate) : null}
                   format={DEFAULT_DATE_FORMAT}
                   fullWidth
-                  inputVariant="filled"
+                  inputvariant="outlined"
                   label={DEFAULT_DATE_FORMAT}
                   name="tradeDate"
                   variant="dialog"
+                  slotProps={{ textField: { size: "small" } }}
                 />
               </InlineFormField>
 
@@ -620,12 +587,13 @@ const RaiseSettlementInstructionForm = ({
                   value={values.settlementDate ? moment(values.settlementDate) : null}
                   format={DEFAULT_DATE_FORMAT}
                   fullWidth
-                  inputVariant="filled"
+                  inputvariant="outlined"
                   label={DEFAULT_DATE_FORMAT}
                   minDate={moment(values.tradeDate)}
                   name="settlementDate"
                   variant="dialog"
                   disabled={!values.tradeDate}
+                  slotProps={{ textField: { size: "small" } }}
                 />
               </InlineFormField>
 
@@ -636,12 +604,13 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="filled"
+                  variant="outlined"
                   value={values.quantity}
+                  decimalScale={6}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                   }}
-                  inputProps={{ decimals: isEquity ? 6 : undefined }}
+                  inputProps={{ decimals: isEquity ? 6 : undefined, decimalScale: 6 }}
                 />
               </InlineFormField>
 
@@ -656,9 +625,9 @@ const RaiseSettlementInstructionForm = ({
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant="filled"
+                  variant="outlined"
                   InputProps={{
-                    inputComponent: CustomCurrencyInputField,
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
                       <InputAdornment disableTypography position="end">
                         <span
@@ -673,7 +642,8 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: 5,
+                    decimals: 6,
+                    decimalScale: 6
                   }}
                 />
               </InlineFormField>
@@ -698,14 +668,14 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label={isEquity ? "Commission/Charges" : "Accrued Interest"}
                   name="accruedInterest"
-                  variant="filled"
+                  variant="outlined"
                   value={values.accruedInterest}
                   disabled={
                     !values.externalSecuritySelectOption?.value?.currencyName ||
                     ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
                   }
                   InputProps={{
-                    inputComponent: CustomCurrencyInputField,
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
                       <InputAdornment disableTypography position="end">
                         <span
@@ -721,6 +691,7 @@ const RaiseSettlementInstructionForm = ({
                   }}
                   inputProps={{
                     decimals: isEquity ? 0 : undefined, //Commission/Charges field is a numeric field that followings the same format of the Principal Amount field in terms of decimal points
+                  
                   }}
                 />
               </InlineFormField>
@@ -787,7 +758,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Internal Trade Ref"
                   name="internalTradeRef"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {

@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 
+
+
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -13,7 +15,10 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import PropTypes from "prop-types";
 
+
+
 import { DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
+import { currencyRenderer } from "../../constants/renderers";
 import { internalTransferStatusEnum } from "../../constants/wethaqAPI/cashManagement";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { floatRenderer } from "../../helpers/renderers";
@@ -25,6 +30,10 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+
+
+
+
 
 const FALLBACK_VALUE = "--";
 
@@ -173,12 +182,7 @@ const InternalTransferTransactionsTable = ({
       title: "Transfer Amount",
       field: "transferAmount",
       type: "numeric",
-      render: (rowData) =>
-        rowData.transferAmount &&
-        convertNumberToIntlFormat(rowData.transferAmount, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
+      render: (rowData) => rowData.transferAmount && currencyRenderer(rowData.transferAmount),
     },
     {
       id: "sourceAccountOwner",
@@ -200,11 +204,7 @@ const InternalTransferTransactionsTable = ({
       type: "numeric",
       exportConfig: { width: 5 },
       render: (rowData) =>
-        rowData.sourceAccountBalance &&
-        convertNumberToIntlFormat(rowData.sourceAccountBalance, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
+        rowData.sourceAccountBalance && currencyRenderer(rowData.sourceAccountBalance),
     },
     {
       id: "destinationAccountOwner",
@@ -226,11 +226,7 @@ const InternalTransferTransactionsTable = ({
       type: "numeric",
       exportConfig: { width: 5 },
       render: (rowData) =>
-        rowData.destinationAccountBalance &&
-        convertNumberToIntlFormat(rowData.destinationAccountBalance, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
+        rowData.destinationAccountBalance && currencyRenderer(rowData.destinationAccountBalance),
     },
     {
       id: "description",

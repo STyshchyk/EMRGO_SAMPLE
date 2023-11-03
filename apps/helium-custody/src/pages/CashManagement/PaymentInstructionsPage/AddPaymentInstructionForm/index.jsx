@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 // import Datepicker from "../../../../components/Datepicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import cx from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
@@ -238,10 +239,9 @@ const AddPaymentInstructionForm = ({
                     component={TextField}
                     label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                     name="paymentAmount"
-                    variant="filled"
-                    type="number"
-                    min="0"
+                    variant="outlined"
                     InputProps={{
+                      inputComponent: CustomNumberInputField,
                       endAdornment: (
                         <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
                       ),
@@ -261,7 +261,7 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Details")}
                   name="paymentDetails"
-                  variant="filled"
+                  variant="outlined"
                 />
               </Box>
               <Box my={1} className="w-full">
