@@ -28,6 +28,7 @@ export interface INewUser {
   firstName: string;
   lastName: string;
   middleName?: string;
+  role?:string;
   roles: TNewUserTypes[] | null;
   email: string;
   invitationStatus?: TNewUserStatus;
