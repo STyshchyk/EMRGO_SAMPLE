@@ -275,6 +275,8 @@ const SecuritiesHoldingsTable = ({
                   label="Safekeeping Account"
                   options={currentSafeAccounts}
                   customOnChange={(newValue) => {
+                    dispatch(reportsActionCreators.doResetTradeDatedSecuritiesHoldings());
+                    dispatch(reportsActionCreators.doResetSecuritiesHoldings());
                     setSelectedSecAccount(newValue);
                   }}
                   getOptionLabel={(options) =>
@@ -312,7 +314,7 @@ const SecuritiesHoldingsTable = ({
                     setIsFetch(true);
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !(filters.entity && filters.securityAccount)}
+                  disabled={(filters) => !(filters.entity && filters.safekeepingAccount)}
                 />
               </Grid>
               <Grid item xs={12}>

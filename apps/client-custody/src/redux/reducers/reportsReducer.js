@@ -150,6 +150,10 @@ const reportsReducer = handleActions(
       draft.securitiesHoldings = null;
     }),
 
+    [actionCreators.doResetTradeDatedSecuritiesHoldings]: produce((draft) => {
+      draft.tradeDatedSecuritiesHoldings = null;
+    }),
+
     [actionCreators.doFetchReferenceData]: produce((draft) => {
       draft.errorMessage = null;
       draft.isFetching = true;
