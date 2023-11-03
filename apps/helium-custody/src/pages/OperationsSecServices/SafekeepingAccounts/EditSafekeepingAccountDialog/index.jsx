@@ -12,6 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import InlineFormField from "apps/helium-custody/src/components/InlineFormField";
 import MaterialTableCustomDropdownRenderer from "apps/helium-custody/src/components/MaterialTableCustomDropdownRenderer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -20,6 +21,7 @@ import PropTypes from "prop-types";
 
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../../../utils/form";
+import addSafekeepingAccount from "../../../../validationSchemas/addSafekeepingAccount";
 
 const EditSafekeepingAccountDialog = ({
   open,
@@ -105,10 +107,10 @@ const EditSafekeepingAccountDialog = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleAddSafekeepingAccount}
-      // validationSchema={addPaymentAccountFormSchema}
+      validationSchema={addSafekeepingAccount}
       enableReinitialize
     >
-      {({ values, setFieldValue, errors, handleSubmit }) => {
+      {({ values, setFieldValue, errors, handleSubmit, isValid }) => {
         return (
           <Form noValidate>
             <Dialog
@@ -153,6 +155,14 @@ const EditSafekeepingAccountDialog = ({
                             }
                           }}
                         />
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="MuiFormHelperText-root"
+                          name="entity"
+                          sx={{ marginLeft: "14px", marginTop: "4px" }}
+                        />
                       </InlineFormField>
 
                       <InlineFormField label={t("Modal.Portfolio Identifier")}>
@@ -196,6 +206,14 @@ const EditSafekeepingAccountDialog = ({
                             }
                           }}
                         />
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="MuiFormHelperText-root"
+                          name="baseCurrency"
+                          sx={{ marginLeft: "14px", marginTop: "4px" }}
+                        />
                       </InlineFormField>
                       <InlineFormField label={t("Modal.Status")} name="status">
                         <Select
@@ -213,6 +231,14 @@ const EditSafekeepingAccountDialog = ({
                               setFieldValue("status", null);
                             }
                           }}
+                        />
+                        <ErrorMessage
+                          component={Typography}
+                          variant="caption"
+                          color="error"
+                          className="MuiFormHelperText-root"
+                          name="status"
+                          sx={{ marginLeft: "14px", marginTop: "4px" }}
                         />
                       </InlineFormField>
                     </Grid>

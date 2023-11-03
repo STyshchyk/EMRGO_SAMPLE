@@ -216,6 +216,10 @@ const SafekeepingAccounts = () => {
   };
 
   const handleAmendSafekeepingAccount = (values, actions) => {
+    if (values.currencies.length === 0) {
+      toast.warning("Add at least one Associated Account", 1000);
+      return;
+    }
     const payload = {
       id: values.id,
       requestPayload: {
