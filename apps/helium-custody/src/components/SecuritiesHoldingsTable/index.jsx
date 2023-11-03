@@ -341,7 +341,7 @@ const SecuritiesHoldingsTable = ({
                     setIsFetch(true);
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.entity && !filters.safekeepingAccount}
+                  disabled={(filters) => !filters.entity || !filters.safekeepingAccount}
                 />
               </Grid>
               <Grid item container xs={12} md={6} lg={3} alignItems="center">

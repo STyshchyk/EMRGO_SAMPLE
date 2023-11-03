@@ -296,7 +296,9 @@ const CashStatementReportPage = () => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.account}
+                  disabled={(filters) =>
+                    !filters.account || !filters.entity || !filters.safekeepingAccount
+                  }
                 />
               </Grid>
 
@@ -327,7 +329,7 @@ const CashStatementReportPage = () => {
           {({ filters, filterColumns }) => {
             console.log("🚀 ~ file: index.jsx:328 ~ CashStatementReportPage ~ filters:", filters);
             const filteredData = filteredRows
-              .filter((row) => {
+              ?.filter((row) => {
                 //  Entry Date range Filter
                 if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
                   const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
@@ -336,7 +338,7 @@ const CashStatementReportPage = () => {
                 }
                 return true;
               })
-              .filter((row) => {
+              ?.filter((row) => {
                 if (filters?.transactionType) {
                   let returnValue = false;
                   const transactionTypeValue = filters?.transactionType.value.value;
@@ -353,6 +355,18 @@ const CashStatementReportPage = () => {
                   return returnValue;
                 }
                 return true;
+              })
+              ?.filter((row) => {
+                if (filters?.account) {
+                  return row.account !== filters?.account?.value?.label;
+                }
+                return false;
+              })
+              ?.filter((row) => {
+                if (filters?.entity) {
+                  return row.entity !== filters?.entity?.value?.label;
+                }
+                return false;
               });
             return (
               <Fragment>
