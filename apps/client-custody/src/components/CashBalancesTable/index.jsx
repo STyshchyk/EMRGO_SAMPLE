@@ -57,12 +57,12 @@ const CashBalancesTable = ({ data, accounts }) => {
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [currentlySelectedCashAccount, setCurrentlySelectedCashAccount] = useState(null);
   const [currentlySelectedCurrency, setCurrentlySelectedCurrency] = useState(null);
+  const [tempCurrenciesList, setTempCurrenciesList] = useState(null);
 
   const [cashAccountOptions, setCashAccountOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
 
   const [dateFilterValue, setDateFilterValue] = useState(moment());
-  const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
 
   const getEntityAndAccounts = (accs) => {
     const entityOpts = [];
@@ -140,17 +140,15 @@ const CashBalancesTable = ({ data, accounts }) => {
 
   const handleSecurityAccountChange = (selectedAccount) => {
     setCurrentlySelectedSecurityAccount(selectedAccount);
-    setCurrentlySelectedCashAccount(null);
-    setCurrentlySelectedCurrency(null);
     const tempEntitiesList = entityOpts
       .filter((entity) =>
         selectedAccount ? entity.id === selectedAccount.data.original.group.entity.id : true
       )
       .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
 
-    if (selectedAccount) {
-      setCurrentlySelectedEntity(tempEntitiesList[0]);
-    }
+    // if (selectedAccount) {
+    //   setCurrentlySelectedEntity(tempEntitiesList[0]);
+    // }
 
     const filteredCashAccounts = cashAccountOpts
       .filter((account) =>
@@ -166,12 +164,14 @@ const CashBalancesTable = ({ data, accounts }) => {
 
     setCashAccountOptions(filteredCashAccounts);
 
+    filterCurrencies(filteredCashAccounts);
+
+    dispatch(reportsActionCreators.doResetCashBalances());
+  };
+  function filterCurrencies(cashAccounts) {
     const filteredCurrencies = [
       ...new Map(
-        filteredCashAccounts?.map((cashAccount) => [
-          cashAccount?.data?.original?.currency.id,
-          cashAccount,
-        ])
+        cashAccounts?.map((cashAccount) => [cashAccount?.data?.original?.currency.id, cashAccount])
       ).values(),
     ].map((currency) => {
       const currencyObject = {
@@ -180,12 +180,9 @@ const CashBalancesTable = ({ data, accounts }) => {
       };
       return currencyObject;
     });
-
+    setTempCurrenciesList(filteredCurrencies);
     setCurrencyOptions(filteredCurrencies);
-
-    dispatch(reportsActionCreators.doResetCashBalances());
-  };
-
+  }
   const handleFetch = (filters) => {
     let qs = "";
     const { date } = filters;
@@ -301,10 +298,9 @@ const CashBalancesTable = ({ data, accounts }) => {
   const matchCashAccCurrencyWithCurrency = (selectedAcccount) => {
     const currenctSelectedAcc = selectedAcccount?.data?.original?.currency?.id;
     const filteredCurrency =
-      currencyOptions &&
-      currencyOptions.filter((currency) => currency.value === currenctSelectedAcc);
-    setCurrentlySelectedCurrency(...filteredCurrency);
-    setDisabledCurrency(true);
+      tempCurrenciesList &&
+      tempCurrenciesList.filter((currency) => currency.value === currenctSelectedAcc);
+    setCurrencyOptions([...filteredCurrency]);
   };
   return (
     <Fragment>
@@ -329,14 +325,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   options={entityOptions}
                   setClearDisabled={setDisabledCurrency}
                   customOnChange={(selectedEntity) => {
-                    if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
-                      setIsAllEntitiesOptionSelected(false);
-                      handleEntityChange(selectedEntity);
-                      return;
-                    }
-
-                    setIsAllEntitiesOptionSelected(true);
-                    setCurrentlySelectedEntity(ALL_ENTITIES_OPTION);
+                    handleEntityChange(selectedEntity);
                   }}
                   currentlySelectedOption={currentlySelectedEntity}
                   setCurrentlySelectedOption={setCurrentlySelectedEntity}
@@ -357,7 +346,6 @@ const CashBalancesTable = ({ data, accounts }) => {
                   customOnChange={(selectedAccount) => {
                     handleSecurityAccountChange(selectedAccount);
                   }}
-                  isDisabled={isAllEntitiesOptionSelected}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
@@ -366,7 +354,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !(filters.entity && filters.securityAccount)}
+                  disabled={(filters) => !(currentlySelectedEntity && filters.securityAccount)}
                 />
               </Grid>
               <Grid item xs={12} lg={2} container></Grid>
@@ -383,6 +371,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
                   setCustomClear={() => {
                     setCurrentlySelectedCurrency(null);
+                    setCurrencyOptions(tempCurrenciesList);
                   }}
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
@@ -431,20 +420,20 @@ const CashBalancesTable = ({ data, accounts }) => {
                 }
                 return true;
               })
-              ?.filter((row) => {
+              .filter((row) => {
                 if (filters?.currency) {
                   return row.currency === filters?.currency?.value?.label;
                 }
                 return true;
               })
-              ?.filter((row) => {
+              .filter((row) => {
                 if (filters?.securityAccount) {
                   return row.securityAccount !== filters?.securityAccount?.value?.label;
                 }
 
                 return false;
               })
-              ?.filter((row) => {
+              .filter((row) => {
                 if (filters?.entity) {
                   return row.entity === filters?.entity?.value?.label;
                 }
