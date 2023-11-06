@@ -42,7 +42,7 @@ const PaymentAccountsTable = ({ tableData }) => {
         {
           title: t("PaymentAccountManagement.PaymentAccountsTable.Label"),
           field: "label",
-          // defaultSort: "asc",
+          defaultSort: "asc",
           width: 150,
         },
         /*
