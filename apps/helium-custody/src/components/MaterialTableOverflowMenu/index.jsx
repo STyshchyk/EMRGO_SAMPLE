@@ -6,7 +6,14 @@ import PropTypes from "prop-types";
 
 import style from "./style.module.scss";
 
-const MaterialTableOverflowMenu = ({ id, actions, anchorEl, setAnchorEl, selectedRow }) => (
+const MaterialTableOverflowMenu = ({
+  id,
+  actions,
+  anchorEl,
+  setAnchorEl,
+  selectedRow,
+  setSelectedRow,
+}) => (
   <>
     {Boolean(anchorEl) && (
       <Menu
@@ -15,7 +22,10 @@ const MaterialTableOverflowMenu = ({ id, actions, anchorEl, setAnchorEl, selecte
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         disableScrollLock
-        onClose={() => setAnchorEl(null)}
+        onClose={() => {
+          setAnchorEl(null);
+          setSelectedRow(null);
+        }}
       >
         {actions.map((action) => {
           const isHidden =

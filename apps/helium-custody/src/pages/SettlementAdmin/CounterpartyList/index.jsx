@@ -149,7 +149,8 @@ const CounterpartyList = () => {
         handleCloseMenu={handleCloseMenu}
         handleOpenMenu={handleOpenMenu}
         setAnchorEl={setAnchorEl}
-        setCurrentlySelectedRowData={setCurrentlySelectedRowData}
+        selectedRow={currentlySelectedRowData}
+        setSelectedRow={setCurrentlySelectedRowData}
         setOpenDialog={setOpenAddCounterpartyDialog}
       />
 
