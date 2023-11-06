@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import v from "voca";
 import PropTypes from "prop-types";
+import v from "voca";
 
 import { reportDateRenderer } from "../../constants/renderers";
 import { counterpartyStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
@@ -37,9 +37,10 @@ const CounterpartyTable = ({
   anchorEl,
   data,
   actions,
-  setCurrentlySelectedRowData,
+  setSelectedRow,
   setAnchorEl,
   setOpenDialog,
+  selectedRow,
 }) => {
   const tableRef = useRef();
   const exportRef = useRef();
@@ -228,7 +229,7 @@ const CounterpartyTable = ({
                       icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
                       onClick: (event, rowData) => {
                         setAnchorEl(event.currentTarget);
-                        setCurrentlySelectedRowData(rowData);
+                        setSelectedRow(rowData);
                       },
                     },
                   ]}
@@ -249,7 +250,8 @@ const CounterpartyTable = ({
                   actions={actions}
                   anchorEl={anchorEl}
                   setAnchorEl={setAnchorEl}
-                  selectedRow={setCurrentlySelectedRowData}
+                  selectedRow={selectedRow}
+                  setSelectedRow={setSelectedRow}
                 />
 
                 <ReportingTablePDFExporter ref={exportRef} title="Counterparty">
@@ -288,7 +290,7 @@ CounterpartyTable.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  setCurrentlySelectedRowData: PropTypes.func.isRequired,
+  setSelectedRow: PropTypes.func.isRequired,
   showAllFilters: PropTypes.bool,
   setAnchorEl: PropTypes.func.isRequired,
   setOpenDialog: PropTypes.func.isRequired,

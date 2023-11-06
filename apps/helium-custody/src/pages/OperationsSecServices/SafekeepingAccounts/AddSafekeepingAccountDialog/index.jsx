@@ -70,8 +70,9 @@ const AddSafekeepingAccountDialog = ({
       lookup: currencyListForMaterialTable,
       editComponent: (props) => <MaterialTableCustomDropdownRenderer {...props} />,
       validate: (rowData) => {
+        const isDeleteTooltip = rowData.tableData?.editing === "delete";
         if (!rowData) return false;
-        if (rowData.currency?.value) return true;
+        if (rowData.currency?.value || isDeleteTooltip) return true;
         return false;
       },
     },
@@ -220,25 +221,21 @@ const AddSafekeepingAccountDialog = ({
                         editable={{
                           onRowAdd: (newData) =>
                             new Promise((resolve, reject) => {
-                              setTimeout(() => {
-                                if (newData.currency) {
-                                  setFieldValue("currencies", [...values.currencies, newData]);
-                                } else {
-                                  reject();
-                                }
-                                resolve();
-                              }, 1000);
+                              if (newData.currency) {
+                                setFieldValue("currencies", [...values.currencies, newData]);
+                              } else {
+                                reject();
+                              }
+                              resolve();
                             }),
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
                               const index = oldData.currency;
-                              setTimeout(() => {
-                                const dataDelete = [...values.currencies].filter(
-                                  (currency) => currency.currency.value !== index
-                                );
-                                setFieldValue("currencies", [...dataDelete]);
-                                resolve();
-                              }, 1000);
+                              const dataDelete = [...values.currencies].filter(
+                                (currency) => currency.currency.value !== index
+                              );
+                              setFieldValue("currencies", [...dataDelete]);
+                              resolve();
                             }),
                         }}
                       />

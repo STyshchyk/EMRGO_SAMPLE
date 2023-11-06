@@ -2,6 +2,7 @@ import { FC } from "react";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Link } from "react-router-dom";
 
+import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
 import { Button, Checkbox, Disclaimer, Input, Logo } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
@@ -91,6 +92,10 @@ export const SignupComponent: FC<ISignupProps> = (props: ISignupProps) => {
         </Button>
       </OneCol>
       <Disclaimer />
+
+    <Styles.HelpItem>
+      Already a user? <Link to={routes.login}>Log in here</Link>
+    </Styles.HelpItem>
     </Styles.SignupForm>
   );
 };
