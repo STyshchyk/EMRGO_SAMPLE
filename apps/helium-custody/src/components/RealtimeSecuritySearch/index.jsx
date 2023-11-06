@@ -115,6 +115,7 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
             pageSize: 5,
             search: false,
             draggable: false,
+            loadingType: "linear",
             rowStyle: (rowData) => ({
               backgroundColor:
                 selectedRowId === rowData.tableData.id
