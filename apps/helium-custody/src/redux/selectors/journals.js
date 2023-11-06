@@ -27,7 +27,9 @@ export const selectInternalTransfersList = createSelector(
           journalStatus: debitTx?.journalStatus,
           transferAmount: debitTx?.amount,
           createdByUser: debitTx?.createdByUser
-            ? `${debitTx?.createdByUser?.firstName} ${creditTx?.createdByUser?.lastName}`
+            ? `${debitTx?.createdByUser?.firstName ?? "--"} ${
+                creditTx?.createdByUser?.lastName ?? "--"
+              }`
             : null,
           approvedByUser: debitTx?.approvedByUser
             ? `${debitTx?.approvedByUser?.firstName ?? "--"} ${
@@ -35,7 +37,9 @@ export const selectInternalTransfersList = createSelector(
               }`
             : null,
           amendedByUser: debitTx?.amendedByUser
-            ? `${debitTx?.amendedByUser?.firstName} ${creditTx?.amendedByUser?.lastName}`
+            ? `${debitTx?.amendedByUser?.firstName ?? "--"} ${
+                creditTx?.amendedByUser?.lastName ?? "--"
+              }`
             : null,
           approvedAt: debitTx?.approvedAt,
         };
