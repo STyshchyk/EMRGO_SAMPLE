@@ -112,6 +112,7 @@ const TFATickets = () => {
                 title: `${t("support:Support.Headers.Date")}`,
                 field: "date",
                 type: "date",
+                defaultSort: "desc",
               },
               {
                 title: `Reason`,
