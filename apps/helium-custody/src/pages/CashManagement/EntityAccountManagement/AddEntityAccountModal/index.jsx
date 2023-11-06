@@ -20,8 +20,9 @@ import AutoSaveFields from "../../../../components/AutoSaveFields";
 import Checkbox from "../../../../components/Checkbox";
 import { useTheme } from "../../../../context/theme-context";
 import * as formActionCreators from "../../../../redux/actionCreators/form";
-import * as selectFormValues from "../../../../redux/selectors/form";
 import * as authSelectors from "../../../../redux/selectors/auth";
+import * as selectFormValues from "../../../../redux/selectors/form";
+import { getDropdownValues } from "../../../../utils/form";
 // import { addAccountSchema } from '../../validationSchemas';
 import style from "./style.module.scss";
 
@@ -37,6 +38,7 @@ const initial = {
 const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options }) => {
   const dispatch = useDispatch();
   const formvalues = useSelector(selectFormValues.selectFormValues);
+
   const fetchingValues = useSelector(selectFormValues.formValuesFetching);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityGroupID = currentEntityGroup?.id;
@@ -52,10 +54,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
   const handleClose = () => {
     setIsModalOpen(false);
   };
-  const filteredCurrency = currency.map((value) => ({
-    value,
-    label: locale.code === "en-GB" ? value.name : value.nameAr,
-  }));
+  const filteredCurrency = getDropdownValues(currency, locale);
   const filteredAccountTypes = bankAccountTypes?.map((value) => ({
     value,
     label: locale.code === "en-GB" ? value.name : value.nameAr,
@@ -115,7 +114,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
           {
             ...values,
             accountTypeId: values.accountTypeId.value.id,
-            currencyId: values.currencyId.value.id,
+            currencyId: values.currencyId.value,
             // entityGroupId: values.entityGroupId.groupId,
             externalAccountNumber: values.externalAccountNumber,
             isVirtualIBAN: values.isVirtualIBAN === true,
