@@ -268,25 +268,21 @@ const EditSafekeepingAccountDialog = ({
                         editable={{
                           onRowAdd: (newData) =>
                             new Promise((resolve, reject) => {
-                              setTimeout(() => {
-                                setFieldValue("currencies", [
-                                  ...values.currencies,
-                                  { currency: newData.currency.value, account: "-" },
-                                ]);
+                              setFieldValue("currencies", [
+                                ...values.currencies,
+                                { currency: newData.currency.value, account: "-" },
+                              ]);
 
-                                resolve();
-                              }, 500);
+                              resolve();
                             }),
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
                               const index = oldData.currency;
-                              setTimeout(() => {
-                                const dataDelete = [...values.currencies].filter(
-                                  (currency) => currency.currency !== index
-                                );
-                                setFieldValue("currencies", [...dataDelete]);
-                                resolve();
-                              }, 500);
+                              const dataDelete = [...values.currencies].filter(
+                                (currency) => currency.currency !== index
+                              );
+                              setFieldValue("currencies", [...dataDelete]);
+                              resolve();
                             }),
                         }}
                       />
