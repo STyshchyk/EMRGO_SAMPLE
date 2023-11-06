@@ -1,6 +1,5 @@
 import React from "react";
 import ReactSelect, { GroupBase, Props } from "react-select";
-import makeAnimated from "react-select/animated";
 
 import { colors, typography } from "@emrgo-frontend/theme";
 import { ellipsis, rem } from "polished";
@@ -15,9 +14,9 @@ export function Select<
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
 >({ components: customComponent, ...props }: Props<Option, IsMulti, Group> & ISelectProps) {
-  const animatedComponents = makeAnimated();
+  const animatedComponents = {}; //to prevent flickering when using select in modals
   const { isDarkMode } = useDarkMode();
-  
+
   const getOptionStyles = (type: string, state: any) => {
     let styles = {};
 

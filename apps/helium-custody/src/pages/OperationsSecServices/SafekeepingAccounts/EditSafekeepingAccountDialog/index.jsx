@@ -263,6 +263,7 @@ const EditSafekeepingAccountDialog = ({
                         options={{
                           search: false,
                           actionsColumnIndex: -1,
+                          loadingType: "linear",
                         }}
                         fullWidth
                         editable={{

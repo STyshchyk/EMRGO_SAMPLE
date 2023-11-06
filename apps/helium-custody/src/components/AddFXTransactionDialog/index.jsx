@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import makeAnimated from "react-select/animated";
 
 import { Select } from "@emrgo-frontend/shared-ui";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -36,8 +35,6 @@ import { addFXTransactionFormSchema } from "../../validationSchemas";
 import AutoSaveFields from "../AutoSaveFields";
 import CalculationField from "../CalculationField";
 
-const animatedComponents = makeAnimated();
-
 const initial = {
   entity: null,
   fromAmount: "",
@@ -70,9 +67,6 @@ const DependentAccountField = (props) => {
         isDisabled={(!values.entity && !props.currency) || props?.optionsList?.length === 0}
         closeMenuOnSelect
         placeholder="Select.."
-        components={{
-          ...animatedComponents,
-        }}
         isSearchable
         styles={selectStyles}
         value={props?.value}
@@ -331,9 +325,6 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           <Select
                             closeMenuOnSelect
                             placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
                             isSearchable
                             styles={selectStyles}
                             value={values.entity}
@@ -386,9 +377,6 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           <Select
                             closeMenuOnSelect
                             placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
                             isSearchable
                             styles={selectStyles}
                             value={values.fromCurrency}
@@ -525,9 +513,6 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                             isDisabled={!values.fromCurrency || fromAccountOptionsList.length === 0}
                             closeMenuOnSelect
                             placeholder="Select.."
-                            components={{
-                              ...animatedComponents,
-                            }}
                             isSearchable
                             styles={selectStyles}
                             value={values.toCurrency}

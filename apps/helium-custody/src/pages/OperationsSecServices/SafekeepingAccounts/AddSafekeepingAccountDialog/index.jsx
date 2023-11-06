@@ -81,7 +81,6 @@ const AddSafekeepingAccountDialog = ({
       editable: "never",
     },
   ];
-
   return (
     <Formik
       initialValues={initialValues}
@@ -215,6 +214,7 @@ const AddSafekeepingAccountDialog = ({
                         options={{
                           search: false,
                           actionsColumnIndex: -1,
+                          loadingType: "linear",
                         }}
                         fullWidth
                         editable={{

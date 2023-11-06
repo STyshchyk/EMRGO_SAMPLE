@@ -26,9 +26,6 @@ const MaterialTableCustomDropdownRenderer = (props) => {
       <Select
         closeMenuOnSelect
         placeholder="Select.."
-        components={{
-          ...animatedComponents,
-        }}
         menuPortalTarget={document.body}
         isSearchable
         styles={selectStyles}

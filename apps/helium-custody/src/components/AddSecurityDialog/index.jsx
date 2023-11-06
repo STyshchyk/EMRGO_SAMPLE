@@ -497,9 +497,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Select
                           closeMenuOnSelect
                           placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
                           isSearchable
                           styles={selectStyles}
                           value={values.frequency}
@@ -532,9 +529,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           closeMenuOnSelect
                           isSearchable
                           placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
                           styles={selectStyles}
                           value={values.country}
                           options={getDropdownValues(
@@ -614,9 +608,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Select
                           closeMenuOnSelect
                           placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
                           isSearchable
                           styles={selectStyles}
                           menuPortalTarget={document.body}
@@ -668,9 +659,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Select
                           closeMenuOnSelect
                           placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
                           menuPortalTarget={document.body}
                           isSearchable
                           styles={selectStyles}
@@ -703,9 +691,6 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Select
                           closeMenuOnSelect
                           placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
                           menuPortalTarget={document.body}
                           isSearchable
                           styles={selectStyles}
