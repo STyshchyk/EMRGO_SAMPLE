@@ -1,3 +1,4 @@
+import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled from "styled-components";
 
@@ -16,3 +17,9 @@ export const TwoCol = styled.div`
   gap: ${rem(24)};
   max-width: ${rem(maxWidth)};
 `;
+
+
+export const HelpItem = styled.div`
+  ${getTheme("typography.regular.02")}
+`;
+
