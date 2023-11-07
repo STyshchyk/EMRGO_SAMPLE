@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import { Button, DashboardContent, EnterOTPCodeModal, Input } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
@@ -8,7 +8,6 @@ import { AccountPanelContent } from "../../components/AccountPanelContent";
 import { AccountPanelFooter } from "../../components/AccountPanelFooter";
 import { AccountPanelHeader } from "../../components/AccountPanelHeader";
 import { AccountPanelHeaderTitle } from "../../components/AccountPanelHeaderTitle";
-import { AccountPanelText } from "../../components/AccountPanelText";
 import { EditCorporateLegalNameModal } from "./EditCorporateLegalNameModal";
 import { EditEmailAddressModal } from "./EditEmailAddressModal/EditEmailAddressModal";
 import { EditNameModal } from "./EditNameModal/EditNameModal";
@@ -86,32 +85,32 @@ export const UserDetailsComponent: FC<IUserDetailsProps> = (props: IUserDetailsP
           </AccountPanelFooter>
         </AccountPanel>
 
-        <AccountPanel>
-          <AccountPanelHeader>
-            <AccountPanelHeaderTitle>Corporate mobile number</AccountPanelHeaderTitle>
-          </AccountPanelHeader>
+        {/*<AccountPanel>*/}
+        {/*  <AccountPanelHeader>*/}
+        {/*    <AccountPanelHeaderTitle>Corporate mobile number</AccountPanelHeaderTitle>*/}
+        {/*  </AccountPanelHeader>*/}
 
-          <Fragment>
-            <AccountPanelContent>
-              {user?.phone ? (
-                <Input disabled value={user?.phone || ""} />
-              ) : (
-                <AccountPanelText>
-                  Add your corporate mobile number for extra security.
-                </AccountPanelText>
-              )}
-            </AccountPanelContent>
-            <AccountPanelFooter>
-              <Button
-                variant={user?.phone ? "secondary" : "primary"}
-                size="large"
-                onClick={() => setStateOfEditCorporateMobileNumberModal(true, user?.phone === null)}
-              >
-                {user?.phone ? "Update" : "Add"} corporate mobile number
-              </Button>
-            </AccountPanelFooter>
-          </Fragment>
-        </AccountPanel>
+        {/*  <Fragment>*/}
+        {/*    <AccountPanelContent>*/}
+        {/*      {user?.phone ? (*/}
+        {/*        <Input disabled value={user?.phone || ""} />*/}
+        {/*      ) : (*/}
+        {/*        <AccountPanelText>*/}
+        {/*          Add your corporate mobile number for extra security.*/}
+        {/*        </AccountPanelText>*/}
+        {/*      )}*/}
+        {/*    </AccountPanelContent>*/}
+        {/*    <AccountPanelFooter>*/}
+        {/*      <Button*/}
+        {/*        variant={user?.phone ? "secondary" : "primary"}*/}
+        {/*        size="large"*/}
+        {/*        onClick={() => setStateOfEditCorporateMobileNumberModal(true, user?.phone === null)}*/}
+        {/*      >*/}
+        {/*        {user?.phone ? "Update" : "Add"} corporate mobile number*/}
+        {/*      </Button>*/}
+        {/*    </AccountPanelFooter>*/}
+        {/*  </Fragment>*/}
+        {/*</AccountPanel>*/}
 
         <AccountPanel>
           <AccountPanelHeader>
@@ -129,7 +128,7 @@ export const UserDetailsComponent: FC<IUserDetailsProps> = (props: IUserDetailsP
       <EditCorporateLegalNameModal user={user || null} />
       <EditEmailAddressModal user={user || null} />
 
-      <EditPhoneNumberModal user={user || null} />
+      <EditPhoneNumberModal user={null || null} />
 
       <EnterOTPCodeModal
         isOpen={isOTPCodeModalOpen}

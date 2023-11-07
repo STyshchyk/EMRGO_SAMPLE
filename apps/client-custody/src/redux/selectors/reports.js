@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 export const selectCashAccountsData = (state) => state.reports.cashAccounts;
 export const selectCashTransactionsData = (state) => state.reports.cashTransactions;
 export const selectCashAccounts = createSelector([selectCashAccountsData], (accountsData) => {
-  if (accountsData) {
+  if (accountsData && Array.isArray(accountsData)) {
     return accountsData
       .map((account) => {
         const securityAccount = { id: account.id, accountNumber: account.accountNo };
