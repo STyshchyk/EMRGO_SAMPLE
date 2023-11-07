@@ -46,6 +46,11 @@ const ALL_ENTITIES_OPTION = {
 };
 const FALLBACK_VALUE = "--";
 
+const intlFormatOpts = {
+  minimumFractionDigits: 6,
+  maximumFractionDigits: 6,
+};
+
 const animatedComponents = makeAnimated();
 
 const SecuritiesTransactionsReportPage = () => {
@@ -77,6 +82,7 @@ const SecuritiesTransactionsReportPage = () => {
 
   const rows = transactions || [];
   let filteredRows = [];
+  console.log(filteredRows, "rows");
   let exportFilters = [];
 
   const getRowsForCSV = () => {
@@ -84,17 +90,17 @@ const SecuritiesTransactionsReportPage = () => {
     filteredRows.forEach((row) => {
       boxes.push([
         row.tradeDate ? dateFormatter(row.settlementInsTradeDate, DEFAULT_DATE_FORMAT) : "",
-        row.wsn || "",
-        row.isin || "",
+        row.wsn || FALLBACK_VALUE,
+        row.externalSecurity?.isin || "",
         row?.externalSecurity?.shortName || "",
         row.issuerName || "",
         row.fromSecurityAccount || "",
         row.investorName || "",
         row.toSecurityAccount || "",
         row?.settlementType?.name || "",
-        convertNumberToIntlFormat(row.netSettleAmount) || "", // amount of sec. settled
+        row?.netSettleAmount ? convertNumberToIntlFormat(row.netSettleAmount, intlFormatOpts) : "", // amount of sec. settled
         // row.instDescription || "",
-        currencyRenderer(row.price) || "",
+        convertNumberToIntlFormat(row.price, intlFormatOpts) || "",
         row?.settlementInsSettlementDate
           ? dateFormatter(row?.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
           : "",
@@ -162,7 +168,6 @@ const SecuritiesTransactionsReportPage = () => {
   if (Array.isArray(filteredEntity) && filteredEntity.length > 1) {
     filteredEntity.unshift(ALL_ENTITIES_OPTION);
   }
-  console.log(currentSafeAccounts);
   const filteredSecurityAccounts = currentSafeAccounts.map((account) => ({
     data: account,
     value: account.id,
@@ -173,15 +178,6 @@ const SecuritiesTransactionsReportPage = () => {
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
 
   const generateSecuritiesTransactionsTableRowData = (i) => {
-    const intlFormatOpts = {
-      minimumFractionDigits: 6,
-      maximumFractionDigits: 6,
-    };
-
-    console.log(i?.settlementInsSettlementDate);
-
-    // const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;
-
     return {
       tradeDate: i?.settlementInsTradeDate,
       currency: i.externalSecurity?.currencyName?.name,
@@ -224,6 +220,12 @@ const SecuritiesTransactionsReportPage = () => {
     },
     { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
     {
+      id: "isin",
+      title: t("Security Transactions.Headers.ISIN"),
+      field: "isin",
+      exportConfig: { render: (rowData) => rowData?.externalSecurity?.isin },
+    },
+    {
       id: "security",
       title: t("Securities Holdings.Headers.Security"),
       field: "securityShortName",
@@ -263,7 +265,7 @@ const SecuritiesTransactionsReportPage = () => {
       field: "netSettleAmount",
       type: "numeric",
       exportConfig: {
-        render: (rowData) => currencyRenderer(rowData.netSettleAmount),
+        render: (rowData) => convertNumberToIntlFormat(rowData.netSettleAmount, intlFormatOpts),
         align: "right",
       },
     },
@@ -274,7 +276,7 @@ const SecuritiesTransactionsReportPage = () => {
       field: "price",
       type: "numeric",
       exportConfig: {
-        render: (rowData) => currencyRenderer(rowData.price),
+        render: (rowData) => convertNumberToIntlFormat(rowData.price, intlFormatOpts),
         align: "right",
         width: 5,
       },
@@ -283,8 +285,6 @@ const SecuritiesTransactionsReportPage = () => {
       id: "settleDate",
       title: t("Security Transactions.Headers.Settle Date"),
       field: "settleDate",
-      // render: (rowData) => console.log(rowData, 'ROW'),
-      // render: (rowData) => dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT),
       render: (rowData) =>
         rowData?.settlementInsSettlementDate
           ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
@@ -298,14 +298,12 @@ const SecuritiesTransactionsReportPage = () => {
       id: "tradeDate",
       title: t("Security Transactions.Headers.Trade Date"),
       field: "tradeDate",
-      // render: (rowData) => (rowData?.tradeDate ? reportDateRenderer(rowData?.tradeDate) : null),
       render: (rowData) =>
         rowData?.tradeDate ? dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT) : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
     },
     // { id: 'entity', title: t('Security Transactions.Headers.Entity'), field: 'entity' },
     { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
-    { id: "wsn", title: t("Security Transactions.Headers.ISIN"), field: "isin" },
+    { id: "isin", title: t("Security Transactions.Headers.ISIN"), field: "isin" },
     {
       id: "security",
       title: t("Securities Holdings.Headers.Security"),
@@ -320,7 +318,6 @@ const SecuritiesTransactionsReportPage = () => {
       id: "fromSecurityAccount",
       title: t("Security Transactions.Headers.From Sec Acct"),
       field: "fromSecurityAccount",
-      exportConfig: { width: 8 },
     },
     {
       id: "investorName",
@@ -331,26 +328,22 @@ const SecuritiesTransactionsReportPage = () => {
       id: "toSecurityAccount",
       title: t("Security Transactions.Headers.To Sec Acct"),
       field: "toSecurityAccount",
-      exportConfig: { width: 8 },
     },
     {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
       field: "settlementType",
-      exportConfig: { width: 8 },
     },
     {
       id: "netSettleAmount",
       title: t("Security Transactions.Headers.Net Settle Amt"),
       field: "netSettleAmount",
-      type: "numeric",
     },
     // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
     {
       id: "price",
       title: t("Security Transactions.Headers.Price"),
       field: "price",
-      type: "numeric",
     },
     {
       id: "settleDate",
@@ -359,7 +352,6 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => (rowData?.settleDate ? dateRenderer(rowData?.settleDate) : null),
       render: (rowData) =>
         rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
     },
   ];
 
@@ -529,8 +521,8 @@ const SecuritiesTransactionsReportPage = () => {
 
               const exportCSV = () => {
                 const tradeColumnName = t("Security Transactions.Headers.Trade Date");
-                const isinColumnName = "ISIN";
                 const wsnColumnName = t("Security Transactions.Headers.WSN");
+                const isinColumnName = "ISIN";
                 const securityColumnName = "Security";
                 const issuerNameColumnName = t("Security Transactions.Headers.Issuer Name");
                 const settlementTypeColumnName = t("Security Transactions.Headers.Settlement Type");
@@ -558,8 +550,8 @@ const SecuritiesTransactionsReportPage = () => {
                 csv
                   .addRow([
                     tradeColumnName,
-                    isinColumnName,
                     wsnColumnName,
+                    isinColumnName,
                     securityColumnName,
                     issuerNameColumnName,
                     fromSecAcctColumnName,

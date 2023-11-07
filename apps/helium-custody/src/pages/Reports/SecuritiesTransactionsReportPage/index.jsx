@@ -39,6 +39,11 @@ const ALL_ENTITIES_OPTION = {
 };
 const FALLBACK_VALUE = "--";
 
+const intlFormatOpts = {
+  minimumFractionDigits: 6,
+  maximumFractionDigits: 6,
+};
+
 const animatedComponents = makeAnimated();
 
 const SecuritiesTransactionsReportPage = () => {
@@ -94,8 +99,10 @@ const SecuritiesTransactionsReportPage = () => {
     ...new Map(listOfSecurities.map((item) => [item.id, item])).values(),
   ];
 
+  console.log(listOfUniqueSecurities, "yolo");
+
   const securityOptionsList = listOfUniqueSecurities?.map((security) => ({
-    label: security.name,
+    label: security.shortName, // table is rendering shortName instead of security.name
     value: security.id,
   }));
 
@@ -126,11 +133,6 @@ const SecuritiesTransactionsReportPage = () => {
   // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
 
   const generateSecuritiesTransactionsTableRowData = (i) => {
-    const intlFormatOpts = {
-      minimumFractionDigits: 6,
-      maximumFractionDigits: 6,
-    };
-
     // const issueDate = i.sukuk?.issueDate || i.externalSecurity?.issueDate;
     return {
       tradeDate: i?.settlementInsTradeDate,
@@ -151,7 +153,6 @@ const SecuritiesTransactionsReportPage = () => {
   };
 
   const getSecurityFieldObject = (securitiesTransactionObject) => {
-    console.log(securitiesTransactionObject, "here");
     if (securitiesTransactionObject?.sukuk) {
       return securitiesTransactionObject.sukuk;
     }
@@ -207,7 +208,7 @@ const SecuritiesTransactionsReportPage = () => {
     { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
     { id: "wsn", title: t("Security Transactions.Headers.ISIN"), field: "isin" },
     {
-      id: "security",
+      id: "securityShortName",
       title: t("Securities Holdings.Headers.Security"),
       field: "securityShortName",
     },
@@ -251,7 +252,6 @@ const SecuritiesTransactionsReportPage = () => {
       field: "netSettleAmount",
       type: "numeric",
       exportConfig: {
-        render: (rowData) => currencyRenderer(rowData.netSettleAmount),
         align: "right",
       },
     },
@@ -262,7 +262,6 @@ const SecuritiesTransactionsReportPage = () => {
       field: "price",
       type: "numeric",
       exportConfig: {
-        render: (rowData) => currencyRenderer(rowData.price),
         align: "right",
         width: 5,
       },
@@ -274,7 +273,7 @@ const SecuritiesTransactionsReportPage = () => {
       // render: (rowData) => (rowData?.settleDate ? dateRenderer(rowData?.settleDate) : null),
       render: (rowData) =>
         rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
+      exportConfig: { render: (rowData) => reportDateRenderer(rowData.settleDate) },
     },
   ];
 

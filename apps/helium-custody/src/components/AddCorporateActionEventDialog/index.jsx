@@ -651,6 +651,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         component={DatePicker}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
                         name="responseDeadline"
+                        minDate={moment()}
                         value={values.responseDeadline}
                         onChange={(date) => {
                           setFieldValue("responseDeadline", date);

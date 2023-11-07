@@ -123,23 +123,6 @@ const CashStatementPage = () => {
     }
   }, [currentlySelectedEntity, currentlySelectedSecurityAccount, currentlySelectedAccount]);
 
-  const getRowsForCSV = () => {
-    const boxes = [];
-    filteredRows.forEach((row) => {
-      boxes.push([
-        row.date || "--",
-        row.transactionType || "--",
-        row.refNo || "--",
-        row.isin || "--",
-        row.narrative || "--",
-        row.debit || "--",
-        row.credit || "--",
-        row.balance || "--",
-      ]);
-    });
-    return boxes;
-  };
-
   const getEntityAndAccounts = (accs) => {
     const entityOpts = [];
     const accountOpts = [];
@@ -244,7 +227,6 @@ const CashStatementPage = () => {
           rowData.debit !== "-" ? currencyRenderer(rowData.debit, decimalFormat) : "-",
         align: "right",
       },
-      // type: 'numeric',
     },
     {
       id: "credit",
@@ -256,7 +238,6 @@ const CashStatementPage = () => {
           rowData.credit !== "-" ? currencyRenderer(rowData.credit, decimalFormat) : "-",
         align: "right",
       },
-      // type: 'numeric',
     },
     {
       id: "balance",
@@ -267,7 +248,6 @@ const CashStatementPage = () => {
         render: (rowData) => currencyRenderer(rowData.balance, decimalFormat),
         align: "right",
       },
-      // type: 'numeric',
     },
   ];
 
@@ -280,42 +260,6 @@ const CashStatementPage = () => {
   //     value: acc.id,
   //     label: acc.label,
   //   }));
-
-  const exportCSV = () => {
-    new CsvBuilder("cash_statement.csv")
-      .addRow([
-        t("Cash Statement.Account"),
-        `${
-          currentlySelectedAccount
-            ? currentlySelectedAccount.data.original.accountNo
-            : t("Cash Statement.NA")
-        } | ${
-          currentlySelectedAccount
-            ? currentlySelectedAccount.data.original.type
-            : t("Cash Statement.NA")
-        }`,
-        "",
-        t("Cash Statement.Currency"),
-        `${
-          currentlySelectedAccount
-            ? currentlySelectedAccount.data.original.currency.name
-            : t("Cash Statement.NA")
-        }`,
-      ])
-      .addRow([""])
-      .addRow([
-        t("Cash Statement.Headers.Date"),
-        t("Cash Statement.Headers.Transaction_Balance Type"),
-        t("Cash Statement.Headers.Reference No"),
-        t("Cash Statement.Headers.Related ISIN"),
-        t("Cash Statement.Headers.Narrative"),
-        t("Cash Statement.Headers.Debit"),
-        t("Cash Statement.Headers.Credit"),
-        t("Cash Statement.Headers.Balance"),
-      ])
-      .addRows(getRowsForCSV())
-      .exportFile();
-  };
 
   const handleFilter = () => {
     let qs = "";
