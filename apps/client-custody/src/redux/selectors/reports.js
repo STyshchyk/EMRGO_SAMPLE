@@ -12,7 +12,7 @@ export const selectCashAccounts = createSelector([selectCashAccountsData], (acco
           group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
         };
       })
-      .filter((account) => account.isActive);
+      .filter((account) => account.isActive && account.portfolio.status === "Active");
   }
   return [];
 });
@@ -38,20 +38,30 @@ export const selectCashTransactions = createSelector(
 );
 
 export const selectSecuritiesAccountsData = (state) => state.reports.securitiesAccounts;
-export const selectSafeAccountsData = (state) => state.reports.safekeepingAccount;
+export const selectSafeAccountsData2 = (state) => state.reports.safekeepingAccount;
 export const selectSecuritiesTransactionsData = (state) => state.reports.securitiesTransactions;
+
+export const selectSafeAccountsData = createSelector([selectSafeAccountsData2], (safeAccounts) => {
+  if (safeAccounts && Array.isArray(safeAccounts)) {
+    return safeAccounts.filter((acc) => acc.status === "Active");
+  }
+  return [];
+});
 
 export const selectSecuritiesAccounts = createSelector(
   [selectSecuritiesAccountsData],
   (accountsData) => {
-    if (accountsData) {
-      return accountsData.map((account) => {
-        const securityAccount = { id: account.id, accountNumber: account.accountNumber };
-        return {
-          ...account,
-          group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
-        };
-      });
+    if (accountsData && Array.isArray(accountsData)) {
+      return accountsData
+        .map((account) => {
+          const securityAccount = { id: account.id, accountNumber: account.accountNumber };
+
+          return {
+            ...account,
+            group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
+          };
+        })
+        .filter((acc) => acc.portfolio.status === "Active");
     }
     return [];
   }
