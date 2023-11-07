@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,6 @@ import ViewIcon from "@mui/icons-material/ViewList";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
-import moment from "moment";
 import v from "voca";
 
 import LoadingPage from "../../../components/LoadingPage";
@@ -93,7 +92,7 @@ const generateInitialValues = (selectedPaymentInstructionRowData, options) => {
 const generateSourceEntityOptions = (entities) =>
   entities.map((entity) => ({
     value: entity.id,
-    label: entity.corporateEntityName,
+    label: entity?.corporateEntityName ?? entity.entityName,
   }));
 
 const generateSourceAccountOptions = (sourceAccounts) =>
@@ -170,17 +169,15 @@ const PaymentInstructionsPage = () => {
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const dropdownValues = useSelector(billingAndPaymentsSelectors.selectDropDowns);
-  const entities = useSelector(entitiesSelectors.selectEntities);
+  const entities = useSelector(entitiesSelectors.selectAllEntities);
   const paymentInstructions = useSelector(accountsSelectors.selectOutgoingInstructionsData);
   const validatedPaymentAccounts = useSelector(accountsSelectors.selectedValidatedPaymentAccounts);
   const sourceAccounts = useSelector(billingAndPaymentsSelectors.selectAccounts);
   const currentUserId = useSelector(authSelectors.selectUserId);
   const isFetching = useSelector(billingAndPaymentsSelectors.selectIsFetching);
-
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityGroupEntityType === "EMRGO_SERVICES";
-
   const hasPaymentApproveACL = currentEntityGroup?.accessControls?.some(
     (i) => i.key === "Payment/Approve"
   );
@@ -193,6 +190,10 @@ const PaymentInstructionsPage = () => {
   const hasPaymentClientInitializeACL = currentEntityGroup?.accessControls?.some(
     (i) => i.key === "Payment/Client/Initialize"
   );
+  const fetchEmrgoOwners = useCallback(
+    () => dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners()),
+    [dispatch]
+  );
 
   const allPaymentAccountOptions = generatePaymentAccountOptions(validatedPaymentAccounts);
   const allSourceAccountOptions = generateSourceAccountOptions(sourceAccounts);
@@ -201,6 +202,8 @@ const PaymentInstructionsPage = () => {
   const currencyOptions = dropdownValues?.currency ?? [];
   const paymentTransferPurposeOptions =
     getDropdownValues(dropdownValues?.paymentTransferPurpose, locale) ?? [];
+
+  console.log(entities);
   const sourceEntityOptions = generateSourceEntityOptions(entities);
 
   const options = {
@@ -224,7 +227,7 @@ const PaymentInstructionsPage = () => {
 
     if (isWethaqUser) {
       const fetchEntities = (payload) => dispatch(entitiesActionCreators.doFetchEntities(payload));
-
+      fetchEmrgoOwners();
       fetchEntities();
     }
   }, [currentEntityGroup, isWethaqUser, dispatch]);
