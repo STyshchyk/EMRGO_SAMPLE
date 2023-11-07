@@ -1,6 +1,5 @@
-import { createRef } from "react";
+import { createRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
 
 import { Select } from "@emrgo-frontend/shared-ui";
@@ -10,15 +9,14 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik, useFormikContext } from "formik";
+import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
-import PropTypes from "prop-types";
 
 import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
 import selectStyles from "../../styles/cssInJs/reactSelect";
-import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
 import CustomNumberInputField from "../CustomNumberInputField";
+import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
 
 // !INTERNAL TRANSFER PAGE COMPONENT
 
@@ -97,6 +95,8 @@ const AddInternalTransferForm = ({
   const destinationEntitiesDropdown = generateEntityOptionsList(destinationOwners);
   let sourceAccountsDropdown = generateWethaqAccountOptionsList(sourceAccounts);
   let destinationAccountsDropdown = generateWethaqAccountOptionsList(destinationAccounts);
+  const [destinationOptions, setDestinationOptions] = useState(destinationAccountsDropdown);
+  const [sourceOptions, setSourceOptions] = useState(sourceAccountsDropdown);
 
   const validateAccountType = (account) => {
     if (!account) return false;
@@ -112,9 +112,11 @@ const AddInternalTransferForm = ({
         const sourceEntityChange = (selectedEntity) => {
           setFieldValue("sourceEntity", selectedEntity);
           setFieldValue("sourceAccount", null);
-          sourceAccountsDropdown = generateWethaqAccountOptionsList(
-            sourceAccounts.filter((account) =>
-              selectedEntity ? account.group.entity.id === selectedEntity.value : true
+          setSourceOptions(
+            generateWethaqAccountOptionsList(
+              sourceAccounts.filter((account) =>
+                selectedEntity ? account.group.entity.id === selectedEntity.value : true
+              )
             )
           );
         };
@@ -132,19 +134,21 @@ const AddInternalTransferForm = ({
           }
 
           if (selectedAccount) {
-            destinationAccountsDropdown = generateWethaqAccountOptionsList(
-              destinationAccounts
-                .filter((account) =>
-                  values.destinationEntity
-                    ? account.group.entity.id === values.destinationEntity.value
-                    : true
-                )
-                .filter((account) =>
-                  selectedAccount ? account.currencyId === selectedAccount.value.currencyId : true
-                )
-                .filter((account) =>
-                  selectedAccount ? account.id !== selectedAccount.value.accountId : false
-                )
+            setDestinationOptions(
+              generateWethaqAccountOptionsList(
+                destinationAccounts
+                  .filter((account) =>
+                    values.destinationEntity
+                      ? account.group.entity.id === values.destinationEntity.value
+                      : true
+                  )
+                  .filter((account) =>
+                    selectedAccount ? account.currencyId === selectedAccount.value.currencyId : true
+                  )
+                  .filter((account) =>
+                    selectedAccount ? account.id !== selectedAccount.value.accountId : false
+                  )
+              )
             );
 
             if (selectedAccount.value.currencyId !== values.destinationAccount?.value.currencyId) {
@@ -156,16 +160,18 @@ const AddInternalTransferForm = ({
         const destinationEntityChange = (selectedEntity) => {
           setFieldValue("destinationEntity", selectedEntity);
           setFieldValue("destinationAccount", null);
-          destinationAccountsDropdown = generateWethaqAccountOptionsList(
-            destinationAccounts
-              .filter((account) =>
-                selectedEntity ? account.group.entity.id === selectedEntity.value : true
-              )
-              .filter((account) =>
-                values.sourceAccount
-                  ? account.currencyId === values.sourceAccount.value.currencyId
-                  : true
-              )
+          setDestinationOptions(
+            generateWethaqAccountOptionsList(
+              destinationAccounts
+                .filter((account) =>
+                  selectedEntity ? account.group.entity.id === selectedEntity.value : true
+                )
+                .filter((account) =>
+                  values.sourceAccount
+                    ? account.currencyId === values.sourceAccount.value.currencyId
+                    : true
+                )
+            )
           );
         };
 
@@ -178,17 +184,21 @@ const AddInternalTransferForm = ({
           );
 
           if (selectedAccount) {
-            sourceAccountsDropdown = generateWethaqAccountOptionsList(
-              sourceAccounts
-                .filter((account) =>
-                  values.sourceEntity ? account.group.entity.id === values.sourceEntity.value : true
-                )
-                .filter((account) =>
-                  selectedAccount ? account.currencyId === selectedAccount.value.currencyId : true
-                )
-                .filter((account) =>
-                  selectedAccount ? account.id !== selectedAccount.value.accountId : false
-                )
+            setSourceOptions(
+              generateWethaqAccountOptionsList(
+                sourceAccounts
+                  .filter((account) =>
+                    values.sourceEntity
+                      ? account.group.entity.id === values.sourceEntity.value
+                      : true
+                  )
+                  .filter((account) =>
+                    selectedAccount ? account.currencyId === selectedAccount.value.currencyId : true
+                  )
+                  .filter((account) =>
+                    selectedAccount ? account.id !== selectedAccount.value.accountId : false
+                  )
+              )
             );
 
             setFieldValue("destinationEntity", tempEntities[0]);
@@ -259,7 +269,7 @@ const AddInternalTransferForm = ({
                   components={{ Option: ReactSelectCurrencyOption }}
                   placeholder={t("components:Select.Select")}
                   value={values.sourceAccount}
-                  options={sourceAccountsDropdown}
+                  options={sourceOptions}
                   onChange={(selectedAccount) => {
                     sourceAccountChange(selectedAccount);
                   }}
@@ -314,7 +324,7 @@ const AddInternalTransferForm = ({
                   // isDisabled={values.sourceAccount === null}
                   placeholder={t("components:Select.Select")}
                   value={values.destinationAccount}
-                  options={destinationAccountsDropdown}
+                  options={destinationOptions}
                   onChange={(selectedAccount) => {
                     destinationAccountChange(selectedAccount);
                   }}
