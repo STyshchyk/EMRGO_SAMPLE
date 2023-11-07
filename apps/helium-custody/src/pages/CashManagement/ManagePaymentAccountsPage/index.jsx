@@ -65,10 +65,7 @@ const ManagePaymentAccountsPage = () => {
 
   // selectors
   const paymentAccounts = useSelector(accountsSelectors.selectPaymentAccounts);
-  const entitiesList = useSelector(entitiesSelectors.selectEntities);
   const allEntities = useSelector(entitiesSelectors.selectAllEntities);
-  // // use selector from cash managment returns all entities merged with emrgo
-  // const allList = useSelector(billingAndPaymentsSelectors.selectSourceOwners);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
