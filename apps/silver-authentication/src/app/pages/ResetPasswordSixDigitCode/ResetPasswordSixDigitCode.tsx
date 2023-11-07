@@ -9,7 +9,7 @@ export const ResetPasswordSixDigitCode: FC<IResetPasswordSixDigitCodeProps> = ({
   method,
 }: IResetPasswordSixDigitCodeProps) => {
   return (
-    <ResetPasswordSixDigitCodeProvider>
+    <ResetPasswordSixDigitCodeProvider method={method}>
       <AuthWrapper>
         <ResetPasswordSixDigitCodeComponent method={method} />
       </AuthWrapper>

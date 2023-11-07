@@ -1,7 +1,15 @@
+import { FormikProps } from "formik";
+
 export interface IResetPasswordSixDigitCodeProps {
-  method: "auth" | "text";
+  method: "authenticator" | "phone";
 }
 
 export interface IResetPasswordSixDigitCodeContext {
-  onSubmit: () => void;
+  form: FormikProps<IResetPasswordSixDigitCodeValues>;
+}
+
+export interface IResetPasswordSixDigitCodeValues {
+  email: string;
+  code: string;
+  verificationType: string;
 }

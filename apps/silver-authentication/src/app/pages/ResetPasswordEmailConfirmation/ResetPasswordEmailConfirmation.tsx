@@ -5,9 +5,9 @@ import { ResetPasswordEmailConfirmationComponent } from "./ResetPasswordEmailCon
 import { ResetPasswordEmailConfirmationProvider } from "./ResetPasswordEmailConfirmation.provider";
 import { IResetPasswordEmailConfirmationProps } from "./ResetPasswordEmailConfirmation.types";
 
-export const ResetPasswordEmailConfirmation: FC<
-  IResetPasswordEmailConfirmationProps
-> = ({}: IResetPasswordEmailConfirmationProps) => {
+export const ResetPasswordEmailConfirmation: FC<IResetPasswordEmailConfirmationProps> = (
+  props: IResetPasswordEmailConfirmationProps
+) => {
   return (
     <ResetPasswordEmailConfirmationProvider>
       <AuthWrapper>

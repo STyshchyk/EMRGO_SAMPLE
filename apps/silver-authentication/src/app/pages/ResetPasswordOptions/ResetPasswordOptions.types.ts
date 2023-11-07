@@ -1,6 +1,16 @@
+import { FormikProps } from "formik";
+
 export interface IResetPasswordOptionsProps {}
 
 export interface IResetPasswordOptionsContext {
-  isButtonEnabled: boolean;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  form: FormikProps<IResetPasswordOptionsPhoneValues>;
+}
+
+export interface IResetPasswordOptionsPhoneValues {
+  email: string;
+  options?: string | null;
+}
+
+export interface IResetPasswordOptionsPhoneRequest {
+  email: string;
 }

@@ -9,7 +9,7 @@ import { useResetPasswordContext } from "./ResetPassword.provider";
 import * as Styles from "./ResetPassword.styles";
 import { IResetPasswordFormValues, IResetPasswordProps } from "./ResetPassword.types";
 
-export const ResetPasswordComponent: FC<IResetPasswordProps> = ({}: IResetPasswordProps) => {
+export const ResetPasswordComponent: FC<IResetPasswordProps> = (props: IResetPasswordProps) => {
   const { form } = ensureNotNull(useResetPasswordContext());
 
   return (

@@ -1,7 +1,19 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, PropsWithChildren, useContext } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { IResetPasswordSixDigitCodeContext } from "./ResetPasswordSixDigitCode.types";
+import { clientAuthenticationRoutes as routes } from "@emrgo-frontend/constants";
+import { useToast } from "@emrgo-frontend/shared-ui";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useFormik } from "formik";
+
+import { ResetPasswordSixDigitCodeSchema } from "./ResetPasswordSixDigitCode.schema";
+import { verifyOTPInternal } from "./ResetPasswordSixDigitCode.service";
+import {
+  IResetPasswordSixDigitCodeContext,
+  IResetPasswordSixDigitCodeProps,
+  IResetPasswordSixDigitCodeValues,
+} from "./ResetPasswordSixDigitCode.types";
 
 const ResetPasswordSixDigitCodeContext = createContext<IResetPasswordSixDigitCodeContext | null>(
   null
@@ -11,17 +23,53 @@ const ResetPasswordSixDigitCodeContext = createContext<IResetPasswordSixDigitCod
  * @description
  * @param {PropsWithChildren} { children }
  * @returns {JSX.Element}
- * Integration point for the ResetPasswordSixDigitCode template. Put any integration logic here.
- * For example, if you need to fetch data from an API, you can do that here.
- *
- * TODO: Implement this code.
  */
-export const ResetPasswordSixDigitCodeProvider = ({ children }: PropsWithChildren) => {
+export const ResetPasswordSixDigitCodeProvider = ({
+  method,
+  children,
+}: PropsWithChildren<IResetPasswordSixDigitCodeProps>) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email") || "";
+  const { showErrorToast } = useToast();
+  const { mutate: doVerifyOTP, error } = useMutation(verifyOTPInternal);
+
+  /**
+   * Initial values for the form.
+   */
+  const initialValues: IResetPasswordSixDigitCodeValues = {
+    email: email,
+    code: "",
+    verificationType: method,
+  };
+
+  /**
+   * @param values an object containing current form values
+   * @returns void
+   */
+  const onSubmit = (values: IResetPasswordSixDigitCodeValues) => {
+    doVerifyOTP(values, {
+      onSuccess: (response) => {
+        navigate(routes.resetPasswordEmailConfirmation);
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          const errorResponse = error?.response?.data.message;
+          showErrorToast(errorResponse);
+        }
+      },
+    });
+  };
+
+  const form = useFormik<IResetPasswordSixDigitCodeValues>({
+    initialValues,
+    validateOnMount: true,
+    validationSchema: ResetPasswordSixDigitCodeSchema,
+    onSubmit,
+  });
+
   const state: IResetPasswordSixDigitCodeContext = {
-    onSubmit: () => {
-      navigate("/reset-password-email-confirmation");
-    },
+    form,
   };
 
   return (

@@ -6,6 +6,7 @@ import { darkTheme, GlobalStyles } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
+import { ResetPasswordSixDigitCode } from "../../../client-authentication/src/app/pages/ResetPasswordSixDigitCode";
 import { CreatePassword } from "./pages/CreatePassword";
 import { Login } from "./pages/Login";
 import { ResetPassword } from "./pages/ResetPassword";
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
   {
     path: routes.resetPasswordOptions,
     element: <ResetPasswordOptions />,
+  },
+  {
+    path: routes.resetPasswordCodeFromAuth,
+    element: <ResetPasswordSixDigitCode method="authenticator" />,
+  },
+  {
+    path: routes.resetPasswordCodeFromText,
+    element: <ResetPasswordSixDigitCode method="phone" />,
   },
   {
     path: routes.completeRegistration,

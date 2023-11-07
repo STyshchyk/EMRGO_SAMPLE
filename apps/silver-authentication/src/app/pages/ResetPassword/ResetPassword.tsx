@@ -5,7 +5,7 @@ import { ResetPasswordComponent } from "./ResetPassword.component";
 import { ResetPasswordProvider } from "./ResetPassword.provider";
 import { IResetPasswordProps } from "./ResetPassword.types";
 
-export const ResetPassword: FC<IResetPasswordProps> = ({}: IResetPasswordProps) => {
+export const ResetPassword: FC<IResetPasswordProps> = (props: IResetPasswordProps) => {
   const parentUrl = "/login";
 
   return (

@@ -3,19 +3,19 @@ import { FC } from "react";
 import { Button, Logo, RadioButton } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
-import { Heading, OneCol, OneColCheck, SubHeading } from "../../components/Form";
-import { LoginHelp } from "../../components/LoginHelp";
+import { LoginHelp } from "../..//components/LoginHelp";
+import { Heading, OneCol, SubHeading } from "../../components/Form";
 import { useResetPasswordOptionsContext } from "./ResetPasswordOptions.provider";
 import * as Styles from "./ResetPasswordOptions.styles";
 import { IResetPasswordOptionsProps } from "./ResetPasswordOptions.types";
 
-export const ResetPasswordOptionsComponent: FC<
-  IResetPasswordOptionsProps
-> = ({}: IResetPasswordOptionsProps) => {
-  const { isButtonEnabled, onSubmit } = ensureNotNull(useResetPasswordOptionsContext());
+export const ResetPasswordOptionsComponent: FC<IResetPasswordOptionsProps> = (
+  props: IResetPasswordOptionsProps
+) => {
+  const { form } = ensureNotNull(useResetPasswordOptionsContext());
 
   return (
-    <Styles.ResetPasswordOptionsForm onSubmit={onSubmit}>
+    <Styles.ResetPasswordOptionsForm onSubmit={form.handleSubmit}>
       <Logo />
 
       <div>
@@ -23,16 +23,20 @@ export const ResetPasswordOptionsComponent: FC<
         <SubHeading>Now choose how you’d like to receive your OTP.</SubHeading>
       </div>
 
+      {/*<OneCol>*/}
+      {/*  <RadioButton {...form.getFieldProps("options")} value="phone" disabled>*/}
+      {/*    Text message via your phone*/}
+      {/*  </RadioButton>*/}
+      {/*</OneCol>*/}
+
       <OneCol>
-        <RadioButton name="options">Text message via your phone</RadioButton>
+        <RadioButton {...form.getFieldProps("options")} value="authenticator">
+          From your authenticator app
+        </RadioButton>
       </OneCol>
 
       <OneCol>
-        <RadioButton name="options">From your authenticator app</RadioButton>
-      </OneCol>
-
-      <OneCol>
-        <Button size="large" disabled={!isButtonEnabled}>
+        <Button size="large" disabled={!form.isValid}>
           Next
         </Button>
       </OneCol>

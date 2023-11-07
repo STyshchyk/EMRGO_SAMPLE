@@ -6,9 +6,9 @@ import { Heading, SubHeading } from "../../components/Form";
 import * as Styles from "./ResetPasswordEmailConfirmation.styles";
 import { IResetPasswordEmailConfirmationProps } from "./ResetPasswordEmailConfirmation.types";
 
-export const ResetPasswordEmailConfirmationComponent: FC<
-  IResetPasswordEmailConfirmationProps
-> = ({}: IResetPasswordEmailConfirmationProps) => {
+export const ResetPasswordEmailConfirmationComponent: FC<IResetPasswordEmailConfirmationProps> = (
+  props: IResetPasswordEmailConfirmationProps
+) => {
   return (
     <Styles.ResetPasswordEmailConfirmation>
       <Logo />
