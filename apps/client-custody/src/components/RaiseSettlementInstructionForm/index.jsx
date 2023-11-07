@@ -370,7 +370,7 @@ const RaiseSettlementInstructionForm = ({
   const settlementInstructionTypeOptionsList = generateSettlementInstructionTypeOptionsList(
     dropdownOptions?.settlementInstructionType
   );
-
+  const activeSafeAccounts = currentSafeAccounts.filter((account) => account.status === "Active");
   /*
               Note that if Settlement Type is set to DFOP or RFOP then
               the Price and Settlement Amount fields should be greyed out and not populated by the user
@@ -458,7 +458,7 @@ const RaiseSettlementInstructionForm = ({
                 <Select
                   {...baseSelectProps}
                   placeholder={"Select Safekeeping Account"}
-                  options={currentSafeAccounts}
+                  options={activeSafeAccounts}
                   getOptionLabel={(option) =>
                     `${option.name} | ${option.securitiesAccount.accountNumber}`
                   }
