@@ -23,11 +23,11 @@ export const ResetPasswordOptionsComponent: FC<IResetPasswordOptionsProps> = (
         <SubHeading>Now choose how you’d like to receive your OTP.</SubHeading>
       </div>
 
-      <OneCol>
-        <RadioButton {...form.getFieldProps("options")} value="phone">
-          Text message via your phone
-        </RadioButton>
-      </OneCol>
+      {/*<OneCol>*/}
+      {/*  <RadioButton {...form.getFieldProps("options")} value="phone">*/}
+      {/*    Text message via your phone*/}
+      {/*  </RadioButton>*/}
+      {/*</OneCol>*/}
 
       <OneCol>
         <RadioButton {...form.getFieldProps("options")} value="authenticator">
