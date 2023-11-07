@@ -44,7 +44,7 @@ const isKYCApproved = (entity) =>
 
 // new migrated v2 endpoint doesnt return key corporateEntityName
 const formatEntities = (data) => {
-  return data?.filter(isKYCApproved)?.map((entity) => {
+  return data?.map((entity) => {
     return {
       ...entity,
       corporateEntityName: entity.entityName,
@@ -60,7 +60,7 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      entitiesList: formatEntities(data.entities),
+      entitiesList: formatEntities(data.entities)?.filter(isKYCApproved),
     }),
     [actionCreators.doFetchEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,
@@ -86,7 +86,7 @@ const moduleReducer = handleActions(
     [actionCreators.doFetchLegacyEntitiesSuccess]: (state, { payload: { data } }) => ({
       ...state,
       isLoading: false,
-      legacyEntitiesList: data.entities?.filter(isKYCApproved), //* BE airtable 1033 changes not pushed to dev env
+      legacyEntitiesList: data.entities?.filter(isKYCApproved), //id: 1033
       // legacyEntitiesList: data.entities,
 
     }),
