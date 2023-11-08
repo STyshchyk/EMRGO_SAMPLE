@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DialogActions } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import FormControl from "@mui/material/FormControl";
@@ -84,6 +85,7 @@ const ViewCorporateActionEventDialog = ({
   title,
   showResponses,
   isReadOnly,
+  currentUserId,
 }) => {
   const isUserInvestor = currentEntityType === "INVESTOR";
   const [tableData, setTableData] = useState([]);
@@ -96,6 +98,10 @@ const ViewCorporateActionEventDialog = ({
   const validInvestors = corporateActionEvent?.validInvestors;
   const allResponses = corporateActionEvent?.responses;
 
+  const currentUsersResponse = allResponses?.filter(
+    (response) => response?.user?.id === currentUserId
+  )[0]?.response;
+
   const isVoluntaryEvent = currentlySelectedRowData?.mandatoryOrVoluntary === "V";
 
   useEffect(() => {
@@ -104,10 +110,7 @@ const ViewCorporateActionEventDialog = ({
 
     const resetCAEventState = () => dispatch(CAEventsActionCreators.doResetCAEventState());
 
-    if (
-      currentEntityType === "EMRGO_SERVICES" &&
-      currentlySelectedRowData?.mandatoryOrVoluntary === "V"
-    ) {
+    if (currentlySelectedRowData?.mandatoryOrVoluntary === "V") {
       fetchCorporateActionEvent({
         requestPayload: { corporateActionEventId: currentlySelectedRowData?.id },
       });
@@ -161,47 +164,59 @@ const ViewCorporateActionEventDialog = ({
             <StyledDialogHeader title={title} handleClose={handleClose} />
             <DialogContent>
               {/* Details */}
-              <CorporateActionEventDetail currentlySelectedRow={currentlySelectedRowData} />
-              {!showResponses && (
+              {isFetchingEvent ? (
+                <Grid container justifyContent="center">
+                  <CircularProgress size={60} />
+                </Grid>
+              ) : (
                 <>
-                  <Section label="Event Terms" value={currentlySelectedRowData?.eventTerms} />
+                  <CorporateActionEventDetail currentlySelectedRow={currentlySelectedRowData} />
+                  {!showResponses && (
+                    <>
+                      <Section label="Event Terms" value={currentlySelectedRowData?.eventTerms} />
 
-                  <Section
-                    label="Additional Information"
-                    value={currentlySelectedRowData?.additionalInfo}
-                  />
+                      <Section
+                        label="Additional Information"
+                        value={currentlySelectedRowData?.additionalInfo}
+                      />
 
-                  <DataGridRow
-                    label={"Voluntary/Mandatory"}
-                    value={currentlySelectedRowData?.mandatoryOrVoluntary}
-                  />
-                </>
-              )}
-
-              {isVoluntaryEvent && (
-                <DataGridRow
-                  label={"Client Response Deadline"}
-                  value={dateFormatter(
-                    currentlySelectedRowData?.responseDeadline,
-                    DEFAULT_DATE_FORMAT
+                      <DataGridRow
+                        label={"Voluntary/Mandatory"}
+                        value={currentlySelectedRowData?.mandatoryOrVoluntary}
+                      />
+                    </>
                   )}
-                />
-              )}
 
-              {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
-              {isUserInvestor && !isReadOnly && (
-                <InlineFormField label="Response">
-                  <Field
-                    fullWidth
-                    component={TextField}
-                    name="clientResponse"
-                    value={values.clientResponse}
-                    variant="filled"
-                    type="text"
-                    multiline
-                    rows={4}
-                  />
-                </InlineFormField>
+                  {isVoluntaryEvent && (
+                    <DataGridRow
+                      label={"Client Response Deadline"}
+                      value={dateFormatter(
+                        currentlySelectedRowData?.responseDeadline,
+                        DEFAULT_DATE_FORMAT
+                      )}
+                    />
+                  )}
+
+                  {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
+                  {isUserInvestor && !isReadOnly && !currentUsersResponse && (
+                    <InlineFormField label="Response">
+                      <Field
+                        fullWidth
+                        component={TextField}
+                        name="clientResponse"
+                        value={values.clientResponse}
+                        variant="filled"
+                        type="text"
+                        multiline
+                        rows={4}
+                      />
+                    </InlineFormField>
+                  )}
+
+                  {currentUsersResponse && (
+                    <DataGridRow label={"Response"} value={currentUsersResponse} />
+                  )}
+                </>
               )}
               <DialogActions>
                 <Grid container justifyContent="flex-end" className="w-full">
