@@ -14,7 +14,7 @@ export const verifyOTPInternal = (requestObject: IResetPasswordSixDigitCodeValue
   const promise = authApi({
     method: "post",
     data: requestObject,
-    url: `/auth/v2/client/forgot-password/verify`,
+    url: `/auth/v2/internal/forgot-password/verify`,
   });
   return promise;
 };
