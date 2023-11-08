@@ -6,12 +6,12 @@ import { darkTheme, GlobalStyles } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
-import { ResetPasswordSixDigitCode } from "../../../client-authentication/src/app/pages/ResetPasswordSixDigitCode";
 import { CreatePassword } from "./pages/CreatePassword";
 import { Login } from "./pages/Login";
 import { ResetPassword } from "./pages/ResetPassword";
 import { ResetPasswordEmailConfirmation } from "./pages/ResetPasswordEmailConfirmation";
 import { ResetPasswordOptions } from "./pages/ResetPasswordOptions";
+import { ResetPasswordSixDigitCode } from "./pages/ResetPasswordSixDigitCode";
 import { SetupMFA } from "./pages/SetupMFA";
 import { TroubleSigningIn } from "./pages/TroubleSigningIn";
 import { TroubleSigningInThanks } from "./pages/TroubleSigningInThanks";
