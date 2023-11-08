@@ -162,7 +162,7 @@ const SecuritiesHoldingsTable = ({
     if (isAllEntitiesOptionSelected) {
       fetchSecuritiesHoldings({
         params: {
-          date: date?.value.toISOString(),
+          date: date ? date?.value.toISOString() : moment().endOf("day").toISOString(),
           entityId: entity?.value?.value,
         },
       });
