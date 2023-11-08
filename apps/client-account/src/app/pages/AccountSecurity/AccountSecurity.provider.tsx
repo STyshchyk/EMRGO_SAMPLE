@@ -3,14 +3,15 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import {
   enableAuthenticatorMFA,
   requestResetAuthenticatorMFA,
+  resetPassword,
   setupAuthenticatorMFA,
   verifyResetAuthenticatorMFA,
 } from "@emrgo-frontend/services";
 import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
-import { TResetPasswordFlowView, TSecureAccountFlowView } from "@emrgo-frontend/types";
+import {IResetPasswordValues, TResetPasswordFlowView, TSecureAccountFlowView, } from "@emrgo-frontend/types";
 import { useMutation } from "@tanstack/react-query";
 
-import { IAccountSecurityContext } from "./AccountSecurity.types";
+import { IAccountSecurityContext, } from "./AccountSecurity.types";
 
 const AccountSecurityContext = createContext<IAccountSecurityContext | null>(null);
 
@@ -39,12 +40,15 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doRequestResetAuthenticatorMFA } = useMutation(requestResetAuthenticatorMFA);
   const { mutate: doVerifyResetMFA } = useMutation(verifyResetAuthenticatorMFA);
 
+  const { mutate: doResetPassword } = useMutation(resetPassword);
+
+
   const onResetPasswordClick = () => {
     setResetPasswordFlowView("enter-email-address");
   };
 
-  const onResetPassword = (email: string) => {
-    console.log("Reset Password", email);
+  const onResetPassword = (values:IResetPasswordValues) => {
+    doResetPassword(values)
   };
 
   const onResetMFA = () => {

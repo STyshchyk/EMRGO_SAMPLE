@@ -1,4 +1,4 @@
-import { IUserConfigData } from "@emrgo-frontend/types";
+import { IResetPasswordValues,IUserConfigData } from "@emrgo-frontend/types";
 
 import { sharedDashboardApi } from "./instances";
 
@@ -89,3 +89,14 @@ export const refreshToken = (role: string) => {
     validateStatus: null,
   });
 };
+
+
+export const resetPassword = (requestObject: IResetPasswordValues) => {
+  return sharedDashboardApi({
+    method: "post",
+    data: requestObject,
+    url: `/auth/v2/client/forgot-password/verify`,
+  });
+};
+
+
