@@ -18,7 +18,7 @@ import TableFiltersWrapper from "../../../components/FilterComponents/TableFilte
 import PageTitle from "../../../components/PageTitle";
 // import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
-import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
+import { reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
@@ -339,7 +339,12 @@ const SecuritiesTransactionsReportPage = () => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.entity || !filters.safekeepingAccount}
+                  disabled={(filters) => {
+                    return (
+                      (!filters.entity || !filters.safekeepingAccount) &&
+                      filters.entity?.value?.value !== "all"
+                    );
+                  }}
                 />
               </Grid>
 
