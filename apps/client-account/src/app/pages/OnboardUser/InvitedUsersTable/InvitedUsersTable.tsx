@@ -27,7 +27,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
   const { onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin } =
     ensureNotNull(useEntityManagementContext());
 
-  const hasSingleAdminRole = (users:INewUser[])  =>{
+  const soleAdminUser = (users:INewUser[])  =>{
     let adminCount = 0; 
     for (const user of users) {
       if (user.roles?.includes(UserRoles.superUser)) {
@@ -35,14 +35,14 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
       }
   
       if (adminCount > 1) {
-        return false; // If more than one "admin" role is found, you should be able to revoke
+        return false; // If more than one "admin" role is found
       }
     }
   
-    return adminCount === 1; // disable revoking cta
+    return adminCount === 1; // there's only one admin among the users
   }
+
     
- 
 
   const columns = [
     columnHelper.accessor("firstName", {
@@ -83,6 +83,8 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
         const id: string = row.original.id as string;
         const status = row.original.invitationStatus?.toLowerCase() as TNewUserStatus;
         const roles = row.original.roles;
+        const hasAdminRole = roles?.includes(UserRoles.superUser);
+
         return (
           <ActionTooltip
             title={
@@ -102,7 +104,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                 >
                   Cancel Invitation
                 </TooltipButtonActions>
-                <TooltipButtonActions onClick={() => onArchiveUser(id)}>
+                <TooltipButtonActions $disabled={hasAdminRole && soleAdminUser(users)} onClick={() => onArchiveUser(id)}>
                   Archive User
                 </TooltipButtonActions>
                 <TooltipButtonActions
@@ -112,7 +114,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   Make Admin
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={!roles?.includes(UserRoles.superUser) || hasSingleAdminRole(users)}
+                  $disabled={!roles?.includes(UserRoles.superUser) || soleAdminUser(users)}
                   onClick={() => onRevokeAdmin(id)}
                 >
                   Revoke Admin

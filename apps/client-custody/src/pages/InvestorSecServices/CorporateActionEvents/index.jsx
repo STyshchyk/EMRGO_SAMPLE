@@ -26,8 +26,10 @@ const CorporateActionEvents = () => {
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const currentUser = useSelector(authSelectors.selectAuthenticatedUserObject);
   const currentEntityGroupID = currentEntityGroup?.id;
   const currentEntityType = currentEntityGroup?.entityType;
+  const currentUserId = currentUser?.id;
   const corporateActionEvents = useSelector(CAEventsSelectors.selectCorporateActionEventsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
 
@@ -95,6 +97,7 @@ const CorporateActionEvents = () => {
           open={openViewCorporateActionEventDialog}
           title={title}
           currentEntityType={currentEntityType}
+          currentUserId={currentUserId}
           handleClose={() => {
             setOpenViewCorporateActionEventDialog(false);
             setCurrentlySelectedRowData(null);
