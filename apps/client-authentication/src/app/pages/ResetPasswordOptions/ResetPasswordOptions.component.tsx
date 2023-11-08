@@ -3,8 +3,8 @@ import { FC } from "react";
 import { Button, Logo, RadioButton } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
-import { LoginHelp } from "../..//components/LoginHelp";
 import { Heading, OneCol, SubHeading } from "../../components/Form";
+import { LoginHelp } from "../../components/LoginHelp";
 import { useResetPasswordOptionsContext } from "./ResetPasswordOptions.provider";
 import * as Styles from "./ResetPasswordOptions.styles";
 import { IResetPasswordOptionsProps } from "./ResetPasswordOptions.types";
