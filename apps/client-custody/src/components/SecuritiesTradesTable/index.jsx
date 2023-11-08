@@ -124,7 +124,10 @@ const generateSecurityTradesTableRowData = (i) => ({
   investor: i.entityGroup?.entity?.corporateEntityName,
   investorCashAccountBalance: convertNumberToIntlFormat(i.investorCashAccountBalance),
   investorCashAccountNo: i.investorCashAccount,
-  investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance),
+  investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance, {
+      minimumFractionDigits: 6,
+      maximumFractionDigits: 6,
+  }),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin: i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
@@ -322,10 +325,6 @@ const SecurityTradesTable = ({
       id: "investorSecuritiesAccountBalance",
       title: t("Headers.Inv Sec Acc Bal"),
       field: "investorSecuritiesAccountBalance",
-      render: (rowData) =>
-        rowData?.investorSecuritiesAccountBalance
-          ? renderCurrency(rowData.investorSecuritiesAccountBalance, decimalFormat6)
-          : FALLBACK_VALUE,
       type: "numeric",
       hidden: ["ISSUER"].includes(entityUserType),
       exportConfig: { width: 5 },
