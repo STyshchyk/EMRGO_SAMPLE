@@ -191,10 +191,16 @@ const SafekeepingAccounts = () => {
   const handleOpenAddSafekeepingAccountDialog = () => {
     setOpenAddSafekeepingAccountDialog(true);
   };
+  const uniqueValuesAdd = (arr) => new Set(arr.map((v) => v.currency.label));
 
   const handleAddSafekeepingAccount = (values, actions) => {
     if (values.currencies.length === 0) {
       toast.warning("Add at least one Associated Account", 1000);
+      return;
+    }
+    const uniqueCurrencies = uniqueValuesAdd(values.currencies);
+    if (uniqueCurrencies.size < values.currencies.length) {
+      toast.warning("Remove duplicated Associated Accounts", 1000);
       return;
     }
     const requestPayload = {
@@ -216,10 +222,15 @@ const SafekeepingAccounts = () => {
   const handleOpenAmendSafekeepingAccountDialog = () => {
     setOpenAmendSafekeepingAccountDialog(true);
   };
-
+  const uniqueValuesAmend = (arr) => new Set(arr.map((v) => v.currency));
   const handleAmendSafekeepingAccount = (values, actions) => {
     if (values.currencies.length === 0) {
       toast.warning("Add at least one Associated Account", 1000);
+      return;
+    }
+    const uniqueCurrencies = uniqueValuesAmend(values.currencies);
+    if (uniqueCurrencies.size < values.currencies.length) {
+      toast.warning("Remove duplicated Associated Accounts", 1000);
       return;
     }
     const payload = {

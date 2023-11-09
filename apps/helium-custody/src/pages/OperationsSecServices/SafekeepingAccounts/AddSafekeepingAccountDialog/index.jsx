@@ -231,10 +231,12 @@ const AddSafekeepingAccountDialog = ({
                           onRowDelete: (oldData) =>
                             new Promise((resolve, reject) => {
                               const index = oldData.currency;
-                              const dataDelete = [...values.currencies].filter(
-                                (currency) => currency.currency.value !== index
+                              const LastIndex = values.currencies.findLastIndex(
+                                (elem) => elem.currency === index
                               );
-                              setFieldValue("currencies", [...dataDelete]);
+                              let detaDelete = [...values.currencies];
+                              if (LastIndex !== -1) detaDelete.splice(LastIndex, 1); //When making an attempt to delete duplicated currency, delete last item
+                              setFieldValue("currencies", [...detaDelete]);
                               resolve();
                             }),
                         }}
