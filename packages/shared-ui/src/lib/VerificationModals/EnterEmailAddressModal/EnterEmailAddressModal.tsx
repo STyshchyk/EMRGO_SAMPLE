@@ -52,7 +52,7 @@ export const EnterEmailAddressModal: FC<IEnterEmailAddressModalProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} width={"33%"}>
+    <Modal isOpen={isOpen} width={"30%"}>
       {activeStep === 0 && (
         <>
           <ModalHeader onClose={handleClose}>
