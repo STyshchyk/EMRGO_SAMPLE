@@ -28,7 +28,7 @@ export const selectAccounts = createSelector([selectAccountsData], (accountsData
           group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
         };
       })
-      .filter((account) => account.isActive);
+      .filter((account) => account.isActive && account.portfolio.status === "Active");
   }
   return [];
 });
