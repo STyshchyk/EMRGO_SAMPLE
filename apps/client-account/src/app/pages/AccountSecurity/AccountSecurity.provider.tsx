@@ -8,10 +8,14 @@ import {
   verifyResetAuthenticatorMFA,
 } from "@emrgo-frontend/services";
 import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
-import {IResetPasswordValues, TResetPasswordFlowView, TSecureAccountFlowView, } from "@emrgo-frontend/types";
+import {
+  IResetPasswordValues,
+  TResetPasswordFlowView,
+  TSecureAccountFlowView,
+} from "@emrgo-frontend/types";
 import { useMutation } from "@tanstack/react-query";
 
-import { IAccountSecurityContext, } from "./AccountSecurity.types";
+import { IAccountSecurityContext } from "./AccountSecurity.types";
 
 const AccountSecurityContext = createContext<IAccountSecurityContext | null>(null);
 
@@ -42,13 +46,12 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
 
   const { mutate: doResetPassword } = useMutation(resetPassword);
 
-
   const onResetPasswordClick = () => {
     setResetPasswordFlowView("enter-email-address");
   };
 
-  const onResetPassword = (values:IResetPasswordValues) => {
-    doResetPassword(values)
+  const onResetPassword = (values: IResetPasswordValues) => {
+    doResetPassword(values);
   };
 
   const onResetMFA = () => {
@@ -79,6 +82,9 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
           setSecureAccountFlowView(undefined);
           showSuccessToast("Successfully reset authenticator");
           refreshProfile();
+          setTimeout(() => {
+            onSetupMFAClick();
+          }, 500);
         },
         onError: () => {
           showErrorToast("Wrong MFA code");
