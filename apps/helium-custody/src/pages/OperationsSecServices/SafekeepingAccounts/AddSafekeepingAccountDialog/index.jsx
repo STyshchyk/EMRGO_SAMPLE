@@ -232,7 +232,7 @@ const AddSafekeepingAccountDialog = ({
                             new Promise((resolve, reject) => {
                               const index = oldData.currency;
                               const LastIndex = values.currencies.findLastIndex(
-                                (elem) => elem.currency === index
+                                (elem) => elem.currency.value === index
                               );
                               let detaDelete = [...values.currencies];
                               if (LastIndex !== -1) detaDelete.splice(LastIndex, 1); //When making an attempt to delete duplicated currency, delete last item
