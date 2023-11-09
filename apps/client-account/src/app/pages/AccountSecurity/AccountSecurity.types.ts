@@ -13,6 +13,7 @@ export interface IAccountSecurityContext {
 
   onResetMFA: () => void;
   onSetupMFA: (otp: string) => void;
+  onVerifyResetMFA: (code: string) => void;
   secureAccountFlowView: TSecureAccountFlowView;
   setSecureAccountFlowView: Dispatch<SetStateAction<TSecureAccountFlowView>>;
   onResetPassword: (email: string) => void;

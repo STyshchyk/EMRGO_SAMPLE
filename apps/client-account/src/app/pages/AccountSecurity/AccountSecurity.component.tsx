@@ -1,9 +1,7 @@
 import { FC } from "react";
 
 import {
-  AddCorporateMobileModal,
   Button,
-  CorporateMobileSuccessModal,
   DashboardContent,
   EnterEmailAddressModal,
   EnterOTPCodeModal,
@@ -38,7 +36,7 @@ export const AccountSecurityComponent: FC<IAccountSecurityProps> = (
     onResetPassword,
     resetPasswordFlowView,
     setResetPasswordFlowView,
-
+    onVerifyResetMFA,
     isQRCodeLoading,
     authenticatorURL,
   } = ensureNotNull(useAccountSecurityContext());
@@ -114,7 +112,7 @@ export const AccountSecurityComponent: FC<IAccountSecurityProps> = (
       <EnterOTPCodeModal
         isOpen={secureAccountFlowView === "enter-otp-code"}
         onClose={onCloseSecureAccountFlowClick}
-        onSetup={() => setSecureAccountFlowView("corporate-mobile-success")}
+        onSetup={onVerifyResetMFA}
         title="Enter the code sent to your email"
         subtitle="To reset MFA, enter the 6-digit verification code sent to your email"
         buttonText="Next"

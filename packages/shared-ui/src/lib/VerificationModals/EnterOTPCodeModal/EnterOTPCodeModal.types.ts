@@ -1,7 +1,7 @@
 export interface IEnterOTPCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSetup: (otp: string) => void;
+  onSetup: (code: string) => void;
   title?: string;
   subtitle?: string;
   buttonText?: string;
@@ -9,5 +9,5 @@ export interface IEnterOTPCodeModalProps {
 }
 
 export interface IEnterOTPCodeModalFormProps {
-  otp: string;
+  code: string;
 }

@@ -2,8 +2,6 @@ import { FC } from "react";
 
 import {
   Button,
-  CodeInput,
-  Hyperlink,
   Modal,
   ModalContent,
   ModalFooter,
@@ -28,12 +26,12 @@ export const EnterOTPCodeModal: FC<IEnterOTPCodeModalProps> = ({
 }) => {
   const form = useFormik<IEnterOTPCodeModalFormProps>({
     initialValues: {
-      otp: "",
+      code: "",
     },
     validateOnMount: true,
     validationSchema: EnterOTPCodeFormSchema,
     onSubmit: (values, { setSubmitting }) => {
-      onSetup(values.otp);
+      onSetup(values.code);
       setSubmitting(false);
     },
   });
@@ -46,9 +44,9 @@ export const EnterOTPCodeModal: FC<IEnterOTPCodeModalProps> = ({
       </ModalHeader>
       <ModalContent>
         <SixDigitCodeInput
-          value={form.values.otp}
+          value={form.values.code}
           onChange={(otp) => {
-            form.setFieldValue("otp", otp);
+            form.setFieldValue("code", otp);
           }}
           size="large"
         />

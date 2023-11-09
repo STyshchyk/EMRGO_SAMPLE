@@ -20,7 +20,7 @@ export const logoutUser = async () => {
   return data || [];
 };
 
-export const verifyEntityExists = (requestObject: { entityName : string }) => {
+export const verifyEntityExists = (requestObject: { entityName: string }) => {
   const promise = sharedDashboardApi({
     method: "get",
     params: requestObject,
@@ -29,10 +29,10 @@ export const verifyEntityExists = (requestObject: { entityName : string }) => {
   return promise;
 };
 
-export const verifyEmailExists = (requestObject: { email: string, userType: string }) => {
+export const verifyEmailExists = (requestObject: { email: string; userType: string }) => {
   const promise = sharedDashboardApi({
     method: "get",
-    params: {...requestObject, userType:requestObject.userType},
+    params: { ...requestObject, userType: requestObject.userType },
     url: `/auth/v2/email/exists`,
   });
   return promise;
@@ -68,6 +68,15 @@ export const requestResetAuthenticatorMFA = () => {
   const promise = sharedDashboardApi({
     method: "put",
     url: `/auth/v2/mfa/reset/request`,
+  });
+  return promise;
+};
+
+export const verifyResetAuthenticatorMFA = (requestObject: { code: string }) => {
+  const promise = sharedDashboardApi({
+    method: "put",
+    url: `/auth/v2/mfa/reset/verify`,
+    data: requestObject,
   });
   return promise;
 };

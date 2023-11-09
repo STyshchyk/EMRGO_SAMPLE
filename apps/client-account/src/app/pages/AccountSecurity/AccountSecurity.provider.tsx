@@ -4,6 +4,7 @@ import {
   enableAuthenticatorMFA,
   requestResetAuthenticatorMFA,
   setupAuthenticatorMFA,
+  verifyResetAuthenticatorMFA,
 } from "@emrgo-frontend/services";
 import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
 import { TResetPasswordFlowView, TSecureAccountFlowView } from "@emrgo-frontend/types";
@@ -19,6 +20,7 @@ const AccountSecurityContext = createContext<IAccountSecurityContext | null>(nul
  * @returns {JSX.Element}
  */
 export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
+  const { showErrorToast } = useToast();
   const refreshProfile = useRefreshProfile();
   const [secureAccountFlowView, setSecureAccountFlowView] =
     useState<TSecureAccountFlowView>(undefined);
@@ -35,6 +37,7 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
   const { mutate: doEnableAuthenticatorMFA } = useMutation(enableAuthenticatorMFA);
 
   const { mutate: doRequestResetAuthenticatorMFA } = useMutation(requestResetAuthenticatorMFA);
+  const { mutate: doVerifyResetMFA } = useMutation(verifyResetAuthenticatorMFA);
 
   const onResetPasswordClick = () => {
     setResetPasswordFlowView("enter-email-address");
@@ -64,6 +67,20 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
     setSecureAccountFlowView("enter-otp-code");
   };
 
+  const onVerifyResetMFA = (code: string) => {
+    doVerifyResetMFA(
+      { code: code },
+      {
+        onSuccess: () => {
+          setSecureAccountFlowView(undefined);
+          refreshProfile();
+        },
+        onError: () => {
+          showErrorToast("Wrong MFA code");
+        },
+      }
+    );
+  };
   const onSetupMFAClick = () => {
     doSetupAuthenticatorMFA(undefined, {
       onSuccess: (response) => {
@@ -92,6 +109,7 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
     onResetPassword,
     resetPasswordFlowView,
     setResetPasswordFlowView,
+    onVerifyResetMFA,
 
     isQRCodeLoading,
     authenticatorURL,
