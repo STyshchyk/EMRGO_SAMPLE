@@ -11,7 +11,7 @@ import { execSync } from "child_process";
 // ##############################################################################
 // EDITABLE AREA
 // ##############################################################################
-const APP_DIR_REGEX = /^app\/([a-zA-Z-]+)\//; // REGEX to match app directory name
+const APP_DIR_REGEX = /^apps\/([a-zA-Z-]+)\//; // REGEX to match app directory name
 
 const CRITICAL_FILES = [
   ".gitlab-ci.yml",
