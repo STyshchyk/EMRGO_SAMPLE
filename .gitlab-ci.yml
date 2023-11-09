@@ -10,7 +10,6 @@ include:
 variables:
   DOCKER_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE
   DOCKER_IMMUTABLE_IMAGE_TAG: $CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA-$TARGET_APP_NAME
-  DOCKER_NODE_IMAGE: "node:19-bullseye"
 
 image: "docker:latest"
 services:
