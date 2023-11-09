@@ -29,7 +29,6 @@ export const AccountSecurityComponent: FC<IAccountSecurityProps> = (
     onResetPasswordClick,
     onCloseSecureAccountFlowClick,
 
-    onResetMFA,
     onSetupMFA,
     secureAccountFlowView,
     setSecureAccountFlowView,

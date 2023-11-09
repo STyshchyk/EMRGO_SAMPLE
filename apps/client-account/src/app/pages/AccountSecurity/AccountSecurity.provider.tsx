@@ -77,6 +77,7 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
       {
         onSuccess: () => {
           setSecureAccountFlowView(undefined);
+          showSuccessToast("Successfully reset authenticator");
           refreshProfile();
         },
         onError: () => {
