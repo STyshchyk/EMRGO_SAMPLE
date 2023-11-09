@@ -80,8 +80,9 @@ const EditSafekeepingAccountDialog = ({
   // console.log("🚀 ~ file: index.jsx:63 ~ initialValues:", account.securitiesAccount);
 
   const currencyListForMaterialTable = {};
-  currencies.forEach((currency) => {
-    currencyListForMaterialTable[currency.id] = currency.name;
+  const filteredCurrenciesForMaterialTable = getDropdownValues(currencies);
+  filteredCurrenciesForMaterialTable.forEach((currency) => {
+    currencyListForMaterialTable[currency.value] = currency.label;
   });
 
   const columns = [
