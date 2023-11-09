@@ -5,7 +5,7 @@ import { IResetPasswordValues,IUser, TResetPasswordFlowView, TSecureAccountFlowV
 export interface IAccountSecurityProps {}
 
 export interface IAccountSecurityContext {
-  user: IUser | null;
+  user: IUser | null | undefined;
   onResetPasswordClick: () => void;
   onResetMFAClick: () => void;
   onSetupMFAClick: () => void;
