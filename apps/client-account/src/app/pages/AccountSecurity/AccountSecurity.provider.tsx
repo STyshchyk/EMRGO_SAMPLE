@@ -70,7 +70,11 @@ export const AccountSecurityProvider = ({ children }: PropsWithChildren) => {
   };
 
   const onResetMFAClick = () => {
-    doRequestResetAuthenticatorMFA(undefined);
+    doRequestResetAuthenticatorMFA(undefined, {
+      onSuccess: () => {
+        showSuccessToast("Successfully sent 6-digit verification code to email");
+      }
+    });
     setSecureAccountFlowView("enter-otp-code");
   };
 

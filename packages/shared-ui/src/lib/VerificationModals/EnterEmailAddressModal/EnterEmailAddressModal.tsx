@@ -43,9 +43,10 @@ export const EnterEmailAddressModal: FC<IEnterEmailAddressModalProps> = ({
     },
     validateOnMount: true,
     validationSchema: EnterEmailAddressModalSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting,resetForm }) => {
       onResetPassword(values);
       setSubmitting(false);
+      resetForm()
       handleClose();
       showSuccessToast("We’ve sent a password reset link to your email");
     },
