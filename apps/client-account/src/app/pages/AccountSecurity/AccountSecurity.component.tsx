@@ -121,7 +121,7 @@ export const AccountSecurityComponent: FC<IAccountSecurityProps> = (
       <EnterEmailAddressModal
         isOpen={resetPasswordFlowView === "enter-email-address"}
         onClose={() => setResetPasswordFlowView(undefined)}
-        onSubmitEmail={onResetPassword}
+        onResetPassword={onResetPassword}
       />
     </DashboardContent>
   );

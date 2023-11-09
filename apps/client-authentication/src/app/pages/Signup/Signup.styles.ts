@@ -20,6 +20,6 @@ export const TwoCol = styled.div`
 
 
 export const HelpItem = styled.div`
-  ${getTheme("typography.regular.02")}
-`;
-
+  ${getTheme("typography.regular.02")};
+  color: ${getTheme("colors.white.100")};
+`

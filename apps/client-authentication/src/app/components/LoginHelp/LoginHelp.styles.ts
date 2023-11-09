@@ -19,4 +19,6 @@ export const HelpListItem = styled.li`
   list-style: none;
 
   ${getTheme("typography.regular.02")}
+  color: ${getTheme("colors.white.100")};
+
 `;

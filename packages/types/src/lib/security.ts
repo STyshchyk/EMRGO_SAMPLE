@@ -9,3 +9,10 @@ export type TSecureAccountFlowView =
 export type TSecureAccountFlowOption = "text" | "app";
 
 export type TResetPasswordFlowView = "enter-email-address" | undefined;
+
+
+export interface IResetPasswordValues {
+  email: string;
+  code: string;
+  verificationType: string; 
+}
