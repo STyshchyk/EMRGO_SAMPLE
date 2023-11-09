@@ -19,8 +19,8 @@ const CRITICAL_FILES = [
   "Dockerfile",
   "package-lock.json",
   "package.json",
+  "env.production",
 ];
-
 
 const CRITICAL_DIRECTORIES = ["packages/", ".gitlab/", "nginx/", "docker/", "templates/"];
 

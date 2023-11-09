@@ -4,6 +4,7 @@
   before_script:
     - echo $TARGET_APP_NAME
     - echo $APP_SUBDOMAIN
+    - echo $CI_ENVIRONMENT_NAME # SANITY CHECK
     # !INSTALL ALPINE LINUX DEPENDENCIES
     - apk update && apk upgrade
     - apk --no-cache add curl bash openssh-client
