@@ -2,11 +2,15 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { Disclaimer, Logo } from "@emrgo-frontend/shared-ui";
+import { ensureNotNull } from "@emrgo-frontend/utils";
 
+import { useVerificationContext } from "./Verification.provider";
 import * as Styles from "./Verification.styles";
 import { IVerificationProps } from "./Verification.types";
 
 export const VerificationComponent: FC<IVerificationProps> = (props: IVerificationProps) => {
+  const { onResendEmail } = ensureNotNull(useVerificationContext())
+
   return (
     <Styles.Verification>
       <Logo />
@@ -19,7 +23,7 @@ export const VerificationComponent: FC<IVerificationProps> = (props: IVerificati
       </Styles.Paragraph>
 
       <Styles.Paragraph>
-        <Link to="">Click here</Link> to resend email.
+        <Link to="#" onClick={() => onResendEmail()}>Click here</Link> to resend email.
       </Styles.Paragraph>
 
       <Styles.Spacer />

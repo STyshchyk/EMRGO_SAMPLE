@@ -30,9 +30,10 @@ export const EnterOTPCodeModal: FC<IEnterOTPCodeModalProps> = ({
     },
     validateOnMount: true,
     validationSchema: EnterOTPCodeFormSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting,resetForm }) => {
       onSetup(values.code);
       setSubmitting(false);
+      resetForm()
     },
   });
 

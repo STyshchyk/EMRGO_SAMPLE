@@ -41,7 +41,8 @@ export const SignupProvider = ({ children }: PropsWithChildren) => {
   const onSubmit = (values: ISignupFormValues) => {
     doRegisterEntity(values, {
       onSuccess: () => {
-        navigate(routes.registrationSucess);
+        const generatedURI = encodeURI(`${routes.registrationSucess}?email=${values.email}`);
+        navigate(generatedURI);
       },
       onError: () => {
         // TODO: wire up error message once error UI components are ready

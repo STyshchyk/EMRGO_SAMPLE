@@ -36,8 +36,8 @@ export const SetupTwoFactorAuthenticationModal: FC<ISetupTwoFactorAuthentication
     validationSchema: SetupTwoFactorAuthenticationFormSchema,
     onSubmit: (values, { setSubmitting,resetForm }) => {
       onSetup(values.otp);
-      resetForm()
       setSubmitting(false);
+      resetForm()
     },
   });
 
