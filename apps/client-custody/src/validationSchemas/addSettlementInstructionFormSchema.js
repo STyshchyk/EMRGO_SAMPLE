@@ -25,9 +25,9 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   }),
   quantity: Yup.string()
     .required("Quantity is required")
-    .test("maxValue", "Maximum value is 1000000000", (value) => {
+    .test("maxValue", "Maximum value is 1000000", (value) => {
       if (!isNaN(Number(value))) {
-        return Number(value) <= 1000000000;
+        return Number(value) <= 10000000;
       }
       return true;
     }),
@@ -52,9 +52,9 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
     otherwise: () =>
       Yup.string()
         .required("Accrued Interest is required")
-        .test("maxValue", "Maximum value is 1000000000", (value) => {
+        .test("maxValue", "Must be at most 12 digits", (value) => {
           if (!isNaN(Number(value))) {
-            return Number(value) <= 1000000000;
+            return value.length <= 12;
           }
           return true;
         }),
