@@ -36,7 +36,7 @@ Pre-Deploy:Dev:
     - .trigger_downstream_deploy_pipelines_config
   when: manual
 
-.Pre-Deploy:UAT:
+Pre-Deploy:UAT:
   stage: pre-deploy
   variables:
     TARGET_ENVIRONMENT: "uat-difc"
