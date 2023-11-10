@@ -72,7 +72,10 @@ export const EditPhoneNumberModal = ({ user }: IEditPhoneNumberModalProps) => {
           <Styles.Spacer />
           <Button
             size="large"
-            onClick={() => setStateOfEditCorporateMobileNumberModal(false, false)}
+            onClick={() => {
+                setStateOfEditCorporateMobileNumberModal(false, false)
+                form.resetForm({ values: form.initialValues });
+            }}
             variant="secondary"
             disabled={!form.isValid}
             type="button"
