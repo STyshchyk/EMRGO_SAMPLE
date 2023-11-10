@@ -17,17 +17,17 @@ import {
   useToast,
 } from "@emrgo-frontend/shared-ui";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { Field, Form, Formik } from "formik";
 
 import { ITFASupportTicketModalProps } from "./TFASupportTicketModal.types";
 import { TFASupportTicketModalFormSchema } from "./TFASupportTikcetModal.schema";
-import { AxiosError } from "axios";
 
 export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
   isOpen,
   onClose,
   email,
-  userType
+  userType,
 }) => {
   const fileInputRef = useRef(null);
   const { mutate: doUploadFile } = useMutation(getFileUploadLink);
@@ -36,7 +36,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} width={"25%"}>
-      <div style={{overflowY:'auto'}}>
+      <div style={{ overflowY: "auto" }}>
         <Formik
           initialValues={{
             type: supportTypes.TFA_SUPPORT_TICKET,
@@ -55,11 +55,11 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
                 showSuccessToast("Successfully created a support ticket to reset your 2FA.");
                 onClose();
               },
-                onError: (error) => {
-                  if (error instanceof AxiosError && error.response?.status === 412) {
-                    showErrorToast(error.response?.data?.message);
-                  }        
-                  return error 
+              onError: (error) => {
+                if (error instanceof AxiosError && error.response?.status === 412) {
+                  showErrorToast(error.response?.data?.message);
+                }
+                return error;
               },
             });
 
@@ -76,7 +76,7 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
                 { filename: file.name, file },
                 {
                   onSuccess: (res) => {
-                    setFieldValue("file", { name: file.name, path: res.path });
+                    setFieldValue("file", { name: file.name, path: res.path, size: file.size });
                     // doUpdateDocument({ id, name, path: res.path });
                   },
                   onError: () => {
@@ -121,16 +121,13 @@ export const TFASupportTicketModal: FC<ITFASupportTicketModalProps> = ({
                 </ModalContent>
                 <ModalFooter>
                   <Spacer />
-                  <Button type="submit">
-                    Submit Ticket
-                  </Button>
+                  <Button type="submit">Submit Ticket</Button>
                 </ModalFooter>
               </Form>
             );
           }}
         </Formik>
       </div>
-
     </Modal>
   );
 };
