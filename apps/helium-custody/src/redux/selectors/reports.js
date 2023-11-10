@@ -43,14 +43,16 @@ export const selectSecuritiesTransactionsData = (state) => state.reports.securit
 export const selectSecuritiesAccounts = createSelector(
   [selectSecuritiesAccountsData],
   (accountsData) => {
-    if (accountsData) {
-      return accountsData.map((account) => {
-        const securityAccount = { id: account.id, accountNumber: account.accountNumber };
-        return {
-          ...account,
-          group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
-        };
-      });
+    if (accountsData && Array.isArray(accountsData)) {
+      return accountsData
+        .map((account) => {
+          const securityAccount = { id: account.id, accountNumber: account.accountNumber };
+          return {
+            ...account,
+            group: { ...account.group, entity: { ...account.group.entity, securityAccount } },
+          };
+        })
+        .filter((acc) => acc.portfolio.status === "Active");
     }
     return [];
   }
