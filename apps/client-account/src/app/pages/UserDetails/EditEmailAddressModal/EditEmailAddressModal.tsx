@@ -58,7 +58,10 @@ export const EditEmailAddressModal = ({ user }: IEditEmailAddressModalProps) => 
         <Styles.Spacer />
         <Button
           size="large"
-          onClick={() => setStateOfEditEmailAddressModal(false)}
+          onClick={() => {
+            setStateOfEditEmailAddressModal(false)
+            form.resetForm({ values: form.initialValues });
+        }}
           variant="secondary"
           disabled={!form.isValid}
         >

@@ -46,7 +46,10 @@ export const EditCorporateLegalNameModal = ({ user }: IEditCorporateLegalNameMod
           <Styles.Spacer />
           <Button
             size="large"
-            onClick={() => setStateOfEditCorporateLegalNameModal(false)}
+            onClick={() => {
+                setStateOfEditCorporateLegalNameModal(false)
+                form.resetForm({ values: form.initialValues });
+            }}
             variant="secondary"
             disabled={!form.isValid}
           >

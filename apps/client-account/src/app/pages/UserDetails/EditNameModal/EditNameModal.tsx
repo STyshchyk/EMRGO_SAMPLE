@@ -51,7 +51,10 @@ export const EditNameModal = ({ user }: IEditNameModalProps) => {
           <Styles.Spacer />
           <Button
             size="large"
-            onClick={() => setStateOfEditNameModal(false)}
+            onClick={() => {
+                setStateOfEditNameModal(false)
+                form.resetForm({ values: form.initialValues });
+            }}
             variant="secondary"
             disabled={!form.isValid}
           >
