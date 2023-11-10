@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { CsvBuilder } from "filefy";
 import moment from "moment";
 import v from "voca";
 
@@ -391,7 +390,7 @@ const CashStatementPage = () => {
             <Grid item xs={12} md={6} lg={3}>
               <DropdownFilter
                 name="securityAccount"
-                label="Security Account"
+                label="Safekeeping Account"
                 options={filteredSecurityAccounts}
                 currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
