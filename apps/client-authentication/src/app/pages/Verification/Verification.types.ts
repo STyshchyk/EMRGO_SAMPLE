@@ -1,3 +1,5 @@
 export interface IVerificationProps {}
 
-export interface IVerificationContext {}
+export interface IVerificationContext {
+    onResendEmail: () => void;
+}
