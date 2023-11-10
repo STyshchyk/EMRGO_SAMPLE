@@ -33,6 +33,7 @@ export const EnterEmailAddressModal: FC<IEnterEmailAddressModalProps> = ({
   const handleClose = () => {
     setActiveStep(0)
     onClose()
+    // form.resetForm()
   }
   
   const form = useFormik<IEnterEmailAddressFormProps>({
@@ -46,8 +47,8 @@ export const EnterEmailAddressModal: FC<IEnterEmailAddressModalProps> = ({
     onSubmit: (values, { setSubmitting,resetForm }) => {
       onResetPassword(values);
       setSubmitting(false);
-      resetForm()
       handleClose();
+      resetForm();
       showSuccessToast("We’ve sent a password reset link to your email");
     },
   });
