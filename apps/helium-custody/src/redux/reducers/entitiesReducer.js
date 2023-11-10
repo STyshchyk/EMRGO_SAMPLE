@@ -40,7 +40,7 @@ const isKYCApproved = (entity) =>
   entity?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED &&
   (entity?.userKycStatus
     ? entity.userKycStatus === accountIdentification.KYC_STATUS_APPROVED // for internal entity api
-    : entity?.groups[0]?.users[0]?.userKycStatus === accountIdentification.KYC_STATUS_APPROVED); // for legacy entity api
+    : entity?.entityKycStatus === accountIdentification.KYC_STATUS_APPROVED); // for legacy entity api //Filter entity at entity level. Users should be filtered at user level by their userKycStatus individually
 
 // new migrated v2 endpoint doesnt return key corporateEntityName
 const formatEntities = (data) => {
@@ -52,7 +52,6 @@ const formatEntities = (data) => {
     };
   });
 };
-
 
 const moduleReducer = handleActions(
   {
@@ -88,7 +87,6 @@ const moduleReducer = handleActions(
       isLoading: false,
       legacyEntitiesList: data.entities?.filter(isKYCApproved), //id: 1033
       // legacyEntitiesList: data.entities,
-
     }),
     [actionCreators.doFetchLegacyEntitiesFailure]: (state, { payload: { message } }) => ({
       ...state,

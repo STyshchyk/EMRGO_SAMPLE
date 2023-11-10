@@ -14,6 +14,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { accountIdentification } from "../../constants/user";
 import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
@@ -88,7 +89,6 @@ CustomCurrencyInputField.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
-
 
 const DependentAmountField = (props) => {
   const { values, touched, setFieldValue } = useFormikContext();
@@ -300,7 +300,7 @@ const generateSafekeepingAccountOptionsList = (data) => {
 const generateEntityGroupUserOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
-      .filter((i) => i.isActive)
+      .filter((i) => i.isActive && i.userKycStatus === accountIdentification.KYC_STATUS_APPROVED) //Filter user by their KYC individually
       .map((i) => ({
         label: i.email,
         value: i,
@@ -643,7 +643,7 @@ const RaiseSettlementInstructionForm = ({
                   }}
                   inputProps={{
                     decimals: 6,
-                    decimalScale: 6
+                    decimalScale: 6,
                   }}
                 />
               </InlineFormField>
@@ -691,7 +691,6 @@ const RaiseSettlementInstructionForm = ({
                   }}
                   inputProps={{
                     decimals: isEquity ? 0 : undefined, //Commission/Charges field is a numeric field that followings the same format of the Principal Amount field in terms of decimal points
-                  
                   }}
                 />
               </InlineFormField>
