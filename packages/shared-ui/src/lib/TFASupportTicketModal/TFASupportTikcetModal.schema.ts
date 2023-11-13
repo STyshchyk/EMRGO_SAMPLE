@@ -1,7 +1,7 @@
 import { verifyEmailExists } from "@emrgo-frontend/services";
 import * as Yup from "yup";
 
-const MAX_FILE_SIZE_BYTES = 1 * 1024 * 1024;
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 
 export const TFASupportTicketModalFormSchema = (userType: string) =>
   Yup.object().shape({
