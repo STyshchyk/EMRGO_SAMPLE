@@ -19,6 +19,7 @@ const DropdownFilter = ({
   isDisabled,
   setClearDisabled,
   setCustomClear,
+  clearButtonRef,
 }) => {
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
@@ -47,7 +48,7 @@ const DropdownFilter = ({
           {label}
         </Typography>
 
-        <ButtonBase onClick={() => clearFilter()}>
+        <ButtonBase ref={clearButtonRef} onClick={() => clearFilter()}>
           <Typography variant="caption">Clear</Typography>
         </ButtonBase>
       </Grid>
