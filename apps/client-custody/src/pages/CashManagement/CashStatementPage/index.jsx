@@ -73,6 +73,7 @@ const CashStatementPage = () => {
   const [currentlySelectedEntity, setCurrentlySelectedEntity] = useState(null);
   const [currentlySelectedAccount, setCurrentlySelectedAccount] = useState(null);
   const [cashAccountOptions, setCashAccountOptions] = useState([]);
+  const cashAccountClearRef = useRef(null);
   const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
   const [currentlySelectedTransactionType, setCurrentlySelectedTransactionType] = useState({
     label: "All",
@@ -395,6 +396,9 @@ const CashStatementPage = () => {
                 currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
                 setCustomClear={() => {
+                  setTimeout(() => {
+                    cashAccountClearRef.current.click();
+                  }, 0);
                   setCashAccountOptions([]);
                   setCurrentlySelectedAccount(null);
                 }}
@@ -408,6 +412,7 @@ const CashStatementPage = () => {
               <DropdownFilter
                 name="account"
                 label=" Cash Account"
+                clearButtonRef={cashAccountClearRef}
                 options={cashAccountOptions}
                 currentlySelectedOption={currentlySelectedAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedAccount}
