@@ -1,3 +1,5 @@
+import "./app.styles.css";
+
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { silverAdministrationRoutes as routes } from "@emrgo-frontend/constants";

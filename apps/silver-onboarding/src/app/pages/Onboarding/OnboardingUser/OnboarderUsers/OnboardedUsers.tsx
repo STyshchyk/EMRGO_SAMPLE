@@ -47,15 +47,14 @@ export const OnboardedUsers: FC<IOnboarderUsersProps> = ({}) => {
 
   return (
     <Styles.OnboarderUsers>
-        <Styles.Content>
-          <Panel>
-            <PanelHeader>Users</PanelHeader>
-            {/*<PanelContent>{data && <O users={data} />}</PanelContent>*/}
-            <PanelContent>
-              {!isError && data && <OnboardedUserTable onboardedUsers={data} />}
-            </PanelContent>
-          </Panel>
-        </Styles.Content>
+      <Styles.Content>
+        <Panel>
+          <PanelHeader>Users</PanelHeader>
+          <PanelContent>
+            {!isError && data && <OnboardedUserTable onboardedUsers={data} />}
+          </PanelContent>
+        </Panel>
+      </Styles.Content>
     </Styles.OnboarderUsers>
   );
 };

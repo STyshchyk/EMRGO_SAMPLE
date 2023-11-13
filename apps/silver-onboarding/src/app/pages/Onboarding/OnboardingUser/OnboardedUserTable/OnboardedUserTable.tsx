@@ -13,6 +13,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createColumnHelper,
   getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -74,7 +76,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboardedUser
     // }),
     columnHelper.accessor("hasAcceptedClientTerms", {
       header: "Custody Terms",
-      cell: (props) => props.getValue()? 'Accepted' : "Pending",
+      cell: (props) => (props.getValue() ? "Accepted" : "Pending"),
     }),
     // timestamp for when client terms is accepted
     columnHelper.accessor("entityCustodyKycSubmissionDate", {
@@ -90,7 +92,7 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboardedUser
         const getRow = row.original;
         const userId = getRow.userId;
         const entityId = getRow.entityId;
-        const allowApproveCP = getKycLabel(getRow.userKycStatus); // client profile 
+        const allowApproveCP = getKycLabel(getRow.userKycStatus); // client profile
         const allowApproveKYC = getKycLabel(getRow.entityKycStatus); // kyc
         const allowApproveCustody = getKycLabel(getRow.entityCustodyKycStatus);
 
@@ -163,7 +165,6 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboardedUser
                   Approve Client Profile
                 </TooltipButtonActions>
 
-
                 <TooltipButtonActions
                   // $disabled={allowApproveCustody !== "Submitted"}
                   $disabled={true}
@@ -209,7 +210,14 @@ export const OnboardedUserTable: FC<IOnboardedUserTableProps> = ({ onboardedUser
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
     debugTable: true,
   });
-  return <Table table={table} />;
+  return <Table table={table} pagination={true} />;
 };
