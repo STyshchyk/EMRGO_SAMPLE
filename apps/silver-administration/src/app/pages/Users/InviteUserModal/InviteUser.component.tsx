@@ -112,7 +112,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
                 menuPosition={"fixed"}
                 type={"select"}
                 id={"role"}
-                error={errors?.role ?? ""}
+                // error={errors?.role ?? ""}
                 onChange={(selected: TInvitedUserTypes) => {
                   setFieldValue("role", selected);
                 }}
