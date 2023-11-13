@@ -30,6 +30,7 @@ export const TermsModal: FC<ITermsModalProps> = ({
 }) => {
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
+  const [warningMessage,setWarningMessage] = useState(false)
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -66,6 +67,16 @@ export const TermsModal: FC<ITermsModalProps> = ({
     }
   };
 
+  const onRejectClick = () => {
+    if(!hasAccepted && !warningMessage){
+      console.log('warning message');
+      setWarningMessage(true)
+      return;
+    }
+    setWarningMessage(false)
+    onReject()
+  }
+
   return (
     <Modal isOpen={isOpen} width={"40%"} variant="darkened">
       <Styles.Wrapper>
@@ -93,7 +104,7 @@ export const TermsModal: FC<ITermsModalProps> = ({
           </Styles.IconButton>
 
           <Styles.Spacer />
-          <Button onClick={onReject} variant="secondary">
+          <Button onClick={onRejectClick} variant="secondary">
             {hasAccepted ? "Close" : "I do not accept"}
           </Button>
           {!hasAccepted ? (
@@ -104,6 +115,16 @@ export const TermsModal: FC<ITermsModalProps> = ({
             ""
           )}
         </Styles.Footer>
+
+        <>
+          {warningMessage && (
+            <Styles.Error>
+              <Styles.ErrorIcon/>
+              You will be logged out if you do not accept the client terms
+            </Styles.Error>
+            )
+          }
+        </>
       </Styles.Wrapper>
     </Modal>
   );
