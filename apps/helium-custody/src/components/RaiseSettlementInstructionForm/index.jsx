@@ -61,35 +61,6 @@ const baseSelectProps = {
   styles: baseSelectStyles,
 };
 
-const CustomCurrencyInputField = forwardRef((props, ref) => {
-  const { onChange, decimals = 2, ...other } = props;
-  const { setFieldTouched } = useFormikContext();
-
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-        setFieldTouched(props.name);
-      }}
-      thousandSeparator
-      decimalScale={decimals}
-    />
-  );
-});
-
-CustomCurrencyInputField.propTypes = {
-  inputRef: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
 const DependentAmountField = (props) => {
   const { values, touched, setFieldValue } = useFormikContext();
   const { valueA, valueB } = props;
@@ -610,7 +581,8 @@ const RaiseSettlementInstructionForm = ({
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                   }}
-                  inputProps={{ decimals: isEquity ? 6 : undefined, decimalScale: 6 }}
+                  // inputProps={{ decimalScale: isEquity ? 6 : undefined }}
+                  inputProps={{ decimalScale: 6 }}
                 />
               </InlineFormField>
 
@@ -642,7 +614,6 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: 6,
                     decimalScale: 6,
                   }}
                 />
@@ -690,7 +661,7 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: isEquity ? 0 : undefined, //Commission/Charges field is a numeric field that followings the same format of the Principal Amount field in terms of decimal points
+                    decimalScale: isEquity ? 0 : undefined, //Commission/Charges field is a numeric field that followings the same format of the Principal Amount field in terms of decimal points
                   }}
                 />
               </InlineFormField>
