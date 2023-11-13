@@ -314,7 +314,6 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         name="counterpartyId"
                         variant="filled"
                         type="text"
-                        InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       />
                     </Grid>
                   </Grid>
