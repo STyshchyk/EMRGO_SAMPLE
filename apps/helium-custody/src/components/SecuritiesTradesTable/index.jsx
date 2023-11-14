@@ -139,8 +139,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   numCerts: convertNumberToIntlFormat(i.numOfCertificates),
   paymentConfirmationFileId: i.paymentConfirmationFileId,
   paymentEvidenceUploaded: i.paymentConfirmationFileId ? "Yes" : "No",
-  price: currencyRenderer(i.price, 6),
-  quantity: currencyRenderer(i.quantity, 6),
+  price: i.price,
+  quantity: i.quantity,
   readyToSettle: i.readyToSettle,
   referenceId: i.referenceId ?? FALLBACK_VALUE,
   security: i.externalSecurity?.name,
@@ -380,6 +380,7 @@ const SecurityTradesTable = ({
     {
       id: "quantity",
       title: t("Headers.Qty"),
+      render: (rowDate) => floatRenderer(rowData.quantity),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
       field: "quantity",
       type: "numeric",
