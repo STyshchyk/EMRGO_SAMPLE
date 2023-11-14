@@ -1,7 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
-import { Panel, PanelContent, PanelHeader } from "@emrgo-frontend/shared-ui";
+import {
+  Input,
+  Panel,
+  PanelContent,
+  PanelHeader,
+  PanelHeaderRight,
+} from "@emrgo-frontend/shared-ui";
 import { useQuery } from "@tanstack/react-query";
 
 import { OnboardedUserTable } from "../OnboardedUserTable";
@@ -40,16 +46,45 @@ const testData: IOnboarderUser[] = [
   },
 ];
 export const OnboardedUsers: FC<IOnboarderUsersProps> = ({}) => {
+  const [searchKey, setSearchKey] = useState("");
+
   const { data, isError, isFetching } = useQuery({
     queryFn: getEntities,
     queryKey: [queryKeys.onboarding.fetch],
+    select: (data) => {
+      const filteredData =
+        searchKey &&
+        data.filter((elem) => {
+          return (
+            elem.firstName.toLowerCase().includes(searchKey.toLowerCase()) ||
+            elem.lastName.toLowerCase().includes(searchKey.toLowerCase()) ||
+            elem.entityName.toLowerCase().includes(searchKey.toLowerCase()) ||
+            elem.email.toLowerCase().includes(searchKey.toLowerCase())
+          );
+        });
+      return searchKey ? filteredData : data;
+    },
   });
 
   return (
     <Styles.OnboarderUsers>
       <Styles.Content>
         <Panel>
-          <PanelHeader>Users</PanelHeader>
+          <PanelHeader>
+            Users
+            <PanelHeaderRight>
+              <Input
+                name={"search"}
+                type={"search "}
+                label={"Search"}
+                value={searchKey}
+                onChange={(event) => {
+                  setSearchKey(event.target.value);
+                }}
+              />
+            </PanelHeaderRight>
+          </PanelHeader>
+
           <PanelContent>
             {!isError && data && <OnboardedUserTable onboardedUsers={data} />}
           </PanelContent>
