@@ -188,7 +188,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
       title: t("Cash Balances.Headers.Balance"),
       field: "balance",
       render: (rowData) => rowData.balance,
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.balance), align: "right" },
+      exportConfig: { align: "right" },
       // type: 'numeric',
     },
     {
