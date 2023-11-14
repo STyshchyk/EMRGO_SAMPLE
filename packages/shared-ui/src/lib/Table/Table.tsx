@@ -65,7 +65,7 @@ export const Table = function <T>({
       </Styles.Table>
 
       {pagination && (
-        <div className="flex sm:flex-row flex-col w-full mt-8 items-center gap-5 text-xs justify-end">
+        <div className="flex sm:flex-row flex-col w-full mt-2 items-center gap-5 text-xs justify-end">
           <div className="mb1">
             <span className="mr-2">Rows per page:</span>
             <Select

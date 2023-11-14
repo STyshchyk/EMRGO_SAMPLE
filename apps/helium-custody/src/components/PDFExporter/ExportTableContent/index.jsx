@@ -23,22 +23,25 @@ const ExportTableContent = ({
   filters,
   headerColumns = [],
   title = "Transaction List",
-}) => (
-  <Fragment>
-    <View style={styles.content}>
-      <Title title={title} />
-      {filters && <Filters filters={filters} />}
-    </View>
+}) => {
+  console.log(data);
+  return (
     <Fragment>
-      <Suspense fallback={<h1>Loading....</h1>}>
-        <SimpleTable
-          columns={columns}
-          data={data}
-          options={tableOptions}
-          headerColumns={headerColumns}
-        />
-      </Suspense>
+      <View style={styles.content}>
+        <Title title={title} />
+        {filters && <Filters filters={filters} />}
+      </View>
+      <Fragment>
+        <Suspense fallback={<h1>Loading....</h1>}>
+          <SimpleTable
+            columns={columns}
+            data={data}
+            options={tableOptions}
+            headerColumns={headerColumns}
+          />
+        </Suspense>
+      </Fragment>
     </Fragment>
-  </Fragment>
-);
+  );
+};
 export default ExportTableContent;

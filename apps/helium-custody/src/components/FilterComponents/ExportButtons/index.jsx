@@ -15,7 +15,6 @@ import { useFilters } from "../../../context/filter-context";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as cashManagementSelectors from "../../../redux/selectors/cashManagement";
 import * as reportsSelectors from "../../../redux/selectors/reports";
-import formatAddress from "../../../utils/reports";
 import ExportTableContent from "../../PDFExporter/ExportTableContent";
 import ReportingTablePDFExporter from "../../ReportingTablePDFExporter";
 
@@ -23,12 +22,12 @@ const ExportButtons = ({ tableRef, name }) => {
   let entityAddress;
   const fileName = v.snakeCase(name);
   const [dataCount, setDataCount] = useState(
-    tableRef?.current?.dataManager?.filteredData.length || 0
+    tableRef?.current?.dataManager?.sortedData?.length || 0
   );
   const [downloadingPdf, setDownloadingPdf] = useState(false);
   const filterContext = useFilters();
   const { filterColumns, filters, allColumns } = filterContext;
-  const [tableData, setTableData] = useState(tableRef?.current?.dataManager?.filteredData);
+  const [tableData, setTableData] = useState(tableRef?.current?.dataManager?.sortedData);
 
   useEffect(() => {
     const hasSearchFilter = filters.hasOwnProperty("search");
@@ -37,12 +36,12 @@ const ExportButtons = ({ tableRef, name }) => {
       setTableData(tableRef?.current?.dataManager?.getRenderState()?.data); // for id 187
       return;
     }
-    setTableData(tableRef?.current?.dataManager?.filteredData);
+    setTableData(tableRef?.current?.dataManager?.sortedData);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     setTableData,
-    tableRef?.current?.dataManager?.filteredData,
+    tableRef?.current?.dataManager?.sortedData,
     tableRef?.current?.dataManager?.getRenderState()?.data,
   ]);
 
@@ -87,7 +86,7 @@ const ExportButtons = ({ tableRef, name }) => {
   };
 
   const processTableData = () => {
-    const rows = [...tableRef?.current?.dataManager?.searchedData]?.map((rowData) => {
+    const rows = [...tableRef?.current?.dataManager?.sortedData]?.map((rowData) => {
       const row = [];
       shownColumns.forEach((column) => {
         const foundData = column?.exportConfig?.render
@@ -109,20 +108,20 @@ const ExportButtons = ({ tableRef, name }) => {
   const exportPDF = (e) => {
     setDownloadingPdf(true);
     e.stopPropagation();
-
-    if (tableData.length === 0) {
+    if (tableData && Array.isArray(tableData) && tableData.length === 0) {
       const emptyData = {};
       pdfColumns.forEach((column) => {
         emptyData[column.id] = column.id === "balance" ? "0" : "-";
       });
       setTableData([emptyData]);
     }
-    setDataCount(tableRef?.current?.dataManager?.filteredData.length || 1);
+    setTableData(tableRef?.current?.dataManager?.sortedData);
+    setDataCount(tableRef?.current?.dataManager?.sortedData.length || 1);
     setTimeout(() => {
       childRef.current.exportFile();
       setDownloadingPdf(false);
       // setTableData([]); // wdifc bug 562/569/536
-    }, 1000);
+    }, 1500);
   };
 
   const fetchFilterValue = (value, type) => {
