@@ -41,7 +41,7 @@ const SafekeepingAccounts = () => {
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const dropdowns = useSelector(miscellaneousSelectors.selectDropdowns);
   const currencies = dropdowns.currency;
-  const accounts = useSelector(safekeepingSelectors.readAccounts);
+  const accounts = useSelector(safekeepingSelectors.readAccountsUnfiltered);
   const accountAuditLogs = useSelector(safekeepingSelectors.readAccountAuditLogs);
   const entities = useSelector(entitiesSelectors.selectEntities);
   const statuses = ["Active", "Inactive"];

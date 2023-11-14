@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
-export const readAccountsKeep = (state) => state.safekeeping.accounts;
-export const readAccounts = createSelector([readAccountsKeep], (safeAccounts) => {
+export const readAccountsUnfiltered = (state) => state.safekeeping.accounts;
+export const readAccounts = createSelector([readAccountsUnfiltered], (safeAccounts) => {
   if (safeAccounts && Array.isArray(safeAccounts)) {
     return safeAccounts.filter((account) => account.status === "Active");
   }
