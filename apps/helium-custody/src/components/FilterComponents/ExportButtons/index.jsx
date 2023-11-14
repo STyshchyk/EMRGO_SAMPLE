@@ -25,6 +25,7 @@ const ExportButtons = ({ tableRef, name }) => {
   const [dataCount, setDataCount] = useState(
     tableRef?.current?.dataManager?.filteredData.length || 0
   );
+  const [downloadingPdf, setDownloadingPdf] = useState(false);
   const filterContext = useFilters();
   const { filterColumns, filters, allColumns } = filterContext;
   const [tableData, setTableData] = useState(tableRef?.current?.dataManager?.filteredData);
@@ -106,6 +107,7 @@ const ExportButtons = ({ tableRef, name }) => {
   });
 
   const exportPDF = (e) => {
+    setDownloadingPdf(true);
     e.stopPropagation();
 
     if (tableData.length === 0) {
@@ -118,6 +120,7 @@ const ExportButtons = ({ tableRef, name }) => {
     setDataCount(tableRef?.current?.dataManager?.filteredData.length || 1);
     setTimeout(() => {
       childRef.current.exportFile();
+      setDownloadingPdf(false);
       // setTableData([]); // wdifc bug 562/569/536
     }, 1000);
   };
@@ -268,6 +271,7 @@ const ExportButtons = ({ tableRef, name }) => {
           <Button
             variant="contained"
             fullWidth
+            disabled={downloadingPdf}
             color="primary"
             startIcon={<CloudDownloadIcon />}
             onClick={exportPDF}
