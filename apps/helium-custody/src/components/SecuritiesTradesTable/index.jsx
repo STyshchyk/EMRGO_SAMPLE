@@ -380,7 +380,7 @@ const SecurityTradesTable = ({
     {
       id: "quantity",
       title: t("Headers.Qty"),
-      render: (rowDate) => floatRenderer(rowData.quantity),
+        render: (rowData) => floatRenderer(rowData.quantity),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
       field: "quantity",
       type: "numeric",
