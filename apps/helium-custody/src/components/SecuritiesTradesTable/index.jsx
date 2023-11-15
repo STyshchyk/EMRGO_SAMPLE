@@ -1,8 +1,6 @@
 import { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-
-
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -16,12 +14,13 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-
-
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import featureFlags from "../../constants/featureFlags";
 import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../constants/renderers";
-import { securityTradeSettlementStatusEnum, settlementInstructionStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
+import {
+  securityTradeSettlementStatusEnum,
+  settlementInstructionStatusEnum,
+} from "../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { getAttribute } from "../../helpers/custodyAndSettlement";
@@ -37,10 +36,6 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-
-
-
-
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 const FALLBACK_VALUE = "--";
@@ -380,7 +375,7 @@ const SecurityTradesTable = ({
     {
       id: "quantity",
       title: t("Headers.Qty"),
-        render: (rowData) => floatRenderer(rowData.quantity),
+      render: (rowData) => floatRenderer(rowData.quantity),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
       field: "quantity",
       type: "numeric",
@@ -433,7 +428,7 @@ const SecurityTradesTable = ({
       title: t("Headers.Price"),
       field: "price",
       // render: (rowData) => rowData?.price && floatRenderer(rowData?.price, 0, 5),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.price) },
+      exportConfig: { render: (rowData) => floatRenderer(rowData.price) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,

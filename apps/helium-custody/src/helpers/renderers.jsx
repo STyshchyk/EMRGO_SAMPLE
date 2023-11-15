@@ -1,8 +1,8 @@
 import React from "react";
 
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
 export const titleRenderer = (value) => {
   const titledValue = v.capitalize(value);
@@ -28,6 +28,7 @@ export const floatRenderer = (value, minimumFractionDigits = 2, maximumFractionD
   new Intl.NumberFormat("en", {
     minimumFractionDigits,
     maximumFractionDigits,
+    roundingMode: "floor", // So it does not round to greater value when reducing decimals
   }).format(value);
 
 export const readyToSettleRenderer = (value) => {
