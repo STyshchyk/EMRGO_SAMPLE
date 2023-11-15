@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import moment from "moment";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import AmendSettlementInstructionDialog from "../../../components/AmendSettlementInstructionDialog";
@@ -305,6 +307,16 @@ const CustodyAndSettlement = () => {
       id: 9,
       label: `${t("TableActions.Set to Settled")}`,
       onClick: () => {
+        const settlementDate = dateFormatter(
+          currentlySelectedRowData?.settlementDate,
+          "DD/MM/YYYY"
+        );
+        const currentDate = moment();
+        if (currentDate.isBefore(moment(settlementDate, "DD/MM/YYYY"))) {
+          toast.warning("Settlement Instruction can't be settled before settlement date", 500);
+          handleCloseMenu();
+          return;
+        }
         const fetchPaymentsList = () =>
           dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
 
