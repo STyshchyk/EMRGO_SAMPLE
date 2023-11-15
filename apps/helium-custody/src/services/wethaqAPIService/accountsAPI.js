@@ -10,7 +10,7 @@ const addAccount = (payload) =>
   baseAxiosInstance({
     method: "POST",
     data: payload,
-    url: `/accounts/v1/accounts`,
+    url: `/accounts/v2/accounts`,
   });
 
 const editAccount = (payload) =>
