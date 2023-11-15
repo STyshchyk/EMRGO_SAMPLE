@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 
-
-
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -15,8 +13,6 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-
-
 import { DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
 import { internalTransferStatusEnum } from "../../constants/wethaqAPI/cashManagement";
@@ -24,16 +20,11 @@ import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-
-
-
-
 
 const FALLBACK_VALUE = "--";
 
@@ -183,6 +174,7 @@ const InternalTransferTransactionsTable = ({
       field: "transferAmount",
       type: "numeric",
       render: (rowData) => rowData.transferAmount && currencyRenderer(rowData.transferAmount),
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.transferAmount) },
     },
     {
       id: "sourceAccountOwner",
@@ -202,7 +194,10 @@ const InternalTransferTransactionsTable = ({
       title: "Source Account Balance",
       field: "sourceAccountBalance",
       type: "numeric",
-      exportConfig: { width: 5 },
+      exportConfig: {
+        width: 5,
+        render: (rowData) => currencyRenderer(rowData.sourceAccountBalance),
+      },
       render: (rowData) =>
         rowData.sourceAccountBalance && currencyRenderer(rowData.sourceAccountBalance),
     },
