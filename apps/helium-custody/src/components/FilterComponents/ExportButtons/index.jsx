@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 import moment from "moment";
@@ -275,7 +276,16 @@ const ExportButtons = ({ tableRef, name }) => {
             startIcon={<CloudDownloadIcon />}
             onClick={exportPDF}
           >
-            PDF
+            {!downloadingPdf ? (
+              "PDF"
+            ) : (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: "rgb(25,118,210)",
+                }}
+              />
+            )}
           </Button>
         </Grid>
       </Grid>
