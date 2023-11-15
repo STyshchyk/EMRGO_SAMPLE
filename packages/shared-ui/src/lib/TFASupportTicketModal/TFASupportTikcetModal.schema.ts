@@ -35,7 +35,7 @@ export const TFASupportTicketModalFormSchema = (userType: string) =>
       .required("ID Proof is Required")
       .test(
         "fileSize",
-        "File size should be less than 1 MB",
+        "File size should be less than 5 MB",
         (value) => value && value.size <= MAX_FILE_SIZE_BYTES
       ),
   });

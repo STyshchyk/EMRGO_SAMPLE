@@ -289,7 +289,7 @@ const ManagePaymentAccountsPage = () => {
         <Grid container alignItems="flex-start" justifyContent="flex-end" spacing={2} lg={9}>
           <Grid item>
             <Button
-              variant="contained"
+              variant="outlined"
               startIcon={<CloudDownloadIcon />}
               onClick={() => {
                 handleExportToCSV(data);
@@ -302,7 +302,11 @@ const ManagePaymentAccountsPage = () => {
           </Grid>
 
           <Grid item>
-            <Button color="primary" onClick={handleClickOnAddPaymentAccountButton}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClickOnAddPaymentAccountButton}
+            >
               {t("PaymentAccountManagement.ManagePaymentAccountsPage.AddPaymentAccountButtonText")}
             </Button>
           </Grid>
