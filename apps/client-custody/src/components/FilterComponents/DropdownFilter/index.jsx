@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Select } from "@emrgo-frontend/shared-ui";
 import { selectStyles } from "@emrgo-frontend/theme";
 import Box from "@mui/material/Box";
@@ -26,13 +28,17 @@ const DropdownFilter = ({
   const filterContext = useFilters();
   const { setFilterValue, clearFilterValue } = filterContext;
 
+  useEffect(() => {
+    //  if default value then include in bubble count
+    if (currentlySelectedOption) {
+      setFilterValue(currentlySelectedOption, name, label, "dropdown");
+    }
+  }, [currentlySelectedOption]);
+
   const clearFilter = () => {
     setCurrentlySelectedOption(null);
     if (setClearDisabled) setClearDisabled(false);
     if (setCustomClear) setCustomClear();
-    // get filters and then filter out the object with name prooperty
-    // const result = Object.fromEntries(Object.entries(filters).filter(([key]) => key !== name));
-    // setFilters(result);
     clearFilterValue(name);
   };
 
