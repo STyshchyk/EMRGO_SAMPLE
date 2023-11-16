@@ -309,26 +309,26 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Securities Holdings.Headers.Security"),
       field: "securityShortName",
     },
-    {
-      id: "issuerName",
-      title: t("Security Transactions.Headers.Issuer Name"),
-      field: "issuerName",
-    },
-    {
-      id: "fromSecurityAccount",
-      title: t("Security Transactions.Headers.From Sec Acct"),
-      field: "fromSecurityAccount",
-    },
-    {
-      id: "investorName",
-      title: t("Security Transactions.Headers.Investor Name"),
-      field: "investorName",
-    },
-    {
-      id: "toSecurityAccount",
-      title: t("Security Transactions.Headers.To Sec Acct"),
-      field: "toSecurityAccount",
-    },
+    // {
+    //   id: "issuerName",
+    //   title: t("Security Transactions.Headers.Issuer Name"),
+    //   field: "issuerName",
+    // },
+    // {
+    //   id: "fromSecurityAccount",
+    //   title: t("Security Transactions.Headers.From Sec Acct"),
+    //   field: "fromSecurityAccount",
+    // },
+    // {
+    //   id: "investorName",
+    //   title: t("Security Transactions.Headers.Investor Name"),
+    //   field: "investorName",
+    // },
+    // {
+    //   id: "toSecurityAccount",
+    //   title: t("Security Transactions.Headers.To Sec Acct"),
+    //   field: "toSecurityAccount",
+    // },
     {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
@@ -669,7 +669,9 @@ const SecuritiesTransactionsReportPage = () => {
                               components={{
                                 ...animatedComponents,
                               }}
-                              value={values.entity}
+                              value={
+                                filteredEntity.length === 1 ? filteredEntity[0] : values.entity
+                              }
                               options={filteredEntity}
                               onChange={(selectedEntity) => {
                                 if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
@@ -716,7 +718,11 @@ const SecuritiesTransactionsReportPage = () => {
                                   height: "3rem",
                                 }),
                               }}
-                              value={values.securityAccount}
+                              value={
+                                filteredSecurityAccounts.length === 1
+                                  ? filteredSecurityAccounts[0]
+                                  : values.securityAccount
+                              }
                               options={filteredSecurityAccounts}
                               onChange={(selectedAccount, triggeredAction) => {
                                 securityAccountChange(selectedAccount);

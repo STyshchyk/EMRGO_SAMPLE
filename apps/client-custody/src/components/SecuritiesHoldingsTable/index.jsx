@@ -267,13 +267,19 @@ const SecuritiesHoldingsTable = ({
           >
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
+                <DropdownFilter
+                  name="entity"
+                  label="Entity"
+                  options={entityOptionsList}
+                  defaultValue={entityOptionsList.length == 1 && entityOptionsList[0]}
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={currentSafeAccounts}
+                  defaultValue={currentSafeAccounts.length == 1 && currentSafeAccounts[0]}
                   customOnChange={(newValue) => {
                     dispatch(reportsActionCreators.doResetTradeDatedSecuritiesHoldings());
                     dispatch(reportsActionCreators.doResetSecuritiesHoldings());

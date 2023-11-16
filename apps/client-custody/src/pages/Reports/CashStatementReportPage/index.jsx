@@ -365,7 +365,9 @@ const CashStatementReportPage = () => {
                   name="entity"
                   label="Entity"
                   options={filteredEntity}
-                  currentlySelectedOption={currentlySelectedEntity}
+                  currentlySelectedOption={
+                    filteredEntity.length === 1 ? filteredEntity[0] : currentlySelectedEntity
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedEntity}
                   customOnChange={(selectedEntity) => {
                     entityChange(selectedEntity);
@@ -378,7 +380,11 @@ const CashStatementReportPage = () => {
                   name="securityAccount"
                   label="Safekeeping Account"
                   options={filteredSecurityAccounts}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
+                  currentlySelectedOption={
+                    filteredSecurityAccounts.length === 1
+                      ? filteredSecurityAccounts[0]
+                      : currentlySelectedSecurityAccount
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
                   setCustomClear={() => {
                     setCashAccountOptions([]);
