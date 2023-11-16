@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
@@ -8,14 +8,11 @@ import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
 
-import {
-  accountTypeRenderer,
-  currencyRenderer,
-  reportDateRenderer,
-} from "../../constants/renderers";
+import { accountTypeRenderer, reportDateRenderer } from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
+import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManagement";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
@@ -55,6 +52,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter"]);
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   const [disabledCurrency, setDisabledCurrency] = useState(false);
   const [currentlySelectedSafekeepingAccount, setCurrentlySelectedSafekeepingAccount] =
     useState(null);
@@ -64,12 +62,12 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
 
   const [cashAccountOptions, setCashAccountOptions] = useState(null);
   const [currencyOptions, setCurrencyOptions] = useState(null);
-
+  const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   const entityList = [
     ...safekeepingAccounts.map((i) => ({
-      label: i.entity?.name,
-      value: i.entity?.id,
-      data: i.entity,
+      label: i.entity?.name ?? i.entityName, //For EMRGO user
+      value: i.entity?.id ?? i.id,
+      data: i.entity ?? i,
     })),
   ];
 
@@ -80,22 +78,27 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
   }
 
   const safeekingAccountList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
-      value: i.id,
-      entityId: i.entity_id,
-      account: i,
-    })),
+    ...safekeepingAccounts
+      .filter((elem) => elem.entityName !== "Emrgo") //Remove EMRGO as it does not have safekeeping account, might change in a future
+      .map((i) => ({
+        label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
+        value: i.id,
+        entityId: i.entity_id,
+        account: i,
+      })),
   ];
-
   const handleEntityChange = (selectedEntity) => {
-    if (selectedEntity && selectedEntity.value !== "all") {
+    if (selectedEntity && selectedEntity.data?.entityName === "Emrgo") {
+      setEmrgoSelected(true);
+    } else if (selectedEntity && selectedEntity.value !== "all") {
+      setEmrgoSelected(false);
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
       setSafeAccountOptions(filteredSafekeepingAccounts);
     } else {
       setSafeAccountOptions(safeekingAccountList);
+      setEmrgoSelected(false);
     }
     dispatch(reportsActionCreators.doResetCashBalances());
   };
@@ -206,7 +209,6 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
       exportConfig: { render: (rowData) => reportDateRenderer(rowData.lastMovement) },
     },
   ];
-
   const matchCashAccCurrencyWithCurrency = (selectedAcccount) => {
     setDisabledCurrency(true);
   };
@@ -271,7 +273,8 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
                   disabled={(filters) => {
                     return (
                       (!filters.entity || !filters.safekeepingAccount) &&
-                      filters.entity?.value?.value !== "all"
+                      filters.entity?.value?.value !== "all" &&
+                      !isEmrgoSelected
                     );
                   }}
                 />
