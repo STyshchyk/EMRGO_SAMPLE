@@ -20,13 +20,14 @@ import { currencyRenderer, reportDateRenderer } from "../../../constants/rendere
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
+import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as authSelectors from "../../../redux/selectors/auth";
+import * as billingAndPaymentsSelectors from "../../../redux/selectors/entities";
 import * as reportsSelectors from "../../../redux/selectors/reports";
 import * as safekeepingSelectors from "../../../redux/selectors/safekeeping";
 import tableStyles from "../../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../../utils/convertNumberToIntlFormat";
 import { dateWithinRange } from "../../../utils/dates";
 import { dateFormatter } from "../../../utils/formatter";
 import ReportingDisclaimer from "../ReportingDisclaimer";
@@ -64,18 +65,19 @@ const CashStatementReportPage = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
-
+  const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   const transactions = useSelector(reportsSelectors.selectCashTransactions);
   const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+  const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
   // console.log('🚀 ~ file: index.js ~ line 61 ~ CashStatementReportPage ~ transactions', transactions);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
-  const [cashAccountOptions, setCashAccountOptions] = useState(null);
+  const [cashAccountOptions, setCashAccountOptions] = useState([]);
 
   const [filteredRows, setFilteredRows] = useState([]);
-
   const currentEntityGroupID = currentEntityGroup?.id;
 
   useWethaqAPIParams({
@@ -84,7 +86,8 @@ const CashStatementReportPage = () => {
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
-
+    const fetchEmrgoOwners = () => dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners());
+    fetchEmrgoOwners();
     const fetchSafekeepingAccounts = (payload) =>
       dispatch(safekeepingActionCreators.doReadAccounts(payload));
     fetchSafekeepingAccounts();
@@ -116,10 +119,10 @@ const CashStatementReportPage = () => {
   const rows = getTableData(transactions);
 
   const entityList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: i.entity?.name,
-      value: i.entity?.id,
-      data: i.entity,
+    ...[].concat(safekeepingAccounts, emrgoOwnews).map((i) => ({
+      label: i.entity?.name ?? i.entityName,
+      value: i.entity?.id ?? i.id,
+      data: i.entity ?? i,
     })),
   ];
 
@@ -135,13 +138,29 @@ const CashStatementReportPage = () => {
   ];
 
   const handleEntityChange = (selectedEntity) => {
-    if (selectedEntity && selectedEntity.value !== "all") {
+    if (!selectedEntity) return;
+    if (selectedEntity.data?.entityName === "Emrgo") {
+      setEmrgoSelected(true);
+      const cashAccountOptions = cashAccounts
+        .filter((account) => account.group.entity.id === selectedEntity.value)
+        .map((cashAccount) => {
+          return {
+            data: cashAccount,
+            value: cashAccount.id,
+            label: `${cashAccount.currency.name} ( ${cashAccount.accountNo} )`,
+          };
+        });
+      setCashAccountOptions(cashAccountOptions);
+      setSafeAccountOptions([]);
+    } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
+      setEmrgoSelected(false);
       setSafeAccountOptions(filteredSafekeepingAccounts);
     } else {
       setSafeAccountOptions(safeekingAccountList);
+      setEmrgoSelected(false);
     }
 
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -245,7 +264,7 @@ const CashStatementReportPage = () => {
       // type: 'numeric',
     },
   ];
-
+  console.log(isEmrgoSelected);
   return (
     <Fragment>
       <PageTitle title={t("Cash Statement.Cash Statement")} />
@@ -310,7 +329,9 @@ const CashStatementReportPage = () => {
                     handleFetch(filters);
                   }}
                   disabled={(filters) =>
-                    !filters.account || !filters.entity || !filters.safekeepingAccount
+                    !filters.account ||
+                    !filters.entity ||
+                    (!filters.safekeepingAccount && !isEmrgoSelected)
                   }
                 />
               </Grid>

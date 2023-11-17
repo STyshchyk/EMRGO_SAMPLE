@@ -62,7 +62,7 @@ const CashStatementPage = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
-
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const transactions = useSelector(reportsSelectors.selectCashTransactions);
@@ -71,7 +71,7 @@ const CashStatementPage = () => {
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   const [cashAccountOptions, setCashAccountOptions] = useState(null);
-
+  const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   const [filteredRows, setFilteredRows] = useState([]);
 
   const currentEntityGroupID = currentEntityGroup?.id;
@@ -82,7 +82,6 @@ const CashStatementPage = () => {
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
-
     const fetchSafekeepingAccounts = (payload) =>
       dispatch(safekeepingActionCreators.doReadAccounts(payload));
     fetchSafekeepingAccounts();
@@ -114,13 +113,12 @@ const CashStatementPage = () => {
   const rows = getTableData(transactions);
 
   const entityList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: i.entity?.name,
+    ...[...emrgoOwnews, ...safekeepingAccounts].map((i) => ({
+      label: i.entity?.name ?? i.entityName, //For EMRGO user
       value: i.entity?.id,
       data: i.entity,
     })),
   ];
-
   const entityOptions = [...new Map(entityList.map((item) => [item.value, item])).values()];
 
   const safeekingAccountList = [
