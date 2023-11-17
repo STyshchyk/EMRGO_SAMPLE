@@ -90,6 +90,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
   const handleEntityChange = (selectedEntity) => {
     if (selectedEntity && selectedEntity.data?.entityName === "Emrgo") {
       setEmrgoSelected(true);
+      setSafeAccountOptions([]);
     } else if (selectedEntity && selectedEntity.value !== "all") {
       setEmrgoSelected(false);
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
