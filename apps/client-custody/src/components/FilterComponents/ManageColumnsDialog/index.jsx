@@ -108,9 +108,6 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
   const confirmColumns = () => {
     const updatedShownColumns = currentShownColumns.map((column) => {
       if (column.defaultHidden === true) {
-        // // Destructure the column and exclude hideColumn
-        // const { hideColumn, ...restOfColumn } = column;
-        // return restOfColumn;
         return { ...column, defaultHidden: false };
       }
       return column;
