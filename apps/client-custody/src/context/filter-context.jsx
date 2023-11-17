@@ -111,9 +111,11 @@ export const FilterProvider = ({ children, tableKey }) => {
   }, [tableConfig || {}, allColumns]);
 
   function setFilterValue(value, key, label, type) {
-    const updatedFilters = { ...filters };
-    updatedFilters[key] = { value, label, type };
-    setFilters(updatedFilters);
+    setFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      updatedFilters[key] = { value, label, type };
+      return updatedFilters;
+    });
   }
 
   function clearFilterValue(key) {
