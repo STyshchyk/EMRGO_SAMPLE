@@ -292,7 +292,7 @@ const CashStatementReportPage = () => {
       field: "transactionType",
       exportConfig: { width: 15 },
     },
-    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin", defaultHidden: true },
     {
       id: "narrative",
       title: t("Cash Statement.Headers.Narrative"),
@@ -365,7 +365,9 @@ const CashStatementReportPage = () => {
                   name="entity"
                   label="Entity"
                   options={filteredEntity}
-                  currentlySelectedOption={currentlySelectedEntity}
+                  currentlySelectedOption={
+                    filteredEntity.length === 1 ? filteredEntity[0] : currentlySelectedEntity
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedEntity}
                   customOnChange={(selectedEntity) => {
                     entityChange(selectedEntity);
@@ -378,7 +380,11 @@ const CashStatementReportPage = () => {
                   name="securityAccount"
                   label="Safekeeping Account"
                   options={filteredSecurityAccounts}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
+                  currentlySelectedOption={
+                    filteredSecurityAccounts.length === 1
+                      ? filteredSecurityAccounts[0]
+                      : currentlySelectedSecurityAccount
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
                   setCustomClear={() => {
                     setCashAccountOptions([]);
@@ -479,6 +485,7 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
+            console.log(filterColumns, "consumer");
             const filteredData = filteredRows
               .filter((row) => {
                 //  Entry Date range Filter

@@ -177,6 +177,7 @@ const SecuritiesHoldingsTable = ({
       title: "WSN",
       field: "wsn",
       exportConfig: { width: 8 },
+      defaultHidden: true,
     },
     {
       id: "entity",
@@ -199,6 +200,7 @@ const SecuritiesHoldingsTable = ({
       id: "csd",
       title: t("Securities Holdings.Headers.Registrar"),
       field: "csd",
+      defaultHidden: true,
     },
     {
       id: "quantity",
@@ -223,6 +225,7 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Broker"),
       field: "broker",
       hidden: ["ISSUER"].includes(entityUserType),
+      defaultHidden: true,
     },
     {
       id: "portfolioId",
@@ -238,6 +241,7 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Inst Description"),
       field: "instDescription",
       exportConfig: { width: 15 },
+      defaultHidden: true,
     },
     {
       id: "lastMovement",
@@ -267,13 +271,19 @@ const SecuritiesHoldingsTable = ({
           >
             <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter name="entity" label="Entity" options={entityOptionsList} />
+                <DropdownFilter
+                  name="entity"
+                  label="Entity"
+                  options={entityOptionsList}
+                  defaultValue={entityOptionsList.length == 1 && entityOptionsList[0]}
+                />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={currentSafeAccounts}
+                  defaultValue={currentSafeAccounts.length == 1 && currentSafeAccounts[0]}
                   customOnChange={(newValue) => {
                     dispatch(reportsActionCreators.doResetTradeDatedSecuritiesHoldings());
                     dispatch(reportsActionCreators.doResetSecuritiesHoldings());

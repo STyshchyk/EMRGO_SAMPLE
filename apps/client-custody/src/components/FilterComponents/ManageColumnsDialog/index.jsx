@@ -106,9 +106,18 @@ const ManageColumnsDialog = ({ open, closeDialog, openResetColumnsDialog }) => {
     isDraggingOver ? style["columnManager__list--active"] : style["columnManager__list--inactive"];
 
   const confirmColumns = () => {
+    const updatedShownColumns = currentShownColumns.map((column) => {
+      if (column.defaultHidden === true) {
+        return { ...column, defaultHidden: false };
+      }
+      return column;
+    });
+
+    console.log(updatedShownColumns, "confirm");
+
     updateConfig(
       {
-        shownColumns: currentShownColumns,
+        shownColumns: updatedShownColumns,
         hiddenColumns: currentHiddenColumns,
       },
       "columns"

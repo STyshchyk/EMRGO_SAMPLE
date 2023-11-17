@@ -218,7 +218,7 @@ const SecuritiesTransactionsReportPage = () => {
         rowData?.tradeDate ? dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT) : "--",
       exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
     },
-    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
+    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn", defaultHidden: true },
     {
       id: "isin",
       title: t("Security Transactions.Headers.ISIN"),
@@ -237,28 +237,28 @@ const SecuritiesTransactionsReportPage = () => {
       field: "settlementType",
       exportConfig: { render: (rowData) => rowData?.settlementType?.name },
     },
-    {
-      id: "issuerName",
-      title: t("Security Transactions.Headers.Issuer Name"),
-      field: "issuerName",
-    },
-    {
-      id: "fromSecurityAccount",
-      title: t("Security Transactions.Headers.From Sec Acct"),
-      field: "fromSecurityAccount",
-      exportConfig: { width: 8 },
-    },
-    {
-      id: "investorName",
-      title: t("Security Transactions.Headers.Investor Name"),
-      field: "investorName",
-    },
-    {
-      id: "toSecurityAccount",
-      title: t("Security Transactions.Headers.To Sec Acct"),
-      field: "toSecurityAccount",
-      exportConfig: { width: 8 },
-    },
+    // {
+    //   id: "issuerName",
+    //   title: t("Security Transactions.Headers.Issuer Name"),
+    //   field: "issuerName",
+    // },
+    // {
+    //   id: "fromSecurityAccount",
+    //   title: t("Security Transactions.Headers.From Sec Acct"),
+    //   field: "fromSecurityAccount",
+    //   exportConfig: { width: 8 },
+    // },
+    // {
+    //   id: "investorName",
+    //   title: t("Security Transactions.Headers.Investor Name"),
+    //   field: "investorName",
+    // },
+    // {
+    //   id: "toSecurityAccount",
+    //   title: t("Security Transactions.Headers.To Sec Acct"),
+    //   field: "toSecurityAccount",
+    //   exportConfig: { width: 8 },
+    // },
     {
       id: "netSettleAmount",
       title: t("Security Transactions.Headers.Net Settle Amt"),
@@ -302,33 +302,37 @@ const SecuritiesTransactionsReportPage = () => {
         rowData?.tradeDate ? dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT) : "--",
     },
     // { id: 'entity', title: t('Security Transactions.Headers.Entity'), field: 'entity' },
-    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
-    { id: "isin", title: t("Security Transactions.Headers.ISIN"), field: "isin" },
+    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn", defaultHidden: true },
+    {
+      id: "isin",
+      title: t("Security Transactions.Headers.ISIN"),
+      field: "isin",
+    },
     {
       id: "security",
       title: t("Securities Holdings.Headers.Security"),
       field: "securityShortName",
     },
-    {
-      id: "issuerName",
-      title: t("Security Transactions.Headers.Issuer Name"),
-      field: "issuerName",
-    },
-    {
-      id: "fromSecurityAccount",
-      title: t("Security Transactions.Headers.From Sec Acct"),
-      field: "fromSecurityAccount",
-    },
-    {
-      id: "investorName",
-      title: t("Security Transactions.Headers.Investor Name"),
-      field: "investorName",
-    },
-    {
-      id: "toSecurityAccount",
-      title: t("Security Transactions.Headers.To Sec Acct"),
-      field: "toSecurityAccount",
-    },
+    // {
+    //   id: "issuerName",
+    //   title: t("Security Transactions.Headers.Issuer Name"),
+    //   field: "issuerName",
+    // },
+    // {
+    //   id: "fromSecurityAccount",
+    //   title: t("Security Transactions.Headers.From Sec Acct"),
+    //   field: "fromSecurityAccount",
+    // },
+    // {
+    //   id: "investorName",
+    //   title: t("Security Transactions.Headers.Investor Name"),
+    //   field: "investorName",
+    // },
+    // {
+    //   id: "toSecurityAccount",
+    //   title: t("Security Transactions.Headers.To Sec Acct"),
+    //   field: "toSecurityAccount",
+    // },
     {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
@@ -669,7 +673,9 @@ const SecuritiesTransactionsReportPage = () => {
                               components={{
                                 ...animatedComponents,
                               }}
-                              value={values.entity}
+                              value={
+                                filteredEntity.length === 1 ? filteredEntity[0] : values.entity
+                              }
                               options={filteredEntity}
                               onChange={(selectedEntity) => {
                                 if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
@@ -716,7 +722,11 @@ const SecuritiesTransactionsReportPage = () => {
                                   height: "3rem",
                                 }),
                               }}
-                              value={values.securityAccount}
+                              value={
+                                filteredSecurityAccounts.length === 1
+                                  ? filteredSecurityAccounts[0]
+                                  : values.securityAccount
+                              }
                               options={filteredSecurityAccounts}
                               onChange={(selectedAccount, triggeredAction) => {
                                 securityAccountChange(selectedAccount);

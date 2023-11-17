@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import makeAnimated from "react-select/animated";
 
 import { Select } from "@emrgo-frontend/shared-ui";
@@ -50,19 +50,25 @@ const DropdownFilter = ({
   customOnChange,
   options,
   defaultFilter,
+  defaultValue,
   isMulti,
   ...props
 }) => {
   const [currentlySelectedOption, setCurrentlySelectedOption] = useState([]);
   const filterContext = useFilters();
   const { setFilterValue, clearFilterValue } = filterContext;
-  // console.log(filters, 'dropdownfilter updated');
+
+  useEffect(() => {
+    // Set the default value if provided
+    if (defaultValue) {
+      setCurrentlySelectedOption(defaultValue);
+      setFilterValue(defaultValue, name, label, "dropdown");
+    }
+  }, [defaultValue]);
 
   const clearFilter = () => {
     setCurrentlySelectedOption([]);
-    // get filters and then filter out the object with name prooperty
-    // const result = Object.fromEntries(Object.entries(filters).filter(([key]) => key !== name));
-    // setFilters(result);
+
     clearFilterValue(name);
   };
 

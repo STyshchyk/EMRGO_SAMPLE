@@ -327,7 +327,9 @@ const CashBalancesTable = ({ data, accounts }) => {
                   customOnChange={(selectedEntity) => {
                     handleEntityChange(selectedEntity);
                   }}
-                  currentlySelectedOption={currentlySelectedEntity}
+                  currentlySelectedOption={
+                    entityOptions.length === 1 ? entityOptions[0] : currentlySelectedEntity
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedEntity}
                 />
               </Grid>
@@ -337,7 +339,11 @@ const CashBalancesTable = ({ data, accounts }) => {
                   setClearDisabled={setDisabledCurrency}
                   label="Safekeeping Account"
                   options={securityAccountOptions}
-                  currentlySelectedOption={currentlySelectedSecurityAccount}
+                  currentlySelectedOption={
+                    securityAccountOptions.length === 1
+                      ? securityAccountOptions[0]
+                      : currentlySelectedSecurityAccount
+                  }
                   setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
                   setCustomClear={() => {
                     setCashAccountOptions([]);
