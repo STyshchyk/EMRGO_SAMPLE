@@ -292,7 +292,7 @@ const CashStatementReportPage = () => {
       field: "transactionType",
       exportConfig: { width: 15 },
     },
-    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin", defaultHidden: true },
     {
       id: "narrative",
       title: t("Cash Statement.Headers.Narrative"),
@@ -485,6 +485,7 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
+            console.log(filterColumns, "consumer");
             const filteredData = filteredRows
               .filter((row) => {
                 //  Entry Date range Filter

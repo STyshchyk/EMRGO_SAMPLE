@@ -177,6 +177,7 @@ const SecuritiesHoldingsTable = ({
       title: "WSN",
       field: "wsn",
       exportConfig: { width: 8 },
+      defaultHidden: true,
     },
     {
       id: "entity",
@@ -199,6 +200,7 @@ const SecuritiesHoldingsTable = ({
       id: "csd",
       title: t("Securities Holdings.Headers.Registrar"),
       field: "csd",
+      defaultHidden: true,
     },
     {
       id: "quantity",
@@ -223,6 +225,7 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Broker"),
       field: "broker",
       hidden: ["ISSUER"].includes(entityUserType),
+      defaultHidden: true,
     },
     {
       id: "portfolioId",
@@ -238,6 +241,7 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Inst Description"),
       field: "instDescription",
       exportConfig: { width: 15 },
+      defaultHidden: true,
     },
     {
       id: "lastMovement",
