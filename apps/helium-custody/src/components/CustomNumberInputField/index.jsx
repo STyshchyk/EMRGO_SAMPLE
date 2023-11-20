@@ -35,7 +35,7 @@ const CustomNumberInputField = ({
 
 CustomNumberInputField.propTypes = {
   name: PropTypes.string.isRequired,
-  inputRef: PropTypes.func.isRequired,
+  inputRef: PropTypes.func,
   onChange: PropTypes.func.isRequired,
 };
 

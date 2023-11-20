@@ -125,8 +125,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorCashAccountBalance: convertNumberToIntlFormat(i.investorCashAccountBalance),
   investorCashAccountNo: i.investorCashAccount,
   investorSecuritiesAccountBalance: convertNumberToIntlFormat(i.investorSecuritiesAccountBalance, {
-      minimumFractionDigits: 6,
-      maximumFractionDigits: 6,
+    minimumFractionDigits: 6,
+    maximumFractionDigits: 6,
   }),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin: i.externalSecurity?.isin,
@@ -168,6 +168,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   entityGroup: i?.entityGroup,
   userId: i?.userId,
   commission: i?.commission,
+  portfolio: i?.portfolio,
   portfolioAccountNumber: i.portfolio?.accountNumber,
   portfolioName: i.portfolio?.name ?? FALLBACK_VALUE,
   isEquityType: i.externalSecurity?.assetTypeName?.key === "equity",

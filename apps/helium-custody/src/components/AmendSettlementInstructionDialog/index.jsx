@@ -31,42 +31,45 @@ const generateEntityOptionsList = (data) =>
       value: i,
     }));
 
-const generateInitialValues = (rowData) => ({
-  counterpartySelectOption: {
-    label: rowData?.counterpartyObject?.shortName,
-    value: rowData?.counterpartyObject,
-  },
-  counterpartySSISelectOption: {
-    label: rowData?.counterpartySSIObject?.ssiLabel,
-    value: rowData?.counterpartySSIObject,
-  },
-  externalSecuritySelectOption: {
-    label: rowData?.externalSecurity?.name,
-    value: {
-      ...rowData?.externalSecurity,
-      isin: getAttribute(rowData?.attributes, "isin") ?? rowData?.externalSecurity?.isin,
+const generateInitialValues = (rowData) => {
+  return {
+    counterpartySelectOption: {
+      label: rowData?.counterpartyObject?.shortName,
+      value: rowData?.counterpartyObject,
     },
-  },
-  price: rowData?.price,
-  // price: parseFloat(rowData?.price.replace(',', ''), 10),
-  // quantity: parseInt(rowData?.quantity,10),
-  quantity: parseFloat(rowData?.quantity.replace(",", ""), 10),
-  settlementAmount: parseFloat(rowData?.settlementAmount.replace(",", ""), 10),
-  settlementDate: new Date(rowData?.settlementDate),
-  settlementTypeSelectOption: {
-    label: rowData?.settlementType,
-    value: rowData?.settlementTypeId,
-  },
-  tradeDate: new Date(rowData?.tradeDate),
-  // new fields
-  principalAmount: parseFloat(rowData?.principalAmount.replace(",", ""), 10),
-  accruedInterest: parseFloat(rowData?.accruedInterest.replace(",", ""), 10),
-  internalTradeRef: rowData?.internalTradeRef,
-  entityGroup: rowData?.entityGroup,
-  entityGroupId: rowData?.entityGroupId,
-  userId: rowData?.userId,
-  portfolio: rowData?.portfolio,
-});
+    counterpartySSISelectOption: {
+      label: rowData?.counterpartySSIObject?.ssiLabel,
+      value: rowData?.counterpartySSIObject,
+    },
+    externalSecuritySelectOption: {
+      label: rowData?.externalSecurity?.name,
+      value: {
+        ...rowData?.externalSecurity,
+        isin: getAttribute(rowData?.attributes, "isin") ?? rowData?.externalSecurity?.isin,
+      },
+    },
+    price: rowData?.price,
+    quantity: parseFloat(rowData?.quantity.replace(",", ""), 10),
+    settlementAmount: parseFloat(rowData?.settlementAmount.replace(",", ""), 10),
+    settlementDate: new Date(rowData?.settlementDate),
+    settlementTypeSelectOption: {
+      label: rowData?.settlementType,
+      value: rowData?.settlementTypeId,
+    },
+    tradeDate: new Date(rowData?.tradeDate),
+    // new fields
+    principalAmount: parseFloat(rowData?.principalAmount.replace(",", ""), 10),
+    accruedInterest: parseFloat(rowData?.accruedInterest.replace(",", ""), 10),
+    internalTradeRef: rowData?.internalTradeRef,
+    entityGroup: rowData?.entityGroup,
+    entityGroupId: rowData?.entityGroupId,
+    userId: rowData?.userId,
+    portfolio_id: {
+      label: `${rowData?.portfolio?.name} (${rowData?.portfolio?.accountNumber})`,
+      value: rowData?.portfolio,
+    },
+  };
+};
 
 const AmendSettlementInstructionDialog = ({ open, handleClose, currentlySelectedRowData }) => {
   const dispatch = useDispatch();

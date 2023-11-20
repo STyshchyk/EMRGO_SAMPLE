@@ -162,9 +162,6 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     // settlementTypeSelectOption: undefined,
     entityGroupId: formikValues?.entityGroupId,
     userId: formikValues?.entityGroupUserId,
-    // entityId: undefined,
-    // entityGroupUserId: undefined,
-    // entityGroup: undefined,
     principalAmount: !formikValues.principalAmount
       ? 0
       : parseFloat(formikValues.principalAmount, 10),
@@ -174,7 +171,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     tradeDate: formikValues?.tradeDate,
     settlementDate: formikValues?.settlementDate,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
-    portfolio_id: formikValues.portfolio_id,
+    portfolio_id: formikValues.portfolio_id?.value?.id,
   };
 
   if (isFreeOfPayment) {
@@ -296,6 +293,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    portfolio_id: "",
   },
   isSubmitting,
   handleCloseDialog,
@@ -426,11 +424,11 @@ const RaiseSettlementInstructionForm = ({
                 <Select
                   {...baseSelectProps}
                   placeholder={"Select Safekeeping Account"}
-                  value={selectedSafekeepingAccountOption}
+                  value={selectedSafekeepingAccountOption || values.portfolio_id}
                   options={safekeepingOptions}
                   onChange={(newValue) => {
                     console.log("onChange", newValue);
-                    setFieldValue("portfolio_id", newValue?.value?.id);
+                    setFieldValue("portfolio_id", newValue);
                     setSelectedSafekeepingAccountOption(newValue);
                   }}
                   isDisabled={!selectedEntityOption}
