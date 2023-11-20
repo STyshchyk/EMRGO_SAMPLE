@@ -53,7 +53,7 @@ const SecuritiesTransactionsReportPage = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
   const childRef = useRef();
-
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
@@ -99,8 +99,6 @@ const SecuritiesTransactionsReportPage = () => {
     ...new Map(listOfSecurities.map((item) => [item.id, item])).values(),
   ];
 
-  console.log(listOfUniqueSecurities, "yolo");
-
   const securityOptionsList = listOfUniqueSecurities?.map((security) => ({
     label: security.shortName, // table is rendering shortName instead of security.name
     value: security.id,
@@ -144,7 +142,7 @@ const SecuritiesTransactionsReportPage = () => {
       issuerName: i.issuerName ?? FALLBACK_VALUE,
       settlementType: i?.settlementType?.name ?? FALLBACK_VALUE,
       fromSecurityAccount: i.fromSecurityAccount,
-      investorName: i.investorName,
+      investorName: i.investorName === "Emrgo" ? "Investor" : i.investorName,
       toSecurityAccount: i.toSecurityAccount,
       netSettleAmount: convertNumberToIntlFormat(i.netSettleAmount, intlFormatOpts),
       price: i.price ? convertNumberToIntlFormat(i.price, intlFormatOpts) : FALLBACK_VALUE, // !Dev notes: externalSecurity object doesn't have this field
@@ -183,13 +181,20 @@ const SecuritiesTransactionsReportPage = () => {
   };
 
   const handleEntityChange = (selectedEntity) => {
-    if (selectedEntity && selectedEntity.value !== "all") {
+    if (!selectedEntity) return;
+    console.log(selectedEntity);
+    if (selectedEntity.label === "Emrgo") {
+      setEmrgoSelected(true);
+      setSafeAccountOptions([]);
+    } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
       setSafeAccountOptions(filteredSafekeepingAccounts);
+      setEmrgoSelected(false);
     } else {
       setSafeAccountOptions(safeekingAccountList);
+      setEmrgoSelected(false);
     }
     dispatch(reportsActionCreators.doResetSecuritiesTransactions());
   };
@@ -213,13 +218,8 @@ const SecuritiesTransactionsReportPage = () => {
       field: "securityShortName",
     },
     {
-      id: "issuerName",
-      title: t("Security Transactions.Headers.Issuer Name"),
-      field: "issuerName",
-    },
-    {
       id: "fromSecurityAccount",
-      title: t("Security Transactions.Headers.From Sec Acct"),
+      title: t("Security Transactions.Headers.To Safe Acct"),
       field: "fromSecurityAccount",
       exportConfig: { width: 8 },
     },
@@ -342,7 +342,8 @@ const SecuritiesTransactionsReportPage = () => {
                   disabled={(filters) => {
                     return (
                       (!filters.entity || !filters.safekeepingAccount) &&
-                      filters.entity?.value?.value !== "all"
+                      filters.entity?.value?.value !== "all" &&
+                      !isEmrgoSelected
                     );
                   }}
                 />

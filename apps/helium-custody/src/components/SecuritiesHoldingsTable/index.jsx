@@ -74,6 +74,7 @@ const SecuritiesHoldingsTable = ({
   const dispatch = useDispatch();
   const mtableLocalization = useMaterialTableLocalization();
   const [entityAddress, setEntityAddress] = useState(null);
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   const [isFetch, setIsFetch] = useState(false);
@@ -178,13 +179,20 @@ const SecuritiesHoldingsTable = ({
   };
 
   const handleEntityChange = (selectedEntity) => {
-    if (selectedEntity && selectedEntity.value !== "all") {
+    if (!selectedEntity) return;
+    console.log(selectedEntity);
+    if (selectedEntity.label === "Emrgo") {
+      setEmrgoSelected(true);
+      setSafeAccountOptions([]);
+    } else if (selectedEntity && selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
       setSafeAccountOptions(filteredSafekeepingAccounts);
+      setEmrgoSelected(false);
     } else {
       setSafeAccountOptions(safeekingAccountList);
+      setEmrgoSelected(false);
     }
   };
 
@@ -342,7 +350,8 @@ const SecuritiesHoldingsTable = ({
                   disabled={(filters) => {
                     return (
                       (!filters.entity || !filters.safekeepingAccount) &&
-                      filters.entity?.value?.value !== "all"
+                      filters.entity?.value?.value !== "all" &&
+                      !isEmrgoSelected
                     );
                   }}
                 />
