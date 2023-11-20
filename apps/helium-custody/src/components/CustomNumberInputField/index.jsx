@@ -3,9 +3,15 @@ import { NumericFormat } from "react-number-format";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 
-const CustomNumberInputField = ({ name, inputRef, onChange, decimalScale, ...rest }) => {
-  const { setFieldTouched } = useFormikContext();
-
+const CustomNumberInputField = ({
+  name,
+  inputRef,
+  onChange,
+  decimalScale,
+  useFormik = true,
+  ...rest
+}) => {
+  const formik = useFormikContext(); //Avoid page crush where component is used without formik
   return (
     <NumericFormat
       {...rest}
@@ -17,7 +23,7 @@ const CustomNumberInputField = ({ name, inputRef, onChange, decimalScale, ...res
             value: values.value,
           },
         });
-        setFieldTouched(name);
+        formik?.setFieldTouched(name);
       }}
       thousandSeparator
       isNumericString
