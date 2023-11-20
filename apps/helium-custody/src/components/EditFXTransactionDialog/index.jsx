@@ -44,6 +44,7 @@ import * as entitiesSelectors from "../../redux/selectors/entities";
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../utils/form";
 import CalculationField from "../CalculationField";
+import { addFXTransactionFormSchema } from "../../validationSchemas";
 
 const animatedComponents = makeAnimated();
 
@@ -323,7 +324,7 @@ const EditFXTransactionDialog = ({
           narrative: selectedRow.narrative,
           overrideFlag: selectedExchangeRate !== Number(selectedRow.rate),
         }}
-        // validationSchema={addFXTransactionFormSchema}
+        validationSchema={addFXTransactionFormSchema}
         enableReinitialize
         onSubmit={(values, actions) => {
           const requestPayload = {

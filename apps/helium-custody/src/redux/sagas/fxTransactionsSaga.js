@@ -27,12 +27,16 @@ function* addFxTransactions({ payload }) {
       requestPayload
     );
     const { data } = response;
-    yield put(fxTransactionsActionCreators.doAddFxTransactionsSuccess({ data }));
+    if (requestPayload.transactionId) {
+      yield put(fxTransactionsActionCreators.doAddFxTransactionsSuccess({ data }));
+      yield call(toast.success, data.message);
+    } else {
+      yield put(fxTransactionsActionCreators.doFetchFxTransactions(dateRange));
+    yield call(toast.success, 'Successfully Added Transaction');
+    }
     if (successCallback && data) {
       successCallback();
     }
-    yield put(fxTransactionsActionCreators.doFetchFxTransactions(dateRange));
-    yield call(toast.success, data.message);
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
