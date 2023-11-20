@@ -10,6 +10,7 @@ import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
+import DropdownFilterOld from "../../../components/FilterComponents/DropdownFilter";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../../../components/FilterComponents/ExportButtons";
 import FilterButton from "../../../components/FilterComponents/FilterButton";
@@ -69,6 +70,8 @@ const CashStatementReportPage = () => {
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const [isEmrgoSelected, setEmrgoSelected] = useState(false);
+  const [currentlySelectedSafekeeping, setCurrentlySelectedSafekeeping] = useState(null);
+  const [currentlySelectedCash, setCurrentlySelectedCash] = useState(null);
   const transactions = useSelector(reportsSelectors.selectCashTransactions);
   const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
   const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
@@ -151,6 +154,7 @@ const CashStatementReportPage = () => {
           };
         });
       setCashAccountOptions(cashAccountOptions);
+      setCurrentlySelectedCash(null);
       setSafeAccountOptions([]);
     } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
@@ -158,6 +162,9 @@ const CashStatementReportPage = () => {
       );
       setEmrgoSelected(false);
       setSafeAccountOptions(filteredSafekeepingAccounts);
+      setCurrentlySelectedCash(null);
+      setCurrentlySelectedSafekeeping(filteredSafekeepingAccounts[0]);
+      handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
     } else {
       setSafeAccountOptions(safeekingAccountList);
       setEmrgoSelected(false);
@@ -176,8 +183,10 @@ const CashStatementReportPage = () => {
         })
       );
       setCashAccountOptions(filteredCashAccounts);
+      setCurrentlySelectedCash(null);
     } else {
       setCashAccountOptions([]);
+      setCurrentlySelectedCash(null);
     }
 
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -264,7 +273,6 @@ const CashStatementReportPage = () => {
       // type: 'numeric',
     },
   ];
-  console.log(isEmrgoSelected);
   return (
     <Fragment>
       <PageTitle title={t("Cash Statement.Cash Statement")} />
@@ -302,10 +310,12 @@ const CashStatementReportPage = () => {
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter
+                <DropdownFilterOld
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={safekeepingAccountOptions || safeekingAccountList}
+                  currentlySelectedOption={currentlySelectedSafekeeping}
+                  setCurrentlySelectedOption={setCurrentlySelectedSafekeeping}
                   customOnChange={(selectedSafekeepingAccount) => {
                     handleSafekeepingAccountChange(selectedSafekeepingAccount);
                   }}
@@ -316,7 +326,13 @@ const CashStatementReportPage = () => {
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter name="account" label="Cash Account" options={cashAccountOptions} />
+                <DropdownFilterOld
+                  name="account"
+                  label="Cash Account"
+                  options={cashAccountOptions}
+                  currentlySelectedOption={currentlySelectedCash}
+                  setCurrentlySelectedOption={setCurrentlySelectedCash}
+                />
               </Grid>
 
               {/* <Grid item xs={12} lg={1} container></Grid> */}
@@ -361,7 +377,6 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
-            console.log("🚀 ~ file: index.jsx:328 ~ CashStatementReportPage ~ filters:", filters);
             const filteredData = filteredRows
               ?.filter((row) => {
                 //  Entry Date range Filter

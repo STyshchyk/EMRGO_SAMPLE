@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Select } from "@emrgo-frontend/shared-ui";
 import { selectStyles } from "@emrgo-frontend/theme";
 import Box from "@mui/material/Box";
@@ -37,7 +39,11 @@ const DropdownFilter = ({
     setCurrentlySelectedOption(newValue);
     setFilterValue(newValue, name, label, "dropdown");
   };
-
+  useEffect(() => {
+    if (currentlySelectedOption) setFilterValue(currentlySelectedOption, name, label, "dropdown");
+    //In order to update filter counter when value is autopopulated or deleted
+    else clearFilter();
+  }, [currentlySelectedOption]);
   return (
     <>
       <Grid container justifyContent="space-between" alignItems="flex-start">

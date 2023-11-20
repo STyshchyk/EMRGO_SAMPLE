@@ -10,6 +10,7 @@ import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
+import DropdownFilterOld from "../../../components/FilterComponents/DropdownFilter";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../../../components/FilterComponents/ExportButtons";
 import FilterButton from "../../../components/FilterComponents/FilterButton";
@@ -70,6 +71,8 @@ const CashStatementPage = () => {
   const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
   // console.log('🚀 ~ file: index.js ~ line 61 ~ CashStatementReportPage ~ transactions', transactions);
   const [transactionTypeValue, setTransactionTypeValue] = useState("all");
+  const [currentlySelectedSafekeeping, setCurrentlySelectedSafekeeping] = useState(null);
+  const [currentlySelectedCash, setCurrentlySelectedCash] = useState(null);
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   const [cashAccountOptions, setCashAccountOptions] = useState(null);
   const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
@@ -132,13 +135,33 @@ const CashStatementPage = () => {
   ];
 
   const handleEntityChange = (selectedEntity) => {
-    if (selectedEntity && selectedEntity.value !== "all") {
+    if (!selectedEntity) return;
+    if (selectedEntity.data?.entityName === "Emrgo") {
+      setEmrgoSelected(true);
+      const cashAccountOptions = cashAccounts
+        .filter((account) => account.group.entity.id === selectedEntity.value)
+        .map((cashAccount) => {
+          return {
+            data: cashAccount,
+            value: cashAccount.id,
+            label: `${cashAccount.currency.name} ( ${cashAccount.accountNo} )`,
+          };
+        });
+      setCashAccountOptions(cashAccountOptions);
+      setCurrentlySelectedCash(null);
+      setSafeAccountOptions([]);
+    } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
+      setEmrgoSelected(false);
       setSafeAccountOptions(filteredSafekeepingAccounts);
+      setCurrentlySelectedCash(null);
+      setCurrentlySelectedSafekeeping(filteredSafekeepingAccounts[0]);
+      handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
     } else {
       setSafeAccountOptions(safeekingAccountList);
+      setEmrgoSelected(false);
     }
 
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -154,8 +177,10 @@ const CashStatementPage = () => {
         })
       );
       setCashAccountOptions(filteredCashAccounts);
+      setCurrentlySelectedCash(null);
     } else {
       setCashAccountOptions([]);
+      setCurrentlySelectedCash(null);
     }
 
     dispatch(reportsActionCreators.doResetCashTransactions());
@@ -279,10 +304,12 @@ const CashStatementPage = () => {
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter
+                <DropdownFilterOld
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={safekeepingAccountOptions || safeekingAccountList}
+                  currentlySelectedOption={currentlySelectedSafekeeping}
+                  setCurrentlySelectedOption={setCurrentlySelectedSafekeeping}
                   customOnChange={(selectedSafekeepingAccount) => {
                     handleSafekeepingAccountChange(selectedSafekeepingAccount);
                   }}
@@ -293,7 +320,13 @@ const CashStatementPage = () => {
               </Grid>
 
               <Grid item xs={12} md={6} lg={3} container>
-                <DropdownFilter name="account" label="Cash Account" options={cashAccountOptions} />
+                <DropdownFilterOld
+                  name="account"
+                  label="Cash Account"
+                  options={cashAccountOptions}
+                  currentlySelectedOption={currentlySelectedCash}
+                  setCurrentlySelectedOption={setCurrentlySelectedCash}
+                />
               </Grid>
 
               {/* <Grid item xs={12} lg={1} container></Grid> */}
