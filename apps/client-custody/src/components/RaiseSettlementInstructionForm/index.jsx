@@ -22,6 +22,7 @@ import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecu
 import * as reportsSelectors from "../../redux/selectors/reports";
 import useIsProduction from "../../utils/useIsProduction";
 import { addSettlementInstructionFormSchema } from "../../validationSchemas";
+import CustomNumberInputField from "../CustomNumberInputField";
 import CustomTextField from "../CustomTextField";
 import RealtimeSecSearchDialog from "../RealtimeSecSearchDialog";
 
@@ -60,63 +61,6 @@ const baseSelectProps = {
   styles: baseSelectStyles,
 };
 
-const CustomCurrencyInputField = forwardRef((props, ref) => {
-  const { onChange, decimals, ...other } = props;
-  const { setFieldTouched } = useFormikContext();
-
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-        setFieldTouched(props.name);
-      }}
-      thousandSeparator
-      decimalScale={decimals}
-    />
-  );
-});
-
-CustomCurrencyInputField.propTypes = {
-  inputRef: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const CustomNumberInputField = forwardRef((props, ref) => {
-  const { onChange, decimals = 0, ...other } = props;
-  const { setFieldTouched } = useFormikContext();
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-        setFieldTouched(props.name);
-      }}
-      thousandSeparator
-      decimalScale={decimals}
-    />
-  );
-});
-
-CustomNumberInputField.propTypes = {
-  inputRef: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
 const DependentAmountField = (props) => {
   const { values, touched, setFieldValue } = useFormikContext();
   const { valueA, valueB } = props;
@@ -147,11 +91,8 @@ const DependentAmountField = (props) => {
         !values.externalSecuritySelectOption?.value?.currencyName ||
         ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
       }
-      inputProps={{
-        decimals: props.decimal ?? "2",
-      }}
       InputProps={{
-        inputComponent: CustomCurrencyInputField,
+        inputComponent: CustomNumberInputField,
         endAdornment: (
           <InputAdornment disableTypography position="end">
             <span
@@ -207,10 +148,12 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
   const isEquityType =
     formikValues.externalSecuritySelectOption?.value?.assetTypeName?.key === "equity";
 
+  console.log(formikValues);
+
   const requestPayload = {
     ...formikValues,
     commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
-    portfolio_id: formikValues.portfolio_id.securitiesAccount.portfolioId,
+    portfolio_id: formikValues.portfolio_id?.id,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
     quantity: parseFloat(formikValues.quantity, 10),
@@ -237,6 +180,8 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     entityGroup: undefined,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
   };
+
+  console.log(requestPayload);
 
   if (isFreeOfPayment) {
     requestPayload.price = undefined;
@@ -357,6 +302,7 @@ const RaiseSettlementInstructionForm = ({
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
   const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
+  console.log(currentSafeAccounts);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityType = currentEntityGroup?.entityType;
   const isWethaqUser = currentEntityType === "EMRGO_SERVICES";
@@ -371,6 +317,7 @@ const RaiseSettlementInstructionForm = ({
     dropdownOptions?.settlementInstructionType
   );
   const activeSafeAccounts = currentSafeAccounts.filter((account) => account.status === "Active");
+  console.log(activeSafeAccounts[0]);
   /*
               Note that if Settlement Type is set to DFOP or RFOP then
               the Price and Settlement Amount fields should be greyed out and not populated by the user
@@ -384,7 +331,7 @@ const RaiseSettlementInstructionForm = ({
     >
       {({ values, setFieldValue, resetForm }) => {
         let curSetType = values.externalSecuritySelectOption?.value?.assetTypeName?.key;
-        let isEqutyType = curSetType === "equity";
+        let isEquityType = curSetType === "equity";
         let settlementType = values.settlementTypeSelectOption?.label ?? "";
 
         return (
@@ -463,7 +410,9 @@ const RaiseSettlementInstructionForm = ({
                     `${option.name} | ${option.securitiesAccount.accountNumber}`
                   }
                   getOptionValue={(option) => option}
+                  value={values?.portfolio_id}
                   onChange={(newValue) => {
+                    console.log(newValue);
                     setFieldValue("portfolio_id", newValue);
                   }}
                 />
@@ -609,13 +558,11 @@ const RaiseSettlementInstructionForm = ({
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                   }}
-                  inputProps={{
-                    decimals: "6",
-                  }}
+                  inputProps={{ decimalScale: 6 }}
                 />
               </InlineFormField>
 
-              <InlineFormField label={`Price ${isEqutyType ? "" : "%"}`} name={"price"}>
+              <InlineFormField label={`Price ${isEquityType ? "" : "%"}`} name={"price"}>
                 <Field
                   component={CustomTextField}
                   disabled={
@@ -628,7 +575,7 @@ const RaiseSettlementInstructionForm = ({
                   value={values.price}
                   variant="filled"
                   InputProps={{
-                    inputComponent: CustomCurrencyInputField,
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
                       <InputAdornment disableTypography position="end">
                         <span
@@ -643,7 +590,7 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: 6,
+                    decimalScale: 6,
                   }}
                 />
               </InlineFormField>
@@ -655,14 +602,14 @@ const RaiseSettlementInstructionForm = ({
                   valueA={{ key: "quantity", value: values?.quantity }}
                   valueB={{ key: "price", value: values?.price }}
                   calculatedValue={
-                    isEqutyType
+                    isEquityType
                       ? currencyRenderer(values.price * Number(values?.quantity))
                       : currencyRenderer((values.price / 100) * Number(values?.quantity))
                   }
                 />
               </InlineFormField>
 
-              <InlineFormField label={isEqutyType ? "Commission / Charges" : "Accrued Interest"}>
+              <InlineFormField label={isEquityType ? "Commission / Charges" : "Accrued Interest"}>
                 <Field
                   fullWidth
                   component={CustomTextField}
@@ -675,7 +622,7 @@ const RaiseSettlementInstructionForm = ({
                     ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
                   }
                   InputProps={{
-                    inputComponent: CustomCurrencyInputField,
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
                       <InputAdornment disableTypography position="end">
                         <span
@@ -690,7 +637,7 @@ const RaiseSettlementInstructionForm = ({
                     ),
                   }}
                   inputProps={{
-                    decimals: 2,
+                    decimalScale: isEquityType ? 0 : undefined,
                   }}
                 />
               </InlineFormField>
@@ -702,20 +649,11 @@ const RaiseSettlementInstructionForm = ({
                   valueA={{ key: "principalAmount", value: values?.principalAmount }}
                   valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
                   calculatedValue={
-                    isEqutyType
+                    isEquityType
                       ? settlementType === "DVP"
-                        ? currencyRenderer(
-                            Number(values?.principalAmount.split(",").join("")) -
-                              Number(values?.accruedInterest.split(",").join(""))
-                          )
-                        : currencyRenderer(
-                            Number(values?.principalAmount.split(",").join("")) +
-                              Number(values?.accruedInterest.split(",").join(""))
-                          )
-                      : currencyRenderer(
-                          Number(values?.principalAmount.split(",").join("")) +
-                            Number(values?.accruedInterest.split(",").join(""))
-                        )
+                        ? Number(values?.principalAmount) - Number(values?.accruedInterest)
+                        : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                      : Number(values?.principalAmount) + Number(values?.accruedInterest)
                   }
                 />
               </InlineFormField>
