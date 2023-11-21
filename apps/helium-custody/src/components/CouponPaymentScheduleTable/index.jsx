@@ -13,7 +13,6 @@ import { currencyRenderer } from "../../constants/renderers";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import ImportCouponPaymentScheduleDataDialog from "./ImportCouponPaymentScheduleDataDialog";
 
@@ -130,19 +129,24 @@ const CouponPaymentScheduleTable = ({
   const handleCSVExportClick = (data) => {
     const generatedAtTimestamp = new Date().toISOString();
     const csvFileName = `coupon_payment_schedule_${generatedAtTimestamp}.csv`;
-
-    const transformed = data.map(({ calenderDate, notional }) => ({
+    console.log(data);
+    const transformed = data.map(({ calenderDate, notional, couponAllocationStatus }) => ({
       date: new Date(calenderDate).toLocaleDateString(),
       notionalAmount: currencyRenderer(notional, 6),
       couponRate: currencyRenderer(hardcodedCouponRate, 6),
+      couponAllocationStatus,
     }));
 
-    const listOfColumnNames = ["date", "notional_amount", "coupon_rate"];
-    const listOfRows = transformed.map(({ date, notionalAmount, couponRate }) => [
-      [date],
-      [notionalAmount],
-      [couponRate],
-    ]);
+    const listOfColumnNames = ["date", "notional_amount", "coupon_rate", "status"];
+    console.log(listOfColumnNames);
+    const listOfRows = transformed.map(
+      ({ date, notionalAmount, couponRate, couponAllocationStatus }) => [
+        [date],
+        [notionalAmount],
+        [couponRate],
+        [couponAllocationStatus],
+      ]
+    );
 
     const csvBuilder = new CsvBuilder(csvFileName)
       .setColumns(listOfColumnNames)
