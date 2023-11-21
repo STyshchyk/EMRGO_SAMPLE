@@ -155,6 +155,7 @@ const CashStatementReportPage = () => {
         });
       setCashAccountOptions(cashAccountOptions);
       setCurrentlySelectedCash(null);
+      setCurrentlySelectedSafekeeping(null);
       setSafeAccountOptions([]);
     } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
