@@ -43,7 +43,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     instDescription: i?.instDescription ?? FALLBACK_VALUE,
     isin: i.externalSecurity?.isin ?? FALLBACK_VALUE,
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
-    portfolioId: i.portfolioId ?? FALLBACK_VALUE,
+    portfolioId: i.portfolio.id ?? FALLBACK_VALUE,
     portfolio: i.portfolio.name,
     securityAccount: i.portfolio.accountNumber,
     positionType: i?.positionType ?? FALLBACK_VALUE,
@@ -93,8 +93,6 @@ const SecuritiesHoldingsTable = ({
     ? isFetchingTradeDatedSecuritiesHoldings
     : isFetchingSecuritiesHoldings;
 
-  console.log(securitiesAccounts);
-
   const entityList = [
     ...securitiesAccounts.map((i) => ({
       label: i.group?.entity?.corporateEntityName,
@@ -107,12 +105,11 @@ const SecuritiesHoldingsTable = ({
   if (Array.isArray(securitiesAccounts) && securitiesAccounts.length > 1) {
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
-
-  const safeekingAccountList = safekeepingAccounts
-    ? safekeepingAccounts.map((i) => ({
-        label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
-        value: i.id,
-        entityId: i.entity_id,
+  const safeekingAccountList = securitiesAccounts
+    ? securitiesAccounts.map((i) => ({
+        label: `${i.portfolio?.name} (${i?.accountNumber})`,
+        value: i.portfolioId,
+        entityId: i.portfolio.entity_id,
       }))
     : [];
 
@@ -180,7 +177,6 @@ const SecuritiesHoldingsTable = ({
 
   const handleEntityChange = (selectedEntity) => {
     if (!selectedEntity) return;
-    console.log(selectedEntity);
     if (selectedEntity.label === "Emrgo") {
       setEmrgoSelected(true);
       setSafeAccountOptions([]);
@@ -418,9 +414,19 @@ const SecuritiesHoldingsTable = ({
                 return true;
               })
               .filter((row) => {
+                // Currency Filter
+                if (filters?.currency) {
+                  return row.currency === filters?.currency?.value?.value;
+                }
+                return true;
+              })
+              .filter((row) => {
                 // Position Type Filter
-                if (filters?.positionType) {
-                  return row.positionType === filters?.positionType?.value?.value;
+                if (
+                  filters?.entity?.value?.value === "all" &&
+                  !!filters?.safekeepingAccount?.value?.entityId
+                ) {
+                  return filters?.safekeepingAccount?.value?.value === row.portfolioId;
                 }
                 return true;
               });
