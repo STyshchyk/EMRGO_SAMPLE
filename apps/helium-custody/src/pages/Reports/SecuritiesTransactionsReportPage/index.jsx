@@ -170,7 +170,7 @@ const SecuritiesTransactionsReportPage = () => {
     const params = {
       fromDate: startDate ? startDate.toISOString() : moment([1970, 1, 1]).toISOString(),
       toDate: endDate ? endDate.toISOString() : moment().endOf("day").toISOString(),
-      portfolio_id: safekeepingAccount?.value?.value,
+      portfolio_id: entity?.value?.value === "all" ? undefined : safekeepingAccount?.value?.value,
       entityId: entity?.value?.value,
     };
 
