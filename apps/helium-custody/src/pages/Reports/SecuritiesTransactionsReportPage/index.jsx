@@ -84,12 +84,12 @@ const SecuritiesTransactionsReportPage = () => {
   if (Array.isArray(securitiesAccounts) && securitiesAccounts.length > 1) {
     entityOptionsList.unshift(ALL_ENTITIES_OPTION);
   }
-
   const safeekingAccountList = [
-    ...safekeepingAccounts.map((i) => ({
-      label: `${i.name} (${i?.securitiesAccount?.accountNumber})`,
-      value: i.id,
-      entityId: i.entity_id,
+    ...securitiesAccounts.map((i) => ({
+      label: `${i.portfolio?.name} (${i?.accountNumber})`,
+      value: i.portfolioId,
+      entityId: i.portfolio.entity_id,
+      name: i.accountNumber,
     })),
   ];
 
@@ -270,7 +270,6 @@ const SecuritiesTransactionsReportPage = () => {
       exportConfig: { render: (rowData) => reportDateRenderer(rowData.settleDate) },
     },
   ];
-
   const generatedTableData = transactions?.map((transaction) => {
     return generateSecuritiesTransactionsTableRowData(transaction);
   });
@@ -365,7 +364,7 @@ const SecuritiesTransactionsReportPage = () => {
               <FilterConsumer>
                 {({ filterColumns, filters }) => {
                   const filteredData = generatedTableData
-                    ?.filter((row, i) => {
+                    .filter((row, i) => {
                       // Settlement Date range Filter
                       if (
                         filters?.settlementDateRange?.value?.startDate &&
@@ -379,15 +378,25 @@ const SecuritiesTransactionsReportPage = () => {
                       }
                       return true;
                     })
-                    ?.filter((row) => {
+                    .filter((row) => {
                       if (filters?.currency) {
                         return row.currency === filters?.currency?.value?.label;
                       }
                       return true;
                     })
-                    ?.filter((row) => {
+                    .filter((row) => {
                       if (filters?.security) {
                         return row.securityShortName === filters?.security?.value?.label;
+                      }
+                      return true;
+                    })
+                    .filter((row) => {
+                      // Position Type Filter
+                      if (
+                        filters?.entity?.value?.value === "all" &&
+                        !!filters?.safekeepingAccount?.value?.entityId
+                      ) {
+                        return filters?.safekeepingAccount?.value?.name === row.fromSecurityAccount;
                       }
                       return true;
                     });
