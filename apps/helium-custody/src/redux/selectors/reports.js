@@ -62,10 +62,17 @@ export const selectSecuritiesTransactions = createSelector(
   [selectSecuritiesTransactionsData],
   (transactionsData) => {
     // Is used to get a mutable array needed by material table
-    if (transactionsData) {
-      const finalData = [];
-      transactionsData.forEach((transaction) => {
-        finalData.push({ ...transaction });
+    if (transactionsData && Array.isArray(transactionsData)) {
+      let finalData = [];
+      finalData = transactionsData.map((transaction) => {
+        return {
+          ...transaction,
+          investorName:
+            ["DVP", "DFOP"].includes(transaction.settlementType.name) &&
+            transaction.investorName.includes("Emrgo")
+              ? transaction.issuerName
+              : transaction.investorName,
+        };
       });
       return finalData;
     }

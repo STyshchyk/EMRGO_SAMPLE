@@ -142,7 +142,7 @@ const SecuritiesTransactionsReportPage = () => {
       issuerName: i.issuerName ?? FALLBACK_VALUE,
       settlementType: i?.settlementType?.name ?? FALLBACK_VALUE,
       fromSecurityAccount: i.fromSecurityAccount,
-      investorName: i.investorName === "Emrgo" ? "Investor" : i.investorName,
+      investorName: i.investorName,
       toSecurityAccount: i.toSecurityAccount,
       netSettleAmount: convertNumberToIntlFormat(i.netSettleAmount, intlFormatOpts),
       price: i.price ? convertNumberToIntlFormat(i.price, intlFormatOpts) : FALLBACK_VALUE, // !Dev notes: externalSecurity object doesn't have this field
