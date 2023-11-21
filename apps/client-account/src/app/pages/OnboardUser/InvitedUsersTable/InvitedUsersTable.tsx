@@ -5,6 +5,7 @@ import {
   Table,
   TooltipButtonActions,
   TooltipButtonBox,
+  useUser,
 } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -26,23 +27,22 @@ const columnHelper = createColumnHelper<INewUser>();
 export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
   const { onArchiveUser, onCancelInvitation, onResendInvitation, onMakeAdmin, onRevokeAdmin } =
     ensureNotNull(useEntityManagementContext());
-
-  const soleAdminUser = (users:INewUser[])  =>{
-    let adminCount = 0; 
+  const { user } = useUser();
+  console.log("user", user);
+  const soleAdminUser = (users: INewUser[]) => {
+    let adminCount = 0;
     for (const user of users) {
       if (user.roles?.includes(UserRoles.superUser)) {
         adminCount++;
       }
-  
+
       if (adminCount > 1) {
         return false; // If more than one "admin" role is found
       }
     }
-  
-    return adminCount === 1; // there's only one admin among the users
-  }
 
-    
+    return adminCount === 1; // there's only one admin among the users
+  };
 
   const columns = [
     columnHelper.accessor("firstName", {
@@ -84,6 +84,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
         const status = row.original.invitationStatus?.toLowerCase() as TNewUserStatus;
         const roles = row.original.roles;
         const hasAdminRole = roles?.includes(UserRoles.superUser);
+        const allowRevoke = row.original.email === user?.email;
 
         return (
           <ActionTooltip
@@ -93,7 +94,7 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   $disabled={status === UserStatus.onboarded}
                   onClick={() => {
                     // if(status === UserStatus.onboarded) return;
-                    onResendInvitation(id)
+                    onResendInvitation(id);
                   }}
                 >
                   Resend Invitation
@@ -104,7 +105,10 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                 >
                   Cancel Invitation
                 </TooltipButtonActions>
-                <TooltipButtonActions $disabled={hasAdminRole && soleAdminUser(users)} onClick={() => onArchiveUser(id)}>
+                <TooltipButtonActions
+                  $disabled={hasAdminRole && soleAdminUser(users)}
+                  onClick={() => onArchiveUser(id)}
+                >
                   Archive User
                 </TooltipButtonActions>
                 <TooltipButtonActions
@@ -114,7 +118,9 @@ export const InvitedUsersTable: FC<IInvitedUsersTableProps> = ({ users }) => {
                   Make Admin
                 </TooltipButtonActions>
                 <TooltipButtonActions
-                  $disabled={!roles?.includes(UserRoles.superUser) || soleAdminUser(users)}
+                  $disabled={
+                    !roles?.includes(UserRoles.superUser) || soleAdminUser(users) || allowRevoke
+                  }
                   onClick={() => onRevokeAdmin(id)}
                 >
                   Revoke Admin
