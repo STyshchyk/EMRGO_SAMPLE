@@ -21,6 +21,7 @@ const CustomNumberInputField = ({ name, inputRef, onChange, decimalScale, ...res
       }}
       thousandSeparator
       isNumericString
+      allowNegative={false}
       decimalScale={decimalScale || 2}
       fixedDecimalScale
     />
