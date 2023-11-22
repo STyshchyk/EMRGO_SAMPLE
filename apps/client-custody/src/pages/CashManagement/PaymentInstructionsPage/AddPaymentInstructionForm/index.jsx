@@ -51,13 +51,14 @@ const AddPaymentInstructionForm = ({
         )
       : allPaymentAccountOptions
   );
-
   return (
     <Formik
       initialValues={{
         ...initialValues,
         paymentAccount:
-          filteredPaymentAccountOptions.lenght !== 0 ? filteredPaymentAccountOptions[0] : null,
+          filteredPaymentAccountOptions.lenght !== 0
+            ? filteredPaymentAccountOptions.filter((account) => account.value.isDefault)[0]
+            : null,
       }}
       onSubmit={handleSubmit}
       // validationSchema={addExternalPaymentSchema}

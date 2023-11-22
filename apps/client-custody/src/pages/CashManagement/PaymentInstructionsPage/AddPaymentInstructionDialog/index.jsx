@@ -25,7 +25,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
     paymentAccount: null,
     valueDate: null,
     paymentAmount: "",
-    paymentDetails: null,
+    paymentDetails: "",
     transferPurpose: null,
   };
   const [initialValues, setInitialValues] = useState(initial);
