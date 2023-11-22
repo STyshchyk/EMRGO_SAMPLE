@@ -648,7 +648,7 @@ const SecurityTradesTable = ({
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={3}>
-                  <ExportButtons tableRef={tableRef} name="Securities Registration Report" />
+                  <ExportButtons tableRef={tableRef} name="‘Settlement Transaction Report" />
                 </Grid>
               </Grid>
             </TableFiltersWrapper>

@@ -2,7 +2,6 @@ import { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
-import { currencyRenderer } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -681,7 +680,7 @@ const SecurityTradesTable = ({
                 {showAllFilters && <Grid item xs={12} md={6} lg={3}></Grid>}
 
                 <Grid item xs={12} md={6} lg={3}>
-                  <ExportButtons tableRef={tableRef} name="Securities Registration Report" />
+                  <ExportButtons tableRef={tableRef} name="Settlement Transaction Report" />
                 </Grid>
               </Grid>
             </TableFiltersWrapper>
