@@ -33,6 +33,7 @@ const errorWaringMsg = {
     "Warning: Selected source account has insufficient balance for requested action",
   negativeBalance: "Warning: Selected source account has negative balance",
   similarAccountBalance: "Warning: Destination Account can not be same as Selected Account",
+  negativeTransferAmount: "Warning: Transfer amount can not be negative",
 };
 const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
@@ -229,10 +230,9 @@ const AddInternalTransferForm = ({
             return "";
           }
           const validatedAccoutType = validateAccountType(values.sourceAccount);
-          console.log(validatedAccoutType);
           const parsedtransferAmount = parseFloat(values.transferAmount, 10);
+          if (parsedtransferAmount < 0) return "negativeTransferAmount";
           const parsedAccountBalance = parseFloat(values.sourceAccount?.value?.accountBalance, 10);
-          if (parsedAccountBalance < 0 && !validatedAccoutType) return "negativeBalance";
           const difference = parsedAccountBalance - parsedtransferAmount;
 
           if (difference < 0 && !validatedAccoutType) {
