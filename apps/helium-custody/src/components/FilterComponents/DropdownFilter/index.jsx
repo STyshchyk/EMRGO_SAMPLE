@@ -40,10 +40,13 @@ const DropdownFilter = ({
     setFilterValue(newValue, name, label, "dropdown");
   };
   useEffect(() => {
-    if (currentlySelectedOption) setFilterValue(currentlySelectedOption, name, label, "dropdown");
     //In order to update filter counter when value is autopopulated or deleted
-    else clearFilter();
-  }, [currentlySelectedOption]);
+    if (currentlySelectedOption) {
+      setTimeout(() => {
+        setFilterValue(currentlySelectedOption, name, label, "dropdown");
+      }, 100);
+    } else clearFilter();
+  }, [currentlySelectedOption, name]);
   return (
     <>
       <Grid container justifyContent="space-between" alignItems="flex-start">
