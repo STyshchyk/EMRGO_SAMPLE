@@ -162,10 +162,11 @@ const CashStatementReportPage = () => {
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
       setEmrgoSelected(false);
-      setSafeAccountOptions(filteredSafekeepingAccounts);
       setCurrentlySelectedCash(null);
-      setCurrentlySelectedSafekeeping(filteredSafekeepingAccounts[0]);
-      handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
+      setSafeAccountOptions(filteredSafekeepingAccounts);
+      setTimeout(() => {
+        handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
+      });
     } else {
       setSafeAccountOptions(safeekingAccountList);
       setEmrgoSelected(false);
@@ -184,6 +185,7 @@ const CashStatementReportPage = () => {
         })
       );
       setCashAccountOptions(filteredCashAccounts);
+      setCurrentlySelectedSafekeeping(selectedSafekeepingAccount);
       setCurrentlySelectedCash(null);
     } else {
       setCashAccountOptions([]);
@@ -378,6 +380,7 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
+            console.log("filters", filters);
             const filteredData = filteredRows
               ?.filter((row) => {
                 //  Entry Date range Filter

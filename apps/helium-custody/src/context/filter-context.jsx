@@ -26,7 +26,7 @@ export const FilterProvider = ({ children, tableKey }) => {
   );
 
   const tableConfig = tableConfigData ? JSON.parse(tableConfigData.value) : null;
-  
+
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   useWethaqAPIParams({
     currentGroupId: currentEntityGroup?.id,

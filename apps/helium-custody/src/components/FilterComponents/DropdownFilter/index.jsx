@@ -25,32 +25,27 @@ const DropdownFilter = ({
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
   const filterContext = useFilters();
-  const { setFilterValue, clearFilterValue } = filterContext;
 
-  const clearFilter = () => {
+  const clearFilter = (name) => {
     setCurrentlySelectedOption(null);
     if (setClearDisabled) setClearDisabled(false);
     if (setCustomClear) setCustomClear();
 
-    clearFilterValue(name);
+    filterContext.clearFilterValue(name);
   };
 
   const handleChange = (newValue) => {
     setCurrentlySelectedOption(newValue);
-    setFilterValue(newValue, name, label, "dropdown");
+    filterContext.setFilterValue(newValue, name, label, "dropdown");
   };
   useEffect(() => {
     //In order to update filter counter when value is autopopulated or deleted
     if (currentlySelectedOption) {
-      setTimeout(() => {
-        setFilterValue(currentlySelectedOption, name, label, "dropdown");
-      }, 100);
+      filterContext.setFilterValue(currentlySelectedOption, name, label, "dropdown");
     } else {
-      setTimeout(() => {
-        clearFilter();
-      }, 100);
+      filterContext.clearFilterValue(name);
     }
-  }, [currentlySelectedOption, name]);
+  }, [currentlySelectedOption?.label]);
   return (
     <>
       <Grid container justifyContent="space-between" alignItems="flex-start">
@@ -58,7 +53,7 @@ const DropdownFilter = ({
           {label}
         </Typography>
 
-        <ButtonBase onClick={() => clearFilter()}>
+        <ButtonBase onClick={() => clearFilter(name)}>
           <Typography variant="caption">Clear</Typography>
         </ButtonBase>
       </Grid>
@@ -75,7 +70,7 @@ const DropdownFilter = ({
           value={currentlySelectedOption}
           onChange={(opt) => {
             handleChange(opt);
-            customOnChange(opt, setFilterValue);
+            customOnChange(opt, filterContext.setFilterValue);
           }}
           isDisabled={isDisabled}
         />

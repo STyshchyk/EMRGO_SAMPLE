@@ -157,8 +157,9 @@ const CashStatementPage = () => {
       setEmrgoSelected(false);
       setSafeAccountOptions(filteredSafekeepingAccounts);
       setCurrentlySelectedCash(null);
-      setCurrentlySelectedSafekeeping(filteredSafekeepingAccounts[0]);
-      handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
+      setTimeout(() => {
+        handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
+      });
     } else {
       setSafeAccountOptions(safeekingAccountList);
       setEmrgoSelected(false);
@@ -177,6 +178,7 @@ const CashStatementPage = () => {
         })
       );
       setCashAccountOptions(filteredCashAccounts);
+      setCurrentlySelectedSafekeeping(selectedSafekeepingAccount);
       setCurrentlySelectedCash(null);
     } else {
       setCashAccountOptions([]);
