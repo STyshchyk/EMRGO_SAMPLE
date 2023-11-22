@@ -45,7 +45,11 @@ const DropdownFilter = ({
       setTimeout(() => {
         setFilterValue(currentlySelectedOption, name, label, "dropdown");
       }, 100);
-    } else clearFilter();
+    } else {
+      setTimeout(() => {
+        clearFilter();
+      }, 100);
+    }
   }, [currentlySelectedOption, name]);
   return (
     <>
