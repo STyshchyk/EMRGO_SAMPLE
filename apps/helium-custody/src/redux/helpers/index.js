@@ -4,7 +4,7 @@ export const extractErrorMessage = (error) => {
   let errorMessage = null;
 
   if (error.response) {
-    errorMessage = error.response?.data?.message;
+    errorMessage = error.response?.data?.message || error.response?.data?.status;
   } else {
     errorMessage = error?.message;
   }
