@@ -1,33 +1,23 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import makeAnimated from "react-select/animated";
 
-// import { useNavigate } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import ButtonBase from "@mui/material/ButtonBase";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { CsvBuilder } from "filefy";
 import { Formik } from "formik";
 import moment from "moment";
 import v from "voca";
 
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
+import DropdownFilterSelection from "../../../components/FilterComponents/DropdownFilter";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilterUpdated";
+import ExportButtons from "../../../components/FilterComponents/ExportButtons";
+import FilterButton from "../../../components/FilterComponents/FilterButton";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
-import ExportTableContent from "../../../components/PDFExporter/ExportTableContent";
-import ReportingTablePDFExporter from "../../../components/ReportingTablePDFExporter";
-// import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
-import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
@@ -51,22 +41,16 @@ const intlFormatOpts = {
   maximumFractionDigits: 6,
 };
 
-const animatedComponents = makeAnimated();
-
 const SecuritiesTransactionsReportPage = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const tableRef = useRef();
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports", "blotter"]);
-  const childRef = useRef();
 
-  const [isAllEntitiesOptionSelected, setIsAllEntitiesOptionSelected] = useState(false);
+  const [currentlySelectedSecurityAccount, setCurrentlySelectedSecurityAccount] = useState(null);
+
   const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
   // selectors
-  const userFullName = useSelector(authSelectors.selectUserFullName);
-  const currentEntityType = useSelector(authSelectors.selectCurrentEntityType);
-  const currentCorporateEntityName = useSelector(authSelectors.selectCurrentCorporateEntityName);
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
   const currentEntityGroupId = useSelector(authSelectors.selectCurrentEntityGroupId);
   const transactions = useSelector(reportsSelectors.selectSecuritiesTransactions);
@@ -74,40 +58,12 @@ const SecuritiesTransactionsReportPage = () => {
 
   const currentEntityGroupID = currentEntityGroup?.id;
 
-  // const entities = useSelector(authSelectors.selectOwnEntityNames);
-
   useWethaqAPIParams({
     currentGroupId: currentEntityGroupID,
   });
 
   const rows = transactions || [];
   let filteredRows = [];
-  console.log(filteredRows, "rows");
-  let exportFilters = [];
-
-  const getRowsForCSV = () => {
-    const boxes = [];
-    filteredRows.forEach((row) => {
-      boxes.push([
-        row.tradeDate ? dateFormatter(row.settlementInsTradeDate, DEFAULT_DATE_FORMAT) : "",
-        row.wsn || FALLBACK_VALUE,
-        row.externalSecurity?.isin || "",
-        row?.externalSecurity?.shortName || "",
-        row.issuerName || "",
-        row.fromSecurityAccount || "",
-        row.investorName || "",
-        row.toSecurityAccount || "",
-        row?.settlementType?.name || "",
-        row?.netSettleAmount ? convertNumberToIntlFormat(row.netSettleAmount, intlFormatOpts) : "", // amount of sec. settled
-        // row.instDescription || "",
-        convertNumberToIntlFormat(row.price, intlFormatOpts) || "",
-        row?.settlementInsSettlementDate
-          ? dateFormatter(row?.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
-          : "",
-      ]);
-    });
-    return boxes;
-  };
 
   const getEntityAndAccounts = (accs) => {
     const entityOpts = [];
@@ -175,8 +131,6 @@ const SecuritiesTransactionsReportPage = () => {
     original: account,
   }));
 
-  // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
-
   const generateSecuritiesTransactionsTableRowData = (i) => {
     return {
       tradeDate: i?.settlementInsTradeDate,
@@ -208,91 +162,6 @@ const SecuritiesTransactionsReportPage = () => {
     return null;
   };
 
-  const headCells = [
-    {
-      id: "tradeDate",
-      title: t("Security Transactions.Headers.Trade Date"),
-      field: "tradeDate",
-      // render: (rowData) => reportDateRenderer(rowData?.tradeDate),
-      render: (rowData) =>
-        rowData?.tradeDate ? dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT) : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
-    },
-    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn", defaultHidden: true },
-    {
-      id: "isin",
-      title: t("Security Transactions.Headers.ISIN"),
-      field: "isin",
-      exportConfig: { render: (rowData) => rowData?.externalSecurity?.isin },
-    },
-    {
-      id: "security",
-      title: t("Securities Holdings.Headers.Security"),
-      field: "securityShortName",
-      exportConfig: { render: (rowData) => rowData?.externalSecurity?.shortName },
-    },
-    {
-      id: "settlementType",
-      title: t("Security Transactions.Headers.Settlement Type"),
-      field: "settlementType",
-      exportConfig: { render: (rowData) => rowData?.settlementType?.name },
-    },
-    // {
-    //   id: "issuerName",
-    //   title: t("Security Transactions.Headers.Issuer Name"),
-    //   field: "issuerName",
-    // },
-    // {
-    //   id: "fromSecurityAccount",
-    //   title: t("Security Transactions.Headers.From Sec Acct"),
-    //   field: "fromSecurityAccount",
-    //   exportConfig: { width: 8 },
-    // },
-    // {
-    //   id: "investorName",
-    //   title: t("Security Transactions.Headers.Investor Name"),
-    //   field: "investorName",
-    // },
-    // {
-    //   id: "toSecurityAccount",
-    //   title: t("Security Transactions.Headers.To Sec Acct"),
-    //   field: "toSecurityAccount",
-    //   exportConfig: { width: 8 },
-    // },
-    {
-      id: "netSettleAmount",
-      title: t("Security Transactions.Headers.Net Settle Amt"),
-      field: "netSettleAmount",
-      type: "numeric",
-      exportConfig: {
-        render: (rowData) => convertNumberToIntlFormat(rowData.netSettleAmount, intlFormatOpts),
-        align: "right",
-      },
-    },
-    // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
-    {
-      id: "price",
-      title: t("Security Transactions.Headers.Price"),
-      field: "price",
-      type: "numeric",
-      exportConfig: {
-        render: (rowData) => convertNumberToIntlFormat(rowData.price, intlFormatOpts),
-        align: "right",
-        width: 5,
-      },
-    },
-    {
-      id: "settleDate",
-      title: t("Security Transactions.Headers.Settle Date"),
-      field: "settleDate",
-      render: (rowData) =>
-        rowData?.settlementInsSettlementDate
-          ? dateFormatter(rowData.settlementInsSettlementDate, DEFAULT_DATE_TIME_FORMAT)
-          : "--",
-      exportConfig: { render: (rowData) => dateRenderer(rowData?.settlementInsSettlementDate) },
-    },
-  ];
-
   const columns = [
     {
       id: "tradeDate",
@@ -300,8 +169,10 @@ const SecuritiesTransactionsReportPage = () => {
       field: "tradeDate",
       render: (rowData) =>
         rowData?.tradeDate ? dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT) : "--",
+      exportConfig: {
+        render: (rowData) => dateFormatter(rowData.tradeDate, DEFAULT_DATE_FORMAT),
+      },
     },
-    // { id: 'entity', title: t('Security Transactions.Headers.Entity'), field: 'entity' },
     { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn", defaultHidden: true },
     {
       id: "isin",
@@ -313,26 +184,6 @@ const SecuritiesTransactionsReportPage = () => {
       title: t("Securities Holdings.Headers.Security"),
       field: "securityShortName",
     },
-    // {
-    //   id: "issuerName",
-    //   title: t("Security Transactions.Headers.Issuer Name"),
-    //   field: "issuerName",
-    // },
-    // {
-    //   id: "fromSecurityAccount",
-    //   title: t("Security Transactions.Headers.From Sec Acct"),
-    //   field: "fromSecurityAccount",
-    // },
-    // {
-    //   id: "investorName",
-    //   title: t("Security Transactions.Headers.Investor Name"),
-    //   field: "investorName",
-    // },
-    // {
-    //   id: "toSecurityAccount",
-    //   title: t("Security Transactions.Headers.To Sec Acct"),
-    //   field: "toSecurityAccount",
-    // },
     {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
@@ -342,33 +193,41 @@ const SecuritiesTransactionsReportPage = () => {
       id: "netSettleAmount",
       title: t("Security Transactions.Headers.Net Settle Amt"),
       field: "netSettleAmount",
+      type: "numeric",
+      exportConfig: {
+        align: "right",
+      },
     },
-    // { id: 'instDescription', title: t('Security Transactions.Headers.Inst Description'), field: 'instDescription' },
     {
       id: "price",
       title: t("Security Transactions.Headers.Price"),
       field: "price",
+      type: "numeric",
+      exportConfig: {
+        align: "right",
+      },
     },
     {
       id: "settleDate",
       title: t("Security Transactions.Headers.Settle Date"),
       field: "settleDate",
-      // render: (rowData) => (rowData?.settleDate ? dateRenderer(rowData?.settleDate) : null),
       render: (rowData) =>
         rowData?.settleDate ? dateFormatter(rowData.settleDate, DEFAULT_DATE_TIME_FORMAT) : "--",
+      exportConfig: {
+        render: (rowData) => dateFormatter(rowData?.settleDate, DEFAULT_DATE_TIME_FORMAT),
+      },
     },
   ];
+
+  useEffect(() => {
+    if (filteredSecurityAccounts.length === 1) {
+      setCurrentlySelectedSecurityAccount(() => filteredSecurityAccounts[0]);
+    }
+  }, [accounts]);
 
   return (
     <Fragment>
       <PageTitle title={t("Security Transactions.Security Transactions")} />
-      {/* <RouteLeavingGuard
-        when={transactions?.length > 0}
-        title={t("Leave Guard.Title")}
-        message={t("Leave Guard.Message")}
-        navigate={(path) => navigate(path)}
-        shouldBlockNavigation={() => true}
-      /> */}
       <FilterProvider tableKey="security_transactions_report">
         <div
           style={{
@@ -444,142 +303,11 @@ const SecuritiesTransactionsReportPage = () => {
               //   return returnValue;
               // });
 
-              exportFilters = [
-                {
-                  label: "Export Date",
-                  value: reportDateRenderer(),
-                },
-                {
-                  label: "Generated By",
-                  value: `${userFullName} - ${v.capitalize(
-                    currentEntityType || "N.A"
-                  )}, ${currentCorporateEntityName}`,
-                },
-                {
-                  label: "Entity",
-                  value: values?.entity?.label,
-                },
-                {
-                  label: "Security Account",
-                  value: values?.securityAccount?.label,
-                },
-                {
-                  label: "Security",
-                  value: values?.security?.label ?? null,
-                },
-                {
-                  label: "Account Name",
-                  // value: ` ${
-                  //   values?.securityAccount?.label ? `${values?.securityAccount?.label} |` : "N.A"
-                  // }  ${v.capitalize(values?.securityAccount?.data.original.type || "N.A") ?? null}`,
-                },
-                {
-                  label: "Currency",
-                  value: values?.currency?.label ?? null,
-                },
-                {
-                  label: "Start Date",
-                  value: values?.startDate?.format("DD/MM/YYYY") ?? null,
-                },
-                {
-                  label: "End Date",
-                  value: values?.endDate?.format("DD/MM/YYYY") ?? null,
-                },
-                // {
-                //   label: "Address",
-                //   value: values?.securityAccount?.data?.original
-                //     ? formatAddress(values.securityAccount?.data?.original?.group?.addresses)
-                //     : null,
-                // },
-              ];
+              const handleFilter = (filters) => {
+                const { securityAccount: selectedSecurityAccount } = filters;
 
-              const filteredExportFilters = (fields) => fields.filter((v) => !!v.value);
-
-              const clearFilter = (key) => {
-                switch (key) {
-                  case "range":
-                    setFieldValue("startDate", null, false);
-                    setFieldValue("endDate", null, false);
-                    dispatch(reportsActionCreators.doResetSecuritiesTransactions());
-                    break;
-                  case "entity":
-                  case "securityAccount":
-                    setIsAllEntitiesOptionSelected(false);
-                    setFieldValue("entity", null, false);
-                    setFieldValue("securityAccount", null, false);
-                    setFieldValue("security", null, false);
-                    setFieldValue("currency", null, false);
-                    dispatch(reportsActionCreators.doResetSecuritiesTransactions());
-
-                    break;
-                  case "security":
-                    setFieldValue("security", null, false);
-                    break;
-                  case "currency":
-                    setFieldValue("currency", null, false);
-                    break;
-                  default:
-                  // code block
-                }
-              };
-
-              const exportCSV = () => {
-                const tradeColumnName = t("Security Transactions.Headers.Trade Date");
-                const wsnColumnName = t("Security Transactions.Headers.WSN");
-                const isinColumnName = "ISIN";
-                const securityColumnName = "Security";
-                const issuerNameColumnName = t("Security Transactions.Headers.Issuer Name");
-                const settlementTypeColumnName = t("Security Transactions.Headers.Settlement Type");
-                const fromSecAcctColumnName = t("Security Transactions.Headers.From Sec Acct");
-                const investorNameColumnName = t("Security Transactions.Headers.Investor Name");
-                const toSecAccountColumnName = t("Security Transactions.Headers.To Sec Acct");
-                const netSettleAmtColumnName = t("Security Transactions.Headers.Net Settle Amt");
-                const InstDescriptionColumnName = t(
-                  "Security Transactions.Headers.Inst Description"
-                );
-                const priceDateColumnName = t("Security Transactions.Headers.Price");
-                const settleDateColumnName = t("Security Transactions.Headers.Settle Date");
-
-                const csv = new CsvBuilder("security_transactions.csv");
-
-                csv.addRow(["Filters"]);
-
-                exportFilters.map((filter) => {
-                  csv.addRow([filter.label, filter.value]);
-                  return false;
-                });
-
-                csv.addRow([""]).addRow([""]);
-
-                csv
-                  .addRow([
-                    tradeColumnName,
-                    wsnColumnName,
-                    isinColumnName,
-                    securityColumnName,
-                    issuerNameColumnName,
-                    fromSecAcctColumnName,
-                    investorNameColumnName,
-                    toSecAccountColumnName,
-                    settlementTypeColumnName,
-                    netSettleAmtColumnName,
-                    // InstDescriptionColumnName,
-                    priceDateColumnName,
-                    settleDateColumnName,
-                  ])
-                  .addRows(getRowsForCSV());
-
-                csv.exportFile();
-              };
-
-              const exportPDF = () => {
-                childRef.current.exportFile();
-              };
-
-              const handleFilter = () => {
                 let qs = "";
                 if (values.startDate) {
-                  //Fix dates
                   qs += `fromDate=${values.startDate.toISOString()}&`;
                 } else {
                   qs += `fromDate=${moment([1970, 1, 1]).toISOString()}&`;
@@ -589,53 +317,11 @@ const SecuritiesTransactionsReportPage = () => {
                 } else {
                   qs += `toDate=${moment().endOf("day").toISOString()}&`;
                 }
-                if (values.entity) {
-                  // qs += `entityId=${values.entity.data.id}&`;
-                }
                 if (values.securityAccount) {
-                  qs += `portfolio_id=${values.securityAccount.original.securitiesAccount.portfolioId}&`;
+                  qs += `portfolio_id=${selectedSecurityAccount?.value?.original.securitiesAccount.portfolioId}&`;
                 }
 
                 dispatch(reportsActionCreators.doFetchSecuritiesTransactions({ qs }));
-              };
-
-              const handleClear = () => {
-                clearFilter("range");
-                clearFilter("entity");
-                clearFilter("currency");
-                dispatch(reportsActionCreators.doResetSecuritiesTransactions());
-              };
-
-              const entityChange = (selectedEntity) => {
-                setFieldValue("entity", selectedEntity);
-                setFieldValue("security", null);
-
-                // const tempSecurityAccountList = securityAccountOpts
-                //   .filter((securityAccount) =>
-                //     selectedEntity
-                //       ? securityAccount.original.group.entity.id === selectedEntity.data.id
-                //       : true
-                //   )
-                //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-                //
-                // if (selectedEntity) {
-                //   setFieldValue("securityAccount", tempSecurityAccountList[0]);
-                // }
-                dispatch(reportsActionCreators.doResetSecuritiesTransactions());
-                submitForm();
-              };
-
-              const securityAccountChange = (selectedAccount) => {
-                setFieldValue("securityAccount", selectedAccount);
-                if (
-                  selectedAccount &&
-                  Array.isArray(filteredEntity) &&
-                  filteredEntity.length >= 1
-                ) {
-                  setFieldValue("entity", filteredEntity[0]);
-                }
-                dispatch(reportsActionCreators.doResetSecuritiesTransactions());
-                submitForm();
               };
 
               const generatedTableData = rows.map((i) =>
@@ -656,134 +342,40 @@ const SecuritiesTransactionsReportPage = () => {
                   >
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={6} lg={3} container>
-                        <Grid container justifyContent="space-between" alignItems="flex-start">
-                          <Typography variant="body1" className="bold">
-                            {t("Security Transactions.Filters.Entity")}
-                          </Typography>
-                          <ButtonBase onClick={() => clearFilter("entity")}>
-                            <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
-                          </ButtonBase>
-                        </Grid>
-                        <Box my={1} className="w-full">
-                          <FormControl className={style.input__form_control}>
-                            <Select
-                              closeMenuOnSelect
-                              isSearchable
-                              placeholder={`${t("Security Transactions.Filters.Entity")}...`}
-                              components={{
-                                ...animatedComponents,
-                              }}
-                              value={
-                                filteredEntity.length === 1 ? filteredEntity[0] : values.entity
-                              }
-                              options={filteredEntity}
-                              onChange={(selectedEntity) => {
-                                if (selectedEntity.value !== ALL_ENTITIES_OPTION.value) {
-                                  setIsAllEntitiesOptionSelected(false);
-                                  entityChange(selectedEntity);
-                                  return;
-                                }
-                                setIsAllEntitiesOptionSelected(true);
-                                setFieldValue("entity", ALL_ENTITIES_OPTION);
-                                setFieldValue("securityAccount", null, false);
-                              }}
-                            />
-                          </FormControl>
-                        </Box>
+                        <DropdownFilter
+                          name="entity"
+                          label="Entity"
+                          options={filteredEntity}
+                          defaultValue={
+                            filteredEntity.length === 1 ? filteredEntity[0] : values.entity
+                          }
+                          customOnChange={(selectedEntity, { action }) => {
+                            setFieldValue("entity", selectedEntity);
+                          }}
+                        />
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container>
-                        <Grid container justifyContent="space-between" alignItems="flex-start">
-                          <Typography variant="body1" className="bold">
-                            {"Safekeeping Account"}
-                          </Typography>
-                          <ButtonBase onClick={() => clearFilter("securityAccount")}>
-                            <Typography variant="caption">{t("blotter:Filters.Clear")}</Typography>
-                          </ButtonBase>
-                        </Grid>
-                        <Box my={1} className="w-full">
-                          <FormControl className={style.input__form_control}>
-                            <Select
-                              closeMenuOnSelect
-                              isSearchable
-                              placeholder={`Safekeeping Account`}
-                              components={{
-                                ...animatedComponents,
-                              }}
-                              styles={{
-                                menu: (styles) => ({
-                                  ...styles,
-                                  zIndex: 100,
-                                }),
-                                control: (styles) => ({
-                                  ...styles,
-                                  border: "none",
-                                  borderRadius: "6px",
-                                  backgroundColor: "rgba(0, 0, 0, 0.09)",
-                                  height: "3rem",
-                                }),
-                              }}
-                              value={
-                                filteredSecurityAccounts.length === 1
-                                  ? filteredSecurityAccounts[0]
-                                  : values.securityAccount
-                              }
-                              options={filteredSecurityAccounts}
-                              onChange={(selectedAccount, triggeredAction) => {
-                                securityAccountChange(selectedAccount);
-                              }}
-                              isDisabled={isAllEntitiesOptionSelected}
-                            />
-                          </FormControl>
-                        </Box>
+                        <DropdownFilterSelection
+                          name="securityAccount"
+                          label="Safekeeping Account"
+                          options={filteredSecurityAccounts}
+                          currentlySelectedOption={currentlySelectedSecurityAccount}
+                          setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
+                          customOnChange={(selectedAccount, { action }) => {
+                            setFieldValue("securityAccount", selectedAccount);
+                          }}
+                        />
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container></Grid>
 
-                      <Grid item xs={12} md={6} lg={3} container justifyContent="flex-end">
-                        <Grid
-                          item
-                          xs={12}
-                          md={6}
-                          lg={12}
-                          container
-                          alignContent="center"
-                          justifyContent="flex-end"
-                        >
-                          <Grid container justifyContent="space-between" alignItems="flex-start">
-                            <Typography variant="body1" className="white-text">
-                              .
-                            </Typography>
-                          </Grid>
-                          <Box my={1} className="w-full">
-                            <Grid container spacing={2}>
-                              <Grid item xs={12} md={6} lg={6}>
-                                <Button
-                                  fullWidth
-                                  disabled={
-                                    values.securityAccount === null && !isAllEntitiesOptionSelected
-                                  }
-                                  variant="contained"
-                                  color="primary"
-                                  onClick={() => handleFilter()}
-                                  size="large"
-                                >
-                                  {t("Security Transactions.Filters.Apply")}
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={6} lg={6}>
-                                <Button
-                                  fullWidth
-                                  disabled={filteredRows.length === 0}
-                                  variant="outlined"
-                                  color="primary"
-                                  onClick={() => handleClear()}
-                                  size="large"
-                                >
-                                  {t("Security Transactions.Filters.Clear")}
-                                </Button>
-                              </Grid>
-                            </Grid>
-                          </Box>
-                        </Grid>
+                      <Grid item xs={12} md={6} lg={3}>
+                        <FilterButton
+                          label="Apply"
+                          onClick={(filters) => {
+                            handleFilter(filters);
+                          }}
+                          disabled={(filters) => !filters.entity || !filters.securityAccount}
+                        />
                       </Grid>
 
                       <Grid item xs={12}>
@@ -817,64 +409,21 @@ const SecuritiesTransactionsReportPage = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={2} container justifyContent="flex-end">
-                        <Grid
-                          item
-                          xs={12}
-                          md={6}
-                          lg={12}
-                          container
-                          alignContent="center"
-                          justifyContent="flex-end"
-                        >
-                          <Grid container justifyContent="space-between" alignItems="flex-start">
-                            <Typography variant="body1" className="white-text">
-                              .
-                            </Typography>
-                          </Grid>
-
-                          <Box my={1} className="w-full">
-                            <Grid container spacing={2}>
-                              <Grid item xs={12} md={6} lg={6}>
-                                <Button
-                                  variant="contained"
-                                  fullWidth
-                                  color="primary"
-                                  startIcon={<CloudDownloadIcon />}
-                                  onClick={exportCSV}
-                                  size="large"
-                                >
-                                  {t("Security Transactions.Filters.CSV")}
-                                </Button>
-                              </Grid>
-
-                              <Grid item xs={12} md={6} lg={6}>
-                                <Button
-                                  variant="contained"
-                                  fullWidth
-                                  color="primary"
-                                  startIcon={<CloudDownloadIcon />}
-                                  onClick={exportPDF}
-                                  size="large"
-                                >
-                                  {t("Security Transactions.Filters.PDF")}
-                                </Button>
-                              </Grid>
-                            </Grid>
-                          </Box>
-                        </Grid>
+                      <Grid item xs={12} md={6} lg={2}>
+                        <ExportButtons tableRef={tableRef} name="Security Transactions Report" />
                       </Grid>
                       <Grid item xs={12} md={12} lg={12} container>
                         <Typography className={style.accountInfo__label}>
                           {`Safekeeping Account`} :{" "}
                         </Typography>
                         <Typography className={style.accountInfo__value}>{`${
-                          values.securityAccount
-                            ? values?.securityAccount?.original?.securitiesAccount.accountNumber
+                          currentlySelectedSecurityAccount
+                            ? currentlySelectedSecurityAccount?.original?.securitiesAccount
+                                .accountNumber
                             : t("Security Transactions.NA")
                         } | ${
-                          values.securityAccount
-                            ? v.capitalize(values?.securityAccount?.original?.name || "N.A")
+                          currentlySelectedSecurityAccount
+                            ? v.capitalize(currentlySelectedSecurityAccount.original?.name || "N.A")
                             : t("Security Transactions.NA")
                         }`}</Typography>
                       </Grid>
@@ -944,22 +493,6 @@ const SecuritiesTransactionsReportPage = () => {
                         }}
                       </FilterConsumer>
                     </Grid>
-
-                    <ReportingTablePDFExporter
-                      ref={childRef}
-                      title={t("Security Transactions.Security Transactions")}
-                    >
-                      <ExportTableContent
-                        columns={headCells}
-                        tableOptions={{
-                          sliceRowCount: 5,
-                          tableOffset: 2,
-                        }}
-                        data={filteredRows}
-                        filters={filteredExportFilters(exportFilters)}
-                        title={`${t("Security Transactions.Security Transactions")} Report`}
-                      />
-                    </ReportingTablePDFExporter>
                   </Grid>
                 </div>
               );

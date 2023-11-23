@@ -13,6 +13,7 @@ import v from "voca";
 import DateRangePicker from "../../../components/FilterComponents/DateRangePicker";
 import DropdownFilter from "../../../components/FilterComponents/DropdownFilter";
 import ExportButtons from "../../../components/FilterComponents/ExportButtons";
+import FilterButton from "../../../components/FilterComponents/FilterButton";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
@@ -163,13 +164,13 @@ const CashStatementPage = () => {
 
   const { entityOpts, accountOpts, securityAccountOpts } = getEntityAndAccounts(accounts);
 
-  const filteredEntity = entityOpts.map((entity) => ({
+  const entityOptions = entityOpts.map((entity) => ({
     data: entity,
     value: entity.id,
     label: entity.label,
   }));
 
-  const filteredSecurityAccounts = securityAccountOpts.map((account) => ({
+  const securityAccountOptions = securityAccountOpts.map((account) => ({
     data: account,
     value: account.id,
     label: account.label,
@@ -261,8 +262,10 @@ const CashStatementPage = () => {
   //     label: acc.label,
   //   }));
 
-  const handleFilter = () => {
+  const handleFetch = (filters) => {
+    const { entity, securityAccount } = filters;
     let qs = "";
+
     if (startDate) {
       qs += `startDate=${startDate.toISOString()}&`;
     }
@@ -270,10 +273,10 @@ const CashStatementPage = () => {
       qs += `endDate=${endDate.toISOString()}&`;
     }
     if (currentlySelectedEntity) {
-      qs += `entityName=${currentlySelectedEntity.label}&`;
+      qs += `entityName=${entity?.value.label}&`;
     }
     if (currentlySelectedSecurityAccount) {
-      qs += `portfolio_id=${currentlySelectedSecurityAccount.original.portfolioId}&`;
+      qs += `portfolio_id=${securityAccount?.value.original.portfolioId}&`;
     }
     if (currentlySelectedAccount) {
       qs += `accountNo=${currentlySelectedAccount.value}`;
@@ -284,48 +287,12 @@ const CashStatementPage = () => {
   const entityChange = (selectedEntity) => {
     setEntityFilterValue(selectedEntity.value);
     setCurrentlySelectedEntity(selectedEntity);
-    setAccountFilterValue(null);
-    // filteredAccounts = accountOpts
-    //   .filter((account) => {
-    //     return entityFilterValue ? account.original.group.entity.id === entityFilterValue : false;
-    //   })
-    //   .map((account) => ({
-    //     data: account,
-    //     value: account.id,
-    //     label: account.label,
-    //   }));
-
-    // const tempSecurityAccountList = securityAccountOpts
-    //   .filter((securityAccount) =>
-    //     selectedEntity ? securityAccount.original.group.entity.id === selectedEntity.data.id : true
-    //   )
-    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-
-    // if (
-    //   selectedEntity &&
-    //   Array.isArray(tempSecurityAccountList) &&
-    //   tempSecurityAccountList.length > 0
-    // ) {
-    //   setSecurityAccountFilterValue(tempSecurityAccountList[0].value);
-    //   setCurrentlySelectedSecurityAccount(tempSecurityAccountList[0]);
-    // }
-
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
 
   const accountChange = (selectedAccount) => {
     setAccountFilterValue(selectedAccount.value);
     setCurrentlySelectedAccount(selectedAccount);
-    // const tempEntitiesList = entityOpts
-    //   .filter((entity) =>
-    //     selectedAccount ? entity.id === selectedAccount.data.original.group.id : true
-    //   )
-    //   .map((entity) => ({ data: entity, value: entity.id, label: entity.label }));
-    //
-    // if (selectedAccount && Array.isArray(tempEntitiesList) && tempEntitiesList.length > 0) {
-    //   setEntityFilterValue(tempEntitiesList[0].value);
-    //   setCurrentlySelectedEntity(tempEntitiesList[0]);
-    // }
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
 
@@ -334,22 +301,6 @@ const CashStatementPage = () => {
     setCurrentlySelectedSecurityAccount(selectedAccount);
     setCurrentlySelectedAccount(null);
 
-    const filteredCashAccounts = accountOpts
-      .filter((account) =>
-        selectedAccount
-          ? account?.original?.group.clientSecuritiesAccount.id === selectedAccount.data.id
-          : false
-      )
-      .map((account) => ({
-        data: account,
-        value: account.id,
-        label: `${account.label}`,
-      }));
-
-    setCashAccountOptions(filteredCashAccounts);
-    if (selectedAccount) {
-      setCurrentlySelectedEntity(filteredEntity[0]);
-    }
     dispatch(billingAndPaymentsActionCreators.doResetTransactions());
   };
 
@@ -358,9 +309,32 @@ const CashStatementPage = () => {
     setCurrentlySelectedTransactionType(selectedTransactionType);
   };
 
-  // console.log("🚀 ~ file: index.jsx:329 ~ entityChange ~ filteredAccounts:", filteredAccounts);
+  useEffect(() => {
+    if (securityAccountOptions.length === 1) {
+      setCurrentlySelectedSecurityAccount(() => securityAccountOptions[0]);
+    }
+  }, [accounts]);
 
-  // const bankAccountTypes = dropdownValues ? dropdownValues.bankAccountTypes : [];
+  useEffect(() => {
+    const filteredCashAccounts = accountOpts
+      .filter((account) =>
+        currentlySelectedSecurityAccount
+          ? account?.original?.group.clientSecuritiesAccount.id ===
+            currentlySelectedSecurityAccount.data.id
+          : false
+      )
+      .map((account) => ({
+        data: account,
+        value: account.id,
+        label: `${account.label}  ${account?.original?.currency?.name}`,
+      }));
+
+    setCashAccountOptions(filteredCashAccounts);
+
+    return () => {
+      dispatch(billingAndPaymentsActionCreators.doResetTransactions());
+    };
+  }, [currentlySelectedSecurityAccount]);
   return (
     <Fragment>
       <PageTitle title={t("Cash Statement.Cash Statement")} />
@@ -378,9 +352,9 @@ const CashStatementPage = () => {
               <DropdownFilter
                 name="entity"
                 label="Entity"
-                options={filteredEntity}
+                options={entityOptions}
                 currentlySelectedOption={
-                  filteredEntity.length === 1 ? filteredEntity[0] : currentlySelectedEntity
+                  entityOptions.length === 1 ? entityOptions[0] : currentlySelectedEntity
                 }
                 setCurrentlySelectedOption={setCurrentlySelectedEntity}
                 customOnChange={(selectedEntity) => {
@@ -393,12 +367,8 @@ const CashStatementPage = () => {
               <DropdownFilter
                 name="securityAccount"
                 label="Safekeeping Account"
-                options={filteredSecurityAccounts}
-                currentlySelectedOption={
-                  filteredSecurityAccounts.length === 1
-                    ? filteredSecurityAccounts[0]
-                    : currentlySelectedSecurityAccount
-                }
+                options={securityAccountOptions}
+                currentlySelectedOption={currentlySelectedSecurityAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedSecurityAccount}
                 setCustomClear={() => {
                   setTimeout(() => {
@@ -421,18 +391,6 @@ const CashStatementPage = () => {
                 options={cashAccountOptions}
                 currentlySelectedOption={currentlySelectedAccount}
                 setCurrentlySelectedOption={setCurrentlySelectedAccount}
-                // customComponent={{
-                //   Option: (props) =>
-                //     ReactSelectCurrencyOption({
-                //       ...props,
-                //       currency: props?.data?.data.original.currency.name,
-                //     }),
-                //   ValueContainer: (props) =>
-                //     ReactSelectCurrencySingleValueContainer({
-                //       ...props,
-                //       currency: props.getValue()[0]?.data?.original.currency.name,
-                //     }),
-                // }}
                 customOnChange={(selectedAccount) => {
                   accountChange(selectedAccount);
                 }}
@@ -440,17 +398,15 @@ const CashStatementPage = () => {
             </Grid>
 
             <Grid item xs={12} md={12} lg={3} className="w-full">
-              <Box mt={4} mb={1}>
-                <Button
-                  fullWidth
-                  disabled={currentlySelectedAccount === null}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleFilter()}
-                >
-                  {t("Cash Statement.Filters.Apply")}
-                </Button>
-              </Box>
+              <FilterButton
+                label="Apply"
+                onClick={(filters) => {
+                  handleFetch(filters);
+                }}
+                disabled={(filters) =>
+                  !filters.entity || !filters.securityAccount || !filters.account
+                }
+              />
             </Grid>
 
             <Grid item xs={12}>
