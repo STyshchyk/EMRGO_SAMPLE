@@ -19,6 +19,15 @@ stages:
   - pre-deploy
   - deploy
 
+Pre-Deploy:Test:
+  stage: pre-deploy
+  variables:
+    TARGET_ENVIRONMENT: "test-difc"
+    SOURCE_BRANCH: "develop"
+  extends:
+    - .trigger_downstream_deploy_pipelines_config
+  when: manual
+
 Pre-Deploy:Exp:
   stage: pre-deploy
   variables:
