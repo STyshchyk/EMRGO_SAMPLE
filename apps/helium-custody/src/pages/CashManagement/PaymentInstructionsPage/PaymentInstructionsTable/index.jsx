@@ -44,7 +44,7 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
           {
             id: "createdAt",
             title: t("Payment Instructions.Headers.Created At Date"),
-            defaultSort: "asc",
+            defaultSort: "desc",
             field: "createdAt",
             render: (rowData) => dateRenderer(rowData.createdAt),
           },
