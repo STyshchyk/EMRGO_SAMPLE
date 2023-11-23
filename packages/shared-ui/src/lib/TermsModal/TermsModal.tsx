@@ -27,10 +27,11 @@ export const TermsModal: FC<ITermsModalProps> = ({
   onAccept,
   onReject,
   type,
+  warningMessage = 'You will be logged out if you do not accept the terms',
 }) => {
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
-  const [warningMessage,setWarningMessage] = useState(false)
+  const [isWarning,setIsWarning] = useState(false)
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -68,12 +69,11 @@ export const TermsModal: FC<ITermsModalProps> = ({
   };
 
   const onRejectClick = () => {
-    if(!hasAccepted && !warningMessage){
-      console.log('warning message');
-      setWarningMessage(true)
+    if(!hasAccepted && !isWarning){
+      setIsWarning(true)
       return;
     }
-    setWarningMessage(false)
+    setIsWarning(false)
     onReject()
   }
 
@@ -117,10 +117,10 @@ export const TermsModal: FC<ITermsModalProps> = ({
         </Styles.Footer>
 
         <>
-          {warningMessage && (
+          {isWarning && (
             <Styles.Error>
               <Styles.ErrorIcon/>
-              You will be logged out if you do not accept the client terms
+              {warningMessage}
             </Styles.Error>
             )
           }
