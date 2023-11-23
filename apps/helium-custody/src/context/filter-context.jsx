@@ -33,18 +33,27 @@ export const FilterProvider = ({ children, tableKey }) => {
   });
 
   function setColumnValue({ shownColumns, hiddenColumns }) {
-    const cleanedShownColumns = shownColumns.map((column) => {
-      const foundColumn = allColumns.find((allColumn) => allColumn.field === column.field);
+    const cleanedShownColumns = [];
+    const cleanedHiddenColumns = [];
 
+    shownColumns.forEach((column) => {
+      const foundColumn = allColumns.find((allColumn) => allColumn.field === column.field);
       const cleanedColumn = {
         title: column.title,
         field: column.field,
         ...foundColumn,
       };
-      return cleanedColumn;
+
+      cleanedColumn.defaultHidden = column?.defaultHidden;
+
+      if (column.defaultHidden && column.defaultHidden === true) {
+        cleanedHiddenColumns.push(cleanedColumn);
+      } else {
+        cleanedShownColumns.push(cleanedColumn);
+      }
     });
 
-    const cleanedHiddenColumns = hiddenColumns.map((column) => {
+    hiddenColumns.forEach((column) => {
       const foundColumn = allColumns.find((allColumn) => allColumn.field === column.field);
 
       const cleanedColumn = {
@@ -52,7 +61,8 @@ export const FilterProvider = ({ children, tableKey }) => {
         field: column.field,
         ...foundColumn,
       };
-      return cleanedColumn;
+
+      cleanedHiddenColumns.push(cleanedColumn);
     });
 
     const updatedColumns = {

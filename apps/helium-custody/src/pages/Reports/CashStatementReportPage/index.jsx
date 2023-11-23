@@ -233,7 +233,7 @@ const CashStatementReportPage = () => {
       field: "transactionType",
       exportConfig: { width: 15 },
     },
-    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin", defaultHidden: true },
     {
       id: "narrative",
       title: t("Cash Statement.Headers.Narrative"),

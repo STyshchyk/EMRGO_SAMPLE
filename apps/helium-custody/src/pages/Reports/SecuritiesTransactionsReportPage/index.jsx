@@ -210,8 +210,12 @@ const SecuritiesTransactionsReportPage = () => {
       exportConfig: { render: (rowData) => reportDateRenderer(rowData.tradeDate) },
     },
     // { id: 'entity', title: t('Security Transactions.Headers.Entity'), field: 'entity' },
-    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn" },
-    { id: "wsn", title: t("Security Transactions.Headers.ISIN"), field: "isin" },
+    { id: "wsn", title: t("Security Transactions.Headers.WSN"), field: "wsn", defaultHidden: true },
+    {
+      id: "isin",
+      title: t("Security Transactions.Headers.ISIN"),
+      field: "isin",
+    },
     {
       id: "securityShortName",
       title: t("Securities Holdings.Headers.Security"),
