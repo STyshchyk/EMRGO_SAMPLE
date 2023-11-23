@@ -157,7 +157,9 @@ const AddPaymentInstructionForm = ({
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        {values.paymentAccount?.value?.currency}
+                        <Typography color="primary" variant="subtitle2">
+                          {values.paymentAccount?.value?.currency}
+                        </Typography>
                       </InputAdornment>
                     ),
                   }}
