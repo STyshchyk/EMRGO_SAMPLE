@@ -16,6 +16,7 @@ import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DatePicker from "../FilterComponents/DatePickerUpdated";
+import DropdownFilterOld from "../FilterComponents/DropdownFilter";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
@@ -78,7 +79,7 @@ const SecuritiesHoldingsTable = ({
   const [allEntitiesOptionSelected, setAllEntitiesOptionSelected] = useState(false);
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
   const [isFetch, setIsFetch] = useState(false);
-
+  const [currentlySelectedSafekeeping, setCurrentlySelectedSafekeeping] = useState(null);
   const { t } = useTranslation(["reports"]);
 
   // selectors
@@ -190,6 +191,11 @@ const SecuritiesHoldingsTable = ({
       setSafeAccountOptions(safeekingAccountList);
       setEmrgoSelected(false);
     }
+    setCurrentlySelectedSafekeeping(null);
+  };
+
+  const handleSafekeepingAccountChange = (selectedSafekeepingAccount) => {
+    setCurrentlySelectedSafekeeping(selectedSafekeepingAccount);
   };
 
   const columns = [
@@ -323,10 +329,15 @@ const SecuritiesHoldingsTable = ({
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <DropdownFilter
+                <DropdownFilterOld
                   name="safekeepingAccount"
                   label="Safekeeping Account"
                   options={safekeepingAccountOptions || safeekingAccountList}
+                  currentlySelectedOption={currentlySelectedSafekeeping}
+                  setCurrentlySelectedOption={setCurrentlySelectedSafekeeping}
+                  customOnChange={(selectedSafekeepingAccount) => {
+                    handleSafekeepingAccountChange(selectedSafekeepingAccount);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
