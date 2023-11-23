@@ -45,7 +45,13 @@ const DEPLOYABLE_PAYLOAD_KEYS = [
 // EDITABLE AREA END
 // ##############################################################################
 
-type TargetEnvironment = "exp-difc" | "dev-difc" | "uat-difc" | "staging-difc" | "prod-difc";
+type TargetEnvironment =
+  | "exp-difc"
+  | "dev-difc"
+  | "uat-difc"
+  | "staging-difc"
+  | "prod-difc"
+  | "test-difc";
 
 type AppChanges = Record<string, boolean>;
 
