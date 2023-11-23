@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export const extractErrorMessage = (error) => {
   let errorMessage = null;
 
-  if (error.response) {
+  if (error?.response) {
     errorMessage = error.response?.data?.message || error.response?.data?.status;
   } else {
     errorMessage = error?.message;
@@ -15,7 +15,7 @@ export const extractErrorMessage = (error) => {
 export const extractErrorStatusCode = (error) => {
   let errorStatusCode = null;
 
-  errorStatusCode = error.response?.status;
+  errorStatusCode = error?.response?.status;
 
   return errorStatusCode;
 };
