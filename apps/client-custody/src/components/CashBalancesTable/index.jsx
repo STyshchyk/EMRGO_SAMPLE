@@ -305,6 +305,8 @@ const CashBalancesTable = ({ data, accounts }) => {
                   }}
                 />
               </Grid>
+              <Grid item xs={12} md={6} lg={3} container></Grid>
+
               <Grid item xs={12} md={6} lg={3}>
                 <FilterButton
                   label="Apply"
@@ -314,7 +316,6 @@ const CashBalancesTable = ({ data, accounts }) => {
                   disabled={(filters) => !(filters.entity && filters.securityAccount)}
                 />
               </Grid>
-              <Grid item xs={12} lg={2} container></Grid>
               <Grid item xs={12}>
                 <Divider />
               </Grid>
