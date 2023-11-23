@@ -13,6 +13,15 @@ import { execSync } from "child_process";
 // ##############################################################################
 const APP_DIR_REGEX = /^apps\/([a-zA-Z-]+)\//; // REGEX to match app directory name
 
+const ENVIRONMENT_NAMES = [
+  "test-difc",
+  "exp-difc",
+  "dev-difc",
+  "uat-difc",
+  "staging-difc",
+  "prod-difc",
+] as const;
+
 const CRITICAL_FILES = [
   ".gitlab-ci.yml",
   "docker-compose.prod.template.yml",
@@ -45,13 +54,7 @@ const DEPLOYABLE_PAYLOAD_KEYS = [
 // EDITABLE AREA END
 // ##############################################################################
 
-type TargetEnvironment =
-  | "exp-difc"
-  | "dev-difc"
-  | "uat-difc"
-  | "staging-difc"
-  | "prod-difc"
-  | "test-difc";
+type TargetEnvironment = (typeof ENVIRONMENT_NAMES)[number];
 
 type AppChanges = Record<string, boolean>;
 
@@ -94,6 +97,7 @@ async function main() {
   const compareCommitSha =
     process.env.CI_COMMIT_BEFORE_SHA || "7fdfb83abbc375a21f5a4e9bac081f05188c603d";
 
+  // !CHECK IF CI-PROVIDED TARGET_ENVIRONMENT IS VALID
   if (!isTargetEnvironment(targetEnvironment)) {
     throw new Error("TARGET_ENVIRONMENT is undefined or invalid");
   }
@@ -248,7 +252,7 @@ async function triggerDownstreamPipelines({
 // UTILITY FUNCTIONS
 
 function isTargetEnvironment(env: any): env is TargetEnvironment {
-  return ["exp-difc", "dev-difc", "uat-difc", "staging-difc", "prod-difc"].includes(env);
+  return ENVIRONMENT_NAMES.includes(env);
 }
 
 async function getChangedFiles({
