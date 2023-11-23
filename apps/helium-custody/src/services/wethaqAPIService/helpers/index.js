@@ -28,7 +28,7 @@ baseAxiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       // Make a request to the token refresh endpoint
