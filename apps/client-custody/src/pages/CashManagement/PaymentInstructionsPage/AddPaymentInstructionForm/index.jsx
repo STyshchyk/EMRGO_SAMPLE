@@ -29,7 +29,7 @@ const AddPaymentInstructionForm = ({
   isSubmitting,
 }) => {
   const { t } = useTranslation(["cash_management", "components"]);
-  console.log(initialValues);
+
   const {
     allSourceAccountOptions,
     allPaymentAccountOptions,
@@ -38,9 +38,7 @@ const AddPaymentInstructionForm = ({
     paymentTransferPurposeOptions,
   } = options;
   // local states
-  const [selectedCurrencyName, setSelectedCurrencyName] = useState(
-    initialValues.paymentAccount?.value?.currency ?? ""
-  );
+
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
   );
@@ -51,6 +49,7 @@ const AddPaymentInstructionForm = ({
         )
       : allPaymentAccountOptions
   );
+
   return (
     <Formik
       initialValues={{
@@ -84,13 +83,11 @@ const AddPaymentInstructionForm = ({
                 options={filteredPaymentAccountOptions}
                 onChange={(selectedOption, triggeredAction) => {
                   if (triggeredAction.action === "clear") {
-                    setSelectedCurrencyName("");
                     setFieldValue("paymentAccount", null);
                   }
 
                   if (triggeredAction.action === "select-option") {
                     setFieldValue("paymentAccount", selectedOption);
-                    setSelectedCurrencyName(selectedOption?.value?.currency);
                   }
                 }}
               />
@@ -159,7 +156,9 @@ const AddPaymentInstructionForm = ({
                   }}
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
+                      <InputAdornment position="end">
+                        {values.paymentAccount?.value?.currency}
+                      </InputAdornment>
                     ),
                   }}
                   // eslint-disable-next-line  react/jsx-no-duplicate-props
