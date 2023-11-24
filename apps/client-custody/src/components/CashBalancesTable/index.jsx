@@ -286,6 +286,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                     entityOptions.length === 1 ? entityOptions[0] : currentlySelectedEntity
                   }
                   setCurrentlySelectedOption={setCurrentlySelectedEntity}
+                  hasDefaultValue={entityOptions.length === 1}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container>
@@ -303,6 +304,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                   customOnChange={(selectedAccount) => {
                     handleSecurityAccountChange(selectedAccount);
                   }}
+                  hasDefaultValue={securityAccountOptions.length === 1}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3} container></Grid>
