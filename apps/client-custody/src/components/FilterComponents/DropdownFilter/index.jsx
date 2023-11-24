@@ -22,6 +22,7 @@ const DropdownFilter = ({
   setClearDisabled,
   setCustomClear,
   clearButtonRef,
+  hasDefaultValue,
 }) => {
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
@@ -30,10 +31,14 @@ const DropdownFilter = ({
 
   useEffect(() => {
     //  if default value then include in bubble count
+    if (currentlySelectedOption && hasDefaultValue) {
+      setFilterValue(currentlySelectedOption, name, label, "dropdown", hasDefaultValue);
+      return;
+    }
     if (currentlySelectedOption) {
       setFilterValue(currentlySelectedOption, name, label, "dropdown");
     }
-  }, [currentlySelectedOption]);
+  }, [currentlySelectedOption, hasDefaultValue]);
 
   const clearFilter = () => {
     setCurrentlySelectedOption(null);
@@ -54,9 +59,11 @@ const DropdownFilter = ({
           {label}
         </Typography>
 
-        <ButtonBase ref={clearButtonRef} onClick={() => clearFilter()}>
-          <Typography variant="caption">Clear</Typography>
-        </ButtonBase>
+        {!hasDefaultValue && (
+          <ButtonBase ref={clearButtonRef} onClick={() => clearFilter()}>
+            <Typography variant="caption">Clear</Typography>
+          </ButtonBase>
+        )}
       </Grid>
 
       <Box my={1} sx={{ width: "100%" }}>
@@ -89,6 +96,7 @@ DropdownFilter.propTypes = {
 
 DropdownFilter.defaultProps = {
   isDisabled: false,
+  hasDefaultValue: false,
   setSelectedOption: () => {},
   customOnChange: () => {},
 };
