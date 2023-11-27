@@ -120,10 +120,10 @@ export const FilterProvider = ({ children, tableKey }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableConfig || {}, allColumns]);
 
-  function setFilterValue(value, key, label, type) {
+  function setFilterValue(value, key, label, type, isDefault = false) {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
-      updatedFilters[key] = { value, label, type };
+      updatedFilters[key] = { value, label, type, isDefault };
       return updatedFilters;
     });
   }
