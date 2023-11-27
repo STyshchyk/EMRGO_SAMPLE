@@ -78,7 +78,6 @@ const AddPaymentInstructionForm = ({
                 placeholder={t("Payment Instructions.Modals.Fields.Payment Account")}
                 isSearchable
                 styles={selectStyles}
-                menuPortalTarget={document.body}
                 value={values.paymentAccount}
                 isClearable
                 options={filteredPaymentAccountOptions}
