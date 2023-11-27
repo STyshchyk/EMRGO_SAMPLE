@@ -364,7 +364,6 @@ const SecuritiesTransactionsReportPage = () => {
                           customOnChange={(selectedAccount, { action }) => {
                             setFieldValue("securityAccount", selectedAccount);
                           }}
-                          hasDefaultValue={filteredSecurityAccounts.length === 1}
                         />
                       </Grid>
                       <Grid item xs={12} md={6} lg={3} container></Grid>

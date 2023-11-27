@@ -60,7 +60,7 @@ export const EditCorporateLegalNameModal = ({ user }: IEditCorporateLegalNameMod
             type="submit"
             onClick={() => form.handleSubmit()}
             variant="primary"
-            disabled={!form.isValid || form.isSubmitting || !form.dirty}
+            disabled={!form.isValid || form.isSubmitting}
           >
             Update Name
           </Button>

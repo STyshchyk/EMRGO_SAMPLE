@@ -186,7 +186,6 @@ export const DashboardSidebar = () => {
         onReject={onRejectPlatformTerms}
         hasAccepted={hasAcceptedPlatformTerms}
         type={showTermsModal}
-        warningMessage = "You will be logged out if you do not accept the platform terms"
       />
 
       <HelpModal isOpen={isHelpDeskOpen} onClose={() => setHelpDeskOpen(false)} />

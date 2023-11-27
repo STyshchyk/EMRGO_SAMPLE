@@ -22,7 +22,6 @@ export const CustodyWrapperComponent = ({ children }) => {
         // hasAccepted={hasAcceptedClientTerms}
         type={showTermsModal}
         hasAccepted={false}
-        warningMessage="You will be logged out if you do not accept the client terms"
       />
     </>
   );
