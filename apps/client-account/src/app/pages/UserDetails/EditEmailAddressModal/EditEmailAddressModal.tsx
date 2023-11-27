@@ -72,7 +72,7 @@ export const EditEmailAddressModal = ({ user }: IEditEmailAddressModalProps) => 
           onClick={() => form.handleSubmit()}
           type="submit"
           variant="primary"
-          disabled={!form.isValid || form.isSubmitting || !form.dirty}
+          disabled={!form.isValid || form.isSubmitting}
         >
           Update Email
         </Button>

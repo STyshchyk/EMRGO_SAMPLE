@@ -337,7 +337,6 @@ const CashStatementReportPage = () => {
                   customOnChange={(selectedEntity) => {
                     entityChange(selectedEntity);
                   }}
-                  hasDefaultValue={entityOptions.length === 1}
                 />
               </Grid>
 
@@ -355,7 +354,6 @@ const CashStatementReportPage = () => {
                   customOnChange={(selectedAccount) => {
                     securityAccountChange(selectedAccount);
                   }}
-                  hasDefaultValue={securityAccountOptions.length === 1}
                 />
               </Grid>
 

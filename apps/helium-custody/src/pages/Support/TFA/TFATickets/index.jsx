@@ -15,7 +15,11 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 
 import LoadingIndicator from "../../../../components/LoadingIndicator";
-import { statusRenderer, typeRenderer } from "../../../../constants/renderers/support_ticket";
+import {
+  statusRenderer,
+  titleRenderer,
+  typeRenderer,
+} from "../../../../constants/renderers/support_ticket";
 import { useTheme } from "../../../../context/theme-context";
 import useMaterialTableLocalization from "../../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../../hooks/useWethaqAPIParams";
@@ -76,7 +80,7 @@ const TFATickets = () => {
       dispatch(supportActionCreators.doFetchTFAVerificationDocument(payload));
     fetchCurrentTicketDocument({ key: ticket.file });
   };
-  console.log(TFATicketsList);
+
   return (
     <Fragment>
       {isFetchingTFATickets ? (
@@ -120,7 +124,6 @@ const TFATickets = () => {
                 title: `${t("support:Support.Headers.Status")}`,
                 field: "type",
                 render: (rowData) => statusRenderer(rowData.approved),
-                customSort: (row, value) => row.approved - value.approved,
               },
             ]}
             data={TFATicketsList}

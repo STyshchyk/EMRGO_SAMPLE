@@ -62,7 +62,7 @@ const DropdownFilter = ({
     // Set the default value if provided
     if (defaultValue) {
       setCurrentlySelectedOption(defaultValue);
-      setFilterValue(defaultValue, name, label, "dropdown", defaultValue);
+      setFilterValue(defaultValue, name, label, "dropdown");
     }
   }, [defaultValue]);
 
@@ -89,11 +89,9 @@ const DropdownFilter = ({
           {label}
         </Typography>
 
-        {!defaultValue && (
-          <ButtonBase onClick={() => clearFilter()}>
-            <Typography variant="caption">Clear</Typography>
-          </ButtonBase>
-        )}
+        <ButtonBase onClick={() => clearFilter()}>
+          <Typography variant="caption">Clear</Typography>
+        </ButtonBase>
       </Grid>
 
       <Box my={1} className="w-full">
@@ -125,7 +123,6 @@ DropdownFilter.propTypes = {
   title: PropTypes.string,
   options: PropTypes.array.isRequired,
   setDefaultFilterValue: PropTypes.func,
-  defaultValue: PropTypes.object,
   customOnChange: PropTypes.func,
 };
 
