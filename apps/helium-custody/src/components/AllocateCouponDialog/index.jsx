@@ -175,9 +175,8 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                   </Grid>
                   <Grid item>
                     {selectedWethaqSourceAccountOption?.value?.accountBalance &&
-                      currencyRenderer(
-                        selectedWethaqSourceAccountOption?.value?.accountBalance
-                      )}{" "}
+                        selectedWethaqSourceAccountOption?.value?.accountBalance != '0' ? 
+                            currencyRenderer(selectedWethaqSourceAccountOption?.value?.accountBalance) : '0'}
                   </Grid>
                 </Grid>
               </Grid>
