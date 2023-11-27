@@ -7,4 +7,5 @@ export interface ITermsModalProps {
   onAccept?: () => void;
   onReject: () => void;
   type: string;
+  warningMessage?:string;
 }

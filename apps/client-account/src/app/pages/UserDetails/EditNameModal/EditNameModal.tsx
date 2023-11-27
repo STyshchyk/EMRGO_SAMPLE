@@ -65,7 +65,7 @@ export const EditNameModal = ({ user }: IEditNameModalProps) => {
             onClick={() => form.handleSubmit()}
             variant="primary"
             type="submit"
-            disabled={!form.isValid || form.isSubmitting}
+            disabled={!form.isValid || form.isSubmitting || !form.dirty}
           >
             Update Name
           </Button>
