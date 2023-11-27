@@ -12,7 +12,9 @@ const ReactSelectCurrencyOption = (props) => {
     <div {...innerProps}>
       <Box p={1} className={style.selectContainer}>
         <Grid container justifyContent="space-between">
-          <Typography className={style.wrapText}>{data.label}</Typography>
+          <Typography color="text.primary" className={style.wrapText}>
+            {data.label}
+          </Typography>
           <Typography color="primary" variant="subtitle2">
             {currency || data.value.currency || data.value?.currencyName}
           </Typography>
