@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useMatch } from "react-router-dom";
 
@@ -8,8 +9,29 @@ import {
 } from "@emrgo-frontend/shared-ui";
 import PropTypes from "prop-types";
 
+export function useHorizontalScroll() {
+  const elRef = useRef();
+  useEffect(() => {
+    const el = elRef.current;
+    if (el) {
+      const onWheel = (e) => {
+        if (e.deltaY == 0) return;
+        e.preventDefault();
+        el.scrollTo({
+          left: el.scrollLeft + e.deltaY,
+          behavior: "auto",
+        });
+      };
+      el.addEventListener("wheel", onWheel);
+      return () => el.removeEventListener("wheel", onWheel);
+    }
+  }, []);
+  return elRef;
+}
+
 const MinorNavbar = ({ routes }) => {
   const { t } = useTranslation();
+  const scrollRef = useHorizontalScroll();
   const enabledRouteConfigs = routes
     .filter((item) => !item?.disabled)
     .map((route) => {
@@ -21,18 +43,22 @@ const MinorNavbar = ({ routes }) => {
     });
 
   return (
-    <SharedMinorNavbar>
-      {enabledRouteConfigs.map((routeConfig) => (
-        // <Pill route={routeConfig} key={routeConfig.link} />
-        <MinorNavbarListItem key={routeConfig.path}>
-          <Link to={routeConfig.link}>
-            <MinorNavbarListItemLink className={routeConfig.isActive ? "active" : ""}>
-              {t(`${routeConfig.text}`)}
-            </MinorNavbarListItemLink>
-          </Link>
-        </MinorNavbarListItem>
-      ))}
-    </SharedMinorNavbar>
+    <>
+      <div>
+        <SharedMinorNavbar ref={scrollRef}>
+          {enabledRouteConfigs.map((routeConfig) => (
+            // <Pill route={routeConfig} key={routeConfig.link} />
+            <MinorNavbarListItem key={routeConfig.path}>
+              <Link to={routeConfig.link}>
+                <MinorNavbarListItemLink className={routeConfig.isActive ? "active" : ""}>
+                  {t(`${routeConfig.text}`)}
+                </MinorNavbarListItemLink>
+              </Link>
+            </MinorNavbarListItem>
+          ))}
+        </SharedMinorNavbar>
+      </div>
+    </>
   );
 };
 

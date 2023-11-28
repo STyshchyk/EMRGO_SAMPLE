@@ -2,15 +2,27 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-
-
-
-
 export const MinorNavbar = styled.div`
   display: flex;
   flex-direction: row;
-  padding: ${rem(12)} ${rem(24)};
+  overflow-x: auto;
+  padding: ${rem(10)} ${rem(24)};
   margin-top: 0.5rem;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar {
+    height: 3px;
+    background-color: ${getTheme("colors.green3")};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${getTheme("colors.green3")};
+    border: 1px solid ${getTheme("colors.green3")};
+  }
 
   ${(props) =>
     props.theme.mode === "light" &&
@@ -28,6 +40,9 @@ export const MinorNavbar = styled.div`
 
 export const MinorNavbarListItem = styled.span`
   display: inline;
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   ${(props) =>
     props.theme.mode === "light" &&
     css`
