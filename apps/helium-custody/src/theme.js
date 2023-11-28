@@ -108,12 +108,12 @@ export default (isDarkMode) => {
           },
         },
       },
-      MuiInputBase : {
-        styleOverrides:{
-          input:{
-            padding:"12px !important"
-          }
-        }
+      MuiInputBase: {
+        styleOverrides: {
+          input: {
+            padding: "12px !important",
+          },
+        },
       },
       MuiInputAdornment: {
         styleOverrides: {
@@ -132,7 +132,7 @@ export default (isDarkMode) => {
           },
           filled: {
             transform: "translate(12px, 15px) scale(1)",
-            lineHeight:'1rem'
+            lineHeight: "1rem",
           },
         },
       },
@@ -169,9 +169,7 @@ export default (isDarkMode) => {
       },
       MuiTextField: {
         styleOverrides: {
-          root:{
-
-          }
+          root: {},
         },
       },
       MuiTooltip: {
