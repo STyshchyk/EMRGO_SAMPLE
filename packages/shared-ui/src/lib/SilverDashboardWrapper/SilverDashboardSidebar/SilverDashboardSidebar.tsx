@@ -50,7 +50,7 @@ export const SilverDashboardSidebar = () => {
           {mainRoutes.map((module) => (
             <Tooltip
               content={
-                module.disabled || !useInternalMatchedPathDashboard(module) ? (
+                module.disabled ? (
                   <Fragment>
                     <TooltipHeader>
                       <TooltipTitle>You do not have access to this page</TooltipTitle>

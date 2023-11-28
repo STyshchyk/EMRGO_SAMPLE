@@ -113,7 +113,14 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <PrimariesIcon />,
       key: "custody",
       path: heliumCustodyRoutes.custody.cashManagement.manageAccounts,
-      paths: getAllSilverRoutes(heliumCustodyRoutes),
+      paths: getAllSilverRoutes(heliumCustodyRoutes.custody),
+    },
+    {
+      label: "Support",
+      icon: <PrimariesIcon />,
+      key: "support",
+      path: heliumCustodyRoutes.support.tfa,
+      paths: getAllSilverRoutes(heliumCustodyRoutes.support),
     },
   ];
 

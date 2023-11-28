@@ -24,20 +24,20 @@ export const silverRoles: any = [
     key: "operations",
     module: "custody",
     route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
-    access: ["authentication", "custody"],
+    access: ["authentication", "custody", "support"],
   },
   {
     label: "Relationship Manager",
     key: "relationship_manager",
     module: "custody",
     route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
-    access: ["authentication", "custody"],
+    access: ["authentication", "custody", "support"],
   },
   {
     label: "Finance",
     key: "finance",
     module: "custody",
     route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
-    access: ["authentication", "custody"],
+    access: ["authentication", "custody", "support"],
   },
 ];
