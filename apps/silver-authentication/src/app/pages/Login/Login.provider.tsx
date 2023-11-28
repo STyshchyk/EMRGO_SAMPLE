@@ -80,7 +80,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
       onSuccess: (data) => {
         disable();
         const user: IUser = LoggedUser;
-        const navigateModileRole = silverRoles.find((role) => user?.role === role.key);
+        const navigateModileRole = silverRoles.find((role: any) => user?.role === role.key);
         if (!navigateModileRole) {
           showErrorToast("Module not found");
           return;

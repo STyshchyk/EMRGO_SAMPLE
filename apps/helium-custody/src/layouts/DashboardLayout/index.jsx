@@ -1,15 +1,10 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 
-import { Box } from "@mui/material";
-import cx from "classnames";
 import PropTypes from "prop-types";
 
-import DashboardHeader from "../../components/DashboardHeader";
+import { CustodyWrapper } from "../../components/CustodyWrapper/CustodyWrapper";
 import DashboardNavHeader from "../../components/DashboardNavHeader";
-import DashboardSidebar from "../../components/DashboardSidebar";
 import { useTheme } from "../../context/theme-context";
-import style from "./style.module.scss";
 
 const drawerWidth = 240;
 
@@ -48,27 +43,10 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className={style.container__root}>
-      <DashboardHeader open={open} handleDrawerToggle={handleDrawerToggle} />
-      <div className={cx(style.bodyContainer)}>
-        <DashboardSidebar open={open} />
-        <main
-          className={cx(
-            style.container__content,
-            locale.rtl ? style.container__content__right : style.container__content__left,
-            {
-              [style.container__contentShift]: open,
-            }
-          )}
-        >
-          <DashboardNavHeader />
-          <div className={style.drawerHeader} />
-          <Box sx={(muiTheme) => muiTheme.mixins.toolbar} />
-          <Outlet />
-          {children}
-        </main>
-      </div>
-    </div>
+    <CustodyWrapper>
+      <DashboardNavHeader />
+      {children}
+    </CustodyWrapper>
   );
 };
 

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 
-import { ClientDashboardWrapper } from "../../../../../packages/shared-ui/src/";
 import { CustodyWrapper as ClientCustodyWrapper } from "../../components/CustodyWrapper/CustodyWrapper";
 import DashboardNavHeader from "../../components/DashboardNavHeader";
 import { useTheme } from "../../context/theme-context";
