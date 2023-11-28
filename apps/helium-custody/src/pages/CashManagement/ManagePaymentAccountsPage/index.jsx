@@ -281,7 +281,7 @@ const ManagePaymentAccountsPage = () => {
 
   return (
     <Fragment>
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" sx={{ mb: "1rem" }}>
         <Grid container lg={3}>
           <PageTitle title={t("PaymentAccountManagement.ManagePaymentAccountsPage.PageTitle")} />
         </Grid>
@@ -295,7 +295,7 @@ const ManagePaymentAccountsPage = () => {
                 handleExportToCSV(data);
               }}
               color="primary"
-              disabled={!isTableDataNotEmpty}
+              // disabled={!isTableDataNotEmpty}
             >
               Export to CSV
             </Button>
@@ -303,8 +303,8 @@ const ManagePaymentAccountsPage = () => {
 
           <Grid item>
             <Button
-              variant="contained"
               color="primary"
+              variant="contained"
               onClick={handleClickOnAddPaymentAccountButton}
             >
               {t("PaymentAccountManagement.ManagePaymentAccountsPage.AddPaymentAccountButtonText")}
@@ -318,11 +318,10 @@ const ManagePaymentAccountsPage = () => {
         <AddPaymentAccountFormDialog
           open={openAddPaymentAccountFormDialog}
           handleClose={handleCloseAddPaymentAccountFormDialog}
-          entitiesList={currentEntityGroupEntityType === "EMRGO_SERVICES" ? allEntities : null}
+          entitiesList={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entitiesList : null}
         />
       ) : null}
     </Fragment>
   );
 };
-
 export default ManagePaymentAccountsPage;

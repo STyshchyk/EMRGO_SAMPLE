@@ -17,17 +17,14 @@ ThemeContext.displayName = "Theme";
 // const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const CustomThemeProvider = (props) => {
-  const { children } = props;
+  const { children, isDarkMode } = props;
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
   const locale = locales.find(({ code }) => code === currentLang);
 
   const theme = {
-    ...themeStyles,
+    ...themeStyles(isDarkMode),
     direction: locale.rtl ? "rtl" : "ltr",
-    // palette: {
-    //   mode: 'light',
-    // },
   };
 
   const muiTheme = createTheme(theme);
