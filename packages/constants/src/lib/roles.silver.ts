@@ -1,4 +1,8 @@
-import {silverAdministrationRoutes, silverCustodyRoutes, silverOnboardingRoutes} from "./silver.routes";
+import {
+  silverAdministrationRoutes,
+  silverCustodyRoutes,
+  silverOnboardingRoutes,
+} from "./silver.routes";
 
 export const silverRoles: any = [
   {
@@ -19,22 +23,21 @@ export const silverRoles: any = [
     label: "Operations",
     key: "operations",
     module: "custody",
-    route: silverCustodyRoutes.home,
+    route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
     access: ["authentication", "custody"],
   },
   {
     label: "Relationship Manager",
     key: "relationship_manager",
     module: "custody",
-    route: silverCustodyRoutes.home,
+    route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
     access: ["authentication", "custody"],
   },
   {
     label: "Finance",
     key: "finance",
     module: "custody",
-    route: silverCustodyRoutes.home,
+    route: silverCustodyRoutes.custody.cashManagement.manageAccounts,
     access: ["authentication", "custody"],
   },
 ];
-
