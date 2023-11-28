@@ -2,6 +2,8 @@ import { Fragment, lazy } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import Box from "@mui/material/Box";
+
 import MinorNavbar from "../../components/MinorNavbar";
 import accessControlsList from "../../constants/accessControlsList";
 import featureFlags from "../../constants/featureFlags";
@@ -23,8 +25,11 @@ const Registrar = lazy(() => import("./Registrar"));
 const CorporateActionEvents = lazy(() => import("./CorporateActionEvents"));
 // const TrusteeServices = lazy(() => import('./TrusteeServices'));
 
-const PageWrapper = ({ children }) => <div style={{ marginTop: "1rem" }}>{children}</div>;
-
+const PageWrapper = ({ children }) => (
+  <div style={{ marginTop: "1rem" }}>
+    <Box sx={{ py: "2rem", px: "2rem" }}>{children}</Box>
+  </div>
+);
 const OperationsSecServices = () => {
   const currentListOfAcls = useSelector(authSelectors.selectCurrentListOfAcls);
 
@@ -123,6 +128,7 @@ const OperationsSecServices = () => {
   return (
     <Routes>
       <Route exact path="" element={<Navigate to={nextAccessibleRoutePath} />}></Route>
+
       <Route
         path="custody-and-settlement"
         element={
