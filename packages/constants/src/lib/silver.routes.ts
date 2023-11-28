@@ -16,6 +16,7 @@ export const silverModuleURLs: IMap = {
   onboarding: import.meta.env["VITE_INTERNAL_ONBOARDING_URL"],
   dataroom: import.meta.env["VITE_INTERNAL_DATA_ROOM_URL"],
   custody: import.meta.env["VITE_INTERNAL_CUSTODY_URL"], // ! recheck URL once its deployed
+  support: import.meta.env["VITE_INTERNAL_CUSTODY_URL"], // ! recheck URL once its deployed
 };
 
 console.debug("DEBUG VITE_BUILD_INFO (MONOREPO): ", import.meta.env["VITE_BUILD_INFO"]);

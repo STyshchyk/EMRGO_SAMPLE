@@ -9,6 +9,7 @@ export enum silverModule {
   onboarding = "onboarding",
   dataroom = "dataroom",
   custody = "custody",
+  support = "custody",
 }
 
 export const buildSilverModuleURL = (module: string, path: string) => {
