@@ -111,7 +111,7 @@ const DependentAmountField = (props) => {
   );
 };
 
-const InlineFormField = ({ label, children }) => (
+const InlineFormField = ({ label,name, children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
       <Typography>{label}</Typography>
@@ -124,13 +124,15 @@ const InlineFormField = ({ label, children }) => (
       >
         {children}
       </FormControl>
-      {/* <ErrorMessage
-        component={Typography}
-        variant="caption"
-        color="error"
-        className="ml-4"
-        name = {props?.name}
-      /> */}
+        {name && (
+            <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name={name}
+            />
+        )}
     </Grid>
   </Grid>
 );
@@ -566,7 +568,7 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={"Quantity"}>
+              <InlineFormField label={"Quantity"} name="quantity">
                 <Field
                   fullWidth
                   component={CustomTextField}
@@ -584,7 +586,7 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={`Price ${isEquity ? "" : `%`}`}>
+              <InlineFormField label={`Price ${isEquity ? "" : `%`}`} name={"price"}>
                 <Field
                   component={CustomTextField}
                   disabled={

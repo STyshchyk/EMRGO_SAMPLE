@@ -6,10 +6,33 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   externalSecuritySelectOption: Yup.object().required('Security is required'),
   price: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
-    then: () => Yup.string(),
-    otherwise: () => Yup.string().required(),
+    then: () =>
+      Yup.string().test("maxValue", "Must be at most 16 digits", (value) => {
+        if (!isNaN(Number(value))) {
+            const maxValue = 9999999999999999.999999;
+            return parseFloat(value) <= maxValue;
+        }
+        return true;
+    }),
+    otherwise: () =>
+      Yup.string()
+        .required("Price is required")
+        .test("maxValue", "Must be at most 16 digits", (value) => {
+        if (!isNaN(Number(value))) {
+            const maxValue = 9999999999999999.999999;
+            return parseFloat(value) <= maxValue;
+        }
+        return true;
+    }),
   }),
-  quantity: Yup.string().required(),
+  quantity: Yup.string().required()    
+    .test("maxValue", "Must be at most 16 digits", (value) => {
+    if (!isNaN(Number(value))) {
+        const maxValue = 9999999999999999.999999;
+        return parseFloat(value) <= maxValue;
+    }
+    return true;
+}),
   settlementAmount: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () => Yup.string(),
