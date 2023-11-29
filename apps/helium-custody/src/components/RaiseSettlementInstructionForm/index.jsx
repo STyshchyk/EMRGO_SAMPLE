@@ -111,7 +111,7 @@ const DependentAmountField = (props) => {
   );
 };
 
-const InlineFormField = ({ label,name, children }) => (
+const InlineFormField = ({ label, children }) => (
   <Grid item container md={12}>
     <Grid item sm={4} container direction="column" justifyContent="center">
       <Typography>{label}</Typography>
@@ -124,7 +124,7 @@ const InlineFormField = ({ label,name, children }) => (
       >
         {children}
       </FormControl>
-        {name && (
+        {/* {name && (
             <ErrorMessage
                 component={Typography}
                 variant="caption"
@@ -132,7 +132,7 @@ const InlineFormField = ({ label,name, children }) => (
                 className="ml-4"
                 name={name}
             />
-        )}
+        )} */}
     </Grid>
   </Grid>
 );
