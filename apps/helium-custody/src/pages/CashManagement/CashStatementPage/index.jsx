@@ -364,6 +364,18 @@ const CashStatementPage = () => {
                 <ExportButtons tableRef={tableRef} name="Cash Statement" />
               </Grid>
             </Grid>
+            <FilterConsumer>
+              {({ filters, filterColumns }) => {
+                return (
+                  <Grid item xs={12}>
+                    <ReportingInfo
+                      cashAccount={filters?.account}
+                      securityAccount={filters?.safekeepingAccount}
+                    />
+                  </Grid>
+                );
+              }}
+            </FilterConsumer>
           </TableFiltersWrapper>
         </div>
 
@@ -400,12 +412,6 @@ const CashStatementPage = () => {
               });
             return (
               <Fragment>
-                <Grid item xs={12}>
-                  <ReportingInfo
-                    cashAccount={filters?.account}
-                    securityAccount={filters?.safekeepingAccount}
-                  />
-                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"
