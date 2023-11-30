@@ -233,21 +233,12 @@ const ViewExternalPaymentsAuditHistoryDialog = ({
                 columns={columns}
               />
 
-              <Grid
-                item
-                container
-                spacing={2}
-                justifyContent="flex-end"
-                style={{
-                  marginTop: "1rem",
-                }}
-              >
+              <Grid item container spacing={2} justifyContent="flex-end">
                 <ExportButtons tableRef={tableRef} name="External Payments Audit History Report" />
-
-                <Box mt={2} ml={2}>
+                <Box mt={4} ml={2}>
                   <Grid item>
                     <Button
-                      size="large"
+                      size="medium"
                       variant="outlined"
                       color="primary"
                       onClick={() => {
