@@ -6,9 +6,8 @@ export const MinorNavbar = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: auto;
-  padding: ${rem(10)} ${rem(24)};
+  padding: ${rem(12)} ${rem(24)};
   margin-top: 0.5rem;
-  scrollbar-width: thin;
 
   &::-webkit-scrollbar-track {
     background-color: #f5f5f5;
@@ -18,6 +17,8 @@ export const MinorNavbar = styled.div`
     height: 3px;
     background-color: ${getTheme("colors.green3")};
   }
+  scrollbar-color: ${getTheme("colors.green3")} #f5f5f5;
+  scrollbar-width: thin;
 
   &::-webkit-scrollbar-thumb {
     background-color: ${getTheme("colors.green3")};

@@ -26,7 +26,7 @@ const CorporateActionEvents = lazy(() => import("./CorporateActionEvents"));
 // const TrusteeServices = lazy(() => import('./TrusteeServices'));
 
 const PageWrapper = ({ children }) => (
-  <div style={{ marginTop: "1rem" }}>
+  <div>
     <Box sx={{ py: "2rem", px: "2rem" }}>{children}</Box>
   </div>
 );
