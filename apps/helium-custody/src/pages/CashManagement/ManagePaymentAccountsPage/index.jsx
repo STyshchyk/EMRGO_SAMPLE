@@ -318,7 +318,7 @@ const ManagePaymentAccountsPage = () => {
         <AddPaymentAccountFormDialog
           open={openAddPaymentAccountFormDialog}
           handleClose={handleCloseAddPaymentAccountFormDialog}
-          entitiesList={currentEntityGroupEntityType === "EMRGO_SERVICES" ? entitiesList : null}
+          entitiesList={currentEntityGroupEntityType === "EMRGO_SERVICES" ? allEntities : null}
         />
       ) : null}
     </Fragment>
