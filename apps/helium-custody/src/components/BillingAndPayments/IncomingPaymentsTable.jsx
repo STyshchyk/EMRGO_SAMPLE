@@ -2,8 +2,6 @@ import React, { useState } from "react";
 // import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
 
-
-
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -11,16 +9,10 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
-
-
 import { currencyRenderer, dateRenderer } from "../../constants/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-
-
-
-
 
 const IncomingPaymentsTable = ({
   data,
@@ -121,7 +113,7 @@ const IncomingPaymentsTable = ({
 
   return (
     <div>
-      <Grid container justifyContent="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center" mb={2}>
         <Grid item>
           <h3>Incoming Payments</h3>
         </Grid>
