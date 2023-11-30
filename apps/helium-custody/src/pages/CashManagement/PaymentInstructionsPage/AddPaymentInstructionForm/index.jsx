@@ -9,7 +9,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 // import Datepicker from "../../../../components/Datepicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import cx from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
@@ -200,6 +199,16 @@ const AddPaymentInstructionForm = ({
                     component={(props) => (
                       <DatePicker
                         {...props}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                          },
+                        }}
                         sx={{
                           width: "100%", // Ensure the DatePicker takes full-width
                           ...(props.sx || {}),
@@ -241,9 +250,12 @@ const AddPaymentInstructionForm = ({
                     name="paymentAmount"
                     variant="outlined"
                     InputProps={{
-                      inputComponent: CustomNumberInputField,
                       endAdornment: (
-                        <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
+                        <InputAdornment position="end">
+                          <Typography color="primary" variant="subtitle2">
+                            {values.paymentAccount?.value?.currency}
+                          </Typography>
+                        </InputAdornment>
                       ),
                     }}
                     // eslint-disable-next-line  react/jsx-no-duplicate-props
