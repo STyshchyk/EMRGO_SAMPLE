@@ -128,6 +128,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       keyEvent.preventDefault();
     }
   }
+
   const formatParsedValues = (payload) => {
     const dateFields = ["exDate", "recordDate", "paymentDate", "responseDeadline"];
     dateFields.forEach((field) => {
@@ -306,70 +307,57 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
             <DialogContent>
               <Box mb={2}>
                 <Grid container>
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Event Type</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder="Select Event Type"
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          isSearchable
-                          styles={selectStyles}
-                          value={values.eventType}
-                          isClearable
-                          options={corporateActionEventTypeOptions}
-                          onChange={(selected) => {
-                            setFieldValue("eventType", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="eventType"
-                      />
-                    </Grid>
-                  </Grid>
+                  <InlineFormField label={"Event Type"}>
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select Event Type"
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.eventType}
+                      isClearable
+                      options={corporateActionEventTypeOptions}
+                      onChange={(selected) => {
+                        setFieldValue("eventType", selected);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="eventType"
+                    />
+                  </InlineFormField>
 
-                  <Grid container className="my-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Linked Event ID</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder="Select Linked Event ID"
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          isSearchable
-                          styles={selectStyles}
-                          value={values.linkedEventId}
-                          isClearable
-                          options={corporateActionLinkedEventOptions}
-                          onChange={(selected) => {
-                            setFieldValue("linkedEventId", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="linkedEventId"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container item justifyContent="flex-end">
+                  <InlineFormField label={"Linked Event ID"}>
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select Linked Event ID"
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.linkedEventId}
+                      isClearable
+                      options={corporateActionLinkedEventOptions}
+                      onChange={(selected) => {
+                        setFieldValue("linkedEventId", selected);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="linkedEventId"
+                    />
+                  </InlineFormField>
+
+                  <Grid container item justifyContent="flex-end" mb={2}>
                     <Grid item>
                       <Button
                         variant="contained"
@@ -381,291 +369,273 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     </Grid>
                   </Grid>
 
+                  <InlineFormField label={"Security ISIN"}>
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select Security ISIN"
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.externalSecuritySelectOption}
+                      isClearable
+                      options={externalSecurityOptionsList}
+                      onChange={(newValue) => {
+                        setFieldValue("externalSecuritySelectOption", newValue);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="externalSecuritySelectOption"
+                    />
+                  </InlineFormField>
+
                   <Grid container className="my-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Security ISIN</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder="Select Security ISIN"
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          isSearchable
-                          styles={selectStyles}
-                          value={values.externalSecuritySelectOption}
-                          isClearable
-                          options={externalSecurityOptionsList}
-                          onChange={(newValue) => {
-                            setFieldValue("externalSecuritySelectOption", newValue);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="externalSecuritySelectOption"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container className="my-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Security Name</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Field
-                          fullWidth
-                          component={TextField}
-                          placeholder="Security Long Name"
-                          name="securityName"
-                          variant="filled"
-                          type="text"
-                          value={
-                            values.externalSecuritySelectOption
-                              ? values.externalSecuritySelectOption.value?.longName
-                              : ""
-                          }
-                          disabled
-                        />
-                      </FormControl>
-                      {/* <ErrorMessage component={Typography} variant="caption" color="error" className="ml-4" name="securityName" /> */}
-                    </Grid>
-                  </Grid>
-
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Ex Date</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
+                    <InlineFormField label={"Security Name"}>
                       <Field
                         fullWidth
-                        format="DD/MM/YYYY"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        component={DatePicker}
-                        name="exDate"
-                        value={values.exDate}
-                        onChange={(date) => {
-                          setFieldValue("exDate", date);
-                        }}
-                      />
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="exDate"
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Record Date</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        format="DD/MM/YYYY"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        minDate={values.exDate}
-                        component={DatePicker}
-                        name="recordDate"
-                        value={values.recordDate}
-                        onChange={(date) => {
-                          setFieldValue("recordDate", date);
-                        }}
-                      />
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="recordDate"
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Payment Date</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        format="DD/MM/YYYY"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        minDate={values.exDate}
-                        component={DatePicker}
-                        name="paymentDate"
-                        value={values.paymentDate}
-                        onChange={(date) => {
-                          setFieldValue("paymentDate", date);
-                        }}
-                      />
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="paymentDate"
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Event Status</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder="Select Event Status"
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          isSearchable
-                          styles={selectStyles}
-                          value={values.eventStatus}
-                          isClearable
-                          options={corporateActionEventStatusOptions}
-                          onChange={(selected) => {
-                            setFieldValue("eventStatus", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="eventStatus"
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Event Terms</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        placeholder="Event Terms"
                         component={TextField}
-                        name="eventTerms"
-                        multiline
-                        rows={2}
-                        variant="filled"
+                        placeholder="Security Long Name"
+                        name="securityName"
+                        variant="outlined"
+                        size="small"
                         type="text"
-                        inputProps={{
-                          maxLength: 100,
-                        }}
-                        value={values.eventTerms}
+                        value={
+                          values.externalSecuritySelectOption
+                            ? values.externalSecuritySelectOption.value?.longName
+                            : ""
+                        }
+                        disabled
                       />
-                    </Grid>
+                    </InlineFormField>
+                    {/* <ErrorMessage component={Typography} variant="caption" color="error" className="ml-4" name="securityName" /> */}
                   </Grid>
 
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Additional Information</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        placeholder="Additional Information"
-                        component={TextField}
-                        name="additionalInfo"
-                        multiline
-                        rows={2}
-                        variant="filled"
-                        type="text"
-                        inputProps={{
-                          maxLength: 100,
-                        }}
-                        value={values.additionalInfo}
-                      />
-                    </Grid>
-                  </Grid>
+                  <InlineFormField label={"Ex Date"}>
+                    <Field
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      size="small"
+                      inputVariant="outlined"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      component={DatePicker}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                        },
+                      }}
+                      name="exDate"
+                      value={values.exDate}
+                      onChange={(date) => {
+                        setFieldValue("exDate", date);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="exDate"
+                    />
+                  </InlineFormField>
 
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography className="mt-4">Voluntary/Mandatory</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <FormControl className="w-full">
-                        <Select
-                          closeMenuOnSelect
-                          placeholder="Select.."
-                          components={{
-                            ...animatedComponents,
-                          }}
-                          isSearchable
-                          styles={selectStyles}
-                          value={values.mandatoryOrVoluntary}
-                          isClearable
-                          options={mandatoryOrVoluntaryOptions}
-                          onChange={(selected) => {
-                            setFieldValue("mandatoryOrVoluntary", selected);
-                          }}
-                        />
-                      </FormControl>
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="mandatoryOrVoluntary"
-                      />
-                    </Grid>
-                  </Grid>
+                  <InlineFormField label={"Record Date"}>
+                    <Field
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      inputVariant="filled"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      minDate={values.exDate}
+                      component={DatePicker}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                        },
+                      }}
+                      name="recordDate"
+                      value={values.recordDate}
+                      onChange={(date) => {
+                        setFieldValue("recordDate", date);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="recordDate"
+                    />
+                  </InlineFormField>
 
-                  <Grid container className="mt-4">
-                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
-                      <Typography
-                        className={`mt-4 ${
-                          values.mandatoryOrVoluntary?.value === "mandatory" && classes.disabledText
-                        }`}
-                      >
-                        Client Response Deadline
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
-                      <Field
-                        fullWidth
-                        format="DD/MM/YYYY"
-                        inputVariant="filled"
-                        variant="dialog"
-                        placeholder="DD/MM/YYYY"
-                        component={DatePicker}
-                        disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
-                        name="responseDeadline"
-                        minDate={moment()}
-                        value={values.responseDeadline}
-                        onChange={(date) => {
-                          setFieldValue("responseDeadline", date);
-                        }}
-                      />
-                      <ErrorMessage
-                        component={Typography}
-                        variant="caption"
-                        color="error"
-                        className="ml-4"
-                        name="responseDeadline"
-                      />
-                    </Grid>
-                  </Grid>
+                  <InlineFormField label={"Payment Date"}>
+                    <Field
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      inputVariant="filled"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      minDate={values.exDate}
+                      component={DatePicker}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                        },
+                      }}
+                      name="paymentDate"
+                      value={values.paymentDate}
+                      onChange={(date) => {
+                        setFieldValue("paymentDate", date);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="paymentDate"
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={"Event Status"}>
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select Event Status"
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      styles={selectStyles}
+                      value={values.eventStatus}
+                      isClearable
+                      options={corporateActionEventStatusOptions}
+                      onChange={(selected) => {
+                        setFieldValue("eventStatus", selected);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="eventStatus"
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={"Event Status"}>
+                    <Field
+                      fullWidth
+                      placeholder="Event Terms"
+                      component={TextField}
+                      name="eventTerms"
+                      multiline
+                      rows={2}
+                      variant="outlined"
+                      type="text"
+                      inputProps={{
+                        maxLength: 100,
+                      }}
+                      value={values.eventTerms}
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={"Additional Information"}>
+                    <Field
+                      fullWidth
+                      placeholder="Additional Information"
+                      component={TextField}
+                      name="additionalInfo"
+                      multiline
+                      rows={2}
+                      variant="outlined"
+                      type="text"
+                      inputProps={{
+                        maxLength: 100,
+                      }}
+                      value={values.additionalInfo}
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={"Voluntary/Mandatory"}>
+                    <Select
+                      closeMenuOnSelect
+                      placeholder="Select.."
+                      components={{
+                        ...animatedComponents,
+                      }}
+                      isSearchable
+                      menuPortalTarget={document.body}
+                      styles={selectStyles}
+                      value={values.mandatoryOrVoluntary}
+                      isClearable
+                      options={mandatoryOrVoluntaryOptions}
+                      onChange={(selected) => {
+                        setFieldValue("mandatoryOrVoluntary", selected);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="mandatoryOrVoluntary"
+                    />
+                  </InlineFormField>
+
+                  <InlineFormField label={" Client Response Deadline"}>
+                    <Field
+                      fullWidth
+                      format="DD/MM/YYYY"
+                      inputVariant="filled"
+                      variant="dialog"
+                      placeholder="DD/MM/YYYY"
+                      component={DatePicker}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                        },
+                      }}
+                      disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
+                      name="responseDeadline"
+                      minDate={moment()}
+                      value={values.responseDeadline}
+                      onChange={(date) => {
+                        setFieldValue("responseDeadline", date);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={Typography}
+                      variant="caption"
+                      color="error"
+                      className="ml-4"
+                      name="responseDeadline"
+                    />
+                  </InlineFormField>
                 </Grid>
               </Box>
             </DialogContent>
@@ -717,5 +687,27 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     </StyledDialog>
   );
 };
-
+const InlineFormField = ({ label, children }) => (
+  <Grid item container md={12} mb={2}>
+    <Grid item sm={4} container direction="column" justifyContent="center" align-items={"center"}>
+      <Typography>{label}</Typography>
+    </Grid>
+    <Grid item sm={8}>
+      <FormControl
+        style={{
+          width: "100%",
+        }}
+      >
+        {children}
+      </FormControl>
+      {/* <ErrorMessage
+        component={Typography}
+        variant="caption"
+        color="error"
+        className="ml-4"
+        name = {props?.name}
+      /> */}
+    </Grid>
+  </Grid>
+);
 export default AddCorporateActionEventDialog;
