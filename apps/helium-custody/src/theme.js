@@ -108,13 +108,7 @@ export default (isDarkMode) => {
           },
         },
       },
-      MuiInputBase: {
-        styleOverrides: {
-          input: {
-            padding: "12px !important",
-          },
-        },
-      },
+
       MuiInputAdornment: {
         styleOverrides: {
           positionStart: {
