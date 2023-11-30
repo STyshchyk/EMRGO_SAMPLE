@@ -227,6 +227,7 @@ const ViewCorporateActionEventDialog = ({
                         handleClose();
                       }}
                       color="primary"
+                      variant="outlined"
                     >
                       Cancel
                     </Button>

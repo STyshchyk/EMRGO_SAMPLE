@@ -54,7 +54,7 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
     then: () => Yup.string(),
     otherwise: () =>
       Yup.string()
-        .required("Accrued Interest is required")
+        .required()
         .test("maxValue", "Must be at most 12 digits", (value) => {
           if (!isNaN(Number(value))) {
             return value.length <= 12;

@@ -300,10 +300,12 @@ const CashBalancesTable = ({ data, accounts }) => {
                   setCustomClear={() => {
                     setCashAccountOptions([]);
                     setCurrentlySelectedCashAccount(null);
+                    setCurrentlySelectedCurrency(null);
                   }}
                   customOnChange={(selectedAccount) => {
                     handleSecurityAccountChange(selectedAccount);
                   }}
+                  dependentFields={["account", "currency"]}
                   hasDefaultValue={securityAccountOptions.length === 1}
                 />
               </Grid>
@@ -333,6 +335,7 @@ const CashBalancesTable = ({ data, accounts }) => {
                     setCurrentlySelectedCurrency(null);
                     setCurrencyOptions(tempCurrenciesList);
                   }}
+                  dependentFields={["currency"]}
                   customOnChange={(selected) => {
                     matchCashAccCurrencyWithCurrency(selected);
                   }}
