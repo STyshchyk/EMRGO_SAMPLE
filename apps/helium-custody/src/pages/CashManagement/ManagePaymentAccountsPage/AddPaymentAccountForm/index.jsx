@@ -230,15 +230,23 @@ const AddPaymentAccountForm = ({
                 <InlineFormField
                   label={t("PaymentAccountManagement.AddPaymentAccountForm.Full Name")}
                 >
-                  <Field fullWidth component={TextField} name="name" variant="filled" type="text" />
+                  <Field
+                    fullWidth
+                    component={TextField}
+                    size="small"
+                    name="name"
+                    variant="outlined"
+                    type="text"
+                  />
                 </InlineFormField>
 
                 <InlineFormField label={t("PaymentAccountManagement.AddPaymentAccountForm.Label")}>
                   <Field
                     fullWidth
                     component={TextField}
+                    size="small"
                     name="label"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                   />
                 </InlineFormField>
@@ -256,7 +264,9 @@ const AddPaymentAccountForm = ({
               </Grid>
 
               <div className="w-full">
-                <div className="w-1/2 inline-block p-2">
+                <div
+                  className={`${values.hasIntermediaryBank ? "w-1/2" : "w-full"} inline-block p-2`}
+                >
                   <Grid container spacing={2}>
                     <InlineFormField label={" "}>
                       <Typography>
@@ -269,8 +279,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="iban"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -281,8 +292,9 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         component={TextField}
+                        size="small"
                         name="swift"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -294,7 +306,8 @@ const AddPaymentAccountForm = ({
                         fullWidth
                         component={TextField}
                         name="bankName"
-                        variant="filled"
+                        size="small"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -312,7 +325,8 @@ const AddPaymentAccountForm = ({
                         rows={5}
                         component={TextField}
                         name="address"
-                        variant="filled"
+                        size="small"
+                        variant="outlined"
                       />
                     </InlineFormField>
 
@@ -323,7 +337,8 @@ const AddPaymentAccountForm = ({
                         fullWidth
                         component={TextField}
                         name="city"
-                        variant="filled"
+                        size="small"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -335,7 +350,8 @@ const AddPaymentAccountForm = ({
                         fullWidth
                         component={TextField}
                         name="postcode"
-                        variant="filled"
+                        size="small"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -350,6 +366,7 @@ const AddPaymentAccountForm = ({
                         isSearchable
                         styles={selectStyles}
                         menuPortalTarget={document.body}
+                        menuPlacement={"auto"}
                         value={values.country} // !WTF
                         isClearable
                         options={getDropdownValues(
