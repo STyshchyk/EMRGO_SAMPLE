@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 
 import { useDarkModeCustomSilver } from "@emrgo-frontend/services";
@@ -18,23 +18,26 @@ import { CustomThemeProvider } from "../../context/theme-context";
 import { UserProvider as CustodyUserProvider } from "../../context/user-context";
 import i18n from "../../i18n";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+      retry: 3,
+      staleTime: 5 * 1000,
+    },
+  },
+});
 const AppProviders = ({ children }) => {
   const { isDarkMode, disable } = useDarkMode(false);
   const [isDarkModeCustom, enableCustom, disableCustom] = useDarkModeCustomSilver();
-  if (isDarkMode === true) {
-    disable();
-  }
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: true,
-        refetchOnMount: false,
-        refetchOnReconnect: true,
-        retry: 3,
-        staleTime: 5 * 1000,
-      },
-    },
-  });
+  useEffect(() => {
+    if (isDarkMode === true) {
+      disable();
+    }
+  }, [isDarkMode]);
+
   return (
     <UserProvider>
       <I18nextProvider i18n={i18n}>
