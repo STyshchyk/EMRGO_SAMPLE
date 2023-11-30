@@ -78,19 +78,20 @@ const DependentAmountField = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueA?.value, valueB?.value, setFieldValue, props.name, props.calculatedValue]);
-
+  const currencyExists = values.externalSecuritySelectOption?.value?.currencyName;
+  const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
+    values.settlementTypeSelectOption?.label
+  );
+  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
   return (
     <Field
       fullWidth
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant="filled"
+      variant={isVariantOutlined ? "outlined" : "filled"}
+      disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
       value={values[props.name]}
-      disabled={
-        !values.externalSecuritySelectOption?.value?.currencyName ||
-        ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-      }
       InputProps={{
         inputComponent: CustomNumberInputField,
         endAdornment: (
@@ -333,7 +334,11 @@ const RaiseSettlementInstructionForm = ({
         let curSetType = values.externalSecuritySelectOption?.value?.assetTypeName?.key;
         let isEquityType = curSetType === "equity";
         let settlementType = values.settlementTypeSelectOption?.label ?? "";
-
+        const currencyExists = values.externalSecuritySelectOption?.value?.currencyName;
+        const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
+          values.settlementTypeSelectOption?.label
+        );
+        const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
         return (
           <Form>
             <Grid container spacing={2}>
@@ -553,7 +558,7 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="filled"
+                  variant="outlined"
                   value={values.quantity}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -565,15 +570,12 @@ const RaiseSettlementInstructionForm = ({
               <InlineFormField label={`Price ${isEquityType ? "" : "%"}`} name={"price"}>
                 <Field
                   component={CustomTextField}
-                  disabled={
-                    !values.externalSecuritySelectOption?.value?.currencyName ||
-                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                  }
                   fullWidth
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant="filled"
+                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -615,12 +617,9 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Accrued Interest"
                   name="accruedInterest"
-                  variant="filled"
+                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   value={values.accruedInterest}
-                  disabled={
-                    !values.externalSecuritySelectOption?.value?.currencyName ||
-                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                  }
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -706,7 +705,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Internal Trade Ref"
                   name="internalTradeRef"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {
