@@ -263,7 +263,7 @@ const AddPaymentAccountForm = ({
                 </InlineFormField>
               </Grid>
 
-              <div className="w-full">
+              <Grid item className="w-full">
                 <div
                   className={`${values.hasIntermediaryBank ? "w-1/2" : "w-full"} inline-block p-2`}
                 >
@@ -387,7 +387,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="accountNo"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -401,7 +402,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="routingNo"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -415,7 +417,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="sortCode"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -429,7 +432,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="ifscCode"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -443,7 +447,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="bsbCode"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -455,7 +460,7 @@ const AddPaymentAccountForm = ({
                   {values.hasIntermediaryBank && (
                     <Grid container spacing={2}>
                       <InlineFormField label={" "}>
-                        <Typography>
+                        <Typography sx={{ paddingTop: "1rem" }}>
                           <strong>Intermediary Bank Details</strong>
                         </Typography>
                       </InlineFormField>
@@ -466,7 +471,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="intermediaryBankIBAN"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -478,7 +484,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="intermediaryBankBIC"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -490,7 +497,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="intermediaryBankName"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -508,7 +516,8 @@ const AddPaymentAccountForm = ({
                           rows={5}
                           component={TextField}
                           name="intermediaryBankAddress"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                         />
                       </InlineFormField>
 
@@ -519,7 +528,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="intermediaryBankCity"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -531,7 +541,8 @@ const AddPaymentAccountForm = ({
                           fullWidth
                           component={TextField}
                           name="intermediaryBankPostCode"
-                          variant="filled"
+                          size="small"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -546,6 +557,7 @@ const AddPaymentAccountForm = ({
                           isSearchable
                           styles={selectStyles}
                           menuPortalTarget={document.body}
+                          menuPlacement={"auto"}
                           value={values.intermediaryBankCountry} // !WTF
                           isClearable
                           options={getDropdownValues(
@@ -565,7 +577,8 @@ const AddPaymentAccountForm = ({
                             fullWidth
                             component={TextField}
                             name="intermediaryBankAccountNo"
-                            variant="filled"
+                            size="small"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -578,7 +591,8 @@ const AddPaymentAccountForm = ({
                             fullWidth
                             component={TextField}
                             name="intermediaryBankRouteCode"
-                            variant="filled"
+                            size="small"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -591,7 +605,8 @@ const AddPaymentAccountForm = ({
                             fullWidth
                             component={TextField}
                             name="intermediaryBankSortCode"
-                            variant="filled"
+                            size="small"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -604,7 +619,8 @@ const AddPaymentAccountForm = ({
                             fullWidth
                             component={TextField}
                             name="intermediaryBankIfscCode"
-                            variant="filled"
+                            size="small"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -617,7 +633,8 @@ const AddPaymentAccountForm = ({
                             fullWidth
                             component={TextField}
                             name="intermediaryBankBsbCode"
-                            variant="filled"
+                            size="small"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -625,7 +642,7 @@ const AddPaymentAccountForm = ({
                     </Grid>
                   )}
                 </div>
-              </div>
+              </Grid>
               {/*
                 <Grid item container xs={12} md={12} lg={12}>
                 <Grid item xs={4} container direction="column" justify="center">
