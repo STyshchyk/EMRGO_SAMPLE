@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import * as paymentAndSettlementSelectors from "../../redux/selectors/paymentAndSettlement";
@@ -40,8 +41,13 @@ const generateInitialValues = (rowData) => {
       value: rowData?.counterpartySSIObject,
     },
     externalSecuritySelectOption: {
-      label: rowData?.externalSecurity?.isin,
-      value: rowData?.externalSecurity,
+      label: rowData?.externalSecurity?.name,
+      value: {
+        ...rowData?.externalSecurity,
+        isin:
+          getAttribute(rowData?.externalSecurity?.attributes, "isin") ??
+          rowData?.externalSecurity?.isin,
+      },
     },
     price: rowData?.price,
     // price: parseFloat(rowData?.price.replace(',', ''), 10),
