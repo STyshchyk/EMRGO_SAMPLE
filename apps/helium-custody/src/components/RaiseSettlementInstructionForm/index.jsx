@@ -476,7 +476,7 @@ const RaiseSettlementInstructionForm = ({
                       resetForm();
                     }
                   }}
-                  isDisabled={editable}
+                  // isDisabled={editable}
                 />
                 <ErrorMessage
                   component={Typography}
