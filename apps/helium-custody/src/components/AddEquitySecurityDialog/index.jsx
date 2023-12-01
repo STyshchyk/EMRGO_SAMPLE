@@ -221,7 +221,8 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Name")}
                           name="name"
-                          variant="filled"
+                          variant="outlined"
+                          size="small"
                           type="text"
                           // InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                         />
@@ -240,7 +241,8 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Long Name")}
                           name="longName"
-                          variant="filled"
+                          variant="outlined"
+                          size="small"
                           type="text"
                         />
                       </Grid>
@@ -258,7 +260,8 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Short Name")}
                           name="shortName"
-                          variant="filled"
+                          variant="outlined"
+                          size="small"
                           type="text"
                           // InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                         />
@@ -444,7 +447,8 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                                         component={TextField}
                                         label={item.securityIdTypeName}
                                         name={`attributes.${index}.value`}
-                                        variant="filled"
+                                        variant="outlined"
+                                        size="small"
                                         type="text"
                                       />
                                     </Grid>
