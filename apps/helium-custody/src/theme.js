@@ -122,7 +122,7 @@ export default (isDarkMode) => {
       MuiInputLabel: {
         styleOverrides: {
           shrink: {
-            transform: "translate(12px, 4px) scale(0.75)!important",
+            transform: "translate(12px, -6px) scale(0.75)!important",
           },
           filled: {
             transform: "translate(12px, 15px) scale(1)",
