@@ -93,8 +93,6 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
       details: values.paymentDetails,
     };
 
-    createPaymentInstruction(requestPayload);
-
     setSubmitting(true);
 
     createPaymentInstruction({
