@@ -351,7 +351,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Security Name")}
                         name="name"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                         InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       />
@@ -370,7 +371,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Security Short Name")}
                         name="shortName"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -388,7 +390,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Security Long Name")}
                         name="longName"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -406,7 +409,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Issuance Name")}
                         name="issuanceName"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -416,7 +420,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Typography className="mt-4">WSN</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6}  className="px-1">
-                        <Field fullWidth component={TextField} label="WSN" name="wsn" variant="filled" type="text" />
+                        <Field fullWidth component={TextField} label="WSN" name="wsn" variant="outlined" size="small" type="text" />
                       </Grid>
                     </Grid>{' '} */}
                   <Grid container className="mt-4">
@@ -431,7 +435,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.ISIN")}
                         name="isin"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -449,7 +454,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Ticker")}
                         name="ticker"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -468,7 +474,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           component={TextField}
                           label={t('external_securities:External Securities.Add Security Form.Rate')}
                           name="profitRate"
-                          variant="filled"
+                          variant="outlined" size="small"
                           type="text"
                         />
                         /> */}
@@ -477,7 +483,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Rate")}
                         name="profitRate"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         value={values.profitRate}
                         InputProps={{
                           inputComponent: CustomNumberInputField,
@@ -560,7 +567,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputvariant="outlined"
+                        size="small"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
@@ -583,7 +591,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputvariant="outlined"
+                        size="small"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         minDate={moment()}
@@ -642,7 +651,8 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         component={TextField}
                         label={t("External Securities.Add Security Form.Issuance Amount")}
                         name="issuanceAmount"
-                        variant="filled"
+                        variant="outlined"
+                        size="small"
                         type="text"
                       />
                     </Grid>
