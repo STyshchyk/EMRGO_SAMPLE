@@ -15,6 +15,7 @@ import { TextField } from "formik-mui";
 import moment from "moment";
 
 import AutoSaveFields from "../../../../components/AutoSaveFields";
+import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import style from "./style.module.scss";
@@ -39,6 +40,9 @@ const AddPaymentInstructionForm = ({
   } = options;
   // local states
 
+  const [selectedCurrencyName, setSelectedCurrencyName] = useState(
+    initialValues.paymentAccount?.value?.currency ?? ""
+  );
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
   );
@@ -82,11 +86,13 @@ const AddPaymentInstructionForm = ({
                 options={filteredPaymentAccountOptions}
                 onChange={(selectedOption, triggeredAction) => {
                   if (triggeredAction.action === "clear") {
+                    setSelectedCurrencyName("");
                     setFieldValue("paymentAccount", null);
                   }
 
                   if (triggeredAction.action === "select-option") {
                     setFieldValue("paymentAccount", selectedOption);
+                    setSelectedCurrencyName(selectedOption?.value?.currency);
                   }
                 }}
               />
@@ -144,22 +150,11 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                   name="paymentAmount"
-                  variant="filled"
-                  type="number"
-                  min="0"
-                  onChange={(event) => {
-                    const regexTwoDecimal = /^[0-9]*(\.[0-9]{0,2})?$/;
-                    if (regexTwoDecimal.test(event.target.value)) {
-                      setFieldValue("paymentAmount", event.target.value);
-                    }
-                  }}
+                  variant="outlined"
                   InputProps={{
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
-                      <InputAdornment position="end">
-                        <Typography color="primary" variant="subtitle2">
-                          {values.paymentAccount?.value?.currency}
-                        </Typography>
-                      </InputAdornment>
+                      <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
                     ),
                   }}
                   // eslint-disable-next-line  react/jsx-no-duplicate-props
