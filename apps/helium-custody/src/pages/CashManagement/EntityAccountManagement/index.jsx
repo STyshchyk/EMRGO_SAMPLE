@@ -252,9 +252,13 @@ const EntityAccountManagement = () => {
         data={rows}
         options={{
           ...tableStyles,
-          searchFieldVariant: "outlined",
+          searchFieldVariant: "filled",
           pageSize: 10,
           actionsColumnIndex: -1,
+          searchFieldStyle: {
+            backgroundColor: "transparent",
+            border: "1px solid gray",
+          },
         }}
         actions={[
           {

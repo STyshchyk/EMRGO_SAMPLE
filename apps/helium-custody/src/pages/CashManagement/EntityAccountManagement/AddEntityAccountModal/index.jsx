@@ -214,6 +214,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     label={t("EntityAccountManagement.IBAN Number")}
                     name="iban"
                     variant="outlined"
+                    size={"small"}
                     fullWidth
                   />
                 </Box>
@@ -223,6 +224,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     label={t("EntityAccountManagement.External Account Number")}
                     name="externalAccountNumber"
                     variant="outlined"
+                    size={"small"}
                     fullWidth
                   />
                 </Box>

@@ -146,6 +146,11 @@ const TFATickets = () => {
             options={{
               actionsColumnIndex: -1,
               pageSize: 10,
+              searchFieldVariant: "filled",
+              searchFieldStyle: {
+                backgroundColor: "transparent",
+                border: "1px solid gray",
+              },
             }}
             // onRowClick={(event, rowData) => viewTFADocument(rowData)}
             localization={mtableLocalization}

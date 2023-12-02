@@ -312,12 +312,25 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Cash Balances Report" />
               </Grid>
+              <FilterConsumer>
+                {({ filters, filterColumns }) => {
+                  return (
+                    <Grid item xs={12}>
+                      <ReportingInfo
+                        cashAccount={filters?.cashAccount}
+                        securityAccount={filters?.safekeepingAccount}
+                      />
+                    </Grid>
+                  );
+                }}
+              </FilterConsumer>
             </Grid>
           </TableFiltersWrapper>
         </div>
 
         <FilterConsumer>
           {({ filterColumns, filters }) => {
+            console.log(filters);
             const filteredData = data
               ?.filter((row) => {
                 if (filters?.cashAccount) {
@@ -334,12 +347,6 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
 
             return (
               <Fragment>
-                <Grid>
-                  <ReportingInfo
-                    cashAccount={filters?.account}
-                    securityAccount={filters?.safekeepingAccount}
-                  />
-                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"

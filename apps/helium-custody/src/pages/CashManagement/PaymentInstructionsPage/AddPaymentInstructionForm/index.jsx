@@ -249,6 +249,7 @@ const AddPaymentInstructionForm = ({
                     label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                     name="paymentAmount"
                     variant="outlined"
+                    size={"small"}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
