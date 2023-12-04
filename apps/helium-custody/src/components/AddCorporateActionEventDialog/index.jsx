@@ -708,7 +708,6 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     setFieldValue("externalSecuritySelectOption", found);
                   }
                 }}
-                assetTypeFilterValue="Fixed Income"
               />
             )}
           </form>
