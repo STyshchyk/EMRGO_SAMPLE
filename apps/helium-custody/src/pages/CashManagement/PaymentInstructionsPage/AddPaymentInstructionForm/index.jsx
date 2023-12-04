@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -207,6 +207,7 @@ const AddPaymentInstructionForm = ({
                           textField: {
                             size: "small",
                             fullWidth: true,
+                            variant: "filled",
                           },
                         }}
                         sx={{
@@ -248,7 +249,7 @@ const AddPaymentInstructionForm = ({
                     component={TextField}
                     label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                     name="paymentAmount"
-                    variant="outlined"
+                    variant="filled"
                     size={"small"}
                     InputProps={{
                       endAdornment: (
@@ -274,7 +275,7 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Details")}
                   name="paymentDetails"
-                  variant="outlined"
+                  variant="filled"
                 />
               </Box>
               <Box my={1} className="w-full">

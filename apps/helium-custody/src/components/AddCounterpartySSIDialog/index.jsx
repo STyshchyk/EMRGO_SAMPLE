@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -470,7 +470,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           component={TextField}
                           label="SSI Label"
                           name="ssiLabel"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                         />
@@ -595,7 +595,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
                           )}
                           name="deliveryOrReceiveIdentifier"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                         />
@@ -673,7 +673,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier"
                           )}
                           name="sellerOrBuyerIdentifier"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                           disabled={settlementLocationIsSix || !values?.sellerOrBuyerIdType?.value} // No input accepted if Seller/Buyer ID Type is <Blank>
@@ -705,7 +705,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account"
                           )}
                           name="safekeepingAccount"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                           disabled={settlementLocationIsSix}

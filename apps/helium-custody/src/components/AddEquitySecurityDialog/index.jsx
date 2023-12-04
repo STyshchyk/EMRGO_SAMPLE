@@ -4,7 +4,7 @@ import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -221,7 +221,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Name")}
                           name="name"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                           InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
@@ -241,7 +241,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Long Name")}
                           name="longName"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                         />
@@ -260,7 +260,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                           component={TextField}
                           label={t("External Securities.Add Security Form.Security Short Name")}
                           name="shortName"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           type="text"
                           InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
@@ -447,7 +447,7 @@ const AddEquitySecurityDialog = ({ open, handleClose, selectedRow, setSelectedRo
                                         component={TextField}
                                         label={item.securityIdTypeName}
                                         name={`attributes.${index}.value`}
-                                        variant="outlined"
+                                        variant="filled"
                                         size="small"
                                         type="text"
                                       />
