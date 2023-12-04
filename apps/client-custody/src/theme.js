@@ -98,7 +98,6 @@ export default (isDarkMode) => {
           input: {
             padding: "14px 12px",
             fontSize: "0.875rem",
-            fontFamily: "Inter",
             fontWeight: 400,
           },
           underline: {
