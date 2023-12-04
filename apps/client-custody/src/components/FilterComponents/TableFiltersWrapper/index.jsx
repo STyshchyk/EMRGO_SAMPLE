@@ -58,7 +58,6 @@ const TableFiltersWrapper = ({
       .map((key) => ({ key, ...filters[key] }))
       .filter((el) => !el.isDefault);
 
-    console.log(updatedFiltersCount);
     return updatedFiltersCount.length;
   };
 
