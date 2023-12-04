@@ -10,7 +10,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { useDarkMode } from "usehooks-ts";
 
 // import * as accountsSelectors from '../../../../redux/selectors/accounts';
 // import * as accountsActionCreators from '../../../../redux/actionCreators/accounts';
@@ -298,6 +297,10 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         multiline
+                        onKeyDown={(event) => {
+                          if (event.which === 13)
+                            setFieldValue("address", event.target.value + "\n");
+                        }}
                         rows={5}
                         component={TextField}
                         size="small"
@@ -484,6 +487,10 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           multiline
+                          onKeyDown={(event) => {
+                            if (event.which === 13)
+                              setFieldValue("intermediaryBankAddress", event.target.value + "\n");
+                          }}
                           rows={5}
                           component={TextField}
                           size="small"

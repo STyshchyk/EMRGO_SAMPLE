@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -43,8 +43,8 @@ import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManageme
 import * as entitiesSelectors from "../../redux/selectors/entities";
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../utils/form";
-import CalculationField from "../CalculationField";
 import { addFXTransactionFormSchema } from "../../validationSchemas";
+import CalculationField from "../CalculationField";
 
 const animatedComponents = makeAnimated();
 
@@ -686,6 +686,10 @@ const EditFXTransactionDialog = ({
                           component={TextField}
                           name="narrative"
                           multiline
+                          onKeyDown={(event) => {
+                            if (event.which === 13)
+                              setFieldValue("narrative", event.target.value + "\n");
+                          }}
                           rows={2}
                           variant="filled"
                           type="text"
