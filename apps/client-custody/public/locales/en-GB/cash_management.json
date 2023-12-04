@@ -165,6 +165,7 @@
       "Placeholders": {
         "Select Source Entity": "Select Source Entity",
         "Select Source Account": "Select Source Account",
+        "Source Account": "Source Account",
         "Select Beneficiary User": "Select Beneficiary User",
         "Transfer Purpose": "Transfer Purpose"
       }

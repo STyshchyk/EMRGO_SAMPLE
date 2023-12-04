@@ -70,6 +70,7 @@ const CustodyAndSettlement = () => {
 
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
+  const currentUserId = useSelector(authSelectors.selectUserId);
   const currentListOfACLs = useSelector(authSelectors.selectCurrentListOfAcls);
   const fileURLsFetched = useSelector(securitiesServicesSelectors.selectFileURLsFetched);
   const paymentAccounts = useSelector(accountsSelectors.selectPaymentAccounts);
@@ -86,10 +87,16 @@ const CustodyAndSettlement = () => {
   const hasSettleTradeACL = currentListOfACLs.includes("Blotter/Settle");
   const hasViewSIAuditHistoryACL = currentListOfACLs.includes("Services/Audit/View");
   const currentEntityGroupEntityType = currentEntityGroup?.entityType;
-
+  const settlementId = currentlySelectedRowData?.id;
   const isFileAlreadyFetched = fileURLsFetched[currentlySelectedRowData?.paymentConfirmationFileId];
   const isPrimSecTrade = Boolean(currentlySelectedRowData?.externalSecurity?.isPrimaryIssuance);
-
+  const settlementInstructionAuditHistoryDataList = useSelector(
+    paymentAndSettlementSelectors.selectSettlementInstructionAuditHistoryDataList
+  );
+  const fetchSettlementInstructionAuditData = (payload) =>
+    dispatch(paymentAndSettlementActionCreators.doFetchSettlementInstructionAuditData(payload));
+  const resetSettlementInstructionAuditData = () =>
+    dispatch(paymentAndSettlementActionCreators.doResetSettlementInstructionAuditData());
   const changeSettlementInstructionStatus = (payload) =>
     dispatch(paymentAndSettlementActionCreators.doChangeSettlementInstructionChange(payload));
 
@@ -112,7 +119,8 @@ const CustodyAndSettlement = () => {
       "settlementInstructionFailedReason",
       "settlementInstructionRejectedReason",
     ];
-
+    const fetchSettlementInstructionAuditData = (payload) =>
+      dispatch(paymentAndSettlementActionCreators.doFetchSettlementInstructionAuditData(payload));
     const fetchCounterpartyList = () =>
       dispatch(counterpartyActionCreators.doFetchCounterpartyList());
     const fetchDropdownOptions = (payload) =>
@@ -368,22 +376,25 @@ const CustodyAndSettlement = () => {
       disabled: [
         settlementInstructionStatusEnum.REJECTED,
         settlementInstructionStatusEnum.CANCELLED,
-        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        // settlementInstructionStatusEnum.CANCELLED_REQUESTED,
         settlementInstructionStatusEnum.SETTLED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
       hidden: isPrimSecTrade,
     },
     {
-      id: 14,
+      id: 15,
       label: "Set to Canceled",
       onClick: () => {
         setRequestedSettlementInstructionStatus(settlementInstructionStatusEnum.CANCELLED);
         setOpenChangeSettlementInstructionDialog(true);
         handleCloseMenu();
       },
-      disabled: ![settlementInstructionStatusEnum.CANCELLED_REQUESTED].includes(
-        currentlySelectedRowData?.settlementInstructionStatus
-      ),
+      disabled: ![
+        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        settlementInstructionStatusEnum.REJECTED,
+        settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED,
+        settlementInstructionStatusEnum.UNMATCHED,
+      ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
     {
@@ -407,6 +418,7 @@ const CustodyAndSettlement = () => {
       disabled: ![
         settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED,
         settlementInstructionStatusEnum.UNMATCHED,
+        settlementInstructionStatusEnum.REJECTED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
@@ -414,11 +426,24 @@ const CustodyAndSettlement = () => {
       id: 14,
       label: "Approve Settlement Instruction",
       onClick: () => {
-        setRequestedSettlementInstructionStatus(
-          settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED
-        );
-        setOpenChangeSettlementInstructionDialog(true);
-        handleCloseMenu();
+        fetchSettlementInstructionAuditData({
+          settlementId,
+          successCallback: (data) => {
+            const raised =
+              Array.isArray(data) &&
+              data.filter((settlement) => settlement.auditSubType === "Inserted");
+            if (raised[0]?.userId === currentUserId)
+              toast.warning("Another officer should be able to approve current SI", 500);
+            else {
+              setRequestedSettlementInstructionStatus(
+                settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED
+              );
+              setOpenChangeSettlementInstructionDialog(true);
+              handleCloseMenu();
+            }
+            resetSettlementInstructionAuditData();
+          },
+        });
       },
       disabled: ![settlementInstructionStatusEnum.APPROVAL_REQUIRED].includes(
         currentlySelectedRowData?.settlementInstructionStatus

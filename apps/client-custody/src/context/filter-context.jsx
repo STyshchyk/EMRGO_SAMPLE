@@ -128,9 +128,18 @@ export const FilterProvider = ({ children, tableKey }) => {
     });
   }
 
-  function clearFilterValue(key) {
+  function clearFilterValue(keys) {
     const updatedFilters = { ...filters };
-    delete updatedFilters[key];
+
+    if (Array.isArray(keys)) {
+      keys.forEach((key) => {
+        delete updatedFilters[key];
+      });
+    } else {
+      // If keys is a single string, delete that key
+      delete updatedFilters[keys];
+    }
+
     setFilters(updatedFilters);
   }
 

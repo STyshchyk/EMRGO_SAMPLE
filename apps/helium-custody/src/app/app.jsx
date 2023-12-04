@@ -25,7 +25,6 @@ import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
 import "./app.styles.css";
 
 const { store, persistor } = configureStore();
-
 const region = appConfig.appRegion;
 
 baseAxiosInstance.interceptors.request.use((config) => {

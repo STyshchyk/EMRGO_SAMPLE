@@ -15,22 +15,30 @@ import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 
-const generateCAEventsTableRowData = (i) => ({
-  id: i?.id,
-  exDate: i?.exDate,
-  recordDate: i?.recordDate,
-  paymentDate: i.paymentDate,
-  securityId: i.securityId,
-  securityName: i?.securityName?.label,
-  eventType: i?.eventType?.name,
-  eventId: i?.eventId ?? "--",
-  eventStatus: i?.eventStatus?.name,
-  mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
-  responseDeadline: i?.clientResponseDeadline,
-  eventTerms: i?.eventTerms,
-  additionalInfo: i?.additionalInfo,
-  linkedEventId: i?.linkedEvent?.eventId ?? "--",
-});
+const generateCAEventsTableRowData = (i, paymentsList) => {
+  //** API support will need to be improved in the future so filtered on the FE for now
+  const portfolioId = paymentsList.filter(
+    (item) => item.externalSecurity.id === i.externalSecurity.id
+  )[0].portfolio_id;
+
+  return {
+    id: i?.id,
+    exDate: i?.exDate,
+    recordDate: i?.recordDate,
+    paymentDate: i.paymentDate,
+    securityId: i.securityId,
+    securityName: i?.securityName?.label,
+    eventType: i?.eventType?.name,
+    eventId: i?.eventId ?? "--",
+    eventStatus: i?.eventStatus?.name,
+    mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
+    responseDeadline: i?.clientResponseDeadline,
+    eventTerms: i?.eventTerms,
+    additionalInfo: i?.additionalInfo,
+    linkedEventId: i?.linkedEvent?.eventId ?? "--",
+    portfolioId: portfolioId,
+  };
+};
 
 const CorporateActionEventsTable = ({
   data,

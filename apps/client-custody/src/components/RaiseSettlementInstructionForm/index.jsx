@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
@@ -78,19 +79,20 @@ const DependentAmountField = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueA?.value, valueB?.value, setFieldValue, props.name, props.calculatedValue]);
-
+  const currencyExists = values.externalSecuritySelectOption?.value?.currencyName;
+  const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
+    values.settlementTypeSelectOption?.label
+  );
+  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
   return (
     <Field
       fullWidth
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant="filled"
+      variant={isVariantOutlined ? "outlined" : "filled"}
+      disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
       value={values[props.name]}
-      disabled={
-        !values.externalSecuritySelectOption?.value?.currencyName ||
-        ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-      }
       InputProps={{
         inputComponent: CustomNumberInputField,
         endAdornment: (
@@ -147,8 +149,6 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
   const isFreeOfPayment = ["DFOP", "RFOP"].includes(formikValues.settlementTypeSelectOption?.label);
   const isEquityType =
     formikValues.externalSecuritySelectOption?.value?.assetTypeName?.key === "equity";
-
-  console.log(formikValues);
 
   const requestPayload = {
     ...formikValues,
@@ -213,8 +213,8 @@ export const generateExternalSecurityOptionsList = (data) => {
       .filter((item) => item?.name)
       .filter((item) => item.status === "Active")
       .map((item) => ({
-        label: item.name, // id 663
-        value: item,
+        label: item.name,
+        value: { ...item, isin: getAttribute(item?.attributes, "isin") ?? item?.isin },
       }));
   }
 
@@ -317,7 +317,6 @@ const RaiseSettlementInstructionForm = ({
     dropdownOptions?.settlementInstructionType
   );
   const activeSafeAccounts = currentSafeAccounts.filter((account) => account.status === "Active");
-  console.log(activeSafeAccounts[0]);
   /*
               Note that if Settlement Type is set to DFOP or RFOP then
               the Price and Settlement Amount fields should be greyed out and not populated by the user
@@ -333,7 +332,11 @@ const RaiseSettlementInstructionForm = ({
         let curSetType = values.externalSecuritySelectOption?.value?.assetTypeName?.key;
         let isEquityType = curSetType === "equity";
         let settlementType = values.settlementTypeSelectOption?.label ?? "";
-
+        const currencyExists = values.externalSecuritySelectOption?.value?.currencyName;
+        const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
+          values.settlementTypeSelectOption?.label
+        );
+        const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
         return (
           <Form>
             <Grid container spacing={2}>
@@ -553,7 +556,7 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="filled"
+                  variant="outlined"
                   value={values.quantity}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -565,15 +568,12 @@ const RaiseSettlementInstructionForm = ({
               <InlineFormField label={`Price ${isEquityType ? "" : "%"}`} name={"price"}>
                 <Field
                   component={CustomTextField}
-                  disabled={
-                    !values.externalSecuritySelectOption?.value?.currencyName ||
-                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                  }
                   fullWidth
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant="filled"
+                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -615,12 +615,9 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Accrued Interest"
                   name="accruedInterest"
-                  variant="filled"
+                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   value={values.accruedInterest}
-                  disabled={
-                    !values.externalSecuritySelectOption?.value?.currencyName ||
-                    ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
-                  }
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -706,7 +703,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Internal Trade Ref"
                   name="internalTradeRef"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {

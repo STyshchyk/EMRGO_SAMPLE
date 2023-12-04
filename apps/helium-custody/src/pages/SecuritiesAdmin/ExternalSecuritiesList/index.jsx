@@ -209,7 +209,9 @@ const ExternalSecuritiesList = () => {
         setOpenEditCouponPaymentScheduleDialog(true);
         handleCloseMenu();
       },
-      disabled: !hasManageSecurityServicesACL,
+      disabled: currentlySelectedRowData?.assetType === "Equity",
+
+      // disabled: !hasManageSecurityServicesACL,
     },
     // {
     //   id: 5,

@@ -44,7 +44,7 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     instDescription: i?.instDescription ?? FALLBACK_VALUE,
     isin: i.externalSecurity?.isin ?? FALLBACK_VALUE,
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
-    portfolioId: i.portfolioId ?? FALLBACK_VALUE,
+    portfolioId: i.portfolio.id ?? FALLBACK_VALUE,
     positionType: i?.positionType ?? FALLBACK_VALUE,
     quantity:
       (i.quantity &&
@@ -227,15 +227,15 @@ const SecuritiesHoldingsTable = ({
       hidden: ["ISSUER"].includes(entityUserType),
       defaultHidden: true,
     },
-    {
-      id: "portfolioId",
-      title: t("Securities Holdings.Headers.Portfolio ID"),
-      field: "portfolioId",
-      hidden: ["ISSUER"].includes(entityUserType),
-      cellStyle: {
-        minWidth: 120,
-      },
-    },
+    // {
+    //   id: "portfolioId",
+    //   title: t("Securities Holdings.Headers.Portfolio ID"),
+    //   field: "portfolioId",
+    //   hidden: ["ISSUER"].includes(entityUserType),
+    //   cellStyle: {
+    //     minWidth: 120,
+    //   },
+    // },
     {
       id: "instDescription",
       title: t("Securities Holdings.Headers.Inst Description"),

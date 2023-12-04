@@ -221,6 +221,10 @@ const ViewCorporateActionEventDialog = ({
                     variant="filled"
                     type="text"
                     multiline
+                    onKeyDown={(event) => {
+                      if (event.which === 13)
+                        setFieldValue("clientResponse", event.target.value + "\n");
+                    }}
                     rows={4}
                   />
                 </InlineFormField>
@@ -233,6 +237,7 @@ const ViewCorporateActionEventDialog = ({
                       onClick={() => {
                         handleClose();
                       }}
+                      variant="outlined"
                       color="primary"
                     >
                       Cancel

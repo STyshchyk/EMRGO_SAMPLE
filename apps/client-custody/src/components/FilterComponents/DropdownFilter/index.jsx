@@ -23,6 +23,7 @@ const DropdownFilter = ({
   setCustomClear,
   clearButtonRef,
   hasDefaultValue,
+  dependentFields,
 }) => {
   // const [currentlySelectedOption, setCurrentlySelectedOption] = useState(defaultFilter);
 
@@ -44,7 +45,12 @@ const DropdownFilter = ({
     setCurrentlySelectedOption(null);
     if (setClearDisabled) setClearDisabled(false);
     if (setCustomClear) setCustomClear();
-    clearFilterValue(name);
+    if (dependentFields) {
+      const keysToClear = [name, ...dependentFields];
+      clearFilterValue(keysToClear);
+    } else {
+      clearFilterValue(name);
+    }
   };
 
   const handleChange = (newValue) => {
@@ -92,6 +98,7 @@ DropdownFilter.propTypes = {
   title: PropTypes.string,
   options: PropTypes.array.isRequired,
   setDefaultFilterValue: PropTypes.func,
+  dependentFields: PropTypes.array,
 };
 
 DropdownFilter.defaultProps = {

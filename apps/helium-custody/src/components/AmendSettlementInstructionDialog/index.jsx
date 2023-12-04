@@ -45,7 +45,9 @@ const generateInitialValues = (rowData) => {
       label: rowData?.externalSecurity?.name,
       value: {
         ...rowData?.externalSecurity,
-        isin: getAttribute(rowData?.attributes, "isin") ?? rowData?.externalSecurity?.isin,
+        isin:
+          getAttribute(rowData?.externalSecurity?.attributes, "isin") ??
+          rowData?.externalSecurity?.isin,
       },
     },
     price: rowData?.price,
