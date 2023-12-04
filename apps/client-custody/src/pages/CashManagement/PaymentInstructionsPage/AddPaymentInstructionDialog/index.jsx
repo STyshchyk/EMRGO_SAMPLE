@@ -59,14 +59,14 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
   useEffect(() => {
     if (!formvalues || !formvalues?.settings) return;
     const data = formvalues?.settings[0];
-    if (
-      !fetchingValues &&
-      data?.value &&
-      data?.value !== "null" &&
-      data?.key === "AddPaymentInstructionDialogForm"
-    ) {
-      setInitialValues(JSON.parse(data.value));
-    }
+    // if (
+    //   !fetchingValues &&
+    //   data?.value &&
+    //   data?.value !== "null" &&
+    //   data?.key === "AddPaymentInstructionDialogForm"
+    // ) {
+    //   setInitialValues(JSON.parse(data.value));
+    // }
   }, [formvalues, fetchingValues]);
 
   const saveFormValues = (value) => {
@@ -79,7 +79,7 @@ const AddPaymentInstructionDialog = ({ isModalOpen, setIsModalOpen, options }) =
         },
       ],
     };
-    dispatch(formActionCreators.doPostFormRequested(obj));
+    // dispatch(formActionCreators.doPostFormRequested(obj));
   };
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     const createPaymentInstruction = (payload) => {
