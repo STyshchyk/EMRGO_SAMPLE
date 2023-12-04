@@ -94,6 +94,9 @@ export default (isDarkMode) => {
         styleOverrides: {
           root: {
             borderRadius: "0.25rem",
+            textarea: {
+              padding: "0",
+            },
           },
           input: {
             padding: "14px 12px",
