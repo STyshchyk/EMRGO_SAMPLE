@@ -56,9 +56,9 @@ const TableFiltersWrapper = ({
     // EBME-1299 comments
     const updatedFiltersCount = Object.keys(filters)
       .map((key) => ({ key, ...filters[key] }))
-      .filter((el) => !el.isDefault).length;
+      .filter((el) => !el.isDefault);
 
-    return updatedFiltersCount;
+    return updatedFiltersCount.length;
   };
 
   const openManageColumnsDialog = (e) => {
