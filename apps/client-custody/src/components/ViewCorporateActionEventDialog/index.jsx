@@ -142,7 +142,10 @@ const ViewCorporateActionEventDialog = ({
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           const formObject = {
-            requestPayload: { response: values?.clientResponse },
+            requestPayload: {
+              response: values?.clientResponse,
+              portfolioId: currentlySelectedRowData?.portfolioId,
+            },
             corporateActionEventId: currentlySelectedRowData?.id,
           };
 
@@ -233,7 +236,7 @@ const ViewCorporateActionEventDialog = ({
                     </Button>
                   </Grid>
                 </Grid>
-                {isUserInvestor && !isReadOnly && (
+                {isUserInvestor && !isReadOnly && !currentUsersResponse && (
                   <Grid item lg={2}>
                     <Button fullWidth type="submit" variant="contained" color="primary">
                       Submit

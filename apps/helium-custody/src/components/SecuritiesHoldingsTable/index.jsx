@@ -234,7 +234,7 @@ const SecuritiesHoldingsTable = ({
       id: "safekeepingAccount",
       title: t("Securities Holdings.Headers.Safekeeping Account"),
       field: "securityAccount",
-      exportConfig: { width: 15 },
+      // exportConfig: { width: 15 },
     },
     {
       id: "currency",
@@ -272,15 +272,15 @@ const SecuritiesHoldingsTable = ({
       hidden: ["ISSUER"].includes(entityUserType),
       defaultHidden: true,
     },
-    {
-      id: "portfolioId",
-      title: t("Securities Holdings.Headers.Portfolio ID"),
-      field: "portfolioId",
-      hidden: ["ISSUER"].includes(entityUserType),
-      cellStyle: {
-        minWidth: 120,
-      },
-    },
+    // {
+    //   id: "portfolioId",
+    //   title: t("Securities Holdings.Headers.Portfolio ID"),
+    //   field: "portfolioId",
+    //   hidden: ["ISSUER"].includes(entityUserType),
+    //   cellStyle: {
+    //     minWidth: 120,
+    //   },
+    // },
     {
       id: "instDescription",
       title: t("Securities Holdings.Headers.Inst Description"),
@@ -395,7 +395,7 @@ const SecuritiesHoldingsTable = ({
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <ExportButtons tableRef={tableRef} name="Security Registrar Report" />
+                <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
               </Grid>
 
               {/* <Grid item xs={12} container>
