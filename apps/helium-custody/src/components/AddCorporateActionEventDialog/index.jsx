@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -401,7 +401,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         component={TextField}
                         placeholder="Security Long Name"
                         name="securityName"
-                        variant="outlined"
+                        variant="filled"
                         size="small"
                         type="text"
                         value={
@@ -420,18 +420,20 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       fullWidth
                       format="DD/MM/YYYY"
                       size="small"
-                      inputVariant="outlined"
+                      inputVariant="filled"
                       variant="dialog"
                       placeholder="DD/MM/YYYY"
                       component={DatePicker}
                       inputProps={{
                         shrink: "false",
                         size: "small",
+                        variant: "filled",
                       }}
                       slotProps={{
                         textField: {
                           size: "small",
                           fullWidth: true,
+                          variant: "filled",
                         },
                       }}
                       name="exDate"
@@ -461,11 +463,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       inputProps={{
                         shrink: "false",
                         size: "small",
+                        variant: "filled",
                       }}
                       slotProps={{
                         textField: {
                           size: "small",
                           fullWidth: true,
+                          variant: "filled",
                         },
                       }}
                       name="recordDate"
@@ -495,11 +499,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       inputProps={{
                         shrink: "false",
                         size: "small",
+                        variant: "filled",
                       }}
                       slotProps={{
                         textField: {
                           size: "small",
                           fullWidth: true,
+                          variant: "filled",
                         },
                       }}
                       name="paymentDate"
@@ -550,8 +556,8 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       name="eventTerms"
                       multiline
                       rows={2}
-                      variant="outlined"
-                      type="text"
+                      variant="filled"
+                      type="textarea"
                       inputProps={{
                         maxLength: 100,
                       }}
@@ -567,7 +573,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       name="additionalInfo"
                       multiline
                       rows={2}
-                      variant="outlined"
+                      variant="filled"
                       type="text"
                       inputProps={{
                         maxLength: 100,
@@ -613,11 +619,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       inputProps={{
                         shrink: "false",
                         size: "small",
+                        variant: "filled",
                       }}
                       slotProps={{
                         textField: {
                           size: "small",
                           fullWidth: true,
+                          variant: "filled",
                         },
                       }}
                       disabled={values.mandatoryOrVoluntary?.value === "mandatory"}

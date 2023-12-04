@@ -2,7 +2,7 @@ import { createRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import { TextField as TextFieldMui } from "@mui/material";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -280,7 +280,7 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                  variant="outlined"
+                  variant="filled"
                   size="small"
                   value={values.sourceAccount?.value?.accountBalance}
                   InputProps={{
@@ -335,7 +335,7 @@ const AddInternalTransferForm = ({
                 <TextFieldMui
                   disabled
                   fullWidth
-                  variant="outlined"
+                  variant="filled"
                   size="small"
                   decimalScale={2}
                   value={values.destinationAccount?.value?.accountBalance}
@@ -363,7 +363,7 @@ const AddInternalTransferForm = ({
                   fullWidth
                   component={TextField}
                   name="transferAmount"
-                  variant="outlined"
+                  variant="filled"
                   size="small"
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -384,7 +384,7 @@ const AddInternalTransferForm = ({
                   rows={4}
                   component={TextField}
                   name="description"
-                  variant="outlined"
+                  variant="filled"
                 />
               </InlineFormField>
 
@@ -403,7 +403,7 @@ const AddInternalTransferForm = ({
               </Grid>
               <Grid item container spacing={2} justifyContent="flex-end">
                 <Grid item>
-                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
+                  <Button color="primary" variant="filled" onClick={handleCloseDialog}>
                     Cancel
                   </Button>
                 </Grid>

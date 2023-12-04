@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -213,7 +213,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     component={TextField}
                     label={t("EntityAccountManagement.IBAN Number")}
                     name="iban"
-                    variant="outlined"
+                    variant="filled"
                     size={"small"}
                     fullWidth
                   />
@@ -223,7 +223,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     component={TextField}
                     label={t("EntityAccountManagement.External Account Number")}
                     name="externalAccountNumber"
-                    variant="outlined"
+                    variant="filled"
                     size={"small"}
                     fullWidth
                   />
