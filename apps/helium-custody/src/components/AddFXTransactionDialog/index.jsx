@@ -580,8 +580,6 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                             if (event.which === 13)
                               setFieldValue("narrative", event.target.value + "\n");
                           }}
-                          rows={4}
-                          variant="outlined"
                           size="small"
                           type="text"
                           inputProps={{
