@@ -551,10 +551,14 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                   <InlineFormField label={"Event Status"}>
                     <Field
                       fullWidth
-                      placeholder="Event Terms"
+                      label="Event Terms"
                       component={TextField}
                       name="eventTerms"
                       multiline
+                      onKeyDown={(event) => {
+                        if (event.which === 13)
+                          setFieldValue("eventTerms", event.target.value + "\n");
+                      }}
                       rows={2}
                       variant="filled"
                       type="textarea"
@@ -568,10 +572,14 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                   <InlineFormField label={"Additional Information"}>
                     <Field
                       fullWidth
-                      placeholder="Additional Information"
+                      label="Additional Information"
                       component={TextField}
                       name="additionalInfo"
                       multiline
+                      onKeyDown={(event) => {
+                        if (event.which === 13)
+                          setFieldValue("additionalInfo", event.target.value + "\n");
+                      }}
                       rows={2}
                       variant="filled"
                       type="text"
