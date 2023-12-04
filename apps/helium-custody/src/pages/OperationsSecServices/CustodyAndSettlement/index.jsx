@@ -389,9 +389,10 @@ const CustodyAndSettlement = () => {
         setOpenChangeSettlementInstructionDialog(true);
         handleCloseMenu();
       },
-      disabled: ![settlementInstructionStatusEnum.CANCELLED_REQUESTED].includes(
-        currentlySelectedRowData?.settlementInstructionStatus
-      ),
+      disabled: ![
+        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        settlementInstructionStatusEnum.REJECTED,
+      ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
     {
