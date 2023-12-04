@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -184,7 +184,7 @@ const AddPaymentAccountForm = ({
         return (
           <Form noValidate onKeyDown={onKeyDown}>
             <Grid container spacing={2}>
-              <Grid item container spacing={2} lg={12}>
+              <Grid item container spacing={2} lg={6}>
                 <InlineFormField
                   label={t("PaymentAccountManagement.AddPaymentAccountForm.Currency")}
                   name="currency"
@@ -213,7 +213,7 @@ const AddPaymentAccountForm = ({
                     component={TextField}
                     size="small"
                     name="name"
-                    variant="outlined"
+                    variant="filled"
                     type="text"
                   />
                 </InlineFormField>
@@ -224,7 +224,7 @@ const AddPaymentAccountForm = ({
                     component={TextField}
                     size="small"
                     name="label"
-                    variant="outlined"
+                    variant="filled"
                     type="text"
                   />
                 </InlineFormField>
@@ -260,7 +260,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="iban"
-                        variant="outlined"
+                        variant="filled"
                         type="text"
                       />
                     </InlineFormField>
@@ -273,7 +273,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="swift"
-                        variant="outlined"
+                        variant="filled"
                         type="text"
                       />
                     </InlineFormField>
@@ -286,7 +286,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="bankName"
-                        variant="outlined"
+                        variant="filled"
                         type="text"
                       />
                     </InlineFormField>
@@ -305,7 +305,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="address"
-                        variant="outlined"
+                        variant="filled"
                       />
                     </InlineFormField>
 
@@ -317,7 +317,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="city"
-                        variant="outlined"
+                        variant="filled"
                         type="text"
                       />
                     </InlineFormField>
@@ -330,7 +330,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="postcode"
-                        variant="outlined"
+                        variant="filled"
                         type="text"
                       />
                     </InlineFormField>
@@ -366,7 +366,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="accountNo"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -381,7 +381,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="routingNo"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -396,7 +396,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="sortCode"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -411,7 +411,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="ifscCode"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -426,7 +426,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="bsbCode"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -450,7 +450,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankIBAN"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -463,7 +463,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankBIC"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -476,7 +476,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankName"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -495,7 +495,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankAddress"
-                          variant="outlined"
+                          variant="filled"
                         />
                       </InlineFormField>
 
@@ -507,7 +507,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankCity"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -520,7 +520,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankPostCode"
-                          variant="outlined"
+                          variant="filled"
                           type="text"
                         />
                       </InlineFormField>
@@ -555,7 +555,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankAccountNo"
-                            variant="outlined"
+                            variant="filled"
                             type="text"
                           />
                         </InlineFormField>
@@ -569,7 +569,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankRouteCode"
-                            variant="outlined"
+                            variant="filled"
                             type="text"
                           />
                         </InlineFormField>
@@ -583,7 +583,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankSortCode"
-                            variant="outlined"
+                            variant="filled"
                             type="text"
                           />
                         </InlineFormField>
@@ -597,7 +597,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankIfscCode"
-                            variant="outlined"
+                            variant="filled"
                             type="text"
                           />
                         </InlineFormField>
@@ -611,7 +611,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankBsbCode"
-                            variant="outlined"
+                            variant="filled"
                             type="text"
                           />
                         </InlineFormField>
@@ -635,7 +635,7 @@ const AddPaymentAccountForm = ({
                 <Grid item>
                   <Button
                     color="primary"
-                    variant="outlined"
+                    variant="filled"
                     onClick={() => {
                       handleCloseDialog();
                     }}
