@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -108,6 +108,18 @@ const AddPaymentInstructionForm = ({
                       sx={{
                         width: "100%", // Ensure the DatePicker takes full-width
                         ...(props.sx || {}),
+                      }}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                        variant: "filled",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                          variant: "filled",
+                        },
                       }}
                     />
                   )}
