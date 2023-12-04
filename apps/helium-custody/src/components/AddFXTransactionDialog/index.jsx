@@ -574,7 +574,11 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           component={TextField}
                           name="narrative"
                           multiline
-                          rows={2}
+                          onKeyDown={(event) => {
+                            if (event.which === 13)
+                              setFieldValue("narrative", event.target.value + "\n");
+                          }}
+                          rows={4}
                           variant="outlined"
                           size="small"
                           type="text"

@@ -566,6 +566,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         component={TextField}
                         name="eventTerms"
                         multiline
+                        onKeyDown={(event) => {
+                          if (event.which === 13)
+                            setFieldValue("eventTerms", event.target.value + "\n");
+                        }}
                         rows={2}
                         variant="filled"
                         type="text"
@@ -588,6 +592,10 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         component={TextField}
                         name="additionalInfo"
                         multiline
+                        onKeyDown={(event) => {
+                          if (event.which === 13)
+                            setFieldValue("address", event.target.value + "\n");
+                        }}
                         rows={2}
                         variant="filled"
                         type="text"

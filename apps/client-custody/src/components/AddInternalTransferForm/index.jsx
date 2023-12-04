@@ -371,6 +371,9 @@ const AddInternalTransferForm = ({
                 <Field
                   fullWidth
                   multiline
+                  onKeyDown={(event) => {
+                    if (event.which === 13) setFieldValue("description", event.target.value + "\n");
+                  }}
                   rows={4}
                   component={TextField}
                   name="description"
