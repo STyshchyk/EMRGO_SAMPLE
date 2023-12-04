@@ -76,6 +76,10 @@ const PaymentAccountsTable = ({ tableData }) => {
           },
         },
         {
+          title: "Entity Name",
+          field: "corporateEntityName",
+        },
+        {
           title: t("PaymentAccountManagement.PaymentAccountsTable.Name"),
           field: "name",
         },
@@ -234,6 +238,7 @@ PaymentAccountsTable.propTypes = {
       sortCode: PropTypes.string,
       supportingDoc: PropTypes.string,
       entityGroupId: PropTypes.string,
+      corporateEntityName: PropTypes.string,
     })
   ).isRequired,
 };

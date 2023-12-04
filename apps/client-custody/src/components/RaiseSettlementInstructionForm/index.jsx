@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
@@ -149,8 +150,6 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
   const isEquityType =
     formikValues.externalSecuritySelectOption?.value?.assetTypeName?.key === "equity";
 
-  console.log(formikValues);
-
   const requestPayload = {
     ...formikValues,
     commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
@@ -214,8 +213,8 @@ export const generateExternalSecurityOptionsList = (data) => {
       .filter((item) => item?.name)
       .filter((item) => item.status === "Active")
       .map((item) => ({
-        label: item.name, // id 663
-        value: item,
+        label: item.name,
+        value: { ...item, isin: getAttribute(item?.attributes, "isin") ?? item?.isin },
       }));
   }
 
@@ -318,7 +317,6 @@ const RaiseSettlementInstructionForm = ({
     dropdownOptions?.settlementInstructionType
   );
   const activeSafeAccounts = currentSafeAccounts.filter((account) => account.status === "Active");
-  console.log(activeSafeAccounts[0]);
   /*
               Note that if Settlement Type is set to DFOP or RFOP then
               the Price and Settlement Amount fields should be greyed out and not populated by the user

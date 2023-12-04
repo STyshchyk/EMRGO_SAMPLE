@@ -132,9 +132,7 @@ const ReferenceDataReportPage = () => {
   const filters = [
     {
       label: t("Security Type"),
-      value:
-        selectedExternalSecurity &&
-        (selectedExternalSecurity?.isPrimaryIssuance ? "Primary Issuance" : "External Security"),
+      value: selectedExternalSecurity?.assetTypeName?.label,
     },
     {
       label: t("Status"),

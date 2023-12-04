@@ -54,6 +54,7 @@ const createPaymentAccountTableDataRow = (account) => ({
   intermediaryBankRouteCode: account?.intermediaryBankRouteCode,
   intermediaryBankSortCode: account?.intermediaryBankSortCode,
   intermediaryBankCountry: account?.intermediaryBankCountry?.name,
+  corporateEntityName: account?.entity?.corporateEntityName,
   createdAt: account?.createdAt,
 });
 
