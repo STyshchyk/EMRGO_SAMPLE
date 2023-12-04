@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -357,7 +357,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           fullWidth
                           component={TextField}
                           name="fromAmount"
-                          variant="outlined"
+                          variant="filled"
                           size="small"
                           // type="number"
                           value={values.fromAmount}
