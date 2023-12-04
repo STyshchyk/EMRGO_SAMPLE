@@ -234,7 +234,7 @@ function* fetchSettlementInstructionAuditData({ payload }) {
     yield put(actionCreators.doFetchSettlementInstructionAuditDataSuccess({ data }));
 
     if (typeof payload?.successCallback === "function") {
-      payload.successCallback();
+      payload.successCallback(data?.data?.SettlementAdminInstructionsAudit);
     }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
