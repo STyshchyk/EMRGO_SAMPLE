@@ -376,7 +376,7 @@ const CustodyAndSettlement = () => {
       disabled: [
         settlementInstructionStatusEnum.REJECTED,
         settlementInstructionStatusEnum.CANCELLED,
-        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        // settlementInstructionStatusEnum.CANCELLED_REQUESTED,
         settlementInstructionStatusEnum.SETTLED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
       hidden: isPrimSecTrade,
