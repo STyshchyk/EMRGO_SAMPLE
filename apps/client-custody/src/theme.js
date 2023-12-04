@@ -96,7 +96,10 @@ export default (isDarkMode) => {
             borderRadius: "0.25rem",
           },
           input: {
-            padding: "12px 12px",
+            padding: "14px 12px",
+            fontSize: "0.875rem",
+            fontFamily: "Inter",
+            fontWeight: 400,
           },
           underline: {
             "&:before": {
@@ -108,13 +111,7 @@ export default (isDarkMode) => {
           },
         },
       },
-      MuiInputBase : {
-        styleOverrides:{
-          input:{
-            padding:"12px !important"
-          }
-        }
-      },
+
       MuiInputAdornment: {
         styleOverrides: {
           positionStart: {
@@ -132,7 +129,13 @@ export default (isDarkMode) => {
           },
           filled: {
             transform: "translate(12px, 15px) scale(1)",
-            lineHeight:'1rem'
+            lineHeight: "1rem",
+          },
+          outlined: {
+            lineHeight: "1rem",
+            "&.MuiInputLabel-shrink": {
+              transform: "translate(12px, -6px) scale(0.75)!important",
+            },
           },
         },
       },
@@ -169,9 +172,7 @@ export default (isDarkMode) => {
       },
       MuiTextField: {
         styleOverrides: {
-          root:{
-
-          }
+          root: {},
         },
       },
       MuiTooltip: {
