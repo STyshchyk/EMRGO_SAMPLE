@@ -96,7 +96,10 @@ export default (isDarkMode) => {
             borderRadius: "0.25rem",
           },
           input: {
-            padding: "12px 12px",
+            padding: "14px 12px",
+            fontSize: "0.875rem",
+            fontFamily: "Inter",
+            fontWeight: 400,
           },
           underline: {
             "&:before": {
@@ -122,11 +125,17 @@ export default (isDarkMode) => {
       MuiInputLabel: {
         styleOverrides: {
           shrink: {
-            transform: "translate(12px, -6px) scale(0.75)!important",
+            transform: "translate(12px, 4px) scale(0.75)!important",
           },
           filled: {
             transform: "translate(12px, 15px) scale(1)",
             lineHeight: "1rem",
+          },
+          outlined: {
+            lineHeight: "1rem",
+            "&.MuiInputLabel-shrink": {
+              transform: "translate(12px, -6px) scale(0.75)!important",
+            },
           },
         },
       },

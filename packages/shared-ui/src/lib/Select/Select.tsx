@@ -2,7 +2,7 @@ import React from "react";
 import ReactSelect, { GroupBase, Props } from "react-select";
 
 import { colors, typography } from "@emrgo-frontend/theme";
-import { ellipsis, rem } from "polished";
+import { ellipsis, rem, rgba } from "polished";
 import { useDarkMode } from "usehooks-ts";
 
 import { ISelectProps } from "./Select.types";
@@ -17,9 +17,8 @@ export function Select<
   const animatedComponents = {}; //to prevent flickering when using select in modals
   const { isDarkMode } = useDarkMode();
 
-  const getOptionStyles = (type: string, state: any) => {
+  const getOptionStyles = (type: string, state?: any, error?: string | boolean) => {
     let styles = {};
-
     switch (type) {
       case "hover":
         styles = {
@@ -37,7 +36,57 @@ export function Select<
             : "transparent",
         };
         break;
-
+      case "controlBackground":
+        styles = {
+          background: error
+            ? isDarkMode
+              ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)`
+              : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
+            : isDarkMode
+            ? rgba(255, 255, 255, 0.05)
+            : colors.black[5],
+        };
+        break;
+      case "placeholderColor":
+        styles = {
+          color: error
+            ? isDarkMode
+              ? colors.orange
+              : colors.red
+            : isDarkMode
+            ? colors.white[60]
+            : colors.black[60],
+        };
+        break;
+      case "controlBorder":
+        styles = {
+          border: error
+            ? isDarkMode
+              ? `1px solid ${colors.orange}`
+              : `1px solid ${colors.red}`
+            : state.isFocused
+            ? isDarkMode
+              ? `1px solid ${colors.green5}`
+              : `1px solid ${colors.green3}`
+            : isDarkMode
+            ? `1px solid ${colors.strokes.dark}`
+            : `1px solid ${colors.strokes.light}`,
+        };
+        break;
+      case "controlHover":
+        styles = {
+          border: error
+            ? isDarkMode
+              ? `1px solid ${colors.orange}`
+              : `1px solid ${colors.red}`
+            : `1px solid ${colors.green3}`,
+          boxShadow: error
+            ? isDarkMode
+              ? `0px 0px 1px ${colors.orange}`
+              : `0px 0px 1px ${colors.red}`
+            : `0px 0px 1px ${colors.green3}`,
+        };
+        break;
       default:
         break;
     }
