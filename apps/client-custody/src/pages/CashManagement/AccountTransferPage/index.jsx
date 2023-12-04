@@ -1,21 +1,20 @@
 import { createRef, Fragment, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
+import v from "voca";
 
 import PageTitle from "../../../components/PageTitle";
 import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
-import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -437,6 +436,10 @@ const AccountTransferPage = () => {
                     <Field
                       fullWidth
                       multiline
+                      onKeyDown={(event) => {
+                        if (event.which === 13)
+                          setFieldValue("description", event.target.value + "\n");
+                      }}
                       rows={4}
                       component={TextField}
                       name="description"

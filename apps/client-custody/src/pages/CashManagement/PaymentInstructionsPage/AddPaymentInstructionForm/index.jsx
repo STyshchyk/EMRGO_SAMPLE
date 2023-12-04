@@ -174,6 +174,10 @@ const AddPaymentInstructionForm = ({
                 fullWidth
                 multiline
                 rows={4}
+                onKeyDown={(event) => {
+                  if (event.which === 13)
+                    setFieldValue("paymentDetails", event.target.value + "\n");
+                }}
                 component={TextField}
                 label={t("Payment Instructions.Modals.Fields.Payment Details")}
                 name="paymentDetails"

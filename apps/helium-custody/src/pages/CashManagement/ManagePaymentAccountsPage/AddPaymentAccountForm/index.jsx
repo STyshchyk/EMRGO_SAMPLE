@@ -305,6 +305,10 @@ const AddPaymentAccountForm = ({
                       <Field
                         fullWidth
                         multiline
+                        onKeyDown={(event) => {
+                          if (event.which === 13)
+                            setFieldValue("address", event.target.value + "\n");
+                        }}
                         rows={5}
                         component={TextField}
                         name="address"
@@ -480,6 +484,10 @@ const AddPaymentAccountForm = ({
                         <Field
                           fullWidth
                           multiline
+                          onKeyDown={(event) => {
+                            if (event.which === 13)
+                              setFieldValue("address", event.target.value + "\n");
+                          }}
                           rows={5}
                           component={TextField}
                           name="intermediaryBankAddress"

@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from "@mui/material/Button";
@@ -57,6 +56,9 @@ const DeactivateUserModal = ({ open, onClose, selectedRow, deactivateEntity }) =
                   component={TextField}
                   minRows={3}
                   multiline
+                  onKeyDown={(event) => {
+                    if (event.which === 13) setFieldValue("reason", event.target.value + "\n");
+                  }}
                   label={t("onboarding:Forms.Reason")}
                   name="reason"
                   variant="filled"

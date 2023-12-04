@@ -9,13 +9,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Typography from "@mui/material/Typography";
 // import Datepicker from "../../../../components/Datepicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import cx from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
 
 import AutoSaveFields from "../../../../components/AutoSaveFields";
+import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
@@ -259,6 +259,10 @@ const AddPaymentInstructionForm = ({
                   multiline
                   rows={4}
                   component={TextField}
+                  onKeyDown={(event) => {
+                    if (event.which === 13)
+                      setFieldValue("paymentDetails", event.target.value + "\n");
+                  }}
                   label={t("Payment Instructions.Modals.Fields.Payment Details")}
                   name="paymentDetails"
                   variant="outlined"
