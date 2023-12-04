@@ -395,7 +395,7 @@ const SecuritiesHoldingsTable = ({
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <ExportButtons tableRef={tableRef} name="Security Registrar Report" />
+                <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
               </Grid>
 
               {/* <Grid item xs={12} container>
