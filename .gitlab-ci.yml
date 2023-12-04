@@ -49,7 +49,7 @@ Pre-Deploy:UAT:
   stage: pre-deploy
   variables:
     TARGET_ENVIRONMENT: "uat-difc"
-    SOURCE_BRANCH: "develop"
+    SOURCE_BRANCH: "develop-stable"
   extends:
     - .trigger_downstream_deploy_pipelines_config
   when: manual
@@ -58,7 +58,7 @@ Pre-Deploy:Staging:
   stage: pre-deploy
   variables:
     TARGET_ENVIRONMENT: "staging-difc"
-    SOURCE_BRANCH: "master"
+    SOURCE_BRANCH: "main"
   extends:
     - .trigger_downstream_deploy_pipelines_config
   when: manual

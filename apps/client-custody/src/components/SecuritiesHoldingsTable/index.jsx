@@ -227,15 +227,15 @@ const SecuritiesHoldingsTable = ({
       hidden: ["ISSUER"].includes(entityUserType),
       defaultHidden: true,
     },
-    {
-      id: "portfolioId",
-      title: t("Securities Holdings.Headers.Portfolio ID"),
-      field: "portfolioId",
-      hidden: ["ISSUER"].includes(entityUserType),
-      cellStyle: {
-        minWidth: 120,
-      },
-    },
+    // {
+    //   id: "portfolioId",
+    //   title: t("Securities Holdings.Headers.Portfolio ID"),
+    //   field: "portfolioId",
+    //   hidden: ["ISSUER"].includes(entityUserType),
+    //   cellStyle: {
+    //     minWidth: 120,
+    //   },
+    // },
     {
       id: "instDescription",
       title: t("Securities Holdings.Headers.Inst Description"),

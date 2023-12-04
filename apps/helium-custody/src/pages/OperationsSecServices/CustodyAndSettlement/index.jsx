@@ -376,7 +376,7 @@ const CustodyAndSettlement = () => {
       disabled: [
         settlementInstructionStatusEnum.REJECTED,
         settlementInstructionStatusEnum.CANCELLED,
-        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        // settlementInstructionStatusEnum.CANCELLED_REQUESTED,
         settlementInstructionStatusEnum.SETTLED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
       hidden: isPrimSecTrade,
@@ -389,9 +389,12 @@ const CustodyAndSettlement = () => {
         setOpenChangeSettlementInstructionDialog(true);
         handleCloseMenu();
       },
-      disabled: ![settlementInstructionStatusEnum.CANCELLED_REQUESTED].includes(
-        currentlySelectedRowData?.settlementInstructionStatus
-      ),
+      disabled: ![
+        settlementInstructionStatusEnum.CANCELLED_REQUESTED,
+        settlementInstructionStatusEnum.REJECTED,
+        settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED,
+        settlementInstructionStatusEnum.UNMATCHED,
+      ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
     {

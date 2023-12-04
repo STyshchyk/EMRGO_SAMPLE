@@ -40,6 +40,11 @@ import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 const FALLBACK_VALUE = "--";
 
+const decimalFormat6 = {
+  minimumFractionDigits: 6,
+  maximumFractionDigits: 6,
+};
+
 const EMPTY_COLUMN = {
   id: "",
   title: "",
@@ -368,15 +373,16 @@ const SecurityTradesTable = ({
       hidden: ["INVESTOR"].includes(entityUserType),
       render: (rowData) =>
         (rowData?.issuerSecuritiesAccountBalance &&
-          convertNumberToIntlFormat(rowData?.issuerSecuritiesAccountBalance)) ||
+          currencyRenderer(rowData?.issuerSecuritiesAccountBalance, decimalFormat6)) ||
         FALLBACK_VALUE,
       width: 150,
     },
     {
       id: "quantity",
       title: t("Headers.Qty"),
-      render: (rowData) => floatRenderer(rowData.quantity),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity) },
+      render: (rowData) =>
+        rowData?.quantity ? currencyRenderer(rowData?.quantity, decimalFormat6) : FALLBACK_VALUE,
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.quantity, decimalFormat6) },
       field: "quantity",
       type: "numeric",
       width: 150,
@@ -427,8 +433,9 @@ const SecurityTradesTable = ({
       id: "price",
       title: t("Headers.Price"),
       field: "price",
-      // render: (rowData) => rowData?.price && floatRenderer(rowData?.price, 0, 5),
-      exportConfig: { render: (rowData) => floatRenderer(rowData.price) },
+      render: (rowData) =>
+        rowData?.price ? currencyRenderer(rowData?.price, decimalFormat6) : FALLBACK_VALUE,
+      exportConfig: { render: (rowData) => currencyRenderer(rowData.price, decimalFormat6) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
@@ -437,7 +444,7 @@ const SecurityTradesTable = ({
       id: "principalAmount",
       title: t("Headers.Principal Amount"),
       field: "principalAmount",
-      render: (rowData) => floatRenderer(rowData.principalAmount),
+      render: (rowData) => currencyRenderer(rowData.principalAmount),
       exportConfig: { render: (rowData) => currencyRenderer(rowData.principalAmount) },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,

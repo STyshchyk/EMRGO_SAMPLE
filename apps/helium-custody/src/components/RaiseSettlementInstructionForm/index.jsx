@@ -124,13 +124,15 @@ const InlineFormField = ({ label, children }) => (
       >
         {children}
       </FormControl>
-      {/* <ErrorMessage
-        component={Typography}
-        variant="caption"
-        color="error"
-        className="ml-4"
-        name = {props?.name}
-      /> */}
+        {/* {name && (
+            <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name={name}
+            />
+        )} */}
     </Grid>
   </Grid>
 );
@@ -476,7 +478,7 @@ const RaiseSettlementInstructionForm = ({
                       resetForm();
                     }
                   }}
-                  isDisabled={editable}
+                  // isDisabled={editable}
                 />
                 <ErrorMessage
                   component={Typography}
@@ -566,7 +568,7 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={"Quantity"}>
+              <InlineFormField label={"Quantity"} name="quantity">
                 <Field
                   fullWidth
                   component={CustomTextField}
@@ -584,7 +586,7 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={`Price ${isEquity ? "" : `%`}`}>
+              <InlineFormField label={`Price ${isEquity ? "" : `%`}`} name={"price"}>
                 <Field
                   component={CustomTextField}
                   disabled={

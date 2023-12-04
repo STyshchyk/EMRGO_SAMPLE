@@ -16,16 +16,45 @@ import * as accountsSelectors from "../../../../redux/selectors/accounts";
 import * as authSelectors from "../../../../redux/selectors/auth";
 import AddPaymentAccountForm from "../AddPaymentAccountForm";
 
-const generateRequestPayload = (formikValues) => ({
-  ...formikValues,
-  entityGroupId: formikValues.sourceEntity?.groups,
-  countryId: formikValues.country?.value,
-  currencyId: formikValues.currency?.value,
-  intermediaryBankCountryId: formikValues.intermediaryBankCountry?.value,
-  country: undefined,
-  currency: undefined,
-  intermediaryBankCountry: undefined,
-});
+const generateRequestPayload = (formikValues) => {
+  const hasIntermediaryBank = formikValues?.hasIntermediaryBank;
+
+  const {
+    intermediaryBankAccountNo,
+    intermediaryBankAddress,
+    intermediaryBankBIC,
+    intermediaryBankCity,
+    intermediaryBankCountry,
+    intermediaryBankIBAN,
+    intermediaryBankName,
+    intermediaryBankPostCode,
+    intermediaryBankRouteCode,
+    intermediaryBankSortCode,
+    ...restFormikValues
+  } = formikValues;
+
+  if (hasIntermediaryBank) {
+    return {
+      ...formikValues,
+      entityGroupId: formikValues.sourceEntity?.groups,
+      countryId: formikValues.country?.value,
+      currencyId: formikValues.currency?.value,
+      country: undefined,
+      currency: undefined,
+      intermediaryBankCountryId: formikValues.intermediaryBankCountry?.value,
+      intermediaryBankCountry: undefined,
+    };
+  } else {
+    return {
+      ...restFormikValues,
+      entityGroupId: formikValues.sourceEntity?.groups,
+      countryId: formikValues.country?.value,
+      currencyId: formikValues.currency?.value,
+      country: undefined,
+      currency: undefined,
+    };
+  }
+};
 
 const AddPaymentAccountFormDialog = ({ open, handleClose, entitiesList }) => {
   const dispatch = useDispatch();

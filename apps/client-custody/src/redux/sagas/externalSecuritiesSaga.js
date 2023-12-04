@@ -115,7 +115,9 @@ function* queryExternalSecurities({ payload }) {
     if (typeof payload?.successCallback === "function") {
       payload.successCallback();
     }
-    yield call(toast.success, data.message);
+    if (data?.data.length !== 0) {
+      yield call(toast.success, data.message);
+    }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);

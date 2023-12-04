@@ -235,7 +235,7 @@ const AddPaymentAccountForm = ({
                     type="checkbox"
                     name="hasIntermediaryBank"
                     control={<Checkbox />}
-                    disabled={!isUSDCurrencySelected && !isGBPCurrencySelected} // !Dev note: Enable an ability to add intermediary bank details only if selected currency is either USD or GBP
+                    // disabled={!isUSDCurrencySelected && !isGBPCurrencySelected} // !Dev note: Enable an ability to add intermediary bank details only if selected currency is either USD or GBP
                     label="Add Intermediary Bank Details"
                   />
                 </InlineFormField>

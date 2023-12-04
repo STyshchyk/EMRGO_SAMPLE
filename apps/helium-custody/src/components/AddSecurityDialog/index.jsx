@@ -353,7 +353,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         name="name"
                         variant="filled"
                         type="text"
-                        InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
+                        // InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       />
                     </Grid>
                   </Grid>

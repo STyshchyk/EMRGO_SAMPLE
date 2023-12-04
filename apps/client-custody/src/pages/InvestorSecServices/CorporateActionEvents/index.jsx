@@ -11,8 +11,10 @@ import LoadingPage from "../../../components/LoadingPage";
 import ViewCorporateActionEventDialog from "../../../components/ViewCorporateActionEventDialog";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as CAEventsActionCreators from "../../../redux/actionCreators/corporateActionEvents";
+import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as CAEventsSelectors from "../../../redux/selectors/corporateActionEvents";
+import * as paymentAndSettlementSelectors from "../../../redux/selectors/paymentAndSettlement";
 
 const CorporateActionEvents = () => {
   const dispatch = useDispatch();
@@ -31,9 +33,12 @@ const CorporateActionEvents = () => {
   const currentEntityType = currentEntityGroup?.entityType;
   const currentUserId = currentUser?.id;
   const corporateActionEvents = useSelector(CAEventsSelectors.selectCorporateActionEventsList);
+  const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
 
-  const tableData = corporateActionEvents?.map((item) => generateCAEventsTableRowData(item));
+  const tableData = corporateActionEvents?.map((item) =>
+    generateCAEventsTableRowData(item, paymentsList)
+  );
 
   const currentDate = moment().format("DD/MM/YYYY"); // Get the current date in 'DD/MM/YYYY' format
   const currentDateParsed = moment(currentDate, "DD/MM/YYYY");
@@ -50,6 +55,10 @@ const CorporateActionEvents = () => {
     // fetches those where inv holds position in security (BE filtering it based on entityId?)
     const fetchCorporateActionEventsList = () => dispatch(CAEventsActionCreators.doFetchCAEvents());
     fetchCorporateActionEventsList();
+
+    const fetchPaymentsList = () =>
+      dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
+    fetchPaymentsList();
   }, [dispatch]);
 
   // !change label based on BRD

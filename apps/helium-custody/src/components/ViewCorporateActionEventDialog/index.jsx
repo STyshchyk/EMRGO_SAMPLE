@@ -237,6 +237,7 @@ const ViewCorporateActionEventDialog = ({
                       onClick={() => {
                         handleClose();
                       }}
+                      variant="outlined"
                       color="primary"
                     >
                       Cancel

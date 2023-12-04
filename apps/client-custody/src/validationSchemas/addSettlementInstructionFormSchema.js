@@ -7,30 +7,33 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
   price: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () =>
-      Yup.string().test("maxValue", "Must be at most 10 digits", (value) => {
-        if (typeof value === 'string' && !isNaN(Number(value))) {
-          return value.length <= 10;
-        } 
+      Yup.string().test("maxValue", "Must be at most 16 digits", (value) => {
+        if (!isNaN(Number(value))) {
+            const maxValue = 9999999999999999.999999;
+            return parseFloat(value) <= maxValue;
+        }
         return true;
-      }),
+    }),
     otherwise: () =>
       Yup.string()
         .required("Price is required")
-        .test("maxValue", "Must be at most 10 digits", (value) => {
-          if (typeof value === 'string' && !isNaN(Number(value))) {
-            return value.length <= 10;
-          }
-          return true;
-        }),
+        .test("maxValue", "Must be at most 16 digits", (value) => {
+        if (!isNaN(Number(value))) {
+            const maxValue = 9999999999999999.999999;
+            return parseFloat(value) <= maxValue;
+        }
+        return true;
+    }),
   }),
   quantity: Yup.string()
     .required("Quantity is required")
-    .test("maxValue", "Maximum value is 1000000", (value) => {
-      if (!isNaN(Number(value))) {
-        return Number(value) <= 10000000;
-      }
-      return true;
-    }),
+    .test("maxValue", "Must be at most 16 digits", (value) => {
+    if (!isNaN(Number(value))) {
+        const maxValue = 9999999999999999.999999;
+        return parseFloat(value) <= maxValue;
+    }
+    return true;
+}),
   settlementAmount: Yup.string().when("settlementTypeSelectOption", {
     is: (value) => ["DFOP", "RFOP"].includes(value?.label),
     then: () => Yup.string(),
@@ -51,7 +54,7 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
     then: () => Yup.string(),
     otherwise: () =>
       Yup.string()
-        .required("Accrued Interest is required")
+        .required()
         .test("maxValue", "Must be at most 12 digits", (value) => {
           if (!isNaN(Number(value))) {
             return value.length <= 12;
