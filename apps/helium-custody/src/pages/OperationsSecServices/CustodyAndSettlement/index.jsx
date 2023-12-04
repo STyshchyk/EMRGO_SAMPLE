@@ -392,6 +392,7 @@ const CustodyAndSettlement = () => {
       disabled: ![
         settlementInstructionStatusEnum.CANCELLED_REQUESTED,
         settlementInstructionStatusEnum.REJECTED,
+        settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
