@@ -22,8 +22,9 @@ import history from "../redux/configs/history";
 import configureStore from "../redux/configureStore";
 import { baseAxiosInstance } from "../services/wethaqAPIService/helpers";
 
-const { store, persistor } = configureStore();
+import "./app.styles.css";
 
+const { store, persistor } = configureStore();
 const region = appConfig.appRegion;
 
 baseAxiosInstance.interceptors.request.use((config) => {

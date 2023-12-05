@@ -1,14 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Form, Formik } from "formik";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Field, Form, Formik } from "formik";
+import moment from "moment/moment";
 
+import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { settlementInstructionStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/paymentAndSettlement";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
@@ -63,7 +66,8 @@ const ChangeSettlementInstructionStatusDialog = ({
 }) => {
   const dispatch = useDispatch();
   const settlementId = currentlySelectedRowData?.id;
-
+  const settledStatus =
+    requestedSettlementInstructionStatus === settlementInstructionStatusEnum.SETTLED;
   const dropdownOptions = useSelector(dropdownSelectors.selectDropdownOptions);
 
   const changeSettlementInstructionStatus = (payload) =>
@@ -100,7 +104,10 @@ const ChangeSettlementInstructionStatusDialog = ({
 
     const requestPayload = {
       status: requestedSettlementInstructionStatus,
-      settlementStatusReasonId: values.settlementStatusReasonSelectOption?.value?.id,
+      settlementDate: settledStatus ? values.settlementDate : undefined,
+      settlementStatusReasonId: settledStatus
+        ? undefined
+        : values.settlementStatusReasonSelectOption?.value?.id,
     };
 
     changeSettlementInstructionStatus({
@@ -151,6 +158,7 @@ const ChangeSettlementInstructionStatusDialog = ({
           <Formik
             initialValues={{
               settlementStatusReasonSelectOption: "",
+              settlementDate: moment(),
             }}
             onSubmit={handleSubmit}
             enableReinitialize
@@ -158,17 +166,39 @@ const ChangeSettlementInstructionStatusDialog = ({
             {({ values, setFieldValue }) => (
               <Form>
                 <Grid container spacing={2}>
-                  <Grid item md={12}>
-                    <Select
-                      {...baseSelectProps}
-                      placeholder={"Select Reason description"}
-                      value={values.settlementStatusReasonSelectOption}
-                      options={settlementStatusReasonSelectOptionsList}
-                      onChange={(newValue) => {
-                        setFieldValue("settlementStatusReasonSelectOption", newValue);
-                      }}
-                    />
-                  </Grid>
+                  {!settledStatus ? (
+                    <Grid item md={12}>
+                      <Select
+                        {...baseSelectProps}
+                        placeholder={"Select Reason description"}
+                        value={values.settlementStatusReasonSelectOption}
+                        options={settlementStatusReasonSelectOptionsList}
+                        onChange={(newValue) => {
+                          setFieldValue("settlementStatusReasonSelectOption", newValue);
+                        }}
+                      />
+                    </Grid>
+                  ) : (
+                    <Grid item md={12}>
+                      <Grid item>
+                        <Typography className="py-2">Select Actual Settlement Date</Typography>
+                      </Grid>
+                      <Field
+                        component={DatePicker}
+                        onChange={(date) => {
+                          setFieldValue("settlementDate", date);
+                        }}
+                        value={values.settlementDate}
+                        format={DEFAULT_DATE_FORMAT}
+                        className="w-full"
+                        inputvariant="outlined"
+                        label={DEFAULT_DATE_FORMAT}
+                        name="tradeDate"
+                        variant="dialog"
+                        slotProps={{ textField: { size: "small" } }}
+                      />
+                    </Grid>
+                  )}
                   <Grid item container spacing={2} justifyContent="flex-end">
                     <Grid item>
                       <Button color="primary" variant="outlined" onClick={handleClose}>

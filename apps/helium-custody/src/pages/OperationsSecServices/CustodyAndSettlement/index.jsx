@@ -326,19 +326,9 @@ const CustodyAndSettlement = () => {
           handleCloseMenu();
           return;
         }
-        const fetchPaymentsList = () =>
-          dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
-
-        changeSettlementInstructionStatus({
-          settlementId: currentlySelectedRowData?.id,
-          requestPayload: {
-            status: settlementInstructionStatusEnum.SETTLED,
-          },
-          successCallback: () => {
-            fetchPaymentsList();
-            handleCloseMenu();
-          },
-        });
+        setRequestedSettlementInstructionStatus(settlementInstructionStatusEnum.SETTLED);
+        setOpenChangeSettlementInstructionDialog(true);
+        handleCloseMenu();
       },
       disabled: ![
         settlementInstructionStatusEnum.MATCHED,

@@ -68,7 +68,6 @@ const mandatoryOrVoluntaryOptions = [
 export const generateExternalSecurityOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
-      .filter((item) => item?.assetTypeName?.name !== "Equity")
       .filter((item) => item?.isin)
       .map((item) => ({
         label: item.isin,
@@ -594,7 +593,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         multiline
                         onKeyDown={(event) => {
                           if (event.which === 13)
-                            setFieldValue("address", event.target.value + "\n");
+                            setFieldValue("additionalInfo", event.target.value + "\n");
                         }}
                         rows={2}
                         variant="filled"
