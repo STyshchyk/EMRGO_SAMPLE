@@ -570,7 +570,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="filled"
                         type="text"
                         inputProps={{
-                          maxLength: 100,
+                          maxLength: 1024,
                         }}
                         value={values.eventTerms}
                       />
@@ -592,7 +592,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="filled"
                         type="text"
                         inputProps={{
-                          maxLength: 100,
+                          maxLength: 1024,
                         }}
                         value={values.additionalInfo}
                       />
