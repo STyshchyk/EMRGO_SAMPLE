@@ -415,7 +415,6 @@ const RaiseSettlementInstructionForm = ({
                   getOptionValue={(option) => option}
                   value={values?.portfolio_id}
                   onChange={(newValue) => {
-                    console.log(newValue);
                     setFieldValue("portfolio_id", newValue);
                   }}
                 />

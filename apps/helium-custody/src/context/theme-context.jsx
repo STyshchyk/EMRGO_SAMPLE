@@ -1,14 +1,22 @@
 import { createContext, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
+
+
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 // import { jssPreset, StylesProvider } from "@mui/styles";
 // import { create } from "jss";
 // import rtl from "jss-rtl";
 import PropTypes from "prop-types";
 
+
+
 import locales from "../constants/locales/locales";
 import themeStyles from "../theme";
+
+
+
+
 
 const ThemeContext = createContext();
 ThemeContext.displayName = "Theme";
@@ -17,12 +25,13 @@ ThemeContext.displayName = "Theme";
 // const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const CustomThemeProvider = (props) => {
-  const { children } = props;
+  const { children, isDarkMode } = props;
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
   const locale = locales.find(({ code }) => code === currentLang);
 
   const theme = {
+    // ...themeStyles(isDarkMode),
     ...themeStyles,
     direction: locale.rtl ? "rtl" : "ltr",
     // palette: {

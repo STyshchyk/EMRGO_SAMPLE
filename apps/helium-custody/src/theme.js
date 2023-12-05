@@ -5,45 +5,45 @@ export default (isDarkMode) => {
   return {
     palette: {
       mode: isDarkMode ? "dark" : "light",
-      ...(isDarkMode
-        ? {
-            // palette values for dark mode
-            primary: {
-              main: colors.green5,
-              contrastText: colors.black[100],
-            },
-            error: {
-              main: "#eb0000",
-              contrastText: "#fff",
-            },
-            divider: colors.strokes.dark,
-            background: {
-              default: colors.green1,
-              paper: colors.green1,
-            },
-            text: {
-              primary: colors.white[60],
-              secondary: colors.white[40],
-            },
-          }
-        : {
-            primary: {
-              main: colors.green3,
-            },
-            error: {
-              main: "#eb0000",
-              contrastText: "#fff",
-            },
-            background: {
-              default: colors.white[100],
-              paper: colors.white[100],
-            },
-            divider: colors.strokes.light,
-            text: {
-              primary: colors.black[80],
-              secondary: colors.black[60],
-            },
-          }),
+      // ...(isDarkMode
+      //   ? {
+      //       // palette values for dark mode
+      //       primary: {
+      //         main: colors.green5,
+      //         contrastText: colors.black[100],
+      //       },
+      //       error: {
+      //         main: "#eb0000",
+      //         contrastText: "#fff",
+      //       },
+      //       divider: colors.strokes.dark,
+      //       background: {
+      //         default: colors.green1,
+      //         paper: colors.green1,
+      //       },
+      //       text: {
+      //         primary: colors.white[60],
+      //         secondary: colors.white[40],
+      //       },
+      //     }
+      //   : {
+      //       primary: {
+      //         main: colors.green3,
+      //       },
+      //       error: {
+      //         main: "#eb0000",
+      //         contrastText: "#fff",
+      //       },
+      //       background: {
+      //         default: colors.white[100],
+      //         paper: colors.white[100],
+      //       },
+      //       divider: colors.strokes.light,
+      //       text: {
+      //         primary: colors.black[80],
+      //         secondary: colors.black[60],
+      //       },
+      //     }),
     },
     // shadows: ['none'],
     shape: {
@@ -108,12 +108,15 @@ export default (isDarkMode) => {
           },
         },
       },
-      MuiInputBase : {
-        styleOverrides:{
-          input:{
-            padding:"12px !important"
-          }
-        }
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: "0.8rem",
+          },
+          input: {
+            padding: "12px !important",
+          },
+        },
       },
       MuiInputAdornment: {
         styleOverrides: {
@@ -132,7 +135,7 @@ export default (isDarkMode) => {
           },
           filled: {
             transform: "translate(12px, 15px) scale(1)",
-            lineHeight:'1rem'
+            lineHeight: "1rem",
           },
         },
       },
@@ -169,9 +172,7 @@ export default (isDarkMode) => {
       },
       MuiTextField: {
         styleOverrides: {
-          root:{
-
-          }
+          root: {},
         },
       },
       MuiTooltip: {
