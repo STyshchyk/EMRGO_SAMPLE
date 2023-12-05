@@ -124,7 +124,7 @@ const InlineFormField = ({ label, children }) => (
       >
         {children}
       </FormControl>
-        {/* {name && (
+      {/* {name && (
             <ErrorMessage
                 component={Typography}
                 variant="caption"
@@ -217,9 +217,10 @@ export const generateExternalSecurityOptionsList = (data) => {
   return [];
 };
 
-export const generateCounterpartyOptionsList = (data) => {
+export const generateCounterpartyOptionsList = (data, entityId) => {
   if (Array.isArray(data) && data.length > 0) {
     return data
+      .filter((item) => item.entityId === entityId)
       .filter((item) => item.status === "Active")
       .map((item) => ({
         label: item.shortName,
@@ -332,7 +333,6 @@ const RaiseSettlementInstructionForm = ({
 
   const [openRealtimeSecuritySearchDialog, setOpenRealtimeSecuritySearchDialog] = useState(false);
 
-  const counterpartyOptionsList = generateCounterpartyOptionsList(counterpartiesList);
   const externalSecurityOptionsList = generateExternalSecurityOptionsList(externalSecuritiesList);
   const settlementInstructionTypeOptionsList = generateSettlementInstructionTypeOptionsList(
     dropdownOptions?.settlementInstructionType
@@ -353,6 +353,10 @@ const RaiseSettlementInstructionForm = ({
         const securityType = values.externalSecuritySelectOption?.value?.assetTypeName?.key;
         const isEquity = securityType === securityTypes.EQUITY;
         const settlementType = values?.settlementTypeSelectOption?.label;
+        const counterpartyOptionsList = generateCounterpartyOptionsList(
+          counterpartiesList,
+          values?.entityId
+        );
 
         return (
           <Form>
