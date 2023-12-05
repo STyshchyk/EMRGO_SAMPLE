@@ -23,7 +23,6 @@ import { currencyRenderer } from "../../constants/renderers";
 import { externalSecurityStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import useIsProduction from "../../utils/useIsProduction";
 import TableFiltersWrapper from "../TableFiltersWrapper";
@@ -297,6 +296,13 @@ const ExternalSecuritiesTable = ({
       id: "assetType",
       title: t("External Securities.Headers.Security Type"),
       render: (rowData) => rowData?.assetType,
+      customSort: (a, b) => {
+        return a.assetType.length - b.assetType.length;
+      },
+      customFilterAndSearch: (term, rowData) => {
+        if (!term) return true;
+        return term.toLowerCase() === rowData?.assetType?.toLowerCase();
+      },
     },
     {
       id: "isin",
@@ -306,7 +312,7 @@ const ExternalSecuritiesTable = ({
       defaultFilter: isinFilterValue,
       customFilterAndSearch: (term, rowData) => {
         if (!term) return true;
-        return term === rowData?.isin;
+        return term.toLowerCase() === rowData?.isin?.toLowerCase();
       },
     },
     {
