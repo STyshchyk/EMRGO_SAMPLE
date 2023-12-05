@@ -67,12 +67,14 @@ const mandatoryOrVoluntaryOptions = [
 
 export const generateExternalSecurityOptionsList = (data) => {
   if (Array.isArray(data) && data.length > 0) {
-    return data
-      .filter((item) => item?.isin)
-      .map((item) => ({
-        label: item.isin,
-        value: item,
-      }));
+    return (
+      data
+        // .filter((item) => item?.isin)
+        .map((item) => ({
+          label: item.isin ?? item?.attributes[0]?.value,
+          value: item,
+        }))
+    );
   }
 
   return [];
