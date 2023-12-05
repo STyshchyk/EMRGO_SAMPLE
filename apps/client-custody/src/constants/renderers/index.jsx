@@ -54,6 +54,11 @@ export const dateRenderer = (date) => {
   return formattedDate;
 };
 
+export const dateFormatter = (date, format) => {
+  if (!date) return "";
+  return moment(date).format(format);
+};
+
 export const reportDateRenderer = (date) => {
   const inputDate = moment(date);
   let formattedDate = "NA";
@@ -199,4 +204,14 @@ export const roundNumber = (number, decimalPlaces) => {
   const decimalPrecision = Number(number).toFixed(decimalPlaces);
   return decimalPrecision;
   // 5.74 0.765
+};
+
+export const securityAttributeRenderer = (attributes, key) => {
+  const foundAttribute = attributes.find((attribute) => {
+    return attribute.match.label === key;
+  });
+
+  const attributeValue = foundAttribute ? foundAttribute.value : "N.A";
+
+  return attributeValue;
 };

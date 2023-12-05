@@ -16,6 +16,8 @@ services:
       - "traefik.http.routers.${TARGET_APP_NAME}-secured.entrypoints=websecure"
       - "traefik.http.routers.${TARGET_APP_NAME}-secured.rule=Host(`${APP_SUBDOMAIN}.${CI_ACME_DOMAIN_NAME}`)"
       - "traefik.http.routers.${TARGET_APP_NAME}-secured.tls.certresolver=lets-encrypt"
+      - "traefik.http.routers.${TARGET_APP_NAME}-secured.tls.options=mintls12@file"
+      - "traefik.http.routers.${TARGET_APP_NAME}-secured.middlewares=default-secure-headers@file"
 
     security_opt:
       - "no-new-privileges:true"
