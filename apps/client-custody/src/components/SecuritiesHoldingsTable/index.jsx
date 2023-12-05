@@ -46,6 +46,8 @@ const generateSecuritiesHoldingsTableRowData = (i) => {
     lastMovement: dateFormatter(i?.lastMovement, DEFAULT_DATE_TIME_FORMAT) ?? FALLBACK_VALUE,
     portfolioId: i.portfolio.id ?? FALLBACK_VALUE,
     positionType: i?.positionType ?? FALLBACK_VALUE,
+    portfolio: i.portfolio.name,
+    securityAccount: i.portfolio.accountNumber,
     quantity:
       (i.quantity &&
         convertNumberToIntlFormat(i.quantity, {
@@ -201,6 +203,20 @@ const SecuritiesHoldingsTable = ({
       title: t("Securities Holdings.Headers.Registrar"),
       field: "csd",
       defaultHidden: true,
+    },
+    {
+      id: "portfolio",
+      title: t("Securities Holdings.Headers.Portfolio"),
+      field: "portfolio",
+      exportConfig: { width: 15 },
+      defaultHidden: true,
+    },
+    {
+      id: "safekeepingAccount",
+      title: t("Securities Holdings.Headers.Safekeeping Account"),
+      field: "securityAccount",
+      defaultHidden: true,
+      // exportConfig: { width: 15 },
     },
     {
       id: "quantity",
