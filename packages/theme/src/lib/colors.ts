@@ -48,7 +48,7 @@ export const colors = {
   },
 
   strokes: {
-    light: "#E8E8E9",
+    light: "rgba(0, 0, 0, 0.23)",
     dark: "#446875",
   },
 } as const;

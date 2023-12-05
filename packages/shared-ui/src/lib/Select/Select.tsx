@@ -58,6 +58,7 @@ export function Select<
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,
+          fontFamily: 'Inter, "Roboto","Helvetica","Arial",sans-serif',
           display: "flex",
           alignItems: "center",
           width: "100%",
@@ -90,18 +91,18 @@ export function Select<
         }),
         option: (styles, state) => ({
           ...styles,
-          ...typography.medium["02"],
+          ...typography.regular["01"],
           ...getOptionStyles("select", state),
-          color: isDarkMode ? colors.white[60] : colors.black[60],
+          color: isDarkMode ? colors.white[60] : colors.black[90],
           "&:hover": {
             ...getOptionStyles("hover", state),
           },
         }),
         singleValue: (styles, state) => ({
           ...styles,
-          color: isDarkMode ? colors.white[60] : colors.black[60],
+          color: isDarkMode ? colors.white[60] : colors.black[90],
           ...ellipsis(),
-          ...typography.medium["02"],
+          ...typography.regular["01"],
         }),
         indicatorSeparator: (base) => ({
           ...base,
