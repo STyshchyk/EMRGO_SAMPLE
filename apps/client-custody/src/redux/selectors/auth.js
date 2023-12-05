@@ -49,8 +49,6 @@ export const selectOwnEntityGroups = (state) => state.auth?.authenticatedUserObj
 export const selectCurrentEntityGroup = createSelector(
   [selectOwnEntityGroups, selectCurrentEntityGroupIndex],
   (ownEntityGroups, currentEntityGroupIndex) => {
-    console.log("🚀 ~ file: auth.js:52 ~ currentEntityGroupIndex:", currentEntityGroupIndex);
-    console.log("🚀 ~ file: auth.js:52 ~ ownEntityGroups:", ownEntityGroups);
     if (ownEntityGroups?.length > 0) {
       return ownEntityGroups[currentEntityGroupIndex];
     }
@@ -62,8 +60,6 @@ export const selectCurrentEntityGroup = createSelector(
 export const selectCurrentEntityGroupId = createSelector(
   [selectOwnEntityGroups, selectCurrentEntityGroupIndex],
   (ownEntityGroups, currentEntityGroupIndex) => {
-    console.log("🚀 ~ file: auth.js:52 ~ currentEntityGroupIndex:", currentEntityGroupIndex);
-    console.log("🚀 ~ file: auth.js:52 ~ ownEntityGroups:", ownEntityGroups);
     if (ownEntityGroups?.length > 0) {
       return ownEntityGroups[currentEntityGroupIndex].entity.id;
     }

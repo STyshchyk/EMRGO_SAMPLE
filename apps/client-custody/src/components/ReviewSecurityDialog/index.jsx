@@ -18,6 +18,7 @@ import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import ReportingPDFExporter from "../ReportingPDFExporter";
 import StyledDialogHeader from "../StyledDialogHeader";
+import { securityAttributeRenderer } from "../../constants/renderers";
 
 const primary = "#23389c";
 
@@ -60,6 +61,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
       profitRate,
       securityLongName,
       securityShortName,
+      name,
       longName,
       shortName,
       ticker,
@@ -85,11 +87,11 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
       },
       isin: {
         label: "ISIN",
-        value: isin,
+        value: isin || securityAttributeRenderer(securityData?.attributes, "ISIN"),
       },
       ticker: {
         label: t("Ticker"),
-        value: ticker,
+        value: ticker || securityAttributeRenderer(securityData?.attributes, "Ticker"),
       },
       countryOfRisk: {
         label: t("Country of Risk"),
@@ -97,7 +99,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
       },
       issuanceName: {
         label: t("Issuance Name"),
-        value: issuanceName,
+        value: issuanceName || name,
       },
       securityLongName: {
         label: t("Security Long Name"),

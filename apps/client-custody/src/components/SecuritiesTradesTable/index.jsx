@@ -17,9 +17,11 @@ import PropTypes from "prop-types";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import featureFlags from "../../constants/featureFlags";
 import {
+  dateFormatter,
   dateRenderer,
   currencyRenderer as renderCurrency,
   reportDateRenderer,
+  securityAttributeRenderer,
 } from "../../constants/renderers";
 import {
   securityTradeSettlementStatusEnum,
@@ -33,7 +35,6 @@ import * as reportsSelectors from "../../redux/selectors/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateWithinRange } from "../../utils/dates";
-import { dateFormatter } from "../../utils/formatter";
 import DateRangePicker from "../FilterComponents/DateRangePicker";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import ExportButtons from "../FilterComponents/ExportButtons";
@@ -128,7 +129,8 @@ const generateSecurityTradesTableRowData = (i) => ({
     maximumFractionDigits: 6,
   }),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
-  isin: i.externalSecurity?.isin,
+  isin:
+    i.externalSecurity.isin || securityAttributeRenderer(i?.externalSecurity?.attributes, "ISIN"),
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
   issueDate: i.settlementDate,
   issuer: i.issuer?.entity?.corporateEntityName,
@@ -598,7 +600,6 @@ const SecurityTradesTable = ({
     label: item,
     value: item,
   }));
-  console.log("listOfEntityNames", listOfIssuerCorporateNames, listOfInvestorCorporateNames);
   return (
     <Fragment>
       <div
@@ -776,7 +777,6 @@ const SecurityTradesTable = ({
                   }
                   return true;
                 });
-              console.log(filterColumns.shownColumns);
               return (
                 <div data-testid="security-trades-table">
                   <MaterialTable
