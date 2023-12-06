@@ -24,7 +24,6 @@ import {
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import { getAttribute } from "../../helpers/custodyAndSettlement";
-import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 // import TableFiltersWrapper from '../TableFiltersWrapper';
 import tableStyles from "../../styles/cssInJs/materialTable";
@@ -127,7 +126,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
-  issueDate: i.settlementDate,
+  issueDate: i.settlementDateActual ?? null,
   issuer: i.issuer?.entity?.name,
   issuerCashAccountBalance: i.issuerCashAccount
     ? convertNumberToIntlFormat(i.issuerCashAccountBalance)
@@ -279,8 +278,8 @@ const SecurityTradesTable = ({
       id: "valueDate",
       title: t("Headers.Value Date"),
       field: "issueDate",
-      render: (rowData) => dateFormatter(rowData?.settlementDate, DEFAULT_DATE_FORMAT),
-      exportConfig: { render: (rowData) => dateRenderer(rowData.settlementDate) },
+      render: (rowData) => dateFormatter(rowData?.issueDate, DEFAULT_DATE_FORMAT),
+      exportConfig: { render: (rowData) => dateRenderer(rowData.issueDate) },
       width: 150,
     },
     {
