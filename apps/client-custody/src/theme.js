@@ -101,7 +101,7 @@ export default (isDarkMode) => {
           input: {
             padding: "14px 12px",
             fontSize: "0.875rem",
-            fontWeight: 400,
+            fontWeight: 500,
           },
           underline: {
             "&:before": {
@@ -132,6 +132,8 @@ export default (isDarkMode) => {
           filled: {
             transform: "translate(12px, 15px) scale(1)",
             lineHeight: "1rem",
+            fontSize: "14px",
+            fontWeight: 500,
           },
           outlined: {
             lineHeight: "1rem",
