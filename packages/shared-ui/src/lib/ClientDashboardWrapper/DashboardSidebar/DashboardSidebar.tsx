@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { clientAccountRoutes, roles } from "@emrgo-frontend/constants";
@@ -34,7 +34,7 @@ import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
 import * as Styles from "./DashboardSidebar.styles";
 import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip";
 
-export const DashboardSidebar = () => {
+export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const origin = window.location.origin;
   const { user } = useUser();
   const currentRole = roles.find((role) => role.key === user?.role);
@@ -65,9 +65,9 @@ export const DashboardSidebar = () => {
 
   return (
     <Styles.DashboardSidebar>
-      <SidebarHeader>
+      <SidebarHeader $isHidden={isHidden}>
         <Link to="/">
-          <Logo />
+          <Logo isHidden={isHidden} />
         </Link>
       </SidebarHeader>
 
@@ -186,7 +186,7 @@ export const DashboardSidebar = () => {
         onReject={onRejectPlatformTerms}
         hasAccepted={hasAcceptedPlatformTerms}
         type={showTermsModal}
-        warningMessage = "You will be logged out if you do not accept the platform terms"
+        warningMessage="You will be logged out if you do not accept the platform terms"
       />
 
       <HelpModal isOpen={isHelpDeskOpen} onClose={() => setHelpDeskOpen(false)} />

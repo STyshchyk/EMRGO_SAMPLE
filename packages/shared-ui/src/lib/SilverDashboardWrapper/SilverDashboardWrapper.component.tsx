@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
 
+import { ExpandArrow } from "@emrgo-frontend/shared-ui";
+
 import { SilverDashboardSidebar } from "./SilverDashboardSidebar";
-import { ExpandArrow } from "./SilverDashboardSidebar/SilverDashboardSidebar.styles";
 import * as Styles from "./SilverDashboardWrapper.styles";
 import { ISilverDashboardWrapperProps } from "./SilverDashboardWrapper.types";
 
