@@ -1,21 +1,25 @@
-import { FC, useEffect } from "react";
-
-import { silverModuleURLs } from "@emrgo-frontend/constants";
-import { ensureNotNull } from "@emrgo-frontend/utils";
+import { FC, useState } from "react";
 
 import { SilverDashboardSidebar } from "./SilverDashboardSidebar";
-import { useSilverDashboardWrapperContext } from "./SilverDashboardWrapper.provider";
+import { ExpandArrow } from "./SilverDashboardSidebar/SilverDashboardSidebar.styles";
 import * as Styles from "./SilverDashboardWrapper.styles";
 import { ISilverDashboardWrapperProps } from "./SilverDashboardWrapper.types";
 
 export const SilverDashboardWrapperComponent: FC<ISilverDashboardWrapperProps> = ({
   children,
 }: ISilverDashboardWrapperProps) => {
-
-
+  const [isMenuHidden, setMenuHidded] = useState(false);
   return (
-    <Styles.Container>
-      <SilverDashboardSidebar />
+    <Styles.Container $isHidden={isMenuHidden}>
+      <SilverDashboardSidebar isHidden={isMenuHidden} />
+      <ExpandArrow
+        $isHidden={isMenuHidden}
+        color="primary"
+        onClick={() => {
+          setMenuHidded((prevState) => (prevState = !prevState));
+        }}
+      />
+
       <Styles.Content>{children}</Styles.Content>
     </Styles.Container>
   );

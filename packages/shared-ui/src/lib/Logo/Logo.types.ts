@@ -1,1 +1,3 @@
-export interface ILogoProps {}
+export interface ILogoProps {
+  isHidden?: boolean;
+}

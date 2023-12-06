@@ -6,8 +6,8 @@ import { ILogoProps } from "./Logo.types";
 
 export const Logo: FC<ILogoProps> = (props: ILogoProps) => {
   return (
-    <Styles.Logo>
-      <Emrgo />
+    <Styles.Logo $isHidden={props.isHidden}>
+      <Emrgo key={"Emrgo"} />
     </Styles.Logo>
   );
 };

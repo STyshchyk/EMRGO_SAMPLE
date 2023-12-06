@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -25,7 +25,7 @@ import {
 import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.provider";
 import * as Styles from "./SilverDashboardSidebar.styles";
 
-export const SilverDashboardSidebar = () => {
+export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const {
     mainRoutes,
     roles,
@@ -37,12 +37,11 @@ export const SilverDashboardSidebar = () => {
     isHelpDeskOpen,
     setHelpDeskOpen,
   } = ensureNotNull(useSilverDashboardWrapperContext());
-
   return (
     <Styles.DashboardSidebar>
-      <SidebarHeader>
+      <SidebarHeader $isHidden={isHidden}>
         <Link to={""}>
-          <Logo />
+          <Logo isHidden={isHidden} />
         </Link>
       </SidebarHeader>
       <nav>
