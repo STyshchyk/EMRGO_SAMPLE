@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateWithinRange } from "../../utils/dates";
@@ -21,7 +22,7 @@ const generateCAEventsTableRowData = (i) => ({
   exDate: i?.exDate,
   recordDate: i?.recordDate,
   paymentDate: i.paymentDate,
-  securityId: i.securityId,
+  securityId: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.securityId,
   securityName: i?.securityName?.label,
   eventType: i?.eventType?.name,
   eventId: i?.eventId ?? "--",
