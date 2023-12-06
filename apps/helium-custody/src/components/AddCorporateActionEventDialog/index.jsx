@@ -357,7 +357,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     />
                   </InlineFormField>
 
-                  <Grid container item justifyContent="flex-end" mb={2}>
+                  <Grid container item justifyContent="flex-end">
                     <Grid item>
                       <Button
                         variant="contained"
@@ -394,26 +394,23 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                     />
                   </InlineFormField>
 
-                  <Grid container className="my-4">
-                    <InlineFormField label={"Security Name"}>
-                      <Field
-                        fullWidth
-                        component={TextField}
-                        placeholder="Security Long Name"
-                        name="securityName"
-                        variant="filled"
-                        size="small"
-                        type="text"
-                        value={
-                          values.externalSecuritySelectOption
-                            ? values.externalSecuritySelectOption.value?.longName
-                            : ""
-                        }
-                        disabled
-                      />
-                    </InlineFormField>
-                    {/* <ErrorMessage component={Typography} variant="caption" color="error" className="ml-4" name="securityName" /> */}
-                  </Grid>
+                  <InlineFormField label={"Security Name"}>
+                    <Field
+                      fullWidth
+                      component={TextField}
+                      placeholder="Security Long Name"
+                      name="securityName"
+                      variant="filled"
+                      size="small"
+                      type="text"
+                      value={
+                        values.externalSecuritySelectOption
+                          ? values.externalSecuritySelectOption.value?.longName
+                          : ""
+                      }
+                      disabled
+                    />
+                  </InlineFormField>
 
                   <InlineFormField label={"Ex Date"}>
                     <Field
@@ -703,5 +700,20 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     </StyledDialog>
   );
 };
-
+const InlineFormField = ({ label, children }) => (
+  <Grid item container md={12} className="py-2">
+    <Grid item md={5} xs={12} container direction="column">
+      <Typography>{label}</Typography>
+    </Grid>
+    <Grid item md={7} xs={12}>
+      <FormControl
+        style={{
+          width: "100%",
+        }}
+      >
+        {children}
+      </FormControl>
+    </Grid>
+  </Grid>
+);
 export default AddCorporateActionEventDialog;
