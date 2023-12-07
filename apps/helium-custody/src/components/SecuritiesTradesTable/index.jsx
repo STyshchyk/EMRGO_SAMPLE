@@ -498,9 +498,13 @@ const SecurityTradesTable = ({
     ...new Set(data.map(({ externalSecurity }) => externalSecurity?.name)),
   ].sort();
   const listOfISINValues = [
-    ...new Set(data.map(({ externalSecurity }) => externalSecurity?.isin)),
+    ...new Set(
+      data.map(
+        ({ externalSecurity }) =>
+          getAttribute(externalSecurity?.attributes, "isin") ?? externalSecurity?.isin
+      )
+    ),
   ].sort();
-
   const externalSecurityOptionsList = listOfExternalSecurityNames.map((item) => ({
     label: item,
     value: item,
