@@ -13,7 +13,6 @@ export const IdentificationForm: FC<IIdentificationFormProps> = ({ onSubmit, id,
           hidden={{ sessionId }}
           onSubmit={onSubmit}
           autoFocus
-          opacity={0}
         />
       </Styles.IdentificationForm>
     </AuthWrapper>
