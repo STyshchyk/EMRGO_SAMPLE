@@ -29,6 +29,7 @@ const generateCAEventsTableRowData = (i) => ({
   eventStatus: i?.eventStatus?.name,
   mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
   responseDeadline: i?.clientResponseDeadline,
+  marketDeadline: i?.marketDeadline,
   eventTerms: i?.eventTerms,
   additionalInfo: i?.additionalInfo,
   linkedEventId: i?.linkedEvent?.eventId ?? "--",
@@ -104,9 +105,19 @@ const CorporateActionEventsTable = ({
     {
       id: "responseDeadline",
       title: "Response Deadline",
+      field: "responseDeadline",
       render: (rowData) =>
         rowData?.responseDeadline
           ? dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT)
+          : "N/A",
+    },
+    {
+      id: "marketDeadline",
+      title: "Market Deadline",
+      field: "marketDeadline",
+      render: (rowData) =>
+        rowData?.marketDeadline
+          ? dateFormatter(rowData?.marketDeadline, DEFAULT_DATE_FORMAT)
           : "N/A",
     },
   ];

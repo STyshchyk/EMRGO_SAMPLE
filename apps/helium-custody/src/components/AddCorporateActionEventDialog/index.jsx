@@ -58,6 +58,7 @@ const initial = {
   additionalInfo: "",
   mandatoryOrVoluntary: null,
   responseDeadline: null,
+  marketDeadline: null,
 };
 
 const mandatoryOrVoluntaryOptions = [
@@ -175,6 +176,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
           ? mandatoryOrVoluntaryOptions.find((option) => option.value === "voluntary")
           : mandatoryOrVoluntaryOptions.find((option) => option.value === "mandatory"),
         responseDeadline: moment(selectedCorporateActionEvent?.clientResponseDeadline),
+        marketDeadline: moment(selectedCorporateActionEvent?.marketDeadline),
       });
     } else {
       if (!formvalues?.settings) return;
@@ -230,11 +232,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       additionalInfo: formikValues?.additionalInfo,
       voluntary: formikValues?.mandatoryOrVoluntary?.value === "voluntary",
       clientResponseDeadline: formikValues?.responseDeadline,
+      marketDeadline: formikValues?.marketDeadline,
     };
 
     // id 933 if mandatory remove clientResponseDeadline
     if (!requestPayload.voluntary) {
       delete requestPayload.clientResponseDeadline;
+      delete requestPayload.marketDeadline;
     }
 
     return { ...requestPayload };
@@ -299,7 +303,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         }}
       >
         {({ values, handleSubmit, setFieldValue }) => (
-          <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
+          <form onSubmit={handleSubmit}>
             <AutoSaveFields formKey="AddCorporateActionEventForm" initial={initial} />
             <DialogTitle id="form-dialog-title">
               {isEdit ? "Edit Corporate Action Event" : "Add Corporate Action Event"}
@@ -672,6 +676,42 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         color="error"
                         className="ml-4"
                         name="responseDeadline"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container className="mt-4">
+                    <Grid item xs={12} md={6} lg={6} alignContent="flex-start">
+                      <Typography
+                        className={`mt-4 ${
+                          values.mandatoryOrVoluntary?.value === "mandatory" && classes.disabledText
+                        }`}
+                      >
+                        Market Response Deadline
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6} alignContent="center" className="px-1">
+                      <Field
+                        fullWidth
+                        format="DD/MM/YYYY"
+                        inputVariant="filled"
+                        variant="dialog"
+                        placeholder="DD/MM/YYYY"
+                        component={DatePicker}
+                        disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
+                        name="marketDeadline"
+                        minDate={moment()}
+                        value={values.marketDeadline}
+                        onChange={(date) => {
+                          setFieldValue("marketDeadline", date);
+                        }}
+                      />
+                      <ErrorMessage
+                        component={Typography}
+                        variant="caption"
+                        color="error"
+                        className="ml-4"
+                        name="marketDeadline"
                       />
                     </Grid>
                   </Grid>
