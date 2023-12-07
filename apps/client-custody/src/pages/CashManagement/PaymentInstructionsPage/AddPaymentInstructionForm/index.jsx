@@ -39,25 +39,15 @@ const AddPaymentInstructionForm = ({
   } = options;
   // local states
 
-  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
-    allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
-  );
-  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] = useState(
-    isWethaqUser
-      ? allPaymentAccountOptions.filter(
-          (i) => initialValues.beneficiaryEntityGroupUser?.value?.id === i.value.userId
-        )
-      : allPaymentAccountOptions
-  );
+  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] =
+    useState(allSourceAccountOptions);
+  const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] =
+    useState(allPaymentAccountOptions);
 
   return (
     <Formik
       initialValues={{
         ...initialValues,
-        paymentAccount:
-          filteredPaymentAccountOptions.lenght !== 0
-            ? filteredPaymentAccountOptions.filter((account) => account.value.isDefault)[0]
-            : null,
       }}
       onSubmit={handleSubmit}
       // validationSchema={addExternalPaymentSchema}
@@ -69,6 +59,48 @@ const AddPaymentInstructionForm = ({
             <AutoSaveFields formKey="AddPaymentInstructionDialogForm" initial={initial} />
           )}
           <Box mb={2}>
+            <Box my={1} className="w-full">
+              <Select
+                name="sourceAccount"
+                placeholder={t("Payment Instructions.Modals.Placeholders.Source Account")}
+                components={{ Option: ReactSelectCurrencyOption }}
+                closeMenuOnSelect
+                isSearchable
+                styles={selectStyles}
+                menuPortalTarget={document.body}
+                value={values.sourceAccount}
+                isClearable
+                options={filteredSourceAccountOptions}
+                onChange={(selectedOption, triggeredAction) => {
+                  if (triggeredAction.action === "clear") {
+                    setFieldValue("sourceAccount", null);
+                  }
+                  if (triggeredAction.action === "select-option") {
+                    const modifiedOption = {
+                      ...selectedOption,
+                      label: selectedOption.customLabel,
+                    };
+                    setFieldValue("sourceAccount", modifiedOption);
+
+                    setFieldValue("paymentAccount", null);
+
+                    setFilteredPaymentAccountOptions(
+                      allPaymentAccountOptions.filter(
+                        (i) => i.value.currency === selectedOption.value.currency
+                      )
+                    );
+                  }
+                }}
+              />
+              <ErrorMessage
+                component={Typography}
+                variant="caption"
+                color="error"
+                className="ml-4"
+                name="sourceAccount"
+              />
+            </Box>
+
             <Box my={1} className="w-full">
               <Select
                 name="paymentAccount"
