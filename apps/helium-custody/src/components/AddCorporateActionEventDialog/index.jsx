@@ -19,6 +19,7 @@ import { TextField } from "formik-mui";
 import moment from "moment";
 
 import { useTheme } from "../../context/theme-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import * as CAEventsActionCreators from "../../redux/actionCreators/corporateActionEvents";
 import * as dropdownActionCreators from "../../redux/actionCreators/dropdown";
 import * as formActionCreators from "../../redux/actionCreators/form";
@@ -72,8 +73,8 @@ export const generateExternalSecurityOptionsList = (data) => {
       data
         // .filter((item) => item?.isin)
         .map((item) => ({
-          label: item.isin ?? item?.attributes[0]?.value,
-          value: item,
+          label: item.isin || getAttribute(item?.attributes, "isin"),
+          value: { ...item, isin: getAttribute(item?.attributes, "isin") ?? item?.isin },
         }))
     );
   }
@@ -151,8 +152,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
           : "",
         externalSecuritySelectOption: selectedCorporateActionEvent?.externalSecurity
           ? {
-              label: selectedCorporateActionEvent?.externalSecurity?.isin,
-              value: selectedCorporateActionEvent?.externalSecurity,
+              label: getAttribute(
+                selectedCorporateActionEvent?.externalSecurity?.attributes,
+                "isin"
+              ),
+              value: {
+                ...selectedCorporateActionEvent?.externalSecurity,
+                isin:
+                  getAttribute(
+                    selectedCorporateActionEvent?.externalSecurity?.attributes,
+                    "isin"
+                  ) ?? selectedCorporateActionEvent?.externalSecurity?.isin,
+              },
             }
           : "",
         eventStatus: selectedCorporateActionEvent?.eventStatus
@@ -432,7 +443,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           type="text"
                           value={
                             values.externalSecuritySelectOption
-                              ? values.externalSecuritySelectOption.value?.longName
+                              ? values.externalSecuritySelectOption.value?.name
                               : ""
                           }
                           disabled
