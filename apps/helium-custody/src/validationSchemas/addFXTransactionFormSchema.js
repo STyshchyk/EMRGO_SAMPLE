@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-const maxLimit = 999999999999999;
+const maxLimit = 999999999999999.999999;
 const minLimit = 1;
 const addFXTransactionFormSchema = Yup.object().shape({
   entity: Yup.object().shape({
