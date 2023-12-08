@@ -186,8 +186,12 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
         mandatoryOrVoluntary: selectedCorporateActionEvent?.voluntary
           ? mandatoryOrVoluntaryOptions.find((option) => option.value === "voluntary")
           : mandatoryOrVoluntaryOptions.find((option) => option.value === "mandatory"),
-        responseDeadline: moment(selectedCorporateActionEvent?.clientResponseDeadline),
-        marketDeadline: moment(selectedCorporateActionEvent?.marketDeadline),
+        responseDeadline: selectedCorporateActionEvent?.clientResponseDeadline
+          ? moment(selectedCorporateActionEvent?.clientResponseDeadline)
+          : null,
+        marketDeadline: selectedCorporateActionEvent?.marketDeadline
+          ? moment(selectedCorporateActionEvent?.marketDeadline)
+          : null,
       });
     } else {
       if (!formvalues?.settings) return;
