@@ -194,13 +194,27 @@ const ViewCorporateActionEventDialog = ({
               )}
 
               {isVoluntaryEvent && (
-                <DataGridRow
-                  label={"Client Response Deadline"}
-                  value={dateFormatter(
-                    currentlySelectedRowData?.responseDeadline,
-                    DEFAULT_DATE_FORMAT
-                  )}
-                />
+                <>
+                  <DataGridRow
+                    label={"Client Response Deadline"}
+                    value={dateFormatter(
+                      currentlySelectedRowData?.responseDeadline,
+                      DEFAULT_DATE_FORMAT
+                    )}
+                  />
+
+                  <DataGridRow
+                    label={"Market Deadline"}
+                    value={
+                      currentlySelectedRowData?.marketDeadline
+                        ? dateFormatter(
+                            currentlySelectedRowData?.marketDeadline,
+                            DEFAULT_DATE_FORMAT
+                          )
+                        : "--"
+                    }
+                  />
+                </>
               )}
 
               {showResponses && (

@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateWithinRange } from "../../utils/dates";
@@ -21,13 +22,14 @@ const generateCAEventsTableRowData = (i) => ({
   exDate: i?.exDate,
   recordDate: i?.recordDate,
   paymentDate: i.paymentDate,
-  securityId: i.securityId,
+  securityId: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.securityId,
   securityName: i?.securityName?.label,
   eventType: i?.eventType?.name,
   eventId: i?.eventId ?? "--",
   eventStatus: i?.eventStatus?.name,
   mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
   responseDeadline: i?.clientResponseDeadline,
+  marketDeadline: i?.marketDeadline,
   eventTerms: i?.eventTerms,
   additionalInfo: i?.additionalInfo,
   linkedEventId: i?.linkedEvent?.eventId ?? "--",
@@ -103,9 +105,19 @@ const CorporateActionEventsTable = ({
     {
       id: "responseDeadline",
       title: "Response Deadline",
+      field: "responseDeadline",
       render: (rowData) =>
         rowData?.responseDeadline
           ? dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT)
+          : "N/A",
+    },
+    {
+      id: "marketDeadline",
+      title: "Market Deadline",
+      field: "marketDeadline",
+      render: (rowData) =>
+        rowData?.marketDeadline
+          ? dateFormatter(rowData?.marketDeadline, DEFAULT_DATE_FORMAT)
           : "N/A",
     },
   ];

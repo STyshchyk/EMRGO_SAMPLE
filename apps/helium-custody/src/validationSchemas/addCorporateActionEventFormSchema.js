@@ -26,7 +26,12 @@ const addCorporateActionEventFormSchema = Yup.object().shape({
   responseDeadline: Yup.date().when('mandatoryOrVoluntary.value', {
     is: (value) => value === 'voluntary',
     then: () => Yup.date().nullable().required('Response Deadline is required'),
-    otherwise: () => Yup.date().nullable(),
+    otherwise: () => Yup.string().nullable(),
+  }),
+  marketDeadline: Yup.date().when('mandatoryOrVoluntary.value', {
+    is: (value) => value === 'voluntary',
+    then: () => Yup.date().nullable().required('Market Deadline is required'),
+    otherwise: () => Yup.string().nullable(),
   }),
 });
 
