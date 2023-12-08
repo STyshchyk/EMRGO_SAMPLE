@@ -234,7 +234,11 @@ function* fetchSettlementInstructionAuditData({ payload }) {
     yield put(actionCreators.doFetchSettlementInstructionAuditDataSuccess({ data }));
 
     if (typeof payload?.successCallback === "function") {
-      payload.successCallback(data?.data?.SettlementAdminInstructionsAudit);
+      payload.successCallback(
+        [...data?.data?.SettlementAdminInstructionsAudit].sort(function (a, b) {
+          return new Date(a.updatedAt) - new Date(b.updatedAt);
+        })
+      );
     }
   } catch (error) {
     const errorMessage = extractErrorMessage(error);
