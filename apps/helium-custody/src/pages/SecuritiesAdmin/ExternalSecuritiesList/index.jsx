@@ -147,7 +147,7 @@ const ExternalSecuritiesList = () => {
     {
       id: 1,
       label: "Amend",
-      onClick: () => {
+      callback: () => {
         if (currentlySelectedRowData.isPrimaryIssuance) {
           setOpenAmendPrimaryIssuanceSecurityDialog(true);
           handleCloseMenu();
@@ -169,7 +169,7 @@ const ExternalSecuritiesList = () => {
     {
       id: 2,
       label: "Set to Inactive",
-      onClick: () => {
+      callback: () => {
         const statusValue = "Inactive";
 
         if (currentlySelectedRowData?.assetType === "Equity") {
@@ -187,7 +187,7 @@ const ExternalSecuritiesList = () => {
     {
       id: 3,
       label: "Set to Active",
-      onClick: () => {
+      callback: () => {
         const statusValue = "Active";
 
         if (currentlySelectedRowData?.assetType === "Equity") {
@@ -205,7 +205,7 @@ const ExternalSecuritiesList = () => {
     {
       id: 4,
       label: "Edit Coupon Payment Schedule",
-      onClick: () => {
+      callback: () => {
         setOpenEditCouponPaymentScheduleDialog(true);
         handleCloseMenu();
       },
@@ -240,6 +240,7 @@ const ExternalSecuritiesList = () => {
         // handleOpenMenu={handleOpenMenu}
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
+        currentlySelectedRowData={currentlySelectedRowData}
         setOpenAddSecurityDialog={setOpenAddSecurityDialog}
         setOpenAddEquitySecurityDialog={setOpenAddEquitySecurityDialog}
       />

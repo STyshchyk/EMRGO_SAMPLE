@@ -204,6 +204,7 @@ const PaymentInstructionsPage = () => {
   const paymentTransferPurposeOptions =
     getDropdownValues(dropdownValues?.paymentTransferPurpose, locale) ?? [];
 
+  console.log(entities);
   const sourceEntityOptions = generateSourceEntityOptions(entities);
 
   const options = {
@@ -440,7 +441,7 @@ const PaymentInstructionsPage = () => {
         transferPurposeTypeId: paymentInstruction.transferPurposeType?.id,
         valueDate: paymentInstruction.valueDate,
         actions: getActions(paymentInstruction),
-        userId: paymentInstruction.userID,
+        userId: paymentInstruction.userId,
         wethaqAccountId: paymentInstruction.wethaqAccount?.id,
         accountId: paymentInstruction.account?.id,
         createdAt: paymentInstruction.createdAt,
