@@ -726,11 +726,11 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={"Internal Trade Ref"}>
+              <InlineFormField label={"Client Settlement Reference"}>
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Internal Trade Ref"
+                  label="Client Settlement Reference"
                   name="internalTradeRef"
                   variant="outlined"
                   type="text"
