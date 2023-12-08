@@ -78,7 +78,7 @@ const AddPaymentInstructionForm = ({
                   if (triggeredAction.action === "select-option") {
                     const modifiedOption = {
                       ...selectedOption,
-                      label: selectedOption.customLabel,
+                      label: selectedOption.label,
                     };
                     setFieldValue("sourceAccount", modifiedOption);
 
