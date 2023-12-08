@@ -626,7 +626,7 @@ const RaiseSettlementInstructionForm = ({
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Accrued Interest"
+                  label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
                   name="accruedInterest"
                   variant={isVariantOutlined ? "outlined" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
@@ -710,11 +710,11 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={"Internal Trade Ref"}>
+              <InlineFormField label={"Client Settlement Reference"}>
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Internal Trade Ref"
+                  label="Client Settlement Reference"
                   name="internalTradeRef"
                   variant="outlined"
                   type="text"

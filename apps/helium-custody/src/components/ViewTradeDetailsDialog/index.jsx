@@ -85,6 +85,11 @@ const ViewTradeDetailsDialog = ({ open, handleClose, currentlySelectedRowData })
   const transformTradeDetails = (tradeData) => {
     if (!tradeData) return [];
 
+    console.log(tradeData);
+
+    const isEquity = tradeData?.externalSecurity?.assetTypeName?.key === "equity";
+    console.log(isEquity);
+
     const {
       referenceId,
       wsn,
@@ -249,7 +254,7 @@ const ViewTradeDetailsDialog = ({ open, handleClose, currentlySelectedRowData })
         value: principalAmount,
       },
       {
-        label: t("Headers.Accrued Interest"),
+        label: isEquity ? t("Headers.Commission") : t("Headers.Accrued Interest"),
         value: accruedInterest,
       },
       {
