@@ -56,8 +56,9 @@ export const buildAddInternalTransferRequestPayload = {};
 
 export const generateEntityOptionsList = (data) =>
   data.map((entity) => ({ value: entity.id, label: entity.entityName }));
-export const generateWethaqAccountOptionsList = (data) =>
-  data.map((account) => ({
+export const generateWethaqAccountOptionsList = (data) => {
+  console.log(data[0]);
+  return data.map((account) => ({
     value: {
       accountId: account.id,
       entityId: account.group.entity?.id,
@@ -65,8 +66,9 @@ export const generateWethaqAccountOptionsList = (data) =>
       currency: account.currency?.name,
       accountBalance: account.accountBalance,
     },
-    label: account.accountNo,
+    label: `${account.accountNo} (${account.type})`,
   }));
+};
 
 const AddInternalTransferForm = ({
   handleCloseDialog,
