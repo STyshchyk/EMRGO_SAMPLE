@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import AddIcon from "@mui/icons-material/Add";
 import BlockIcon from "@mui/icons-material/Block";
@@ -203,7 +204,6 @@ const PaymentInstructionsPage = () => {
   const paymentTransferPurposeOptions =
     getDropdownValues(dropdownValues?.paymentTransferPurpose, locale) ?? [];
 
-  console.log(entities);
   const sourceEntityOptions = generateSourceEntityOptions(entities);
 
   const options = {
@@ -266,6 +266,11 @@ const PaymentInstructionsPage = () => {
   };
 
   const handleApproveClick = (data) => {
+    if (data.userId === currentUserId) {
+      toast.warning("Another officer should be able to approve current SI", 500);
+      return;
+    }
+
     setSelectedPaymentInstruction(data);
     setApproveModalOpen(true);
   };
@@ -435,7 +440,7 @@ const PaymentInstructionsPage = () => {
         transferPurposeTypeId: paymentInstruction.transferPurposeType?.id,
         valueDate: paymentInstruction.valueDate,
         actions: getActions(paymentInstruction),
-        userId: paymentInstruction.userId,
+        userId: paymentInstruction.userID,
         wethaqAccountId: paymentInstruction.wethaqAccount?.id,
         accountId: paymentInstruction.account?.id,
         createdAt: paymentInstruction.createdAt,
