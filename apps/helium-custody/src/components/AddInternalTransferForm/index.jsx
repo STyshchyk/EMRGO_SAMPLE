@@ -57,7 +57,6 @@ export const buildAddInternalTransferRequestPayload = {};
 export const generateEntityOptionsList = (data) =>
   data.map((entity) => ({ value: entity.id, label: entity.entityName }));
 export const generateWethaqAccountOptionsList = (data) => {
-  console.log(data[0]);
   return data.map((account) => ({
     value: {
       accountId: account.id,
