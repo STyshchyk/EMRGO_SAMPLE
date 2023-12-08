@@ -267,7 +267,7 @@ const PaymentInstructionsPage = () => {
 
   const handleApproveClick = (data) => {
     if (data.userId === currentUserId) {
-      toast.warning("Another officer should be able to approve current SI", 500);
+      toast.warning("Another officer should be able to approve current Payment", 500);
       return;
     }
 
