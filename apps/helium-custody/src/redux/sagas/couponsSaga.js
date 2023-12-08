@@ -147,6 +147,13 @@ function* approveCouponAllocation({ payload }) {
   }
 }
 
+function* showCsvFileErrorToast() {
+    yield call(
+      toast.error,
+      "CSV file columns does not match expected format. Please check and try again"
+    );
+}
+
 const couponsSaga = [
   takeLatest(couponsActionTypes.COUPONS_ADD_PAYMENT_SCHEDULE_REQUESTED, addCouponPaymentSchedule),
   takeLatest(couponsActionTypes.COUPONS_EDIT_PAYMENT_SCHEDULE_REQUESTED, editCouponPaymentSchedule),
@@ -158,6 +165,7 @@ const couponsSaga = [
     couponsActionTypes.COUPONS_FETCH_PAYMENT_SCHEDULE_BY_ID_REQUESTED,
     fetchCouponPaymentScheduleById
   ),
+  takeLatest(couponsActionTypes.COUPONS_IMPORT_CSV_FILE_FAILED, showCsvFileErrorToast),
   takeLatest(
     couponsActionTypes.COUPONS_PUBLISH_PAYMENT_SCHEDULE_BY_ID_REQUESTED,
     publishCouponPaymentScheduleById

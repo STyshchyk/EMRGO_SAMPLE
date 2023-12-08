@@ -31,6 +31,9 @@ export const doFetchAllCouponPaymentSchedulesSuccess = createAction(
 export const doFetchAllCouponPaymentSchedulesFailure = createAction(
   actionTypes.COUPONS_FETCH_ALL_PAYMENT_SCHEDULES_FAILED
 );
+export const doCouponImportCsvFileFailure = createAction(
+  actionTypes.COUPONS_IMPORT_CSV_FILE_FAILED
+);
 
 export const doFetchCouponPaymentScheduleById = createAction(
   actionTypes.COUPONS_FETCH_PAYMENT_SCHEDULE_BY_ID_REQUESTED
