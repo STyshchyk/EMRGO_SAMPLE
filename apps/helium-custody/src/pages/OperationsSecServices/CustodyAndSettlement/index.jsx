@@ -422,7 +422,12 @@ const CustodyAndSettlement = () => {
             const raised =
               Array.isArray(data) &&
               data.filter((settlement) => settlement.auditSubType === "Inserted");
-            if (raised[0]?.userId === currentUserId)
+            const lastItem = data[data.length - 1];
+            if (
+              raised[0]?.userId === currentUserId ||
+              (lastItem.newStatus === settlementInstructionStatusEnum.APPROVAL_REQUIRED &&
+                lastItem.userId === currentUserId)
+            )
               toast.warning("Another officer should be able to approve current SI", 500);
             else {
               setRequestedSettlementInstructionStatus(
