@@ -423,7 +423,7 @@ const RaiseSettlementInstructionForm = ({
                   variant="caption"
                   color="error"
                   className="ml-4"
-                  name="portfolioId"
+                  name="portfolio_id"
                 />
               </InlineFormField>
               <InlineFormField label="Settlement Type">
@@ -528,6 +528,13 @@ const RaiseSettlementInstructionForm = ({
                   name="tradeDate"
                   variant="dialog"
                 />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="tradeDate"
+                />
               </InlineFormField>
 
               <InlineFormField label="Settlement Date">
@@ -545,6 +552,13 @@ const RaiseSettlementInstructionForm = ({
                   name="settlementDate"
                   variant="dialog"
                   disabled={!values.tradeDate}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="settlementDate"
                 />
               </InlineFormField>
 
