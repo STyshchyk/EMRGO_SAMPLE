@@ -626,7 +626,7 @@ const RaiseSettlementInstructionForm = ({
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Accrued Interest"
+                  label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
                   name="accruedInterest"
                   variant={isVariantOutlined ? "outlined" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
