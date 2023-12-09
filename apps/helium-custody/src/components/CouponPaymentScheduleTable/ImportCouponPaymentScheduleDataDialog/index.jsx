@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
-
+import { useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import * as XLSX from "xlsx";
 
 import { DEFAULT_DATE_FORMAT } from "../../../constants/datetime";
+import * as couponsActionCreators from "../../../redux/actionCreators/coupons";
 
 // !Dev notes: Disable an ability to import XLS file until XLS file validating logic is sorted
 
@@ -103,6 +104,7 @@ const parseXLSXData = (binaryFile) => {
 };
 
 const ImportCouponPaymentScheduleDataDialog = ({ open, handleClose, setTableData }) => {
+  const dispatch = useDispatch();
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const fileType = file.type;
@@ -129,7 +131,9 @@ const ImportCouponPaymentScheduleDataDialog = ({ open, handleClose, setTableData
       }
 
       setTableData(parsed); // overwrite existing table data with the value of parsed
-
+      if (!parsed?.length) {
+        dispatch(couponsActionCreators.doCouponImportCsvFileFailure());
+      }
       handleClose();
     };
 

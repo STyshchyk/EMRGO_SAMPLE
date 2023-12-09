@@ -21,6 +21,7 @@ import { currencyRenderer, reportDateRenderer } from "../../../constants/rendere
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
+import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
 import * as safekeepingActionCreators from "../../../redux/actionCreators/safekeeping";
 import * as authSelectors from "../../../redux/selectors/auth";
@@ -64,20 +65,21 @@ const CashStatementPage = () => {
   const mtableLocalization = useMaterialTableLocalization();
   const { t } = useTranslation(["reports"]);
   const defaultDateRangeFilter = "none";
-  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
+  const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
   // selectors
   const currentEntityGroup = useSelector(authSelectors.selectCurrentEntityGroup);
-  const transactions = useSelector(reportsSelectors.selectCashTransactions);
-  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
-  // console.log('🚀 ~ file: index.js ~ line 61 ~ CashStatementReportPage ~ transactions', transactions);
-  const [transactionTypeValue, setTransactionTypeValue] = useState("all");
+  const [isEmrgoSelected, setEmrgoSelected] = useState(false);
   const [currentlySelectedSafekeeping, setCurrentlySelectedSafekeeping] = useState(null);
   const [currentlySelectedCash, setCurrentlySelectedCash] = useState(null);
+  const transactions = useSelector(reportsSelectors.selectCashTransactions);
+  const safekeepingAccounts = useSelector(safekeepingSelectors.readAccounts);
+  const cashAccounts = useSelector(reportsSelectors.selectCashAccounts);
+  // console.log('🚀 ~ file: index.js ~ line 61 ~ CashStatementReportPage ~ transactions', transactions);
+  const [transactionTypeValue, setTransactionTypeValue] = useState("all");
   const [safekeepingAccountOptions, setSafeAccountOptions] = useState(null);
-  const [cashAccountOptions, setCashAccountOptions] = useState(null);
-  const emrgoOwnews = useSelector(billingAndPaymentsSelectors.selectEmrgoOwners);
-  const [filteredRows, setFilteredRows] = useState([]);
+  const [cashAccountOptions, setCashAccountOptions] = useState([]);
 
+  const [filteredRows, setFilteredRows] = useState([]);
   const currentEntityGroupID = currentEntityGroup?.id;
 
   useWethaqAPIParams({
@@ -86,6 +88,8 @@ const CashStatementPage = () => {
   useEffect(() => {
     const fetchAccounts = (payload) => dispatch(reportsActionCreators.doFetchCashAccounts(payload));
     fetchAccounts();
+    const fetchEmrgoOwners = () => dispatch(billingAndPaymentsActionCreators.doFetchEmrgoOwners());
+    fetchEmrgoOwners();
     const fetchSafekeepingAccounts = (payload) =>
       dispatch(safekeepingActionCreators.doReadAccounts(payload));
     fetchSafekeepingAccounts();
@@ -117,12 +121,13 @@ const CashStatementPage = () => {
   const rows = getTableData(transactions);
 
   const entityList = [
-    ...[...emrgoOwnews, ...safekeepingAccounts].map((i) => ({
-      label: i.entity?.name ?? i.entityName, //For EMRGO user
-      value: i.entity?.id,
-      data: i.entity,
+    ...[].concat(safekeepingAccounts, emrgoOwnews).map((i) => ({
+      label: i.entity?.name ?? i.entityName,
+      value: i.entity?.id ?? i.id,
+      data: i.entity ?? i,
     })),
   ];
+
   const entityOptions = [...new Map(entityList.map((item) => [item.value, item])).values()];
 
   const safeekingAccountList = [
@@ -149,14 +154,15 @@ const CashStatementPage = () => {
         });
       setCashAccountOptions(cashAccountOptions);
       setCurrentlySelectedCash(null);
+      setCurrentlySelectedSafekeeping(null);
       setSafeAccountOptions([]);
     } else if (selectedEntity.value !== "all") {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
       setEmrgoSelected(false);
-      setSafeAccountOptions(filteredSafekeepingAccounts);
       setCurrentlySelectedCash(null);
+      setSafeAccountOptions(filteredSafekeepingAccounts);
       setTimeout(() => {
         handleSafekeepingAccountChange(filteredSafekeepingAccounts[0]);
       });
@@ -226,7 +232,7 @@ const CashStatementPage = () => {
       field: "transactionType",
       exportConfig: { width: 15 },
     },
-    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin" },
+    { id: "isin", title: t("Cash Statement.Headers.WSN"), field: "isin", defaultHidden: true },
     {
       id: "narrative",
       title: t("Cash Statement.Headers.Narrative"),
@@ -269,7 +275,6 @@ const CashStatementPage = () => {
       // type: 'numeric',
     },
   ];
-
   return (
     <Fragment>
       <PageTitle title={t("Cash Statement.Cash Statement")} />
@@ -302,6 +307,7 @@ const CashStatementPage = () => {
                   customOnChange={(selectedEntity) => {
                     handleEntityChange(selectedEntity);
                   }}
+                  customClearChange={() => handleEntityChange()}
                 />
               </Grid>
 
@@ -340,7 +346,11 @@ const CashStatementPage = () => {
                   onClick={(filters) => {
                     handleFetch(filters);
                   }}
-                  disabled={(filters) => !filters.account}
+                  disabled={(filters) =>
+                    !filters.account ||
+                    !filters.entity ||
+                    (!filters.safekeepingAccount && !isEmrgoSelected)
+                  }
                 />
               </Grid>
 
@@ -361,7 +371,7 @@ const CashStatementPage = () => {
               </Grid>
 
               <Grid item xs={12} md={6} lg={3}>
-                <ExportButtons tableRef={tableRef} name="Cash Statement" />
+                <ExportButtons tableRef={tableRef} name="Cash Statement Report" />
               </Grid>
             </Grid>
             <FilterConsumer>
@@ -381,9 +391,8 @@ const CashStatementPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
-            console.log("🚀 ~ file: index.jsx:328 ~ CashStatementPage ~ filters:", filters);
             const filteredData = filteredRows
-              .filter((row) => {
+              ?.filter((row) => {
                 //  Entry Date range Filter
                 if (filters?.entryDate?.value?.startDate && filters?.entryDate?.value?.endDate) {
                   const { startDate: fromDate, endDate: toDate } = filters?.entryDate.value;
@@ -392,7 +401,7 @@ const CashStatementPage = () => {
                 }
                 return true;
               })
-              .filter((row) => {
+              ?.filter((row) => {
                 if (filters?.transactionType) {
                   let returnValue = false;
                   const transactionTypeValue = filters?.transactionType.value.value;

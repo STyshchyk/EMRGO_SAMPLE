@@ -64,6 +64,10 @@ const AddPaymentInstructionForm = ({
       validationSchema={addExternalPaymentSchema}
     >
       {({ values, setFieldValue, resetForm }) => {
+        const crossCurrency =
+          values?.sourceAccount &&
+          values?.paymentAccount &&
+          values?.sourceAccount?.value?.currency !== values?.paymentAccount?.value?.currency;
         return (
           <Form className={cx(style.formWrapper)}>
             {initial && (
@@ -137,7 +141,7 @@ const AddPaymentInstructionForm = ({
                         if (triggeredAction.action === "select-option") {
                           const modifiedOption = {
                             ...selectedOption,
-                            label: selectedOption.customLabel,
+                            label: selectedOption.label,
                           };
                           setFieldValue("sourceAccount", modifiedOption);
                         }
@@ -308,6 +312,12 @@ const AddPaymentInstructionForm = ({
               </Box>
 
               <Box my={2} className="w-full">
+                {crossCurrency && (
+                  <Typography variant="caption" color="error">
+                    * Cross currency payment is forbidden
+                  </Typography>
+                )}
+
                 <Grid container xs={12} justifyContent="flex-end">
                   <Button
                     onClick={() => {
@@ -318,7 +328,12 @@ const AddPaymentInstructionForm = ({
                   >
                     {t("Entity Accounts.Cancel")}
                   </Button>
-                  <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={isSubmitting || crossCurrency}
+                  >
                     {t("Entity Accounts.Submit")}
                   </Button>
                 </Grid>

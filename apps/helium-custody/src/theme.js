@@ -115,7 +115,16 @@ export default (isDarkMode) => {
           },
         },
       },
-
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: "0.8rem",
+          },
+          input: {
+            padding: "12px !important",
+          },
+        },
+      },
       MuiInputAdornment: {
         styleOverrides: {
           positionStart: {
@@ -178,7 +187,9 @@ export default (isDarkMode) => {
       },
       MuiTextField: {
         styleOverrides: {
-          root: {},
+          root:{
+
+          }
         },
       },
       MuiTooltip: {

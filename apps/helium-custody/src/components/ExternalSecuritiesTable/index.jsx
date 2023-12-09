@@ -1,198 +1,28 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Select } from "@emrgo-frontend/shared-ui";
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import ButtonBase from "@mui/material/ButtonBase";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
-import Grow from "@mui/material/Grow";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
 import { externalSecurityStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
+import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../utils/formatter";
-import useIsProduction from "../../utils/useIsProduction";
-import TableFiltersWrapper from "../TableFiltersWrapper";
+import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
+import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 
 const FALLBACK_VALUE = "--";
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
-
-const customSelectStyles = {
-  menu: (styles) => ({
-    ...styles,
-    zIndex: 100,
-  }),
-  control: (styles) => ({
-    ...styles,
-    border: "none",
-    borderRadius: "6px",
-    backgroundColor: "rgba(0, 0, 0, 0.09)",
-    height: "3rem",
-  }),
-};
-
-const TableActionMenu = ({ handleCloseMenu, actions, anchorEl }) => {
-  const { t } = useTranslation(["external_securities"]);
-
-  return (
-    <Fragment>
-      {Boolean(anchorEl) && (
-        <Popper
-          id="ss-table-action-menu"
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          role={undefined}
-          transition
-          disablePortal
-          placement="right"
-          sx={{ zIndex: 99 }}
-        >
-          {({ TransitionProps }) => (
-            <Grow {...TransitionProps}>
-              <Paper>
-                <ClickAwayListener onClickAway={handleCloseMenu}>
-                  <MenuList id="split-button-menu">
-                    {actions.map((action) => (
-                      <MenuItem
-                        key={action.id}
-                        disabled={action.disabled}
-                        onClick={() => {
-                          action.onClick();
-                        }}
-                      >
-                        <Typography variant="inherit">{action.label}</Typography>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      )}
-    </Fragment>
-  );
-};
-
-TableActionMenu.propTypes = {
-  actions: PropTypes.arrayOf(
-    PropTypes.shape({
-      onClick: PropTypes.func,
-      label: PropTypes.string,
-      disabled: PropTypes.bool,
-    })
-  ).isRequired,
-};
-
-const TableToolbar = ({ searchText, setSearchText }) => {
-  const onChange = useCallback((event) => setSearchText(event?.target.value), []);
-
-  return (
-    <Grid container spacing={4}>
-      <Grid alignItems="center" justifyContent="flex-end" item container spacing={2} lg={9}>
-        {/* {manageColumns && (
-          <Grid item>
-            <Button color="primary" variant="outlined">
-              MANAGE COLUMNS
-            </Button>
-          </Grid>
-        )} */}
-      </Grid>
-
-      <Grid item container lg={3}>
-        <TextField placeholder="Search" variant="filled" value={searchText} onChange={onChange} />
-      </Grid>
-    </Grid>
-  );
-};
-
-const TableFiltering = ({ options, setStatusFilterValue, setISINFilterValue }) => {
-  const { statusOptionsList, isinOptionsList } = options;
-  const [currentlySelectedStatusOption, setCurrentlySelectedStatusOption] = useState(null);
-  const [currentlySelectedISINOption, setCurrentlySelectedISINOption] = useState(null);
-
-  return (
-    <Grid container spacing={2}>
-      <Grid item lg={3}>
-        <Grid container justifyContent="space-between" alignItems="flex-start">
-          <Typography variant="body1" className="bold">
-            Status
-          </Typography>
-          <ButtonBase
-            onClick={() => {
-              setStatusFilterValue("");
-              setCurrentlySelectedStatusOption(null);
-            }}
-          >
-            <Typography variant="caption">Clear</Typography>
-          </ButtonBase>
-        </Grid>
-
-        <Box my={1} className="w-full">
-          <Select
-            fullWidth
-            closeMenuOnSelect
-            isSearchable
-            placeholder="Status"
-            styles={customSelectStyles}
-            options={statusOptionsList}
-            value={currentlySelectedStatusOption}
-            onChange={(newValue) => {
-              setStatusFilterValue(newValue.value);
-              setCurrentlySelectedStatusOption(newValue);
-            }}
-          />
-        </Box>
-      </Grid>
-
-      <Grid item lg={3}>
-        <Grid container justifyContent="space-between" alignItems="flex-start">
-          <Typography variant="body1" className="bold">
-            ISIN
-          </Typography>
-          <ButtonBase
-            onClick={() => {
-              setISINFilterValue("");
-              setCurrentlySelectedISINOption(null);
-            }}
-          >
-            <Typography variant="caption">Clear</Typography>
-          </ButtonBase>
-        </Grid>
-
-        <Box my={1} className="w-full">
-          <Select
-            fullWidth
-            closeMenuOnSelect
-            isSearchable
-            placeholder="ISIN"
-            styles={customSelectStyles}
-            options={isinOptionsList}
-            value={currentlySelectedISINOption}
-            onChange={(newValue) => {
-              setISINFilterValue(newValue.value);
-              setCurrentlySelectedISINOption(newValue);
-            }}
-          />
-        </Box>
-      </Grid>
-    </Grid>
-  );
-};
 
 const generateExternalSecuritiesListTableRowData = (i) => ({
   id: i.id,
@@ -233,6 +63,7 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
   attributes: i.attributes
     ?.filter((item) => !["Short Name", "Long Name"].includes(item?.match?.name))
     .map((item) => ({
+      ...item,
       identifierId: item.identifierId,
       value: item.value,
       securityIdTypeName: item.match?.name,
@@ -240,24 +71,17 @@ const generateExternalSecuritiesListTableRowData = (i) => ({
   coupons: i?.coupons, // for id 634
 });
 
-const getAttribute = (attrs, fieldName) => {
-  const attribute = attrs.filter((attr) => attr.securityIdTypeName.toLowerCase() === fieldName)[0];
-  return attribute?.value ?? FALLBACK_VALUE;
-};
-
 const ExternalSecuritiesTable = ({
   anchorEl,
   handleCloseMenu,
   data,
   actions,
   setCurrentlySelectedRowData,
+  currentlySelectedRowData,
   setAnchorEl,
   setOpenAddSecurityDialog,
   setOpenAddEquitySecurityDialog,
 }) => {
-  const inProd = useIsProduction();
-
-  const [searchText, setSearchText] = useState("");
   const tableRef = useRef();
   const { t } = useTranslation(["external_securities"]);
   const mtableLocalization = useMaterialTableLocalization();
@@ -265,7 +89,11 @@ const ExternalSecuritiesTable = ({
   const [statusFilterValue, setStatusFilterValue] = useState("");
   // helium issues airtable ID 259
   const sortedISIN = Array.from(
-    new Set(data.filter((item) => item?.status === "Active").map((item) => item.isin))
+    new Set(
+      data
+        .filter((item) => item?.status === "Active")
+        .map((item) => getAttribute(item?.attributes, "isin"))
+    )
   ).sort();
   // filter out null isins
   const isinOptionsList = sortedISIN
@@ -286,7 +114,7 @@ const ExternalSecuritiesTable = ({
     },
   ];
 
-  const extSecuritiesColumns = [
+  const columns = [
     {
       id: "name",
       title: t("External Securities.Headers.Security"),
@@ -303,10 +131,12 @@ const ExternalSecuritiesTable = ({
         if (!term) return true;
         return term.toLowerCase() === rowData?.assetType?.toLowerCase();
       },
+      field: "assetType",
     },
     {
       id: "isin",
       title: t("External Securities.Headers.ISIN"),
+      field: "isin",
       render: (rowData) => rowData?.isin ?? getAttribute(rowData?.attributes, "isin"),
       sorting: false,
       defaultFilter: isinFilterValue,
@@ -318,6 +148,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "wsn",
       title: "WSN",
+      field: "wsn",
       customFilterAndSearch: (term, rowData) => term === rowData?.wsn,
       render: (rowData) => rowData?.wsn ?? FALLBACK_VALUE,
       sorting: false,
@@ -325,6 +156,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "ticker",
       title: t("External Securities.Headers.Ticker"),
+      field: "ticker",
       render: (rowData) => rowData?.ticker ?? getAttribute(rowData?.attributes, "ticker"),
       sorting: false,
     },
@@ -337,6 +169,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "profitRate",
       title: t("External Securities.Headers.Rate"),
+      field: "profitRate",
       customSort: (a, b) => parseFloat(a.profitRate) - parseFloat(b.profitRate),
       render: (rowData) => {
         const localizedProfitRateStringValue = currencyRenderer(rowData?.profitRate, 6);
@@ -348,6 +181,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "frequency",
       title: t("External Securities.Headers.Frequency"),
+      field: "frequency",
       customFilterAndSearch: (term, rowData) => term === rowData?.frequency?.name,
       render: (rowData) => rowData?.frequency?.name ?? FALLBACK_VALUE,
       sorting: false,
@@ -355,6 +189,7 @@ const ExternalSecuritiesTable = ({
     {
       id: "country",
       title: t("External Securities.Headers.Country"),
+      field: "country",
       customFilterAndSearch: (term, rowData) => term === rowData?.country?.name,
       render: (rowData) => rowData?.country?.name ?? FALLBACK_VALUE, // !DEV NOTE: PRIMARY ISSUANCE ROW DATA IS NOT EXPECTED TO CONTAIN COUNTRY FIELD,
       sorting: false,
@@ -372,12 +207,14 @@ const ExternalSecuritiesTable = ({
     {
       id: "currency",
       title: t("External Securities.Headers.CCY"),
+      field: "currency",
       render: (rowData) => rowData?.currency?.name,
       sorting: false,
     },
     {
       id: "issuanceAmount",
       title: t("External Securities.Headers.Issuance Amount"),
+      field: "issuanceAmount",
       customSort: (a, b) => parseFloat(a.issuanceAmount) - parseFloat(b.issuanceAmount),
       render: (rowData) => {
         if (rowData?.issuanceAmount) {
@@ -391,12 +228,14 @@ const ExternalSecuritiesTable = ({
     {
       id: "denomination",
       title: t("External Securities.Headers.Denomination"),
+      field: "denomination",
       render: (rowData) => rowData?.denomination?.name ?? FALLBACK_VALUE,
       sorting: false,
     },
     {
       id: "status",
       title: t("External Securities.Headers.Status"),
+      field: "status",
       render: (rowData) => rowData?.status,
       sorting: false,
       defaultFilter: statusFilterValue,
@@ -407,110 +246,119 @@ const ExternalSecuritiesTable = ({
     },
   ];
 
-  const now = new Date();
-
-  const dateOptionsList = [
-    {
-      label: "All",
-      value: "",
-    },
-    {
-      label: "Today",
-      value: dateFormatter(now.toISOString(), DEFAULT_DATE_FORMAT),
-    },
-    {
-      label: "Specific Day",
-      value: null,
-    },
-  ];
-
-  useEffect(() => {
-    if (!tableRef.current?.dataManager) return;
-
-    tableRef.current.dataManager.changeSearchText(searchText);
-    tableRef.current.setState({ searchText });
-    tableRef.current.setState(tableRef.current.dataManager.getRenderState());
-  }, [searchText, tableRef]);
-
   return (
     <Fragment>
-      <div
-        style={{
-          marginBottom: "1rem",
-        }}
-      >
-        <Box pb={3}>
-          <Grid alignItems="flex-end" item container md={12} direction="column" spacing={2}>
-            <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  setOpenAddSecurityDialog(true);
-                }}
-              >
-                {t("External Securities.Buttons.New Security")}
-              </Button>
+      <FilterProvider tableKey="external_security_list_key">
+        <div
+          style={{
+            marginBottom: "1rem",
+          }}
+        >
+          <Box pb={3}>
+            <Grid alignItems="flex-end" item container md={12} direction="column" spacing={2}>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    setOpenAddSecurityDialog(true);
+                  }}
+                >
+                  {t("External Securities.Buttons.New Security")}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    setOpenAddEquitySecurityDialog(true);
+                  }}
+                >
+                  {t("External Securities.Buttons.New Equity Security")}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  setOpenAddEquitySecurityDialog(true);
-                }}
-              >
-                {t("External Securities.Buttons.New Equity Security")}
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-        <TableFiltersWrapper>
-          <TableToolbar searchText={searchText} setSearchText={setSearchText} />
-          <TableFiltering
-            options={{
-              statusOptionsList,
-              isinOptionsList,
-            }}
-            tableRef={tableRef}
-            setStatusFilterValue={setStatusFilterValue}
-            setISINFilterValue={setISINFilterValue}
-          />
-        </TableFiltersWrapper>
-      </div>
+          </Box>
 
-      <MaterialTable
-        tableRef={tableRef}
-        size="small"
-        title=""
-        style={{
-          boxShadow: "none",
-        }}
-        columns={extSecuritiesColumns}
-        data={data}
-        actions={[
-          {
-            icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
-            onClick: (event, rowData) => {
-              setAnchorEl(event.currentTarget);
-              setCurrentlySelectedRowData(rowData);
-            },
-          },
-        ]}
-        options={{
-          ...tableStyles,
-          toolbar: false,
-          pageSize: 5,
-          search: false,
-          fixedColumns: {
-            left: 0,
-          },
-          actionsColumnIndex: -1,
-          draggable: false,
-        }}
-        localization={mtableLocalization}
-      />
-      <TableActionMenu actions={actions} anchorEl={anchorEl} handleCloseMenu={handleCloseMenu} />
+          <TableFiltersWrapper
+            tableRef={tableRef}
+            data={data}
+            columns={columns}
+            open={true}
+            hideExportButtons
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6} lg={3}>
+                <DropdownFilter name="status" label="Status" options={statusOptionsList} />
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <DropdownFilter name="isin" label="ISIN" options={isinOptionsList} />
+              </Grid>
+            </Grid>
+          </TableFiltersWrapper>
+        </div>
+
+        <FilterConsumer>
+          {({ filters, filterColumns }) => {
+            const filteredData = data
+              .filter((row) => {
+                if (filters?.status) {
+                  return row.status === filters?.status?.value?.label;
+                }
+                return true;
+              })
+              .filter((row) => {
+                if (filters?.isin) {
+                  return row.isin === filters?.isin?.value?.value;
+                }
+                return true;
+              });
+
+            return (
+              <Fragment>
+                <MaterialTable
+                  tableRef={tableRef}
+                  size="small"
+                  title=""
+                  style={{
+                    boxShadow: "none",
+                  }}
+                  columns={filterColumns.shownColumns}
+                  data={filteredData}
+                  actions={[
+                    {
+                      icon: () => <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" />,
+                      onClick: (event, rowData) => {
+                        setAnchorEl(event.currentTarget);
+                        setCurrentlySelectedRowData(rowData);
+                      },
+                    },
+                  ]}
+                  options={{
+                    ...tableStyles,
+                    toolbar: false,
+                    pageSize: 5,
+                    search: false,
+                    fixedColumns: {
+                      left: 0,
+                    },
+                    actionsColumnIndex: -1,
+                    draggable: false,
+                  }}
+                  localization={mtableLocalization}
+                />
+                <MaterialTableOverflowMenu
+                  actions={actions}
+                  anchorEl={anchorEl}
+                  setAnchorEl={setAnchorEl}
+                  selectedRow={currentlySelectedRowData}
+                />
+              </Fragment>
+            );
+          }}
+        </FilterConsumer>
+      </FilterProvider>
     </Fragment>
   );
 };
@@ -520,7 +368,7 @@ export default ExternalSecuritiesTable;
 export { generateExternalSecuritiesListTableRowData };
 
 ExternalSecuritiesTable.propTypes = {
-  handleCloseMenu: PropTypes.func.isRequired,
+  handleCloseMenu: PropTypes.func,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       security: PropTypes.string,
@@ -536,6 +384,7 @@ ExternalSecuritiesTable.propTypes = {
     })
   ).isRequired,
   setCurrentlySelectedRowData: PropTypes.func.isRequired,
+  currentlySelectedRowData: PropTypes.object.isRequired,
   setAnchorEl: PropTypes.func.isRequired,
   setOpenAddSecurityDialog: PropTypes.func.isRequired,
 };

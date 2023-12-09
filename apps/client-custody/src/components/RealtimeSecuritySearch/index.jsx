@@ -43,6 +43,7 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
     if (searchTerm === "") {
       setSelectedRowId(null);
       resetExtSecSearchResults();
+      queryExternalSecurities({ query: " " });
     }
 
     return () => {

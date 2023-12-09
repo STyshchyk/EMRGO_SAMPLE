@@ -24,11 +24,13 @@ export const selectCorporateActionEventsList = createSelector([selectCAEventsDat
       eventStatus: item?.statusDropdown,
       voluntary: Boolean(item.voluntary),
       clientResponseDeadline: item?.clientResponseDeadline,
+      marketDeadline: item?.marketDeadline,
       eventTerms: item?.eventTerms,
       additionalInfo: item?.additionalInfo,
       externalSecurity: item?.externalSecurity,
       linkedEvent: item?.linkedEvent,
       id: item.id,
+
     }));
   }
 

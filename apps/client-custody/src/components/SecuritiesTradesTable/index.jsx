@@ -29,6 +29,7 @@ import {
 } from "../../constants/wethaqAPI/securitiesServices";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 import { floatRenderer } from "../../helpers/renderers";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsSelectors from "../../redux/selectors/reports";
@@ -131,8 +132,9 @@ const generateSecurityTradesTableRowData = (i) => ({
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin:
     i.externalSecurity.isin || securityAttributeRenderer(i?.externalSecurity?.attributes, "ISIN"),
+  // isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
-  issueDate: i.settlementDate,
+  issueDate: i.actualSettlementDate,
   issuer: i.issuer?.entity?.corporateEntityName,
   issuerCashAccountBalance: i.issuerCashAccount
     ? convertNumberToIntlFormat(i.issuerCashAccountBalance)
@@ -276,8 +278,8 @@ const SecurityTradesTable = ({
       id: "valueDate",
       title: t("Headers.Value Date"),
       field: "issueDate",
-      render: (rowData) => dateFormatter(rowData?.settlementDate, DEFAULT_DATE_FORMAT),
-      exportConfig: { render: (rowData) => dateRenderer(rowData.settlementDate) },
+      render: (rowData) => dateFormatter(rowData?.issueDate, DEFAULT_DATE_FORMAT),
+      exportConfig: { render: (rowData) => dateRenderer(rowData.issueDate) },
       width: 150,
     },
     {
@@ -526,7 +528,12 @@ const SecurityTradesTable = ({
     ...new Set(data.map(({ externalSecurity }) => externalSecurity?.name)),
   ].sort();
   const listOfISINValues = [
-    ...new Set(data.map(({ externalSecurity }) => externalSecurity?.isin)),
+    ...new Set(
+      data.map(
+        ({ externalSecurity }) =>
+          getAttribute(externalSecurity?.attributes, "isin") ?? externalSecurity?.isin
+      )
+    ),
   ].sort();
 
   const externalSecurityOptionsList = listOfExternalSecurityNames.map((item) => ({

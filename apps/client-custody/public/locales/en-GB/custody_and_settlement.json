@@ -1,6 +1,6 @@
 {
   "Headers": {
-    "Reference": "Reference",
+    "Reference": "EMRGO Settlement Reference",
     "WSN": "WSN",
     "Security": "Security",
     "Trade Type": "Trade Type",
@@ -34,7 +34,7 @@
     "Principal Amount": "Principal Amount",
     "Accrued Interest": "Accrued Interest",
     "Commission": "Commission",
-    "Internal Trade Ref": "Internal Trade Ref"
+    "Internal Trade Ref": "Client Settlement Reference"
   },
   "TableActions": {
     "Review Security Info": "Review Security Info",

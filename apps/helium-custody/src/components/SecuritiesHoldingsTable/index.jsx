@@ -266,7 +266,7 @@ const SecuritiesHoldingsTable = ({
       id: "isin",
       title: "ISIN",
       field: "isin",
-      exportConfig: { width: 8 },
+      exportConfig: { width: 10 },
     },
     {
       id: "broker",

@@ -413,7 +413,6 @@ const RaiseSettlementInstructionForm = ({
                   getOptionValue={(option) => option}
                   value={values?.portfolio_id}
                   onChange={(newValue) => {
-                    console.log(newValue);
                     setFieldValue("portfolio_id", newValue);
                   }}
                 />
@@ -422,7 +421,7 @@ const RaiseSettlementInstructionForm = ({
                   variant="caption"
                   color="error"
                   className="ml-4"
-                  name="portfolioId"
+                  name="portfolio_id"
                 />
               </InlineFormField>
               <InlineFormField label="Settlement Type">
@@ -539,6 +538,13 @@ const RaiseSettlementInstructionForm = ({
                   name="tradeDate"
                   variant="dialog"
                 />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="tradeDate"
+                />
               </InlineFormField>
 
               <InlineFormField label="Settlement Date">
@@ -568,6 +574,13 @@ const RaiseSettlementInstructionForm = ({
                   }}
                   variant="dialog"
                   disabled={!values.tradeDate}
+                />
+                <ErrorMessage
+                  component={Typography}
+                  variant="caption"
+                  color="error"
+                  className="ml-4"
+                  name="settlementDate"
                 />
               </InlineFormField>
 
@@ -635,7 +648,7 @@ const RaiseSettlementInstructionForm = ({
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Accrued Interest"
+                  label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
                   name="accruedInterest"
                   variant={isVariantfilled ? "filled" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
@@ -719,11 +732,11 @@ const RaiseSettlementInstructionForm = ({
                 />
               </InlineFormField>
 
-              <InlineFormField label={"Internal Trade Ref"}>
+              <InlineFormField label={"Client Settlement Reference"}>
                 <Field
                   fullWidth
                   component={CustomTextField}
-                  label="Internal Trade Ref"
+                  label="Client Settlement Reference"
                   name="internalTradeRef"
                   variant="filled"
                   type="text"

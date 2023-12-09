@@ -12,19 +12,15 @@ const CustomNumberInputField = ({
   ...rest
 }) => {
   const formik = useFormikContext(); //Avoid page crush where component is used without formik
+  const handleChange = (values) => {
+    formik.setFieldTouched(name);
+    onChange({ target: { name, value: values?.value } });
+  };
   return (
     <NumericFormat
       {...rest}
       getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name,
-            value: values.value,
-          },
-        });
-        formik?.setFieldTouched(name);
-      }}
+      onValueChange={handleChange}
       thousandSeparator
       isNumericString
       decimalScale={decimalScale || 2}
