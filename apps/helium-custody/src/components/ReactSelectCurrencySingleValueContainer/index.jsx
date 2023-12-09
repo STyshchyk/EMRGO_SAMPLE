@@ -1,28 +1,48 @@
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { components } from "react-select";
+
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
-import style from "./style.module.scss";
-
-const ReactSelectCurrencySingleValueContainer = (props) => {
-  const { innerProps, getValue, currency, selectProps } = props;
-  const data = getValue()[0];
+const ReactSelectCurrencySingleValueContainer = ({ children, ...props }) => {
+  const {
+    getValue,
+    hasValue,
+    isMulti,
+    currency,
+    selectProps: { placeholder, inputValue },
+  } = props;
+  const numberOfValues = getValue().length;
+  console.log(props.getValue());
+  if (!hasValue || !isMulti) {
+    return (
+      <components.ValueContainer {...props}>
+        {children}
+        <Typography
+          color="primary"
+          variant={"subtitle2"}
+          component={"span"}
+          className={"self-start"}
+          sx={{
+            position: "absolute",
+            top: "calc(50% - 11px)",
+            right: "0",
+            zIndex: "10",
+          }}
+        >
+          {currency}
+        </Typography>
+      </components.ValueContainer>
+    );
+  }
   return (
-    <div {...innerProps} className={style.wrapper}>
-      <Box p={1} className={style.selectContainer}>
-        <Grid container justifyContent="space-between">
-          {data ? (
-            <Typography>{data.value}</Typography>
-          ) : (
-            <Typography style={{ color: "gray" }}>{selectProps.placeholder}</Typography>
-          )}
-          <Typography color="primary" variant="subtitle2">
-            {currency}
-          </Typography>
-        </Grid>
-      </Box>
-    </div>
+    <components.ValueContainer {...props}>
+      {!inputValue && (
+        <components.Placeholder {...props}>
+          {`${numberOfValues} ${placeholder}`}
+        </components.Placeholder>
+      )}
+      {children[1]}
+    </components.ValueContainer>
   );
 };
 

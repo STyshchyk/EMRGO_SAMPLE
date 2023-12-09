@@ -16,7 +16,13 @@ const ReactSelectCurrencySingleValueContainer = ({ children, ...props }) => {
     return (
       <components.ValueContainer {...props}>
         {children}
-        <Typography color="primary" variant={"subtitle2"} align="left">
+        <Typography
+          color="primary"
+          variant={"subtitle2"}
+          component={"span"}
+          className={"self-start"}
+          sx={{ position: "absolute", top: "calc(50% - 11px)", right: "0" }}
+        >
           {currency}
         </Typography>
       </components.ValueContainer>
