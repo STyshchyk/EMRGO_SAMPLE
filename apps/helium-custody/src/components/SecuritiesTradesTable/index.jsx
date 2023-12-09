@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Chip from "@mui/material/Chip";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
@@ -649,6 +650,11 @@ const SecurityTradesTable = ({
                     name="status"
                     label="Status"
                     options={settlementStatusOptionsList}
+                    customComponent={{
+                      MultiValueContainer: ({ data }) => (
+                        <Chip key={data.value} label={data.value} className="" color="primary" />
+                      ),
+                    }}
                     isMulti
                   />
                 </Grid>

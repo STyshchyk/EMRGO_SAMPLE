@@ -322,7 +322,7 @@ const SecuritiesTransactionsReportPage = () => {
                   options={safekeepingAccountOptions || safeekingAccountList}
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={3}>
+              <Grid item xs={12} md={6} lg={4}>
                 <DateRangePicker
                   name="settlementDateRange"
                   label={"Settlement Date"}
@@ -330,7 +330,7 @@ const SecuritiesTransactionsReportPage = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6} lg={3}>
+              <Grid item xs={12} md={3} lg={2}>
                 <FilterButton
                   label="Apply"
                   onClick={(filters) => {

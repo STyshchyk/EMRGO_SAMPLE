@@ -761,6 +761,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
                         name="marketDeadline"
                         minDate={moment()}
