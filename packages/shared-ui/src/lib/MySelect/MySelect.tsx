@@ -197,7 +197,6 @@ export const MySelect = <
           }),
           valueContainer: (styles, state) => ({
             ...styles,
-            display: "flex",
           }),
           multiValueLabel: (base) => ({
             ...base,

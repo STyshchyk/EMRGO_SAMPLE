@@ -155,7 +155,6 @@ export function Select<
         }),
         valueContainer: (styles, state) => ({
           ...styles,
-          display: "flex",
         }),
         indicatorSeparator: (base) => ({
           ...base,
