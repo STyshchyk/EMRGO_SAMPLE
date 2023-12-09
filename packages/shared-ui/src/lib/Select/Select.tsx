@@ -152,6 +152,10 @@ export function Select<
           ...ellipsis(),
           ...typography.medium["02"],
         }),
+        valueContainer: (styles, state) => ({
+          ...styles,
+          display: "flex",
+        }),
         indicatorSeparator: (base) => ({
           ...base,
           display: "none",
