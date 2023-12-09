@@ -7,7 +7,6 @@ import style from "./style.module.scss";
 
 const ReactSelectCurrencyOption = (props) => {
   const { innerProps, isDisabled, data, currency } = props;
-
   return !isDisabled ? (
     <div {...innerProps}>
       <Box p={1} className={style.selectContainer}>
@@ -16,7 +15,7 @@ const ReactSelectCurrencyOption = (props) => {
             {data.label}
           </Typography>
           <Typography color="primary" variant="subtitle2">
-            {currency || data.value.currency || data.value?.currencyName}
+            {currency || data.value.currency || data.value?.currencyName || data.currency}
           </Typography>
         </Grid>
       </Box>
@@ -31,7 +30,7 @@ ReactSelectCurrencyOption.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     label: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }).isRequired,
 };
 

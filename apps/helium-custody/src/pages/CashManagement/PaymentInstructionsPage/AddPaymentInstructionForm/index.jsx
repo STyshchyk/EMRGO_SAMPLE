@@ -15,8 +15,8 @@ import { TextField } from "formik-mui";
 import moment from "moment";
 
 import AutoSaveFields from "../../../../components/AutoSaveFields";
-import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../../../../components/ReactSelectCurrencySingleValueContainer";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
@@ -126,7 +126,14 @@ const AddPaymentInstructionForm = ({
                       placeholder={t(
                         "Payment Instructions.Modals.Placeholders.Select Source Account"
                       )}
-                      components={{ Option: ReactSelectCurrencyOption }}
+                      components={{
+                        Option: ReactSelectCurrencyOption,
+                        ValueContainer: (props) =>
+                          ReactSelectCurrencySingleValueContainer({
+                            ...props,
+                            currency: props?.getValue()[0]?.value?.currency,
+                          }),
+                      }}
                       closeMenuOnSelect
                       isSearchable
                       styles={selectStyles}
@@ -161,7 +168,14 @@ const AddPaymentInstructionForm = ({
               <Box my={1} className="w-full">
                 <Select
                   name="paymentAccount"
-                  components={{ Option: ReactSelectCurrencyOption }}
+                  components={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.value?.currency,
+                      }),
+                  }}
                   closeMenuOnSelect
                   placeholder={t("Payment Instructions.Modals.Fields.Payment Account")}
                   isSearchable

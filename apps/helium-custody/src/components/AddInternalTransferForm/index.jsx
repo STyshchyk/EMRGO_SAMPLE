@@ -17,6 +17,7 @@ import * as billingAndPaymentsSelectors from "../../redux/selectors/cashManageme
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import CustomNumberInputField from "../CustomNumberInputField";
 import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../ReactSelectCurrencySingleValueContainer";
 
 // !INTERNAL TRANSFER PAGE COMPONENT
 
@@ -267,7 +268,14 @@ const AddInternalTransferForm = ({
                 <Select
                   {...baseSelectProps}
                   ref={sourceAccountRef}
-                  components={{ Option: ReactSelectCurrencyOption }}
+                  components={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.value?.currency,
+                      }),
+                  }}
                   placeholder={t("components:Select.Select")}
                   value={values.sourceAccount}
                   options={sourceOptions}
@@ -321,7 +329,14 @@ const AddInternalTransferForm = ({
                 <Select
                   {...baseSelectProps}
                   ref={destinationAccountRef}
-                  components={{ Option: ReactSelectCurrencyOption }}
+                  components={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.value?.currency,
+                      }),
+                  }}
                   // isDisabled={values.sourceAccount === null}
                   placeholder={t("components:Select.Select")}
                   value={values.destinationAccount}

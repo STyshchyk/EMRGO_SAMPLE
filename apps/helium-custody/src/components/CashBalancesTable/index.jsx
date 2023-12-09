@@ -22,6 +22,8 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import ReportingInfo from "../FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../ReactSelectCurrencySingleValueContainer";
 
 const ALL_ENTITIES_OPTION = {
   label: "All",
@@ -124,7 +126,8 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
         return {
           data: cashAccount,
           value: cashAccount.account,
-          label: `${cashAccount.currency} ( ${cashAccount.account} )`,
+          currency: cashAccount.currency,
+          label: `${cashAccount.account}`,
         };
       });
 
@@ -133,7 +136,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
       ];
 
       setCashAccountOptions(filteredCashAccounts);
-
+      console.log(filteredCashAccounts);
       const currencyOptions = data?.map((cashAccount) => {
         return {
           data: cashAccount,
@@ -290,6 +293,14 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
                   name="cashAccount"
                   label="Cash Account"
                   options={cashAccountOptions}
+                  customComponent={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.currency,
+                      }),
+                  }}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
                   customOnChange={(selected) => {
@@ -330,7 +341,6 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
 
         <FilterConsumer>
           {({ filterColumns, filters }) => {
-            console.log(filters);
             const filteredData = data
               ?.filter((row) => {
                 if (filters?.cashAccount) {
