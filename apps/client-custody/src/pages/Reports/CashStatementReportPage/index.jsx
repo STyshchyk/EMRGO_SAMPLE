@@ -15,6 +15,8 @@ import FilterButton from "../../../components/FilterComponents/FilterButton";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
+import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -298,7 +300,8 @@ const CashStatementReportPage = () => {
       .map((account) => ({
         data: account,
         value: account.id,
-        label: `${account.label}  ${account?.original?.currency?.name}`,
+        currency: account.original.currency.name,
+        label: `${account.label}  `,
       }));
 
     setCashAccountOptions(filteredCashAccounts);
@@ -366,6 +369,14 @@ const CashStatementReportPage = () => {
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  customComponent={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.currency,
+                      }),
+                  }}
                   customOnChange={(selectedAccount) => {
                     cashAccountChange(selectedAccount);
                   }}

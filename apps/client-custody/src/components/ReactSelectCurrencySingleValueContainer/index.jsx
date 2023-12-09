@@ -12,7 +12,6 @@ const ReactSelectCurrencySingleValueContainer = ({ children, ...props }) => {
     selectProps: { placeholder, inputValue },
   } = props;
   const numberOfValues = getValue().length;
-  console.log(hasValue, isMulti);
   if (!hasValue || !isMulti) {
     return (
       <components.ValueContainer {...props}>

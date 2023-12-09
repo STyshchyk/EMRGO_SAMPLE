@@ -8,11 +8,7 @@ import Grid from "@mui/material/Grid";
 import moment from "moment";
 import v from "voca";
 
-import {
-  accountTypeRenderer,
-  currencyRenderer,
-  reportDateRenderer,
-} from "../../constants/renderers";
+import { accountTypeRenderer, reportDateRenderer } from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
@@ -25,6 +21,8 @@ import ExportButtons from "../FilterComponents/ExportButtons";
 import FilterButton from "../FilterComponents/FilterButton";
 import ReportingInfo from "../FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
+import ReactSelectCurrencyOption from "../ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../ReactSelectCurrencySingleValueContainer";
 
 const ALL_ENTITIES_OPTION = {
   label: "All",
@@ -245,7 +243,8 @@ const CashBalancesTable = ({ data, accounts }) => {
       .map((account) => ({
         data: account,
         value: account.id,
-        label: `${account.label}  ${account?.original?.currency?.name}`,
+        currency: account.original.currency.name,
+        label: `${account.label}  `,
       }));
 
     setCashAccountOptions(filteredCashAccounts);
@@ -331,6 +330,14 @@ const CashBalancesTable = ({ data, accounts }) => {
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCashAccount}
                   setCurrentlySelectedOption={setCurrentlySelectedCashAccount}
+                  customComponent={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.currency,
+                      }),
+                  }}
                   setCustomClear={() => {
                     setCurrentlySelectedCurrency(null);
                     setCurrencyOptions(tempCurrenciesList);

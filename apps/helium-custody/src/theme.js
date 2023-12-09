@@ -94,12 +94,10 @@ export default (isDarkMode) => {
         styleOverrides: {
           root: {
             borderRadius: "0.25rem",
-            backgroundColor: "rgb(243, 243, 244)",
             textarea: {
               padding: "0",
             },
           },
-
           input: {
             padding: "14px 12px",
             fontSize: "0.875rem",
@@ -187,9 +185,7 @@ export default (isDarkMode) => {
       },
       MuiTextField: {
         styleOverrides: {
-          root:{
-
-          }
+          root: {},
         },
       },
       MuiTooltip: {
