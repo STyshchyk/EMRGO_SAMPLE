@@ -162,7 +162,8 @@ const generateSecurityTradesTableRowData = (i) => ({
   internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
   entityGroup: i?.entityGroup,
   userId: i?.userId,
-  portfolio: i?.portfolio,
+  portfolioName: i?.portfolio?.name,
+  portfolioNumber: i?.portfolio?.accountNumber,
 });
 
 const SecurityTradesTable = ({
@@ -239,13 +240,13 @@ const SecurityTradesTable = ({
     {
       id: "investorSecuritiesAccountNo",
       title: t("Headers.Settlement Account"),
-      field: "portfolio.accountNumber",
+      field: "portfolioNumber",
       width: 150,
     },
     {
       id: "portfolio",
       title: t("Headers.Portfolio"),
-      field: "portfolio.name",
+      field: "portfolioName",
       width: 150,
     },
     {
