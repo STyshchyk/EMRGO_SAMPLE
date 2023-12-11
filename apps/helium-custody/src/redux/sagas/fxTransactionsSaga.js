@@ -29,10 +29,11 @@ function* addFxTransactions({ payload }) {
     const { data } = response;
     if (requestPayload.transactionId) {
       yield put(fxTransactionsActionCreators.doAddFxTransactionsSuccess({ data }));
+      yield put(fxTransactionsActionCreators.doFetchFxTransactions(dateRange));
       yield call(toast.success, data.message);
     } else {
       yield put(fxTransactionsActionCreators.doFetchFxTransactions(dateRange));
-    yield call(toast.success, 'Successfully Added Transaction');
+      yield call(toast.success, "Successfully Added Transaction");
     }
     if (successCallback && data) {
       successCallback();
