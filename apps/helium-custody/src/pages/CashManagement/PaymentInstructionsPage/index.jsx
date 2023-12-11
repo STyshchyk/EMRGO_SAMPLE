@@ -204,6 +204,7 @@ const PaymentInstructionsPage = () => {
   const paymentTransferPurposeOptions =
     getDropdownValues(dropdownValues?.paymentTransferPurpose, locale) ?? [];
 
+  console.log(entities);
   const sourceEntityOptions = generateSourceEntityOptions(entities);
 
   const options = {
@@ -267,7 +268,7 @@ const PaymentInstructionsPage = () => {
 
   const handleApproveClick = (data) => {
     if (data.userId === currentUserId) {
-      toast.warning("Another officer should be able to approve current SI", 500);
+      toast.warning("Another officer should be able to approve current Payment", 500);
       return;
     }
 
@@ -440,7 +441,7 @@ const PaymentInstructionsPage = () => {
         transferPurposeTypeId: paymentInstruction.transferPurposeType?.id,
         valueDate: paymentInstruction.valueDate,
         actions: getActions(paymentInstruction),
-        userId: paymentInstruction.userID,
+        userId: paymentInstruction.userId,
         wethaqAccountId: paymentInstruction.wethaqAccount?.id,
         accountId: paymentInstruction.account?.id,
         createdAt: paymentInstruction.createdAt,
