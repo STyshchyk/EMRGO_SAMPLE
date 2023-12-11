@@ -135,6 +135,8 @@ export const MySelect = <
             "&:hover": {
               ...getOptionStyles("hover", state),
             },
+            display: "flex",
+            justifyContent: "space-between",
           }),
           control: (baseStyles, state) => ({
             ...baseStyles,

@@ -146,6 +146,8 @@ export function Select<
           "&:hover": {
             ...getOptionStyles("hover", state),
           },
+          display: "flex",
+          justifyContent: "space-between",
         }),
         singleValue: (styles, state) => ({
           ...styles,
