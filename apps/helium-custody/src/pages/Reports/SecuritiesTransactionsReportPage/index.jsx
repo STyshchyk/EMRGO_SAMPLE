@@ -20,6 +20,7 @@ import PageTitle from "../../../components/PageTitle";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
+import { getAttribute } from "../../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
@@ -113,6 +114,13 @@ const SecuritiesTransactionsReportPage = () => {
     ...new Map(currencyOptionsList.map((item) => [item.value, item])).values(),
   ];
 
+  const isinOptionsList = listOfUniqueSecurities
+    ?.map(({ isin }) => ({
+      label: isin,
+      value: isin,
+    }))
+    .filter((v) => !!v.label); // filter until BE changes as equity isins are returned null
+
   useEffect(() => {
     const fetchAccounts = (payload) =>
       dispatch(reportsActionCreators.doFetchSecuritiesAccounts(payload));
@@ -137,6 +145,7 @@ const SecuritiesTransactionsReportPage = () => {
       currency: i.externalSecurity?.currencyName?.name,
       // entity: i.externalSecurity.name ?? FALLBACK_VALUE,
       wsn: i.wsn ?? FALLBACK_VALUE,
+      // isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? FALLBACK_VALUE, //* use this once ebme-1585 BE changes are done
       isin: i?.externalSecurity?.isin ?? FALLBACK_VALUE,
       securityShortName: i.sukuk?.securityShortName || i.externalSecurity?.shortName,
       issuerName: i.issuerName ?? FALLBACK_VALUE,
@@ -147,6 +156,7 @@ const SecuritiesTransactionsReportPage = () => {
       netSettleAmount: convertNumberToIntlFormat(i.netSettleAmount, intlFormatOpts),
       price: i.price ? convertNumberToIntlFormat(i.price, intlFormatOpts) : FALLBACK_VALUE, // !Dev notes: externalSecurity object doesn't have this field
       settleDate: i?.settlementInsSettlementDate, // !Dev notes: By design?,
+      actualSettleDate: i?.settlementInsActualSettlementDate,
     };
   };
 
@@ -265,6 +275,16 @@ const SecuritiesTransactionsReportPage = () => {
       },
     },
     {
+      id: "actualSettleDate",
+      title: t("Security Transactions.Headers.Actual Settle Date"),
+      field: "actualSettleDate",
+      render: (rowData) =>
+        rowData?.actualSettleDate
+          ? dateFormatter(rowData.actualSettleDate, DEFAULT_DATE_TIME_FORMAT)
+          : "--",
+      exportConfig: { render: (rowData) => reportDateRenderer(rowData.actualSettleDate) },
+    },
+    {
       id: "settleDate",
       title: t("Security Transactions.Headers.Settle Date"),
       field: "settleDate",
@@ -354,9 +374,11 @@ const SecuritiesTransactionsReportPage = () => {
                 <DropdownFilter name="security" label="Security" options={securityOptionsList} />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
+                <DropdownFilter name="isin" label="ISIN" options={isinOptionsList} />
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
                 <DropdownFilter name="currency" label="Currency" options={currencyOptionsList} />
               </Grid>
-              <Grid item xs={12} md={6} lg={3}></Grid>
 
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Security Transactions Report" />
@@ -401,6 +423,12 @@ const SecuritiesTransactionsReportPage = () => {
                         !!filters?.safekeepingAccount?.value?.entityId
                       ) {
                         return filters?.safekeepingAccount?.value?.name === row.fromSecurityAccount;
+                      }
+                      return true;
+                    })
+                    .filter((row) => {
+                      if (filters?.isin) {
+                        return row.isin === filters?.isin?.value?.label;
                       }
                       return true;
                     });
