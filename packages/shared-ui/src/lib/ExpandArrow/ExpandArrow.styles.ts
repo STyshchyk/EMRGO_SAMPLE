@@ -4,49 +4,57 @@ import styled, { css } from "styled-components";
 
 export const ExpandArrow = styled.span<{ $isHidden: boolean }>`
   z-index: 1000;
-  top: 2.5%;
+  top: 23px;
   position: absolute;
-  display: inline-block;
-  width: 0;
-  height: 0;
+  width: 12px;
+  height: 12px;
+  border: 2.25px solid;
+  cursor: pointer;
   &:after,
   &:before {
     content: "";
     position: absolute;
-    top: -10px;
-    bottom: -10px;
-    left: -2px;
-    right: -6px;
+    top: -13px;
+    bottom: -8px;
+    left: -6px;
+    right: -1px;
+    border-radius: 5px;
+    transform: rotate(45deg);
   }
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
 
   ${({ theme }) =>
     theme.mode === "light" &&
     css`
-      border-right: 3px solid ${getTheme("colors.green3")}; /* Change the color as needed */
-
+      border-color: ${getTheme("colors.green3")} transparent transparent
+        ${getTheme("colors.green3")};
       &:hover {
-        cursor: pointer;
-        border-right: 3px solid ${getTheme("colors.green5")}; /* Change the color as needed */
+        &:after,
+        &:before {
+          background-color: ${getTheme("colors.black.10")};
+        }
       }
     `}
 
   ${({ theme }) =>
     theme.mode === "dark" &&
     css`
-      border-right: 3px solid ${getTheme("colors.green5")}; /* Change the color as needed */
+      border-color: ${getTheme("colors.green5")} transparent transparent
+        ${getTheme("colors.green5")};
 
       &:hover {
-        cursor: pointer;
-        border-right: 3px solid ${getTheme("colors.green3")}; /* Change the color as needed */
+        &:after,
+        &:before {
+          background-color: ${getTheme("colors.black.10")};
+        }
       }
     `}
-\`;
+  \`;
 
   transform: ${(props) =>
-    props.$isHidden ? `scale(3, 3) rotateY(3.142rad);` : `scale(3, 3) rotate(0deg)`};
+    props.$isHidden
+      ? `scale(1.5, 1.5)  rotateY(3.142rad) rotate(-45deg) ;`
+      : `scale(1.5, 1.5) rotateY(0) rotate(-45deg)`};
 
-  left: ${(props) => (props.$isHidden ? `${rem(67)}` : `${rem(227)}`)};
-  transition: left ease 1s, transform ease 1s, background-color 0.25s ease-in-out, border 1s ease;
+  left: ${(props) => (props.$isHidden ? `${rem(59)}` : `${rem(231)}`)};
+  transition: all 1s ease;
 `;
