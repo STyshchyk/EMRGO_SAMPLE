@@ -19,6 +19,7 @@ import TableFiltersWrapper from "../../../components/FilterComponents/TableFilte
 import PageTitle from "../../../components/PageTitle";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
+import { getAttribute } from "../../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
@@ -137,6 +138,7 @@ const SecuritiesTransactionsReportPage = () => {
       currency: i.externalSecurity?.currencyName?.name,
       // entity: i.externalSecurity.name ?? FALLBACK_VALUE,
       wsn: i.wsn ?? FALLBACK_VALUE,
+      // isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? FALLBACK_VALUE, //* use this once ebme-1585 BE changes are done
       isin: i?.externalSecurity?.isin ?? FALLBACK_VALUE,
       securityShortName: i.sukuk?.securityShortName || i.externalSecurity?.shortName,
       issuerName: i.issuerName ?? FALLBACK_VALUE,
@@ -290,6 +292,14 @@ const SecuritiesTransactionsReportPage = () => {
                 ...new Map(filteredSecurities.map((item) => [item.label, item])).values(),
               ];
 
+              const uniqueISINs = uniqueSecurities
+                ?.map((obj) => ({
+                  label: obj.value.isin,
+                  value: obj.value.isin,
+                }))
+                .filter((v) => !!v.label);
+              console.log(uniqueISINs);
+
               filteredRows = rows
                 .filter((item) => {
                   const securityObject = getSecurityFieldObject(item);
@@ -394,7 +404,7 @@ const SecuritiesTransactionsReportPage = () => {
                         <Divider />
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={2} container>
+                      <Grid item xs={12} md={6} lg={3} container>
                         <DropdownFilter
                           name="security"
                           label="Security"
@@ -405,12 +415,16 @@ const SecuritiesTransactionsReportPage = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} md={6} lg={2} container>
+                      <Grid item xs={12} md={6} lg={3} container>
                         <DropdownFilter
                           name="currency"
                           label="Currency"
                           options={uniqueCurrencies}
                         />
+                      </Grid>
+
+                      <Grid item xs={12} md={6} lg={3} container>
+                        <DropdownFilter name="isin" label="ISIN" options={uniqueISINs} />
                       </Grid>
 
                       <Grid item xs={12} md={6} lg={6} container>
@@ -420,6 +434,8 @@ const SecuritiesTransactionsReportPage = () => {
                           defaultFilter="none"
                         />
                       </Grid>
+
+                      <Grid item xs={12} md={6} lg={4} container></Grid>
 
                       <Grid item xs={12} md={6} lg={2}>
                         <ExportButtons tableRef={tableRef} name="Security Transactions Report" />
@@ -480,6 +496,12 @@ const SecuritiesTransactionsReportPage = () => {
                             ?.filter((row) => {
                               if (filters?.security) {
                                 return row.securityShortName === filters?.security?.value?.label;
+                              }
+                              return true;
+                            })
+                            ?.filter((row) => {
+                              if (filters?.isin) {
+                                return row.isin === filters?.isin?.value?.label;
                               }
                               return true;
                             });
