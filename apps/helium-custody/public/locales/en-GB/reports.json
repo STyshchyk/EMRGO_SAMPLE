@@ -94,7 +94,8 @@
       "Inst Description": "Inst Description",
       "Price": "Price",
       "Currency": "Currency",
-      "Settle Date": "Settle Date",
+      "Settle Date": "Expected Settle Date",
+      "Actual Settle Date": "Actual Settle Date",
       "Settlement Type": "Settlement Type"
     },
     "Filters": {
