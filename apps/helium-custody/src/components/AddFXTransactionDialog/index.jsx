@@ -137,7 +137,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
       }
 
       filteredOptions = filteredOptions.map((acc) => ({
-        label: acc?.accountNo,
+        label: `${acc?.accountNo} (${acc?.type})`,
         value: acc?.accountNo,
         id: acc?.id,
       }));
