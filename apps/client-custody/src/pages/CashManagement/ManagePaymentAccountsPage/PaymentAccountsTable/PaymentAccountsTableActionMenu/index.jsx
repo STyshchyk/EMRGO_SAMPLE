@@ -173,11 +173,9 @@ const PaymentAccountsTableActionMenu = ({ rowData }) => {
           </MenuItem>
         )}
 
-        {isAdmin && hasManageAccountsACL && (
-          <MenuItem disabled={rowData?.isValidated} onClick={handleClickOnValidate}>
-            {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Validate")}
-          </MenuItem>
-        )}
+        <MenuItem disabled={rowData?.isValidated} onClick={handleClickOnValidate}>
+          {t("PaymentAccountManagement.PaymentAccountsTableActionMenu.Validate")}
+        </MenuItem>
       </Menu>
       {openEditAccountFormDialog ? (
         <EditPaymentAccountFormDialog
