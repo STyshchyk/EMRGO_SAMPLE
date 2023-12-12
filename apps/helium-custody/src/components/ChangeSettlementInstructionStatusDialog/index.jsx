@@ -66,6 +66,8 @@ const ChangeSettlementInstructionStatusDialog = ({
 }) => {
   const dispatch = useDispatch();
   const settlementId = currentlySelectedRowData?.id;
+  const tradeDate = currentlySelectedRowData?.tradeDate;
+  const entryDate = currentlySelectedRowData?.entryDate;
   const settledStatus =
     requestedSettlementInstructionStatus === settlementInstructionStatusEnum.SETTLED;
   const dropdownOptions = useSelector(dropdownSelectors.selectDropdownOptions);

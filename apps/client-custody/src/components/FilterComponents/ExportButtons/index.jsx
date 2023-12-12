@@ -101,10 +101,12 @@ const ExportButtons = ({ tableRef, name }) => {
     return rows;
   };
 
-  const pdfColumns = shownColumns.map((shownColumn) => {
-    const found = allColumns.find((column) => column.field === shownColumn.field);
-    return found;
-  });
+  const pdfColumns = shownColumns
+    .map((shownColumn) => {
+      const found = allColumns.find((column) => column.field === shownColumn.field);
+      return found;
+    })
+    .filter((column) => column !== undefined);
 
   const exportPDF = (e) => {
     setDownloadingPdf(true);
