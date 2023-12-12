@@ -197,6 +197,11 @@ const ChangeSettlementInstructionStatusDialog = ({
                         variant="dialog"
                         slotProps={{ textField: { size: "small" } }}
                         maxDate={moment()}
+                        minDate={
+                          moment(tradeDate).isSameOrAfter(moment(entryDate))
+                            ? moment(tradeDate)
+                            : moment(entryDate)
+                        }
                       />
                     </Grid>
                   )}
