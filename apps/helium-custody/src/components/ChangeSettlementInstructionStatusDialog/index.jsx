@@ -196,6 +196,7 @@ const ChangeSettlementInstructionStatusDialog = ({
                         name="tradeDate"
                         variant="dialog"
                         slotProps={{ textField: { size: "small" } }}
+                        maxDate={moment()}
                       />
                     </Grid>
                   )}
