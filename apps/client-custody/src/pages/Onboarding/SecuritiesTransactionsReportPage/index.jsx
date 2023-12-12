@@ -29,6 +29,7 @@ import ReportingTablePDFExporter from "../../../components/ReportingTablePDFExpo
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { currencyRenderer, dateRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
+import { removeCommas } from "../../../helpers/table";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
@@ -99,7 +100,7 @@ const SecuritiesTransactionsReportPage = () => {
           : dateRenderer(row?.externalSecurity?.issueDate),
       ]);
     });
-    return boxes;
+    return [...boxes].map((elem) => removeCommas(elem));
   };
 
   const getEntityAndAccounts = (accs) => {

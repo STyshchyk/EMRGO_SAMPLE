@@ -4,15 +4,16 @@ import { useTranslation } from "react-i18next";
 
 import MaterialTable from "@material-table/core";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
 import { dateRenderer, floatRenderer } from "../../constants/paymentAndStatuses/renderers";
+import { removeCommas } from "../../helpers/table";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const IncomingPaymentsTable = ({
   data,
@@ -100,7 +101,9 @@ const IncomingPaymentsTable = ({
 
     const Rows = tableData.map((rowDataObject) =>
       headCells.map((fieldObject) =>
-        fieldObject.render ? fieldObject.render(rowDataObject) : rowDataObject[fieldObject.field]
+        fieldObject.render
+          ? removeCommas(fieldObject.render(rowDataObject))
+          : removeCommas(rowDataObject[fieldObject.field])
       )
     );
 

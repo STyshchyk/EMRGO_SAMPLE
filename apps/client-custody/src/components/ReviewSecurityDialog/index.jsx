@@ -13,12 +13,13 @@ import { CsvBuilder } from "filefy";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
+import { securityAttributeRenderer } from "../../constants/renderers";
 import { roundNumber } from "../../helpers/renderers";
+import { removeCommas } from "../../helpers/table";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import ReportingPDFExporter from "../ReportingPDFExporter";
 import StyledDialogHeader from "../StyledDialogHeader";
-import { securityAttributeRenderer } from "../../constants/renderers";
 
 const primary = "#23389c";
 
@@ -138,7 +139,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
 
     Object.entries(transformedSecurityData).forEach(([, { label, value }]) => {
       listOfColumnNames.push(label);
-      listOfRowValues.push(value);
+      listOfRowValues.push(removeCommas(value));
     });
 
     const csvBuilder = new CsvBuilder(csvFileName)

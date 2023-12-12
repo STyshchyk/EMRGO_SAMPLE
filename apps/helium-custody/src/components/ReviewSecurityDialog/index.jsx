@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { roundNumber } from "../../helpers/renderers";
+import { removeCommas } from "../../helpers/table";
 import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import ReportingPDFExporter from "../ReportingPDFExporter";
@@ -136,7 +137,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
 
     Object.entries(transformedSecurityData).forEach(([, { label, value }]) => {
       listOfColumnNames.push(label);
-      listOfRowValues.push(value);
+      listOfRowValues.push(removeCommas(value));
     });
 
     const csvBuilder = new CsvBuilder(csvFileName)

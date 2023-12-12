@@ -20,6 +20,7 @@ import PageTitle from "../../../components/PageTitle";
 import { dateRenderer } from "../../../constants/paymentAndStatuses/renderers";
 import { currencyRenderer } from "../../../constants/renderers";
 import { useTheme } from "../../../context/theme-context";
+import { removeCommas } from "../../../helpers/table";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
 import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
@@ -529,7 +530,7 @@ const PaymentInstructionsPage = () => {
     Object.entries(td)
       .filter(([, { hidden }]) => !hidden)
       .forEach(([, { label, value }]) => {
-        rowsList.push(value);
+        rowsList.push(removeCommas(value));
         columnsList.push(label);
       });
     listOfRowValues.push(rowsList);

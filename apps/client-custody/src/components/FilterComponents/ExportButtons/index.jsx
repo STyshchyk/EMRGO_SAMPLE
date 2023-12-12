@@ -12,6 +12,7 @@ import v from "voca";
 
 import { reportDateRenderer } from "../../../constants/renderers";
 import { useFilters } from "../../../context/filter-context";
+import { removeCommas } from "../../../helpers/table";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as cashManagementSelectors from "../../../redux/selectors/cashManagement";
 import * as reportsSelectors from "../../../redux/selectors/reports";
@@ -92,7 +93,7 @@ const ExportButtons = ({ tableRef, name }) => {
         const foundData = column?.exportConfig?.render
           ? column?.exportConfig?.render(rowData)
           : rowData[column.field];
-        row.push(foundData || "");
+        row.push(removeCommas(foundData) || "");
       });
       return row;
     });

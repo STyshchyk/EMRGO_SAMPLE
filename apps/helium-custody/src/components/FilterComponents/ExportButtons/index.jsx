@@ -13,6 +13,7 @@ import v from "voca";
 
 import { reportDateRenderer } from "../../../constants/renderers";
 import { useFilters } from "../../../context/filter-context";
+import { removeCommas } from "../../../helpers/table";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as cashManagementSelectors from "../../../redux/selectors/cashManagement";
 import * as reportsSelectors from "../../../redux/selectors/reports";
@@ -91,8 +92,8 @@ const ExportButtons = ({ tableRef, name }) => {
       const row = [];
       shownColumns.forEach((column) => {
         const foundData = column?.exportConfig?.render
-          ? column?.exportConfig?.render(rowData)
-          : rowData[column.field];
+          ? removeCommas(column?.exportConfig?.render(rowData))
+          : removeCommas(rowData[column.field]);
         row.push(foundData || "");
       });
       return row;
@@ -233,12 +234,12 @@ const ExportButtons = ({ tableRef, name }) => {
 
       // Adding Data
       const processedData = processTableData();
-
+      console.log(processedData);
       if (processedData.length === 0) {
         const emptyRow = [];
         shownColumns.forEach((column) => {
           const value = column.id === "balance" ? "0" : "-";
-          emptyRow.push(value);
+          emptyRow.push(removeCommas(value));
         });
         csv.addRow(emptyRow);
       } else {
