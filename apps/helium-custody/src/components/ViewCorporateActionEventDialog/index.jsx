@@ -50,7 +50,7 @@ const Section = ({ label, value }) => (
       </Grid>
 
       <Grid item>
-        <Typography style={{ color: "gray" }} variant="subtitle1">
+        <Typography style={{ color: "gray" }} variant="subtitle1" className="break-all">
           {value}
         </Typography>{" "}
       </Grid>
