@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import { CsvBuilder } from "filefy";
 
 import { useFilters } from "../../context/filter-context";
-import { getCsvData } from "../../helpers/table";
+import { getCsvData, removeCommas } from "../../helpers/table";
 
 const ExportButtons = forwardRef(({ tableKey, exportData = {}, hideExportButtons }, ref) => {
   const { t } = useTranslation(["counterparty"]);
@@ -84,18 +84,19 @@ const ExportButtons = forwardRef(({ tableKey, exportData = {}, hideExportButtons
     e.stopPropagation();
     if (listOfColumnNames && listOfRowValues) {
       let csv;
+      let filteredListRowValue = listOfRowValues.map((elem) => removeCommas(elem));
       if (tableKey === "ssiTable") {
         csv = new CsvBuilder("counterparty_ssi.csv")
           .addRow(listOfHeaderColumnNames)
           .addRow(listOfColumnNames[0])
-          .addRows(listOfRowValues)
+          .addRows(filteredListRowValue)
           .addRow([""])
           .addRow([""])
           .addRow(["Filters"]);
       } else
         csv = new CsvBuilder(`${tableKey}.csv`)
           .setColumns(listOfColumnNames[0])
-          .addRows(listOfRowValues)
+          .addRows(filteredListRowValue)
           .addRow([""])
           .addRow([""])
           .addRow(["Filters"]);

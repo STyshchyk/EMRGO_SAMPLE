@@ -21,6 +21,7 @@ import LoadingPage from "../../../components/LoadingPage";
 import PageTitle from "../../../components/PageTitle";
 import { dateRenderer } from "../../../constants/renderers";
 import { useTheme } from "../../../context/theme-context";
+import { removeCommas } from "../../../helpers/table";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
 import * as billingAndPaymentsActionCreators from "../../../redux/actionCreators/cashManagement";
@@ -551,7 +552,7 @@ const PaymentInstructionsPage = () => {
         rowsList.push(value);
         columnsList.push(label);
       });
-    listOfRowValues.push(rowsList);
+    listOfRowValues.push(removeCommas(rowsList));
     listOfColumnNames.push(columnsList);
   });
 

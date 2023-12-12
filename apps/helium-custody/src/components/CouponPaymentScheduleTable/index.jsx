@@ -11,6 +11,7 @@ import moment from "moment";
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
+import { removeCommas } from "../../helpers/table";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
 import { dateFormatter } from "../../utils/formatter";
@@ -129,16 +130,15 @@ const CouponPaymentScheduleTable = ({
   const handleCSVExportClick = (data) => {
     const generatedAtTimestamp = new Date().toISOString();
     const csvFileName = `coupon_payment_schedule_${generatedAtTimestamp}.csv`;
-    console.log(data);
     const transformed = data.map(({ calenderDate, notional, couponAllocationStatus }) => ({
       date: new Date(calenderDate).toLocaleDateString(),
-      notionalAmount: currencyRenderer(notional, 6),
-      couponRate: currencyRenderer(hardcodedCouponRate, 6),
+      notionalAmount: removeCommas(currencyRenderer(notional, 6)),
+      couponRate: removeCommas(currencyRenderer(hardcodedCouponRate, 6)),
       couponAllocationStatus,
     }));
 
     const listOfColumnNames = ["date", "notional_amount", "coupon_rate", "status"];
-    console.log(listOfColumnNames);
+
     const listOfRows = transformed.map(
       ({ date, notionalAmount, couponRate, couponAllocationStatus }) => [
         [date],

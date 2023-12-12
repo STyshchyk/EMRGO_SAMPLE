@@ -9,6 +9,7 @@ import { CsvBuilder } from "filefy";
 import moment from "moment";
 
 import PageTitle from "../../../components/PageTitle";
+import { removeCommas } from "../../../helpers/table";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as accountsActionCreators from "../../../redux/actionCreators/accounts";
 import * as entitiesActionCreators from "../../../redux/actionCreators/entities";
@@ -233,7 +234,7 @@ const ManagePaymentAccountsPage = () => {
     Object.entries(td)
       .filter(([, { hidden }]) => !hidden)
       .forEach(([, { label, value }]) => {
-        rows.push(value);
+        rows.push(removeCommas(value));
         columns.push(label);
       });
     listOfRowValues.push(rows);

@@ -8,7 +8,7 @@ export const getCsvData = (transformedData) => {
     Object.entries(td)
       .filter(([, { hidden }]) => !hidden)
       .forEach(([, { label, value }]) => {
-        rowsList.push(value);
+        rowsList.push(removeCommas(value));
         columnsList.push(label);
       });
     listOfRowValues.push(rowsList);
@@ -80,4 +80,12 @@ export const getSSIHeaderColumn = (columns) => {
   });
 
   return listOfHeaderColumnNames;
+};
+
+export const removeCommas = (value) => {
+  if (typeof value === "string" && !isNaN(parseFloat(value))) {
+    // If it's a valid number, remove commas
+    return value.replace(/,/g, "");
+  }
+  return value;
 };
