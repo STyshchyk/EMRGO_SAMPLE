@@ -179,7 +179,7 @@ const CashStatementReportPage = () => {
     if (selectedSafekeepingAccount && selectedSafekeepingAccount.value !== "all") {
       const filteredCashAccounts = selectedSafekeepingAccount.account.wethaqAccounts.map(
         (account) => ({
-          label: `${account?.currency?.name} ( ${account?.accountNo} )`,
+          label: `${account?.currency?.name} ( ${account?.accountNo} ) ${account.type}`,
           value: account?.id,
           data: account,
         })
