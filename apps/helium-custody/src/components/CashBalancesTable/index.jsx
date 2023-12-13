@@ -124,7 +124,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
         return {
           data: cashAccount,
           value: cashAccount.account,
-          label: `${cashAccount.currency} ( ${cashAccount.account} )`,
+          label: `${cashAccount.currency} ( ${cashAccount.account} ) ${cashAccount.accountType}`,
         };
       });
 
