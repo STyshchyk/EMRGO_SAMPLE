@@ -61,9 +61,9 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
       Array.isArray(currentlySelectedRowData?.investors) &&
       currentlySelectedRowData?.investors.length > 0
     ) {
-      const updatedTableData = currentlySelectedRowData?.investors.map((i) =>
-        generateCouponAllocationTableRowData(i)
-      );
+      const updatedTableData = currentlySelectedRowData?.investors.map((i) => {
+        return generateCouponAllocationTableRowData(i);
+      });
 
       setTableData(updatedTableData);
     }
@@ -175,8 +175,9 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                   </Grid>
                   <Grid item>
                     {selectedWethaqSourceAccountOption?.value?.accountBalance &&
-                        selectedWethaqSourceAccountOption?.value?.accountBalance != '0' ? 
-                            currencyRenderer(selectedWethaqSourceAccountOption?.value?.accountBalance) : '0'}
+                    selectedWethaqSourceAccountOption?.value?.accountBalance != "0"
+                      ? currencyRenderer(selectedWethaqSourceAccountOption?.value?.accountBalance)
+                      : "0"}
                   </Grid>
                 </Grid>
               </Grid>

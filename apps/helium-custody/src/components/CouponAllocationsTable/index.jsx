@@ -9,6 +9,7 @@ import tableStyles from "../../styles/cssInJs/materialTable";
 const generateCouponAllocationTableRowData = (item) => ({
   clientEntityGroupId: item?.entityGroup?.id,
   clientName: item?.entityGroup?.entity?.corporateEntityName,
+  portfolioName: item?.entityGroup?.entity?.name,
   couponAllocation: item?.couponAllocation ? parseFloat(item?.couponAllocation, 10) : 0,
   currency: item?.entityGroup?.wethaqAccount?.currency?.name ?? "--",
   securitiesHolding: item?.securitiesHoldings?.quantity ?? 0,
@@ -46,8 +47,15 @@ const CouponAllocationsTable = ({ isLoading, tableData, setTableData, editable }
       columns={[
         {
           id: "client",
-          title: "Client",
+          title: "Name",
           field: "clientName",
+          defaultSort: "asc",
+          editable: false,
+        },
+        {
+          id: "safekeeping",
+          title: "Safekeeping A/C",
+          field: "portfolioName",
           defaultSort: "asc",
           editable: false,
         },
