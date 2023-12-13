@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 
 const CustomNumberInputField = ({ name, inputRef, onChange, decimalScale, ...rest }) => {
-  const { setFieldTouched } = useFormikContext();
+  const formik = useFormikContext();
 
   return (
     <NumericFormat
@@ -14,10 +14,10 @@ const CustomNumberInputField = ({ name, inputRef, onChange, decimalScale, ...res
         onChange({
           target: {
             name,
-            value: values.value,
+            value: values?.value,
           },
         });
-        setFieldTouched(name);
+        formik?.setFieldTouched(name);
       }}
       thousandSeparator
       isNumericString
