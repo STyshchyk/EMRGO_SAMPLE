@@ -13,7 +13,7 @@ const CustomNumberInputField = ({
 }) => {
   const formik = useFormikContext(); //Avoid page crush where component is used without formik
   const handleChange = (values) => {
-    formik.setFieldTouched(name);
+    formik?.setFieldTouched(name);
     onChange({ target: { name, value: values?.value } });
   };
   return (

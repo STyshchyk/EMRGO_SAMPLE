@@ -132,7 +132,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
     }
   }
   const formatParsedValues = (payload) => {
-    const dateFields = ["exDate", "recordDate", "paymentDate", "responseDeadline"];
+    const dateFields = [
+      "exDate",
+      "recordDate",
+      "paymentDate",
+      "responseDeadline",
+      "marketDeadline",
+    ];
     dateFields.forEach((field) => {
       if (payload[field]) {
         payload[field] = moment(payload[field]);

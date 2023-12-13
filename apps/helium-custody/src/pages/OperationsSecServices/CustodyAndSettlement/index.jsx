@@ -384,6 +384,7 @@ const CustodyAndSettlement = () => {
         settlementInstructionStatusEnum.REJECTED,
         settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED,
         settlementInstructionStatusEnum.UNMATCHED,
+        settlementInstructionStatusEnum.FAILED,
       ].includes(currentlySelectedRowData?.settlementInstructionStatus),
     },
 
