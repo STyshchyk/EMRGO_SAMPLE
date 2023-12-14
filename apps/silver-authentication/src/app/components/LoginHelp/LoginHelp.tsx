@@ -10,8 +10,8 @@ export const LoginHelp: FC<ILoginHelpProps> = (props: ILoginHelpProps) => (
       <Link to="/reset-password">Forgot password?</Link>
     </Styles.HelpListItem>
 
-    <Styles.HelpListItem>
+    {/* <Styles.HelpListItem>
       Trouble signing in? <Link to="/trouble-signing-in">Click here</Link>
-    </Styles.HelpListItem>
+    </Styles.HelpListItem> */}
   </Styles.HelpList>
 );
