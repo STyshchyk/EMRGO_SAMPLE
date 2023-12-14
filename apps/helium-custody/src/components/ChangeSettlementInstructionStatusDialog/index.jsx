@@ -200,7 +200,7 @@ const ChangeSettlementInstructionStatusDialog = ({
                         slotProps={{ textField: { size: "small" } }}
                         maxDate={moment()}
                         minDate={
-                          moment(tradeDate).isSameOrAfter(moment(entryDate))
+                          moment(tradeDate).isSameOrBefore(moment(entryDate))
                             ? moment(tradeDate)
                             : moment(entryDate)
                         }
