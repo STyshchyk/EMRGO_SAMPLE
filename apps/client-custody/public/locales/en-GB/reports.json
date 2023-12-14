@@ -91,7 +91,8 @@
       "Price": "Price",
       "Settle Date": "Expected Settle Date",
       "Actual Settle Date": "Actual Settle Date",
-      "Settlement Type": "Settlement Type"
+      "Settlement Type": "Settlement Type",
+      "Settlement Status": "Settlement Status"
     },
     "Filters": {
       "All": "All",

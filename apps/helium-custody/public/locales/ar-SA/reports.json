@@ -91,7 +91,8 @@
       "Price": "السعر",
       "Currency": "العملة",
       "Settle Date": "تاريخ التسوية",
-      "Settlement Type": "Settlement Type"
+      "Settlement Type": "Settlement Type",
+      "Settlement Status": "Settlement Status"
     },
     "Filters": {
       "All": "الجميع",

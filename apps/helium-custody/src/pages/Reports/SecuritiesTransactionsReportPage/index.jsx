@@ -20,7 +20,6 @@ import PageTitle from "../../../components/PageTitle";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
-import { getAttribute } from "../../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as reportsActionCreators from "../../../redux/actionCreators/reports";
@@ -150,6 +149,7 @@ const SecuritiesTransactionsReportPage = () => {
       securityShortName: i.sukuk?.securityShortName || i.externalSecurity?.shortName,
       issuerName: i.issuerName ?? FALLBACK_VALUE,
       settlementType: i?.settlementType?.name ?? FALLBACK_VALUE,
+      settlementStatus: i?.settlementStatus ?? FALLBACK_VALUE,
       fromSecurityAccount: i.fromSecurityAccount,
       investorName: i.investorName,
       toSecurityAccount: i.toSecurityAccount,
@@ -246,6 +246,12 @@ const SecuritiesTransactionsReportPage = () => {
       id: "settlementType",
       title: t("Security Transactions.Headers.Settlement Type"),
       field: "settlementType",
+      exportConfig: { width: 8 },
+    },
+    {
+      id: "settlementStatus",
+      title: t("Security Transactions.Headers.Settlement Status"),
+      field: "settlementStatus",
       exportConfig: { width: 8 },
     },
     {
