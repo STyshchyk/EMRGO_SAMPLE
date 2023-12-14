@@ -18,6 +18,7 @@ import FilterButton from "../../../components/FilterComponents/FilterButton";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
+import { tableVersion } from "../../../constants/tables";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import { getAttribute } from "../../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -241,7 +242,10 @@ const SecuritiesTransactionsReportPage = () => {
   return (
     <Fragment>
       <PageTitle title={t("Security Transactions.Security Transactions")} />
-      <FilterProvider tableKey="security_transactions_report">
+      <FilterProvider
+        tableKey="security_transactions_report"
+        version={tableVersion.SecurityTransactionsReport}
+      >
         <div
           style={{
             marginBottom: "1rem",
