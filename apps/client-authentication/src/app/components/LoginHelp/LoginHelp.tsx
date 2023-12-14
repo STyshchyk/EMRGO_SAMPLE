@@ -15,8 +15,8 @@ export const LoginHelp: FC<ILoginHelpProps> = (props: ILoginHelpProps) => (
     <Styles.HelpListItem>
       Dont have an Account? <Link to={routes.signUp}>Sign up here</Link>
     </Styles.HelpListItem>
-    <Styles.HelpListItem>
+    {/* <Styles.HelpListItem>
       Trouble signing in? <Link to={routes.troubleSigningIn}>Click here</Link>
-    </Styles.HelpListItem>
+    </Styles.HelpListItem> */}
   </Styles.HelpList>
 );
