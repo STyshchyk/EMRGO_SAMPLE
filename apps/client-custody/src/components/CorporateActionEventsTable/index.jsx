@@ -18,9 +18,9 @@ import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 
 const generateCAEventsTableRowData = (i, paymentsList) => {
   //** API support will need to be improved in the future so filtered on the FE for now
-  const portfolioId = paymentsList.filter(
+  const portfolioId = paymentsList?.filter(
     (item) => item.externalSecurity.id === i.externalSecurity.id
-  )[0].portfolio_id;
+  )[0]?.portfolio_id;
 
   return {
     id: i?.id,
