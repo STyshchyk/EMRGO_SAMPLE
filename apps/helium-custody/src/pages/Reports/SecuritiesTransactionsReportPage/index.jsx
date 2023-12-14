@@ -19,6 +19,7 @@ import PageTitle from "../../../components/PageTitle";
 // import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
 import { reportDateRenderer } from "../../../constants/renderers";
+import { tableVersion } from "../../../constants/table";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import { getAttribute } from "../../../helpers/custodyAndSettlement";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -308,7 +309,10 @@ const SecuritiesTransactionsReportPage = () => {
         navigate={(path) => navigate(path)}
         shouldBlockNavigation={() => true}
       /> */}
-      <FilterProvider tableKey="security_transactions_report">
+      <FilterProvider
+        tableKey="security_transactions_report"
+        version={tableVersion.SecurityTransactionsReport}
+      >
         <div
           style={{
             marginBottom: "1rem",

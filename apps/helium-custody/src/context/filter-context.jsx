@@ -10,7 +10,7 @@ import * as miscellaneousSelectors from "../redux/selectors/miscellaneous";
 
 const FilterContext = createContext();
 
-export const FilterProvider = ({ children, tableKey }) => {
+export const FilterProvider = ({ children, tableKey, version = "v1" }) => {
   const [filters, setFilters] = useState({});
   const [columns, setColumns] = useState({
     hiddenColumns: [],
@@ -93,6 +93,7 @@ export const FilterProvider = ({ children, tableKey }) => {
       key: tableKey,
       value: JSON.stringify(value),
       isActive,
+      version,
     };
 
     const settings = {
@@ -102,7 +103,7 @@ export const FilterProvider = ({ children, tableKey }) => {
   };
 
   useDeepCompareEffect(() => {
-    if (tableConfig !== null) {
+    if (tableConfig !== null && tableConfigData?.version === version) {
       const fetchedColumns = tableConfig.columns;
 
       setColumnValue({
