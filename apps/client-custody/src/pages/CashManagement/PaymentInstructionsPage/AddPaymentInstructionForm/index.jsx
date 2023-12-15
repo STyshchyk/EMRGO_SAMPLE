@@ -182,7 +182,7 @@ const AddPaymentInstructionForm = ({
                   onChange={(event) => {
                     const regexTwoDecimal = /^[0-9]*(\.[0-9]{0,2})?$/;
                     if (regexTwoDecimal.test(event.target.value)) {
-                      setFieldValue("paymentAmount", event.target.value);
+                      setFieldValue("paymentAmount", parseFloat(event.target.value));
                     }
                   }}
                   InputProps={{
