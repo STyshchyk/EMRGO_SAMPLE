@@ -67,8 +67,10 @@ const generateInitialValues = (rowData) => {
     entityGroupId: rowData?.entityGroupId,
     userId: rowData?.userId,
     portfolio_id: {
-      label: `${rowData?.portfolio?.name} (${rowData?.portfolio?.accountNumber})`,
-      value: rowData?.portfolio,
+      label: `${rowData?.portfolioName} (${rowData?.portfolioNumber})`,
+      value: {
+        id: rowData?.portfolio?.id,
+      },
     },
   };
 };
