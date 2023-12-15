@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import MaterialTable from "@material-table/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import moment from "moment";
+import v from "voca";
 
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../constants/datetime";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
+import style from "../../pages/Reports/SecuritiesTransactionsReportPage/style.module.scss";
 import * as reportsActionCreators from "../../redux/actionCreators/reports";
 import * as reportsSelectors from "../../redux/selectors/reports";
 import tableStyles from "../../styles/cssInJs/materialTable";
@@ -447,25 +450,37 @@ const SecuritiesHoldingsTable = ({
               });
 
             return (
-              <MaterialTable
-                isLoading={isLoading}
-                tableRef={tableRef}
-                size="small"
-                title=""
-                style={{
-                  boxShadow: "none",
-                }}
-                columns={filterColumns.shownColumns}
-                data={filteredData}
-                options={{
-                  ...tableStyles,
-                  toolbar: false,
-                  pageSize: 10,
-                  search: false,
-                  draggable: false,
-                }}
-                localization={mtableLocalization}
-              />
+              <div>
+                <Grid item xs={12} container>
+                  <Typography className={style.accountInfo__label}>
+                    {t("Security Transactions.Safe Account")} :{" "}
+                  </Typography>
+                  <Typography className={style.accountInfo__value}>{`${
+                    filters.safekeepingAccount
+                      ? v.capitalize(filters.safekeepingAccount.value.label || "N.A")
+                      : t("Security Transactions.NA")
+                  }`}</Typography>
+                </Grid>
+                <MaterialTable
+                  isLoading={isLoading}
+                  tableRef={tableRef}
+                  size="small"
+                  title=""
+                  style={{
+                    boxShadow: "none",
+                  }}
+                  columns={filterColumns.shownColumns}
+                  data={filteredData}
+                  options={{
+                    ...tableStyles,
+                    toolbar: false,
+                    pageSize: 10,
+                    search: false,
+                    draggable: false,
+                  }}
+                  localization={mtableLocalization}
+                />
+              </div>
             );
           }}
         </FilterConsumer>
