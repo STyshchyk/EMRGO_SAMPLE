@@ -78,7 +78,7 @@ export const TermsModal: FC<ITermsModalProps> = ({
   }
 
   return (
-    <Modal isOpen={isOpen} width={"40%"} variant="darkened">
+    <Modal isOpen={isOpen} width={"50%"} variant="darkened">
       <Styles.Wrapper>
         <Styles.Title>{title}</Styles.Title>
         <Styles.Subtitle>{subtitle}</Styles.Subtitle>
