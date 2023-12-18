@@ -166,6 +166,7 @@ const generateSecurityTradesTableRowData = (i) => {
     userId: i?.userId,
     portfolioName: i?.portfolio?.name,
     portfolioNumber: i?.portfolio?.accountNumber,
+    portfolio: i?.portfolio,
   };
 };
 

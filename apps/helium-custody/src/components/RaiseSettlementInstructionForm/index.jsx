@@ -374,6 +374,8 @@ const RaiseSettlementInstructionForm = ({
                         setSelectedEntityOption(newValue);
                         setSelectedEntityGroupOption(null);
                         setSelectedEntityGroupUserOption(null);
+                        setFieldValue("counterpartySelectOption", null);
+                        setFieldValue("counterpartySSISelectOption", null);
                       }}
                     />
                   </InlineFormField>
