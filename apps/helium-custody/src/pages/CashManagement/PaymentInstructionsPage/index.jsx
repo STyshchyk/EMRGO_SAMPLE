@@ -272,9 +272,9 @@ const PaymentInstructionsPage = () => {
       toast.warning("Another officer should be able to approve current Payment", 500);
       return;
     }
-
-    setSelectedPaymentInstruction(data);
-    setApproveModalOpen(true);
+    console.log(data.userId, currentUserId);
+    // setSelectedPaymentInstruction(data);
+    // setApproveModalOpen(true);
   };
 
   const handleFinalizeClick = (data) => {
@@ -442,7 +442,7 @@ const PaymentInstructionsPage = () => {
         transferPurposeTypeId: paymentInstruction.transferPurposeType?.id,
         valueDate: paymentInstruction.valueDate,
         actions: getActions(paymentInstruction),
-        userId: paymentInstruction.userId,
+        userId: paymentInstruction.userID,
         wethaqAccountId: paymentInstruction.wethaqAccount?.id,
         accountId: paymentInstruction.account?.id,
         createdAt: paymentInstruction.createdAt,

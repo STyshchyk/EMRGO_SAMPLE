@@ -40,6 +40,7 @@
   "Cash Balances": {
     "Cash Balances": "Cash Balances",
     "Account": "Account",
+    "Safe Account": "Safekeeping Account",
     "Address": "Address",
     "NA": "N.A",
     "Headers": {
@@ -78,6 +79,7 @@
     "Security Transactions": "Security Transactions",
     "Currency": "Currency",
     "Account": "Account",
+    "Safe Account": "Safekeeping Account",
     "Address": "Address",
     "NA": "N.A",
     "Headers": {

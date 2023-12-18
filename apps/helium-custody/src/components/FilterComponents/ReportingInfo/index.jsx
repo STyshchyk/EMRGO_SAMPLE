@@ -3,9 +3,6 @@ import { useTranslation } from "react-i18next";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import v from "voca";
-
-import formatAddress from "../../../utils/reports";
 
 const PREFIX = "ReportingInfo";
 
@@ -28,7 +25,8 @@ const Root = styled("div")(() => ({
 
 const ReportingInfo = ({ cashAccount, securityAccount }) => {
   const { t } = useTranslation(["reports"]);
-
+  console.log(securityAccount);
+  console.log(cashAccount);
   return (
     <Root>
       <Grid item xs={12} container>
@@ -36,8 +34,16 @@ const ReportingInfo = ({ cashAccount, securityAccount }) => {
           {t("Cash Balances.Account")} :{" "}
         </Typography>
         <Typography className={classes.accountInfoValue}>{`${
+          cashAccount ? cashAccount.value.label : "-"
+        }`}</Typography>
+      </Grid>
+      <Grid item xs={12} container>
+        <Typography className={classes.accountInfoLabel}>
+          {t("Cash Balances.Safe Account")} :{" "}
+        </Typography>
+        <Typography className={classes.accountInfoValue}>{`${
           securityAccount ? securityAccount.value.label : "-"
-        } | ${cashAccount ? cashAccount.value.label : "-"}`}</Typography>
+        } `}</Typography>
       </Grid>
     </Root>
   );

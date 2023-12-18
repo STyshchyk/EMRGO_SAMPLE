@@ -336,7 +336,7 @@ const CashBalancesTable = ({ data, accounts, safekeepingAccounts }) => {
               <Fragment>
                 <Grid>
                   <ReportingInfo
-                    cashAccount={filters?.account}
+                    cashAccount={filters?.cashAccount}
                     securityAccount={filters?.safekeepingAccount}
                   />
                 </Grid>
