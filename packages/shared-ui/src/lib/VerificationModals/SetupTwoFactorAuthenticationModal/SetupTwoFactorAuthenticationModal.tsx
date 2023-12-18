@@ -70,7 +70,7 @@ export const SetupTwoFactorAuthenticationModal: FC<ISetupTwoFactorAuthentication
           )}
           {/* <Styles.QRCodeImage src={QRImage} /> */}
           <Styles.DownloadInstructions>
-            Download on of the supported applications through your mobile phone&apos;s App Store:
+            Download one of the supported applications through your mobile phone&apos;s App Store:
             Google Authenticator, Microsoft Authenticator, Authy or any other 2FA supported app that
             you currently use
           </Styles.DownloadInstructions>

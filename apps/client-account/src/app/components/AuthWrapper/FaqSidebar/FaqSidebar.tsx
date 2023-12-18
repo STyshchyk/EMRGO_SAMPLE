@@ -28,33 +28,45 @@ export const FaqSidebar: FC<IFaqSidebarProps> = ({ onClose, isOpen }) => {
       <Styles.Title>FAQs</Styles.Title>
 
       <Accordion>
-        <AccordionPanel id="phone-number">
-          <AccordionTitle>Why does Emrgo need my phone number?</AccordionTitle>
+        <AccordionPanel id="steps-client-platform">
+          <AccordionTitle>What are the steps to becoming a Client on the Platform?</AccordionTitle>
           <AccordionDetails>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et massa elementum,
-            molestie lorem vel, sagittis metus. Fusce mi massa, semper in viverra vel, gravida eget
-            urna. Phasellus tristique, orci id feugiat placerat, metus dolor tempor diam, ac tempor
-            eros nisi ac risus. Morbi vitae quam porta, feugiat orci ac, dignissim ipsum
+            <p>
+              First, you will complete Registration to become a user of the Platform by providing
+              personal details such as your Name, the Corporate Entity you work for and your
+              Corporate Email Address.
+            </p>
+            <br />
+            <p>
+              Second, you are required to complete and submit the Client Questionnaire along with an
+              ID proof. This will be reviewed by our Relationship Manager.
+            </p>
+            <br />
+            <p>
+              Third, the Administrator for your Entity will be required to complete KYC on behalf of
+              the Entity. Upon Approval of the KYC, you will be granted access to the relevant
+              module.
+            </p>
           </AccordionDetails>
         </AccordionPanel>
-        <AccordionPanel id="landline-for-verification">
-          <AccordionTitle>
-            Why can&apos;t I use a landline to get a verification code?
-          </AccordionTitle>
+        <AccordionPanel id="details-kyc">
+          <AccordionTitle>What details will be asked as part of KYC?</AccordionTitle>
           <AccordionDetails>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et massa elementum,
-            molestie lorem vel, sagittis metus. Fusce mi massa, semper in viverra vel, gravida eget
-            urna. Phasellus tristique, orci id feugiat placerat, metus dolor tempor diam, ac tempor
-            eros nisi ac risus. Morbi vitae quam porta, feugiat orci ac, dignissim ipsum
+            Corporate Details, Shareholders/Ultimate Beneficial Owners, Key Individiuals &
+            Supporting Documents
           </AccordionDetails>
         </AccordionPanel>
-        <AccordionPanel id="lorem">
-          <AccordionTitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</AccordionTitle>
+        <AccordionPanel id="account-secure">
+          <AccordionTitle>How does the Platform keep my account secure?</AccordionTitle>
           <AccordionDetails>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et massa elementum,
-            molestie lorem vel, sagittis metus. Fusce mi massa, semper in viverra vel, gravida eget
-            urna. Phasellus tristique, orci id feugiat placerat, metus dolor tempor diam, ac tempor
-            eros nisi ac risus. Morbi vitae quam porta, feugiat orci ac, dignissim ipsum
+            We require all users to set a strong password. Additionally we also enforce 2 Factor
+            Authentication for an additional layer of security.
+          </AccordionDetails>
+        </AccordionPanel>
+        <AccordionPanel id="help-desk">
+          <AccordionTitle>How can i reach out to the Helpdesk?</AccordionTitle>
+          <AccordionDetails>
+            Once within the platform, we have a short cut in the bottom left side of the screen to contact our helpdesk. You may also write to them directly on helpdesk@difc.emrgo.com
           </AccordionDetails>
         </AccordionPanel>
       </Accordion>
