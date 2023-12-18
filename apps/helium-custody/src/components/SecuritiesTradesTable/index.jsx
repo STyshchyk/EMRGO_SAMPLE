@@ -166,6 +166,7 @@ const generateSecurityTradesTableRowData = (i) => {
     userId: i?.userId,
     portfolioName: i?.portfolio?.name,
     portfolioNumber: i?.portfolio?.accountNumber,
+    portfolio: i?.portfolio,
   };
 };
 
@@ -324,7 +325,7 @@ const SecurityTradesTable = ({
       type: "numeric",
       hidden: ["ISSUER"].includes(entityUserType),
       exportConfig: { width: 5 },
-      width: 150,
+      width: 200,
     },
     {
       id: "investorSecuritiesAccountNo",
