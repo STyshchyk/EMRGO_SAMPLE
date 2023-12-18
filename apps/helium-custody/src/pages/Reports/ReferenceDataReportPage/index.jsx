@@ -376,7 +376,6 @@ const ReferenceDataReportPage = () => {
                 {isWethaqAdmin && (
                   <Grid item>
                     <Button
-                      disabled
                       fullWidth
                       variant="contained"
                       color="primary"
