@@ -25,8 +25,6 @@ const Root = styled("div")(() => ({
 
 const ReportingInfo = ({ cashAccount, securityAccount }) => {
   const { t } = useTranslation(["reports"]);
-  console.log(securityAccount);
-  console.log(cashAccount);
   return (
     <Root>
       <Grid item xs={12} container>

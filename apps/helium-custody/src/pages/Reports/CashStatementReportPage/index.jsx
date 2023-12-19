@@ -380,7 +380,6 @@ const CashStatementReportPage = () => {
 
         <FilterConsumer>
           {({ filters, filterColumns }) => {
-            console.log("filters", filters);
             const filteredData = filteredRows
               ?.filter((row) => {
                 //  Entry Date range Filter
