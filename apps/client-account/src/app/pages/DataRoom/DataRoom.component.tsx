@@ -45,13 +45,13 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Platform Terms & Conditions</AccountPanelHeaderTitle>
             </AccountPanelHeader>
-            <AccountPanelContent>
+            {/* <AccountPanelContent>
               <AccountPanelText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
                 quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
                 ultrices.
               </AccountPanelText>
-            </AccountPanelContent>
+            </AccountPanelContent> */}
             <AccountPanelFooter>
               {!hasAcceptedPlatformTerms ? (
                 <Button variant="primary" onClick={onViewPlatformTermsAndConditions}>
@@ -70,13 +70,13 @@ export const DataRoomComponent: FC<IDataRoomProps> = (props: IDataRoomProps) => 
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Client Terms & Conditions</AccountPanelHeaderTitle>
             </AccountPanelHeader>
-            <AccountPanelContent>
+            {/* <AccountPanelContent>
               <AccountPanelText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in sodales leo,
                 quis volutpat purus. Vestibulum ante ipsum primis in faucibus orci luctus et
                 ultrices.
               </AccountPanelText>
-            </AccountPanelContent>
+            </AccountPanelContent> */}
             <AccountPanelFooter>
               {!hasAcceptedClientTerms ? (
                 <Button variant="primary" onClick={onViewClientTermsAndConditions}>

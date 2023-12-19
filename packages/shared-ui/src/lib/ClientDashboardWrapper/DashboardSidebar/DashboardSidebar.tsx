@@ -37,6 +37,7 @@ import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip
 export const DashboardSidebar = () => {
   const origin = window.location.origin;
   const { user } = useUser();
+  console.log("🚀 ~ file: DashboardSidebar.tsx:40 ~ DashboardSidebar ~ user:", user)
   const currentRole = roles.find((role) => role.key === user?.role);
 
   const {
@@ -52,6 +53,7 @@ export const DashboardSidebar = () => {
     setHelpDeskOpen,
     isHelpDeskOpen,
   } = ensureNotNull(useDashboardWrapperContext());
+    console.log("🚀 ~ file: DashboardSidebar.tsx:56 ~ DashboardSidebar ~ showTermsModal:", showTermsModal)
 
   const [value, setvalue] = useState(false);
   const [isDarkModeCustom, enable, disable, toggle] = useDarkModeCustom();
@@ -81,12 +83,12 @@ export const DashboardSidebar = () => {
                 module.disabled ? (
                   <Fragment>
                     <TooltipHeader>
-                      <TooltipTitle>Coming Soon...</TooltipTitle>
+                      <TooltipTitle>Coming Soon</TooltipTitle>
                     </TooltipHeader>
-                    <TooltipContent>
+                    {/* <TooltipContent>
                       The {module.label} module is under construction and will be ready soon. Please
                       check back later for updates.
-                    </TooltipContent>
+                    </TooltipContent> */}
                   </Fragment>
                 ) : (
                   ""
@@ -181,7 +183,8 @@ export const DashboardSidebar = () => {
         title="Platform Terms"
         subtitle={!hasAcceptedPlatformTerms ? "Please accept our platform terms to proceed." : ""}
         documentURL={termsDocumentURL}
-        isOpen={!user?.hasAcceptedSilverTnc && showTermsModal === "tnc"}
+        // isOpen={!user?.hasAcceptedSilverTnc && showTermsModal === "tnc"}
+        isOpen={showTermsModal === "tnc"}
         onAccept={onAcceptPlatformTerms}
         onReject={onRejectPlatformTerms}
         hasAccepted={hasAcceptedPlatformTerms}
