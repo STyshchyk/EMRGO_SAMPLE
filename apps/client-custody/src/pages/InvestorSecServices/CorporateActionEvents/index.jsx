@@ -36,9 +36,37 @@ const CorporateActionEvents = () => {
   const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
 
+  const isValidDate = (dateString) => {
+    // not sure BE bug? returning 0001/01/01 so omit it out as valid now
+    if (dateString === "0001-01-01T00:00:00Z") {
+      return false; // Special case: "0001-01-01T00:00:00Z" is not a valid date
+    }
+
+    const date = moment(dateString, moment.ISO_8601, true);
+    return date.isValid();
+  };
+
   const tableData = corporateActionEvents?.map((item) =>
     generateCAEventsTableRowData(item, paymentsList)
   );
+
+  const filteredTableData = tableData?.filter((item) => {
+    const actualSettlementDate = item?.actualSettlementDate;
+    console.log(actualSettlementDate);
+    const recordDate = item?.recordDate;
+    const exDate = item?.exDate;
+
+    //*Event should not be displayed when SI settled after Record date & Ex date
+    // Check if actualSettlementDate does not exceed recordDate or exDate
+    if (isValidDate(actualSettlementDate)) {
+      return (
+        moment(actualSettlementDate).isSameOrBefore(moment(recordDate)) ||
+        moment(actualSettlementDate).isSameOrBefore(moment(exDate))
+      );
+    }
+
+    return false;
+  });
 
   const currentDate = moment().format("DD/MM/YYYY"); // Get the current date in 'DD/MM/YYYY' format
   const currentDateParsed = moment(currentDate, "DD/MM/YYYY");
@@ -94,7 +122,7 @@ const CorporateActionEvents = () => {
       <CorporateActionEventsTable
         actions={defaultTableActions}
         anchorEl={anchorEl}
-        data={tableData}
+        data={filteredTableData}
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         currentlySelectedRowData={currentlySelectedRowData}
