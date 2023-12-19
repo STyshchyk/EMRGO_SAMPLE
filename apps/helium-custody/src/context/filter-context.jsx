@@ -99,7 +99,6 @@ export const FilterProvider = ({ children, tableKey, version = "v1" }) => {
     const settings = {
       settings: [config],
     };
-    console.log(settings);
     updateTableConfig(settings);
   };
 
