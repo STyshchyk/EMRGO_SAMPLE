@@ -454,10 +454,10 @@ const SecurityTradesTable = ({
       title: t("Headers.Accrued Interest"),
       field: "accruedInterest",
       render: (rowData) =>
-        rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.principalAmount),
+        rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.accruedInterest),
       exportConfig: {
         render: (rowData) =>
-          rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.principalAmount),
+          rowData.isEquityType ? FALLBACK_VALUE : renderCurrency(rowData?.accruedInterest),
       },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
