@@ -24,52 +24,54 @@ const FALLBACK_VALUE = "--";
 
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
 
-const generateExternalSecuritiesListTableRowData = (i) => ({
-  id: i.id,
-  country: i.country,
-  couponId: i.couponId,
-  createdAt: i.createdAt,
-  currency: i.currencyName,
-  currencyId: i.currency,
-  dayCountConvention: i.dayCountConventionName,
-  denomination: i.denominationName,
-  exchangeCode: i.exchangeCode,
-  formOfOffering: i.formOfOfferingName,
-  frequency: i.frequencyName,
-  governingLaw: i.governingLawName,
-  guarantor: i.guarantor,
-  isin: i.isin,
-  isPrimaryIssuance: i.isPrimaryIssuance,
-  issuanceAmount: i?.issuanceAmount,
-  issuanceName: i.issuanceName,
-  issueDate: i.issueDate,
-  jurisdiction: i.jurisdictionName,
-  listing: i.listingName,
-  longName: i.longName,
-  maturityAmount: i.maturityAmount,
-  maturityDate: i.maturityDate,
-  name: i.name, // security name
-  pricingMethod: i.pricingName,
-  profitRate: i.profitRate,
-  profitRateTerms: i.profitRateTermsName,
-  ranking: i.rankingName,
-  sellingRestrictions: i.sellingRestrictionsName,
-  shariahCompliance: i.shariahComplianceName,
-  shortName: i.shortName,
-  status: i.status,
-  ticker: i.ticker,
-  wsn: i.wsn,
-  assetType: i.assetTypeName?.label ?? FALLBACK_VALUE,
-  attributes: i.attributes
-    ?.filter((item) => !["Short Name", "Long Name"].includes(item?.match?.name))
-    .map((item) => ({
-      ...item,
-      identifierId: item.identifierId,
-      value: item.value,
-      securityIdTypeName: item.match?.name,
-    })),
-  coupons: i?.coupons, // for id 634
-});
+const generateExternalSecuritiesListTableRowData = (i) => {
+  return {
+    id: i.id,
+    country: i.country?.name,
+    couponId: i.couponId,
+    createdAt: i.createdAt,
+    currency: i.currencyName?.name,
+    currencyId: i.currency,
+    dayCountConvention: i.dayCountConventionName,
+    denomination: i.denominationName?.name,
+    exchangeCode: i.exchangeCode,
+    formOfOffering: i.formOfOfferingName,
+    frequency: i.frequencyName?.name,
+    governingLaw: i.governingLawName,
+    guarantor: i.guarantor,
+    isin: i.isin,
+    isPrimaryIssuance: i.isPrimaryIssuance,
+    issuanceAmount: i?.issuanceAmount,
+    issuanceName: i.issuanceName,
+    issueDate: i.issueDate,
+    jurisdiction: i.jurisdictionName,
+    listing: i.listingName,
+    longName: i.longName,
+    maturityAmount: i.maturityAmount,
+    maturityDate: i.maturityDate,
+    name: i.name, // security name
+    pricingMethod: i.pricingName,
+    profitRate: i.profitRate,
+    profitRateTerms: i.profitRateTermsName,
+    ranking: i.rankingName,
+    sellingRestrictions: i.sellingRestrictionsName,
+    shariahCompliance: i.shariahComplianceName,
+    shortName: i.shortName,
+    status: i.status,
+    ticker: i.ticker,
+    wsn: i.wsn,
+    assetType: i.assetTypeName?.label ?? FALLBACK_VALUE,
+    attributes: i.attributes
+      ?.filter((item) => !["Short Name", "Long Name"].includes(item?.match?.name))
+      .map((item) => ({
+        ...item,
+        identifierId: item.identifierId,
+        value: item.value,
+        securityIdTypeName: item.match?.name,
+      })),
+    coupons: i?.coupons, // for id 634
+  };
+};
 
 const ExternalSecuritiesTable = ({
   anchorEl,
@@ -182,16 +184,16 @@ const ExternalSecuritiesTable = ({
       id: "frequency",
       title: t("External Securities.Headers.Frequency"),
       field: "frequency",
-      customFilterAndSearch: (term, rowData) => term === rowData?.frequency?.name,
-      render: (rowData) => rowData?.frequency?.name ?? FALLBACK_VALUE,
+      customFilterAndSearch: (term, rowData) => term === rowData?.frequency,
+      render: (rowData) => rowData?.frequency ?? FALLBACK_VALUE,
       sorting: false,
     },
     {
       id: "country",
       title: t("External Securities.Headers.Country"),
       field: "country",
-      customFilterAndSearch: (term, rowData) => term === rowData?.country?.name,
-      render: (rowData) => rowData?.country?.name ?? FALLBACK_VALUE, // !DEV NOTE: PRIMARY ISSUANCE ROW DATA IS NOT EXPECTED TO CONTAIN COUNTRY FIELD,
+      customFilterAndSearch: (term, rowData) => term === rowData?.country,
+      render: (rowData) => rowData?.country ?? FALLBACK_VALUE, // !DEV NOTE: PRIMARY ISSUANCE ROW DATA IS NOT EXPECTED TO CONTAIN COUNTRY FIELD,
       sorting: false,
     },
     {
@@ -208,7 +210,7 @@ const ExternalSecuritiesTable = ({
       id: "currency",
       title: t("External Securities.Headers.CCY"),
       field: "currency",
-      render: (rowData) => rowData?.currency?.name,
+      render: (rowData) => rowData?.currency,
       sorting: false,
     },
     {
@@ -229,7 +231,7 @@ const ExternalSecuritiesTable = ({
       id: "denomination",
       title: t("External Securities.Headers.Denomination"),
       field: "denomination",
-      render: (rowData) => rowData?.denomination?.name ?? FALLBACK_VALUE,
+      render: (rowData) => rowData?.denomination ?? FALLBACK_VALUE,
       sorting: false,
     },
     {
