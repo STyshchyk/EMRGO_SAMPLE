@@ -16,7 +16,7 @@ export const CustodyWrapperComponent = ({ children }) => {
         title="Client Terms"
         subtitle={!hasAcceptedClientTerms ? "Please accept our client terms to proceed." : ""}
         documentURL={termsDocumentURL}
-        isOpen={showTermsModal === "client_terms"}
+        isOpen={true}
         onAccept={onAcceptClientTerms}
         onReject={onRejectClientTerms}
         // hasAccepted={hasAcceptedClientTerms}
