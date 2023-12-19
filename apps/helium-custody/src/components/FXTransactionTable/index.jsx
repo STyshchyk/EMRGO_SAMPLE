@@ -1,8 +1,6 @@
 import React, { Fragment, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-
-
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
@@ -10,9 +8,14 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import PropTypes from "prop-types";
 
-
-
-import { BANK_AMOUNT_DP, BANK_RATE_DP, CLIENT_AMOUNT_DP, CLIENT_RATE_DP, MARKUP_AMOUNT_DP, MARKUP_RATE_DP } from "../../constants/currency/availableCurrencies";
+import {
+  BANK_AMOUNT_DP,
+  BANK_RATE_DP,
+  CLIENT_AMOUNT_DP,
+  CLIENT_RATE_DP,
+  MARKUP_AMOUNT_DP,
+  MARKUP_RATE_DP,
+} from "../../constants/currency/availableCurrencies";
 import { currencyRenderer } from "../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import findDateRange from "../../helpers/dates";
@@ -23,10 +26,6 @@ import DateRangePicker from "../FilterComponents/DateRangePicker";
 import FilterButton from "../FilterComponents/FilterButton";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
-
-
-
-
 
 const generateFXTransactionTableRowData = (i) => ({
   id: i.id,
@@ -52,6 +51,7 @@ const FXTransactionTable = ({
   anchorEl,
   data,
   actions,
+  currentlySelectedRowData,
   setCurrentlySelectedRowData,
   setAnchorEl,
   setOpenAddFXTransactionDialog,
@@ -266,7 +266,8 @@ const FXTransactionTable = ({
                   actions={actions}
                   anchorEl={anchorEl}
                   setAnchorEl={setAnchorEl}
-                  selectedRow={setCurrentlySelectedRowData}
+                  selectedRow={currentlySelectedRowData}
+                  setSelectedRow={setCurrentlySelectedRowData}
                 />
               </Fragment>
             );

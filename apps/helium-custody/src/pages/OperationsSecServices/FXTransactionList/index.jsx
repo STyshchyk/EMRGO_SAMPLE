@@ -76,6 +76,7 @@ const FXTransactionList = () => {
         setOpenFXTransactionActionDialog("approve");
       },
       hidden: false,
+      disabled: currentlySelectedRowData?.status === "Approved",
       icon: <DoneAllIcon fontSize="small" />,
     },
     {
@@ -84,7 +85,7 @@ const FXTransactionList = () => {
       callback: () => {
         setOpenFXTransactionActionDialog("cancel");
       },
-      disabled: false,
+      disabled: currentlySelectedRowData?.status === "Cancelled",
       icon: <DeleteIcon fontSize="small" />,
     },
   ];
@@ -97,6 +98,7 @@ const FXTransactionList = () => {
         data={generatedTableData}
         handleCloseMenu={handleCloseMenu}
         setAnchorEl={setAnchorEl}
+        currentlySelectedRowData={currentlySelectedRowData}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         setOpenAddFXTransactionDialog={setOpenAddFXTransactionDialog}
         fetchFxTransactionsList={fetchFxTransactionsList}

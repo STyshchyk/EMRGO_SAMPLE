@@ -60,8 +60,12 @@ function* processFxTransactions({ payload }) {
     yield put(fxTransactionsActionCreators.doFetchFxTransactions(dateRange));
     yield call(toast.success, data.message);
   } catch (error) {
+    const {errorCallback } = payload;
     const errorMessage = extractErrorMessage(error);
     showToastErrorNotification(error, errorMessage);
+    if (errorCallback) {
+      errorCallback();
+    }
     yield put(fxTransactionsActionCreators.doProcessFxTransactionsFailure(errorMessage));
   }
 }
