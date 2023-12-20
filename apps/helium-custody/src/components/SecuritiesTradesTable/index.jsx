@@ -245,7 +245,7 @@ const SecurityTradesTable = ({
     },
     {
       id: "investorSecuritiesAccountNo",
-      title: t("Headers.Settlement Account"),
+      title: t("Headers.Safekeeping Account"),
       field: "portfolioNumber",
       width: 150,
     },
