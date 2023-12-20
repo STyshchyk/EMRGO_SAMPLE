@@ -9,6 +9,7 @@ import CorporateActionEventsTable, {
 } from "../../../components/CorporateActionEventsTable";
 import LoadingPage from "../../../components/LoadingPage";
 import ViewCorporateActionEventDialog from "../../../components/ViewCorporateActionEventDialog";
+import { isValidDate } from "../../../helpers/table";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as CAEventsActionCreators from "../../../redux/actionCreators/corporateActionEvents";
 import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
@@ -35,16 +36,6 @@ const CorporateActionEvents = () => {
   const corporateActionEvents = useSelector(CAEventsSelectors.selectCorporateActionEventsList);
   const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
-
-  const isValidDate = (dateString) => {
-    // not sure BE bug? returning 0001/01/01 so omit it out as valid now
-    if (dateString === "0001-01-01T00:00:00Z") {
-      return false; // Special case: "0001-01-01T00:00:00Z" is not a valid date
-    }
-
-    const date = moment(dateString, moment.ISO_8601, true);
-    return date.isValid();
-  };
 
   const tableData = corporateActionEvents?.map((item) =>
     generateCAEventsTableRowData(item, paymentsList)

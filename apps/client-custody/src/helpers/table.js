@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const getCsvData = (transformedData) => {
   const listOfColumnNames = [];
   const listOfRowValues = [];
@@ -87,4 +89,15 @@ export const removeCommas = (value) => {
     return value.replace(/,/g, "");
   }
   return value;
+};
+
+
+export const isValidDate = (dateString) => {
+  // not sure BE bug? returning 0001/01/01 so omit it out as valid now
+  if (dateString === "0001-01-01T00:00:00Z") {
+    return false; // Special case: "0001-01-01T00:00:00Z" is not a valid date
+  }
+
+  const date = moment(dateString, moment.ISO_8601, true);
+  return date.isValid();
 };
