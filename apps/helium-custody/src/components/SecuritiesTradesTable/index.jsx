@@ -101,10 +101,11 @@ TableActionMenu.propTypes = {
   ).isRequired,
 };
 
-const generateSecurityTradesTableRowData = (i) => {    
+const generateSecurityTradesTableRowData = (i) => {
+  // console.log("ISIN", getAttribute(i?.externalSecurity?.attributes, "isin"));
   return {
     cashSSI: FALLBACK_VALUE,
-    counterparty: i.counterParty?.longName ?? FALLBACK_VALUE,
+    counterparty: i.counterParty?.counterpartyId ?? FALLBACK_VALUE,
     counterpartyId: i.counterParty?.id,
     counterpartyObject: i.counterParty,
     counterpartySSI: i.counterPartySSI?.ssiLabel ?? FALLBACK_VALUE,
@@ -465,27 +466,27 @@ const SecurityTradesTable = ({
       field: "accruedInterest",
       render: (rowData) =>
         rowData.isEquityType ? FALLBACK_VALUE : currencyRenderer(rowData?.accruedInterest),
-        exportConfig: {
-          render: (rowData) =>
+      exportConfig: {
+        render: (rowData) =>
           rowData.isEquityType ? FALLBACK_VALUE : currencyRenderer(rowData?.accruedInterest),
-        },
+      },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
-      },
-      {
-        id: "commission",
-        title: t("Headers.Commission"),
-        field: "commission",
+    },
+    {
+      id: "commission",
+      title: t("Headers.Commission"),
+      field: "commission",
+      render: (rowData) =>
+        rowData.isEquityType ? currencyRenderer(rowData.commission) : FALLBACK_VALUE,
+      exportConfig: {
         render: (rowData) =>
           rowData.isEquityType ? currencyRenderer(rowData.commission) : FALLBACK_VALUE,
-          exportConfig: {
-            render: (rowData) =>
-            rowData.isEquityType ? currencyRenderer(rowData.commission) : FALLBACK_VALUE,
-          },
-        type: "numeric",
-        width: 150,
       },
+      type: "numeric",
+      width: 150,
+    },
     {
       id: "settlementAmount",
       title: t("Headers.Settle Amount"),
