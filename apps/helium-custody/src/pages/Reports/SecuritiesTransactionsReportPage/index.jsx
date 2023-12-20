@@ -18,7 +18,7 @@ import TableFiltersWrapper from "../../../components/FilterComponents/TableFilte
 import PageTitle from "../../../components/PageTitle";
 // import RouteLeavingGuard from "../../../components/RouteLeavingGuard";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
-import { reportDateRenderer } from "../../../constants/renderers";
+import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { tableVersion } from "../../../constants/table";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -158,6 +158,7 @@ const SecuritiesTransactionsReportPage = () => {
       price: i.price ? convertNumberToIntlFormat(i.price, intlFormatOpts) : FALLBACK_VALUE, // !Dev notes: externalSecurity object doesn't have this field
       settleDate: i?.settlementInsSettlementDate, // !Dev notes: By design?,
       actualSettleDate: i?.settlementInsActualSettlementDate,
+      settlementAmount: i?.settlementAmount,
     };
   };
 
@@ -280,6 +281,18 @@ const SecuritiesTransactionsReportPage = () => {
         align: "right",
         width: 5,
       },
+    },
+    {
+      id: "settlementAmount",
+      title: t("Security Transactions.Headers.Settlement Amount"),
+      field: "settlementAmount",
+      render: (rowData) =>
+        rowData?.settlementAmount ? currencyRenderer(rowData?.settlementAmount) : FALLBACK_VALUE,
+      exportConfig: {
+        render: (rowData) =>
+          rowData?.settlementAmount ? currencyRenderer(rowData?.settlementAmount) : FALLBACK_VALUE,
+      },
+      type: "numeric",
     },
     {
       id: "actualSettleDate",

@@ -93,7 +93,9 @@
       "Actual Settle Date": "Actual Settle Date",
       "Settlement Type": "Settlement Type",
       "Settlement Status": "Settlement Status",
-      "Quantity":"Quantity"
+      "Quantity":"Quantity",
+      "Settlement Amount":"Settlement Amount"
+
     },
     "Filters": {
       "All": "All",

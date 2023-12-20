@@ -1,5 +1,5 @@
 export const tableVersion = {
-  SecurityTransactionsReport : 'v2'
+  SecurityTransactionsReport : 'v3'
   // add all the versions here once you add/remove new columns
 };
 
