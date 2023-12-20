@@ -106,7 +106,7 @@ TableActionMenu.propTypes = {
 
 const generateSecurityTradesTableRowData = (i) => ({
   cashSSI: FALLBACK_VALUE,
-  counterparty: i.counterParty?.longName ?? FALLBACK_VALUE,
+  counterparty: i.counterParty?.counterpartyId ?? FALLBACK_VALUE,
   counterpartyId: i.counterParty?.id,
   counterpartyObject: i.counterParty,
   counterpartySSI: i.counterPartySSI?.ssiLabel ?? FALLBACK_VALUE,
@@ -506,7 +506,7 @@ const SecurityTradesTable = ({
     },
     {
       id: "portfolioAccountNumber",
-      title: "Settlement Account",
+      title: "Safekeeping Account",
       field: "portfolioAccountNumber",
       width: 150,
     },
