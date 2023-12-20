@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from "react";
+import { Fragment, useRef } from "react";
 
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -20,15 +20,15 @@ import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 const generateCAEventsTableRowData = (i, paymentsList) => {
   //** API support will need to be improved in the future so filtered on the FE for now
   const settlementInstructions = paymentsList
-    ?.filter((item) => item.externalSecurity.id === i.externalSecurity.id)
-    .sort((a, b) => {
-      const dateA = moment(a.actualSettlementDate);
-      const dateB = moment(b.actualSettlementDate);
+    ?.filter((item) => item?.externalSecurity.id === i?.externalSecurity.id)
+    ?.sort((a, b) => {
+      const dateA = moment(a?.actualSettlementDate);
+      const dateB = moment(b?.actualSettlementDate);
       return dateB.diff(dateA); // Sort in descending order
     });
 
   // Get the SI with the largest actualSettlementDate
-  const maxSI = settlementInstructions[0];
+  // const maxSI = settlementInstructions[0];
 
   return {
     id: i?.id,
@@ -45,8 +45,8 @@ const generateCAEventsTableRowData = (i, paymentsList) => {
     eventTerms: i?.eventTerms,
     additionalInfo: i?.additionalInfo,
     linkedEventId: i?.linkedEvent?.eventId ?? "--",
-    portfolioId: maxSI.portfolioId,
-    actualSettlementDate: maxSI.actualSettlementDate,
+    portfolioId: settlementInstructions[0]?.portfolioId,
+    actualSettlementDate: settlementInstructions[0]?.actualSettlementDate,
   };
 };
 
