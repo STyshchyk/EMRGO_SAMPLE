@@ -108,6 +108,32 @@ const generateSourceAccountOptions = (sourceAccounts) =>
     customLabel: internalWethaqAccount.accountNo,
   }));
 
+const generateSourceAccountOptionsGrouped = (sourceAccounts) => {
+  return Object.values(
+    sourceAccounts.reduce((grouped, option) => {
+      const { portfolioId, portfolio, group } = option;
+      const pushedOpt = {
+        value: {
+          id: option.id,
+          currency: option.currency.name,
+          entityId: option.group.entity.id,
+        },
+        label: `${option.accountNo} ${v.capitalize(option.type)}`,
+        customLabel: option.accountNo,
+      };
+      if (!grouped[portfolioId]) {
+        grouped[portfolioId] = {
+          portfolioId: portfolioId,
+          label: `${portfolio?.name} ${portfolio?.accountNumber ?? ""}` ?? "N/A",
+          value: { entityId: group?.entity?.id ?? "N/A" },
+          options: [],
+        };
+      }
+      grouped[portfolioId].options.push({ ...pushedOpt });
+      return grouped;
+    }, {})
+  );
+};
 const generateBeneficiaryUserOptions = (validatedPaymentAccounts) => {
   const uniqueUserSet = new Set();
 
@@ -199,18 +225,18 @@ const PaymentInstructionsPage = () => {
 
   const allPaymentAccountOptions = generatePaymentAccountOptions(validatedPaymentAccounts);
   const allSourceAccountOptions = generateSourceAccountOptions(sourceAccounts);
+  const allSourceAccountOptionsGrouped = generateSourceAccountOptionsGrouped(sourceAccounts);
   const bankAccountTypeOptions = dropdownValues?.bankAccountTypes ?? [];
   const beneficiaryUserOptions = generateBeneficiaryUserOptions(validatedPaymentAccounts);
   const currencyOptions = dropdownValues?.currency ?? [];
   const paymentTransferPurposeOptions =
     getDropdownValues(dropdownValues?.paymentTransferPurpose, locale) ?? [];
 
-  console.log(entities);
   const sourceEntityOptions = generateSourceEntityOptions(entities);
-
   const options = {
     allPaymentAccountOptions,
     allSourceAccountOptions,
+    allSourceAccountOptionsGrouped,
     bankAccountTypeOptions,
     beneficiaryUserOptions,
     currencyOptions,
@@ -266,15 +292,18 @@ const PaymentInstructionsPage = () => {
     setSelectedPaymentInstruction(data);
     setEditModalOpen(true);
   };
-
+  const findPorfolio = (wethaqID) => {
+    const porfolio = sourceAccounts.find((account) => wethaqID === account.id);
+    return porfolio;
+  };
   const handleApproveClick = (data) => {
     if (data.userId === currentUserId) {
       toast.warning("Another officer should be able to approve current Payment", 500);
       return;
     }
-    console.log(data.userId, currentUserId);
-    // setSelectedPaymentInstruction(data);
-    // setApproveModalOpen(true);
+
+    setSelectedPaymentInstruction(data);
+    setApproveModalOpen(true);
   };
 
   const handleFinalizeClick = (data) => {
@@ -420,7 +449,9 @@ const PaymentInstructionsPage = () => {
     paymentInstructions?.forEach((paymentInstruction) => {
       // if not true then it's assumed that the instruction is initiated by either the CO or the OPS
       const isAdminInitiated = currentUserId !== paymentInstruction.userId;
-
+      const wethaqID = paymentInstruction.wethaqAccount.id;
+      const wethaqNumber = paymentInstruction.wethaqAccount.accountNo;
+      const currentPorfolio = findPorfolio(wethaqID);
       entries.push({
         id: paymentInstruction.id,
         accountNo: paymentInstruction.wethaqAccount?.accountNo,
@@ -451,6 +482,8 @@ const PaymentInstructionsPage = () => {
         intermediaryBankIBAN: paymentInstruction.account?.intermediaryBankIBAN,
         intermediaryBankBIC: paymentInstruction.account?.intermediaryBankBIC,
         providerBeneficiaryName: paymentInstruction.providerBeneficiaryName,
+        portfolioNumber: currentPorfolio?.portfolio.accountNumber ?? "--",
+        portfolioName: currentPorfolio?.portfolio.name ?? "--",
       });
     });
     return entries;

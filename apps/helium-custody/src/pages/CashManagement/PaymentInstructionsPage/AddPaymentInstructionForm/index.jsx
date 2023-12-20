@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { components } from "react-select";
 
 import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
@@ -21,6 +22,11 @@ import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
 
+const Group = (props) => (
+  <div>
+    <components.Group {...props} />
+  </div>
+);
 const AddPaymentInstructionForm = ({
   initialValues,
   handleSubmit,
@@ -38,6 +44,7 @@ const AddPaymentInstructionForm = ({
     sourceEntityOptions,
     beneficiaryUserOptions,
     paymentTransferPurposeOptions,
+    allSourceAccountOptionsGrouped,
   } = options;
 
   // local states
@@ -47,6 +54,12 @@ const AddPaymentInstructionForm = ({
 
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptions.filter((i) => initialValues.sourceEntity?.value === i.value.entityId)
+  );
+
+  const [filteredSourceAccountOptions2, setFilteredSourceAccountOptions2] = useState(
+    allSourceAccountOptionsGrouped.filter(
+      (i) => initialValues.sourceEntity?.value === i.value.entityId
+    )
   );
   const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] = useState(
     isWethaqUser
@@ -91,14 +104,14 @@ const AddPaymentInstructionForm = ({
                       options={sourceEntityOptions}
                       onChange={(selectedOption, triggeredAction) => {
                         if (triggeredAction.action === "clear") {
-                          setFilteredSourceAccountOptions([]);
+                          setFilteredSourceAccountOptions2([]);
                           setFieldValue("sourceEntity", null);
                         }
 
                         if (triggeredAction.action === "select-option") {
                           setFieldValue("sourceEntity", selectedOption);
-                          setFilteredSourceAccountOptions(
-                            allSourceAccountOptions.filter(
+                          setFilteredSourceAccountOptions2(
+                            allSourceAccountOptionsGrouped.filter(
                               (i) => i.value.entityId === selectedOption.value
                             )
                           );
@@ -126,14 +139,14 @@ const AddPaymentInstructionForm = ({
                       placeholder={t(
                         "Payment Instructions.Modals.Placeholders.Select Source Account"
                       )}
-                      components={{ Option: ReactSelectCurrencyOption }}
+                      components={{ Option: ReactSelectCurrencyOption, Group: Group }}
                       closeMenuOnSelect
                       isSearchable
                       styles={selectStyles}
                       menuPortalTarget={document.body}
                       value={values.sourceAccount}
                       isClearable
-                      options={filteredSourceAccountOptions}
+                      options={filteredSourceAccountOptions2}
                       onChange={(selectedOption, triggeredAction) => {
                         if (triggeredAction.action === "clear") {
                           setFieldValue("sourceAccount", null);
