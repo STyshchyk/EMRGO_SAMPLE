@@ -506,7 +506,7 @@ const SecurityTradesTable = ({
     },
     {
       id: "portfolioAccountNumber",
-      title: "Safekeeping Account",
+      title: "Safekeeping Account", // ebme-1847
       field: "portfolioAccountNumber",
       width: 150,
     },
