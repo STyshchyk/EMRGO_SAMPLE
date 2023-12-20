@@ -119,7 +119,7 @@ const CorporateActionEventsTable = ({
     },
     {
       id: "responseDeadline",
-      title: "Response Deadline",
+      title: "Client Response Deadline",
       render: (rowData) =>
         rowData?.responseDeadline
           ? dateFormatter(rowData?.responseDeadline, DEFAULT_DATE_FORMAT)

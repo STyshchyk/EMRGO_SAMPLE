@@ -104,7 +104,7 @@ const CorporateActionEventsTable = ({
     },
     {
       id: "responseDeadline",
-      title: "Response Deadline",
+      title: "Client Response Deadline",
       field: "responseDeadline",
       render: (rowData) =>
         rowData?.responseDeadline
