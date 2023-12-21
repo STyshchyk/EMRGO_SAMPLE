@@ -15,6 +15,7 @@ import * as paymentAndSettlementActionCreators from "../../redux/actionCreators/
 import * as counterpartySelectors from "../../redux/selectors/counterparty";
 import * as dropdownSelectors from "../../redux/selectors/dropdown";
 import * as externalSecuritiesSelectors from "../../redux/selectors/externalSecurities";
+import * as reportsSelectors from "../../redux/selectors/reports";
 
 const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
   const dispatch = useDispatch();
@@ -26,11 +27,31 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
   const externalSecuritiesList = useSelector(
     externalSecuritiesSelectors.selectExternalSecuritiesData
   );
+  const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
 
   const raiseBulkSettlementInstructions = (payload) =>
     dispatch(paymentAndSettlementActionCreators.doRaiseBulkSettlementInstructions(payload));
   const fetchPaymentsList = () =>
     dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
+
+  const getPortfolioId = (accountNumber) => {
+    const found = currentSafeAccounts?.find(
+      (item) => item.securitiesAccount.accountNumber === accountNumber
+    );
+
+    if (!found) {
+      return toast.error(`Safekeeping account ${accountNumber} not found`);
+    }
+
+    // check if the account number is active
+    if (!found?.status === "Active") {
+      return toast.error(
+        `Safekeeping account ${found.securitiesAccount.accountNumber} isn't active`
+      );
+    }
+
+    return found?.securitiesAccount?.portfolioId;
+  };
 
   const getCounterpartyById = (counterparty, counterpartySSI) => {
     const selectedCounterparty = counterpartiesList.filter(
@@ -85,6 +106,7 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
 
     const instructions = importedData.map((entry) => {
       const {
+        portfolioAccountNumber,
         settlementType,
         isin,
         counterparty,
@@ -103,6 +125,7 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
 
       return {
         ...entry, // tradedate,settlementdate
+        portfolio_id: getPortfolioId(portfolioAccountNumber),
         settlementTypeId: getSettlementId(settlementType),
         settlementType: undefined,
         externalSecuritiesId: getExternalSecurityId(isin),
