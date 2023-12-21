@@ -124,7 +124,7 @@ const generateSourceAccountOptionsGrouped = (sourceAccounts) => {
       if (!grouped[portfolioId]) {
         grouped[portfolioId] = {
           portfolioId: portfolioId,
-          label: `${portfolio?.name} ${portfolio?.accountNumber ?? ""}` ?? "N/A",
+          label: `${portfolio?.name}  ${portfolio?.account_number ?? ""}` ?? "N/A",
           value: { entityId: group?.entity?.id ?? "N/A" },
           options: [],
         };
@@ -482,7 +482,7 @@ const PaymentInstructionsPage = () => {
         intermediaryBankIBAN: paymentInstruction.account?.intermediaryBankIBAN,
         intermediaryBankBIC: paymentInstruction.account?.intermediaryBankBIC,
         providerBeneficiaryName: paymentInstruction.providerBeneficiaryName,
-        portfolioNumber: currentPorfolio?.portfolio.accountNumber ?? "--",
+        portfolioNumber: currentPorfolio?.portfolio.account_number ?? "--",
         portfolioName: currentPorfolio?.portfolio.name ?? "--",
       });
     });
