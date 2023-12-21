@@ -92,12 +92,12 @@ export const SilverDashboardSidebar = () => {
                 module.disabled ? (
                   <Fragment>
                     <TooltipHeader>
-                      <TooltipTitle>Coming Soon...</TooltipTitle>
+                      <TooltipTitle>Coming Soon</TooltipTitle>
                     </TooltipHeader>
-                    <TooltipContent>
+                    {/* <TooltipContent>
                       The {module.label} module is under construction and will be ready soon. Please
                       check back later for updates.
-                    </TooltipContent>
+                    </TooltipContent> */}
                   </Fragment>
                 ) : (
                   ""

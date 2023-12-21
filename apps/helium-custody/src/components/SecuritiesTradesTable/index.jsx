@@ -101,8 +101,7 @@ TableActionMenu.propTypes = {
   ).isRequired,
 };
 
-const generateSecurityTradesTableRowData = (i) => {
-  console.log("ISIN", getAttribute(i?.externalSecurity?.attributes, "isin"));
+const generateSecurityTradesTableRowData = (i) => {    
   return {
     cashSSI: FALLBACK_VALUE,
     counterparty: i.counterParty?.longName ?? FALLBACK_VALUE,
@@ -164,8 +163,11 @@ const generateSecurityTradesTableRowData = (i) => {
     internalTradeRef: i?.internalTradeRef ? i?.internalTradeRef : FALLBACK_VALUE, // api returns ""
     entityGroup: i?.entityGroup,
     userId: i?.userId,
+    commission: i?.commission,
     portfolioName: i?.portfolio?.name,
     portfolioNumber: i?.portfolio?.accountNumber,
+    portfolio: i?.portfolio,
+    isEquityType: i.externalSecurity?.assetTypeName?.key === "equity",
   };
 };
 
@@ -324,7 +326,7 @@ const SecurityTradesTable = ({
       type: "numeric",
       hidden: ["ISSUER"].includes(entityUserType),
       exportConfig: { width: 5 },
-      width: 150,
+      width: 200,
     },
     {
       id: "investorSecuritiesAccountNo",
@@ -461,12 +463,29 @@ const SecurityTradesTable = ({
       id: "accruedInterest",
       title: t("Headers.Accrued Interest"),
       field: "accruedInterest",
-      render: (rowData) => currencyRenderer(rowData.accruedInterest),
-      exportConfig: { render: (rowData) => currencyRenderer(rowData.accruedInterest) },
+      render: (rowData) =>
+        rowData.isEquityType ? FALLBACK_VALUE : currencyRenderer(rowData?.accruedInterest),
+        exportConfig: {
+          render: (rowData) =>
+          rowData.isEquityType ? FALLBACK_VALUE : currencyRenderer(rowData?.accruedInterest),
+        },
       type: "numeric",
       hidden: !isIntlSecTradeSettlementWorkflowEnabled,
       width: 150,
-    },
+      },
+      {
+        id: "commission",
+        title: t("Headers.Commission"),
+        field: "commission",
+        render: (rowData) =>
+          rowData.isEquityType ? currencyRenderer(rowData.commission) : FALLBACK_VALUE,
+          exportConfig: {
+            render: (rowData) =>
+            rowData.isEquityType ? currencyRenderer(rowData.commission) : FALLBACK_VALUE,
+          },
+        type: "numeric",
+        width: 150,
+      },
     {
       id: "settlementAmount",
       title: t("Headers.Settle Amount"),

@@ -60,7 +60,7 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
                   </div>
                 )}
                 <SubHeading align={"center"}>
-                  Download on of the supported applications through your mobile phone’s App Store: Google
+                  Download one of the supported applications through your mobile phone’s App Store: Google
                   Authenticator, Microsoft Authenticator, Authy or any other 2FA supported app that you
                   currently use
                 </SubHeading>
@@ -89,11 +89,11 @@ export const TwoFactorAuth: FC<ITwoFactorAuthProps> = ({ position, mode, otpauth
                   </Button>
                 </OneCol>
                 <Styles.Spacer />
-                <Styles.HelpListItem>
+                {/* <Styles.HelpListItem>
                   <Button variant="text" type="button" onClick={() => openTFASupportTicketModal()}>
                     Raise support ticket
                   </Button>                
-                </Styles.HelpListItem>
+                </Styles.HelpListItem> */}
               </Styles.RightColumn>
             </Styles.MainWrapper>
           </form>

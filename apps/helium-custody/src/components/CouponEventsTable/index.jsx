@@ -189,7 +189,7 @@ const generateCouponEventsTableRowData = (i) => ({
   externalSecurity: i.couponSchedule?.externalSecurity,
   isin: i.couponSchedule?.externalSecurity?.isin ?? "--",
   issuer: i.issuer,
-  security: i.couponSchedule?.externalSecurity?.longName,
+  security: i.couponSchedule?.externalSecurity?.name,
   shortName: i.couponSchedule?.externalSecurity?.shortName ?? "N/A",
   wsn: i.couponSchedule?.externalSecurity?.wsn ?? "--",
   totalCouponAmount: i.totalCouponAmount,

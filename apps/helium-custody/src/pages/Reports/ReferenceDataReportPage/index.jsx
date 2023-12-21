@@ -373,20 +373,6 @@ const ReferenceDataReportPage = () => {
           <Grid item>
             <Box my={1} className="w-full">
               <Grid container spacing={2} alignItems="center">
-                {isWethaqAdmin && (
-                  <Grid item>
-                    <Button
-                      disabled
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      // onClick={() => {}}
-                    >
-                      {t("Update Reference Data")}
-                    </Button>
-                  </Grid>
-                )}
                 <Grid item>
                   <Button
                     fullWidth

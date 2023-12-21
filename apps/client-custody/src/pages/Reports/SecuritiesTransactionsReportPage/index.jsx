@@ -223,9 +223,9 @@ const SecuritiesTransactionsReportPage = () => {
       field: "actualSettleDate",
       render: (rowData) =>
         rowData?.actualSettleDate
-          ? dateFormatter(rowData.actualSettleDate, DEFAULT_DATE_TIME_FORMAT)
+          ? dateFormatter(rowData?.actualSettleDate, DEFAULT_DATE_TIME_FORMAT)
           : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.actualSettleDate) },
+        exportConfig: { render: (rowData) => dateFormatter(rowData?.actualSettleDate, DEFAULT_DATE_TIME_FORMAT) },
     },
     {
       id: "settleDate",
