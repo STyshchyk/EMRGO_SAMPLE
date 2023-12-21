@@ -125,7 +125,7 @@ const ViewSafekeepingAccountDialog = ({
         <Box pb={2}>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <InlineLabel label={t("Modal.Entity")} value={initialValues?.entity.label} />
+              <InlineLabel label={t("Modal.Entity")} value={initialValues?.entity?.label} />
 
               <InlineLabel label={t("Modal.Portfolio Identifier")} value={initialValues?.name} />
 

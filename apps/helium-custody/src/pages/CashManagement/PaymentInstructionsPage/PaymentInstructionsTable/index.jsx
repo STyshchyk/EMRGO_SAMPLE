@@ -6,6 +6,7 @@ import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import moment from "moment";
+
 import DateRangePicker from "../../../../components/FilterComponents/DateRangePicker";
 import TableFiltersWrapper from "../../../../components/FilterComponents/TableFiltersWrapper";
 import LoadingPage from "../../../../components/LoadingPage";
@@ -29,6 +30,16 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
       id: "accountNo",
       title: t("Payment Instructions.Headers.Account No"),
       field: "accountNo",
+    },
+    {
+      id: "safekeepingAccName",
+      title: t("Payment Instructions.Headers.Portfolio Name"),
+      field: "portfolioName",
+    },
+    {
+      id: "safekeepingAccNumber",
+      title: t("Payment Instructions.Headers.Portfolio Number"),
+      field: "portfolioNumber",
     },
     {
       id: "clientBalance",
@@ -140,22 +151,21 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
         >
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={6}>
-            <DateRangePicker name="createdAt" label={"Date"} defaultFilter="none" />
+              <DateRangePicker name="createdAt" label={"Date"} defaultFilter="none" />
             </Grid>
           </Grid>
         </TableFiltersWrapper>
       </div>
       <FilterConsumer>
-      {({ filters, filterColumns }) => {
-              const filteredData = data
-                .filter((row) => {
-                  if (filters?.createdAt?.value?.startDate && filters?.createdAt?.value?.endDate) {
-                    const { startDate, endDate } = filters?.createdAt.value;
+        {({ filters, filterColumns }) => {
+          const filteredData = data.filter((row) => {
+            if (filters?.createdAt?.value?.startDate && filters?.createdAt?.value?.endDate) {
+              const { startDate, endDate } = filters?.createdAt.value;
 
-                    return moment(row.createdAt).isBetween(startDate, endDate);
-                  }
-                  return true;
-                })
+              return moment(row.createdAt).isBetween(startDate, endDate);
+            }
+            return true;
+          });
           return (
             <Fragment>
               <MaterialTable

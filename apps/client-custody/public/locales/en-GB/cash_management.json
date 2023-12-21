@@ -130,6 +130,8 @@
     "Headers": {
       "Created At Date": "Created At",
       "Client Balance": "Client Balance",
+      "Portfolio Name": "Portfolio",
+      "Portfolio Number": "Portfolio Number",
       "Value Date": "Value Date",
       "Investor/Owner": "Investor/Owner",
       "Payment Amount": "Payment Amount",

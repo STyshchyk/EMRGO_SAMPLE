@@ -14,8 +14,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
 
+import CustomNumberInputField from "../../../../../../helium-custody/src/components/CustomNumberInputField";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
+import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import style from "./style.module.scss";
 
@@ -32,15 +34,17 @@ const AddPaymentInstructionForm = ({
 
   const {
     allSourceAccountOptions,
+    allSourceAccountOptionsGroped,
     allPaymentAccountOptions,
     sourceEntityOptions,
     beneficiaryUserOptions,
     paymentTransferPurposeOptions,
   } = options;
   // local states
-
-  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] =
-    useState(allSourceAccountOptions);
+  console.log(allSourceAccountOptionsGroped);
+  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
+    allSourceAccountOptionsGroped
+  );
   const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] =
     useState(allPaymentAccountOptions);
 
@@ -63,7 +67,7 @@ const AddPaymentInstructionForm = ({
               <Select
                 name="sourceAccount"
                 placeholder={t("Payment Instructions.Modals.Placeholders.Source Account")}
-                components={{ Option: ReactSelectCurrencyOption }}
+                components={{ Option: ReactSelectCurrencyOption, Group: ReactSelectGroup }}
                 closeMenuOnSelect
                 isSearchable
                 styles={selectStyles}
@@ -176,21 +180,12 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                   name="paymentAmount"
-                  variant="filled"
-                  type="number"
-                  min="0"
-                  onChange={(event) => {
-                    const regexTwoDecimal = /^[0-9]*(\.[0-9]{0,2})?$/;
-                    if (regexTwoDecimal.test(event.target.value)) {
-                      setFieldValue("paymentAmount", parseFloat(event.target.value));
-                    }
-                  }}
+                  variant="outlined"
                   InputProps={{
+                    inputComponent: CustomNumberInputField,
                     endAdornment: (
                       <InputAdornment position="end">
-                        <Typography color="primary" variant="subtitle2">
-                          {values.paymentAccount?.value?.currency}
-                        </Typography>
+                        {values.paymentAccount?.value?.currency}
                       </InputAdornment>
                     ),
                   }}

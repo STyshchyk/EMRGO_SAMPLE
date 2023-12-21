@@ -129,6 +129,8 @@
     "New Payment Instructions": "New Payment Instructions",
     "Headers": {
       "Created At Date": "Created At",
+      "Portfolio Name": "Portfolio",
+      "Portfolio Number": "Portfolio Number",
       "Client Balance": "Client Balance",
       "Value Date": "Value Date",
       "Investor/Owner": "Investor/Owner",

@@ -67,16 +67,12 @@ export const selectSecuritiesTransactions = createSelector(
       finalData = transactionsData.map((transaction) => {
         return {
           ...transaction,
-          fromSecurityAccount:
-            ["DVP", "DFOP"].includes(transaction.settlementType.name) &&
-            transaction.investorName.includes("Emrgo")
-              ? transaction.toSecurityAccount
-              : transaction.fromSecurityAccount,
-          investorName:
-            ["DVP", "DFOP"].includes(transaction.settlementType.name) &&
-            transaction.investorName.includes("Emrgo")
-              ? transaction.issuerName
-              : transaction.investorName,
+          fromSecurityAccount: transaction.investorName.includes("Emrgo")
+            ? transaction.issuerSecurityAccount
+            : transaction.investorSecurityAccount,
+          investorName: transaction.investorName.includes("Emrgo")
+            ? transaction.issuerName
+            : transaction.investorName,
         };
       });
       return finalData;
