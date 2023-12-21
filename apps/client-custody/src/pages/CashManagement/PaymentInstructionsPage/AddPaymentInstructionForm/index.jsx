@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -17,6 +17,7 @@ import moment from "moment";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../../../../components/ReactSelectCurrencySingleValueContainer";
 import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import style from "./style.module.scss";
@@ -41,7 +42,6 @@ const AddPaymentInstructionForm = ({
     paymentTransferPurposeOptions,
   } = options;
   // local states
-  console.log(allSourceAccountOptionsGroped);
   const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
     allSourceAccountOptionsGroped
   );
@@ -67,7 +67,16 @@ const AddPaymentInstructionForm = ({
               <Select
                 name="sourceAccount"
                 placeholder={t("Payment Instructions.Modals.Placeholders.Source Account")}
-                components={{ Option: ReactSelectCurrencyOption, Group: ReactSelectGroup }}
+                components={{
+                  Option: ReactSelectCurrencyOption,
+                  ValueContainer: (props) =>
+                    ReactSelectCurrencySingleValueContainer({
+                      ...props,
+                      currency: props?.getValue()[0]?.value?.currency,
+
+                    }),
+                    Group: ReactSelectGroup
+                }}
                 closeMenuOnSelect
                 isSearchable
                 styles={selectStyles}
@@ -108,7 +117,14 @@ const AddPaymentInstructionForm = ({
             <Box my={1} className="w-full">
               <Select
                 name="paymentAccount"
-                components={{ Option: ReactSelectCurrencyOption }}
+                components={{
+                  Option: ReactSelectCurrencyOption,
+                  ValueContainer: (props) =>
+                    ReactSelectCurrencySingleValueContainer({
+                      ...props,
+                      currency: props?.getValue()[0]?.value?.currency,
+                    }),
+                }}
                 closeMenuOnSelect
                 placeholder={t("Payment Instructions.Modals.Fields.Payment Account")}
                 isSearchable
@@ -144,6 +160,18 @@ const AddPaymentInstructionForm = ({
                       sx={{
                         width: "100%", // Ensure the DatePicker takes full-width
                         ...(props.sx || {}),
+                      }}
+                      inputProps={{
+                        shrink: "false",
+                        size: "small",
+                        variant: "filled",
+                      }}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                          variant: "filled",
+                        },
                       }}
                     />
                   )}

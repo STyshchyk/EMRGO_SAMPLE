@@ -1,24 +1,30 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
-import cx from "classnames";
+import { Badge, Tab, Tabs } from "@emrgo-frontend/shared-ui";
 
 import featureFlags from "../../constants/featureFlags";
 import routes from "../../constants/routes";
 import { useFeatureToggle } from "../../context/feature-toggle-context";
 import * as authSelectors from "../../redux/selectors/auth";
 import * as kycSelectors from "../../redux/selectors/kyc";
-import style from "./style.module.scss";
-import appConfig from "../../appConfig";
 
 const cashManagement = {
   acls: ["Account/Edit", "Account/Validate", "Account/Manage"],
   baseURLPattern: /(?:\/dashboard\/custody\/cash-management\/)(?:[\w-/]*)/,
   displayName: "Cash Management",
   homeUrl: routes.dashboard.custody.cashManagement.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "OBLIGOR", "ISSUER", "operations", "finance", "relationship_manager"],
+  requiredEntityTypes: [
+    "EMRGO_SERVICES",
+    "INVESTOR",
+    "OBLIGOR",
+    "ISSUER",
+    "operations",
+    "finance",
+    "relationship_manager",
+  ],
 };
 
 const reports = {
@@ -26,7 +32,14 @@ const reports = {
   baseURLPattern: /(?:\/dashboard\/custody\/reports\/)(?:[\w-/]*)/,
   displayName: "Reporting",
   homeUrl: routes.dashboard.custody.reports.home,
-  requiredEntityTypes: ["EMRGO_SERVICES", "INVESTOR", "ISSUER", "operations", "finance", "relationship_manager"],
+  requiredEntityTypes: [
+    "EMRGO_SERVICES",
+    "INVESTOR",
+    "ISSUER",
+    "operations",
+    "finance",
+    "relationship_manager",
+  ],
 };
 const issuerServices = {
   acls: ["Services/Issuer/View"],
@@ -94,29 +107,33 @@ const NavLinkList = ({ routingConfigs }) => {
       .find((obj) => obj.baseURLPattern.test(location.pathname))
   );
 
-  return shouldShowNav ? (
-    <div className={style.linkMenuWrapper}>
-      <div className={style.linkMenuContainer}>
-        {filteredRoutingConfigs.map((item, index) => {
-          const currentDashboardRoutingConfig = routingConfigs[item];
-          const { displayName, homeUrl, baseURLPattern } = currentDashboardRoutingConfig;
-          const matchURL = baseURLPattern.test(location.pathname);
+  const processedRoutingConfigs = filteredRoutingConfigs.map((item, index) => {
+    const currentDashboardRoutingConfig = routingConfigs[item];
+    const { displayName, homeUrl, baseURLPattern } = currentDashboardRoutingConfig;
+    const matchURL = baseURLPattern.test(location.pathname);
 
-          return (
-            <div className={style.linkContainer} key={index}>
-              <div className={cx(matchURL ? style.selectedBorder : "")}>
-                <RouterLink
-                  className={cx(style.linkText, matchURL ? style.selected : "")}
-                  to={homeUrl}
-                >
-                  {t(`Sidebar.${displayName}`)}
-                </RouterLink>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    return {
+      matchURL,
+      displayName,
+      homeUrl,
+      key: item,
+      notification: 0,
+    };
+  });
+
+  const matchedUrl = processedRoutingConfigs.find((config) => config.matchURL === true);
+
+  return shouldShowNav ? (
+    <Tabs value={matchedUrl.key}>
+      {processedRoutingConfigs.map((tab, index) => {
+        return (
+          <Tab value={tab.key} as={RouterLink} to={tab.homeUrl} key={tab.key}>
+            {t(`Sidebar.${tab.displayName}`)}
+            {tab.notification > 0 && <Badge>{tab.notification}</Badge>}
+          </Tab>
+        );
+      })}
+    </Tabs>
   ) : (
     <></>
   );

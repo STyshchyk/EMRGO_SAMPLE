@@ -7,6 +7,8 @@ import { Sidebar, SidebarListItemIcon } from "../../Sidebar";
 
 export const DashboardSidebar = styled(Sidebar)`
   overflow-y: auto;
+  position: relative;
+  overflow-x: clip;
 `;
 
 export const SidebarListItemIconWithBadge = styled(SidebarListItemIcon)`

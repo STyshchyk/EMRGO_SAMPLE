@@ -73,7 +73,7 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
 
   return (
     <Grid container direction="column" spacing={2}>
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" className="px-4">
         <Grid item xs={12} md={5} lg={5}>
           <Typography>Security Search</Typography>
         </Grid>

@@ -1,25 +1,20 @@
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { components } from "react-select";
+
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
-import style from "./style.module.scss";
-
-const ReactSelectCurrencyOption = (props) => {
+const ReactSelectCurrencyOption = ({ children, ...props }) => {
+  // @ts-ignore
   const { innerProps, isDisabled, data, currency } = props;
 
-  return !isDisabled ? (
-    <div {...innerProps}>
-      <Box p={1} className={style.selectContainer}>
-        <Grid container justifyContent="space-between">
-          <Typography className={style.wrapText}>{data.label}</Typography>
-          <Typography color="primary" variant="subtitle2">
-            {currency || data.value.currency || data.value?.currencyName}
-          </Typography>
-        </Grid>
-      </Box>
-    </div>
-  ) : null;
+  return (
+    <components.Option {...props}>
+      <span>{children}</span>
+      <Typography color="primary" variant={"subtitle2"} component={"span"}>
+        {currency || data.value.currency || data.value?.currencyName || data.currency}
+      </Typography>
+    </components.Option>
+  );
 };
 
 ReactSelectCurrencyOption.propTypes = {
@@ -29,7 +24,7 @@ ReactSelectCurrencyOption.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     label: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }).isRequired,
 };
 

@@ -17,6 +17,8 @@ import FilterButton from "../../../components/FilterComponents/FilterButton";
 import ReportingInfo from "../../../components/FilterComponents/ReportingInfo";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
+import ReactSelectCurrencyOption from "../../../components/ReactSelectCurrencyOption";
+import ReactSelectCurrencySingleValueContainer from "../../../components/ReactSelectCurrencySingleValueContainer";
 import { currencyRenderer, reportDateRenderer } from "../../../constants/renderers";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -149,9 +151,11 @@ const CashStatementPage = () => {
           return {
             data: cashAccount,
             value: cashAccount.id,
-            label: `${cashAccount.currency.name} ( ${cashAccount.accountNo} )`,
+            currency: cashAccount.currency.name,
+            label: `${cashAccount.accountNo}  `,
           };
         });
+
       setCashAccountOptions(cashAccountOptions);
       setCurrentlySelectedCash(null);
       setCurrentlySelectedSafekeeping(null);
@@ -160,6 +164,7 @@ const CashStatementPage = () => {
       const filteredSafekeepingAccounts = safeekingAccountList.filter((account) =>
         selectedEntity ? account?.entityId === selectedEntity.value : false
       );
+
       setEmrgoSelected(false);
       setCurrentlySelectedCash(null);
       setSafeAccountOptions(filteredSafekeepingAccounts);
@@ -178,8 +183,9 @@ const CashStatementPage = () => {
     if (selectedSafekeepingAccount && selectedSafekeepingAccount.value !== "all") {
       const filteredCashAccounts = selectedSafekeepingAccount.account.wethaqAccounts.map(
         (account) => ({
-          label: `${account?.currency?.name} ( ${account?.accountNo} )`,
+          label: `${account?.accountNo}`,
           value: account?.id,
+          currency: account?.currency?.name,
           data: account,
         })
       );
@@ -331,6 +337,14 @@ const CashStatementPage = () => {
                 <DropdownFilterOld
                   name="account"
                   label="Cash Account"
+                  customComponent={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.currency,
+                      }),
+                  }}
                   options={cashAccountOptions}
                   currentlySelectedOption={currentlySelectedCash}
                   setCurrentlySelectedOption={setCurrentlySelectedCash}
@@ -374,6 +388,18 @@ const CashStatementPage = () => {
                 <ExportButtons tableRef={tableRef} name="Cash Statement Report" />
               </Grid>
             </Grid>
+            <FilterConsumer>
+              {({ filters, filterColumns }) => {
+                return (
+                  <Grid item xs={12}>
+                    <ReportingInfo
+                      cashAccount={filters?.account}
+                      securityAccount={filters?.safekeepingAccount}
+                    />
+                  </Grid>
+                );
+              }}
+            </FilterConsumer>
           </TableFiltersWrapper>
         </div>
 
@@ -409,12 +435,6 @@ const CashStatementPage = () => {
               });
             return (
               <Fragment>
-                <Grid item xs={12}>
-                  <ReportingInfo
-                    cashAccount={filters?.account}
-                    securityAccount={filters?.safekeepingAccount}
-                  />
-                </Grid>
                 <MaterialTable
                   tableRef={tableRef}
                   size="small"

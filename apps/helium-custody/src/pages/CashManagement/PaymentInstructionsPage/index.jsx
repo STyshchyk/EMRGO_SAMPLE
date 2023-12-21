@@ -605,7 +605,7 @@ const PaymentInstructionsPage = () => {
 
   return (
     <Fragment>
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" mb={2}>
         <Grid container lg={3}>
           <PageTitle title={t("PaymentAccountManagement.ManagePaymentAccountsPage.PageTitle")} />
         </Grid>

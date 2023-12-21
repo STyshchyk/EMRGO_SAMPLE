@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -471,6 +471,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           label="SSI Label"
                           name="ssiLabel"
                           variant="filled"
+                          size="small"
                           type="text"
                         />
                       </Grid>
@@ -595,6 +596,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           )}
                           name="deliveryOrReceiveIdentifier"
                           variant="filled"
+                          size="small"
                           type="text"
                         />
                       </Grid>
@@ -672,6 +674,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           )}
                           name="sellerOrBuyerIdentifier"
                           variant="filled"
+                          size="small"
                           type="text"
                           disabled={settlementLocationIsSix || !values?.sellerOrBuyerIdType?.value} // No input accepted if Seller/Buyer ID Type is <Blank>
                         />
@@ -703,6 +706,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           )}
                           name="safekeepingAccount"
                           variant="filled"
+                          size="small"
                           type="text"
                           disabled={settlementLocationIsSix}
                         />

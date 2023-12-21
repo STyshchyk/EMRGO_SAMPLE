@@ -5,45 +5,45 @@ export default (isDarkMode) => {
   return {
     palette: {
       mode: isDarkMode ? "dark" : "light",
-      // ...(isDarkMode
-      //   ? {
-      //       // palette values for dark mode
-      //       primary: {
-      //         main: colors.green5,
-      //         contrastText: colors.black[100],
-      //       },
-      //       error: {
-      //         main: "#eb0000",
-      //         contrastText: "#fff",
-      //       },
-      //       divider: colors.strokes.dark,
-      //       background: {
-      //         default: colors.green1,
-      //         paper: colors.green1,
-      //       },
-      //       text: {
-      //         primary: colors.white[60],
-      //         secondary: colors.white[40],
-      //       },
-      //     }
-      //   : {
-      //       primary: {
-      //         main: colors.green3,
-      //       },
-      //       error: {
-      //         main: "#eb0000",
-      //         contrastText: "#fff",
-      //       },
-      //       background: {
-      //         default: colors.white[100],
-      //         paper: colors.white[100],
-      //       },
-      //       divider: colors.strokes.light,
-      //       text: {
-      //         primary: colors.black[80],
-      //         secondary: colors.black[60],
-      //       },
-      //     }),
+      ...(isDarkMode
+        ? {
+            // palette values for dark mode
+            primary: {
+              main: colors.green5,
+              contrastText: colors.black[100],
+            },
+            error: {
+              main: "#eb0000",
+              contrastText: "#fff",
+            },
+            divider: colors.strokes.dark,
+            background: {
+              default: colors.green1,
+              paper: colors.green1,
+            },
+            text: {
+              primary: colors.white[60],
+              secondary: colors.white[40],
+            },
+          }
+        : {
+            primary: {
+              main: colors.green3,
+            },
+            error: {
+              main: "#eb0000",
+              contrastText: "#fff",
+            },
+            background: {
+              default: colors.white[100],
+              paper: colors.white[100],
+            },
+            divider: colors.strokes.light,
+            text: {
+              primary: colors.black[80],
+              secondary: colors.black[60],
+            },
+          }),
     },
     // shadows: ['none'],
     shape: {
@@ -94,9 +94,14 @@ export default (isDarkMode) => {
         styleOverrides: {
           root: {
             borderRadius: "0.25rem",
+            textarea: {
+              padding: "0",
+            },
           },
           input: {
-            padding: "12px 12px",
+            padding: "14px 12px",
+            fontSize: "0.875rem",
+            fontWeight: 500,
           },
           underline: {
             "&:before": {
@@ -136,6 +141,14 @@ export default (isDarkMode) => {
           filled: {
             transform: "translate(12px, 15px) scale(1)",
             lineHeight: "1rem",
+            fontSize: "14px",
+            fontWeight: 500,
+          },
+          outlined: {
+            lineHeight: "1rem",
+            "&.MuiInputLabel-shrink": {
+              transform: "translate(12px, -6px) scale(0.75)!important",
+            },
           },
         },
       },

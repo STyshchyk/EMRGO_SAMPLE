@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -475,6 +475,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         name="exDate"
                         value={values.exDate}
                         onChange={(date) => {
@@ -504,6 +516,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         placeholder="DD/MM/YYYY"
                         minDate={values.exDate}
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         name="recordDate"
                         value={values.recordDate}
                         onChange={(date) => {
@@ -533,6 +557,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         placeholder="DD/MM/YYYY"
                         minDate={values.exDate}
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         name="paymentDate"
                         value={values.paymentDate}
                         onChange={(date) => {
@@ -683,6 +719,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
                         name="responseDeadline"
                         minDate={moment()}
@@ -719,6 +767,18 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                          variant: "filled",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
                         name="marketDeadline"
                         minDate={moment()}

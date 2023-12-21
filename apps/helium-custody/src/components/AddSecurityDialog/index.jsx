@@ -4,7 +4,7 @@ import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -352,6 +352,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Security Name")}
                         name="name"
                         variant="filled"
+                        size="small"
                         type="text"
                         // InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       />
@@ -371,6 +372,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Security Short Name")}
                         name="shortName"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -389,6 +391,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Security Long Name")}
                         name="longName"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -407,6 +410,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Issuance Name")}
                         name="issuanceName"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -416,7 +420,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         <Typography className="mt-4">WSN</Typography>
                       </Grid>
                       <Grid item xs={12} md={6} lg={6}  className="px-1">
-                        <Field fullWidth component={TextField} label="WSN" name="wsn" variant="filled" type="text" />
+                        <Field fullWidth component={TextField} label="WSN" name="wsn" variant="filled" size="small" type="text" />
                       </Grid>
                     </Grid>{' '} */}
                   <Grid container className="mt-4">
@@ -432,6 +436,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.ISIN")}
                         name="isin"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -450,6 +455,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Ticker")}
                         name="ticker"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>
@@ -468,7 +474,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                           component={TextField}
                           label={t('external_securities:External Securities.Add Security Form.Rate')}
                           name="profitRate"
-                          variant="filled"
+                          variant="filled" size="small"
                           type="text"
                         />
                         /> */}
@@ -478,6 +484,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Rate")}
                         name="profitRate"
                         variant="filled"
+                        size="small"
                         value={values.profitRate}
                         InputProps={{
                           inputComponent: CustomNumberInputField,
@@ -560,10 +567,22 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputvariant="filled"
+                        size="small"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         value={values.issueDate}
                         onChange={(date) => {
                           setFieldValue("issueDate", date);
@@ -583,11 +602,23 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputvariant="filled"
+                        size="small"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         minDate={moment()}
                         component={DatePicker}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         value={values.maturityDate}
                         onChange={(date) => {
                           setFieldValue("maturityDate", date);
@@ -643,6 +674,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
                         label={t("External Securities.Add Security Form.Issuance Amount")}
                         name="issuanceAmount"
                         variant="filled"
+                        size="small"
                         type="text"
                       />
                     </Grid>

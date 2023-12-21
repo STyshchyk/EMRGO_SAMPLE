@@ -1,6 +1,6 @@
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import FormControl from "@mui/material/FormControl";
 
 import selectStyles from "../../styles/cssInJs/reactSelect";

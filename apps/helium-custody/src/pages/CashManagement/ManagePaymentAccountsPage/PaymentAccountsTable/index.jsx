@@ -42,17 +42,17 @@ const PaymentAccountsTable = ({ tableData }) => {
         {
           title: t("PaymentAccountManagement.PaymentAccountsTable.Label"),
           field: "label",
-          // defaultSort: "asc",
+          defaultSort: "asc",
           width: 150,
         },
         /*
-        {
-          title: t('PaymentAccountManagement.PaymentAccountsTable.Account ID'),
-          field: 'id',
-          ...sharedColumnOptions,
-          width: 350,
-        },
-        */
+                        {
+                          title: t('PaymentAccountManagement.PaymentAccountsTable.Account ID'),
+                          field: 'id',
+                          ...sharedColumnOptions,
+                          width: 350,
+                        },
+                        */
         {
           title: t("PaymentAccountManagement.PaymentAccountsTable.Default"),
           field: "isDefault",
@@ -144,6 +144,10 @@ const PaymentAccountsTable = ({ tableData }) => {
           field: "intermediaryBankName",
         },
         {
+          title: "Intermediary Bank Account No",
+          field: "intermediaryBankAccountNo",
+        },
+        {
           title: "Intermediary Bank IBAN",
           field: "intermediaryBankIBAN",
         },
@@ -169,11 +173,7 @@ const PaymentAccountsTable = ({ tableData }) => {
           field: "intermediaryBankPostCode",
         },
         {
-          title: "Intermediary Bank Account No",
-          field: "intermediaryBankAccountNo",
-        },
-        {
-          title: "Intermediary Routing Code",
+          title: "Intermediary Route Code",
           field: "intermediaryBankRouteCode",
         },
         {
@@ -192,20 +192,24 @@ const PaymentAccountsTable = ({ tableData }) => {
           defaultSort: "desc", // Set the default sorting direction (desc for the latest created items)
         },
         /*
-        {
-          title: t('PaymentAccountManagement.PaymentAccountsTable.Balance'),
-          field: 'accountBalance',
-          type: 'numeric',
-          ...sharedColumnOptions,
-        },
-        */
+                        {
+                          title: t('PaymentAccountManagement.PaymentAccountsTable.Balance'),
+                          field: 'accountBalance',
+                          type: 'numeric',
+                          ...sharedColumnOptions,
+                        },
+                        */
       ]}
       data={tableData}
       options={{
         ...tableStyles,
-        searchFieldVariant: "outlined",
+        searchFieldVariant: "filled",
         pageSize: 10,
         actionsColumnIndex: -1,
+        searchFieldStyle: {
+          backgroundColor: "transparent",
+          border: "1px solid gray",
+        },
       }}
       localization={mtableLocalization}
     />

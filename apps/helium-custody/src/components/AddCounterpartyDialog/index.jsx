@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -313,6 +313,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         label={t("Counterparty.Add Counterparty Form.Counterparty ID")}
                         name="counterpartyId"
                         variant="filled"
+                        size={"small"}
                         type="text"
                         InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       />
@@ -340,6 +341,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         label={t("Counterparty.Add Counterparty Form.Short Name")}
                         name="shortName"
                         variant="filled"
+                        size={"small"}
                         type="text"
                       />
                     </Grid>
@@ -366,6 +368,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         label={t("Counterparty.Add Counterparty Form.Long Name")}
                         name="longName"
                         variant="filled"
+                        size={"small"}
                         type="text"
                       />
                     </Grid>

@@ -1,17 +1,14 @@
 import { useState } from "react";
-import makeAnimated from "react-select/animated";
 
 import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 import { useFilters } from "../../../context/filter-context";
 
-const animatedComponents = makeAnimated();
 const customSelectStyles = {
   menu: (styles) => ({
     ...styles,
@@ -49,6 +46,7 @@ const DropdownFilter = ({
   label,
   customOnChange,
   options,
+  customComponent,
   defaultFilter,
   isMulti,
   customClearChange,
@@ -94,12 +92,7 @@ const DropdownFilter = ({
         <Select
           closeMenuOnSelect
           fullWidth
-          components={{
-            ...animatedComponents,
-            MultiValueContainer: ({ data }) => (
-              <Chip key={data.value} label={data.value} className="" color="primary" />
-            ),
-          }}
+          components={customComponent}
           isMulti={isMulti}
           isSearchable
           placeholder={`${label}...`}

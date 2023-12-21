@@ -52,7 +52,7 @@ const DashboardWrapperContext = createContext<ISilverDashboardWrapperContext | n
 export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const { disable } = useDarkMode();
   const { user, roles, updateUserConfig } = useUser();
-  const currentRole = constants.silverRoles.find((role) => role.key === user?.role);
+  const currentRole = constants.silverRoles.find((role: any) => role.key === user?.role);
   const { showWarningToast, showInfoToast } = useToast();
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
@@ -112,8 +112,15 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       label: "Custody",
       icon: <PrimariesIcon />,
       key: "custody",
-      path: heliumCustodyRoutes.home,
-      paths: getAllSilverRoutes(heliumCustodyRoutes),
+      path: heliumCustodyRoutes.custody.cashManagement.manageAccounts,
+      paths: getAllSilverRoutes(heliumCustodyRoutes.custody),
+    },
+    {
+      label: "Support",
+      icon: <PrimariesIcon />,
+      key: "support",
+      path: heliumCustodyRoutes.support.tfa,
+      paths: getAllSilverRoutes(heliumCustodyRoutes.support),
     },
   ];
 

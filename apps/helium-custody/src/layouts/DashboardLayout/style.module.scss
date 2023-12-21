@@ -1,11 +1,6 @@
 @import "../../styles/config.scss";
-div[role="presentation"]:has(div[style*="opacity: 0"]) {
-  visibility: hidden;
-}
-
 
 .container {
-
   &__root {
     height: 100vh;
     max-width: 100vw;

@@ -40,7 +40,7 @@ export const DashboardSidebarAccountTooltip: FC<IDashboardSidebarAccountTooltipP
         {roles?.map((role: string) => {
           const roleConfig = staticRoles.find((staticRole) => staticRole.key === role);
           return (
-            <SidebarListItem>
+            <SidebarListItem key={role}>
               {roleConfig && (
                 <SidebarListItemSecondaryLink
                   onClick={() => changeUserRole(roleConfig)}

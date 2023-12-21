@@ -21,8 +21,10 @@ export const Sidebar = styled.aside`
     `}
 `;
 
-export const SidebarHeader = styled.header`
+export const SidebarHeader = styled.header<{ $isHidden: boolean }>`
   padding: ${rem(24)};
+  width: ${(props) => (!props.$isHidden ? `100%` : `93%`)};
+  overflow: clip;
 `;
 
 export const SidebarFooter = styled.footer`
@@ -37,6 +39,8 @@ export const SidebarList = styled.ul`
 `;
 
 export const SidebarListItem = styled.li`
+  white-space: nowrap;
+
   ${(props) =>
     props.theme.mode === "light" &&
     css`

@@ -15,9 +15,9 @@ import { TextField } from "formik-mui";
 import moment from "moment";
 
 import AutoSaveFields from "../../../../components/AutoSaveFields";
-import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import ReactSelectGroup from "../../../../components/ReactSelectGroup";
+import ReactSelectCurrencySingleValueContainer from "../../../../components/ReactSelectCurrencySingleValueContainer";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
@@ -134,7 +134,15 @@ const AddPaymentInstructionForm = ({
                       placeholder={t(
                         "Payment Instructions.Modals.Placeholders.Select Source Account"
                       )}
-                      components={{ Option: ReactSelectCurrencyOption, Group: ReactSelectGroup }}
+                      components={{
+                        Option: ReactSelectCurrencyOption,
+                        ValueContainer: (props) =>
+                          ReactSelectCurrencySingleValueContainer({
+                            ...props,
+                            currency: props?.getValue()[0]?.value?.currency,
+                          }),
+                          Group: ReactSelectGroup
+                      }}
                       closeMenuOnSelect
                       isSearchable
                       styles={selectStyles}
@@ -169,7 +177,14 @@ const AddPaymentInstructionForm = ({
               <Box my={1} className="w-full">
                 <Select
                   name="paymentAccount"
-                  components={{ Option: ReactSelectCurrencyOption }}
+                  components={{
+                    Option: ReactSelectCurrencyOption,
+                    ValueContainer: (props) =>
+                      ReactSelectCurrencySingleValueContainer({
+                        ...props,
+                        currency: props?.getValue()[0]?.value?.currency,
+                      }),
+                  }}
                   closeMenuOnSelect
                   placeholder={t("Payment Instructions.Modals.Fields.Payment Account")}
                   isSearchable
@@ -212,6 +227,17 @@ const AddPaymentInstructionForm = ({
                     component={(props) => (
                       <DatePicker
                         {...props}
+                        inputProps={{
+                          shrink: "false",
+                          size: "small",
+                        }}
+                        slotProps={{
+                          textField: {
+                            size: "small",
+                            fullWidth: true,
+                            variant: "filled",
+                          },
+                        }}
                         sx={{
                           width: "100%", // Ensure the DatePicker takes full-width
                           ...(props.sx || {}),
@@ -251,12 +277,13 @@ const AddPaymentInstructionForm = ({
                     component={TextField}
                     label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                     name="paymentAmount"
-                    variant="outlined"
+                    variant="filled"
+                    size={"small"}
                     InputProps={{
-                      inputComponent: CustomNumberInputField,
-                      endAdornment: (
-                        <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
-                      ),
+                        inputComponent: CustomNumberInputField,
+                        endAdornment: (
+                            <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
+                        ),
                     }}
                     // eslint-disable-next-line  react/jsx-no-duplicate-props
                     inputProps={{
@@ -277,7 +304,7 @@ const AddPaymentInstructionForm = ({
                   }}
                   label={t("Payment Instructions.Modals.Fields.Payment Details")}
                   name="paymentDetails"
-                  variant="outlined"
+                  variant="filled"
                 />
               </Box>
               <Box my={1} className="w-full">

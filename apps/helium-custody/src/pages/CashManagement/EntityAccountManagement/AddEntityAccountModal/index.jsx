@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
 
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -183,20 +183,6 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                       placeholder={`${t("EntityAccountManagement.Account Type")}`}
                       // isDisabled={filteredCountry.length===0}
                       isSearchable
-                      styles={{
-                        menu: (styles) => ({
-                          ...styles,
-                          zIndex: 10,
-                        }),
-                        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                        control: (styles) => ({
-                          ...styles,
-                          border: "none",
-                          borderRadius: "6px",
-                          backgroundColor: "rgba(0, 0, 0, 0.09)",
-                          height: "3rem",
-                        }),
-                      }}
                       menuPortalTarget={document.body}
                       value={values.accountTypeId}
                       options={filteredAccountTypes}
@@ -213,20 +199,6 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                       placeholder={`${t("EntityAccountManagement.Currency")}`}
                       // isDisabled={filteredCountry.length===0}
                       isSearchable
-                      styles={{
-                        menu: (styles) => ({
-                          ...styles,
-                          zIndex: 10,
-                        }),
-                        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                        control: (styles) => ({
-                          ...styles,
-                          border: "none",
-                          borderRadius: "6px",
-                          backgroundColor: "rgba(0, 0, 0, 0.09)",
-                          height: "3rem",
-                        }),
-                      }}
                       menuPortalTarget={document.body}
                       value={values.currencyId}
                       options={filteredCurrency}
@@ -242,6 +214,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     label={t("EntityAccountManagement.IBAN Number")}
                     name="iban"
                     variant="filled"
+                    size={"small"}
                     fullWidth
                   />
                 </Box>
@@ -251,6 +224,7 @@ const AddEntityAccountModal = ({ isModalOpen, setIsModalOpen, onSubmit, options 
                     label={t("EntityAccountManagement.External Account Number")}
                     name="externalAccountNumber"
                     variant="filled"
+                    size={"small"}
                     fullWidth
                   />
                 </Box>

@@ -2,13 +2,13 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isHidden: boolean }>`
   display: grid;
-  grid-template-columns: minmax(auto, ${rem(240)}) 1fr;
   height: 100vh;
-  position: relative;
+  grid-template-columns: ${(props) =>
+    props.$isHidden ? `minmax(auto, ${rem(60)}) 1fr` : `minmax(auto, ${rem(220)}) 1fr`};
+  transition: grid-template-columns ease 1s;
 `;
-
 export const Content = styled.main`
   display: flex;
   flex-direction: column;

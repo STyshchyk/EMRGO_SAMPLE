@@ -116,7 +116,7 @@ const IncomingPaymentsTable = ({
 
   return (
     <div>
-      <Grid container justifyContent="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center" mb={2}>
         <Grid item>
           <h3>Incoming Payments</h3>
         </Grid>

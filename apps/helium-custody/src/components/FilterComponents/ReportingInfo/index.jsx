@@ -15,11 +15,12 @@ const classes = {
 const Root = styled("div")(() => ({
   [`& .${classes.accountInfoLabel}`]: {
     fontWeight: 700,
-    marginLeft: "1rem",
+    marginTop: "1rem",
   },
 
   [`& .${classes.accountInfoValue}`]: {
     marginLeft: "0.5rem",
+    marginTop: "1rem",
   },
 }));
 

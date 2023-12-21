@@ -1,6 +1,5 @@
 import React, { useId } from "react";
 import Select, { GroupBase, Props } from "react-select";
-import makeAnimated from "react-select/animated";
 
 import { colors, typography } from "@emrgo-frontend/theme";
 import { ellipsis, rem, rgba } from "polished";
@@ -16,9 +15,10 @@ export const MySelect = <
 >({
   error,
   maxWidth,
+  components: customComponent,
   ...props
 }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
-  const animatedComponents = makeAnimated();
+  const animatedComponents = {};
   const { isDarkMode } = useDarkMode();
   const componentId = useId();
   const idValue = props.id ?? componentId;
@@ -99,7 +99,11 @@ export const MySelect = <
 
     return styles;
   };
-
+  // Create an object that merges customComponent and animatedComponents
+  const mergedComponents = {
+    ...animatedComponents,
+    ...(customComponent || {}), // Use customComponent if available
+  };
   return (
     <Styles.MySelect $maxWidth={maxWidth}>
       <Select
@@ -108,7 +112,7 @@ export const MySelect = <
         name={idValue}
         // blurInputOnSelect // Removes focus after user select option. This to remove error icon if exists
         components={{
-          ...animatedComponents,
+          ...mergedComponents,
         }}
         styles={{
           menu: (styles, state) => ({
@@ -131,6 +135,8 @@ export const MySelect = <
             "&:hover": {
               ...getOptionStyles("hover", state),
             },
+            display: "flex",
+            justifyContent: "space-between",
           }),
           control: (baseStyles, state) => ({
             ...baseStyles,
@@ -190,6 +196,9 @@ export const MySelect = <
             ...base,
             backgroundColor: isDarkMode ? `${colors.strokes.light}` : `${colors.strokes.dark}`,
             svg: { fill: `${colors.red}` },
+          }),
+          valueContainer: (styles, state) => ({
+            ...styles,
           }),
           multiValueLabel: (base) => ({
             ...base,

@@ -1,49 +1,64 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useMatch } from "react-router-dom";
 
-import cx from "classnames";
+import {
+  MinorNavbarListItem,
+  MinorNavbarListItemLink,
+  MinorNavbar as SharedMinorNavbar,
+} from "@emrgo-frontend/shared-ui";
 import PropTypes from "prop-types";
 
-import style from "./style.module.scss";
-
-// TODO: Refactor this to use MUI's Tabs/Tab components for better consistency
-
-const Pill = ({ route }) => {
-  const { t } = useTranslation();
-  const isActive = useMatch(route.link);
-
-  return (
-    <div className={style.pillContainer}>
-      <div className={style.pillTextWrapper}>
-        <Link className={cx(style.pillText, isActive ? style.selected : "")} to={route.link}>
-          {t(`${route.text}`)}
-        </Link>
-      </div>
-      <div className={cx(style.pillIndicator, isActive ? style.selectedLine : "")} />
-    </div>
-  );
-};
-
-Pill.propTypes = {
-  route: PropTypes.shape({
-    path: PropTypes.string,
-    link: PropTypes.string,
-    text: PropTypes.string,
-    disabled: PropTypes.bool,
-  }).isRequired,
-};
+export function useHorizontalScroll() {
+  const elRef = useRef();
+  useEffect(() => {
+    const el = elRef.current;
+    if (el) {
+      const onWheel = (e) => {
+        if (e.deltaY == 0) return;
+        e.preventDefault();
+        el.scrollTo({
+          left: el.scrollLeft + e.deltaY,
+          behavior: "auto",
+        });
+      };
+      el.addEventListener("wheel", onWheel);
+      return () => el.removeEventListener("wheel", onWheel);
+    }
+  }, []);
+  return elRef;
+}
 
 const MinorNavbar = ({ routes }) => {
-  const enabledRouteConfigs = routes.filter((item) => !item?.disabled);
+  const { t } = useTranslation();
+  const scrollRef = useHorizontalScroll();
+  const enabledRouteConfigs = routes
+    .filter((item) => !item?.disabled)
+    .map((route) => {
+      const isActive = useMatch(route.link);
+      return {
+        ...route,
+        isActive,
+      };
+    });
 
   return (
-    <div className={style.pillMenuWrapper}>
-      <div className={style.pillMenuContainer}>
-        {enabledRouteConfigs.map((routeConfig) => (
-          <Pill route={routeConfig} key={routeConfig.link} />
-        ))}
+    <>
+      <div>
+        <SharedMinorNavbar ref={scrollRef}>
+          {enabledRouteConfigs.map((routeConfig) => (
+            // <Pill route={routeConfig} key={routeConfig.link} />
+            <MinorNavbarListItem key={routeConfig.path}>
+              <Link to={routeConfig.link}>
+                <MinorNavbarListItemLink className={routeConfig.isActive ? "active" : ""}>
+                  {t(`${routeConfig.text}`)}
+                </MinorNavbarListItemLink>
+              </Link>
+            </MinorNavbarListItem>
+          ))}
+        </SharedMinorNavbar>
       </div>
-    </div>
+    </>
   );
 };
 

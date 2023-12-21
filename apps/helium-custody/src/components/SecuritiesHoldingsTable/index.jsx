@@ -400,7 +400,22 @@ const SecuritiesHoldingsTable = ({
               <Grid item xs={12} md={6} lg={3}>
                 <ExportButtons tableRef={tableRef} name="Security Holdings Report" />
               </Grid>
-
+              <FilterConsumer>
+                {({ filters, filterColumns }) => {
+                  return (
+                    <Grid item xs={12} container>
+                      <Typography className={style.accountInfo__label}>
+                        {t("Security Transactions.Account")} :{" "}
+                      </Typography>
+                      <Typography className={style.accountInfo__value}>{`${
+                        filters.safekeepingAccount
+                          ? v.capitalize(filters.safekeepingAccount.value.label || "N.A")
+                          : t("Security Transactions.NA")
+                      }`}</Typography>
+                    </Grid>
+                  );
+                }}
+              </FilterConsumer>
               {/* <Grid item xs={12} container>
                 <Typography variant="subtitle1">
                   <Box fontWeight="bold">{t("Cash Balances.Address")} : </Box>{" "}

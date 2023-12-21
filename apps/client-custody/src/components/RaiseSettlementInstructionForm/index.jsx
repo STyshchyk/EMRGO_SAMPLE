@@ -1,8 +1,7 @@
-import { forwardRef, Fragment, useEffect, useState } from "react";
-import { NumericFormat } from "react-number-format";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
@@ -11,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import moment from "moment";
-import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
@@ -83,14 +81,14 @@ const DependentAmountField = (props) => {
   const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
     values.settlementTypeSelectOption?.label
   );
-  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
+  const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
   return (
     <Field
       fullWidth
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant={isVariantOutlined ? "outlined" : "filled"}
+      variant={isVariantfilled ? "filled" : "filled"}
       disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
       value={values[props.name]}
       InputProps={{
@@ -336,7 +334,7 @@ const RaiseSettlementInstructionForm = ({
         const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
           values.settlementTypeSelectOption?.label
         );
-        const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
+        const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
         return (
           <Form>
             <Grid container spacing={2}>
@@ -520,6 +518,18 @@ const RaiseSettlementInstructionForm = ({
                   onChange={(date) => {
                     setFieldValue("tradeDate", date);
                   }}
+                  inputProps={{
+                    shrink: "false",
+                    size: "small",
+                    variant: "filled",
+                  }}
+                  slotProps={{
+                    textField: {
+                      size: "small",
+                      fullWidth: true,
+                      variant: "filled",
+                    },
+                  }}
                   value={values.tradeDate ? moment(values.tradeDate) : null}
                   format={DEFAULT_DATE_FORMAT}
                   fullWidth
@@ -550,6 +560,18 @@ const RaiseSettlementInstructionForm = ({
                   label={DEFAULT_DATE_FORMAT}
                   minDate={moment(values.tradeDate)}
                   name="settlementDate"
+                  inputProps={{
+                    shrink: "false",
+                    size: "small",
+                    variant: "filled",
+                  }}
+                  slotProps={{
+                    textField: {
+                      size: "small",
+                      fullWidth: true,
+                      variant: "filled",
+                    },
+                  }}
                   variant="dialog"
                   disabled={!values.tradeDate}
                 />
@@ -569,7 +591,7 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="outlined"
+                  variant="filled"
                   value={values.quantity}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -585,7 +607,7 @@ const RaiseSettlementInstructionForm = ({
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  variant={isVariantfilled ? "filled" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -628,7 +650,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
                   name="accruedInterest"
-                  variant={isVariantOutlined ? "outlined" : "filled"}
+                  variant={isVariantfilled ? "filled" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   value={values.accruedInterest}
                   InputProps={{
@@ -716,7 +738,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Client Settlement Reference"
                   name="internalTradeRef"
-                  variant="outlined"
+                  variant="filled"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {
@@ -727,7 +749,7 @@ const RaiseSettlementInstructionForm = ({
 
               <Grid item container spacing={2} justifyContent="flex-end">
                 <Grid item>
-                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
+                  <Button color="primary" variant="filled" onClick={handleCloseDialog}>
                     Cancel
                   </Button>
                 </Grid>

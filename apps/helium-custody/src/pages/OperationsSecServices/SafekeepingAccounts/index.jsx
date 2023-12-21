@@ -368,9 +368,13 @@ const SafekeepingAccounts = () => {
                   data={filteredData}
                   options={{
                     ...tableStyles,
-                    toolbar: false,
+                    toolbar: true,
                     pageSize: 10,
-                    searchFieldVariant: "outlined",
+                    searchFieldVariant: "filled",
+                    searchFieldStyle: {
+                      backgroundColor: "transparent",
+                      border: "1px solid gray",
+                    },
                     actionsColumnIndex: -1,
                   }}
                   localization={mtableLocalization}
