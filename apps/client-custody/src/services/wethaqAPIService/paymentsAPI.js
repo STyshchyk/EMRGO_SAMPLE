@@ -84,7 +84,7 @@ const getSettlementInstructionAuditDataById = (payload) =>
 const raiseBulkSettlementInstructions = (payload) =>
   baseAxiosInstance({
     method: "POST",
-    url: "/payments/v1/payment/external/bulk-settlement-instructions",
+    url: "/payments/v2/payment/external/bulk-settlement-instructions",
     data: payload.requestPayload,
   });
 
