@@ -14,8 +14,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import moment from "moment";
 
-import CustomNumberInputField from "../../../../../../helium-custody/src/components/CustomNumberInputField";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
+import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
 import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
