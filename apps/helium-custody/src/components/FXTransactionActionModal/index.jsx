@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
@@ -21,6 +22,9 @@ const FXTransactionActionModal = ({
   const { t } = useTranslation(["fx_transactions"]);
   const dispatch = useDispatch();
 
+  // Use local state for isSubmitting
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const isApprove = action === "approve";
 
   return (
@@ -28,6 +32,7 @@ const FXTransactionActionModal = ({
       initialValues={{}}
       // validationSchema={}
       onSubmit={(values, { setSubmitting }) => {
+        setIsSubmitting(true); // Set isSubmitting to true when submitting
         const payload = {
           transactionId: selectedRow.id,
           requestPayload: {
@@ -35,7 +40,12 @@ const FXTransactionActionModal = ({
           },
           dateRange: currentlySelectedDateRange,
           successCallback: () => {
+            setIsSubmitting(false);
             setSubmitting(false);
+            onClose();
+          },
+          errorCallback: () => {
+            setIsSubmitting(false);
             onClose();
           },
         };
@@ -81,6 +91,7 @@ const FXTransactionActionModal = ({
                     color="primary"
                     fullWidth
                     onClick={handleSubmit}
+                    disabled={isSubmitting}
                   >
                     {isApprove
                       ? t("Fx Action Modal.Approve Transaction")
