@@ -134,7 +134,32 @@ const generateBeneficiaryUserOptions = (validatedPaymentAccounts) => {
       return !isPresentInSet;
     });
 };
-
+const generateSourceAccountOptionsGrouped = (sourceAccounts) => {
+  return Object.values(
+    sourceAccounts.reduce((grouped, option) => {
+      const { portfolioId, portfolio, group } = option;
+      const pushedOpt = {
+        value: {
+          id: option.id,
+          currency: option.currency.name,
+          entityId: option.group.entity.id,
+        },
+        label: `${option.accountNo} ${v.capitalize(option.type)}`,
+        customLabel: option.accountNo,
+      };
+      if (!grouped[portfolioId]) {
+        grouped[portfolioId] = {
+          portfolioId: portfolioId,
+          label: `${portfolio?.name} ${portfolio?.account_number ?? ""}` ?? "N/A",
+          value: { entityId: group?.entity?.id ?? "N/A" },
+          options: [],
+        };
+      }
+      grouped[portfolioId].options.push({ ...pushedOpt });
+      return grouped;
+    }, {})
+  );
+};
 const generatePaymentAccountOptions = (validatedPaymentAccounts) =>
   validatedPaymentAccounts.map((paymentAccount) => ({
     value: {
@@ -197,6 +222,7 @@ const PaymentInstructionsPage = () => {
 
   const allPaymentAccountOptions = generatePaymentAccountOptions(validatedPaymentAccounts);
   const allSourceAccountOptions = generateSourceAccountOptions(sourceAccounts);
+  const allSourceAccountOptionsGroped = generateSourceAccountOptionsGrouped(sourceAccounts);
   const bankAccountTypeOptions = dropdownValues?.bankAccountTypes ?? [];
   const beneficiaryUserOptions = generateBeneficiaryUserOptions(validatedPaymentAccounts);
   const currencyOptions = dropdownValues?.currency ?? [];
@@ -207,6 +233,7 @@ const PaymentInstructionsPage = () => {
   const options = {
     allPaymentAccountOptions,
     allSourceAccountOptions,
+    allSourceAccountOptionsGroped,
     bankAccountTypeOptions,
     beneficiaryUserOptions,
     currencyOptions,
@@ -247,7 +274,10 @@ const PaymentInstructionsPage = () => {
       options: ["bankAccountTypes", "currency", "paymentTransferPurpose"],
     });
   }, [dispatch]);
-
+  const findPorfolio = (wethaqID) => {
+    const porfolio = sourceAccounts.find((account) => wethaqID === account.id);
+    return porfolio;
+  };
   const handleModifyClick = (data) => {
     setSelectedPaymentInstruction(data);
     setEditModalOpen(true);
@@ -401,6 +431,9 @@ const PaymentInstructionsPage = () => {
     paymentInstructions?.forEach((paymentInstruction) => {
       // if not true then it's assumed that the instruction is initiated by either the CO or the OPS
       const isAdminInitiated = currentUserId !== paymentInstruction.userId;
+      const wethaqID = paymentInstruction.wethaqAccount.id;
+      const wethaqNumber = paymentInstruction.wethaqAccount.accountNo;
+      const currentPorfolio = findPorfolio(wethaqID);
 
       entries.push({
         id: paymentInstruction.id,
@@ -432,6 +465,8 @@ const PaymentInstructionsPage = () => {
         intermediaryBankIBAN: paymentInstruction.account?.intermediaryBankIBAN,
         intermediaryBankBIC: paymentInstruction.account?.intermediaryBankBIC,
         providerBeneficiaryName: paymentInstruction.providerBeneficiaryName,
+        portfolioNumber: currentPorfolio?.portfolio.account_number ?? "--",
+        portfolioName: currentPorfolio?.portfolio.name ?? "--",
       });
     });
     return entries;

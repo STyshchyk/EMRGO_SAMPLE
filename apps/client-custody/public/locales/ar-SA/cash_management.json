@@ -127,6 +127,8 @@
     "New Payment Instructions": "تعليمات دفع جديدة",
     "Headers": {
       "Created At Date": "أنشئت في",
+      "Portfolio Name": "Portfolio",
+      "Portfolio Number": "Portfolio Number",
       "Client Balance": "رصيد العميل",
       "Value Date": "تاريخ صالح",
       "Investor/Owner": "مسثثمر/مالك",

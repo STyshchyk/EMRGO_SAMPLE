@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { components } from "react-select";
 
 import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
@@ -18,15 +17,11 @@ import moment from "moment";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
+import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
 
-const Group = (props) => (
-  <div>
-    <components.Group {...props} />
-  </div>
-);
 const AddPaymentInstructionForm = ({
   initialValues,
   handleSubmit,
@@ -139,7 +134,7 @@ const AddPaymentInstructionForm = ({
                       placeholder={t(
                         "Payment Instructions.Modals.Placeholders.Select Source Account"
                       )}
-                      components={{ Option: ReactSelectCurrencyOption, Group: Group }}
+                      components={{ Option: ReactSelectCurrencyOption, Group: ReactSelectGroup }}
                       closeMenuOnSelect
                       isSearchable
                       styles={selectStyles}

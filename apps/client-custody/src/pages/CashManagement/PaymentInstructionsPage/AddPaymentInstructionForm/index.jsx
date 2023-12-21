@@ -17,6 +17,7 @@ import moment from "moment";
 import CustomNumberInputField from "../../../../../../helium-custody/src/components/CustomNumberInputField";
 import AutoSaveFields from "../../../../components/AutoSaveFields";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
+import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import style from "./style.module.scss";
 
@@ -33,15 +34,17 @@ const AddPaymentInstructionForm = ({
 
   const {
     allSourceAccountOptions,
+    allSourceAccountOptionsGroped,
     allPaymentAccountOptions,
     sourceEntityOptions,
     beneficiaryUserOptions,
     paymentTransferPurposeOptions,
   } = options;
   // local states
-
-  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] =
-    useState(allSourceAccountOptions);
+  console.log(allSourceAccountOptionsGroped);
+  const [filteredSourceAccountOptions, setFilteredSourceAccountOptions] = useState(
+    allSourceAccountOptionsGroped
+  );
   const [filteredPaymentAccountOptions, setFilteredPaymentAccountOptions] =
     useState(allPaymentAccountOptions);
 
@@ -64,7 +67,7 @@ const AddPaymentInstructionForm = ({
               <Select
                 name="sourceAccount"
                 placeholder={t("Payment Instructions.Modals.Placeholders.Source Account")}
-                components={{ Option: ReactSelectCurrencyOption }}
+                components={{ Option: ReactSelectCurrencyOption, Group: ReactSelectGroup }}
                 closeMenuOnSelect
                 isSearchable
                 styles={selectStyles}

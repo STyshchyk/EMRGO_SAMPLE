@@ -37,6 +37,16 @@ const PaymentInstructionsTable = ({ data, actions, setSelectedRow, selectedRow }
             field: "accountNo",
           },
           {
+            id: "safekeepingAccName",
+            title: t("Payment Instructions.Headers.Portfolio Name"),
+            field: "portfolioName",
+          },
+          {
+            id: "safekeepingAccNumber",
+            title: t("Payment Instructions.Headers.Portfolio Number"),
+            field: "portfolioNumber",
+          },
+          {
             id: "clientBalance",
             title: t("Payment Instructions.Headers.Client Balance"),
             field: "clientBalance",
