@@ -18,7 +18,6 @@ import FilterButton from "../../../components/FilterComponents/FilterButton";
 import TableFiltersWrapper from "../../../components/FilterComponents/TableFiltersWrapper";
 import PageTitle from "../../../components/PageTitle";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_TIME_FORMAT } from "../../../constants/datetime";
-import { reportDateRenderer } from "../../../constants/renderers";
 import { tableVersion } from "../../../constants/tables";
 import { FilterConsumer, FilterProvider } from "../../../context/filter-context";
 import useMaterialTableLocalization from "../../../hooks/useMTableLocalization";
@@ -224,9 +223,9 @@ const SecuritiesTransactionsReportPage = () => {
       field: "actualSettleDate",
       render: (rowData) =>
         rowData?.actualSettleDate
-          ? dateFormatter(rowData.actualSettleDate, DEFAULT_DATE_TIME_FORMAT)
+          ? dateFormatter(rowData?.actualSettleDate, DEFAULT_DATE_TIME_FORMAT)
           : "--",
-      exportConfig: { render: (rowData) => reportDateRenderer(rowData.actualSettleDate) },
+        exportConfig: { render: (rowData) => dateFormatter(rowData?.actualSettleDate, DEFAULT_DATE_TIME_FORMAT) },
     },
     {
       id: "settleDate",
