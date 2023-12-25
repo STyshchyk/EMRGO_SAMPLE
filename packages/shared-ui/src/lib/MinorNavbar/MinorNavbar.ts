@@ -2,6 +2,8 @@ import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
 import styled, { css } from "styled-components";
 
+import { ScrollStyles } from "../ScrollBar";
+
 export const MinorNavbar = styled.div`
   display: flex;
   flex-direction: row;
@@ -9,21 +11,7 @@ export const MinorNavbar = styled.div`
   padding: ${rem(12)} ${rem(24)};
   margin-top: 0.5rem;
 
-  &::-webkit-scrollbar-track {
-    background-color: #f5f5f5;
-  }
-
-  &::-webkit-scrollbar {
-    height: 3px;
-    background-color: ${getTheme("colors.green3")};
-  }
-  scrollbar-color: ${getTheme("colors.green3")} #f5f5f5;
-  scrollbar-width: thin;
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${getTheme("colors.green3")};
-    border: 1px solid ${getTheme("colors.green3")};
-  }
+  ${ScrollStyles}
 
   ${(props) =>
     props.theme.mode === "light" &&
@@ -60,7 +48,8 @@ const activeLinkStyles = css`
   ${(props) =>
     props.theme.mode === "light" &&
     css`
-      color: ${getTheme("colors.white.100")}!important;
+      color: ${getTheme("colors.white.100")} !important;
+
       &,
       &:hover {
         color: ${getTheme("colors.white.100")};
@@ -71,7 +60,8 @@ const activeLinkStyles = css`
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.white.100")}!important;
+      color: ${getTheme("colors.white.100")} !important;
+
       &,
       &:hover {
         color: ${getTheme("colors.white.100")};
@@ -106,7 +96,8 @@ const linkStyles = css`
   ${(props) =>
     props.theme.mode === "light" &&
     css`
-      color: ${getTheme("colors.black.100")}!important;
+      color: ${getTheme("colors.black.100")} !important;
+
       &:hover {
         background-color: ${getTheme("colors.black.10")};
       }
@@ -115,7 +106,8 @@ const linkStyles = css`
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
-      color: ${getTheme("colors.white.100")}!important;
+      color: ${getTheme("colors.white.100")} !important;
+
       &:hover {
         background-color: ${getTheme("colors.white.10")};
       }
@@ -125,14 +117,12 @@ const linkStyles = css`
 export const MinorNavbarListItemLink = styled.a<ILinkProps>`
   ${linkStyles}
   ${getTheme("typography.medium.01")}
-
   ${(props) =>
     props.active &&
     css`
       ${getTheme("typography.semiBold.01")}
       ${activeLinkStyles}
     `}
-
   &.active {
     ${getTheme("typography.semiBold.01")}
     ${activeLinkStyles}
