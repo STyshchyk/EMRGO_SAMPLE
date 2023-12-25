@@ -1,9 +1,5 @@
 import { include } from "named-urls";
 
-
-
-
-
 interface IMap {
   [key: string]: string | undefined;
 }
@@ -18,7 +14,7 @@ export const clientModuleURLs: IMap = {
   primaries: import.meta.env["VITE_CLIENT_PRIMARIES_URL"],
   secondaries: import.meta.env["VITE_CLIENT_SECONDARIES_URL"],
   custody: import.meta.env["VITE_CLIENT_CUSTODY_URL"],
-  account: import.meta.env["VITE_CLIENT_ACCOUNT_URL"]
+  account: import.meta.env["VITE_CLIENT_ACCOUNT_URL"],
 };
 
 export const clientAuthenticationRoutes = {
@@ -36,7 +32,7 @@ export const clientAuthenticationRoutes = {
   investorProfile: "/investor-profile",
   troubleSigningIn: "/trouble-signing-in",
   troubleSigningInThanks: "/trouble-signing-in-thanks",
-  changePasswordVerification: "/change-email"
+  changePasswordVerification: "/change-email",
 };
 
 export const clientPrimariesRoutes = {
@@ -48,21 +44,21 @@ export const clientPrimariesRoutes = {
         home: "",
         details: include(":issuanceId", {
           home: "",
-          dataRoom: "data-room"
-        })
-      })
-    })
+          dataRoom: "data-room",
+        }),
+      }),
+    }),
   }),
   tradeManagement: include("/trade-management", {
-    home: ""
+    home: "",
   }),
   postTrade: include("/post-trade", {
-    home: ""
-  })
+    home: "",
+  }),
 };
 
 export const clientSecondariesRoutes = {
-  home: "/"
+  home: "/",
 };
 
 export const clientAccountRoutes = {
@@ -85,6 +81,12 @@ export const clientAccountRoutes = {
     dataRoom: "data-room",
     onboardUser: "onboard-user",
   }),
+  secureMessaging: include("/secure-messaging", {
+    inbox: include("inbox/", {
+      home: "",
+      id: ":id",
+    }),
+  }),
 };
 
 export const clientCustodyRoutes = include("/dashboard", {
@@ -101,26 +103,26 @@ export const clientCustodyRoutes = include("/dashboard", {
       incomingPayments: "incoming-payments",
     }),
     onboarding: include("onboarding", {
-      home: ""
+      home: "",
     }),
     reports: include("reports", {
       home: "",
       securities: include("securities", {
         holdings: "holdings",
         transactions: "transactions",
-        referenceData: "reference-data"
+        referenceData: "reference-data",
       }),
       cash: include("cash", {
         balances: "balances",
-        statement: "statement"
-      })
+        statement: "statement",
+      }),
     }),
     issuerSecServices: include("issuer-securities-services", {
       home: "",
       securitiesRegistration: "securities-registration",
       custodyAndSettlement: "custody-and-settlement",
       agencyServices: "agency-services",
-      registrar: "registrar"
+      registrar: "registrar",
     }),
     investorSecServices: include("investor-securities-services", {
       home: "",
@@ -129,7 +131,7 @@ export const clientCustodyRoutes = include("/dashboard", {
       holdings: "holdings",
       counterpartyList: "counterparty-list",
       counterpartySSIList: "counterparty-ssi-list",
-      corporateActionEvents: "corporate-action-events"
+      corporateActionEvents: "corporate-action-events",
     }),
     opsSecServices: include("securities-services", {
       home: "",
@@ -142,12 +144,12 @@ export const clientCustodyRoutes = include("/dashboard", {
       counterpartyList: "counterparty-list",
       counterpartySSIList: "counterparty-ssi-list",
       couponAdministration: "coupon-administration",
-      corporateActionEvents: "corporate-action-events"
+      corporateActionEvents: "corporate-action-events",
     }),
     securitiesAdmin: include("securities-admin", {
       home: "",
-      securitiesList: "securities-list"
-    })
+      securitiesList: "securities-list",
+    }),
   }),
 
   administration: include("administration", {
@@ -168,17 +170,17 @@ export const clientCustodyRoutes = include("/dashboard", {
               home: "",
               individual: include(":individualId", {
                 home: "details",
-                setupMFA: "setup-mfa"
-              })
+                setupMFA: "setup-mfa",
+              }),
             }),
             entityClassification: "entity-classification",
             keyIndividuals: "key-individuals",
             overview: "overview",
             shareholders: "shareholders",
-            wealth: "wealth"
-          })
-        })
-      })
+            wealth: "wealth",
+          }),
+        }),
+      }),
     }),
     entityManagement: include("entity-management", {
       entities: include("entities", {
@@ -188,36 +190,36 @@ export const clientCustodyRoutes = include("/dashboard", {
           entityGroups: include("entity-groups", {
             home: "",
             entityGroup: include(":groupId", {
-              entityUserAccessManagement: "entity-user-access-management"
-            })
+              entityUserAccessManagement: "entity-user-access-management",
+            }),
           }),
           entityUsers: include("entity-users", {
-            home: ""
+            home: "",
           }),
           editEntityPrefs: include("edit-entity-preferences", {
-            home: ""
-          })
-        })
+            home: "",
+          }),
+        }),
       }),
       visitors: include("visitors", {
-        home: ""
+        home: "",
       }),
       users: include("users", {
-        home: ""
-      })
+        home: "",
+      }),
     }),
     parentEntityManagement: include("parent-entity-management", {
-      home: ""
+      home: "",
     }),
     entityAccountManagement: include("entity-account-management", {
-      home: ""
+      home: "",
     }),
     tfa: include("tfa", {
-      tickets: "tickets"
+      tickets: "tickets",
     }),
     userManagement: include("user-management", {
-      home: ""
-    })
+      home: "",
+    }),
   }),
   issuances: include("issuances", {
     home: "",
@@ -239,36 +241,36 @@ export const clientCustodyRoutes = include("/dashboard", {
       closing: "closing",
       paymentAdministration: "payment-administration",
       cmaNotification: "cma-notification",
-      speIncorporation: "spe-incorporation"
-    })
+      speIncorporation: "spe-incorporation",
+    }),
   }),
   blotters: include("blotters", {
-    home: ""
+    home: "",
   }),
   support: include("support", {
     home: "",
-    tfa: "tfa"
+    tfa: "tfa",
   }),
   bulletins: include("bulletins", {
     home: "",
     view: "view",
-    manage: "manage"
+    manage: "manage",
   }),
 
   settlementAdmin: include("settlement-admin", {
     home: "",
     counterpartyList: "counterparty-list",
-    counterpartySSIList: "counterparty-ssi-list"
+    counterpartySSIList: "counterparty-ssi-list",
   }),
   reconciliation: include("reconciliation", {
-    home: ""
+    home: "",
   }),
   billing: include("billing", {
     home: "",
     invoices: "invoices",
     manageInvoices: "manage-invoices",
-    clientRateCard: "client-rate-card"
-  })
+    clientRateCard: "client-rate-card",
+  }),
 });
 
 export const BASE_API_URL = import.meta.env["VITE_API_URL"];

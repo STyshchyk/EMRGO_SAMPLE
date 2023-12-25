@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
+import * as constants from "@emrgo-frontend/constants";
 import { clientAccountRoutes, roles } from "@emrgo-frontend/constants";
 import { useDarkModeCustom } from "@emrgo-frontend/services";
 import {
@@ -22,7 +23,6 @@ import {
   TermsModal,
   ThemeSwitcher,
   Tooltip,
-  TooltipContent,
   TooltipHeader,
   TooltipTitle,
   useUser,
@@ -37,7 +37,7 @@ import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip
 export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const origin = window.location.origin;
   const { user } = useUser();
-  console.log("🚀 ~ file: DashboardSidebar.tsx:40 ~ DashboardSidebar ~ user:", user)
+  console.log("🚀 ~ file: SecureSideBar.tsx:40 ~ SecureSideBar ~ user:", user);
   const currentRole = roles.find((role) => role.key === user?.role);
 
   const {
@@ -53,7 +53,7 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
     setHelpDeskOpen,
     isHelpDeskOpen,
   } = ensureNotNull(useDashboardWrapperContext());
-    console.log("🚀 ~ file: DashboardSidebar.tsx:56 ~ DashboardSidebar ~ showTermsModal:", showTermsModal)
+  console.log("🚀 ~ file: SecureSideBar.tsx:56 ~ SecureSideBar ~ showTermsModal:", showTermsModal);
 
   const [value, setvalue] = useState(false);
   const [isDarkModeCustom, enable, disable, toggle] = useDarkModeCustom();
@@ -132,18 +132,33 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
             </SidebarListItem>
           </Tooltip>
           <SidebarListItem>
-            <SidebarListItemSecondaryLink disabled={true}>
+            <SidebarListItemSecondaryLink
+              onClick={() => {
+                navigateToModule("account", clientAccountRoutes.secureMessaging.inbox.home);
+              }}
+              className={
+                useClientMatchedPathSidebar(
+                  constants.getAllRoutes(clientAccountRoutes.secureMessaging)
+                )
+                  ? "active"
+                  : ""
+              }
+            >
               <Styles.SidebarListItemIconWithBadge>
                 <NotificationsIcon />
                 <Styles.NotificationsBadge>{numberOfNotifications}</Styles.NotificationsBadge>
               </Styles.SidebarListItemIconWithBadge>
-              Notifications
+              Secure Messaging
             </SidebarListItemSecondaryLink>
           </SidebarListItem>
           <SidebarListItem>
             <SidebarListItemSecondaryLink
               href={buildModuleURL("account", clientAccountRoutes.home)}
-              className={useClientMatchedPathSidebar(allAccountRoutes) ? "active" : ""}
+              className={
+                useClientMatchedPathSidebar(constants.getAllRoutes(clientAccountRoutes.account))
+                  ? "active"
+                  : ""
+              }
             >
               <SidebarListItemIcon>
                 <AccountIcon />

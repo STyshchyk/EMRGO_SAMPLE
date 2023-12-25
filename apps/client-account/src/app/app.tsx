@@ -3,7 +3,7 @@ import "./app.styles.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
-import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
+import { ClientSecureMessaging, ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   },
   {
     path: routes.account.onboardUser,
-    element: <EntityManagement/>,
+    element: <EntityManagement />,
   },
   {
     path: routes.clientInvestmentProfile.home,
@@ -67,6 +67,16 @@ const router = createBrowserRouter([
   {
     path: routes.kyc.form,
     element: <KYCForm />,
+  },
+  {
+    path: routes.secureMessaging.inbox.home,
+    element: <ClientSecureMessaging />,
+    children: [
+      {
+        path: routes.secureMessaging.inbox.id,
+        element: <p>hello23</p>,
+      },
+    ],
   },
 ]);
 

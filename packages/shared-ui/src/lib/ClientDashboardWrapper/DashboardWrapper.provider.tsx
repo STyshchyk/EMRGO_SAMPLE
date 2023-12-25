@@ -142,7 +142,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
     },
   ];
 
-  const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes);
+  const allAccountRoutes = constants.getAllRoutes(constants.clientAccountRoutes.account);
 
   const onRejectPlatformTerms = () => {
     if (user?.hasAcceptedSilverTnc) {
