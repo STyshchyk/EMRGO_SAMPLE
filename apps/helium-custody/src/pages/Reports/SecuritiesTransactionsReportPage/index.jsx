@@ -411,7 +411,7 @@ const SecuritiesTransactionsReportPage = () => {
                   return (
                     <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
-                        {t("Security Transactions.Account")} :{" "}
+                        {t("Security Transactions.Safe Account")} :{" "}
                       </Typography>
                       <Typography className={style.accountInfo__value}>{`${
                         filters.safekeepingAccount

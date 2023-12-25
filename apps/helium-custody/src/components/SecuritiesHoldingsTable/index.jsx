@@ -405,7 +405,7 @@ const SecuritiesHoldingsTable = ({
                   return (
                     <Grid item xs={12} container>
                       <Typography className={style.accountInfo__label}>
-                        {t("Security Transactions.Account")} :{" "}
+                        {t("Security Transactions.Safe Account")} :{" "}
                       </Typography>
                       <Typography className={style.accountInfo__value}>{`${
                         filters.safekeepingAccount
@@ -466,16 +466,6 @@ const SecuritiesHoldingsTable = ({
 
             return (
               <div>
-                <Grid item xs={12} container>
-                  <Typography className={style.accountInfo__label}>
-                    {t("Security Transactions.Safe Account")} :{" "}
-                  </Typography>
-                  <Typography className={style.accountInfo__value}>{`${
-                    filters.safekeepingAccount
-                      ? v.capitalize(filters.safekeepingAccount.value.label || "N.A")
-                      : t("Security Transactions.NA")
-                  }`}</Typography>
-                </Grid>
                 <MaterialTable
                   isLoading={isLoading}
                   tableRef={tableRef}

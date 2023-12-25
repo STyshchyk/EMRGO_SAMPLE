@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Select } from "@emrgo-frontend/shared-ui";
+import { MySelect as Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -15,9 +15,10 @@ import { TextField } from "formik-mui";
 import moment from "moment";
 
 import AutoSaveFields from "../../../../components/AutoSaveFields";
+import CustomNumberInputField from "../../../../components/CustomNumberInputField";
 import ReactSelectCurrencyOption from "../../../../components/ReactSelectCurrencyOption";
-import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import ReactSelectCurrencySingleValueContainer from "../../../../components/ReactSelectCurrencySingleValueContainer";
+import ReactSelectGroup from "../../../../components/ReactSelectGroup";
 import selectStyles from "../../../../styles/cssInJs/reactSelect";
 import { addExternalPaymentSchema } from "../../../../validationSchemas";
 import style from "./style.module.scss";
@@ -141,7 +142,7 @@ const AddPaymentInstructionForm = ({
                             ...props,
                             currency: props?.getValue()[0]?.value?.currency,
                           }),
-                          Group: ReactSelectGroup
+                        Group: ReactSelectGroup,
                       }}
                       closeMenuOnSelect
                       isSearchable
@@ -280,10 +281,10 @@ const AddPaymentInstructionForm = ({
                     variant="filled"
                     size={"small"}
                     InputProps={{
-                        inputComponent: CustomNumberInputField,
-                        endAdornment: (
-                            <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
-                        ),
+                      inputComponent: CustomNumberInputField,
+                      endAdornment: (
+                        <InputAdornment position="end">{selectedCurrencyName}</InputAdornment>
+                      ),
                     }}
                     // eslint-disable-next-line  react/jsx-no-duplicate-props
                     inputProps={{

@@ -6,6 +6,7 @@ export * from "./lib/Breadcrumbs";
 export * from "./lib/Button/Button";
 export * from "./lib/Checkbox/Checkbox";
 export * from "./lib/ClientDashboardWrapper";
+export * from "./lib/ClientSecureMessaging";
 export * from "./lib/CodeInput";
 export * from "./lib/Countdown";
 export * from "./lib/Disclaimer/";
