@@ -4,22 +4,21 @@ import styled, { css } from "styled-components";
 
 export const ExpandArrow = styled.span<{ $isHidden: boolean }>`
   z-index: 1000;
-  top: 23px;
+  top: 27px;
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2.25px solid;
+  width: 6px;
+  height: 6px;
+  border: 1px solid;
   cursor: pointer;
   &:after,
   &:before {
     content: "";
     position: absolute;
-    top: -13px;
-    bottom: -8px;
+    top: -6px;
+    bottom: -6px;
     left: -6px;
-    right: -1px;
-    border-radius: 5px;
-    transform: rotate(45deg);
+    right: -6px;
+    border-radius: 100%;
   }
 
   ${({ theme }) =>
@@ -44,7 +43,7 @@ export const ExpandArrow = styled.span<{ $isHidden: boolean }>`
       &:hover {
         &:after,
         &:before {
-          background-color: ${getTheme("colors.black.10")};
+          background-color: ${getTheme("colors.white.10")};
         }
       }
     `}
@@ -55,6 +54,6 @@ export const ExpandArrow = styled.span<{ $isHidden: boolean }>`
       ? `scale(1.5, 1.5)  rotateY(3.142rad) rotate(-45deg) ;`
       : `scale(1.5, 1.5) rotateY(0) rotate(-45deg)`};
 
-  left: ${(props) => (props.$isHidden ? `${rem(59)}` : `${rem(231)}`)};
+  left: ${(props) => (props.$isHidden ? `${rem(69)}` : `${rem(230)}`)};
   transition: all 1s ease;
 `;
