@@ -26,7 +26,7 @@ export const TabHeader = styled.div`
 export const Container = styled.div<{ $isHidden?: boolean }>`
   display: grid;
   height: calc(100vh - 57px);
-  grid-template-columns: minmax(auto, ${rem(260)}) 1fr;
+  grid-template-columns: minmax(auto, ${rem(360)}) 1fr;
 
   transition: grid-template-columns ease 1s;
 `;

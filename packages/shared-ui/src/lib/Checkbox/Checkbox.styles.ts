@@ -3,6 +3,7 @@ import { rem } from "polished";
 import styled from "styled-components";
 
 import CheckMarkIcon from "./Assets/check-mark.svg";
+import indeterminateMarkIcon from "./Assets/indeterminate-icon.svg";
 
 export const Label = styled.label`
   display: inline-flex;
@@ -25,6 +26,22 @@ export const Checkbox = styled.input`
 
   &:not(:checked)::after {
     display: none;
+  }
+
+  &:indeterminate {
+    &::before {
+      display: inline-flex;
+      content: "";
+      height: ${rem(17)};
+      width: ${rem(17)};
+      border-radius: ${rem(4)};
+      border: 1px solid ${getTheme("colors.strokes.light")};
+
+      background-image: url(${indeterminateMarkIcon});
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: ${getTheme("colors.green5")};
+    }
   }
 
   &::before,

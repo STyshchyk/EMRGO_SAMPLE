@@ -33,6 +33,18 @@ export const DashboardSidebar = styled(Sidebar)`
   overflow-x: clip;
   ${ScrollStyles}
 `;
+export const FilterArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid gray;
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+`;
 export const SidebarListItemIcon = styled.span`
   display: inline-flex;
   font-size: ${rem(24)};
@@ -45,6 +57,8 @@ export const SidebarList = styled.ul`
 `;
 
 export const SidebarListItem = styled.li`
+  width: 100%;
+  position: relative;
   ${(props) =>
     props.theme.mode === "light" &&
     css`
@@ -61,8 +75,7 @@ export const SidebarListItem = styled.li`
 const listItemContentStyles = css`
   display: flex;
   flex-direction: column;
-  column-gap: ${rem(16)};
-  padding: ${rem(6)} ${rem(12)};
+  padding: ${rem(6)} ${rem(30)} ${rem(6)} ${rem(42)};
 `;
 
 const linkStyles = css`
@@ -70,6 +83,7 @@ const linkStyles = css`
   width: 100%;
   text-decoration: none;
   cursor: pointer;
+  position: relative;
 
   &,
   &:hover {
@@ -138,9 +152,36 @@ const disabledLinkStyles = css`
       }
     `}
 `;
+export const Initials = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(0.25rem);
+  width: 30px;
+  height: 30px;
+  display: ${(props) => (!!props.isChecked || !!props.checkMode ? "none" : "flex")};
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  border: 1px solid gray;
+  border-radius: 100%;
+`;
+
+export const Select = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(0.5rem);
+  width: 26px;
+  height: 26px;
+  display: ${(props) => (!!props.isChecked || !!props.checkMode ? "flex" : "none")};
+  cursor: pointer;
+`;
 
 export const SidebarListItemLink = styled.a<ILinkProps>`
-  ${linkStyles}
+  ${linkStyles};
+  position: relative;
+
   ${(props) =>
     props.active &&
     css`
@@ -156,6 +197,14 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
   &.active {
     ${getTheme("typography.regular.02")}
     ${activeLinkStyles}
+  }
+
+  &:hover ${Initials} {
+    display: none;
+  }
+
+  &:hover ${Select} {
+    display: flex;
   }
 `;
 
@@ -188,6 +237,7 @@ export const DateWrapper = styled.div<{ isActive?: boolean; hover?: boolean }>`
       props.isActive &&
       css`
         fill: ${getTheme("colors.red")};
+
         &:hover {
           fill: red;
         }
