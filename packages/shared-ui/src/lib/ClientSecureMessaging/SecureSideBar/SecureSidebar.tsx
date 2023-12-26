@@ -75,7 +75,7 @@ const list = [
   },
 ];
 export const SecureSideBar: FC = () => {
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = React.useState<string[]>([]);
   const [isCheckModeSelected, setCheckMode] = React.useState(false);
   const selectAllRef = useRef<HTMLInputElement>(null);
 
@@ -93,7 +93,7 @@ export const SecureSideBar: FC = () => {
   }
 
   function selectAll() {
-    const newChecked = [...checked];
+    const newChecked: string[] = [...checked];
     list.forEach((elem) => {
       if (newChecked.indexOf(elem.id) === -1) newChecked.push(elem.id);
     });
@@ -105,9 +105,10 @@ export const SecureSideBar: FC = () => {
   function diSelectAll() {
     setChecked([]);
     setCheckMode(false);
-
-    selectAllRef.current.checked = false;
-    selectAllRef.current.indeterminate = false;
+    if (selectAllRef.current) {
+      selectAllRef.current.checked = false;
+      selectAllRef.current.indeterminate = false;
+    }
   }
 
   return (
@@ -160,7 +161,7 @@ export const SecureSideBar: FC = () => {
                       checked={checked.indexOf(message.id) >= 0}
                       onChange={(event) => {
                         handleCheck(message.id);
-                        selectAllRef.current.indeterminate = true;
+                        if (selectAllRef.current) selectAllRef.current.indeterminate = true;
                       }}
                     />
                   </Styles.Select>

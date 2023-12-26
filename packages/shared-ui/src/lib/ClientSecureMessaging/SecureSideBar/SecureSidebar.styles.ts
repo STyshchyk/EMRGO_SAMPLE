@@ -37,7 +37,7 @@ export const FilterArea = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
   border-bottom: 1px solid gray;
   & div {
     display: flex;
@@ -75,7 +75,7 @@ export const SidebarListItem = styled.li`
 const listItemContentStyles = css`
   display: flex;
   flex-direction: column;
-  padding: ${rem(6)} ${rem(30)} ${rem(6)} ${rem(42)};
+  padding: ${rem(6)} ${rem(30)} ${rem(6)} ${rem(50)};
 `;
 
 const linkStyles = css`
@@ -154,22 +154,21 @@ const disabledLinkStyles = css`
 `;
 export const Initials = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
   position: absolute;
-  left: 0;
+  left: 5px;
   top: 50%;
   transform: translateY(-50%) translateX(0.25rem);
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  aspect-ratio: 1/1;
   display: ${(props) => (!!props.isChecked || !!props.checkMode ? "none" : "flex")};
   justify-content: center;
   align-items: center;
-  aspect-ratio: 1/1;
   border: 1px solid gray;
   border-radius: 100%;
 `;
 
 export const Select = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
   position: absolute;
-  left: 0;
+  left: 0.5rem;
   top: 50%;
   transform: translateY(-50%) translateX(0.5rem);
   width: 26px;
