@@ -76,6 +76,7 @@ export const generateExternalSecurityOptionsList = (data) => {
           label: item.isin || getAttribute(item?.attributes, "isin"),
           value: { ...item, isin: getAttribute(item?.attributes, "isin") ?? item?.isin },
         }))
+        .filter((item) => !!item.value.isin)
     );
   }
 

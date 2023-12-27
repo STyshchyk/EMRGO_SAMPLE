@@ -133,9 +133,11 @@ const UploadPaymentConfirmationDialog = ({ open, handleClose, currentlySelectedR
                 fontWeight: "bold",
               }}
             >
-              {` ${t("Upload Payment Confirmation")} - ${
-                currentlySelectedRowData?.externalSecurity?.issuanceName
-              }`}
+              {currentlySelectedRowData?.externalSecurity?.issuanceName
+                ? `${t("Upload Payment Confirmation")} - ${
+                    currentlySelectedRowData.externalSecurity.issuanceName
+                  }`
+                : t("Upload Payment Confirmation")}
             </Typography>
           </Grid>
           <Grid item>
