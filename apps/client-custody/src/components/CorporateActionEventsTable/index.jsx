@@ -45,7 +45,7 @@ const generateCAEventsTableRowData = (i, paymentsList) => {
     eventTerms: i?.eventTerms,
     additionalInfo: i?.additionalInfo,
     linkedEventId: i?.linkedEvent?.eventId ?? "--",
-    portfolioId: settlementInstructions[0]?.portfolioId,
+    portfolioId: settlementInstructions[0]?.portfolio_id,
     actualSettlementDate: settlementInstructions[0]?.actualSettlementDate,
   };
 };
