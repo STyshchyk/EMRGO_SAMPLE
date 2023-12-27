@@ -17,23 +17,38 @@ import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 
-const generateCAEventsTableRowData = (i) => ({
-  id: i?.id,
-  exDate: i?.exDate,
-  recordDate: i?.recordDate,
-  paymentDate: i.paymentDate,
-  securityId: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.securityId,
-  securityName: i?.securityName?.label,
-  eventType: i?.eventType?.name,
-  eventId: i?.eventId ?? "--",
-  eventStatus: i?.eventStatus?.name,
-  mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
-  responseDeadline: i?.clientResponseDeadline,
-  marketDeadline: i?.marketDeadline,
-  eventTerms: i?.eventTerms,
-  additionalInfo: i?.additionalInfo,
-  linkedEventId: i?.linkedEvent?.eventId ?? "--",
-});
+const generateCAEventsTableRowData = (i, paymentsList) => {
+  //** API support will need to be improved in the future so filtered on the FE for now
+  const settlementInstructions = paymentsList
+    ?.filter((item) => item?.externalSecurity.id === i?.externalSecurity.id)
+    ?.sort((a, b) => {
+      const dateA = moment(a?.actualSettlementDate);
+      const dateB = moment(b?.actualSettlementDate);
+      return dateB.diff(dateA); // Sort in descending order
+    });
+
+  // Get the SI with the largest actualSettlementDate
+  // const maxSI = settlementInstructions[0];
+
+  return {
+    id: i?.id,
+    exDate: i?.exDate,
+    recordDate: i?.recordDate,
+    paymentDate: i.paymentDate,
+    securityId: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.securityId,
+    securityName: i?.securityName?.label,
+    eventType: i?.eventType?.name,
+    eventId: i?.eventId ?? "--",
+    eventStatus: i?.eventStatus?.name,
+    mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
+    responseDeadline: i?.clientResponseDeadline,
+    eventTerms: i?.eventTerms,
+    additionalInfo: i?.additionalInfo,
+    linkedEventId: i?.linkedEvent?.eventId ?? "--",
+    portfolioId: settlementInstructions[0]?.portfolioId,
+    actualSettlementDate: settlementInstructions[0]?.actualSettlementDate,
+  };
+};
 
 const CorporateActionEventsTable = ({
   data,

@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import moment from "moment";
@@ -43,7 +42,6 @@ const CorporateActionEvents = () => {
 
   const filteredTableData = tableData?.filter((item) => {
     const actualSettlementDate = item?.actualSettlementDate;
-    console.log(actualSettlementDate);
     const recordDate = item?.recordDate;
     const exDate = item?.exDate;
 
@@ -56,7 +54,7 @@ const CorporateActionEvents = () => {
       );
     }
 
-    return false;
+    return true;
   });
 
   const currentDate = moment().format("DD/MM/YYYY"); // Get the current date in 'DD/MM/YYYY' format

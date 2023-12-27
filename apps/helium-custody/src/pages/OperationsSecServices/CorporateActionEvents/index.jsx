@@ -1,11 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import moment from "moment/moment";
 
+import { isValidDate } from "../../../../../client-custody/src/helpers/table";
+import * as paymentAndSettlementActionCreators from "../../../../../client-custody/src/redux/actionCreators/paymentAndSettlement";
+import * as paymentAndSettlementSelectors from "../../../../../client-custody/src/redux/selectors/paymentAndSettlement";
 import AddCorporateActionEventDialog from "../../../components/AddCorporateActionEventDialog";
 import CorporateActionEventsTable, {
   generateCAEventsTableRowData,
@@ -36,9 +39,26 @@ const CorporateActionEvents = () => {
 
   const corporateActionEvents = useSelector(CAEventsSelectors.selectCorporateActionEventsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
+  const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
+  const tableData = corporateActionEvents?.map((item) =>
+    generateCAEventsTableRowData(item, paymentsList)
+  );
+  const filteredTableData = tableData?.filter((item) => {
+    const actualSettlementDate = item?.actualSettlementDate;
+    const recordDate = item?.recordDate;
+    const exDate = item?.exDate;
 
-  const tableData = corporateActionEvents?.map((item) => generateCAEventsTableRowData(item));
+    //*Event should not be displayed when SI settled after Record date & Ex date
+    // Check if actualSettlementDate does not exceed recordDate or exDate
+    if (isValidDate(actualSettlementDate)) {
+      return (
+        moment(actualSettlementDate).isSameOrBefore(moment(recordDate)) ||
+        moment(actualSettlementDate).isSameOrBefore(moment(exDate))
+      );
+    }
 
+    return true;
+  });
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
@@ -51,6 +71,10 @@ const CorporateActionEvents = () => {
     const fetchCorporateActionEventsList = () => dispatch(CAEventsActionCreators.doFetchCAEvents());
 
     fetchCorporateActionEventsList();
+
+    const fetchPaymentsList = () =>
+      dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
+    fetchPaymentsList();
   }, [dispatch]);
 
   const defaultTableActions = [
@@ -134,7 +158,7 @@ const CorporateActionEvents = () => {
       <CorporateActionEventsTable
         actions={defaultTableActions}
         anchorEl={anchorEl}
-        data={tableData}
+        data={filteredTableData}
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         currentlySelectedRowData={currentlySelectedRowData}
