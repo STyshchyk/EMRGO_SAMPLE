@@ -56,6 +56,7 @@ export const selectCounterpartySSIList = createSelector(
         safekeepingAccount: item?.safekeepingAccount,
         createdAt: item?.createdAt,
         status: item?.status,
+        cptyEntityId: item?.counterparty?.entityId,
       }));
     }
 
