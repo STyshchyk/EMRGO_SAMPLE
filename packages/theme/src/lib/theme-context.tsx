@@ -18,7 +18,7 @@ declare module "@mui/material/styles" {
 // Configure JSS
 // const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
-const CustomThemeProvider = ({ children }) => {
+export const CustomThemeProvider = ({ children }) => {
   const { isDarkMode } = useDarkMode();
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
@@ -36,6 +36,4 @@ const CustomThemeProvider = ({ children }) => {
   );
 };
 
-const useTheme = () => useContext(ThemeContext);
-
-export { CustomThemeProvider, useTheme };
+export const useTheme = () => useContext(ThemeContext);

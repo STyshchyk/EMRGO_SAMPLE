@@ -84,7 +84,7 @@ export const clientAccountRoutes = {
   secureMessaging: include("/secure-messaging", {
     inbox: include("inbox/", {
       home: "",
-      id: ":id",
+      id: "id/:id",
     }),
   }),
 };

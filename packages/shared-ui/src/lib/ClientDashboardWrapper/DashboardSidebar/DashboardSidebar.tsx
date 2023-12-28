@@ -37,7 +37,7 @@ import { DashboardSidebarAccountTooltip } from "./DashboardSidebarAccountTooltip
 export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
   const origin = window.location.origin;
   const { user } = useUser();
-  console.log("🚀 ~ file: SecureSideBar.tsx:40 ~ SecureSideBar ~ user:", user);
+  // console.log("🚀 ~ file: SecureSideBar.tsx:40 ~ SecureSideBar ~ user:", user);
   const currentRole = roles.find((role) => role.key === user?.role);
 
   const {

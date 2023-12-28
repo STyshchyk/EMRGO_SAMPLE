@@ -3,8 +3,15 @@ import "./app.styles.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
-import { ClientSecureMessaging, ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
-import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
+import {
+  ClientSecureMessaging,
+  MessageContainer,
+  ToastProvider,
+  UserProvider,
+} from "@emrgo-frontend/shared-ui";
+import { CustomThemeProvider, darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
@@ -74,7 +81,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.secureMessaging.inbox.id,
-        element: <p>hello23</p>,
+        element: <MessageContainer />,
       },
     ],
   },
@@ -86,7 +93,11 @@ export function App() {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyles />
       <UserProvider>
-        <RouterProvider router={router} />
+        <CustomThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <RouterProvider router={router} />
+          </LocalizationProvider>
+        </CustomThemeProvider>
       </UserProvider>
       <ToastProvider />
     </ThemeProvider>

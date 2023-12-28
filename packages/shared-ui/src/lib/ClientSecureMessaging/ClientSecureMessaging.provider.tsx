@@ -21,6 +21,7 @@ const list = [
     subject: "Password reset",
     date: new Date(),
     isSelected: false,
+    isRead: false,
   },
   {
     id: "2asdasf14fas",
@@ -35,6 +36,7 @@ const list = [
     subject: "Password 2fa",
     date: new Date(),
     isSelected: false,
+    isRead: false,
   },
   {
     id: "2asdasf14f4as",

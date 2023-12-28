@@ -5,13 +5,14 @@ import { SecureSideBar } from "@emrgo-frontend/shared-ui";
 
 import * as Styles from "./ClientSecureMessaging.styles";
 import { IClientSecureMessagingProps } from "./ClientSecureMessaging.types";
+import { TabHeader } from "./TabHeader";
 
 export const ClientSecureMessagingComponent: FC<IClientSecureMessagingProps> = ({
   children,
 }: IClientSecureMessagingProps) => {
   return (
     <Styles.ClientSecureMessaging>
-      <Styles.TabHeader>hello</Styles.TabHeader>
+      <TabHeader />
       <Styles.Container>
         <SecureSideBar />
         <Styles.Content>
