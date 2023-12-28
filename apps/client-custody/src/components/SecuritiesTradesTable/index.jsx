@@ -131,7 +131,7 @@ const generateSecurityTradesTableRowData = (i) => ({
   }),
   investorSecuritiesAccountNo: i.investorSecuritiesAccount,
   isin:
-    i.externalSecurity.isin || securityAttributeRenderer(i?.externalSecurity?.attributes, "ISIN"),
+    securityAttributeRenderer(i?.externalSecurity?.attributes, "ISIN") || i.externalSecurity.isin,
   // isin: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.externalSecurity?.isin,
   isPrimaryIssuance: i.externalSecurity?.isPrimaryIssuance,
   issueDate: i.actualSettlementDate,

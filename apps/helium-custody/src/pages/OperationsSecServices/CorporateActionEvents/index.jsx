@@ -6,9 +6,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import moment from "moment/moment";
 
-import { isValidDate } from "../../../../../client-custody/src/helpers/table";
-import * as paymentAndSettlementActionCreators from "../../../../../client-custody/src/redux/actionCreators/paymentAndSettlement";
-import * as paymentAndSettlementSelectors from "../../../../../client-custody/src/redux/selectors/paymentAndSettlement";
 import AddCorporateActionEventDialog from "../../../components/AddCorporateActionEventDialog";
 import CorporateActionEventsTable, {
   generateCAEventsTableRowData,
@@ -17,8 +14,11 @@ import LoadingPage from "../../../components/LoadingPage";
 import ViewCorporateActionEventDialog from "../../../components/ViewCorporateActionEventDialog";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as CAEventsActionCreators from "../../../redux/actionCreators/corporateActionEvents";
+import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as CAEventsSelectors from "../../../redux/selectors/corporateActionEvents";
+import * as paymentAndSettlementSelectors from "../../../redux/selectors/paymentAndSettlement";
+import { isValidDate } from "../../../utils/dates";
 
 const CorporateActionEvents = () => {
   const dispatch = useDispatch();

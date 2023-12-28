@@ -46,6 +46,7 @@ export const titleRenderer = (value) => {
 };
 
 export const dateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
   let formattedDate = "NA";
   if (inputDate.isValid()) {

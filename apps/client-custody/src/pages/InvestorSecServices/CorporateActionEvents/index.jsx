@@ -48,8 +48,6 @@ const CorporateActionEvents = () => {
     //*Event should not be displayed when SI settled after Record date & Ex date
     // Check if actualSettlementDate does not exceed recordDate or exDate
     if (isValidDate(actualSettlementDate)) {
-      console.log(actualSettlementDate);
-      console.log(moment(actualSettlementDate).startOf("day").toISOString());
       return (
         moment(actualSettlementDate).isSameOrBefore(moment(recordDate)) ||
         moment(actualSettlementDate).isSameOrBefore(moment(exDate))

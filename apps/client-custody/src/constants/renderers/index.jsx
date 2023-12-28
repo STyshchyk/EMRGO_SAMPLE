@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import moment from "moment";
 import v from "voca";
 
+import { isValidDate } from "../../helpers/table";
 import tableStyles from "../../styles/cssInJs/materialTable";
 
 const chipStyle = {
@@ -46,6 +47,7 @@ export const titleRenderer = (value) => {
 };
 
 export const dateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
   let formattedDate = "NA";
   if (inputDate.isValid()) {
@@ -56,10 +58,12 @@ export const dateRenderer = (date) => {
 
 export const dateFormatter = (date, format) => {
   if (!date) return "";
+  if (!isValidDate(date)) return "--";
   return moment(date).format(format);
 };
 
 export const reportDateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
   let formattedDate = "NA";
   if (inputDate.isValid()) {
