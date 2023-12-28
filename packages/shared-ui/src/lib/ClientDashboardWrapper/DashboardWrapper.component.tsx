@@ -12,6 +12,8 @@ export const DashboardWrapperComponent: FC<IDashboardWrapperProps> = ({ children
     <Styles.Container $isHidden={isMenuHidden}>
       <DashboardSidebar isHidden={isMenuHidden} />
       <ExpandArrow
+        sx={{ transition: "all 1s ease" }}
+        fontSize={"large"}
         $isHidden={isMenuHidden}
         onClick={() => {
           setMenuHidded((prevState) => (prevState = !prevState));
