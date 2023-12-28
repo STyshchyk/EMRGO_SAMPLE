@@ -6,6 +6,7 @@ import moment from "moment";
 import v from "voca";
 
 import tableStyles from "../../styles/cssInJs/materialTable";
+import { isValidDate } from "../../utils/dates";
 
 const chipStyle = {
   borderRadius: "3px",
