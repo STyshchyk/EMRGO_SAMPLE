@@ -7,6 +7,7 @@ import { ScrollStyles } from "../../ScrollBar";
 interface ILinkProps {
   active?: boolean;
   disabled?: boolean;
+  unread?: boolean;
 }
 
 export const Sidebar = styled.aside`
@@ -16,14 +17,12 @@ export const Sidebar = styled.aside`
     props.theme.mode === "light" &&
     css`
       background-color: ${getTheme("colors.white.100")};
-      border-right: 1px solid ${getTheme("colors.strokes.light")};
     `}
 
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
       background-color: ${getTheme("colors.green1")};
-      border-right: 1px solid ${getTheme("colors.strokes.dark")};
     `}
 `;
 
@@ -32,22 +31,6 @@ export const DashboardSidebar = styled(Sidebar)`
   position: relative;
   overflow-x: clip;
   ${ScrollStyles}
-`;
-export const FilterArea = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.75rem 0.5rem 1rem;
-  border-bottom: 1px solid gray;
-  & div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-`;
-export const SidebarListItemIcon = styled.span`
-  display: inline-flex;
-  font-size: ${rem(24)};
 `;
 
 export const SidebarList = styled.ul`
@@ -129,6 +112,28 @@ const activeLinkStyles = css`
     `}
 `;
 
+const unreadLinkStyles = css`
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      &,
+      &:hover {
+        color: ${getTheme("colors.white.60")};
+        background-color: ${getTheme("colors.green2")};
+      }
+    `}
+
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      &,
+      &:hover {
+        color: ${getTheme("colors.white.60")};
+        background-color: ${getTheme("colors.green2")};
+      }
+    `}
+`;
+
 const disabledLinkStyles = css`
   ${(props) =>
     props.theme.mode === "light" &&
@@ -157,13 +162,7 @@ export const Initials = styled.span<{ isChecked?: boolean; checkMode?: boolean }
   left: 5px;
   top: 50%;
   transform: translateY(-50%) translateX(0.25rem);
-  width: 35px;
-  aspect-ratio: 1/1;
   display: ${(props) => (!!props.isChecked || !!props.checkMode ? "none" : "flex")};
-  justify-content: center;
-  align-items: center;
-  border: 1px solid gray;
-  border-radius: 100%;
 `;
 
 export const Select = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
@@ -186,6 +185,12 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
     css`
       ${getTheme("typography.regular.02")}
       ${activeLinkStyles}
+    `}
+  ${(props) =>
+    props.unread === false &&
+    css`
+      ${getTheme("typography.regular.02")}
+      ${unreadLinkStyles}
     `}
   ${(props) =>
     props.disabled &&

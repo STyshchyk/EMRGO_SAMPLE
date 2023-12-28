@@ -1,8 +1,12 @@
 import React, { FC, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
+import * as constants from "@emrgo-frontend/constants";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import EmojiFlagsIcon from "@mui/icons-material/EmojiFlags";
 import EventIcon from "@mui/icons-material/Event";
+import { Avatar } from "@mui/material";
+import { reverse } from "named-urls";
 
 import { Button } from "../../Button/Button";
 import { Checkbox } from "../../Checkbox/Checkbox";
@@ -14,6 +18,8 @@ export const SecureSideBar: FC = () => {
   const { messagesList, checked, setChecked, isCheckModeSelected, setCheckMode } = ensureNotNull(
     useClientSecureMessagingContext()
   );
+  const localtion = useLocation();
+  const navigate = useNavigate();
 
   const selectAllRef = useRef<HTMLInputElement>(null);
 
@@ -38,15 +44,26 @@ export const SecureSideBar: FC = () => {
       <FilterArea />
       <nav style={{ padding: "2rem 0" }}>
         {messagesList.map((message: any) => {
+          const route = reverse(`${constants.clientAccountRoutes.secureMessaging.inbox.id}`, {
+            id: message.id,
+          });
           return (
             <Styles.SidebarList key={message.id}>
               <Styles.SidebarListItem>
-                <Styles.SidebarListItemLink onClick={() => {}}>
+                <Styles.SidebarListItemLink
+                  active={localtion.pathname === route}
+                  unread={message?.isRead ?? true}
+                  onClick={() => {
+                    navigate(route);
+                  }}
+                >
                   <Styles.Initials checkMode={isCheckModeSelected}>
-                    {message.enityName
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+                    <Avatar sx={{ width: 34, height: 34 }}>
+                      {message.enityName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </Avatar>
                   </Styles.Initials>
                   <Styles.Select checkMode={isCheckModeSelected}>
                     <Checkbox

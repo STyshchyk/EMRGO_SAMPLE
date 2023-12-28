@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 export const TabHeaderWrapper = styled.div`
   display: flex;
   column-gap: ${rem(8)};
-  padding: 0 ${rem(24)};
+  padding: 0 ${rem(24)} 0 ${rem(32)};
   min-height: 85px;
   align-items: center;
   ${({ theme }) =>
