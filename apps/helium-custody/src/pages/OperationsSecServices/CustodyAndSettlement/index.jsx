@@ -420,17 +420,25 @@ const CustodyAndSettlement = () => {
         fetchSettlementInstructionAuditData({
           settlementId,
           successCallback: (data) => {
-            const raised =
-              Array.isArray(data) &&
-              data.filter((settlement) => settlement.auditSubType === "Inserted");
+            //* the last user who touched it (input or amended) cannot approve it
+            const getLastUser = (actionType) => {
+              const actions =
+                Array.isArray(data) && data.filter((inst) => inst.auditSubType === actionType);
+              return actions.length > 0 ? actions[actions.length - 1]?.user : null;
+            };
+
+            const lastUser = getLastUser("Amended") || getLastUser("Inserted");
+
             const lastItem = data[data.length - 1];
+
             if (
-              raised[0]?.userId === currentUserId ||
+              lastUser?.id === currentUserId ||
               (lastItem.newStatus === settlementInstructionStatusEnum.APPROVAL_REQUIRED &&
                 lastItem.userId === currentUserId)
-            )
+            ) {
               toast.warning("Another officer should be able to approve current SI", 500);
-            else {
+              handleCloseMenu();
+            } else {
               setRequestedSettlementInstructionStatus(
                 settlementInstructionStatusEnum.ACKNOWLEDGED_ACCEPTED
               );
