@@ -88,7 +88,7 @@ const ReviewSecurityDialog = ({ data, open, handleClose }) => {
       },
       isin: {
         label: "ISIN",
-        value: isin || securityAttributeRenderer(securityData?.attributes, "ISIN"),
+        value: securityAttributeRenderer(securityData?.attributes, "ISIN") || isin,
       },
       ticker: {
         label: t("Ticker"),
