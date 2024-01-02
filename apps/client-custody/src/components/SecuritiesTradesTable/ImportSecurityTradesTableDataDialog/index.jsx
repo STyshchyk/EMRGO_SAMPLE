@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -15,6 +16,7 @@ import { parse } from "papaparse";
 import PropTypes from "prop-types";
 
 import { DEFAULT_DATE_FORMAT } from "../../../constants/datetime";
+import * as externalSecuritiesSelectors from "../../../redux/selectors/externalSecurities";
 
 const ALLOWED_FILE_TYPES = "text/csv";
 
@@ -46,9 +48,19 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-const parseCsvData = (csvString) => {
+const getSecurityType = (inputtedIsin, exList) => {
+  const selectedExtSecurity = exList.find((v) => v?.isin === inputtedIsin);
+
+  if (!selectedExtSecurity?.id) {
+    toast.error(`External Security doesn't exist`);
+    return null;
+  }
+
+  return selectedExtSecurity?.assetTypeName?.key;
+};
+
+const parseCsvData = (csvString, externalSecuritiesList) => {
   const { data } = parse(csvString);
-  // 04/10/2022 12:18:15
 
   // const datetime = '04/10/2022 12:18:15';
   // const res1 = moment(datetime, 'DD/MM/YYYY HH:mm:ss');
@@ -81,6 +93,9 @@ const parseCsvData = (csvString) => {
 
         // if (!settlementType || !isin || !currency || !internalTradeRef) return null;
 
+        const isEquityType = getSecurityType(isin, externalSecuritiesList) === "equity";
+        // console.log(securityType);
+
         return {
           portfolioAccountNumber,
           settlementType,
@@ -96,6 +111,7 @@ const parseCsvData = (csvString) => {
           counterparty,
           counterpartySSI,
           internalTradeRef,
+          isEquityType,
         };
       }
 
@@ -118,6 +134,10 @@ const ImportSecurityTradesTableDataDialog = ({
   tableData,
   setHasImportedData,
 }) => {
+  const externalSecuritiesList = useSelector(
+    externalSecuritiesSelectors.selectExternalSecuritiesList
+  );
+
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const fileType = file.type;
@@ -132,7 +152,7 @@ const ImportSecurityTradesTableDataDialog = ({
       let parsed = [];
 
       if (isFileTypeCSV) {
-        parsed = parseCsvData(fileData);
+        parsed = parseCsvData(fileData, externalSecuritiesList);
       }
 
       if (!parsed.length) {
