@@ -1,5 +1,6 @@
 import orderby from "lodash.orderby";
 import { createSelector } from "reselect";
+import { getAttribute } from "../../helpers/custodyAndSettlement";
 
 export const selectExternalSecuritiesData = (state) =>
   state.externalSecurities.externalSecuritiesData;
@@ -58,7 +59,8 @@ export const selectAllExternalSecurities = createSelector(
         // securityLongName: item?.longName,
         // securityShortName: item?.shortName,
         // coupons:item?.coupons,
-        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value
+        isin: item?.isin ?? getAttribute(item?.attributes,'isin'),
+        ticker: getAttribute(item?.attributes,'ticker') ?? '--'
       }));
 
       return orderby(fixed, ["name"], ["asc"]);

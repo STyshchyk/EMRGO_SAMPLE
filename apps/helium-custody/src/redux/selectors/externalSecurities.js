@@ -59,7 +59,8 @@ export const selectAllExternalSecurities = createSelector(
         // securityLongName: item?.longName,
         // securityShortName: item?.shortName,
         // coupons:item?.coupons,
-        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value
+        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value,
+        ticker: item?.attributes.find(attribute => attribute.match.key === 'ticker')?.value ?? '--'
       }));
 
       return orderby(fixed, ["name"], ["asc"]);
