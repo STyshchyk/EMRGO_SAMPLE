@@ -296,8 +296,11 @@ const CounterpartySSITable = ({
                   name="entity"
                   label="Entity"
                   options={entityOptionsList}
-                  currentlySelectedOption={entityFilterValue}
+                  currentlySelectedOption={
+                    entityOptionsList.length === 1 ? entityOptionsList[0] : entityFilterValue
+                  }
                   setCurrentlySelectedOption={setEntityFilterValue}
+                  hasDefaultValue={entityOptionsList.length === 1}
                 />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
