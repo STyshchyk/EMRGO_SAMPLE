@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 
 import StyledDialogHeader from "../StyledDialogHeader";
 
+const FALLBACK_VALUE = "--";
+
 const DataGridRow = ({ label, value }) => (
   <Grid container>
     <Grid item xs={6}>
@@ -60,7 +62,7 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
       },
       {
         label: "Seller Agent ID Type",
-        value: sellerIdentifierType?.name,
+        value: sellerIdentifierType?.name ?? FALLBACK_VALUE,
       },
       {
         label: "Settlement Location",
