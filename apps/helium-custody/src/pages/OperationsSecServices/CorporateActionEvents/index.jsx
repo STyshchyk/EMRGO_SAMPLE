@@ -158,7 +158,8 @@ const CorporateActionEvents = () => {
       <CorporateActionEventsTable
         actions={defaultTableActions}
         anchorEl={anchorEl}
-        data={filteredTableData}
+        // ops should see all the CA events at all times.
+        data={tableData} // based on the comment on ebme-1775
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         currentlySelectedRowData={currentlySelectedRowData}
