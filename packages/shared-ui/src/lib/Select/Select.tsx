@@ -109,6 +109,7 @@ export function Select<
           ...baseStyles,
           fontFamily: 'Inter, "Roboto","Helvetica","Arial",sans-serif',
           display: "flex",
+          flexWrap: "nowrap",
           alignItems: "center",
           width: "100%",
           columnGap: rem(8),
@@ -147,6 +148,7 @@ export function Select<
             ...getOptionStyles("hover", state),
           },
           display: "flex",
+          flexWrap: "nowrap",
           justifyContent: "space-between",
         }),
         singleValue: (styles, state) => ({
@@ -158,6 +160,11 @@ export function Select<
         valueContainer: (styles, state) => ({
           ...styles,
         }),
+        placeholder: (base, props) => ({
+          ...base,
+          ...ellipsis(),
+        }),
+
         indicatorSeparator: (base) => ({
           ...base,
           display: "none",
