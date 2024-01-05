@@ -73,9 +73,8 @@ const AddPaymentInstructionForm = ({
                     ReactSelectCurrencySingleValueContainer({
                       ...props,
                       currency: props?.getValue()[0]?.value?.currency,
-
                     }),
-                    Group: ReactSelectGroup
+                  Group: ReactSelectGroup,
                 }}
                 closeMenuOnSelect
                 isSearchable
@@ -208,7 +207,7 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                   name="paymentAmount"
-                  variant="outlined"
+                  variant="filled"
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
