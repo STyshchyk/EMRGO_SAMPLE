@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-import { amber, deepOrange, grey } from "@mui/material/colors";
+import { themeStyles } from "@emrgo-frontend/theme";
 import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 // import { jssPreset, StylesProvider } from "@mui/styles";
 // import { create } from "jss";
@@ -9,7 +9,6 @@ import { createTheme, StyledEngineProvider, ThemeProvider } from "@mui/material/
 import PropTypes from "prop-types";
 
 import locales from "../constants/locales/locales";
-import themeStyles from "../theme";
 
 const ThemeContext = createContext();
 ThemeContext.displayName = "Theme";

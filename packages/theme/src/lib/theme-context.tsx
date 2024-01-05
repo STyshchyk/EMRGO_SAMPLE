@@ -7,7 +7,7 @@ import { useDarkMode } from "usehooks-ts";
 // import { jssPreset, StylesProvider } from "@mui/styles";
 // import { create } from "jss";
 // import rtl from "jss-rtl";
-import themeStyles from "./theme-mui";
+import { themeStyles } from "./theme-mui";
 
 declare module "@mui/material/styles" {
   interface ThemeOptions {
