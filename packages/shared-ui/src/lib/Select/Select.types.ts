@@ -1,9 +1,8 @@
 export interface ICustomComponent {
-    Option: React.ComponentType<any>; 
-    ValueContainer: React.ComponentType<any>; 
-  }
+  Option: React.ComponentType<any>;
+  ValueContainer: React.ComponentType<any>;
+}
 
 export interface ISelectProps {
-    components: ICustomComponent;
-
+  components?: ICustomComponent;
 }
