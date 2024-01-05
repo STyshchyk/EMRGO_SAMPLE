@@ -42,6 +42,7 @@ const generateCAEventsTableRowData = (i, paymentsList) => {
     eventStatus: i?.eventStatus?.name,
     mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
     responseDeadline: i?.clientResponseDeadline,
+    marketDeadline: i?.marketDeadline,
     eventTerms: i?.eventTerms,
     additionalInfo: i?.additionalInfo,
     linkedEventId: i?.linkedEvent?.eventId ?? "--",
