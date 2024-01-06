@@ -3,7 +3,12 @@ import "./app.styles.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import { silverAdministrationRoutes as routes } from "@emrgo-frontend/constants";
-import { ToastProvider, UserProvider } from "@emrgo-frontend/shared-ui";
+import {
+  MessageContainer,
+  SilverSecureMessaging,
+  ToastProvider,
+  UserProvider,
+} from "@emrgo-frontend/shared-ui";
 import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
@@ -27,6 +32,16 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Navigate to={routes.administration.users} replace />,
+      },
+    ],
+  },
+  {
+    path: routes.secureMessaging.inbox.home,
+    element: <SilverSecureMessaging />,
+    children: [
+      {
+        path: routes.secureMessaging.inbox.id,
+        element: <MessageContainer />,
       },
     ],
   },

@@ -9,9 +9,7 @@ import {
   ToastProvider,
   UserProvider,
 } from "@emrgo-frontend/shared-ui";
-import { CustomThemeProvider, darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { darkTheme, GlobalStyles, lightTheme } from "@emrgo-frontend/theme";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "usehooks-ts";
 
@@ -93,11 +91,7 @@ export function App() {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyles />
       <UserProvider>
-        <CustomThemeProvider>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <RouterProvider router={router} />
-          </LocalizationProvider>
-        </CustomThemeProvider>
+        <RouterProvider router={router} />
       </UserProvider>
       <ToastProvider />
     </ThemeProvider>

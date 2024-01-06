@@ -1,6 +1,8 @@
 import { createContext, lazy, useContext } from "react";
 import { useSelector } from "react-redux";
 
+import { SilverSecureMessaging } from "@emrgo-frontend/shared-ui";
+
 import featureFlags from "../constants/featureFlags";
 import routes from "../constants/routes";
 import * as kycSelectors from "../redux/selectors/kyc";
@@ -16,6 +18,7 @@ const DocuSignSignature = lazy(() => import("../pages/DocuSignSignature"));
 const DocuSignSignatureModalSuccess = lazy(() => import("../pages/DocuSignSignatureModalSuccess"));
 const DocuSignSignatureSuccess = lazy(() => import("../pages/DocuSignSignatureSuccess"));
 const EmptyLayout = lazy(() => import("../layouts/EmptyLayout"));
+const EmptyLayoutSecure = lazy(() => import("../layouts/EmptyLayoutSecure"));
 const InvestorServices = lazy(() => import("../pages/InvestorSecServices"));
 const IssuancesList = lazy(() => import("../pages/IssuancesList"));
 const IssuerServices = lazy(() => import("../pages/IssuerSecServices"));
@@ -54,6 +57,13 @@ const RouterMappingProvider = ({ children }) => {
         isPublic: true,
         layout: PublicLayout,
         path: routes.public.home,
+      },
+      {
+        component: SilverSecureMessaging,
+        exact: true,
+        isPublic: true,
+        layout: EmptyLayoutSecure,
+        path: `${routes.public.secureMessaging.inbox.home}*`,
       },
       {
         component: Login,

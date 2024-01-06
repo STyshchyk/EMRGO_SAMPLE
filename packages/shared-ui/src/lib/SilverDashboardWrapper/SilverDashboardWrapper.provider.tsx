@@ -6,6 +6,7 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCopyToClipboard } from "react-use";
 
 import * as constants from "@emrgo-frontend/constants";
@@ -29,6 +30,7 @@ import {
 } from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { reverse } from "named-urls";
 import { useDarkMode } from "usehooks-ts";
 
 import {
@@ -58,6 +60,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const { showSuccessToast, showErrorToast } = useToast();
   const [enableRoleMapping, setRoleMapping] = useState(true);
   const [isHelpDeskOpen, setHelpDeskOpen] = useState(false);
+  const navigate = useNavigate();
   useLayoutEffect(() => {
     disable();
   }, []);
@@ -83,14 +86,14 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <PrimariesIcon />,
       key: "administration",
       path: silverAdministrationRoutes.home,
-      paths: getAllSilverRoutes(silverAdministrationRoutes),
+      paths: getAllSilverRoutes(silverAdministrationRoutes.administration),
     },
     {
       label: "Primaries",
       icon: <PrimariesIcon />,
       key: "primaries",
       path: silverPrimariesRoutes.home,
-      paths: getAllSilverRoutes(silverPrimariesRoutes),
+      paths: getAllSilverRoutes(silverPrimariesRoutes.primaries),
       disabled: true,
     },
     {
@@ -98,14 +101,14 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <PrimariesIcon />,
       key: "onboarding",
       path: silverOnboardingRoutes.home,
-      paths: getAllSilverRoutes(silverOnboardingRoutes),
+      paths: getAllSilverRoutes(silverOnboardingRoutes.onboarding),
     },
     {
       label: "Data Room",
       icon: <PrimariesIcon />,
       key: "dataroom",
       path: silverDataRoomRoutes.home,
-      paths: getAllSilverRoutes(silverDataRoomRoutes),
+      paths: getAllSilverRoutes(silverDataRoomRoutes.dataRoom),
       disabled: true,
     },
     {
@@ -137,19 +140,21 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       },
     },
     {
-      label: "Notification",
+      label: "Secure Messaging",
       icon: (
         <>
           <SidebarListItemIconWithBadge>
             <NotificationsIcon />
-            <NotificationsBadge>{}</NotificationsBadge>
+            <NotificationsBadge>{2}</NotificationsBadge>
           </SidebarListItemIconWithBadge>
         </>
       ),
-      key: "Notification",
+      key: "Secure Messaging",
       path: "",
       paths: "",
-      disabled: true,
+      onClick: () => {
+        navigate(reverse(silverAdministrationRoutes.secureMessaging.inbox.home, {}));
+      },
     },
     {
       label: "Account",

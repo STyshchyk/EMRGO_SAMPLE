@@ -116,51 +116,6 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
               </SidebarListItem>
             </Tooltip>
           ))}
-          {/*<SidebarListItem>*/}
-          {/*  <SidebarListItemSecondaryLink*/}
-          {/*    onClick={() => {*/}
-          {/*      doLogout();*/}
-          {/*    }}*/}
-          {/*  >*/}
-          {/*    <SidebarListItemIcon>*/}
-          {/*      <AccountIcon />*/}
-          {/*    </SidebarListItemIcon>*/}
-          {/*    Log out*/}
-          {/*  </SidebarListItemSecondaryLink>*/}
-          {/*</SidebarListItem>*/}
-          {/*<SidebarListItem>*/}
-          {/*  <SidebarListItemSecondaryLink href="#">*/}
-          {/*    <Styles.SidebarListItemIconWithBadge>*/}
-          {/*      <NotificationsIcon />*/}
-          {/*      <Styles.NotificationsBadge>{}</Styles.NotificationsBadge>*/}
-          {/*    </Styles.SidebarListItemIconWithBadge>*/}
-          {/*    Notifications*/}
-          {/*  </SidebarListItemSecondaryLink>*/}
-          {/*</SidebarListItem>*/}
-          {/*<SidebarListItem>*/}
-          {/*  <SidebarListItemSecondaryLink href="#">*/}
-          {/*    <SidebarListItemIcon>*/}
-          {/*      <AccountIcon />*/}
-          {/*    </SidebarListItemIcon>*/}
-          {/*    Account*/}
-          {/*  </SidebarListItemSecondaryLink>*/}
-          {/*</SidebarListItem>*/}
-          {/*<SidebarListItem>*/}
-          {/*  <SidebarListItemSecondaryLink href="#">*/}
-          {/*    <SidebarListItemIcon>*/}
-          {/*      <HelpIcon />*/}
-          {/*    </SidebarListItemIcon>*/}
-          {/*    Help*/}
-          {/*  </SidebarListItemSecondaryLink>*/}
-          {/*</SidebarListItem>*/}
-          {/*<SidebarListItem>*/}
-          {/*  <SidebarListItemContent>*/}
-          {/*    <SidebarListItemIcon>*/}
-          {/*      <EyeIcon />*/}
-          {/*    </SidebarListItemIcon>*/}
-          {/*    <ThemeSwitcher theme={isDarkMode ? "dark" : "light"} onToggle={toggle} />*/}
-          {/*  </SidebarListItemContent>*/}
-          {/*</SidebarListItem>*/}
         </SidebarList>
       </SidebarFooter>
       <HelpModal isOpen={isHelpDeskOpen} onClose={() => setHelpDeskOpen(false)} />

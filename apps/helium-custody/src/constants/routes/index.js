@@ -11,6 +11,12 @@ const publicUrls = include("/", {
     success: "success",
     action: "document/success/:token/",
   }),
+  secureMessaging: include("/secure-messaging", {
+    inbox: include("inbox/", {
+      home: "",
+      id: "id/:id",
+    }),
+  }),
 });
 
 const authenticationUrls = include("/authentication", {
