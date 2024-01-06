@@ -42,6 +42,7 @@ export * from "./lib/SilverDashboardWrapper";
 export * from "./lib/SixDigitCodeInput";
 export * from "./lib/Table";
 export * from "./lib/Tabs";
+export * from "./lib/Context";
 export * from "./lib/TermsModal";
 export * from "./lib/TextBox";
 export * from "./lib/TFASupportTicketModal";
