@@ -32,6 +32,7 @@ const InputComponent: ForwardRefRenderFunction<
     type,
     disabled,
     variant,
+    autoResize,
   },
   ref
 ) => {
@@ -48,6 +49,15 @@ const InputComponent: ForwardRefRenderFunction<
     }
   }, [hasFocus]);
 
+  useEffect(() => {
+    if (textAreaRef.current && autoResize) {
+      // We need to reset the height momentarily to get the correct scrollHeight for the textarea
+      textAreaRef.current.style.height = "40px";
+      const scrollHeight = textAreaRef.current.scrollHeight;
+      console.log(scrollHeight);
+      textAreaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [textAreaRef, value]);
   const focus = () => {
     setHasFocus(true);
   };
@@ -78,11 +88,13 @@ const InputComponent: ForwardRefRenderFunction<
           </Styles.Label>
           <Styles.Input
             value={value}
+            ref={textAreaRef}
+            $autoResize={autoResize}
             $active={active}
             $disabled={disabled}
             disabled={disabled}
             id={idValue}
-            rows={rows}
+            rows={5}
             cols={cols}
             onChange={onChange}
             $maxWidth={maxWidth}

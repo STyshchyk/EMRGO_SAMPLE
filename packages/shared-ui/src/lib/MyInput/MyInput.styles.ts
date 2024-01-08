@@ -1,11 +1,7 @@
 import { getTheme } from "@emrgo-frontend/theme";
-import { rem, rgba } from "polished";
+import { rem } from "polished";
 import styled, { css } from "styled-components";
 
-import {
-  CheckNotificationIcon as CheckNotificationIconBase,
-  ErrorIcon as ErrorIconBase,
-} from "../Icons";
 import {
   CheckNotificationIcon as GlobalCheckNotificationIcon,
   Error as GlobalError,
@@ -87,6 +83,7 @@ export const Input = styled.textarea<{
   variant?: TMyInputVariants;
   $maxWidth?: number;
   $maxHeight?: number;
+  $autoResize?: boolean;
 }>`
   /* Layout */
   display: block;
@@ -96,13 +93,13 @@ export const Input = styled.textarea<{
   border: none;
   background: transparent;
   max-width: ${({ $maxWidth }) => $maxWidth && rem($maxWidth - 20)};
+  resize: ${({ $autoResize }) => ($autoResize ? "none" : "auto")};
   max-height: ${({ $maxHeight }) => $maxHeight && rem($maxHeight - 20)};
   /* Text styles */
   font-style: normal;
   font-weight: 500;
   font-size: ${rem(14)};
   line-height: ${rem(16)};
-
   /* Variants */
 
   ${({ theme, variant = "default" }) => css`
