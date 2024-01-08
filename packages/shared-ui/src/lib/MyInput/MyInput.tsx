@@ -8,6 +8,9 @@ import {
   useState,
 } from "react";
 
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import SendIcon from "@mui/icons-material/Send";
+
 import * as Styles from "./MyInput.styles";
 import { IMyInputProps } from "./MyInput.types";
 
@@ -33,6 +36,8 @@ const InputComponent: ForwardRefRenderFunction<
     disabled,
     variant,
     autoResize,
+    onSendClick,
+    onAttachlick,
   },
   ref
 ) => {
@@ -54,7 +59,6 @@ const InputComponent: ForwardRefRenderFunction<
       // We need to reset the height momentarily to get the correct scrollHeight for the textarea
       textAreaRef.current.style.height = "40px";
       const scrollHeight = textAreaRef.current.scrollHeight;
-      console.log(scrollHeight);
       textAreaRef.current.style.height = scrollHeight + "px";
     }
   }, [textAreaRef, value]);
@@ -110,6 +114,12 @@ const InputComponent: ForwardRefRenderFunction<
             }}
             variant={variant}
           ></Styles.Input>
+          {autoResize && (
+            <Styles.ActionButtons>
+              <AttachFileIcon fontSize={"small"} onClick={onAttachlick} />
+              <SendIcon onClick={onSendClick} />
+            </Styles.ActionButtons>
+          )}
         </Styles.InputContainerWrapper>
         {valid && <Styles.CheckNotificationIcon variant={variant} />}
       </Styles.InputContainer>
