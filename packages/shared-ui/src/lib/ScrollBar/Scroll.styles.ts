@@ -26,7 +26,7 @@ export const ScrollStyles = css`
       props.theme.mode === "light" &&
       css`
         background-color: ${getTheme("colors.green4")};
-        border: 1px solid ${getTheme("colors.dark")};
+        border: 1px solid ${getTheme("colors.light")};
 
         &:hover {
           background-color: ${getTheme("colors.green3")};
