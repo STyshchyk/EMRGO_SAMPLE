@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 import { SecureSideBar } from "@emrgo-frontend/shared-ui";
 
+import { TabHeader } from "../SecureMessagingCommon/TabHeader";
 import * as Styles from "./ClientSecureMessaging.styles";
 import { IClientSecureMessagingProps } from "./ClientSecureMessaging.types";
-import { TabHeader } from "./TabHeader";
 
 export const ClientSecureMessagingComponent: FC<IClientSecureMessagingProps> = ({
   children,

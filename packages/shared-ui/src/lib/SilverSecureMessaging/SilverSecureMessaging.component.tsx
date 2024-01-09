@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { MessageContainer } from "./MessageContainer";
+import { MessageContainer, TabHeader } from "../SecureMessagingCommon";
 import { SecureSideBar } from "./SecureSideBar";
 import * as Styles from "./SilverSecureMessaging.styles";
 import { ISilverSecureMessagingProps } from "./SilverSecureMessaging.types";
-import { TabHeader } from "./TabHeader";
 
 export const SilverSecureMessagingComponent: FC<ISilverSecureMessagingProps> = ({
   children,
