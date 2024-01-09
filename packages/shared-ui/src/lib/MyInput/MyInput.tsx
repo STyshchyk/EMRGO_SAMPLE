@@ -38,6 +38,7 @@ const InputComponent: ForwardRefRenderFunction<
     autoResize,
     onSendClick,
     onAttachlick,
+    children,
   },
   ref
 ) => {
@@ -57,7 +58,7 @@ const InputComponent: ForwardRefRenderFunction<
   useEffect(() => {
     if (textAreaRef.current && autoResize) {
       // We need to reset the height momentarily to get the correct scrollHeight for the textarea
-      textAreaRef.current.style.height = "40px";
+      textAreaRef.current.style.height = "30px";
       const scrollHeight = textAreaRef.current.scrollHeight;
       textAreaRef.current.style.height = scrollHeight + "px";
     }
@@ -112,12 +113,26 @@ const InputComponent: ForwardRefRenderFunction<
               blur();
               onBlur && onBlur(e);
             }}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13 && e.key === "Enter") {
+                if (onSendClick) {
+                  onSendClick();
+                }
+              }
+            }}
             variant={variant}
           ></Styles.Input>
+          {autoResize && children && <Styles.AttachedFiles>{children}</Styles.AttachedFiles>}
           {autoResize && (
             <Styles.ActionButtons>
               <AttachFileIcon fontSize={"small"} onClick={onAttachlick} />
-              <SendIcon onClick={onSendClick} />
+              <SendIcon
+                onClick={() => {
+                  if (onSendClick) {
+                    onSendClick();
+                  }
+                }}
+              />
             </Styles.ActionButtons>
           )}
         </Styles.InputContainerWrapper>

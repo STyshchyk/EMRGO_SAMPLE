@@ -1,8 +1,8 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 
 export type TMyInputVariants = "signup" | "default";
 
-export interface IMyInputProps extends HTMLAttributes<HTMLTextAreaElement> {
+export interface IMyInputProps extends HTMLAttributes<HTMLTextAreaElement>, PropsWithChildren {
   /** The input value */
   value?: string;
   /** Change Handler */

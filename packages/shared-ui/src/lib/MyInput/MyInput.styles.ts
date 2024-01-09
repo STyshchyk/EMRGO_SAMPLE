@@ -216,3 +216,9 @@ export const ActionButtons = styled.div`
     }
   }
 `;
+export const AttachedFiles = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+`;
+export const AttachedFile = styled.span``;
