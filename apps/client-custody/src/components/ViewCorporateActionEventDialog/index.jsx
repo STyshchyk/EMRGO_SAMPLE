@@ -103,6 +103,7 @@ const ViewCorporateActionEventDialog = ({
   )[0]?.response;
 
   const isVoluntaryEvent = currentlySelectedRowData?.mandatoryOrVoluntary === "V";
+  const isCancelledEvent = currentlySelectedRowData?.eventStatus === "Cancelled";
 
   useEffect(() => {
     const fetchCorporateActionEvent = (payload) =>
@@ -201,7 +202,7 @@ const ViewCorporateActionEventDialog = ({
                   )}
 
                   {/* !! Textfield for investors to respond for VOLUNTARY events so disable it BASED ON THE VALUE OF ROW.VOLUNTARY on actions */}
-                  {isUserInvestor && !isReadOnly && !currentUsersResponse && (
+                  {isUserInvestor && !isReadOnly && !currentUsersResponse && !isCancelledEvent && (
                     <InlineFormField label="Response">
                       <Field
                         fullWidth
