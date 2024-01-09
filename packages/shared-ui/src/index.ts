@@ -36,6 +36,7 @@ export * from "./lib/Properties";
 export * from "./lib/QuestionnaireItems/";
 export * from "./lib/RadioButton";
 export * from "./lib/SearchInput";
+export * from "./lib/SecureMessagingCommon";
 export * from "./lib/Select";
 export * from "./lib/Sidebar";
 export * from "./lib/SilverDashboardWrapper";

@@ -17,8 +17,12 @@ const statusOptions = [
     value: "resolved",
   },
   {
-    label: "Open",
-    value: "open",
+    label: "In Progress",
+    value: "in_progress",
+  },
+  {
+    label: "Closed",
+    value: "closed",
   },
 ];
 const labelOption = [
@@ -121,7 +125,7 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
   return (
     <Styles.TabHeaderWrapper>
       <Grid container>
-        <Grid container xs={8} direction={"row"}>
+        <Grid container xs={8} direction={"row"} alignItems={"center"}>
           <Grid item xs={2}>
             <Select
               options={queryOptions}
