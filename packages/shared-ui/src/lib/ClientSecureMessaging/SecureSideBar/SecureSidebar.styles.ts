@@ -13,16 +13,19 @@ interface ILinkProps {
 export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
+  padding-right: 0.25rem;
   ${(props) =>
     props.theme.mode === "light" &&
     css`
       background-color: ${getTheme("colors.white.100")};
+      border-right: 1px solid ${getTheme("colors.strokes.light")};
     `}
 
   ${(props) =>
     props.theme.mode === "dark" &&
     css`
       background-color: ${getTheme("colors.green1")};
+      border-right: 1px solid ${getTheme("colors.strokes.dark")};
     `}
 `;
 
@@ -58,7 +61,7 @@ export const SidebarListItem = styled.li`
 const listItemContentStyles = css`
   display: flex;
   flex-direction: column;
-  padding: ${rem(6)} ${rem(30)} ${rem(6)} ${rem(50)};
+  padding: ${rem(16)} ${rem(16)} ${rem(16)} ${rem(50)};
 `;
 
 const linkStyles = css`
@@ -189,7 +192,7 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
   ${(props) =>
     props.unread === false &&
     css`
-      ${getTheme("typography.regular.02")}
+      ${getTheme("typography.semiBold.02")}
       ${unreadLinkStyles}
     `}
   ${(props) =>

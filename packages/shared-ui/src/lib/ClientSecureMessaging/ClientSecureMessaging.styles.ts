@@ -8,16 +8,15 @@ export const ClientSecureMessaging = styled.div`
 export const Container = styled.div<{ $isHidden?: boolean }>`
   display: grid;
   height: calc(100vh - 85px);
-  grid-template-columns: minmax(auto, ${rem(360)}) 1fr;
-
+  grid-template-columns: minmax(auto, ${rem(300)}) 1fr;
   transition: grid-template-columns ease 1s;
 `;
 export const Content = styled.main`
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  height: 100%;
   position: relative;
+  height: calc(100vh - 85px);
+  padding: 1.5rem;
   ${(props) =>
     props.theme.mode === "light" &&
     css`
