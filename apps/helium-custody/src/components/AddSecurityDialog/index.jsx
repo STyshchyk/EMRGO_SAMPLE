@@ -159,6 +159,7 @@ const AddSecurityDialog = ({ open, handleClose, selectedRow, setSelectedRow }) =
 
     requestPayload.issuanceAmount = parseInt(requestPayload.issuanceAmount, 10);
     requestPayload.profitRate = parseFloat(requestPayload.profitRate, 10);
+    requestPayload.ticker = requestPayload.ticker ? requestPayload.ticker : undefined;
 
     return { ...requestPayload, countryId };
   };
