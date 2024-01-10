@@ -167,9 +167,11 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     principalAmount: !formikValues.principalAmount
       ? 0
       : parseFloat(formikValues.principalAmount, 10),
-    [isEquity ? "commission" : "accruedInterest"]: !formikValues.accruedInterest
-      ? 0
-      : parseFloat(formikValues.accruedInterest, 10),
+    commission: isEquity ? parseFloat(formikValues.commission, 10) : undefined,
+    accruedInterest: !isEquity ? parseFloat(formikValues.accruedInterest, 10) : undefined,
+    // [isEquity ? "commission" : "accruedInterest"]: !formikValues.accruedInterest
+    //   ? 0
+    //   : parseFloat(formikValues.accruedInterest, 10),
     tradeDate: formikValues?.tradeDate,
     settlementDate: formikValues?.settlementDate,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
@@ -296,6 +298,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    commission: "",
     portfolio_id: "",
   },
   isSubmitting,
@@ -644,9 +647,9 @@ const RaiseSettlementInstructionForm = ({
                   fullWidth
                   component={CustomTextField}
                   label={isEquity ? "Commission/Charges" : "Accrued Interest"}
-                  name="accruedInterest"
+                  name={isEquity ? "commission" : "accruedInterest"}
                   variant="outlined"
-                  value={values.accruedInterest}
+                  value={isEquity ? values.commission : values.accruedInterest}
                   disabled={
                     !values.externalSecuritySelectOption?.value?.currencyName ||
                     ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
@@ -677,12 +680,22 @@ const RaiseSettlementInstructionForm = ({
                   label="Settlement Amount"
                   name="settlementAmount"
                   valueA={{ key: "principalAmount", value: values?.principalAmount }}
-                  valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
+                  valueB={{
+                    key: isEquity ? "commission" : "accruedInterest",
+                    value: isEquity ? values.commission : values.accruedInterest,
+                  }}
                   calculatedValue={
-                    isEquity && settlementType === "DVP"
-                      ? Number(values?.principalAmount) - Number(values?.accruedInterest)
-                      : Number(values?.principalAmount) + Number(values?.accruedInterest) // if equity RVP or if FI security RVP/DVP
+                    isEquity
+                      ? settlementType === "DVP"
+                        ? Number(values?.principalAmount) - Number(values?.commission)
+                        : Number(values?.principalAmount) + Number(values?.commission)
+                      : Number(values?.principalAmount) + Number(values?.accruedInterest)
                   }
+                  // calculatedValue={
+                  //   isEquity && settlementType === "DVP"
+                  //     ? Number(values?.principalAmount) - Number(values?.accruedInterest)
+                  //     : Number(values?.principalAmount) + Number(values?.accruedInterest) // if equity RVP or if FI security RVP/DVP
+                  // }
                 />
               </InlineFormField>
 
