@@ -22,7 +22,6 @@ const DataGridRow = ({ label, value }) => (
 const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedRowData }) => {
   const transformCounterpartySSIData = (counterpartySSIData, counterpartyData) => {
     if (!counterpartySSIData) return [];
-
     const {
       ssiLabel,
       counterparty,
@@ -58,7 +57,7 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
       },
       {
         label: "Seller Agent Identifier",
-        value: sellerIdentifier,
+        value: sellerIdentifier ?? FALLBACK_VALUE,
       },
       {
         label: "Seller Agent ID Type",
@@ -70,7 +69,7 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
       },
       {
         label: "Safe-keeping Account no.",
-        value: safekeepingAccount,
+        value: safekeepingAccount ?? FALLBACK_VALUE,
       },
     ];
   };

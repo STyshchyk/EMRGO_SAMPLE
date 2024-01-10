@@ -100,7 +100,8 @@ const CorporateActionEvents = () => {
       },
       disabled:
         currentlySelectedRowData?.mandatoryOrVoluntary === "M" ||
-        moment(currentlySelectedRowData?.responseDeadline).isBefore(currentDateParsed),
+        moment(currentlySelectedRowData?.responseDeadline).isBefore(currentDateParsed) ||
+        currentlySelectedRowData?.eventStatus === "Cancelled",
     },
   ];
 

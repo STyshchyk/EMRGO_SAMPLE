@@ -152,7 +152,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
 
   const requestPayload = {
     ...formikValues,
-    commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
+    commission: isEquityType ? parseFloat(formikValues.commission, 10) : undefined,
     portfolio_id: formikValues.portfolio_id?.id,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
@@ -288,6 +288,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    commission: "",
     portfolio_id: "",
   },
   isSubmitting,
@@ -627,10 +628,10 @@ const RaiseSettlementInstructionForm = ({
                   fullWidth
                   component={CustomTextField}
                   label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
-                  name="accruedInterest"
+                  name={isEquityType ? "commission" : "accruedInterest"}
                   variant={isVariantOutlined ? "outlined" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
-                  value={values.accruedInterest}
+                  value={isEquityType ? values.commission : values.accruedInterest}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -657,12 +658,15 @@ const RaiseSettlementInstructionForm = ({
                   label="Settlement Amount"
                   name="settlementAmount"
                   valueA={{ key: "principalAmount", value: values?.principalAmount }}
-                  valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
+                  valueB={{
+                    key: isEquityType ? "commission" : "accruedInterest",
+                    value: isEquityType ? values.commission : values.accruedInterest,
+                  }}
                   calculatedValue={
                     isEquityType
                       ? settlementType === "DVP"
-                        ? Number(values?.principalAmount) - Number(values?.accruedInterest)
-                        : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                        ? Number(values?.principalAmount) - Number(values?.commission)
+                        : Number(values?.principalAmount) + Number(values?.commission)
                       : Number(values?.principalAmount) + Number(values?.accruedInterest)
                   }
                 />

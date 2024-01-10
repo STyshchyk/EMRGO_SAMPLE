@@ -50,18 +50,38 @@ const addSettlementInstructionFormSchema = Yup.object().shape({
     then: () => Yup.string(),
     otherwise: () => Yup.string().required(),
   }),
-  accruedInterest: Yup.string().when("settlementTypeSelectOption", {
-    is: (value) => ["DFOP", "RFOP"].includes(value?.label),
+  accruedInterest: Yup.string().when(['settlementTypeSelectOption', 'externalSecuritySelectOption'], {
+    is: (settlementType,externalSecurity) => {
+      const excludedSettlementTypes = ['DFOP', 'RFOP'];
+      const isEquityType = externalSecurity?.value?.assetTypeName.key === 'equity'
+      return excludedSettlementTypes.includes(settlementType?.label) || isEquityType;
+    },
     then: () => Yup.string(),
-    otherwise: () =>
-      Yup.string()
-        .required()
-        .test("maxValue", "Must be at most 12 digits", (value) => {
-          if (!isNaN(Number(value))) {
-            return value.length <= 12;
-          }
-          return true;
-        }),
+    otherwise: () => Yup.string()
+      .required()
+      .test('maxValue', 'Must be at most 12 digits', (value) => {
+        if (!isNaN(Number(value))) {
+          return value.length <= 12;
+        }
+        return true;
+      }),
+  }),
+
+  commission: Yup.string().when(['settlementTypeSelectOption', 'externalSecuritySelectOption'], {
+    is: (settlementType,externalSecurity) => {
+      const excludedSettlementTypes = ['DFOP', 'RFOP'];
+      const isEquityType = externalSecurity?.value?.assetTypeName.key === 'equity'
+      return excludedSettlementTypes.includes(settlementType?.label) || !isEquityType;
+    },
+    then: () => Yup.string(),
+    otherwise: () => Yup.string()
+      .required()
+      .test('maxValue', 'Must be at most 12 digits', (value) => {
+        if (!isNaN(Number(value))) {
+          return value.length <= 12;
+        }
+        return true;
+      }),
   }),
 });
 
