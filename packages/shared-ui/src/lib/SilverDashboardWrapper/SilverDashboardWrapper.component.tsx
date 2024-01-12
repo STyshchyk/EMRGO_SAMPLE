@@ -15,7 +15,6 @@ export const SilverDashboardWrapperComponent: FC<ISilverDashboardWrapperProps> =
     <Styles.Container $isHidden={isMenuHidden}>
       <SilverDashboardSidebar isHidden={isMenuHidden} />
       <ExpandArrow
-        sx={{ transition: "all 1s ease" }}
         $isHidden={isMenuHidden}
         color="primary"
         onClick={() => {

@@ -152,7 +152,6 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       key: "Secure Messaging",
       path: "",
       paths: "",
-      disabled: true,
       onClick: () => {
         navigate(reverse(silverAdministrationRoutes.secureMessaging.inbox.home, {}));
       },
