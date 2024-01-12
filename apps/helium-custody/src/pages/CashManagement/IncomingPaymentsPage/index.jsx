@@ -103,7 +103,8 @@ const IncomingPaymentsPage = () => {
       callback: handleAssignAccountClick,
       icon: <AssignmentIndIcon fontSize="small" />,
       label: t("Incoming Payments.Context Menu.Assign Account"),
-      disabled: selectedRow.assignedAccountId,
+      // disabled: selectedRow.assignedAccountId,
+      disabled: selectedRow.assignedAccountNo !== "",
     },
     {
       callback: handleViewEvidenceClick,
@@ -120,7 +121,8 @@ const IncomingPaymentsPage = () => {
       callback: handleReleaseClick,
       icon: <SendIcon fontSize="small" />,
       label: t("Incoming Payments.Context Menu.Release"),
-      disabled: !selectedRow.assignedAccountId || selectedRow.approver1 === currentUserId,
+      //disabled: !selectedRow.assignedAccountId || selectedRow.approver1 === currentUserId,
+      disabled: selectedRow.assignedAccountNo === "" || selectedRow.approver1 === currentUserId,
     },
   ];
 
@@ -154,7 +156,7 @@ const IncomingPaymentsPage = () => {
         customerRef: transfer.customerReference,
         bankRef: transfer.bankReference,
         supplementary: transfer?.supplementary ?? "",
-        assignedClient: transfer?.assignedEntityGroup?.entity?.corporateEntityName ?? "",
+        assignedClient: transfer?.assignedEntityName,
         assignedAccountNo: transfer?.assignedAccount?.accountNo ?? "",
         detailSegments: transfer?.detailSegments,
         sourceAccount: transfer?.sourceAccount,

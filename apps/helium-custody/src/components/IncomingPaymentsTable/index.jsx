@@ -18,6 +18,7 @@ import MoveToSuspenseModal from "../BillingAndPayments/MoveToSuspenseModal";
 import ReleaseFundsModal from "../BillingAndPayments/ReleaseFundsModal";
 import ViewTransactionDetailsModal from "../BillingAndPayments/ViewTransactionDetailsModal";
 
+//! NOT USED
 const IncomingTable = () => {
   const { t } = useTranslation(["cash_management"]);
 

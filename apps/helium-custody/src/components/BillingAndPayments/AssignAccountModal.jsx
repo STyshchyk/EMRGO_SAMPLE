@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -76,7 +76,7 @@ const AssignAccountModal = ({
 
   const sourceEntitiesDropdown = sourceOwners.map((entity) => ({
     value: entity.id,
-    label: entity.corporateEntityName,
+    label: entity.entityName,
   }));
 
   return (
@@ -89,7 +89,7 @@ const AssignAccountModal = ({
       onSubmit={(values) => {
         const payload = {
           transactionId: selectedTransaction.id,
-          assignedEntityGroupId: values.paymentAccount.value.original.entityGroupId,
+          assignedEntityGroupId: values.paymentAccount.value.original.portfolioId,
           assignedAccountId: values.paymentAccount.value.accountId,
         };
 
@@ -124,7 +124,7 @@ const AssignAccountModal = ({
             .filter((entity) =>
               selectedAccount ? entity.id === selectedAccount.value.entityId : true
             )
-            .map((entity) => ({ value: entity.id, label: entity.corporateEntityName }));
+            .map((entity) => ({ value: entity.id, label: entity.entityName }));
 
           if (selectedAccount) {
             setFieldValue("paymentEntity", tempEntitiesList[0]);
@@ -141,7 +141,7 @@ const AssignAccountModal = ({
               fullWidth
             >
               <DialogTitle id="form-dialog-title">
-                {t("cash_management:Incoming Payments.Modals.Assign Account")}
+                {t("Incoming Payments.Modals.Assign Account")}
               </DialogTitle>
               <DialogContent>
                 <Box mb={2}>
@@ -149,7 +149,7 @@ const AssignAccountModal = ({
                     <FormControl className={style.input__form_control}>
                       <Select
                         closeMenuOnSelect
-                        placeholder={t("cash_management:Incoming Payments.Modals.Fields.Client")}
+                        placeholder={t("Incoming Payments.Modals.Fields.Client")}
                         isSearchable
                         styles={selectStyles}
                         menuPortalTarget={document.body}
@@ -168,9 +168,7 @@ const AssignAccountModal = ({
                       <Select
                         components={{ Option: ReactSelectCurrencyOption }}
                         closeMenuOnSelect
-                        placeholder={t(
-                          "cash_management:Incoming Payments.Modals.Fields.Client Account"
-                        )}
+                        placeholder={t("Incoming Payments.Modals.Fields.Client Account")}
                         isSearchable
                         styles={selectStyles}
                         menuPortalTarget={document.body}
@@ -193,10 +191,10 @@ const AssignAccountModal = ({
                   }}
                   color="primary"
                 >
-                  {t("cash_management:Entity Accounts.Cancel")}
+                  {t("Entity Accounts.Cancel")}
                 </Button>
                 <Button onClick={handleSubmit} variant="contained" color="primary">
-                  {t("cash_management:Entity Accounts.Submit")}
+                  {t("Entity Accounts.Submit")}
                 </Button>
               </DialogActions>
             </Dialog>
