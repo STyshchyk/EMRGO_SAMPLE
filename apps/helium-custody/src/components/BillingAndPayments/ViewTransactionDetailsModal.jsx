@@ -26,7 +26,7 @@ const ViewTransactionDetailsModal = ({ isModalOpen, setIsModalOpen, selectedTran
       fullWidth
     >
       <DialogTitle id="form-dialog-title">
-        {t("cash_management:Incoming Payments.Modals.Payment Details")}
+        {t("Incoming Payments.Modals.Payment Details")}
       </DialogTitle>
       <DialogContent>
         <Box className={style.detailsWrapper}>
@@ -44,7 +44,7 @@ const ViewTransactionDetailsModal = ({ isModalOpen, setIsModalOpen, selectedTran
           }}
           color="primary"
         >
-          {t("cash_management:Entity Accounts.Cancel")}
+          {t("Entity Accounts.Cancel")}
         </Button>
       </DialogActions>
     </Dialog>
