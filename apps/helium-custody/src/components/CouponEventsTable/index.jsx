@@ -1,8 +1,6 @@
 import React, { Fragment, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-
-
 import MaterialTable from "@material-table/core";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
@@ -21,8 +19,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-
-
 import { DEFAULT_DATE_FORMAT } from "../../constants/datetime";
 import { currencyRenderer } from "../../constants/renderers";
 import { couponAllocationStatusEnum } from "../../constants/wethaqAPI/securitiesServices";
@@ -30,14 +26,9 @@ import { useCouponEventsTableFilters } from "../../context/coupon-events-table-f
 import { FilterConsumer, FilterProvider } from "../../context/filter-context";
 import useMaterialTableLocalization from "../../hooks/useMTableLocalization";
 import tableStyles from "../../styles/cssInJs/materialTable";
-import convertNumberToIntlFormat from "../../utils/convertNumberToIntlFormat";
 import { dateFormatter } from "../../utils/formatter";
 import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
-
-
-
-
 
 // TODO: CLEAN UP LATER
 // TODO: REFACTOR THIS COMPONENT: ENCAPSULATE TABLE FILTERING LOGIC - SEE GLENN'S FX CODES FOR INSPIRATION
@@ -108,7 +99,7 @@ const CouponEventsTableFiltering = () => {
           <Box my={1} className="w-full" sx={{ width: "100%" }}>
             <DatePicker
               placeholder="From"
-              inputVariant="filled"
+              inputVariant="outlined"
               format={DEFAULT_DATE_FORMAT}
               value={
                 couponEventFiltersState.fromDate

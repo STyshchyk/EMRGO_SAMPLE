@@ -28,14 +28,14 @@ import { UserItem, UserItems } from "./UserItems";
 export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children }: IEntityManagementProps) => {
   const { user } = useUser()
 
-  const { 
-      onboardedUsers, 
-      isOnboardUserModalOpen, 
-      setIsOnboardUserModalOpen, 
+  const {
+      onboardedUsers,
+      isOnboardUserModalOpen,
+      setIsOnboardUserModalOpen,
       onViewPlatformDetails,
-      onViewBankingDetails, 
-      onViewCashAccounts, 
-      onViewAuthRepresentatives 
+      onViewBankingDetails,
+      onViewCashAccounts,
+      onViewAuthRepresentatives
     } = ensureNotNull(useEntityManagementContext());
 
   const entityOperationDetails = [
@@ -43,13 +43,13 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
     //   id: "1",
     //   label: "Portfolio Details",
     //   callback: onViewPlatformDetails
-    // }, 
+    // },
     {
       id: "1",
       label: "Client Banking Details",
       callback: onViewBankingDetails,
       disabled:true,
-    }, 
+    },
     {
       id: "2",
       label: "Account Opening (Safekeeping & Cash)",
@@ -75,7 +75,7 @@ export const EntityManagementComponent: FC<IEntityManagementProps> = ({ children
             <AccountPanelHeader>
               <AccountPanelHeaderTitle>Entity Identification Details</AccountPanelHeaderTitle>
             </AccountPanelHeader>
-     
+
             <AccountPanelContent>
               <Styles.EntityIdentityDetails>
                 <Input disabled value={user?.entityId || ""} />

@@ -9,7 +9,7 @@ import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useFilters } from "../../../context/filter-context";
 
-const DatePicker = ({ name, defaultFilter, label,maxDate, disableClear = false, ...props }) => {
+const DatePicker = ({ name, defaultFilter, label, maxDate, disableClear = false, ...props }) => {
   const [pickerValue, setPickerValue] = useState(defaultFilter);
   const filterContext = useFilters();
   const { setFilterValue } = filterContext;
@@ -45,23 +45,24 @@ const DatePicker = ({ name, defaultFilter, label,maxDate, disableClear = false, 
             {label}
           </Typography>
         </Grid>
-        {!disableClear && <Grid item xs={3} container justifyContent="flex-end">
-          <ButtonBase
-            onClick={() => {
-              clearDatepickerValue();
-            }}
-          >
-            <Typography variant="caption">{t("miscellaneous:Clear")}</Typography>
-          </ButtonBase>
-        </Grid>
-        }
+        {!disableClear && (
+          <Grid item xs={3} container justifyContent="flex-end">
+            <ButtonBase
+              onClick={() => {
+                clearDatepickerValue();
+              }}
+            >
+              <Typography variant="caption">{t("miscellaneous:Clear")}</Typography>
+            </ButtonBase>
+          </Grid>
+        )}
       </Grid>
 
       <Box my={1} className="w-full">
         <MuiDatePicker
           fullWidth
           format="DD/MM/YYYY"
-          inputVariant="filled"
+          inputVariant="outlined"
           inputProps={{
             shrink: "false",
           }}

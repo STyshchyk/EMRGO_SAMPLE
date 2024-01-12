@@ -232,7 +232,7 @@ const ViewCorporateActionEventDialog = ({
                     component={TextField}
                     name="clientResponse"
                     value={values.clientResponse}
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                     multiline
                     onKeyDown={(event) => {

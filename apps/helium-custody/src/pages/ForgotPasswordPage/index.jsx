@@ -203,7 +203,7 @@ const PasswordResetRequestForm = () => {
                     component={TextField}
                     className={style.accordian__input}
                     name="email"
-                    variant="filled"
+                    variant="outlined"
                   />
                 </div>
                 <Box>

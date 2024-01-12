@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -194,7 +194,7 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
               <Grid item>
                 <TextField
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
                   value={totalCouponAmount}
                   onChange={handleTotalCouponAmountChange}
                   InputProps={{
@@ -232,7 +232,7 @@ const AllocateCouponDialog = ({ open, handleClose, currentlySelectedRowData }) =
                 <TextField
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
                   value={totalCouponAmount - computedTotalAllocatedCouponAmount}
                   InputProps={{
                     inputComponent: CustomNumberInputField,

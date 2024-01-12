@@ -452,7 +452,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                           component={TextField}
                           placeholder="Security Long Name"
                           name="securityName"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                           value={
                             values.externalSecuritySelectOption
@@ -474,20 +474,20 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputVariant="outlined"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
                         inputProps={{
                           shrink: "false",
                           size: "small",
-                          variant: "filled",
+                          variant: "outlined",
                         }}
                         slotProps={{
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         name="exDate"
@@ -514,7 +514,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputVariant="outlined"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         minDate={values.exDate}
@@ -522,13 +522,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         inputProps={{
                           shrink: "false",
                           size: "small",
-                          variant: "filled",
+                          variant: "outlined",
                         }}
                         slotProps={{
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         name="recordDate"
@@ -555,7 +555,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputVariant="outlined"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         minDate={values.exDate}
@@ -563,13 +563,13 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                         inputProps={{
                           shrink: "false",
                           size: "small",
-                          variant: "filled",
+                          variant: "outlined",
                         }}
                         slotProps={{
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         name="paymentDate"
@@ -636,7 +636,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                             setFieldValue("eventTerms", event.target.value + "\n");
                         }}
                         rows={2}
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                         inputProps={{
                           maxLength: 1024,
@@ -662,7 +662,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                             setFieldValue("additionalInfo", event.target.value + "\n");
                         }}
                         rows={2}
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                         inputProps={{
                           maxLength: 1024,
@@ -718,20 +718,20 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputVariant="outlined"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
                         inputProps={{
                           shrink: "false",
                           size: "small",
-                          variant: "filled",
+                          variant: "outlined",
                         }}
                         slotProps={{
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}
@@ -766,20 +766,20 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
                       <Field
                         fullWidth
                         format="DD/MM/YYYY"
-                        inputVariant="filled"
+                        inputVariant="outlined"
                         variant="dialog"
                         placeholder="DD/MM/YYYY"
                         component={DatePicker}
                         inputProps={{
                           shrink: "false",
                           size: "small",
-                          variant: "filled",
+                          variant: "outlined",
                         }}
                         slotProps={{
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         disabled={values.mandatoryOrVoluntary?.value === "mandatory"}

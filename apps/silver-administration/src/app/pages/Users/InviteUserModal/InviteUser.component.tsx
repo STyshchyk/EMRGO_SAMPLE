@@ -76,6 +76,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
                 id="firstName"
                 name="firstName"
                 component={FormikInput}
+                variant={"signup"}
                 as={"input"}
                 label={"Enter First Name"}
                 placeholder="Enter your name"
@@ -87,6 +88,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
               <Field
                 id="lastName"
                 component={FormikInput}
+                variant={"signup"}
                 name="lastName"
                 as={"input"}
                 label={"Enter Second Name"}
@@ -101,6 +103,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
                 as={"email"}
                 label={"Enter Email ID"}
                 component={FormikInput}
+                variant={"signup"}
               />
             </Styles.TwoCol>
             <Styles.TwoCol>
@@ -108,6 +111,7 @@ export const InviteUserComponent = ({}: IInviteUserProps) => {
               <Field
                 name="role"
                 component={FormikInputCustom}
+                variant={"signup"}
                 menuPortalTarget={document.body}
                 menuPosition={"fixed"}
                 type={"select"}

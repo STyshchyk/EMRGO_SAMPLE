@@ -312,7 +312,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         component={TextField}
                         label={t("Counterparty.Add Counterparty Form.Counterparty ID")}
                         name="counterpartyId"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>
@@ -338,7 +338,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         component={TextField}
                         label={t("Counterparty.Add Counterparty Form.Short Name")}
                         name="shortName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>
@@ -364,7 +364,7 @@ const AddCounterpartyDialog = ({ open, handleClose, selectedRow, setSelectedRow 
                         component={TextField}
                         label={t("Counterparty.Add Counterparty Form.Long Name")}
                         name="longName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>

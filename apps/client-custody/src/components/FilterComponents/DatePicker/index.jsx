@@ -1,13 +1,13 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import Box from "@mui/material/Box";
-import ButtonBase from "@mui/material/ButtonBase";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import moment from "moment";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Box from '@mui/material/Box';
+import ButtonBase from '@mui/material/ButtonBase';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
 
-import { useFilters } from "../../../context/filter-context";
+import { useFilters } from '../../../context/filter-context';
 
 const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
   const { t } = useTranslation(["reports", "blotter"]);
@@ -45,7 +45,7 @@ const DatePicker = ({ name, label, dateFilterValue, setDateFilterValue }) => {
           <DatePicker
             fullWidth
             format="DD/MM/YYYY"
-            inputVariant="filled"
+            inputVariant="outlined"
             inputProps={{
               shrink: "false",
             }}

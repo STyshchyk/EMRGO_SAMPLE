@@ -50,7 +50,8 @@ export const InvitedUsersComponent: FC<IInvitedUsersProps> = ({}: IInvitedUsersP
           <PanelHeaderRight>
             <Input
               name={"search"}
-              type={"search "}
+              type={"search"}
+              variant={"signup"}
               label={"Search"}
               value={searchKey}
               onChange={(event) => {

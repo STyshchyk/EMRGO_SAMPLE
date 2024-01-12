@@ -357,7 +357,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           fullWidth
                           component={TextField}
                           name="fromAmount"
-                          variant="filled"
+                          variant="outlined"
                           size="small"
                           // type="number"
                           value={values.fromAmount}
@@ -576,7 +576,7 @@ const AddFXTransactionDialog = ({ open, handleClose, currentlySelectedDateRange 
                           name="narrative"
                           multiline
                           rows={2}
-                          variant="filled"
+                          variant="outlined"
                           onKeyDown={(event) => {
                             if (event.which === 13)
                               setFieldValue("narrative", event.target.value + "\n");

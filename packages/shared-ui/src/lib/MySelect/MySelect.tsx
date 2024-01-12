@@ -16,13 +16,14 @@ export const MySelect = <
   error,
   maxWidth,
   components: customComponent,
+  variant = "signup",
   ...props
 }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
   const animatedComponents = {};
   const { isDarkMode } = useDarkMode();
   const componentId = useId();
   const idValue = props.id ?? componentId;
-
+  const SignUpVariant = variant === "signup";
   const getOptionStyles = (type: string, state?: any, error?: string | boolean) => {
     let styles = {};
     switch (type) {
@@ -49,7 +50,11 @@ export const MySelect = <
               ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)`
               : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
             : isDarkMode
-            ? rgba(255, 255, 255, 0.05)
+            ? SignUpVariant
+              ? colors.white[0]
+              : rgba(255, 255, 255, 0.05)
+            : SignUpVariant
+            ? colors.white[100]
             : colors.black[5],
         };
         break;
@@ -196,9 +201,9 @@ export const MySelect = <
             ...base,
             backgroundColor: isDarkMode ? `${colors.green5}` : `${colors.green2}`,
             svg: { fill: `${colors.red}` },
-            borderRadius:'5px',
-            display: 'flex',
-            alignItems: 'center',
+            borderRadius: "5px",
+            display: "flex",
+            alignItems: "center",
           }),
           valueContainer: (styles, state) => ({
             ...styles,
@@ -206,13 +211,13 @@ export const MySelect = <
           multiValueLabel: (base) => ({
             ...base,
             ...typography.medium["02Tight"],
-            color: isDarkMode ? `${colors.black['90']}` : `${colors.white['100']}`,
+            color: isDarkMode ? `${colors.black["90"]}` : `${colors.white["100"]}`,
           }),
         }}
       />
       {!!error && (
         <Styles.Error>
-            <Styles.ErrorIcon />
+          <Styles.ErrorIcon />
           <span>{error}</span>
         </Styles.Error>
       )}

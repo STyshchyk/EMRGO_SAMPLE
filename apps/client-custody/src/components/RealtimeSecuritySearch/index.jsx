@@ -78,7 +78,7 @@ const RealtimeSecuritySearch = ({ onSecurityResultItemSelect, assetTypeFilterVal
           <Typography>Security Search</Typography>
         </Grid>
         <Grid item xs={12} md={7} lg={7} className="px-1">
-          <TextField onChange={debouncedHandleTextChange} variant="filled" fullWidth />
+          <TextField onChange={debouncedHandleTextChange} variant="outlined" fullWidth />
         </Grid>
       </Grid>
       <Grid item>

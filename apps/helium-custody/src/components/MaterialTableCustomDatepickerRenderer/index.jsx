@@ -11,7 +11,7 @@ const MaterialTableCustomDatepickerRenderer = (props) => (
     // margin="normal"
     label={props.label}
     value={props.value}
-    inputVariant="filled"
+    inputVariant="outlined"
     onChange={(selected) => {
       props.onChange(selected);
     }}

@@ -236,7 +236,7 @@ const AddPaymentInstructionForm = ({
                           textField: {
                             size: "small",
                             fullWidth: true,
-                            variant: "filled",
+                            variant: "outlined",
                           },
                         }}
                         sx={{
@@ -251,7 +251,7 @@ const AddPaymentInstructionForm = ({
                     }}
                     value={values.valueDate ? moment(values.valueDate) : null}
                     format={"DD/MM/YYYY"}
-                    inputVariant="filled"
+                    inputVariant="outlined"
                     label={t("Payment Instructions.Modals.Fields.Value Date")}
                     name="valueDate"
                     validateOnChange
@@ -278,7 +278,7 @@ const AddPaymentInstructionForm = ({
                     component={TextField}
                     label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                     name="paymentAmount"
-                    variant="filled"
+                    variant="outlined"
                     size={"small"}
                     InputProps={{
                       inputComponent: CustomNumberInputField,
@@ -305,7 +305,7 @@ const AddPaymentInstructionForm = ({
                   }}
                   label={t("Payment Instructions.Modals.Fields.Payment Details")}
                   name="paymentDetails"
-                  variant="filled"
+                  variant="outlined"
                 />
               </Box>
               <Box my={1} className="w-full">

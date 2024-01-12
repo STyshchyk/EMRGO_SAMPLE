@@ -75,7 +75,8 @@ export const OnboardedUsers: FC<IOnboarderUsersProps> = ({}) => {
             <PanelHeaderRight>
               <Input
                 name={"search"}
-                type={"search "}
+                type={"search"}
+                variant={"signup"}
                 label={"Search"}
                 value={searchKey}
                 onChange={(event) => {

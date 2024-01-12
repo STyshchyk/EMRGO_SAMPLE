@@ -64,7 +64,7 @@ const TransactionChargesSection = ({
         <MuiTextField
           fullWidth
           label="Charge"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -79,7 +79,7 @@ const TransactionChargesSection = ({
         <MuiTextField
           fullWidth
           label="Txns"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -93,7 +93,7 @@ const TransactionChargesSection = ({
         <MuiTextField
           fullWidth
           label="Total"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />

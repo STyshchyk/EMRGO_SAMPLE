@@ -61,7 +61,7 @@ const DeactivateUserModal = ({ open, onClose, selectedRow, deactivateEntity }) =
                   }}
                   label={t("onboarding:Forms.Reason")}
                   name="reason"
-                  variant="filled"
+                  variant="outlined"
                 />
               </Grid>
             </DialogContent>

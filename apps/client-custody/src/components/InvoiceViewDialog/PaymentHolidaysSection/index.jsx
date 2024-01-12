@@ -78,7 +78,7 @@ const PaymentHolidaysSection = ({
         <MuiTextField
           fullWidth
           label="Narrative"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />

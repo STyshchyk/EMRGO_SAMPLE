@@ -119,7 +119,29 @@ export const themeStyles = (isDarkMode: boolean) => {
           },
         },
       },
-
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            borderRadius: "0.25rem",
+            textarea: {
+              padding: "0",
+            },
+          },
+          input: {
+            padding: "12px",
+            fontSize: "1rem",
+            fontWeight: 500,
+          },
+          underline: {
+            "&:before": {
+              display: "none",
+            },
+            "&:after": {
+              display: "none",
+            },
+          },
+        },
+      },
       MuiInputAdornment: {
         styleOverrides: {
           positionStart: {
@@ -133,7 +155,7 @@ export const themeStyles = (isDarkMode: boolean) => {
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            transform: "translate(12px, 11px) scale(1) !important",
+            transform: "translate(12px, 15px) scale(1) !important",
           },
           shrink: {
             transform: "translate(15px, 4px) scale(0.75) !important",

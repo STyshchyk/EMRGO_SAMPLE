@@ -81,7 +81,8 @@ const DependentAmountField = (props) => {
   const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
     values.settlementTypeSelectOption?.label
   );
-  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
+  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
+  const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
   return (
     <Field
       fullWidth
@@ -335,7 +336,7 @@ const RaiseSettlementInstructionForm = ({
         const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
           values.settlementTypeSelectOption?.label
         );
-        const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
+        const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;
         return (
           <Form>
             <Grid container spacing={2}>

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -186,7 +186,7 @@ const CreateIssuanceForm = ({ handleClose, formOptions, open }) => {
                         component={TextField}
                         label={t("issuances:New Issuance Modal.Issuance Name")}
                         name="name"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Grid>
@@ -195,7 +195,7 @@ const CreateIssuanceForm = ({ handleClose, formOptions, open }) => {
                         component={TextField}
                         label={t("issuances:New Issuance Modal.Ticker")}
                         name="ticker"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Grid>
@@ -219,7 +219,7 @@ const CreateIssuanceForm = ({ handleClose, formOptions, open }) => {
                           component={TextField}
                           label={t("issuances:New Issuance Modal.Hybrid Sukuk Type")}
                           name="hybridSukukType"
-                          variant="filled"
+                          variant="outlined"
                           fullWidth
                         />
                       </Grid>

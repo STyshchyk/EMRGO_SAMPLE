@@ -413,7 +413,7 @@ const AccountTransferPage = () => {
                       fullWidth
                       component={TextField}
                       name="transferAmount"
-                      variant="filled"
+                      variant="outlined"
                       type="number"
                       min="0"
                       InputProps={{
@@ -443,7 +443,7 @@ const AccountTransferPage = () => {
                       rows={4}
                       component={TextField}
                       name="description"
-                      variant="filled"
+                      variant="outlined"
                     />
                   </Grid>
                 </Grid>

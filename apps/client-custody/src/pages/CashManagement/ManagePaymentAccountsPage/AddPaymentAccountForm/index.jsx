@@ -191,6 +191,7 @@ const AddPaymentAccountForm = ({
                 >
                   <Select
                     closeMenuOnSelect
+                    variant={"signup"}
                     placeholder={t("PaymentAccountManagement.AddPaymentAccountForm.Currency")}
                     isSearchable
                     styles={selectStyles}
@@ -213,7 +214,7 @@ const AddPaymentAccountForm = ({
                     component={TextField}
                     size="small"
                     name="name"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                   />
                 </InlineFormField>
@@ -224,7 +225,7 @@ const AddPaymentAccountForm = ({
                     component={TextField}
                     size="small"
                     name="label"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                   />
                 </InlineFormField>
@@ -260,7 +261,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="iban"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -273,7 +274,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="swift"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -286,7 +287,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="bankName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -305,7 +306,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="address"
-                        variant="filled"
+                        variant="outlined"
                       />
                     </InlineFormField>
 
@@ -317,7 +318,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="city"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -330,7 +331,7 @@ const AddPaymentAccountForm = ({
                         component={TextField}
                         size="small"
                         name="postcode"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </InlineFormField>
@@ -341,6 +342,7 @@ const AddPaymentAccountForm = ({
                     >
                       <Select
                         closeMenuOnSelect
+                        variant={"signup"}
                         placeholder={t("components:Select.Select")}
                         isSearchable
                         styles={selectStyles}
@@ -366,7 +368,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="accountNo"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -381,7 +383,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="routingNo"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -396,7 +398,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="sortCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -411,7 +413,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="ifscCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -426,7 +428,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="bsbCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -450,7 +452,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankIBAN"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -463,7 +465,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankBIC"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -476,7 +478,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankName"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -495,7 +497,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankAddress"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </InlineFormField>
 
@@ -507,7 +509,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankCity"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -520,7 +522,7 @@ const AddPaymentAccountForm = ({
                           component={TextField}
                           size="small"
                           name="intermediaryBankPostCode"
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                         />
                       </InlineFormField>
@@ -531,6 +533,7 @@ const AddPaymentAccountForm = ({
                       >
                         <Select
                           closeMenuOnSelect
+                          variant={"signup"}
                           placeholder={t("components:Select.Select")}
                           isSearchable
                           styles={selectStyles}
@@ -555,7 +558,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankAccountNo"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -569,7 +572,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankRouteCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -583,7 +586,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankSortCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -597,7 +600,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankIfscCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>
@@ -611,7 +614,7 @@ const AddPaymentAccountForm = ({
                             component={TextField}
                             size="small"
                             name="intermediaryBankBsbCode"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                           />
                         </InlineFormField>

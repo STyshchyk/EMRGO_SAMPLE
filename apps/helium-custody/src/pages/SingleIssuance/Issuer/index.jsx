@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -127,7 +127,7 @@ const Issuer = () => {
                         disabled={hasIssuer}
                         label={t("issuer:Form.Display Role")}
                         name="authorisedPersonDisplayRole"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>
@@ -137,7 +137,7 @@ const Issuer = () => {
                         disabled={hasIssuer}
                         label={t("issuer:Form.Entity Name")}
                         name="entityName"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>
@@ -151,7 +151,7 @@ const Issuer = () => {
                         label={t("issuer:Form.First Name")}
                         disabled={hasIssuer}
                         name="authorisedPersonFirstName"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>
@@ -161,7 +161,7 @@ const Issuer = () => {
                         label={t("issuer:Form.Middle Name")}
                         disabled={hasIssuer}
                         name="authorisedPersonMiddleName"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>
@@ -171,7 +171,7 @@ const Issuer = () => {
                         label={t("issuer:Form.Last Name")}
                         disabled={hasIssuer}
                         name="authorisedPersonLastName"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>
@@ -181,7 +181,7 @@ const Issuer = () => {
                         label={t("issuer:Form.Email ID")}
                         disabled={hasIssuer}
                         name="authorisedPersonEmail"
-                        variant="filled"
+                        variant="outlined"
                         fullWidth
                       />
                     </Box>

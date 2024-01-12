@@ -38,7 +38,7 @@ const CalculationField = ({
           component={TextField}
           name={fieldKey}
           // type="number"
-          variant="filled"
+          variant="outlined"
           size="small"
           value={fieldValue}
           onBlur={(e) => handleOnBlur(e, fieldKey)}

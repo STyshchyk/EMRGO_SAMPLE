@@ -238,7 +238,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       editComponent: (props) => (
         <MuiTextField
           label="Charge ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -285,7 +285,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       editComponent: (props) => (
         <MuiTextField
           label="Band Start ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -297,7 +297,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       editComponent: (props) => (
         <MuiTextField
           label="Band End ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -310,7 +310,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       editComponent: (props) => (
         <MuiTextField
           label="Charge ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -374,7 +374,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
       editComponent: (props) => (
         <MuiTextField
           label="Narrative"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -585,7 +585,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                         disabled
                         component={TextField}
                         name="client"
-                        variant="filled"
+                        variant="outlined"
                       />
                     </Grid>
                   </Grid>
@@ -667,7 +667,7 @@ const ClientRateCardViewDialog = ({ open, handleClose, selectedRow, modalType })
                         fullWidth
                         component={TextField}
                         name="minimumCharge"
-                        variant="filled"
+                        variant="outlined"
                       />
                     </Grid>
                   </Grid>

@@ -370,7 +370,7 @@ const SafekeepingAccounts = () => {
                     ...tableStyles,
                     toolbar: true,
                     pageSize: 10,
-                    searchFieldVariant: "filled",
+                    searchFieldVariant: "outlined",
                     searchFieldStyle: {
                       backgroundColor: "transparent",
                       border: "1px solid gray",

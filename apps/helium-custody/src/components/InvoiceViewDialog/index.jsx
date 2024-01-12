@@ -331,7 +331,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="client"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -347,7 +347,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="invoiceRef"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -363,7 +363,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="invoiceDate"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -379,7 +379,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           fullWidth
                           component={TextField}
                           name="minimumCharge"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -432,7 +432,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                       disabled={modalType !== "amend"}
                       component={TextField}
                       name="invoiceAmount"
-                      variant="filled"
+                      variant="outlined""
                       className="w-[20rem] ml-6 mr-2 "
                     />
                     {modalType === "amend" && (

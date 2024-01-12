@@ -40,7 +40,7 @@ const OutOfPocketExpensesSections = ({
         <MuiTextField
           fullWidth
           label="Narrative"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -54,7 +54,7 @@ const OutOfPocketExpensesSections = ({
         <MuiTextField
           fullWidth
           label="Charge ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />

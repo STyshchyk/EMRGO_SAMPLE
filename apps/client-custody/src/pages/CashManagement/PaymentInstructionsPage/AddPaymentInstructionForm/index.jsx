@@ -65,6 +65,7 @@ const AddPaymentInstructionForm = ({
           <Box mb={2}>
             <Box my={1} className="w-full">
               <Select
+                variant={"signup"}
                 name="sourceAccount"
                 placeholder={t("Payment Instructions.Modals.Placeholders.Source Account")}
                 components={{
@@ -115,6 +116,7 @@ const AddPaymentInstructionForm = ({
 
             <Box my={1} className="w-full">
               <Select
+                variant={"signup"}
                 name="paymentAccount"
                 components={{
                   Option: ReactSelectCurrencyOption,
@@ -163,13 +165,13 @@ const AddPaymentInstructionForm = ({
                       inputProps={{
                         shrink: "false",
                         size: "small",
-                        variant: "filled",
+                        variant: "outlined",
                       }}
                       slotProps={{
                         textField: {
                           size: "small",
                           fullWidth: true,
-                          variant: "filled",
+                          variant: "outlined",
                         },
                       }}
                     />
@@ -180,7 +182,7 @@ const AddPaymentInstructionForm = ({
                   }}
                   value={values.valueDate ? moment(values.valueDate) : null}
                   format={"DD/MM/YYYY"}
-                  inputVariant="filled"
+                  inputVariant="outlined"
                   label={t("Payment Instructions.Modals.Fields.Value Date")}
                   name="valueDate"
                   validateOnChange
@@ -207,7 +209,7 @@ const AddPaymentInstructionForm = ({
                   component={TextField}
                   label={t("Payment Instructions.Modals.Fields.Payment Amount")}
                   name="paymentAmount"
-                  variant="filled"
+                  variant="outlined"
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -235,11 +237,12 @@ const AddPaymentInstructionForm = ({
                 component={TextField}
                 label={t("Payment Instructions.Modals.Fields.Payment Details")}
                 name="paymentDetails"
-                variant="filled"
+                variant="outlined"
               />
             </Box>
             <Box my={1} className="w-full">
               <Select
+                variant={"signup"}
                 name="transferPurpose"
                 closeMenuOnSelect
                 placeholder={t("Payment Instructions.Modals.Placeholders.Transfer Purpose")}

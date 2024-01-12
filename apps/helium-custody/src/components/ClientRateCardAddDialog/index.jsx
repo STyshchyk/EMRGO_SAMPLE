@@ -280,7 +280,7 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                             fullWidth
                             component={TextField}
                             name="minimumCharge"
-                            variant="filled"
+                            variant="outlined"
                           />
                         </Grid>
                       </Grid>
@@ -294,7 +294,7 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                           <Field
                             fullWidth
                             format="DD/MM/YYYY"
-                            inputVariant="filled"
+                            inputVariant="outlined"
                             variant="dialog"
                             minDate={moment()}
                             placeholder="DD/MM/YYYY"
@@ -318,7 +318,7 @@ const ClientRateCardAddDialog = ({ open, handleClose }) => {
                           <Field
                             fullWidth
                             format="DD/MM/YYYY"
-                            inputVariant="filled"
+                            inputVariant="outlined"
                             variant="dialog"
                             minDate={values.startDate}
                             placeholder="DD/MM/YYYY"

@@ -38,6 +38,7 @@ export const OnboardUserComponent = () => {
                 component={FormikInputCustom}
                 type={"input"}
                 label={"Enter First Name"}
+                variant={"signup"}
                 placeholder="Enter your name"
               />
             </TwoCol>
@@ -48,6 +49,7 @@ export const OnboardUserComponent = () => {
                 component={FormikInputCustom}
                 name="lastName"
                 type={"input"}
+                variant={"signup"}
                 label={"Enter Last Name"}
                 placeholder="Enter your email"
               />
@@ -58,6 +60,7 @@ export const OnboardUserComponent = () => {
                 id="email"
                 name="email"
                 type={"email"}
+                variant={"signup"}
                 label={"Enter Email ID"}
                 component={FormikInputCustom}
               />
@@ -72,6 +75,7 @@ export const OnboardUserComponent = () => {
                 isClearable={false}
                 value={values.roles}
                 id={"roles"}
+                variant={"signup"}
                 isMulti={true}
                 onChange={(selected: any) => {
                   setFieldValue("roles", selected);

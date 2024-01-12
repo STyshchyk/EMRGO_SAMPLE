@@ -7,8 +7,8 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import MuiTextField from "@mui/material/TextField";
-import v from "voca";
 import { v4 as uuidv4 } from "uuid";
+import v from "voca";
 import * as yup from "yup";
 
 import { currencyRenderer } from "../../../constants/renderers";
@@ -49,7 +49,7 @@ const SafekeepingChargesSection = ({
         <MuiTextField
           fullWidth
           label="Start ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -62,7 +62,7 @@ const SafekeepingChargesSection = ({
         <MuiTextField
           fullWidth
           label="End ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -76,7 +76,7 @@ const SafekeepingChargesSection = ({
         <MuiTextField
           fullWidth
           label="Charge"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -91,7 +91,7 @@ const SafekeepingChargesSection = ({
         <MuiTextField
           fullWidth
           label="Valuation"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
@@ -105,7 +105,7 @@ const SafekeepingChargesSection = ({
         <MuiTextField
           fullWidth
           label="Charge ($)"
-          variant="filled"
+          variant="outlined"
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />

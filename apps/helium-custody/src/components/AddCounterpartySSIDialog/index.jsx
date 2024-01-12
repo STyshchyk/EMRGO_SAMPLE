@@ -470,7 +470,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                           component={TextField}
                           label="SSI Label"
                           name="ssiLabel"
-                          variant="filled"
+                          variant="outlined"
                           size="small"
                           type="text"
                         />
@@ -595,7 +595,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.DeliveryOrReceive Agent Identifier"
                           )}
                           name="deliveryOrReceiveIdentifier"
-                          variant="filled"
+                          variant="outlined"
                           size="small"
                           type="text"
                         />
@@ -673,7 +673,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.SellerOrBuyer Identifier"
                           )}
                           name="sellerOrBuyerIdentifier"
-                          variant="filled"
+                          variant="outlined"
                           size="small"
                           type="text"
                           disabled={settlementLocationIsSix || !values?.sellerOrBuyerIdType?.value} // No input accepted if Seller/Buyer ID Type is <Blank>
@@ -705,7 +705,7 @@ const AddCounterpartySSIDialog = ({ open, handleClose, selectedRow, setSelectedR
                             "Counterparty SSI.Add Counterparty SSI Form.Safekeeping Account"
                           )}
                           name="safekeepingAccount"
-                          variant="filled"
+                          variant="outlined"
                           size="small"
                           type="text"
                           disabled={settlementLocationIsSix}

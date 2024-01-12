@@ -119,14 +119,14 @@ const DependentInputField = (props) => {
 
   return (
     <>
-      {/* <Field fullWidth component={TextField} name="rate" variant="filled" type="number" /> */}
+      {/* <Field fullWidth component={TextField} name="rate" variant="outlined" type="number" /> */}
       <Field
         {...props}
         fullWidth
         component={TextField}
         label="Rate"
         name="rate"
-        variant="filled"
+        variant="outlined"
         type="number"
         value={values.rate}
         InputProps={{
@@ -462,7 +462,7 @@ const EditFXTransactionDialog = ({
                           component={TextField}
                           label="From Amount"
                           name="fromAmount"
-                          variant="filled"
+                          variant="outlined"
                           value={values.fromAmount}
                           InputProps={{
                             inputProps: values,
@@ -691,7 +691,7 @@ const EditFXTransactionDialog = ({
                               setFieldValue("narrative", event.target.value + "\n");
                           }}
                           rows={2}
-                          variant="filled"
+                          variant="outlined"
                           type="text"
                           inputProps={{
                             maxLength: 100,

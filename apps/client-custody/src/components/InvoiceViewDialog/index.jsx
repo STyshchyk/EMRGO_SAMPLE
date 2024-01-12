@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,11 +13,11 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
+import v from "voca";
 
 import { BANK_AMOUNT_DP } from "../../constants/currency/availableCurrencies";
 import { dateRenderer, idRenderer, roundNumber } from "../../constants/renderers";
@@ -331,7 +331,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="client"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -347,7 +347,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="invoiceRef"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -363,7 +363,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           disabled
                           component={TextField}
                           name="invoiceDate"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -379,7 +379,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                           fullWidth
                           component={TextField}
                           name="minimumCharge"
-                          variant="filled"
+                          variant="outlined"
                         />
                       </Grid>
                     </Grid>
@@ -432,7 +432,7 @@ const InvoiceViewDialog = ({ open, handleClose, selectedRow, modalType, fetchInv
                       disabled={modalType !== "amend"}
                       component={TextField}
                       name="invoiceAmount"
-                      variant="filled"
+                      variant="outlined"
                       className="w-[20rem] ml-6 mr-2 "
                     />
                     {modalType === "amend" && (

@@ -52,10 +52,17 @@ export const InputContainer = styled.div<{
         background: ${getTheme("colors.white.5")};
         border: 1px solid ${getTheme("colors.strokes.dark")};
       `}
-      ${variant === "signup" &&
+      ${theme.mode === "light" &&
+      variant === "signup" &&
       css`
         background: ${getTheme("colors.white.100")};
         border: 1px solid ${getTheme("colors.strokes.light")};
+      `}
+      ${theme.mode === "dark" &&
+      variant === "signup" &&
+      css`
+        background: ${getTheme("colors.white.0")};
+        border: 1px solid ${getTheme("colors.strokes.dark")};
       `}
     `}
 
@@ -71,13 +78,11 @@ export const InputContainer = styled.div<{
       css`
         border: 1px solid ${getTheme("colors.green5")};
       `}
-    `}
-
-  /* Error States */
-  ${(props) =>
+    `} /* Error States */ ${(props) =>
     props.$error &&
     css`
       ${props.theme.mode === "light" &&
+      props.variant === "default" &&
       css`
         border: 1px solid ${getTheme("colors.red")};
         background: linear-gradient(
@@ -89,6 +94,7 @@ export const InputContainer = styled.div<{
       `}
 
       ${props.theme.mode === "dark" &&
+      props.variant === "default" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
         background: linear-gradient(
@@ -99,7 +105,20 @@ export const InputContainer = styled.div<{
           ${getTheme("colors.white.10")};
       `}
 
-      ${props.variant === "signup" &&
+            ${props.theme.mode === "dark" &&
+      props.variant === "signup" &&
+      css`
+        border: 1px solid ${getTheme("colors.orange")};
+        background: linear-gradient(
+            0deg,
+            ${rgba(getTheme("colors.orange")(props), 0.05)},
+            ${rgba(getTheme("colors.orange")(props), 0.05)}
+          ),
+          ${getTheme("colors.white.10")};
+      `}
+
+            ${props.theme.mode === "light" &&
+      props.variant === "signup" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
         background: linear-gradient(
@@ -110,6 +129,7 @@ export const InputContainer = styled.div<{
           ${getTheme("colors.white.100")};
       `}
     `}
+
 
   ${({ $disabled }) => {
     if ($disabled) {
@@ -154,21 +174,21 @@ export const Label = styled.label<{
     css`
       color: ${getTheme("colors.white.60")};
     `}
-    ${variant === "signup" &&
+    ${theme.mode === "dark" &&
+    variant === "signup" &&
+    css`
+      color: ${getTheme("colors.white.60")};
+    `}
+    ${theme.mode === "light" &&
+    variant === "signup" &&
     css`
       color: ${getTheme("colors.black.60")};
     `}
-  `}
-
-  /* Active States */
-  ${({ $active }) =>
+  `} /* Active States */ ${({ $active }) =>
     !$active &&
     css`
       transform: translateY(${rem(5)}) scale(1.4);
-    `}
-
-  /* Error State */
-  ${({ $error, theme }) =>
+    `} /* Error State */ ${({ $error, theme }) =>
     $error &&
     css`
       ${theme.mode === "light" &&
@@ -203,6 +223,7 @@ export const Input = styled.input<{
   line-height: ${rem(16)};
 
   /* Variants */
+
   ${({ theme, variant = "default" }) => css`
     ${theme.mode === "light" &&
     css`
@@ -214,13 +235,19 @@ export const Input = styled.input<{
       color: ${getTheme("colors.white.100")};
       caret-color: ${getTheme("colors.green5")};
     `}
-    ${variant === "signup" &&
+    ${theme.mode === "dark" &&
+    variant === "signup" &&
     css`
-      color: ${getTheme("colors.black.100")};
+      color: ${getTheme("colors.white.100")};
       caret-color: ${getTheme("colors.green5")};
     `}
+    ${theme.mode === "light" &&
+    variant === "signup" &&
+    css`
+      color: ${getTheme("colors.black.100")};
+      caret-color: ${getTheme("colors.green3")};
+    `}
   `}
-
   :focus {
     outline: none;
   }
@@ -250,10 +277,7 @@ export const HelperText = styled.div<{ variant?: TInputVariants }>`
   min-height: ${rem(24)};
 
   /* Font Styles */
-  ${getTheme("typography.medium.02Tight")}
-
-  /* Variants */
-  ${({ theme, variant = "default" }) => css`
+  ${getTheme("typography.medium.02Tight")} /* Variants */ ${({ theme, variant = "default" }) => css`
     ${theme.mode === "light" &&
     css`
       color: ${getTheme("colors.black.50")};
@@ -282,6 +306,7 @@ export const Error = styled.div`
   line-height: ${rem(24)};
 
   /* Variants */
+
   span {
     ${({ theme }) => css`
       ${theme.mode === "light" &&

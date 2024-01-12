@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -19,8 +19,6 @@ import PropTypes from "prop-types";
 import entityTypes from "../../constants/wethaqAPI/onboarding";
 import regionSwitcher from "../../helpers/regions";
 import selectStyles from "../../styles/cssInJs/reactSelect";
-import DropdownSelect from "../DropdownSelect";
-import InputField from "../InputField";
 import Required from "../Required";
 import style from "./style.module.scss";
 
@@ -152,7 +150,7 @@ const AssignEntityModal = ({ isModalOpen, handleClose, submitAssignForm, data, e
                         component={TextField}
                         label={t(`administration:KYC.KYCManage.AssignEntityModal.First Name`)}
                         name="firstName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>
@@ -170,7 +168,7 @@ const AssignEntityModal = ({ isModalOpen, handleClose, submitAssignForm, data, e
                         component={TextField}
                         label={t(`administration:KYC.KYCManage.AssignEntityModal.Last Name`)}
                         name="lastName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>
@@ -301,7 +299,7 @@ const AssignEntityModal = ({ isModalOpen, handleClose, submitAssignForm, data, e
                         component={TextField}
                         label={t(`administration:KYC.KYCManage.AssignEntityModal.Entity Name`)}
                         name="entityName"
-                        variant="filled"
+                        variant="outlined"
                         type="text"
                       />
                     </Grid>

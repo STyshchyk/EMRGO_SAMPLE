@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Navigate, useParams } from "react-router-dom";
 
 // import { TextField } from 'formik-mui';
-
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik } from "formik";
@@ -57,7 +56,7 @@ const RegistrationForm = ({ requestPasswordReset, resetPasswordSuccess }) => {
                 component={TextField}
                 label={t("auth:Password")}
                 name="password"
-                variant="filled"
+                variant="outlined"
                 type="password"
               />
               {errors.password && <Typography variant="caption">{errors.password}</Typography>}
@@ -70,7 +69,7 @@ const RegistrationForm = ({ requestPasswordReset, resetPasswordSuccess }) => {
                 component={TextField}
                 label={t("auth:Confirm Password")}
                 name="confirmPassword"
-                variant="filled"
+                variant="outlined"
                 type="password"
                 data-testid="confirmPassword"
               />

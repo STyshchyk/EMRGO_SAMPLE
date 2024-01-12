@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import {NumericFormat} from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 import makeAnimated from "react-select/animated";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,7 +28,6 @@ import * as issuanceActionCreators from "../../redux/actionCreators/issuance";
 import * as issuanceSelectors from "../../redux/selectors/issuance";
 import selectStyles from "../../styles/cssInJs/reactSelect";
 import { getDropdownValues } from "../../utils/form";
-import { dateFormatter } from "../../utils/formatter";
 
 const animatedComponents = makeAnimated();
 
@@ -293,7 +292,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="name"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                       InputProps={{ readOnly: isEdit, disableUnderline: isEdit }}
                       disabled
@@ -310,7 +309,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="shortName"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -325,7 +324,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="longName"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -340,7 +339,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="issuanceName"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -353,7 +352,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="ticker"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -365,7 +364,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="isin"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -375,7 +374,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="exchangeCode"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -387,7 +386,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="profitRate"
-                      variant="filled"
+                      variant="outlined"
                       value={values.profitRate}
                       InputProps={{
                         inputComponent: CustomNumberInputField,
@@ -423,7 +422,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                     <Field
                       fullWidth
                       format="DD/MM/YYYY"
-                      inputVariant="filled"
+                      inputVariant="outlined"
                       variant="dialog"
                       placeholder="DD/MM/YYYY"
                       component={DatePicker}
@@ -443,7 +442,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                     <Field
                       fullWidth
                       format="DD/MM/YYYY"
-                      inputVariant="filled"
+                      inputVariant="outlined"
                       variant="dialog"
                       placeholder="DD/MM/YYYY"
                       minDate={moment()}
@@ -487,7 +486,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       fullWidth
                       component={TextField}
                       name="issuanceAmount"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                       InputProps={{
                         inputComponent: CustomNumberInputField,
@@ -596,7 +595,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       component={TextField}
                       label="Guarantor"
                       name="guarantor"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>
@@ -641,7 +640,7 @@ const AmendPrimaryIssuanceSecurityDialog = ({ open, handleClose, currentlySelect
                       InputProps={{ type: "number" }}
                       component={TextField}
                       name="maturityAmount"
-                      variant="filled"
+                      variant="outlined"
                       type="text"
                     />
                   </InlineFormField>

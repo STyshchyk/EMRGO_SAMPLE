@@ -183,7 +183,7 @@ const DateRangePicker = ({
               sx={{ width: "100%" }}
               //   className={style.input__datepicker}
               format="DD/MM/YYYY"
-              inputVariant="filled"
+              inputVariant="outlined"
               inputProps={{
                 shrink: "false",
               }}
@@ -223,7 +223,7 @@ const DateRangePicker = ({
               sx={{ width: "100%" }}
               //   className={style.input__datepicker}
               format="DD/MM/YYYY"
-              inputVariant="filled"
+              inputVariant="outlined"
               variant="dialog"
               showTodayButton
               minDate={pickerValues.startDate ?? moment()}

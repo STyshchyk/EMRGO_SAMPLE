@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "@emrgo-frontend/shared-ui";
 
+import { Select } from "@emrgo-frontend/shared-ui";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import InfoIcon from "@mui/icons-material/Info";
@@ -169,7 +169,7 @@ const OnboardingForm = ({ formPage, values, setFieldValue, countries }) => {
                 fullWidth
                 component={CustomTextField}
                 name="firstName"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 inputProps={{
                   maxLength: 40,
@@ -187,7 +187,7 @@ const OnboardingForm = ({ formPage, values, setFieldValue, countries }) => {
                 fullWidth
                 component={CustomTextField}
                 name="middleName"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 inputProps={{
                   maxLength: 40,
@@ -206,7 +206,7 @@ const OnboardingForm = ({ formPage, values, setFieldValue, countries }) => {
                 fullWidth
                 component={CustomTextField}
                 name="lastName"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 inputProps={{
                   maxLength: 40,
@@ -225,7 +225,7 @@ const OnboardingForm = ({ formPage, values, setFieldValue, countries }) => {
                 fullWidth
                 component={CustomTextField}
                 name="entityName"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 inputProps={{
                   maxLength: 40,
@@ -257,7 +257,7 @@ const OnboardingForm = ({ formPage, values, setFieldValue, countries }) => {
                 fullWidth
                 component={CustomTextField}
                 name="entityEmail"
-                variant="filled"
+                variant="outlined"
                 type="text"
                 inputProps={{
                   maxLength: 40,

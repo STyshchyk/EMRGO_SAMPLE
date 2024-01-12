@@ -119,7 +119,7 @@ const ApproveCouponAllocationDialog = ({ open, handleClose, currentlySelectedRow
                 <TextField
                   disabled
                   fullWidth
-                  variant="filled"
+                  variant="outlined"
                   value={totalCouponAmount}
                   InputProps={{
                     inputComponent: CustomNumberInputField,

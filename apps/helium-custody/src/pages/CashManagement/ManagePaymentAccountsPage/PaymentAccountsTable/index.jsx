@@ -203,7 +203,7 @@ const PaymentAccountsTable = ({ tableData }) => {
       data={tableData}
       options={{
         ...tableStyles,
-        searchFieldVariant: "filled",
+        searchFieldVariant: "outlined",
         pageSize: 10,
         actionsColumnIndex: -1,
         searchFieldStyle: {
