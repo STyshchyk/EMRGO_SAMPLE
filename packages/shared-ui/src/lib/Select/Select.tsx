@@ -13,7 +13,11 @@ export function Select<
   Option,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
->({ components: customComponent, ...props }: Props<Option, IsMulti, Group> & ISelectProps) {
+>({
+  components: customComponent,
+  type = "filled",
+  ...props
+}: Props<Option, IsMulti, Group> & ISelectProps) {
   const animatedComponents = {}; //to prevent flickering when using select in modals
   const { isDarkMode } = useDarkMode();
 
@@ -115,7 +119,7 @@ export function Select<
           columnGap: rem(8),
           backgroundColor: isDarkMode ? colors.green1 : colors.white[100],
           borderStyle: "solid",
-          borderWidth: "1px",
+          borderWidth: type === "standard" ? "0" : "1px",
           borderRadius: rem(4),
           padding: `${rem(1)} ${rem(4)}`,
           borderColor: isDarkMode
@@ -125,6 +129,7 @@ export function Select<
             : state.menuIsOpen
             ? colors.green3
             : colors.strokes.light,
+
           boxShadow: "none",
         }),
         menu: (styles, state) => ({

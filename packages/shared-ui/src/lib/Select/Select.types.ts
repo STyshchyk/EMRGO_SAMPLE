@@ -5,4 +5,7 @@ export interface ICustomComponent {
 
 export interface ISelectProps {
   components?: ICustomComponent;
+  type?: TSelectType;
 }
+
+type TSelectType = "standard" | "filled";
