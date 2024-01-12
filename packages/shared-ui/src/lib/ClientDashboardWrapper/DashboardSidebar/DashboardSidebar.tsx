@@ -133,8 +133,9 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
           </Tooltip>
           <SidebarListItem>
             <SidebarListItemSecondaryLink
+              disabled={true}
               onClick={() => {
-                navigateToModule("account", clientAccountRoutes.secureMessaging.inbox.home);
+                // navigateToModule("account", clientAccountRoutes.secureMessaging.inbox.home);
               }}
               className={
                 useClientMatchedPathSidebar(
