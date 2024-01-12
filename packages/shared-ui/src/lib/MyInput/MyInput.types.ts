@@ -27,6 +27,6 @@ export interface IMyInputProps extends HTMLAttributes<HTMLTextAreaElement>, Prop
   /** The input variant. Note Signup Variant should only be used on signup flows */
   variant?: TMyInputVariants;
   autoResize?: boolean;
-  onAttachlick?: () => void;
+  onAttachlick?: (e: any) => void;
   onSendClick?: () => void;
 }

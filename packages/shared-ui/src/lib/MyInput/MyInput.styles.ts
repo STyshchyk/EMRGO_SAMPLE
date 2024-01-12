@@ -203,17 +203,13 @@ export const ActionButtons = styled.div`
   display: flex;
   padding: 1rem 0.5rem 0.25rem 0;
   svg {
-    &:hover {
+    cursor: pointer;
+    &:first-child:hover {
       fill: ${getTheme("colors.green5")};
-      cursor: pointer;
     }
   }
   & svg:last-child {
     margin-left: auto;
-    fill: ${getTheme("colors.green3")};
-    &:hover {
-      fill: ${getTheme("colors.green5")};
-    }
   }
 `;
 export const AttachedFiles = styled.div`
