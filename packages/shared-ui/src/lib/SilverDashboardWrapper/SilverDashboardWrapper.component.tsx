@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import { ExpandArrow } from "@emrgo-frontend/shared-ui";
+import { useLocalStorage } from "usehooks-ts";
 
 import { SilverDashboardSidebar } from "./SilverDashboardSidebar";
 import * as Styles from "./SilverDashboardWrapper.styles";
@@ -9,7 +10,7 @@ import { ISilverDashboardWrapperProps } from "./SilverDashboardWrapper.types";
 export const SilverDashboardWrapperComponent: FC<ISilverDashboardWrapperProps> = ({
   children,
 }: ISilverDashboardWrapperProps) => {
-  const [isMenuHidden, setMenuHidded] = useState(false);
+  const [isMenuHidden, setMenuHidded] = useLocalStorage("SideBarState", false);
   return (
     <Styles.Container $isHidden={isMenuHidden}>
       <SilverDashboardSidebar isHidden={isMenuHidden} />
