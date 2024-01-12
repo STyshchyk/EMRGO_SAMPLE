@@ -27,6 +27,7 @@ export const SidebarListItemAccountLabel = styled.span`
 
 export const SidebarListItemAccountAvatar = styled.div`
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
