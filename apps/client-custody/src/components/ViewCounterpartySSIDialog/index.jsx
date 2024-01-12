@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 
 import StyledDialogHeader from "../StyledDialogHeader";
 
+const FALLBACK_VALUE = "--";
+
 const DataGridRow = ({ label, value }) => (
   <Grid container>
     <Grid item xs={6}>
@@ -20,7 +22,6 @@ const DataGridRow = ({ label, value }) => (
 const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedRowData }) => {
   const transformCounterpartySSIData = (counterpartySSIData, counterpartyData) => {
     if (!counterpartySSIData) return [];
-
     const {
       ssiLabel,
       counterparty,
@@ -56,11 +57,11 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
       },
       {
         label: "Seller Agent Identifier",
-        value: sellerIdentifier,
+        value: sellerIdentifier ?? FALLBACK_VALUE,
       },
       {
         label: "Seller Agent ID Type",
-        value: sellerIdentifierType?.name,
+        value: sellerIdentifierType?.name ?? FALLBACK_VALUE,
       },
       {
         label: "Settlement Location",
@@ -68,7 +69,7 @@ const ViewCounterpartySSIDialog = ({ data, open, handleClose, currentlySelectedR
       },
       {
         label: "Safe-keeping Account no.",
-        value: safekeepingAccount,
+        value: safekeepingAccount ?? FALLBACK_VALUE,
       },
     ];
   };

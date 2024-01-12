@@ -25,7 +25,7 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
   const counterpartiesList = useSelector(counterpartySelectors.selectAllCounterparties);
   const dropdownDataOptions = useSelector(dropdownSelectors.selectDropdownOptions);
   const externalSecuritiesList = useSelector(
-    externalSecuritiesSelectors.selectExternalSecuritiesData
+    externalSecuritiesSelectors.selectExternalSecuritiesList
   );
   const currentSafeAccounts = useSelector(reportsSelectors.selectSafeAccountsData);
 
@@ -117,6 +117,8 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
         accruedInterest,
         settlementAmount,
         internalTradeRef,
+        commission,
+        isEquityType,
       } = entry;
       const isFreeOfPayment = ["DFOP", "RFOP"].includes(settlementType);
 
@@ -140,9 +142,13 @@ const RaiseBulkTradesDialog = ({ open, handleClose, tableData }) => {
         principalAmount: !isFreeOfPayment
           ? parseFloat(principalAmount.replace(",", ""))
           : undefined,
-        accruedInterest: !isFreeOfPayment
-          ? parseFloat(accruedInterest.replace(",", ""))
-          : undefined,
+        accruedInterest:
+          !isEquityType && !isFreeOfPayment
+            ? parseFloat(accruedInterest.replace(",", ""))
+            : undefined,
+        commission:
+          isEquityType && !isFreeOfPayment ? parseFloat(commission.replace(",", "")) : undefined,
+
         settlementAmount: !isFreeOfPayment
           ? parseFloat(settlementAmount.replace(",", ""))
           : undefined,

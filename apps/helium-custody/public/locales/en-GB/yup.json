@@ -18,6 +18,7 @@
       "settlementAmount": "Settlement amount is required",
       "principalAmount": "Principal amount is required",
       "accruedInterest": "Accrued Interest is required",
+      "commission": "Commission is required",
       "settlementType": "Settlement type is required",
       "csdSelectOption": "Please select a Registrar before submitting",
       "baseCurrency": "Base Currency is required",

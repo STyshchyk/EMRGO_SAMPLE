@@ -194,8 +194,11 @@ export const MySelect = <
           }),
           multiValue: (base) => ({
             ...base,
-            backgroundColor: isDarkMode ? `${colors.strokes.light}` : `${colors.strokes.dark}`,
+            backgroundColor: isDarkMode ? `${colors.green5}` : `${colors.green2}`,
             svg: { fill: `${colors.red}` },
+            borderRadius:'5px',
+            display: 'flex',
+            alignItems: 'center',
           }),
           valueContainer: (styles, state) => ({
             ...styles,
@@ -203,13 +206,13 @@ export const MySelect = <
           multiValueLabel: (base) => ({
             ...base,
             ...typography.medium["02Tight"],
-            color: isDarkMode ? `${colors.strokes.dark}` : `${colors.strokes.light}`,
+            color: isDarkMode ? `${colors.black['90']}` : `${colors.white['100']}`,
           }),
         }}
       />
       {!!error && (
         <Styles.Error>
-          <Styles.ErrorIcon />
+            <Styles.ErrorIcon />
           <span>{error}</span>
         </Styles.Error>
       )}

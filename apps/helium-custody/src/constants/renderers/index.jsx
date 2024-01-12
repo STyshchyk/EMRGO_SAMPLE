@@ -2,10 +2,11 @@ import Chip from "@mui/material/Chip";
 import { amber, green, grey, red } from "@mui/material/colors";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import moment from "moment";
+import moment from "moment-timezone";
 import v from "voca";
 
 import tableStyles from "../../styles/cssInJs/materialTable";
+import { isValidDate } from "../../utils/dates";
 
 const chipStyle = {
   borderRadius: "3px",
@@ -46,6 +47,7 @@ export const titleRenderer = (value) => {
 };
 
 export const dateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
   let formattedDate = "NA";
   if (inputDate.isValid()) {
@@ -55,10 +57,13 @@ export const dateRenderer = (date) => {
 };
 
 export const reportDateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
-  let formattedDate = "-";
+  const timeZone = moment.tz.guess(); // Use the browser's time zone
+
+  let formattedDate = "NA";
   if (inputDate.isValid()) {
-    formattedDate = inputDate.format("DD/MM/YYYY HH:mm:ss");
+    formattedDate = inputDate.tz(timeZone).format("DD/MM/YYYY HH:mm:ss");
   }
   return formattedDate;
 };

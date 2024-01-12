@@ -1,9 +1,10 @@
 import { amber, green, grey, red } from "@mui/material/colors";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import v from "voca";
 import moment from "moment";
+import v from "voca";
 
+import { isValidDate } from "../../helpers/table";
 import tableStyles from "../../styles/cssInJs/materialTable";
 
 export const titleRenderer = (value) => {
@@ -12,6 +13,7 @@ export const titleRenderer = (value) => {
 };
 
 export const dateRenderer = (date) => {
+  if (!isValidDate(date)) return "--";
   const inputDate = moment(date);
   let formattedDate = "NA";
   if (inputDate.isValid()) {

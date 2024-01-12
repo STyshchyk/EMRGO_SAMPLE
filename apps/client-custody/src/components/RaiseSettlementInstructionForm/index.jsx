@@ -81,14 +81,14 @@ const DependentAmountField = (props) => {
   const isSettlementTypeDFOPorRFOP = ["DFOP", "RFOP"].includes(
     values.settlementTypeSelectOption?.label
   );
-  const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
+  const isVariantOutlined = currencyExists && !isSettlementTypeDFOPorRFOP;const isVariantfilled = currencyExists && !isSettlementTypeDFOPorRFOP;
   return (
     <Field
       fullWidth
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant={isVariantfilled ? "filled" : "filled"}
+      variant={isVariantOutlined ? "outlined" : "filled"}
       disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
       value={values[props.name]}
       InputProps={{
@@ -150,7 +150,7 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
 
   const requestPayload = {
     ...formikValues,
-    commission: isEquityType ? parseFloat(formikValues.accruedInterest, 10) : undefined,
+    commission: isEquityType ? parseFloat(formikValues.commission, 10) : undefined,
     portfolio_id: formikValues.portfolio_id?.id,
     settlementAmount: parseFloat(formikValues.settlementAmount, 10),
     price: parseFloat(formikValues.price, 10),
@@ -286,6 +286,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    commission: "",
     portfolio_id: "",
   },
   isSubmitting,
@@ -521,13 +522,13 @@ const RaiseSettlementInstructionForm = ({
                   inputProps={{
                     shrink: "false",
                     size: "small",
-                    variant: "filled",
+                    variant: "outlined",
                   }}
                   slotProps={{
                     textField: {
                       size: "small",
                       fullWidth: true,
-                      variant: "filled",
+                      variant: "outlined",
                     },
                   }}
                   value={values.tradeDate ? moment(values.tradeDate) : null}
@@ -563,13 +564,13 @@ const RaiseSettlementInstructionForm = ({
                   inputProps={{
                     shrink: "false",
                     size: "small",
-                    variant: "filled",
+                    variant: "outlined",
                   }}
                   slotProps={{
                     textField: {
                       size: "small",
                       fullWidth: true,
-                      variant: "filled",
+                      variant: "outlined",
                     },
                   }}
                   variant="dialog"
@@ -591,7 +592,7 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="filled"
+                  variant="outlined"
                   value={values.quantity}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -607,7 +608,7 @@ const RaiseSettlementInstructionForm = ({
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant={isVariantfilled ? "filled" : "filled"}
+                  variant={isVariantOutlined ? "outlined" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
@@ -649,10 +650,10 @@ const RaiseSettlementInstructionForm = ({
                   fullWidth
                   component={CustomTextField}
                   label={isEquityType ? "Commission / Charges" : "Accrued Interest"}
-                  name="accruedInterest"
-                  variant={isVariantfilled ? "filled" : "filled"}
+                  name={isEquityType ? "commission" : "accruedInterest"}
+                  variant={isVariantOutlined ? "outlined" : "filled"}
                   disabled={!currencyExists || isSettlementTypeDFOPorRFOP}
-                  value={values.accruedInterest}
+                  value={isEquityType ? values.commission : values.accruedInterest}
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -679,12 +680,15 @@ const RaiseSettlementInstructionForm = ({
                   label="Settlement Amount"
                   name="settlementAmount"
                   valueA={{ key: "principalAmount", value: values?.principalAmount }}
-                  valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
+                  valueB={{
+                    key: isEquityType ? "commission" : "accruedInterest",
+                    value: isEquityType ? values.commission : values.accruedInterest,
+                  }}
                   calculatedValue={
                     isEquityType
                       ? settlementType === "DVP"
-                        ? Number(values?.principalAmount) - Number(values?.accruedInterest)
-                        : Number(values?.principalAmount) + Number(values?.accruedInterest)
+                        ? Number(values?.principalAmount) - Number(values?.commission)
+                        : Number(values?.principalAmount) + Number(values?.commission)
                       : Number(values?.principalAmount) + Number(values?.accruedInterest)
                   }
                 />
@@ -738,7 +742,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Client Settlement Reference"
                   name="internalTradeRef"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {
@@ -749,7 +753,7 @@ const RaiseSettlementInstructionForm = ({
 
               <Grid item container spacing={2} justifyContent="flex-end">
                 <Grid item>
-                  <Button color="primary" variant="filled" onClick={handleCloseDialog}>
+                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
                     Cancel
                   </Button>
                 </Grid>

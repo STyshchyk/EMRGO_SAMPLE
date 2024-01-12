@@ -1,9 +1,12 @@
 import moment from "moment";
 
+import { isValidDate } from "../helpers/table";
+
 const toMomentObject = (date) => moment(date);
 
 const dateFormatter = (date, format) => {
   if (!date) return "";
+  if (!isValidDate(date)) return "--";
   return moment(date).format(format);
 };
 

@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+
+import moment from "moment/moment";
 
 import CorporateActionEventsTable, {
   generateCAEventsTableRowData,
@@ -9,8 +10,11 @@ import LoadingPage from "../../../components/LoadingPage";
 import ViewCorporateActionEventDialog from "../../../components/ViewCorporateActionEventDialog";
 import useWethaqAPIParams from "../../../hooks/useWethaqAPIParams";
 import * as CAEventsActionCreators from "../../../redux/actionCreators/corporateActionEvents";
+import * as paymentAndSettlementActionCreators from "../../../redux/actionCreators/paymentAndSettlement";
 import * as authSelectors from "../../../redux/selectors/auth";
 import * as CAEventsSelectors from "../../../redux/selectors/corporateActionEvents";
+import * as paymentAndSettlementSelectors from "../../../redux/selectors/paymentAndSettlement";
+import { isValidDate } from "../../../utils/dates";
 
 const CorporateActionEvents = () => {
   const dispatch = useDispatch();
@@ -28,9 +32,27 @@ const CorporateActionEvents = () => {
   const currentEntityType = currentEntityGroup?.entityType;
   const corporateActionEvents = useSelector(CAEventsSelectors.selectCorporateActionEventsList);
   const isFetchingCAEvents = useSelector(CAEventsSelectors.selectIsFetching);
+  const paymentsList = useSelector(paymentAndSettlementSelectors.selectPaymentsList);
 
-  const tableData = corporateActionEvents?.map((item) => generateCAEventsTableRowData(item));
+  const tableData = corporateActionEvents?.map((item) =>
+    generateCAEventsTableRowData(item, paymentsList)
+  );
 
+  const filteredTableData = tableData?.filter((item) => {
+    const actualSettlementDate = moment(item?.actualSettlementDate).startOf("day").toISOString();
+    const recordDate = moment(item?.recordDate).startOf("day").toISOString();
+    const exDate = moment(item?.exDate).startOf("day").toISOString();
+    //*Event should not be displayed when SI settled after Record date & Ex date
+    // Check if actualSettlementDate does not exceed recordDate or exDate
+    if (isValidDate(actualSettlementDate)) {
+      return (
+        moment(actualSettlementDate).isSameOrBefore(moment(recordDate)) ||
+        moment(actualSettlementDate).isSameOrBefore(moment(exDate))
+      );
+    }
+
+    return false;
+  });
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
@@ -43,6 +65,10 @@ const CorporateActionEvents = () => {
     // fetches those where inv holds position in security (BE filtering it based on entityId?)
     const fetchCorporateActionEventsList = () => dispatch(CAEventsActionCreators.doFetchCAEvents());
     fetchCorporateActionEventsList();
+
+    const fetchPaymentsList = () =>
+      dispatch(paymentAndSettlementActionCreators.doFetchPaymentsList());
+    fetchPaymentsList();
   }, [dispatch]);
 
   // !change label based on BRD
@@ -76,7 +102,7 @@ const CorporateActionEvents = () => {
       <CorporateActionEventsTable
         actions={defaultTableActions}
         anchorEl={anchorEl}
-        data={tableData}
+        data={filteredTableData}
         setAnchorEl={setAnchorEl}
         setCurrentlySelectedRowData={setCurrentlySelectedRowData}
         currentlySelectedRowData={currentlySelectedRowData}

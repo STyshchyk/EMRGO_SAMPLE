@@ -17,6 +17,8 @@ import DropdownFilter from "../FilterComponents/DropdownFilterUpdated";
 import TableFiltersWrapper from "../FilterComponents/TableFiltersWrapper";
 import MaterialTableOverflowMenu from "../MaterialTableOverflowMenu";
 
+const FALLBACK_VALUE = "--";
+
 const generateCAEventsTableRowData = (i, paymentsList) => {
   //** API support will need to be improved in the future so filtered on the FE for now
   const settlementInstructions = paymentsList
@@ -34,18 +36,18 @@ const generateCAEventsTableRowData = (i, paymentsList) => {
     id: i?.id,
     exDate: i?.exDate,
     recordDate: i?.recordDate,
-    paymentDate: i.paymentDate,
+    paymentDate: i.paymentDate ?? FALLBACK_VALUE,
     securityId: getAttribute(i?.externalSecurity?.attributes, "isin") ?? i.securityId,
     securityName: i?.securityName?.label,
     eventType: i?.eventType?.name,
-    eventId: i?.eventId ?? "--",
+    eventId: i?.eventId ?? FALLBACK_VALUE,
     eventStatus: i?.eventStatus?.name,
     mandatoryOrVoluntary: i?.voluntary ? "V" : "M",
     responseDeadline: i?.clientResponseDeadline,
     eventTerms: i?.eventTerms,
     additionalInfo: i?.additionalInfo,
-    linkedEventId: i?.linkedEvent?.eventId ?? "--",
-    portfolioId: settlementInstructions[0]?.portfolioId,
+    linkedEventId: i?.linkedEvent?.eventId ?? FALLBACK_VALUE,
+    portfolioId: settlementInstructions[0]?.portfolio_id,
     actualSettlementDate: settlementInstructions[0]?.actualSettlementDate,
   };
 };

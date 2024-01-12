@@ -7,7 +7,7 @@ const addSecurityFormSchema = Yup.object().shape({
   issuanceName: Yup.string().nullable().required("Issuance Name is required"),
   // wsn: Yup.string().nullable().required('WSN is required'),
   isin: Yup.string().nullable().required("ISIN is required"),
-  ticker: Yup.string().nullable().required("Ticker is required"),
+  ticker: Yup.string().nullable(),
   profitRate: Yup.number().min(0).max(100).nullable().required("Rate is required"),
   country: Yup.object().shape({
     label:Yup.string(),

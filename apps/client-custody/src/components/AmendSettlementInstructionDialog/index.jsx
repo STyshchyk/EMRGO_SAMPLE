@@ -31,6 +31,9 @@ const generateEntityOptionsList = (data) =>
     }));
 
 const generateInitialValues = (rowData) => {
+  const isEquity = rowData?.isEquityType;
+  const isFreeOfPayment = ["DFOP", "RFOP"].includes(rowData?.settlementType);
+
   return {
     counterpartySelectOption: {
       label: rowData?.counterpartyObject?.shortName,
@@ -62,7 +65,14 @@ const generateInitialValues = (rowData) => {
     tradeDate: new Date(rowData?.tradeDate),
     // new fields
     principalAmount: parseFloat(rowData?.principalAmount.replace(",", ""), 10),
-    accruedInterest: parseFloat(rowData?.accruedInterest.replace(",", ""), 10),
+    accruedInterest:
+      !isEquity && !isFreeOfPayment
+        ? parseFloat(rowData?.accruedInterest.replace(",", ""), 10)
+        : undefined,
+    commission:
+      isEquity && !isFreeOfPayment
+        ? parseFloat(rowData?.commission.replace(",", ""), 10)
+        : undefined,
     internalTradeRef: rowData?.internalTradeRef,
     entityGroup: rowData?.entityGroup,
     entityGroupId: rowData?.entityGroupId,

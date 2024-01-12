@@ -76,6 +76,7 @@ export const generateExternalSecurityOptionsList = (data) => {
           label: item.isin || getAttribute(item?.attributes, "isin"),
           value: { ...item, isin: getAttribute(item?.attributes, "isin") ?? item?.isin },
         }))
+        .filter((item) => !!item.value.isin)
     );
   }
 
@@ -186,7 +187,9 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
           : "",
         exDate: moment(selectedCorporateActionEvent?.exDate) || null,
         recordDate: moment(selectedCorporateActionEvent?.recordDate),
-        paymentDate: moment(selectedCorporateActionEvent?.paymentDate),
+        paymentDate: selectedCorporateActionEvent?.paymentDate
+          ? moment(selectedCorporateActionEvent?.paymentDate)
+          : undefined,
         eventTerms: selectedCorporateActionEvent?.eventTerms || "",
         additionalInfo: selectedCorporateActionEvent?.additionalInfo || "",
         mandatoryOrVoluntary: selectedCorporateActionEvent?.voluntary
@@ -247,7 +250,7 @@ const AddCorporateActionEventDialog = ({ open, handleClose, selectedRow, setSele
       securityName: formikValues?.externalSecuritySelectOption?.value?.longName,
       exDate: formikValues?.exDate,
       recordDate: formikValues?.recordDate,
-      paymentDate: formikValues?.paymentDate,
+      paymentDate: formikValues?.paymentDate ?? undefined,
       status: formikValues?.eventStatus?.value,
       eventTerms: formikValues?.eventTerms,
       additionalInfo: formikValues?.additionalInfo,

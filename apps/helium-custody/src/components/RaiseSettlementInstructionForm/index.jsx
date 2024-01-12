@@ -84,7 +84,7 @@ const DependentAmountField = (props) => {
       component={CustomTextField}
       label={props.label}
       name={props.name}
-      variant="filled"
+      variant="outlined"
       value={values[props.name]}
       disabled={
         !values.externalSecuritySelectOption?.value?.currencyName ||
@@ -165,9 +165,11 @@ export const buildRaiseSIRequestPayload = (formikValues) => {
     principalAmount: !formikValues.principalAmount
       ? 0
       : parseFloat(formikValues.principalAmount, 10),
-    [isEquity ? "commission" : "accruedInterest"]: !formikValues.accruedInterest
-      ? 0
-      : parseFloat(formikValues.accruedInterest, 10),
+    commission: isEquity ? parseFloat(formikValues.commission, 10) : undefined,
+    accruedInterest: !isEquity ? parseFloat(formikValues.accruedInterest, 10) : undefined,
+    // [isEquity ? "commission" : "accruedInterest"]: !formikValues.accruedInterest
+    //   ? 0
+    //   : parseFloat(formikValues.accruedInterest, 10),
     tradeDate: formikValues?.tradeDate,
     settlementDate: formikValues?.settlementDate,
     internalTradeRef: formikValues.internalTradeRef === "" ? "--" : formikValues.internalTradeRef, // otherwise even when internalRef isn't amended appears on audit log
@@ -294,6 +296,7 @@ const RaiseSettlementInstructionForm = ({
     internalTradeRef: "",
     principalAmount: "",
     accruedInterest: "",
+    commission: "",
     portfolio_id: "",
   },
   isSubmitting,
@@ -414,7 +417,7 @@ const RaiseSettlementInstructionForm = ({
                     placeholder="Entity"
                     component={CustomTextField}
                     name="entity"
-                    variant="filled"
+                    variant="outlined"
                     type="text"
                     value={
                       values?.entityGroup?.entity?.corporateEntityName ||
@@ -516,7 +519,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="ISIN"
                   name="isin"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.externalSecuritySelectOption?.value?.isin ?? ""}
                   disabled
@@ -529,7 +532,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Currency"
                   name="currencyName"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.externalSecuritySelectOption?.value?.currencyName?.name ?? ""}
                   disabled
@@ -545,11 +548,11 @@ const RaiseSettlementInstructionForm = ({
                   value={values.tradeDate ? moment(values.tradeDate) : null}
                   format={DEFAULT_DATE_FORMAT}
                   fullWidth
-                  inputvariant="filled"
+                  inputvariant="outlined"
                   label={DEFAULT_DATE_FORMAT}
                   name="tradeDate"
                   variant="dialog"
-                  slotProps={{ textField: { size: "small", variant: "filled" } }}
+                  slotProps={{ textField: { size: "small" } }}
                 />
               </InlineFormField>
 
@@ -562,13 +565,13 @@ const RaiseSettlementInstructionForm = ({
                   value={values.settlementDate ? moment(values.settlementDate) : null}
                   format={DEFAULT_DATE_FORMAT}
                   fullWidth
-                  inputvariant="filled"
+                  inputvariant="outlined"
                   label={DEFAULT_DATE_FORMAT}
                   minDate={moment(values.tradeDate)}
                   name="settlementDate"
                   variant="dialog"
                   disabled={!values.tradeDate}
-                  slotProps={{ textField: { size: "small", variant: "filled" } }}
+                  slotProps={{ textField: { size: "small" } }}
                 />
               </InlineFormField>
 
@@ -579,7 +582,7 @@ const RaiseSettlementInstructionForm = ({
                   disabled={false} // !Dev notes: Jeez :/ -> (https://github.com/stackworx/formik-mui/issues/81#issuecomment-517260458)
                   label="Quantity"
                   name="quantity"
-                  variant="filled"
+                  variant="outlined"
                   value={values.quantity}
                   decimalScale={6}
                   InputProps={{
@@ -601,7 +604,7 @@ const RaiseSettlementInstructionForm = ({
                   label="Price"
                   name="price"
                   value={values.price}
-                  variant="filled"
+                  variant="outlined"
                   InputProps={{
                     inputComponent: CustomNumberInputField,
                     endAdornment: (
@@ -642,9 +645,9 @@ const RaiseSettlementInstructionForm = ({
                   fullWidth
                   component={CustomTextField}
                   label={isEquity ? "Commission/Charges" : "Accrued Interest"}
-                  name="accruedInterest"
-                  variant="filled"
-                  value={values.accruedInterest}
+                  name={isEquity ? "commission" : "accruedInterest"}
+                  variant="outlined"
+                  value={isEquity ? values.commission : values.accruedInterest}
                   disabled={
                     !values.externalSecuritySelectOption?.value?.currencyName ||
                     ["DFOP", "RFOP"].includes(values.settlementTypeSelectOption?.label)
@@ -675,12 +678,22 @@ const RaiseSettlementInstructionForm = ({
                   label="Settlement Amount"
                   name="settlementAmount"
                   valueA={{ key: "principalAmount", value: values?.principalAmount }}
-                  valueB={{ key: "accruedInterest", value: values?.accruedInterest }}
+                  valueB={{
+                    key: isEquity ? "commission" : "accruedInterest",
+                    value: isEquity ? values.commission : values.accruedInterest,
+                  }}
                   calculatedValue={
-                    isEquity && settlementType === "DVP"
-                      ? Number(values?.principalAmount) - Number(values?.accruedInterest)
-                      : Number(values?.principalAmount) + Number(values?.accruedInterest) // if equity RVP or if FI security RVP/DVP
+                    isEquity
+                      ? settlementType === "DVP"
+                        ? Number(values?.principalAmount) - Number(values?.commission)
+                        : Number(values?.principalAmount) + Number(values?.commission)
+                      : Number(values?.principalAmount) + Number(values?.accruedInterest)
                   }
+                  // calculatedValue={
+                  //   isEquity && settlementType === "DVP"
+                  //     ? Number(values?.principalAmount) - Number(values?.accruedInterest)
+                  //     : Number(values?.principalAmount) + Number(values?.accruedInterest) // if equity RVP or if FI security RVP/DVP
+                  // }
                 />
               </InlineFormField>
 
@@ -732,7 +745,7 @@ const RaiseSettlementInstructionForm = ({
                   component={CustomTextField}
                   label="Client Settlement Reference"
                   name="internalTradeRef"
-                  variant="filled"
+                  variant="outlined"
                   type="text"
                   value={values.internalTradeRef ?? ""}
                   onChange={(newValue) => {
@@ -743,7 +756,7 @@ const RaiseSettlementInstructionForm = ({
 
               <Grid item container spacing={2} justifyContent="flex-end">
                 <Grid item>
-                  <Button color="primary" variant="filled" onClick={handleCloseDialog}>
+                  <Button color="primary" variant="outlined" onClick={handleCloseDialog}>
                     Cancel
                   </Button>
                 </Grid>

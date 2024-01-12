@@ -28,7 +28,7 @@ export const selectExternalSecuritiesList = createSelector(
           ? { label: item.frequencyName.name, value: item.frequencyName.id }
           : null,
         id: item.id,
-        isin: item.isin,
+        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value,
         issuanceAmount: item.issuanceAmount,
         issuanceName: item.issuanceName,
         issueDate: item?.issueDate,
@@ -38,7 +38,7 @@ export const selectExternalSecuritiesList = createSelector(
         profitRate: item.profitRate,
         shortName: item.shortName,
         status: item?.status ? { label: item.status, value: item.status } : null,
-        ticker: item.ticker,
+        ticker: item.ticker ? item?.attributes.find(attribute => attribute.match.key === 'ticker')?.value : '--' ,
         wsn: item.wsn,
         isPrimaryIssuance: Boolean(item.isPrimaryIssuance),
         attributes:item?.attributes
@@ -59,7 +59,8 @@ export const selectAllExternalSecurities = createSelector(
         // securityLongName: item?.longName,
         // securityShortName: item?.shortName,
         // coupons:item?.coupons,
-        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value
+        isin: item?.isin ?? item?.attributes.find(attribute => attribute.match.key === 'isin')?.value,
+        ticker: item?.attributes.find(attribute => attribute.match.key === 'ticker')?.value ?? '--'
       }));
 
       return orderby(fixed, ["name"], ["asc"]);

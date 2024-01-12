@@ -80,6 +80,7 @@
     "lodash.sortby": "^4.7.0",
     "moment": "^2.29.4",
     "moment-range": "^4.0.2",
+    "moment-timezone": "^0.5.43",
     "named-urls": "^2.0.1",
     "object-resolve-path": "^1.1.1",
     "papaparse": "^5.4.1",

@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import moment from "moment";
@@ -42,10 +41,9 @@ const CorporateActionEvents = () => {
   );
 
   const filteredTableData = tableData?.filter((item) => {
-    const actualSettlementDate = item?.actualSettlementDate;
-    console.log(actualSettlementDate);
-    const recordDate = item?.recordDate;
-    const exDate = item?.exDate;
+    const actualSettlementDate = moment(item?.actualSettlementDate).startOf("day").toISOString();
+    const recordDate = moment(item?.recordDate).startOf("day").toISOString();
+    const exDate = moment(item?.exDate).startOf("day").toISOString();
 
     //*Event should not be displayed when SI settled after Record date & Ex date
     // Check if actualSettlementDate does not exceed recordDate or exDate
@@ -102,7 +100,8 @@ const CorporateActionEvents = () => {
       },
       disabled:
         currentlySelectedRowData?.mandatoryOrVoluntary === "M" ||
-        moment(currentlySelectedRowData?.responseDeadline).isBefore(currentDateParsed),
+        moment(currentlySelectedRowData?.responseDeadline).isBefore(currentDateParsed) ||
+        currentlySelectedRowData?.eventStatus === "Cancelled",
     },
   ];
 
