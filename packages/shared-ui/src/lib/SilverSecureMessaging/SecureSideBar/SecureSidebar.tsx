@@ -1,23 +1,16 @@
 import React, { FC, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import * as constants from "@emrgo-frontend/constants";
+import { FilterArea, SideBarList } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
-import EmojiFlagsIcon from "@mui/icons-material/EmojiFlags";
-import EventIcon from "@mui/icons-material/Event";
-import { Avatar } from "@mui/material";
-import { reverse } from "named-urls";
 
 import { Button } from "../../Button/Button";
-import { Checkbox } from "../../Checkbox/Checkbox";
-import { FilterArea } from "../FilterArea";
 import { useSilverSecureMessagingContext } from "../SilverSecureMessaging.provider";
 import * as Styles from "./SecureSidebar.styles";
 
 export const SecureSideBar: FC = () => {
-  const { messagesList, checked, setChecked, isCheckModeSelected, setCheckMode } = ensureNotNull(
-    useSilverSecureMessagingContext()
-  );
+  const { messagesList, checked, setChecked, isCheckModeSelected, setCheckMode, setNewMsgGroup } =
+    ensureNotNull(useSilverSecureMessagingContext());
   const localtion = useLocation();
   const navigate = useNavigate();
 
@@ -38,66 +31,22 @@ export const SecureSideBar: FC = () => {
 
   return (
     <Styles.DashboardSidebar>
-      <Button size={"medium"} variant={"secondary"}>
+      <Button
+        size={"medium"}
+        variant={"secondary"}
+        onClick={() => {
+          setNewMsgGroup(true);
+        }}
+      >
         Create new message
       </Button>
       <FilterArea />
-      <nav style={{ padding: "2rem 0" }}>
-        {messagesList.map((message: any) => {
-          const route = reverse(`${constants.clientAccountRoutes.secureMessaging.inbox.id}`, {
-            id: message.id,
-          });
-          return (
-            <Styles.SidebarList key={message.id}>
-              <Styles.SidebarListItem>
-                <Styles.SidebarListItemLink
-                  active={localtion.pathname === route}
-                  unread={message?.isRead ?? true}
-                  onClick={() => {
-                    navigate(route);
-                  }}
-                >
-                  <Styles.Initials checkMode={isCheckModeSelected}>
-                    <Avatar sx={{ width: 34, height: 34 }}>
-                      {message.enityName
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </Avatar>
-                  </Styles.Initials>
-                  <Styles.Select checkMode={isCheckModeSelected}>
-                    <Checkbox
-                      checked={checked.indexOf(message.id) >= 0}
-                      onChange={(event) => {
-                        handleCheck(message.id);
-                        if (selectAllRef.current) selectAllRef.current.indeterminate = true;
-                      }}
-                    />
-                  </Styles.Select>
-                  <Styles.TextWrapper>
-                    <Styles.Elipsis>{message.enityName}</Styles.Elipsis>
-                    <Styles.DateWrapper>
-                      <EventIcon fontSize={"small"} />
-                    </Styles.DateWrapper>
-                  </Styles.TextWrapper>
-                  <Styles.TextWrapper>
-                    <Styles.Elipsis>{message.subject}</Styles.Elipsis>
-                    <Styles.DateWrapper>2024.24.52</Styles.DateWrapper>
-                  </Styles.TextWrapper>
-                  <Styles.TextWrapper>
-                    <Button size={"small"} variant={"primary"}>
-                      Status
-                    </Button>
-                    <Styles.DateWrapper isActive={false} hover={true}>
-                      <EmojiFlagsIcon fontSize={"small"} onClick={() => {}} />
-                    </Styles.DateWrapper>
-                  </Styles.TextWrapper>
-                </Styles.SidebarListItemLink>
-              </Styles.SidebarListItem>
-            </Styles.SidebarList>
-          );
-        })}
-      </nav>
+      <SideBarList
+        messagesList={messagesList}
+        isMessageEditConsoleActive={() => {
+          setNewMsgGroup(false);
+        }}
+      />
     </Styles.DashboardSidebar>
   );
 };
