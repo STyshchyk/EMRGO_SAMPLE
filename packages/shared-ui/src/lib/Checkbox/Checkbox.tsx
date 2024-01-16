@@ -8,7 +8,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
     return (
       <Styles.Label className={className}>
         <Styles.Checkbox {...checkboxProps} type="checkbox" ref={ref} />
-        <span>{children}</span>
+        <Styles.LabelText>{children}</Styles.LabelText>
       </Styles.Label>
     );
   }

@@ -1,52 +1,31 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import Chip from "@mui/material/Chip";
-
-import { MyTextArea } from "../../MyInput";
+import { AttachedFile } from "../AttachedFile";
 import * as Styles from "./MessageContainer.styles";
 import { IMessageContainerProps } from "./MessageContainer.types";
 
-export const MessageContainer: FC<IMessageContainerProps> = ({}) => {
+export const MessageContainer: FC<IMessageContainerProps> = ({
+  isSendMode = false,
+  sendMode,
+  messsageList = isSendMode ? [] : Array.from(Array(5).keys()),
+}) => {
   const { id } = useParams();
-  const [value, setValue] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
-  const [isSent, setIsSend] = useState(false);
-  const [file, setFile] = useState<File | []>([]);
-  const fileInputRef = useRef(null);
-
-  const handleButtonClick = () => {
-    // @ts-ignore
-    fileInputRef.current.click();
-  };
-
-  const handleFileDelete = (index: number) => {
-    const temp = [...file];
-    temp.splice(index, 1);
-    setFile(temp);
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = [...event.target.files] || [];
-    setFile((prevState) => [...prevState, ...files]);
-    console.log(event.target.files);
-    const formData: any = new FormData();
-    formData.append("file", event.target.files);
-    console.log(formData.values());
-  };
+  const emptyMessageBox = Array.isArray(messsageList) && messsageList.length > 0;
+  const files = [1, 2, 3];
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [id, isSent]);
+  }, [id]);
+
   return (
-    <>
-      <Styles.Subject>Hello</Styles.Subject>
-      <Styles.MessageContainer>
-        <Styles.MessagesBox>
-          {Array.from(Array(5).keys()).map((elem, index) => {
+    <Styles.MessageContainer>
+      <Styles.MessagesBox isEmpty={emptyMessageBox}>
+        {emptyMessageBox ? (
+          messsageList.map((elem, index) => {
             return (
-              <Styles.MessageItem isSender={index % 2 === 1}>
+              <Styles.MessageItem $isSender={index % 2 === 1} key={index}>
                 <Styles.MessageHeader>
                   <span>Instant Doe</span>
                   <span>15.56 12.12.24</span>
@@ -63,58 +42,22 @@ export const MessageContainer: FC<IMessageContainerProps> = ({}) => {
                   deserunt ducimus enim, eos harum laborum mollitia odit praesentium provident quae
                   quasi qui reiciendis, soluta veniam!
                 </Styles.MessageContent>
+                {Array.isArray(files) && files.length > 0 && (
+                  <Styles.MessageFilesContainer>
+                    {files.map((file, index) => {
+                      return <AttachedFile key={index} variant={"outlined"} />;
+                    })}
+                  </Styles.MessageFilesContainer>
+                )}
               </Styles.MessageItem>
             );
-          })}
-        </Styles.MessagesBox>
+          })
+        ) : (
+          <> Start New Query</>
+        )}
+      </Styles.MessagesBox>
 
-        <div ref={bottomRef} />
-      </Styles.MessageContainer>
-      <Styles.MessageInput>
-        <MyTextArea
-          label={"Enter Text"}
-          type={"textarea"}
-          autoResize={true}
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          onSendClick={() => {
-            console.log("click");
-            setIsSend((prevState) => !prevState);
-          }}
-          onAttachlick={() => {
-            console.log("attach");
-            handleButtonClick();
-          }}
-        >
-          {file.map((file, index) => {
-            return (
-              <Chip
-                label={file.name}
-                onClick={() => {}}
-                onDelete={() => {
-                  handleFileDelete(index);
-                }}
-                deleteIcon={<DeleteIcon />}
-                variant="outlined"
-              />
-            );
-          })}
-        </MyTextArea>
-        <input
-          type="file"
-          ref={fileInputRef}
-          multiple
-          accept={
-            "image/jpg, image/jpeg, image/png, application/pdf, .csv, .doc, .docx, .xls, .xlsx, .csv"
-          }
-          style={{ display: "none" }}
-          onChange={(e) => {
-            handleFileChange(e);
-          }}
-        />
-      </Styles.MessageInput>
-    </>
+      <div ref={bottomRef} />
+    </Styles.MessageContainer>
   );
 };

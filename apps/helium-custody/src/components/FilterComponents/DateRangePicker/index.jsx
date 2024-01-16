@@ -180,7 +180,12 @@ const DateRangePicker = ({
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} lg={6}>
             <DatePicker
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                "& .MuiInputBase-input": {
+                  padding: "8px 12px",
+                },
+              }}
               //   className={style.input__datepicker}
               format="DD/MM/YYYY"
               inputVariant="outlined"
@@ -221,7 +226,12 @@ const DateRangePicker = ({
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <DatePicker
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                "& .MuiInputBase-input": {
+                  padding: "8px 12px",
+                },
+              }}
               //   className={style.input__datepicker}
               format="DD/MM/YYYY"
               inputVariant="outlined"

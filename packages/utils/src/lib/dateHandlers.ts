@@ -5,6 +5,8 @@ import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";
+export const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
 
 export function compareDates(date2: string): string {
   const today = MIN_DATE,

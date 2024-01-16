@@ -48,6 +48,7 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
         <SidebarList>
           {mainRoutes.map((module) => (
             <Tooltip
+              key={module.key}
               content={
                 module.disabled ? (
                   <Fragment>
@@ -64,7 +65,7 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
                 )
               }
             >
-              <SidebarListItem key={module.key}>
+              <SidebarListItem>
                 <SidebarListItemLink
                   onClick={() => {
                     if (!enableRoleMapping) navigateSilverModule(module.key, module.path);
@@ -87,6 +88,7 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
         <SidebarList>
           {footerRoutes.map((module) => (
             <Tooltip
+              key={module.key}
               content={
                 module.disabled ? (
                   <Fragment>
@@ -103,7 +105,7 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
                 )
               }
             >
-              <SidebarListItem key={module.key}>
+              <SidebarListItem>
                 <SidebarListItemSecondaryLink
                   onClick={() => {
                     if (module.onClick) module.onClick();

@@ -10,17 +10,23 @@ interface IFetchDropdownsQueryParams {
 
 const QUERY_KEY = [queryKeys.miscelleneous.dropdowns.fetch];
 
-const fetchDropdowns = async (params: IFetchDropdownsQueryParams): Promise<IDropdownsResponse> => {
+const fetchDropdowns = async (
+  params: IFetchDropdownsQueryParams | string
+): Promise<IDropdownsResponse> => {
   const { data } = await sharedDashboardApi({
     method: "get",
     url: `dropdown/v1/dropdown`,
     params: {
-      types: JSON.stringify(params.types),
+      types: params?.type ? JSON.stringify(params.types) : params,
     },
   });
   return data;
 };
 
 export const useFetchDropdowns = (params: IFetchDropdownsQueryParams) => {
-  return useQuery<IDropdownsResponse, Error>(QUERY_KEY, () => fetchDropdowns(params));
+  return useQuery<IDropdownsResponse, Error>({
+    queryKey: QUERY_KEY,
+    queryFn: () => fetchDropdowns(params),
+    staleTime: Infinity,
+  });
 };

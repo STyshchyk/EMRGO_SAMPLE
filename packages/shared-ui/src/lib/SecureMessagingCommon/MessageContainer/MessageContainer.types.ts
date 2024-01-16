@@ -1,3 +1,9 @@
 import { PropsWithChildren } from "react";
 
-export type IMessageContainerProps = PropsWithChildren;
+export interface IMessageContainerProps extends PropsWithChildren {
+  isSendMode?: boolean;
+  sendMode: TSendMode;
+  messsageList?: any;
+}
+
+type TSendMode = "client" | "internal";

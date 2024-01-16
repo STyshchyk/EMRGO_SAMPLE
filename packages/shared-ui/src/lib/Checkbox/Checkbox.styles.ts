@@ -1,6 +1,6 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import { rem } from "polished";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import CheckMarkIcon from "./Assets/check-mark.svg";
 import indeterminateMarkIcon from "./Assets/indeterminate-icon.svg";
@@ -13,6 +13,23 @@ export const Label = styled.label`
   ${getTheme("typography.regular.02")}
 `;
 
+export const LabelText = styled.span`
+  color: ${getTheme("colors.black.100")};
+
+  ${getTheme("typography.regular.02")}
+
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      color: ${getTheme("colors.black.100")};
+    `}
+
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      color: ${getTheme("colors.white.100")};
+    `}
+`;
 export const Checkbox = styled.input`
   display: inline-flex;
   align-items: center;

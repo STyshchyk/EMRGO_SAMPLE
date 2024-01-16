@@ -1,15 +1,17 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useRef, useState } from 'react';
 
-import { Button, Select } from "@emrgo-frontend/shared-ui";
-import CloseIcon from "@mui/icons-material/Close";
-import { FormControl, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Input, MySelect as Select } from '@emrgo-frontend/shared-ui';
+import { DEFAULT_DATE_FORMAT } from '@emrgo-frontend/utils';
+import { FormControl, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { useFilters } from "../../Context/filter-context";
-import * as Styles from "./TabHeader.styles";
-import { ITabHeaderProps } from "./TabHeader.types";
+import { useFilters } from '../../Context/filter-context';
+import { TFilterValue } from '../../Context/filter-context.types';
+import * as Styles from './TabHeader.styles';
+import { ITabHeaderProps } from './TabHeader.types';
 
 const statusOptions = [
   {
@@ -90,213 +92,211 @@ const initialValues = {
   querySubject: null,
 };
 export const TabHeader: FC<ITabHeaderProps> = ({}) => {
-  const [query, setQuery] = useState([]);
   const ref = useRef<HTMLInputElement>(null);
-  const [selectedQueryType, setSelectedQueryType] = useState(null);
+  const [selectedQueryType, setSelectedQueryType] = useState(queryOptions[0]);
   const [selectedDropDown, setDropDown] = useState(null);
-  const { setFilterValue, filters } = useFilters();
-  console.log(filters);
-  const handleDelete = (id) => {
-    setQuery((prevArray) => {
-      // Filter out the item with the specified id
-      const newArray = prevArray.filter((item) => item.queryType !== id);
-      return newArray;
-    });
-  };
-  const addOrUpdateObject = (newObject) => {
-    // Check if the object already exists in the array
-    const index = query.findIndex((obj) => obj.queryType === newObject.queryType);
+  const [localFilters, setLocalFilters] = useState<TFilterValue | null>(null);
+  const { setFilterValue, filters, setFilters, clearFilterValue } = useFilters();
 
-    if (index !== -1) {
-      // If it exists, update the existing object
-      setQuery((prevArray) => {
-        const newArray = [...prevArray];
-        newArray[index] = newObject;
-        return newArray;
-      });
-    } else {
-      // If it doesn't exist, add the new object to the array
-      setQuery((prevArray) => [...prevArray, newObject]);
-    }
+  function SetLocalFilters(value: any, key: string, label: string, type: string) {
+    setLocalFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      updatedFilters[key] = { value, label, key, type };
+      return updatedFilters;
+    });
+  }
+
+  const handleDelete = (key: string[] | string) => {
+    clearFilterValue(key);
   };
 
   function AddQuery() {}
 
   return (
     <Styles.TabHeaderWrapper>
-      <Grid container>
-        <Grid container xs={8} direction={"row"} alignItems={"center"}>
-          <Grid item xs={2}>
-            <Select
-              options={queryOptions}
-              menuPortalTarget={document.body}
-              value={selectedQueryType}
-              isClearable={true}
-              placeholder={"Select query"}
-              onChange={(selectedValue) => {
-                if (ref.current) {
-                  ref.current.value = null;
-                }
-                setSelectedQueryType(selectedValue);
-                setDropDown(null);
-              }}
-            />
-          </Grid>
-          <Grid item xs={5} flexDirection={"column"}>
-            {(() => {
-              if (["queryDate"].includes(selectedQueryType?.value)) {
-                return (
-                  <TextField
-                    fullWidth
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    onChange={(e) => {}}
-                    name="searchText"
-                    variant="outlined"
-                    size="small"
-                    inputProps={{
-                      style: {
-                        height: "23.47px",
-                      },
-                    }}
-                    InputProps={{
-                      inputComponent: ({ inputRef, ...rest }) => (
-                        <FormControl
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "100%",
-                            alignItems: "center",
-                          }}
-                        >
-                          <DatePicker
-                            label="Start Date"
-                            sx={{
-                              width: "100%",
-                              ".MuiInputBase-input": { padding: "8.75px 14px" },
-                              ".MuiInputLabel-shrink": {
-                                display: "none",
-                              },
-                              ".MuiOutlinedInput-notchedOutline": {
-                                border: "none !important",
-                              },
-                            }}
-                          />
-                          <span> - </span>
-                          <DatePicker
-                            label="End Date"
-                            sx={{
-                              width: "100%",
-                              ".MuiInputBase-input": { padding: "8.75px 14px" },
-                              ".MuiInputLabel-shrink": {
-                                display: "none",
-                              },
-                              ".MuiOutlinedInput-notchedOutline": {
-                                border: "none !important",
-                              },
-                            }}
-                          />
-                          <input ref={inputRef} {...rest} type="text" style={{ display: "none" }} />
-                        </FormControl>
-                      ),
-                    }}
-                  />
-                );
-              } else if (["querySubject", "queryEntity"].includes(selectedQueryType?.value)) {
-                return (
-                  <TextField
-                    fullWidth
-                    inputRef={ref}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    onChange={(e) => {}}
-                    label={"Search"}
-                    name="searchText"
-                    variant="outlined"
-                    size="small"
-                    inputProps={{
-                      style: {
-                        height: "23.47px",
-                      },
-                    }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="clear search"
-                            size="small"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (ref.current) {
-                                ref.current.value = null;
-                              }
-                            }}
-                          >
-                            <CloseIcon fontSize="inherit" />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                );
-              } else {
-                return (
-                  <Select
-                    options={selectedQueryType?.option}
-                    menuPortalTarget={document.body}
-                    isClearable={true}
-                    value={selectedDropDown}
-                    placeholder={`Select ${selectedQueryType?.label ?? ""}`}
-                    onChange={(selectedValue, actionMeta) => {
-                      setDropDown(selectedValue);
-                      // setFilterValue(selectedValue, selectedQueryType?.label, selectedQueryType?.label, "dropdown");
-                    }}
-                  />
-                );
-              }
-            })()}
-          </Grid>
-          <Grid item xs={2} container alignItems={"center"}>
-            <Button
-              size={"medium"}
-              type={"submit"}
-              onClick={() => {
-                if ((ref.current || selectedDropDown) && selectedQueryType) {
-                  const oldValue = {
-                    queryType: selectedQueryType?.value,
-                    queryLabel: selectedQueryType?.label,
-                    value: ref?.current?.value ?? selectedDropDown.value,
-                  };
-                  addOrUpdateObject(oldValue);
-                }
-              }}
-            >
-              + Add query
-            </Button>
-          </Grid>
-        </Grid>
+      <span>Search by</span>
+      <Styles.SearchWrapper>
+        <Select
+          variant={"signup"}
+          options={queryOptions}
+          menuPortalTarget={document.body}
+          value={selectedQueryType}
+          isClearable={true}
+          placeholder={"Select query"}
+          onChange={(selectedValue) => {
+            console.log(selectedValue);
+            if (ref.current) {
+              ref.current.value = null;
+            }
+            setLocalFilters(null);
+            setSelectedQueryType(selectedValue);
+            setDropDown(null);
+          }}
+        />
+        {(() => {
+          if (["queryDate"].includes(selectedQueryType?.value)) {
+            return (
+              <TextField
+                fullWidth
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                name="searchText"
+                variant="outlined"
+                size="small"
+                inputProps={{
+                  style: {
+                    height: "24.0px",
+                  },
+                }}
+                InputProps={{
+                  inputComponent: ({ inputRef, ...rest }) => (
+                    <FormControl
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "100%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <DatePicker
+                        label="Start Date"
+                        format={DEFAULT_DATE_FORMAT}
+                        value={localFilters?.startDate?.value}
+                        sx={{
+                          width: "100%",
+                          ".MuiInputLabel-shrink": {
+                            display: "none",
+                          },
+                          ".MuiOutlinedInput-notchedOutline": {
+                            border: "none !important",
+                          },
+                        }}
+                        onChange={(selectedValue) => {
+                          console.log(selectedValue);
+                          SetLocalFilters(selectedValue, "startDate", "Start Date", "date");
+                        }}
+                      />
+                      <span> - </span>
+                      <DatePicker
+                        label="End Date"
+                        format={DEFAULT_DATE_FORMAT}
+                        key={"date"}
+                        value={localFilters?.endDate?.value}
+                        sx={{
+                          width: "100%",
+                          ".MuiInputLabel-shrink": {
+                            display: "none",
+                          },
+                          ".MuiOutlinedInput-notchedOutline": {
+                            border: "none !important",
+                          },
+                        }}
+                        onChange={(selectedValue) => {
+                          SetLocalFilters(selectedValue, "endDate", "End Date", "date");
+                        }}
+                      />
+                      <input ref={inputRef} {...rest} type="text" style={{ display: "none" }} />
+                    </FormControl>
+                  ),
+                }}
+              />
+            );
+          } else if (["querySubject", "queryEntity"].includes(selectedQueryType?.value)) {
+            return (
+              <Input
+                variant={"signup"}
+                label={"Search"}
+                onChange={(e) => {
+                  SetLocalFilters(
+                    e.target.value,
+                    selectedQueryType.value,
+                    selectedQueryType.label,
+                    "text"
+                  );
+                }}
+              />
+            );
+          } else {
+            return (
+              <Select
+                options={selectedQueryType?.option}
+                menuPortalTarget={document.body}
+                isClearable={true}
+                value={selectedDropDown}
+                placeholder={`Select ${selectedQueryType?.label ?? ""}`}
+                onChange={(selectedValue, actionMeta) => {
+                  setDropDown(selectedValue);
+                  // setLocalFilters({
+                  //   value: selectedValue.value,
+                  //   key: selectedQueryType.value,
+                  //   label: selectedQueryType.label,
+                  //   type: "dropdown",
+                  // });
+                  SetLocalFilters(
+                    selectedValue.value,
+                    selectedQueryType.value,
+                    selectedQueryType.label,
+                    "dropdown"
+                  );
+                }}
+              />
+            );
+          }
+        })()}
 
-        <Grid xs={4}>
-          <Stack direction="row" spacing={1} flexWrap={"wrap"} gap={"0.5rem"}>
-            {query.map((elem) => {
+        <Button
+          size={"medium"}
+          type={"submit"}
+          onClick={() => {
+            console.log(filters);
+            if (!localFilters) return;
+            for (let loopFilter in localFilters) {
+              const obj = localFilters[loopFilter];
+              setFilterValue(obj.value, loopFilter, obj.label, obj.type);
+            }
+            // localFilters.forEach(elem =>{
+            //   setFilters(elem.value, elem.key, elem.label, elem.type)
+            // })
+            setLocalFilters(null);
+            // if ((ref.current || selectedDropDown) && selectedQueryType) {
+            //   const oldValue = {
+            //     queryType: selectedQueryType?.value,
+            //     queryLabel: selectedQueryType?.label,
+            //     value: ref?.current?.value ?? selectedDropDown.value,
+            //   };
+            //   addOrUpdateObject(oldValue);
+            // }
+          }}
+        >
+          + Add query
+        </Button>
+      </Styles.SearchWrapper>
+
+      <Styles.FilterWrapper>
+        <Stack direction="row" spacing={1} flexWrap={"wrap"} gap={"0.5rem"}>
+          {filters &&
+            Object.values(filters).map((elem, index) => {
+              const dateType = elem.type === "date";
+              console.log(elem);
+              console.log(dateType);
               return (
                 <Chip
-                  key={elem.queryType}
+                  key={elem.key}
                   variant="outlined"
                   color={"primary"}
                   sx={{ marginLeft: "0px !important" }}
-                  label={`${elem.queryLabel} : ${elem.value}`}
+                  label={`${elem?.label} : ${
+                    dateType ? elem?.value.format("DD/MM/YYYY") : elem?.value
+                  }`}
                   onDelete={() => {
-                    handleDelete(elem.queryType);
+                    handleDelete(elem.key);
                   }}
                 />
               );
             })}
-          </Stack>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Styles.FilterWrapper>
     </Styles.TabHeaderWrapper>
   );
 };

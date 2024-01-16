@@ -6,6 +6,7 @@ export * from "./lib/hooks";
 export * from "./lib/instances";
 export * from "./lib/issuances";
 export * from "./lib/profile";
+export * from "./lib/secureMessages";
 export * from "./lib/silver.account";
 export * from "./lib/silver.entities";
 export * from "./lib/silver.instance";

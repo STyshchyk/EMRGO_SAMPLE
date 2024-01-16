@@ -49,6 +49,7 @@ export const FilterToggle: FC<IFilterToggleProps> = ({}) => {
             {toggleFilter.map((elem) => {
               return (
                 <ToggleButton
+                  key={elem.label}
                   sx={{
                     textTransform: "capitalize",
                     border: "0",
@@ -63,7 +64,7 @@ export const FilterToggle: FC<IFilterToggleProps> = ({}) => {
           </ToggleButtonGroup>
         }
       >
-        <Tooltip title={"Sort"} placement="top">
+        <Tooltip title={"Sort by"} placement="top">
           <FilterListIcon />
         </Tooltip>
       </FathomTooltip>

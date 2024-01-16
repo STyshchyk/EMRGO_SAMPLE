@@ -134,7 +134,7 @@ const InputComponent: ForwardRefRenderFunction<
                   }}
                 />
                 <SendIcon
-                  color={value ? "primary" : "disabled"}
+                  color={value && !error ? "primary" : "disabled"}
                   onClick={() => {
                     if (value && onSendClick) {
                       onSendClick();

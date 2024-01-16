@@ -14,44 +14,31 @@ export const MessageContainer = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
 `;
 
-export const MessagesBox = styled.div`
+export const MessagesBox = styled.div<{ isEmpty?: boolean }>`
   /* Layout */ /* Element Styles */ /* Text styles */
   display: flex;
   flex-direction: column;
-  margin-top: auto;
+
+  ${(props) =>
+    !props.isEmpty
+      ? css`
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+        `
+      : css`
+          margin-top: auto;
+        `}
+
   padding-bottom: 1rem;
   /* use !important to prevent breakage from child margin settings */
 `;
-export const MessageInput = styled.div`
-  width: 100%;
-  margin-top: 1rem;
-`;
-export const Subject = styled.div`
-  /* Layout */ /* Element Styles */ /* Text styles */
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
 
-  ${getTheme("typography.regular.01")};
-
-  ${(props) =>
-    props.theme.mode === "light" &&
-    css`
-      background-color: ${getTheme("colors.white.100")};
-    `}
-
-  ${(props) =>
-    props.theme.mode === "dark" &&
-    css`
-      background-color: ${getTheme("colors.green1")};
-    `}
-`;
-
-export const MessageItem = styled(Card)<{ isSender?: boolean }>`
+export const MessageItem = styled(Card)<{ $isSender?: boolean }>`
   /* Layout */ /* Element Styles */ /* Text styles */
   display: flex;
   flex-direction: column;
-  align-self: ${({ isSender }) => (isSender ? "end" : "auto")};
+  align-self: ${({ $isSender }) => ($isSender ? "end" : "auto")};
   padding: 1rem;
   margin-top: 1rem;
   width: 76%;
@@ -83,11 +70,30 @@ export const MessageHeader = styled.div`
     props.theme.mode === "dark" &&
     css`
       border-bottom: 1px solid ${getTheme("colors.light")};
-    `} /* use !important to prevent breakage from child margin settings */
+    `}
 `;
 export const MessageContent = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
   margin-top: 0.25rem;
+  /* use !important to prevent breakage from child margin settings */
+`;
+
+export const MessageFilesContainer = styled.div`
+  /* Layout */ /* Element Styles */ /* Text styles */
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      border-top: 1px solid ${getTheme("colors.strokes.light")};
+    `}
+  ${(props) =>
+    props.theme.mode === "dark" &&
+    css`
+      border-top: 1px solid ${getTheme("colors.light")};
+    `}
+  display: flex;
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  gap: 0.5rem;
   /* use !important to prevent breakage from child margin settings */
 `;
 

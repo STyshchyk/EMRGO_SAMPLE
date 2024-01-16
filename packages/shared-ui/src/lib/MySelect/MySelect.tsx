@@ -152,6 +152,7 @@ export const MySelect = <
             },
             display: "flex",
             alignItems: "center",
+            flexWrap: "nowrap",
             width: "100%",
             columnGap: rem(8),
             ...getOptionStyles("controlBackground", state, error),

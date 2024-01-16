@@ -40,6 +40,7 @@ export const Dropdown = <ValueType extends Key>(props: IDropdownProps<ValueType>
           top: y ?? 0,
           left: x ?? 0,
           minWidth: refs.reference.current?.getBoundingClientRect().width,
+          zIndex: 1000,
         }}
       >
         {isOpen && (

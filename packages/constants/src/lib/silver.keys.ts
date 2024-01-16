@@ -36,6 +36,10 @@ export const silverQueryKeys = {
   onboarding: include("onboarding", {
     fetch: "",
   }),
+  secureMessaging: include("secureMessaging", {
+    fetch: "",
+    id: "id/:id",
+  }),
   document: include("/document", {
     fetch: "",
     client: "client",

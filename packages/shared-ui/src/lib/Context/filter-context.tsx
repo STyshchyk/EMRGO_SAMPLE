@@ -1,18 +1,23 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import React, { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
-import { IFilterContext, IFilterProvider, TFilterValue } from "./filter-context.types";
+import {
+  IFilterContext,
+  IFilterProvider,
+  TFilterValue,
+  TMessageType,
+} from "./filter-context.types";
 
 const FilterContext = createContext<IFilterContext | null>(null);
 
 export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) => {
-  const [filters, setFilters] = useState<TFilterValue[] | null>(null);
-
+  const [filters, setFilters] = useState<TFilterValue | null>(null);
+  const [messageType, setMessageType] = React.useState<TMessageType>("received");
   function setFilterValue(value: any, key: string, label: string, type: string, isDefault = false) {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
-      updatedFilters[key] = { value, label, type, isDefault };
+      updatedFilters[key] = { value, label, type, key, isDefault };
       return updatedFilters;
     });
   }
@@ -34,6 +39,8 @@ export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) =>
 
   const providerValue: IFilterContext = {
     filters,
+    messageType,
+    setMessageType,
     setFilters,
     setFilterValue,
     clearFilterValue,

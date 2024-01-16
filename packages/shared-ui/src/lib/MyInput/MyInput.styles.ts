@@ -113,9 +113,16 @@ export const Input = styled.textarea<{
       color: ${getTheme("colors.white.100")};
       caret-color: ${getTheme("colors.green5")};
     `}
-    ${variant === "signup" &&
+    ${theme.mode === "light" &&
+    variant === "signup" &&
     css`
       color: ${getTheme("colors.black.100")};
+      caret-color: ${getTheme("colors.green3")};
+    `}
+    ${theme.mode === "dark" &&
+    variant === "signup" &&
+    css`
+      color: ${getTheme("colors.white.100")};
       caret-color: ${getTheme("colors.green5")};
     `}
   `}

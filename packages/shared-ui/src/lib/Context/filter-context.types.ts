@@ -1,8 +1,10 @@
 import React, { PropsWithChildren } from "react";
 
 export interface IFilterContext {
-  filters: TFilterValue[] | null;
+  filters: TFilterValue | null;
   setFilters: React.Dispatch<React.SetStateAction<TFilterValue>>;
+  messageType: TMessageType;
+  setMessageType: React.Dispatch<React.SetStateAction<TMessageType>>;
   setFilterValue: (
     value: any,
     key: string | number,
@@ -24,3 +26,4 @@ export type TFilterValue = {
   type: string;
   isDefault?: boolean;
 };
+export type TMessageType = "received" | "draft" | "sent" | "archived";
