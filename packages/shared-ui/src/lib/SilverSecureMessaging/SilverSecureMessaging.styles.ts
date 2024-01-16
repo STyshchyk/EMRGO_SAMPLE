@@ -18,6 +18,8 @@ export const Content = styled.main`
   overflow-y: auto;
   height: 100%;
   position: relative;
+  padding: 1.5rem;
+
   ${(props) =>
     props.theme.mode === "light" &&
     css`

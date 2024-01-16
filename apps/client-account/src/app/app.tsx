@@ -5,7 +5,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { clientAccountRoutes as routes } from "@emrgo-frontend/constants";
 import {
   ClientSecureMessaging,
-  MessageContainer,
+  MessagesContainerCommon,
   ToastProvider,
   UserProvider,
 } from "@emrgo-frontend/shared-ui";
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.secureMessaging.inbox.id,
-        element: <MessageContainer />,
+        element: <MessagesContainerCommon sendMode={"client"} />,
       },
     ],
   },

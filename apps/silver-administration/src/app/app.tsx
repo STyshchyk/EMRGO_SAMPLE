@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 
 import { silverAdministrationRoutes as routes } from "@emrgo-frontend/constants";
 import {
-  MessageContainer,
+  MessagesContainerCommon,
   SilverSecureMessaging,
   ToastProvider,
   UserProvider,
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: routes.secureMessaging.inbox.id,
-        element: <MessageContainer />,
+        element: <MessagesContainerCommon sendMode={"internal"} />,
       },
     ],
   },

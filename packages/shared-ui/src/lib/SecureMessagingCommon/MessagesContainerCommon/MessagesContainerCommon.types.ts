@@ -1,4 +1,4 @@
-export interface IClientMessageContainerProps {
+export interface IMessagesContainerCommonProps {
   isSendMode?: boolean;
   sendMode: TSendMode;
 }

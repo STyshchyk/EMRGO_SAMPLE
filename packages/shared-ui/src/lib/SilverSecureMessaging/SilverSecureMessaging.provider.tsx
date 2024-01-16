@@ -1,4 +1,7 @@
-import React, { createContext, PropsWithChildren, useContext } from "react";
+import React, { createContext, PropsWithChildren, useContext, useState } from "react";
+
+import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { useQuery } from "@tanstack/react-query";
 
 import { ISilverSecureMessagingContext } from "./SilverSecureMessaging.types";
 
@@ -29,6 +32,7 @@ const list = [
     subject: "Password 2fa",
     date: new Date(),
     isSelected: false,
+    isRead: false,
   },
   {
     id: "2asdasf14fa3s",
@@ -36,7 +40,6 @@ const list = [
     subject: "Password 2fa",
     date: new Date(),
     isSelected: false,
-    isRead: false,
   },
   {
     id: "2asdasf14f4as",
@@ -84,10 +87,21 @@ const list = [
 export const SilverSecureMessagingProvider = ({ children }: PropsWithChildren) => {
   const [checked, setChecked] = React.useState<string[]>([]);
   const [isCheckModeSelected, setCheckMode] = React.useState(false);
+  const [isNewMsgGroup, setNewMsgGroup] = useState(false);
+
+  const { data } = useQuery({
+    queryKey: [queryKeys.secureMessaging.fetch],
+    staleTime: 10000,
+    initialData: list,
+    enabled: false,
+  });
+
   const state: ISilverSecureMessagingContext = {
-    messagesList: list,
+    messagesList: data ?? [],
     checked,
     isCheckModeSelected,
+    isNewMsgGroup,
+    setNewMsgGroup,
     setCheckMode,
     setChecked,
   };

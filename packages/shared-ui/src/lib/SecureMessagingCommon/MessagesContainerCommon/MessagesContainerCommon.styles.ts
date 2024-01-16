@@ -1,7 +1,7 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import styled, { css } from "styled-components";
 
-export const ClientMessageContainer = styled.div`
+export const MessagesContainerCommon = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
 `;
 export const Subject = styled.div`

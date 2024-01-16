@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useContext } from "react";
+import React, { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { IClientSecureMessagingContext } from "./ClientSecureMessaging.types";
 
@@ -29,6 +29,7 @@ const list = [
     subject: "Password 2fa",
     date: new Date(),
     isSelected: false,
+    isRead: false,
   },
   {
     id: "2asdasf14fa3s",
@@ -36,7 +37,6 @@ const list = [
     subject: "Password 2fa",
     date: new Date(),
     isSelected: false,
-    isRead: false,
   },
   {
     id: "2asdasf14f4as",
@@ -84,10 +84,13 @@ const list = [
 export const ClientSecureMessagingProvider = ({ children }: PropsWithChildren) => {
   const [checked, setChecked] = React.useState<string[]>([]);
   const [isCheckModeSelected, setCheckMode] = React.useState(false);
+  const [isNewMsgGroup, setNewMsgGroup] = useState(false);
   const state: IClientSecureMessagingContext = {
     messagesList: list,
     checked,
     isCheckModeSelected,
+    isNewMsgGroup,
+    setNewMsgGroup,
     setCheckMode,
     setChecked,
   };
