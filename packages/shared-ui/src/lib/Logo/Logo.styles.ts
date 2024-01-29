@@ -7,7 +7,7 @@ export const Logo = styled.div<{ $isHidden?: boolean }>`
   ${(props) =>
     props.$isHidden &&
     css`
-      transform: scale(0.85) translateX(-25px);
+      transform: scale(0.8) translateX(-35px);
     `}
   ${(props) =>
     props.theme.mode === "light" &&

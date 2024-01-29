@@ -28,7 +28,8 @@ export const SidebarListItem = styled.li`
       color: ${getTheme("colors.white.60")};
     `}
 
-  border-bottom: 1px solid  ${getTheme("colors.strokes.light")};
+  border-bottom: 1px solid ${getTheme("colors.strokes.light")};
+
   &:first-child {
     border-top: 1px solid ${getTheme("colors.strokes.light")};
   }
@@ -37,7 +38,7 @@ export const SidebarListItem = styled.li`
 const listItemContentStyles = css`
   display: flex;
   flex-direction: column;
-  padding: ${rem(16)} ${rem(32)} ${rem(16)} ${rem(40)};
+  padding: ${rem(8)} ${rem(32)} ${rem(8)} ${rem(40)};
 `;
 
 const linkStyles = css`
@@ -136,12 +137,12 @@ const disabledLinkStyles = css`
       }
     `}
 `;
-export const Initials = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
+export const Initials = styled.span<{ isChecked?: boolean; $isCheckMode?: boolean }>`
   position: absolute;
   left: 5px;
   top: 50%;
   transform: translateY(-50%) translateX(0.25rem);
-  display: ${(props) => (!!props.isChecked || !!props.checkMode ? "none" : "flex")};
+  display: ${(props) => (!!props.isChecked || !!props.$isCheckMode ? "none" : "flex")};
 `;
 export const Delete = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
   position: absolute;
@@ -155,6 +156,7 @@ export const Delete = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
 
   &:hover {
     background-color: rgba(255, 0, 0, 0.28);
+
     svg {
       fill: red !important;
     }
@@ -176,32 +178,38 @@ export const Select = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
   z-index: 10000;
 `;
 
-export const SidebarListItemLink = styled.a<ILinkProps>`
+export const SidebarListItemLink = styled.a<{
+  $IsActive: boolean;
+  $IsNew: boolean;
+  $IsDisabled?: boolean;
+}>`
   ${linkStyles};
   position: relative;
 
-  ${(props) =>
-    props.active &&
+  ${({ $IsActive }) =>
+    $IsActive &&
     css`
       ${getTheme("typography.regular.02")}
       ${activeLinkStyles}
     `}
-  ${(props) =>
-    props.unread === false &&
+  ${({ $IsNew }) =>
+    $IsNew === false &&
     css`
       ${getTheme("typography.semiBold.02")}
       ${unreadLinkStyles}
     `}
-  ${(props) =>
-    props.disabled &&
+  ${({ $IsDisabled }) =>
+    $IsDisabled &&
     css`
       pointer-events: none;
       ${disabledLinkStyles}
     `}
+
   &.active {
     ${getTheme("typography.regular.02")}
     ${activeLinkStyles}
   }
+
   // TODO: to remove if message selection is enabled
   // &:hover ${Initials} {
   //   display: none;
@@ -210,6 +218,7 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
   &:hover ${Select} {
     display: flex;
   }
+
   &:hover ${Delete} {
     display: flex;
   }
@@ -223,8 +232,9 @@ export const TextWrapper = styled.div`
   align-items: center;
   flex: 1 1 auto;
   padding-bottom: 0.1rem;
+  line-height: 20px;
 `;
-export const DateWrapper = styled.div<{ isActive?: boolean; hover?: boolean }>`
+export const DateWrapper = styled.div<{ $isActive?: boolean; $isHover?: boolean }>`
   ${getTheme("typography.medium.04")};
 
   svg {
@@ -232,7 +242,7 @@ export const DateWrapper = styled.div<{ isActive?: boolean; hover?: boolean }>`
     border-radius: 0.25rem;
 
     ${(props) =>
-      props.hover &&
+      props.$isHover &&
       css`
         &:hover {
           background-color: ${getTheme("colors.grey")};
@@ -241,7 +251,7 @@ export const DateWrapper = styled.div<{ isActive?: boolean; hover?: boolean }>`
       `}
 
     ${(props) =>
-      props.isActive &&
+      props.$isActive &&
       css`
         fill: ${getTheme("colors.red")};
 

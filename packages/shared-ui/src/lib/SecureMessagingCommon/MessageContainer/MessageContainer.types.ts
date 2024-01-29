@@ -1,9 +1,10 @@
 import { PropsWithChildren } from "react";
 
-export interface IMessageContainerProps extends PropsWithChildren {
-  isSendMode?: boolean;
-  sendMode: TSendMode;
-  messsageList?: any;
-}
+import { IMessageChain } from "@emrgo-frontend/types";
 
-type TSendMode = "client" | "internal";
+export interface IMessageContainerProps extends PropsWithChildren {
+  messsageList?: IMessageChain[];
+  isLoading: boolean;
+  Key: string;
+  scrollDown: boolean;
+}

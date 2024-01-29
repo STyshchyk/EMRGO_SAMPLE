@@ -9,6 +9,11 @@ export const buildModuleURL = (module: string, path: string) => {
   return fullPath;
 };
 
+export const extractId = (id: any) => {
+  if ("id" in id) return id.id;
+  if (!id || !id.hasOwnProperty("*")) return "";
+  return id["*"].replace(/id\//g, "");
+};
 export const navigateModule = (module: string, path: string) => {
   const fullPath = buildModuleURL(module, path);
   window.location.assign(fullPath);

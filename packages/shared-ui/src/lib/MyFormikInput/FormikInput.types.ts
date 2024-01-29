@@ -6,7 +6,8 @@ export interface IFormikInputProps<T> extends IInputProps {
   form: FormikProps<T>;
   id: Extract<keyof T, string>;
   type?: "text" | "password" | "email" | "file" | "select" | "textarea";
-  accept: string;
+  accept?: string;
+  border: boolean;
 }
 
 export type TMyInputVariants = "signup" | "default";

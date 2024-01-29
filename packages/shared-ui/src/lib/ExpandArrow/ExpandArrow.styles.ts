@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 
 export const ExpandArrow = styled(KeyboardArrowLeftTwoToneIcon)<{ $isHidden: boolean }>`
   z-index: 1000;
-  top: 28.5px;
+  top: 50%;
   position: absolute;
   cursor: pointer;
   border-radius: 100%;
@@ -27,12 +27,12 @@ export const ExpandArrow = styled(KeyboardArrowLeftTwoToneIcon)<{ $isHidden: boo
       &:hover {
         background-color: ${getTheme("colors.white.20")};
       }
-    `}
-  \`;
+    `} \`;
 
   transform: ${(props) =>
     props.$isHidden
       ? ` rotateY(3.142rad)  translateY(-50%) scale(0.9)`
       : `  rotateY(0)   translateY(-50%) scale(0.9)`};
-  left: ${(props) => (props.$isHidden ? `${rem(59)}` : `${rem(219)}`)};
+
+  left: ${(props) => (props.$isHidden ? `${rem(0)}` : `${rem(0)}`)};
 `;

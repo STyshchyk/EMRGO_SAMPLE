@@ -15,5 +15,9 @@ const fetchUser = async (): Promise<IUser> => {
 };
 
 export const useFetchUser = () => {
-  return useQuery<IUser, Error>(QUERY_KEY, () => fetchUser());
+  return useQuery<IUser, Error>({
+    queryKey: QUERY_KEY,
+    queryFn: fetchUser,
+    staleTime: Infinity,
+  });
 };

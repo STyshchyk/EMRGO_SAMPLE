@@ -29,6 +29,7 @@ const InputComponent: ForwardRefRenderFunction<
     valid,
     id,
     maxWidth,
+    className,
     type,
     disabled,
     variant,
@@ -39,7 +40,8 @@ const InputComponent: ForwardRefRenderFunction<
 ) => {
   const [hasFocus, setHasFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const idValue = id || useId();
+  const idCase = useId();
+  const idValue = id || idCase;
 
   const active = !!value || hasFocus || !!inputRef.current?.value.length;
 
@@ -58,7 +60,7 @@ const InputComponent: ForwardRefRenderFunction<
   };
 
   return (
-    <Styles.Wrapper $maxWidth={maxWidth}>
+    <Styles.Wrapper $maxWidth={maxWidth} className={className}>
       <Styles.InputContainer
         $active={active}
         $error={!!error}

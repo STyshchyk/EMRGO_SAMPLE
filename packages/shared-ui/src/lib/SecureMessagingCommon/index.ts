@@ -1,8 +1,11 @@
 export { AttachedFile } from "./AttachedFile";
+export { AutoSaveGroup } from "./AutoSaveGroup";
+export { AutoSaveGroupMessage } from "./AutoSaveGroupMessage";
 export { AvatarIcon } from "./Avatar";
 export { FilterArea } from "./FilterArea";
-export { useUploadMessages } from "./Hooks";
+export * from "./Hooks";
 export { MessageContainer } from "./MessageContainer";
 export { MessagesContainerCommon } from "./MessagesContainerCommon";
+export { SecureSideBar } from "./SecureSideBar";
 export { SideBarList } from "./SideBarList";
 export { TabHeader } from "./TabHeader";

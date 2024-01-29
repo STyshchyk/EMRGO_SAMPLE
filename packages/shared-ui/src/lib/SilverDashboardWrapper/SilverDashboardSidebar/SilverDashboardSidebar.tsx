@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+import { silverModuleURLs } from "@emrgo-frontend/constants";
 import {
   HelpModal,
   Logo,
@@ -21,6 +22,7 @@ import {
   navigateSilverModule,
   useInternalMatchedPathDashboard,
 } from "@emrgo-frontend/utils";
+import { reverse } from "named-urls";
 
 import { useSilverDashboardWrapperContext } from "../SilverDashboardWrapper.provider";
 import * as Styles from "./SilverDashboardSidebar.styles";
@@ -37,6 +39,7 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
     isHelpDeskOpen,
     setHelpDeskOpen,
   } = ensureNotNull(useSilverDashboardWrapperContext());
+  const navigate = useNavigate();
   return (
     <Styles.DashboardSidebar>
       <SidebarHeader $isHidden={isHidden}>
@@ -70,7 +73,10 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
                   onClick={() => {
                     if (!enableRoleMapping) navigateSilverModule(module.key, module.path);
                     if (currentRole?.access.includes(module.key)) {
-                      navigateSilverModule(module.key, module.path);
+                      const originPath = silverModuleURLs[module.key];
+                      const { origin } = window.location;
+                      if (origin === originPath) navigate(module.path);
+                      else navigateSilverModule(module.key, module.path);
                     }
                   }}
                   disabled={enableRoleMapping && !currentRole?.access.includes(module.key)}
@@ -107,10 +113,15 @@ export const SilverDashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) 
             >
               <SidebarListItem>
                 <SidebarListItemSecondaryLink
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    const originPath = silverModuleURLs[module.key];
+                    const { origin } = window.location;
+                    navigate(reverse(module.path, {}));
                     if (module.onClick) module.onClick();
                   }}
                   disabled={module.disabled}
+                  className={useInternalMatchedPathDashboard(module) ? "active" : ""}
                 >
                   <SidebarListItemIcon>{module.icon}</SidebarListItemIcon>
                   {module.label}

@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-import { ExpandArrow } from "@emrgo-frontend/shared-ui";
 import { useLocalStorage } from "usehooks-ts";
 
 import { DashboardSidebar } from "./DashboardSidebar";
@@ -12,14 +11,6 @@ export const DashboardWrapperComponent: FC<IDashboardWrapperProps> = ({ children
   return (
     <Styles.Container $isHidden={isMenuHidden}>
       <DashboardSidebar isHidden={isMenuHidden} />
-      <ExpandArrow
-        sx={{ transition: "all 1s ease" }}
-        fontSize={"large"}
-        $isHidden={isMenuHidden}
-        onClick={() => {
-          setMenuHidded((prevState) => (prevState = !prevState));
-        }}
-      />
       <Styles.Content>{children}</Styles.Content>
     </Styles.Container>
   );

@@ -11,7 +11,12 @@ import {
   logoutUser,
   refreshToken,
 } from "@emrgo-frontend/services";
-import { useRefreshProfile, useToast, useUser } from "@emrgo-frontend/shared-ui";
+import {
+  useFetchUndeadGroupsCount,
+  useRefreshProfile,
+  useToast,
+  useUser,
+} from "@emrgo-frontend/shared-ui";
 import { navigateModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -43,6 +48,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const [termsDocumentURL, setTermsDocumentURL] = useState("");
   const [copyState, copyToClipboard] = useCopyToClipboard();
   const { showSuccessToast, showErrorToast } = useToast();
+  const { data } = useFetchUndeadGroupsCount("client");
   useEffect(() => {
     if (user) {
       if (!user?.hasAcceptedSilverTnc) {
@@ -84,6 +90,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
 
   useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfile(),
+    staleTime: Infinity,
     // enabled: currentModuleKey !== 'custody',
     onSuccess: (response) => {
       const user = response;
@@ -192,7 +199,7 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   };
 
   const state: IDashboardWrapperContext = {
-    numberOfNotifications: 1,
+    numberOfNotifications: data ?? 0,
     user,
     roles,
     showTermsModal,

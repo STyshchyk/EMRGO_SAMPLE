@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { SecureSideBar } from "@emrgo-frontend/shared-ui";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 
+import { useFilters } from "../Context/filter-context";
 import { TabHeader } from "../SecureMessagingCommon/TabHeader";
 import { useClientSecureMessagingContext } from "./ClientSecureMessaging.provider";
 import * as Styles from "./ClientSecureMessaging.styles";
@@ -13,14 +14,20 @@ import { CreateNewMessageContainer } from "./CreateNewMessageContainer";
 export const ClientSecureMessagingComponent: FC<IClientSecureMessagingProps> = ({
   children,
 }: IClientSecureMessagingProps) => {
-  const { isNewMsgGroup } = ensureNotNull(useClientSecureMessagingContext());
+  const { messagesList } = ensureNotNull(useClientSecureMessagingContext());
+  const { isNewMsgGroup, setNewMsgGroup } = useFilters();
+  const isCreateMessageModeEnabled = isNewMsgGroup === "sent" || isNewMsgGroup === "draft";
   return (
     <Styles.ClientSecureMessaging>
       <TabHeader />
       <Styles.Container>
-        <SecureSideBar />
+        <SecureSideBar messageList={messagesList} setNewMsgGroup={setNewMsgGroup} type={"client"} />
         <Styles.Content>
-          {isNewMsgGroup ? <CreateNewMessageContainer key={"sendMsgMode"} /> : <Outlet />}
+          {isCreateMessageModeEnabled ? (
+            <CreateNewMessageContainer key={isNewMsgGroup} />
+          ) : (
+            <Outlet />
+          )}
         </Styles.Content>
       </Styles.Container>
     </Styles.ClientSecureMessaging>

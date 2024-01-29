@@ -1,8 +1,8 @@
 import { FC, Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import * as constants from "@emrgo-frontend/constants";
-import { clientAccountRoutes, roles } from "@emrgo-frontend/constants";
+import { clientAccountRoutes, clientModuleURLs, roles } from "@emrgo-frontend/constants";
 import { useDarkModeCustom } from "@emrgo-frontend/services";
 import {
   AccountIcon,
@@ -27,7 +27,7 @@ import {
   TooltipTitle,
   useUser,
 } from "@emrgo-frontend/shared-ui";
-import { buildModuleURL, ensureNotNull, useClientMatchedPathSidebar } from "@emrgo-frontend/utils";
+import { ensureNotNull, useClientMatchedPathSidebar } from "@emrgo-frontend/utils";
 import { useDarkMode } from "usehooks-ts";
 
 import { useDashboardWrapperContext } from "../DashboardWrapper.provider";
@@ -54,7 +54,7 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
     isHelpDeskOpen,
   } = ensureNotNull(useDashboardWrapperContext());
   console.log("🚀 ~ file: SecureSideBar.tsx:56 ~ SecureSideBar ~ showTermsModal:", showTermsModal);
-
+  const navigate = useNavigate();
   const [value, setvalue] = useState(false);
   const [isDarkModeCustom, enable, disable, toggle] = useDarkModeCustom();
   const { isDarkMode } = useDarkMode();
@@ -134,7 +134,10 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
           <SidebarListItem>
             <SidebarListItemSecondaryLink
               onClick={() => {
-                navigateToModule("account", clientAccountRoutes.secureMessaging.inbox.home);
+                const originPath = clientModuleURLs["account"];
+                const { origin } = window.location;
+                if (origin === originPath) navigate(clientAccountRoutes.secureMessaging.inbox.home);
+                else navigateToModule("account", clientAccountRoutes.secureMessaging.inbox.home);
               }}
               className={
                 useClientMatchedPathSidebar(
@@ -146,14 +149,21 @@ export const DashboardSidebar: FC<{ isHidden: boolean }> = ({ isHidden }) => {
             >
               <Styles.SidebarListItemIconWithBadge>
                 <NotificationsIcon />
-                <Styles.NotificationsBadge>{numberOfNotifications}</Styles.NotificationsBadge>
+                {numberOfNotifications > 0 && (
+                  <Styles.NotificationsBadge>{numberOfNotifications}</Styles.NotificationsBadge>
+                )}
               </Styles.SidebarListItemIconWithBadge>
               Secure Messaging
             </SidebarListItemSecondaryLink>
           </SidebarListItem>
           <SidebarListItem>
             <SidebarListItemSecondaryLink
-              href={buildModuleURL("account", clientAccountRoutes.home)}
+              onClick={() => {
+                const originPath = clientModuleURLs["account"];
+                const { origin } = window.location;
+                if (origin === originPath) navigate(clientAccountRoutes.home);
+                else navigateToModule("account", clientAccountRoutes.home);
+              }}
               className={
                 useClientMatchedPathSidebar(constants.getAllRoutes(clientAccountRoutes.account))
                   ? "active"

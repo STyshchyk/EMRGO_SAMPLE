@@ -6,6 +6,7 @@ export * from "./lib/issuer";
 export * from "./lib/mfa";
 export * from "./lib/questionnaire";
 export * from "./lib/response";
+export * from "./lib/secureMessaging";
 export * from "./lib/security";
 export * from "./lib/sellside";
 export * from "./lib/silver.entities";

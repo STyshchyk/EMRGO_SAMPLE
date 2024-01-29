@@ -11,7 +11,7 @@ interface IFetchDropdownsQueryParams {
 const QUERY_KEY = [queryKeys.miscelleneous.dropdowns.fetch];
 
 const fetchDropdowns = async (
-  params: IFetchDropdownsQueryParams | string
+  params: string | IFetchDropdownsQueryParams
 ): Promise<IDropdownsResponse> => {
   const { data } = await sharedDashboardApi({
     method: "get",

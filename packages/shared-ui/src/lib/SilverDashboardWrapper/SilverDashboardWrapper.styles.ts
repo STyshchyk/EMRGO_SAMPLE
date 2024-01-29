@@ -6,14 +6,14 @@ export const Container = styled.div<{ $isHidden: boolean }>`
   display: grid;
   height: 100vh;
   grid-template-columns: ${(props) =>
-    props.$isHidden ? `minmax(auto, ${rem(60)}) 1fr` : `minmax(auto, ${rem(220)}) 1fr`};
+    props.$isHidden ? `minmax(auto, ${rem(57)}) 1fr` : `minmax(auto, ${rem(220)}) 1fr`};
   transition: grid-template-columns ease 1s;
 `;
 export const Content = styled.main`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-
+  height: 100%;
   ${(props) =>
     props.theme.mode === "light" &&
     css`

@@ -3,12 +3,6 @@ import styled, { css } from "styled-components";
 
 import { ScrollStyles } from "../../ScrollBar";
 
-interface ILinkProps {
-  active?: boolean;
-  disabled?: boolean;
-  unread?: boolean;
-}
-
 export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;

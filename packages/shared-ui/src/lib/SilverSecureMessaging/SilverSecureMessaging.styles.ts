@@ -8,7 +8,7 @@ export const SilverSecureMessaging = styled.div`
 export const Container = styled.div<{ $isHidden?: boolean }>`
   display: grid;
   height: calc(100vh - 85px);
-  grid-template-columns: minmax(auto, ${rem(360)}) 1fr;
+  grid-template-columns: minmax(auto, ${rem(300)}) 1fr;
 
   transition: grid-template-columns ease 1s;
 `;

@@ -1,1 +1,1 @@
-export { ExpandArrow } from "./ExpandArrow.styles";
+export { ExpandArrow } from "./ExpandArrow";

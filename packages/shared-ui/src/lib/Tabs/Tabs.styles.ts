@@ -6,7 +6,7 @@ export const Tabs = styled.div`
   display: flex;
   column-gap: ${rem(8)};
   padding: 0 ${rem(24)};
-
+  position: relative;
   ${({ theme }) =>
     theme.mode === "light" &&
     css`

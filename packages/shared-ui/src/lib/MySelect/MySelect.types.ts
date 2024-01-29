@@ -5,5 +5,7 @@ export interface IMySelectProps {
   maxWidth?: number;
   components?: ICustomComponent;
   variant?: TSelectVariants;
+  type?: TSelectType;
 }
 type TSelectVariants = "default" | "signup";
+type TSelectType = "standard" | "filled";

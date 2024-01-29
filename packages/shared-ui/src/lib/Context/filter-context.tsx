@@ -1,24 +1,37 @@
 import React, { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { ensureNotNull } from "@emrgo-frontend/utils";
+import { useLocalStorage } from "usehooks-ts";
 
 import {
   IFilterContext,
   IFilterProvider,
   TFilterValue,
   TMessageType,
+  TUserType,
+  TWriteType,
 } from "./filter-context.types";
 
 const FilterContext = createContext<IFilterContext | null>(null);
 
 export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) => {
   const [filters, setFilters] = useState<TFilterValue | null>(null);
-  const [messageType, setMessageType] = React.useState<TMessageType>("received");
+  const [messageType, setMessageType] = useLocalStorage<TMessageType>("messageType", "Received");
+  const [isNewMsgGroup, setMessageGroup] = useState<TWriteType>("none");
+  const [userType, setUserType] = useState<TUserType>("client");
+  console.log("isNewMsgGroup", isNewMsgGroup);
+
   function setFilterValue(value: any, key: string, label: string, type: string, isDefault = false) {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
       updatedFilters[key] = { value, label, type, key, isDefault };
       return updatedFilters;
+    });
+  }
+
+  function setNewMsgGroup(state: TWriteType) {
+    setMessageGroup((prevState) => {
+      return state;
     });
   }
 
@@ -40,6 +53,10 @@ export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) =>
   const providerValue: IFilterContext = {
     filters,
     messageType,
+    isNewMsgGroup,
+    userType,
+    setUserType,
+    setNewMsgGroup,
     setMessageType,
     setFilters,
     setFilterValue,
@@ -51,7 +68,7 @@ export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) =>
 
 export const FilterConsumer = ({ children }: PropsWithChildren) => (
   <FilterContext.Consumer>
-    {(context) => {
+    {(context: IFilterContext | null) => {
       if (context === undefined) {
         throw new Error("FilterConsumer must be used within a FilterProvider");
       }

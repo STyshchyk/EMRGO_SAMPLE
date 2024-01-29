@@ -25,12 +25,12 @@ import {
   HelpIcon,
   NotificationsIcon,
   PrimariesIcon,
+  useFetchUndeadGroupsCount,
   useToast,
   useUser,
 } from "@emrgo-frontend/shared-ui";
 import { navigateSilverModule, silverModule } from "@emrgo-frontend/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { reverse } from "named-urls";
 import { useDarkMode } from "usehooks-ts";
 
 import {
@@ -61,6 +61,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
   const [enableRoleMapping, setRoleMapping] = useState(true);
   const [isHelpDeskOpen, setHelpDeskOpen] = useState(false);
   const navigate = useNavigate();
+  const { data } = useFetchUndeadGroupsCount("internal");
   useLayoutEffect(() => {
     disable();
   }, []);
@@ -73,7 +74,8 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
 
   const { data: userData } = useQuery([constants.queryKeys.account.profile.fetch], {
     queryFn: () => fetchUserProfileSilver(),
-    keepPreviousData: false,
+    keepPreviousData: true,
+    staleTime: Infinity,
     refetchOnMount: true,
     onSuccess: (response) => {
       const user = response;
@@ -133,7 +135,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <AccountIcon />,
       key: "Log out",
       path: "",
-      paths: "",
+      paths: [],
       disabled: false,
       onClick: () => {
         doLogout();
@@ -145,23 +147,21 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
         <>
           <SidebarListItemIconWithBadge>
             <NotificationsIcon />
-            <NotificationsBadge>{2}</NotificationsBadge>
+            {!!data && data > 0 && <NotificationsBadge>{data}</NotificationsBadge>}
           </SidebarListItemIconWithBadge>
         </>
       ),
       key: "Secure Messaging",
-      path: "",
-      paths: "",
-      onClick: () => {
-        navigate(reverse(silverAdministrationRoutes.secureMessaging.inbox.home, {}));
-      },
+      path: silverAdministrationRoutes.secureMessaging.inbox.home,
+      paths: getAllSilverRoutes(silverAdministrationRoutes.secureMessaging.inbox),
+      onClick: () => {},
     },
     {
       label: "Account",
       icon: <AccountIcon />,
       key: "Account",
       path: "",
-      paths: "",
+      paths: [],
       disabled: true,
     },
     {
@@ -169,7 +169,7 @@ export const SilverDashboardWrapperProvider = ({ children }: PropsWithChildren) 
       icon: <HelpIcon />,
       key: "Help",
       path: "",
-      paths: "",
+      paths: [],
       disabled: false,
       onClick: () => {
         setHelpDeskOpen(true);

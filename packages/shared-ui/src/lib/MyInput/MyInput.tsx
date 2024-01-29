@@ -23,6 +23,7 @@ const InputComponent: ForwardRefRenderFunction<
     onBlur,
     onFocus,
     error,
+    isValidForm,
     label,
     helperText,
     value,
@@ -126,17 +127,17 @@ const InputComponent: ForwardRefRenderFunction<
             ></Styles.Input>
             {autoResize && children && <Styles.AttachedFiles>{children}</Styles.AttachedFiles>}
             {autoResize && (
-              <Styles.ActionButtons>
-                <AttachFileIcon
-                  fontSize={"small"}
-                  onClick={() => {
-                    if (fileInputRef.current) fileInputRef.current?.click();
-                  }}
-                />
+              <Styles.ActionButtons
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (fileInputRef.current) fileInputRef.current?.click();
+                }}
+              >
+                <AttachFileIcon fontSize={"small"} />
                 <SendIcon
-                  color={value && !error ? "primary" : "disabled"}
+                  color={isValidForm && !error ? "primary" : "disabled"}
                   onClick={() => {
-                    if (value && onSendClick) {
+                    if (isValidForm && onSendClick) {
                       onSendClick();
                     }
                   }}

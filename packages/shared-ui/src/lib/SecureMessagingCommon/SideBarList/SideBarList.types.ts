@@ -1,4 +1,5 @@
 export interface ISideBarListProps {
-  messagesList: any;
+  messagesList?: any;
   isMessageEditConsoleActive: () => void;
+  type: "client" | "internal";
 }

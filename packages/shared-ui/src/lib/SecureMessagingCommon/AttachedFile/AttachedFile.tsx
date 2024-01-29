@@ -1,28 +1,34 @@
 import React, { FC } from "react";
 
-import { BytesFormmater } from "@emrgo-frontend/utils";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CircularProgress } from "@mui/material";
 import Chip from "@mui/material/Chip";
 
 import * as Styles from "./AttachedFile.styles";
 import { IAttachedFileProps } from "./AttachedFile.types";
+import { FileIcon } from "./FileIcon";
 
 export const AttachedFile: FC<IAttachedFileProps> = ({
-  file,
+  size,
+  fileName,
+  isLoading,
   index,
+  color,
   handleFileDelete,
-  variant = "elevated",
+  variant = "outlined",
   onClick,
 }) => {
+  const name_draft = fileName || "test_name.pdf";
+  const fileType = name_draft ? name_draft.split(".").pop() : "empty";
+  const size_draf = size || "100Kib";
   return (
     <Styles.AttachedFile>
       <Chip
-        icon={file?.isLoading ? <CircularProgress size={15} /> : <></>}
+        icon={isLoading ? <CircularProgress size={15} /> : <FileIcon name={fileType} size={15} />}
         label={
           <Styles.InfoWrapper>
-            <span>{file?.file.name ?? "testName"}</span>
-            <span>{BytesFormmater(file?.file.size)}</span>
+            <span>{name_draft}</span>
+            <span>{size_draf}</span>
           </Styles.InfoWrapper>
         }
         onClick={() => {
@@ -36,9 +42,9 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
           height: "42px",
         }}
         deleteIcon={handleFileDelete ? <DeleteIcon /> : <></>}
-        variant={"outlined"}
+        variant={variant ?? "outlined"}
         size={"medium"}
-        color={"primary"}
+        color={color ?? "primary"}
       />
     </Styles.AttachedFile>
   );

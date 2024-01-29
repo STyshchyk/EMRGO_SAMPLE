@@ -5,12 +5,21 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "lib": ["es2023", "dom"],
-    "types": ["vite/client"],
+    "lib": [
+      "es2023",
+      "es2015",
+      "es2017",
+      "dom"
+    ],
+    "types": [
+      "vite/client"
+    ],
     "suppressImplicitAnyIndexErrors": true
   },
   "files": [],
-  "include": ["src/shared.d.ts"],
+  "include": [
+    "src/shared.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.lib.json"

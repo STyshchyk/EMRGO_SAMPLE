@@ -23,7 +23,7 @@ export const Sidebar = styled.aside`
 
 export const SidebarHeader = styled.header<{ $isHidden: boolean }>`
   padding: ${rem(24)};
-  width: ${(props) => (!props.$isHidden ? `100%` : `93%`)};
+  width: ${(props) => (!props.$isHidden ? `100%` : `90%`)};
   overflow: clip;
 `;
 
@@ -36,6 +36,14 @@ export const SidebarList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+
+  ${(props) =>
+    props.theme.mode === "light" &&
+    css`
+      @container (width < 1000px) {
+        background-color: red;
+      }
+    `}
 `;
 
 export const SidebarListItem = styled.li`
@@ -58,11 +66,11 @@ const listItemContentStyles = css`
   display: flex;
   align-items: center;
   column-gap: ${rem(16)};
-  padding: ${rem(12)} ${rem(24)};
+  padding: ${rem(12)} ${rem(24)} ${rem(12)} ${rem(16)};
 `;
 
 const linkStyles = css`
-  ${listItemContentStyles}
+  ${listItemContentStyles};
   width: 100%;
   text-decoration: none;
   cursor: pointer;
@@ -143,21 +151,18 @@ interface ILinkProps {
 export const SidebarListItemLink = styled.a<ILinkProps>`
   ${linkStyles}
   ${getTheme("typography.medium.01")}
-
   ${(props) =>
     props.active &&
     css`
       ${getTheme("typography.semiBold.01")}
       ${activeLinkStyles}
     `}
-
   ${(props) =>
     props.disabled &&
     css`
       pointer-events: none;
       ${disabledLinkStyles}
     `}
-
   &.active {
     ${getTheme("typography.semiBold.01")}
     ${activeLinkStyles}
@@ -167,22 +172,18 @@ export const SidebarListItemLink = styled.a<ILinkProps>`
 export const SidebarListItemSecondaryLink = styled.a<ILinkProps>`
   ${linkStyles}
   ${getTheme("typography.medium.02")}
-
   ${(props) =>
     props.active &&
     css`
       ${getTheme("typography.semiBold.02")}
       ${activeLinkStyles}
     `}
-
-
   ${(props) =>
     props.disabled &&
     css`
       pointer-events: none;
       ${disabledLinkStyles}
     `}
-
   &.active {
     ${getTheme("typography.semiBold.02")}
     ${activeLinkStyles}

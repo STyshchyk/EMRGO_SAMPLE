@@ -1,12 +1,10 @@
 import { MIN_DATE } from "@emrgo-frontend/constants";
 import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
+import moment from "moment";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
 export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";
 export const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
+export const DEFAULT_DATE_TIME_FORMAT_SM = `ddd ${DEFAULT_DATE_FORMAT} HH:mm A `;
 
 export function compareDates(date2: string): string {
   const today = MIN_DATE,
@@ -32,4 +30,17 @@ export function trimDate(date: string): string {
 export const dateFormatter = (date: Date, format?: string) => {
   if (!date) return "";
   return dayjs(date).format(format || "DD/MM/YYYY");
+};
+
+export const customDateFormat = (date: Date) => {
+  const currentDate = moment();
+  const inputDate = moment(date);
+
+  if (currentDate.isSame(inputDate, "day")) {
+    return inputDate.format("HH:mm");
+  }
+  if (currentDate.isSame(inputDate, "week")) {
+    return inputDate.format("ddd MM/D");
+  }
+  return inputDate.format("D/M/YYYY");
 };

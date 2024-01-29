@@ -2,6 +2,7 @@ import React, { useId } from "react";
 import Select, { GroupBase, Props } from "react-select";
 
 import { colors, typography } from "@emrgo-frontend/theme";
+import { useFormikContext } from "formik";
 import { ellipsis, rem, rgba } from "polished";
 import { useDarkMode } from "usehooks-ts";
 
@@ -13,17 +14,23 @@ export const MySelect = <
   IsMulti extends boolean = false,
   GroupType extends GroupBase<OptionType> = GroupBase<OptionType>
 >({
-  error,
+  error: customError,
   maxWidth,
+  type = "filled",
   components: customComponent,
   variant = "signup",
   ...props
 }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
+  const formik = useFormikContext();
+  const formikError =
+    formik?.touched[`${props?.id}`] && (formik?.errors[`${props?.id}`] as string | undefined);
+  const error = customError ? customError : formikError;
   const animatedComponents = {};
   const { isDarkMode } = useDarkMode();
   const componentId = useId();
   const idValue = props.id ?? componentId;
   const SignUpVariant = variant === "signup";
+
   const getOptionStyles = (type: string, state?: any, error?: string | boolean) => {
     let styles = {};
     switch (type) {
@@ -167,6 +174,7 @@ export const MySelect = <
               : state.menuIsOpen
               ? colors.green3
               : colors.strokes.light,
+            border: type === "standard" && "none",
             boxShadow: "none",
           }),
           singleValue: (styles, state) => ({

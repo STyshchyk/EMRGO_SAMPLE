@@ -43,6 +43,7 @@ export * from "./lib/SilverDashboardWrapper";
 export * from "./lib/SilverDashboardWrapper";
 export * from "./lib/SilverSecureMessaging";
 export * from "./lib/SixDigitCodeInput";
+export * from "./lib/Spinner";
 export * from "./lib/Table";
 export * from "./lib/Tabs";
 export * from "./lib/TermsModal";

@@ -14,13 +14,13 @@ export const MessageContainer = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
 `;
 
-export const MessagesBox = styled.div<{ isEmpty?: boolean }>`
+export const MessagesBox = styled.div<{ $isEmpty?: boolean }>`
   /* Layout */ /* Element Styles */ /* Text styles */
   display: flex;
   flex-direction: column;
 
   ${(props) =>
-    !props.isEmpty
+    !props.$isEmpty
       ? css`
           height: 100%;
           justify-content: center;
@@ -75,6 +75,8 @@ export const MessageHeader = styled.div`
 export const MessageContent = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
   margin-top: 0.25rem;
+  word-break: break-word;
+  white-space: pre-line;
   /* use !important to prevent breakage from child margin settings */
 `;
 
@@ -91,6 +93,7 @@ export const MessageFilesContainer = styled.div`
       border-top: 1px solid ${getTheme("colors.light")};
     `}
   display: flex;
+  flex-wrap: wrap;
   margin-top: 0.25rem;
   padding-top: 0.5rem;
   gap: 0.5rem;

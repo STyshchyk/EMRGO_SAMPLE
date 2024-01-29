@@ -1,17 +1,23 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from "react";
 
-import { Input, MySelect as Select } from '@emrgo-frontend/shared-ui';
-import { DEFAULT_DATE_FORMAT } from '@emrgo-frontend/utils';
-import { FormControl, TextField } from '@mui/material';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {
+  ExpandArrow,
+  Input,
+  MySelect as Select,
+  useFetchEntities,
+} from "@emrgo-frontend/shared-ui";
+import { DEFAULT_DATE_FORMAT } from "@emrgo-frontend/utils";
+import { FormControl, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useLocalStorage } from "usehooks-ts";
 
-import { useFilters } from '../../Context/filter-context';
-import { TFilterValue } from '../../Context/filter-context.types';
-import * as Styles from './TabHeader.styles';
-import { ITabHeaderProps } from './TabHeader.types';
+import { useFilters } from "../../Context/filter-context";
+import { TFilterValue } from "../../Context/filter-context.types";
+import * as Styles from "./TabHeader.styles";
+import { ITabHeaderProps } from "./TabHeader.types";
 
 const statusOptions = [
   {
@@ -93,11 +99,17 @@ const initialValues = {
 };
 export const TabHeader: FC<ITabHeaderProps> = ({}) => {
   const ref = useRef<HTMLInputElement>(null);
+  const { userType } = useFilters();
   const [selectedQueryType, setSelectedQueryType] = useState(queryOptions[0]);
   const [selectedDropDown, setDropDown] = useState(null);
   const [localFilters, setLocalFilters] = useState<TFilterValue | null>(null);
+  const {
+    data: entityData,
+    isRefetching: isEntityFetching,
+    isSuccess,
+  } = useFetchEntities(userType === "internal");
   const { setFilterValue, filters, setFilters, clearFilterValue } = useFilters();
-
+  const [isMenuHidden, setMenuHidded] = useLocalStorage<boolean>("SideBarState", false);
   function SetLocalFilters(value: any, key: string, label: string, type: string) {
     setLocalFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
@@ -113,7 +125,12 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
   function AddQuery() {}
 
   return (
-    <Styles.TabHeaderWrapper>
+    <Styles.TabHeaderWrapper id={"MinNavBar"} className={"relative"}>
+      <ExpandArrow
+        onClick={() => {
+          setMenuHidded((prevState) => (prevState = !prevState));
+        }}
+      />
       <span>Search by</span>
       <Styles.SearchWrapper>
         <Select

@@ -9,10 +9,10 @@ export const FormikInputCustom = <T,>({
   id,
   accept,
   type,
+  border,
   ...rest
 }: IFormikInputProps<T>) => {
   let error: string | undefined;
-
   try {
     error = form.touched[id] && (form.errors[id] as string | undefined);
   } catch (e) {
@@ -20,15 +20,34 @@ export const FormikInputCustom = <T,>({
     throw e;
   }
   const fieldProps = form.getFieldProps(id);
-
+  console.log(error);
   if (type === "file")
     return (
       <InputFile id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
     );
-  else if (type === "select") return <MySelect id={id} error={error} {...fieldProps} {...rest} />;
+  else if (type === "select")
+    return <MySelect id={id} error={error} {...fieldProps} border={border} {...rest} />;
   else if (type === "textarea")
     return (
-      <MyTextArea id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
+      <MyTextArea
+        id={id}
+        error={error}
+        {...fieldProps}
+        accept={accept}
+        type={type}
+        {...rest}
+        isValidForm={rest?.isValidForm}
+      />
     );
-  return <Input id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />;
+  return (
+    <Input
+      id={id}
+      error={error}
+      {...fieldProps}
+      accept={accept}
+      type={type}
+      border={border}
+      {...rest}
+    />
+  );
 };

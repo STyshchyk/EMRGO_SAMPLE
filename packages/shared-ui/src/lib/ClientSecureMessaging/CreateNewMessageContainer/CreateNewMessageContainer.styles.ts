@@ -1,12 +1,12 @@
 import { getTheme } from "@emrgo-frontend/theme";
 import styled, { css } from "styled-components";
 
-export const ClientMessageContainer = styled.div`
+export const CreateNewMessageContainer = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
 `;
 export const Subject = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
   display: flex;

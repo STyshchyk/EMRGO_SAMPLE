@@ -11,6 +11,7 @@ export interface IMyInputProps extends HTMLAttributes<HTMLTextAreaElement>, Prop
   label?: string;
   /** The input is in an error state */
   error?: string | false;
+  isValidForm?: boolean;
   /** The input helper text */
   helperText?: string;
   rows?: number;

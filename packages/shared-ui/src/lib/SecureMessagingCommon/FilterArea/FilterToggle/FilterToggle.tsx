@@ -5,6 +5,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Tooltip from "@mui/material/Tooltip";
 
+import { TMessageType } from "../../../Context";
 import { useFilters } from "../../../Context/filter-context";
 import { Tooltip as FathomTooltip } from "../../../Tooltip";
 import * as Styles from "./FilterToggle.styles";
@@ -12,23 +13,24 @@ import { IFilterToggleProps } from "./FilterToggle.types";
 
 const toggleFilter = [
   {
-    value: "received",
+    value: "Received",
     label: "Received",
   },
   {
-    value: "drafts",
+    value: "Draft",
     label: "Drafts",
   },
 
   {
-    value: "sent",
+    value: "Sent",
     label: "Sent",
   },
   {
-    value: "archived",
+    value: "Archived",
     label: "Archived",
   },
 ];
+
 export const FilterToggle: FC<IFilterToggleProps> = ({}) => {
   const { messageType, setMessageType } = useFilters();
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: TMessageType) => {
