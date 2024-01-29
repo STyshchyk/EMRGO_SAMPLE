@@ -105,7 +105,7 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
         messageId: lastDraftMessage.id,
         DeleteAttachmentIds: [],
         isDraft: true,
-        lastTimeSavedDraft: lastDraftMessage.createdAt,
+        lastTimeSavedDraft: lastDraftMessage.updatedAt,
       };
       setInitialData(initialData);
       return;

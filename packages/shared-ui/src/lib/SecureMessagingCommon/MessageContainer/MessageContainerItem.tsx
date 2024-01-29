@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { DEFAULT_DATE_TIME_FORMAT_SM } from "@emrgo-frontend/utils";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import moment from "moment";
+import dayjs from "dayjs";
 
 import { useFilters } from "../../Context";
 import { AttachedFile } from "../AttachedFile";
@@ -18,7 +18,7 @@ export const MessageContainerItem: FC<{ elem: any; index: number; unreadRef }> =
 
   const files = elem?.attachments ?? [];
   const sender = elem?.sender;
-  const date = moment(elem.sentAt).format(DEFAULT_DATE_TIME_FORMAT_SM);
+  const date = dayjs(elem.sentAt).format(DEFAULT_DATE_TIME_FORMAT_SM);
   const isCurrentMsgBelongToSender = elem.sender.type === userType;
   const isNewMessagesPoint = elem.isNewStarted;
 

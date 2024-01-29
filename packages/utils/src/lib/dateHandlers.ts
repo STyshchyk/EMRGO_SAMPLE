@@ -1,6 +1,5 @@
 import { MIN_DATE } from "@emrgo-frontend/constants";
 import dayjs from "dayjs";
-import moment from "moment";
 
 export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";
 export const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
@@ -33,8 +32,8 @@ export const dateFormatter = (date: Date, format?: string) => {
 };
 
 export const customDateFormat = (date: Date) => {
-  const currentDate = moment();
-  const inputDate = moment(date);
+  const currentDate = dayjs();
+  const inputDate = dayjs(date);
 
   if (currentDate.isSame(inputDate, "day")) {
     return inputDate.format("HH:mm");
