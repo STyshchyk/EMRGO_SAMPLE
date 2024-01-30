@@ -74,7 +74,7 @@ export const silverAdministrationRoutes = {
   }),
   secureMessaging: include("/secure-messaging", {
     inbox: include("inbox/", {
-      home: "",
+      home: "*",
       id: "id/:id",
     }),
   }),
@@ -88,7 +88,7 @@ export const silverOnboardingRoutes = {
   }),
   secureMessaging: include("/secure-messaging", {
     inbox: include("inbox/", {
-      home: "",
+      home: "*",
       id: "id/:id",
     }),
   }),
