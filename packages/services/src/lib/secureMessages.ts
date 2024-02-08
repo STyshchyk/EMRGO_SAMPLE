@@ -1,13 +1,16 @@
 import {
   IDeleteGroupProps,
+  IFetchAuditHistoryProps,
   IFetchGroupMessagesIdProps,
   IFetchGroupsProps,
   IGroups,
   IMessageData,
   IPostGroupMessageProps,
   IPostNewGroupProps,
+  ISecureAudit,
   IUpdateFlagProps,
   IUpdateGroupMessageProps,
+  IUpdateGroupStatusProps,
   IUpdateNewGroupMessageProps,
   IUsePostReadMessagesProps,
 } from "@emrgo-frontend/types";
@@ -20,9 +23,18 @@ const sharedClient = sharedDashboardApi;
 
 export const fetchGroups = async (props: IFetchGroupsProps): Promise<IGroups[]> => {
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
-  const promise = sharedSilver({
+  const promise = sharedApi({
     method: "get",
     url: `/messaging/v1/groups`,
+  });
+  const data = await (await promise).data.data;
+  return data || [];
+};
+export const fetchAuditHistory = async (props: IFetchAuditHistoryProps): Promise<ISecureAudit> => {
+  const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
+  const promise = sharedApi({
+    method: "get",
+    url: `messaging/v1/groups/${props.groupId}/audit`,
   });
   const data = await (await promise).data.data;
   return data || [];
@@ -32,7 +44,7 @@ export const fetchGroupMessagesId = async (
   props: IFetchGroupMessagesIdProps
 ): Promise<IMessageData> => {
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
-  const promise = sharedSilver({
+  const promise = sharedApi({
     method: "get",
     url: `/messaging/v1/groups/${props.id}`,
   });
@@ -44,7 +56,7 @@ export const usePostReadMessages = async (
   props: IUsePostReadMessagesProps
 ): Promise<IMessageData> => {
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
-  const promise = sharedSilver({
+  const promise = sharedApi({
     method: "post",
     url: `/messaging/v1/message/read`,
     data: props.payload,
@@ -76,7 +88,17 @@ export const updateFlag = async (props: IUpdateFlagProps): Promise<any> => {
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
   const promise = sharedApi({
     method: "patch",
-    url: `/messaging/v1/group/${props.id}/flagged/${props.status}`,
+    url: `/messaging/v1/group/${props.id}/status/${props.status}`,
+  });
+  const data = await (await promise).data;
+  return data || [];
+};
+
+export const updateGroupStatus = async (props: IUpdateGroupStatusProps): Promise<any> => {
+  const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
+  const promise = sharedApi({
+    method: "patch",
+    url: `/messaging/v1/group/${props.groupId}/status/${props.status}`,
   });
   const data = await (await promise).data;
   return data || [];
@@ -129,14 +151,16 @@ export const updateGroupMessage = async (props: IUpdateGroupMessageProps): Promi
 const SecureMessaging = {
   fetchGroups,
   fetchGroupMessagesId,
+  fetchAuditHistory,
   deleteGroup,
   deleteMessage,
-  usePostReadMessages,
   updateFlag,
+  updateGroupMessage,
+  updateGroupStatus,
   updateNewGroupMessage,
   postNewGroup,
+  usePostReadMessages,
   postGroupMessage,
-  updateGroupMessage,
 };
 
 export default SecureMessaging;

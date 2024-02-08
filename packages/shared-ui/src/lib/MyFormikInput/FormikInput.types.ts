@@ -8,6 +8,7 @@ export interface IFormikInputProps<T> extends IInputProps {
   type?: "text" | "password" | "email" | "file" | "select" | "textarea";
   accept?: string;
   border: boolean;
+  isValidForm?: boolean;
 }
 
 export type TMyInputVariants = "signup" | "default";

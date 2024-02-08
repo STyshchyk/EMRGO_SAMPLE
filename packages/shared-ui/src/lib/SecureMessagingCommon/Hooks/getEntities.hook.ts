@@ -12,8 +12,7 @@ const isKYCApproved = (entity: any) =>
 export const useFetchEntities = (enabled: boolean) => {
   return useQuery<IEntity[], Error>([silverQueryKeys.onboarding.fetch], {
     queryFn: getEntities,
-    refetchOnMount: "always",
-    staleTime: 60 * 1000,
+    staleTime: 1000 * 1000,
     enabled,
     select: (data) => {
       return data.filter((entity) => {

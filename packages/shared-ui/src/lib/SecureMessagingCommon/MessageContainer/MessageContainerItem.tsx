@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, RefObject } from "react";
 
+import { IMessageData } from "@emrgo-frontend/types";
 import { DEFAULT_DATE_TIME_FORMAT_SM } from "@emrgo-frontend/utils";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
@@ -9,11 +10,12 @@ import { useFilters } from "../../Context";
 import { AttachedFile } from "../AttachedFile";
 import * as Styles from "./MessageContainer.styles";
 
-export const MessageContainerItem: FC<{ elem: any; index: number; unreadRef }> = ({
-  elem,
-  index,
-  unreadRef,
-}) => {
+export const MessageContainerItem: FC<{
+  elem: any;
+  index: number;
+  unreadRef: RefObject<HTMLElement | null>;
+  recepient: IMessageData;
+}> = ({ elem, index, unreadRef, recepient }) => {
   const { userType } = useFilters();
 
   const files = elem?.attachments ?? [];
@@ -35,9 +37,17 @@ export const MessageContainerItem: FC<{ elem: any; index: number; unreadRef }> =
       )}
       <Styles.MessageItem $isSender={!isCurrentMsgBelongToSender}>
         <Styles.MessageHeader>
-          <span>
-            {sender.firstName} {sender.lastName}
-          </span>
+          <div className={"flex flex-col justify-start"}>
+            <span>
+              {sender.firstName} {sender.lastName}
+            </span>
+            <span>
+              to:
+              {isCurrentMsgBelongToSender
+                ? ` ${recepient?.creator?.firstName} ${recepient?.creator?.lastName}`
+                : ` ${recepient?.entities?.name}`}
+            </span>
+          </div>
           <span>{date}</span>
         </Styles.MessageHeader>
         <Styles.MessageContent>{elem?.message}</Styles.MessageContent>

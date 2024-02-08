@@ -10,7 +10,6 @@ export const InfoWrapper = styled.div`
   flex-direction: column;
   font-size: 16px;
   width: 150px;
-  padding-left: 0.5rem;
 
   & span:first-child {
     ${ellipsis("150", 1)};

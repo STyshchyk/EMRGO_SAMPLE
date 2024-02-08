@@ -6,6 +6,7 @@ import { ensureNotNull } from "@emrgo-frontend/utils";
 
 import { useFilters } from "../Context/filter-context";
 import { MessagesContainerCommon, TabHeader } from "../SecureMessagingCommon";
+import { GroupMessagingAuditHistory } from "../SecureMessagingCommon/AuditLogs";
 import { CreateNewMessageContainer } from "./CreateNewMessageContainer";
 import { useSilverSecureMessagingContext } from "./SilverSecureMessaging.provider";
 import * as Styles from "./SilverSecureMessaging.styles";
@@ -15,12 +16,18 @@ export const SilverSecureMessagingComponent: FC<ISilverSecureMessagingProps> = (
   children,
 }: ISilverSecureMessagingProps) => {
   const { messagesList } = ensureNotNull(useSilverSecureMessagingContext());
-  const { isNewMsgGroup, setNewMsgGroup } = useFilters();
+  const { isNewMsgGroup, setNewMsgGroup, auditUrl, setAuditUrl } = useFilters();
   const isCreateMessageModeEnabled = isNewMsgGroup === "sent" || isNewMsgGroup === "draft";
   return (
     <Styles.SilverSecureMessaging>
       <TabHeader />
       <Styles.Container>
+        <GroupMessagingAuditHistory
+          open={auditUrl.length > 0}
+          handleClose={() => {
+            setAuditUrl("");
+          }}
+        />
         <SecureSideBar
           messageList={messagesList}
           setNewMsgGroup={setNewMsgGroup}

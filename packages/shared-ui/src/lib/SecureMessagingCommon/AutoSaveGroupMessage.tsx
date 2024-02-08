@@ -8,23 +8,28 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormikContext } from "formik";
 import debounce from "lodash.debounce";
 
+import { useFilters } from "../Context";
 import { IAutoSaveGroupMessageProps } from "./AutoSave.types";
 import { useDeleteMesssages } from "./Hooks";
 
 export const AutoSaveGroupMessage: FC<IAutoSaveGroupMessageProps> = ({
   initial,
   id,
-  type,
   isFileUploading,
+  isSubmitting,
 }) => {
   const client = useQueryClient();
   const navigate = useNavigate();
+  const { userType: type } = useFilters();
   const formikContext = useFormikContext();
-  const { mutate: deleteMessage } = useDeleteMesssages(queryKeys.secureMessaging.id, `${id}`);
+  const { mutate: deleteMessage } = useDeleteMesssages(
+    [queryKeys.secureMessaging.id, `${id}`],
+    type
+  );
   const { mutate: postDraftMessage } = useMutation(SecureMessagesApi.postGroupMessage, {
     onSuccess: () => {
       console.log("post draft sucess");
-      // client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
+      client.invalidateQueries([queryKeys.secureMessaging.id, id]).then(() => {});
     },
     onError: () => {},
   });
@@ -32,11 +37,11 @@ export const AutoSaveGroupMessage: FC<IAutoSaveGroupMessageProps> = ({
   const { mutate: updateMessageGroup } = useMutation(SecureMessagesApi.updateGroupMessage, {
     onSuccess: () => {
       console.log("post update sucess");
-      // client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
+      client.invalidateQueries([queryKeys.secureMessaging.id, id]).then(() => {});
     },
     onError: () => {},
   });
-  const saveFormValues = (values: any, id: string) => {
+  const saveFormValues = (values: any, id: string | undefined) => {
     const filterAddedAttachment = Array.isArray(values.addAttachments)
       ? values.addAttachments.filter((elem) => !elem.id)
       : [];
@@ -51,28 +56,34 @@ export const AutoSaveGroupMessage: FC<IAutoSaveGroupMessageProps> = ({
       addAttachments: filterAddedAttachment,
     };
     if (!payload.messageId) {
-      console.log("create draft", payload);
+      console.log("create draft", isMessageEmpty, payload, values);
       if (isMessageEmpty) return;
       postDraftMessage({ message: payload, wrapper: type });
     } else {
-      console.log("update draft", isMessageEmpty, payload);
+      console.log("update draft", isMessageEmpty, payload, values);
       if (!payload.messageId) return;
+      console.log("pre delete", isMessageEmpty);
       isMessageEmpty
         ? deleteMessage({ wrapper: type, id: payload.messageId })
         : updateMessageGroup({ message: payload, wrapper: type, id: payload.messageId });
     }
   };
 
-  const debouncedHandleSaveValues = useMemo(() => debounce(saveFormValues, 2500), []);
+  const debouncedHandleSaveValues = useMemo(() => debounce(saveFormValues, 2000), []);
   useEffect(() => {
     const equal = JSON.stringify(formikContext?.values) === JSON.stringify(initial);
-    if (formikContext.isSubmitting) {
+    // console.log("isFileUploading", isFileUploading, "isSubmitting", isSubmitting);
+
+    if (formikContext.isSubmitting || isFileUploading || !initial.groupId || !id || isSubmitting) {
+      debouncedHandleSaveValues.cancel();
+      console.log("return");
       return;
     }
     if (!equal && !isFileUploading && !formikContext.isSubmitting) {
+      // console.log("formikContext?.values", formikContext?.values, "/n", "initial", initial);
       debouncedHandleSaveValues(formikContext.values, id);
     }
-  }, [formikContext?.values, isFileUploading]);
+  }, [formikContext?.values, formikContext?.isSubmitting, isFileUploading, isSubmitting]);
 
   return null;
 };

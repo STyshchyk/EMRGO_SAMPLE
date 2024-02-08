@@ -52,11 +52,14 @@ export const MessageHeader = styled.div`
   flex-direction: row;
   padding-bottom: 0.25rem;
 
-  & span:first-child {
+  & div > span:first-child {
     ${getTheme("typography.regular02")}
   }
 
-  & span:last-child {
+  & div > span:last-child {
+    ${getTheme("typography.semiBold.03Tight")};
+  }
+  & > span:last-child {
     ${getTheme("typography.semiBold.03Tight")};
     margin-left: auto;
   }

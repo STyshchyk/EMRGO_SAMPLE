@@ -113,7 +113,6 @@ export const DashboardWrapperProvider = ({ children }: PropsWithChildren) => {
   const navigateToModule = (module: string, path: string) => {
     navigateModule(module, path);
   };
-
   const mainRoutes = [
     {
       label: "Primaries",

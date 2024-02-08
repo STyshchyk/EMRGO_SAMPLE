@@ -1,8 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import * as constants from "@emrgo-frontend/constants";
-import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
+import { clientAccountRoutes, silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { SecureMessagesApi } from "@emrgo-frontend/services";
 import { IUploadDraftMessage, IUploadNewGroup } from "@emrgo-frontend/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,26 +17,26 @@ export const AutoSaveGroup: FC<IAutoSaveGroupProps> = ({
   updateDraftMessageData,
   draftMessageData,
   id,
-  type,
   isFileUploading,
 }) => {
   const client = useQueryClient();
-  const { setNewMsgGroup } = useFilters();
+  const { userType: type } = useFilters();
+  const { setNewMsgGroup, isNewMsgGroup } = useFilters();
   const navigate = useNavigate();
   const formikContext = useFormikContext();
   const { mutate: updateMessage } = useMutation(SecureMessagesApi.updateNewGroupMessage, {
     onSuccess: () => {
       console.log("auto save success");
-      // client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
+      client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
       // client.invalidateQueries([queryKeys.secureMessaging.fetch]).then(() => {});
     },
   });
   const { mutate: postMessageGroup } = useMutation(SecureMessagesApi.postNewGroup, {
     onSuccess: (data) => {
-      const route = reverse(`${constants.clientAccountRoutes.secureMessaging.inbox.id}`, {
-        id: data.data?.id ?? data.data[0].id,
+      const id = data.data?.id ?? data.data[0].id;
+      const route = reverse(`${clientAccountRoutes.secureMessaging.inbox.id}`, {
+        id,
       });
-      console.log("auto save success2");
       client.invalidateQueries([queryKeys.secureMessaging.fetch]).then(() => {
         setNewMsgGroup("draft");
         navigate(route);
@@ -47,31 +46,39 @@ export const AutoSaveGroup: FC<IAutoSaveGroupProps> = ({
   const saveFormValues = (
     updateDraftMessageData: IUploadDraftMessage,
     draftMessageData: IUploadNewGroup,
-    id: string
+    id: string,
+    initial: any
   ) => {
     //Check wether id is exits in params which indicats that current message is draft other wise user is about to create a message so save it as draft
-
     if (id) {
       const payload = updateDraftMessageData;
       console.log(type);
-      console.log("update draft", payload);
+      console.log("update draft", isNewMsgGroup, "payload", payload, "initial", initial);
+      if (!payload.subject || !payload.label) return;
       updateMessage({ message: payload, wrapper: type, id });
     } else {
       const payload = draftMessageData;
       console.log(type);
-      console.log("first draft", payload);
-      if (!payload.subject) return;
+      console.log("first draft", isNewMsgGroup, "payload", payload, "initial", initial);
+      if (!payload.subject || !payload.label) return;
       postMessageGroup({ message: payload, wrapper: type });
     }
   };
 
-  const debouncedHandleSaveValues = useMemo(() => debounce(saveFormValues, 2500), []);
+  const debouncedHandleSaveValues = useMemo(() => debounce(saveFormValues, 5000), []);
   useEffect(() => {
     const equal = JSON.stringify(formikContext?.values) === JSON.stringify(initial);
-    if (!equal && !isFileUploading) {
-      debouncedHandleSaveValues(updateDraftMessageData, draftMessageData, id);
+    if (isFileUploading || formikContext.isSubmitting) {
+      debouncedHandleSaveValues.cancel();
+      console.log("return");
+      return;
     }
-  }, [formikContext?.values, isFileUploading]);
+
+    if (!equal && !isFileUploading) {
+      console.log("initial", initial, "\nformikContext.values", formikContext.values);
+      debouncedHandleSaveValues(updateDraftMessageData, draftMessageData, id, initial);
+    }
+  }, [formikContext?.values, formikContext.isSubmitting]);
 
   return null;
 };

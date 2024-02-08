@@ -31,7 +31,8 @@ export const dateFormatter = (date: Date, format?: string) => {
   return dayjs(date).format(format || "DD/MM/YYYY");
 };
 
-export const customDateFormat = (date: Date) => {
+export const customDateFormat = (date: Date | null | undefined): string => {
+  if (!date) return "N/A";
   const currentDate = dayjs();
   const inputDate = dayjs(date);
 

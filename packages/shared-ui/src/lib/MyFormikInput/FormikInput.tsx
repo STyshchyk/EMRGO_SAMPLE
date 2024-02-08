@@ -20,13 +20,22 @@ export const FormikInputCustom = <T,>({
     throw e;
   }
   const fieldProps = form.getFieldProps(id);
-  console.log(error);
   if (type === "file")
     return (
       <InputFile id={id} error={error} {...fieldProps} accept={accept} type={type} {...rest} />
     );
   else if (type === "select")
-    return <MySelect id={id} error={error} {...fieldProps} border={border} {...rest} />;
+    return (
+      <MySelect
+        id={id}
+        components={rest?.components}
+        error={error}
+        {...fieldProps}
+        variant={rest?.variant}
+        border={rest?.removeBorder || false}
+        {...rest}
+      />
+    );
   else if (type === "textarea")
     return (
       <MyTextArea
@@ -35,8 +44,8 @@ export const FormikInputCustom = <T,>({
         {...fieldProps}
         accept={accept}
         type={type}
-        {...rest}
         isValidForm={rest?.isValidForm}
+        {...rest}
       />
     );
   return (
@@ -46,7 +55,7 @@ export const FormikInputCustom = <T,>({
       {...fieldProps}
       accept={accept}
       type={type}
-      border={border}
+      border={rest?.removeBorder || false}
       {...rest}
     />
   );

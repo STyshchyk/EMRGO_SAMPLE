@@ -23,6 +23,7 @@ const InputComponent: ForwardRefRenderFunction<
     onBlur,
     onFocus,
     error,
+    border,
     label,
     helperText,
     value,
@@ -58,11 +59,11 @@ const InputComponent: ForwardRefRenderFunction<
   const blur = () => {
     setHasFocus(false);
   };
-
   return (
     <Styles.Wrapper $maxWidth={maxWidth} className={className}>
       <Styles.InputContainer
         $active={active}
+        $border={border}
         $error={!!error}
         $hasFocus={hasFocus}
         onClick={() => {

@@ -1,5 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext, useState } from "react";
 
+import { TWrapperType } from "@emrgo-frontend/types";
 import { ensureNotNull } from "@emrgo-frontend/utils";
 import { useLocalStorage } from "usehooks-ts";
 
@@ -8,7 +9,6 @@ import {
   IFilterProvider,
   TFilterValue,
   TMessageType,
-  TUserType,
   TWriteType,
 } from "./filter-context.types";
 
@@ -18,13 +18,19 @@ export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) =>
   const [filters, setFilters] = useState<TFilterValue | null>(null);
   const [messageType, setMessageType] = useLocalStorage<TMessageType>("messageType", "Received");
   const [isNewMsgGroup, setMessageGroup] = useState<TWriteType>("none");
-  const [userType, setUserType] = useState<TUserType>("client");
-  console.log("isNewMsgGroup", isNewMsgGroup);
+  const [userType, setUserType] = useState<TWrapperType | null>(null);
+  const [auditUrl, setAuditUrl] = React.useState<string>("");
 
-  function setFilterValue(value: any, key: string, label: string, type: string, isDefault = false) {
+  function setFilterValue(
+    value: any,
+    key: string,
+    label: string,
+    type: string,
+    filterValue: string
+  ) {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
-      updatedFilters[key] = { value, label, type, key, isDefault };
+      updatedFilters[key] = { value, label, type, key, filterValue };
       return updatedFilters;
     });
   }
@@ -55,6 +61,8 @@ export const FilterProvider = ({ children, version = "v1" }: IFilterProvider) =>
     messageType,
     isNewMsgGroup,
     userType,
+    auditUrl,
+    setAuditUrl,
     setUserType,
     setNewMsgGroup,
     setMessageType,

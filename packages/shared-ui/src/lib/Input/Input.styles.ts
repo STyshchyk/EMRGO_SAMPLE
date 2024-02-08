@@ -19,11 +19,16 @@ export const Wrapper = styled.div<{ $maxWidth?: number }>`
   max-width: ${({ $maxWidth }) => $maxWidth && rem($maxWidth)};
 `;
 
+export const BorderBottom = css`
+  border: 1px solid transparent;
+`;
+
 export const InputContainer = styled.div<{
   $active: boolean;
   $hasFocus: boolean;
   $error: boolean;
   $disabled?: boolean;
+  $border?: boolean;
   variant?: TInputVariants;
 }>`
   /* Layout */
@@ -40,33 +45,38 @@ export const InputContainer = styled.div<{
   transition: all 0.2s ease-in-out;
 
   /* Variants */
-  ${({ theme, variant = "default" }) =>
+  ${({ theme, $border, variant = "default" }) =>
     css`
       ${theme.mode === "light" &&
       css`
         background: ${getTheme("colors.black.5")};
         border: 1px solid ${getTheme("colors.strokes.light")};
+        ${(props) => props.$border && BorderBottom}
       `}
+
       ${theme.mode === "dark" &&
       css`
         background: ${getTheme("colors.white.5")};
         border: 1px solid ${getTheme("colors.strokes.dark")};
+        ${(props) => props.$border && BorderBottom}
       `}
-      ${theme.mode === "light" &&
+
+            ${theme.mode === "light" &&
       variant === "signup" &&
       css`
         background: ${getTheme("colors.white.100")};
         border: 1px solid ${getTheme("colors.strokes.light")};
+        ${(props) => props.$border && BorderBottom}
       `}
-      ${theme.mode === "dark" &&
+            ${theme.mode === "dark" &&
       variant === "signup" &&
       css`
         background: ${getTheme("colors.white.0")};
         border: 1px solid ${getTheme("colors.strokes.dark")};
+        ${(props) => props.$border && BorderBottom}
       `}
-    `}
+    `};
 
-  /* Focus States */
   ${({ $hasFocus, theme }) =>
     $hasFocus &&
     css`
@@ -78,7 +88,9 @@ export const InputContainer = styled.div<{
       css`
         border: 1px solid ${getTheme("colors.green5")};
       `}
-    `} /* Error States */ ${(props) =>
+    `}
+
+  ${(props) =>
     props.$error &&
     css`
       ${props.theme.mode === "light" &&
@@ -97,6 +109,7 @@ export const InputContainer = styled.div<{
       props.variant === "default" &&
       css`
         border: 1px solid ${getTheme("colors.orange")};
+        border: unset;
         background: linear-gradient(
             0deg,
             ${rgba(getTheme("colors.orange")(props), 0.05)},

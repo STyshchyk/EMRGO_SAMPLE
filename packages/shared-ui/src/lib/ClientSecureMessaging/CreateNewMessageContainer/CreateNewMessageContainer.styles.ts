@@ -1,10 +1,11 @@
 import { getTheme } from "@emrgo-frontend/theme";
+import Card from "@mui/material/Card";
 import styled, { css } from "styled-components";
 
 export const CreateNewMessageContainer = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
 `;
-export const Subject = styled.div`
+export const Subject = styled(Card)`
   /* Layout */ /* Element Styles */ /* Text styles */
   padding: 1rem 1rem;
   margin-bottom: 1rem;

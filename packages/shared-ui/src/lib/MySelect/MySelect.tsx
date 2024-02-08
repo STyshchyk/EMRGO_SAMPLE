@@ -1,8 +1,8 @@
-import React, { useId } from "react";
+import React, { useContext, useId } from "react";
 import Select, { GroupBase, Props } from "react-select";
 
 import { colors, typography } from "@emrgo-frontend/theme";
-import { useFormikContext } from "formik";
+import { FormikContext } from "formik";
 import { ellipsis, rem, rgba } from "polished";
 import { useDarkMode } from "usehooks-ts";
 
@@ -16,12 +16,12 @@ export const MySelect = <
 >({
   error: customError,
   maxWidth,
-  type = "filled",
+  border,
   components: customComponent,
   variant = "signup",
   ...props
 }: Props<OptionType, IsMulti, GroupType> & IMySelectProps) => {
-  const formik = useFormikContext();
+  const formik = useContext(FormikContext);
   const formikError =
     formik?.touched[`${props?.id}`] && (formik?.errors[`${props?.id}`] as string | undefined);
   const error = customError ? customError : formikError;
@@ -55,7 +55,7 @@ export const MySelect = <
           background: error
             ? isDarkMode
               ? `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)`
-              : `linear-gradient( 0deg, rgba(255,66,66,0.05), rgba(255,66,66,0.05) ),  #FFFFFF`
+              : `linear-gradient( 0deg, rgba(255,100,3,0.05), rgba(255,100,3,0.05) ), rgba(255,255,255,0.1)`
             : isDarkMode
             ? SignUpVariant
               ? colors.white[0]
@@ -152,7 +152,7 @@ export const MySelect = <
           }),
           control: (baseStyles, state) => ({
             ...baseStyles,
-            height: "3rem",
+            minHeight: "3rem",
             ...getOptionStyles("controlBorder", state, error),
             "&:hover": {
               ...getOptionStyles("controlHover", state, error),
@@ -174,7 +174,7 @@ export const MySelect = <
               : state.menuIsOpen
               ? colors.green3
               : colors.strokes.light,
-            border: type === "standard" && "none",
+            border: border ? "1px solid transparent" : "",
             boxShadow: "none",
           }),
           singleValue: (styles, state) => ({
@@ -211,11 +211,10 @@ export const MySelect = <
             backgroundColor: isDarkMode ? `${colors.green5}` : `${colors.green2}`,
             svg: { fill: `${colors.red}` },
             borderRadius: "5px",
-            display: "flex",
-            alignItems: "center",
           }),
           valueContainer: (styles, state) => ({
             ...styles,
+            gap: state.isMulti ? "5px" : "",
           }),
           multiValueLabel: (base) => ({
             ...base,

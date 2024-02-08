@@ -26,7 +26,8 @@ export const useUploadMessages = (): [
   ) => void,
   boolean
 ] => {
-  const { mutate: doUploadFile, isLoading } = useMutation(getFileUploadLink);
+  const { mutate: doUploadFile, isLoading: isFileUploading } = useMutation(getFileUploadLink);
+  // const [isFileUploading, setFileLoading] = useState(false);
   const { showWarningToast } = useToast();
   const handleFileDelete = (
     index: number,
@@ -63,31 +64,33 @@ export const useUploadMessages = (): [
       return;
     }
     setFieldValue(fieldName, combinedFiles);
-    setTimeout(() => {
-      const array: any[] = combinedFiles;
-      const fileIndex =
-        Array.isArray(array) && array.findLastIndex((elem) => elem.fileName === file.name);
-      array[fileIndex].isLoading = false;
-      array[fileIndex].url = "TestPath";
-      setFieldValue(fieldName, array);
-    }, 2000);
-    // doUploadFile(
-    //   { filename: `${file.name}`, formData },
-    //   {
-    //     onSuccess: (res) => {
-    //       const array: any[] = combinedFiles;
-    //       const fileIndex =
-    //         Array.isArray(array) && array.findLastIndex((elem) => elem.name === file.name);
-    //       array[fileIndex].isLoading = false;
-    //       array[fileIndex].path = res.path;
-    //       setFieldValue("files", array);
-    //     },
-    //     onError: (error) => {
-    //       console.log("error", error);
-    //     },
-    //   }
-    // );
+    // setFileLoading(true);
+    // setTimeout(() => {
+    //   const array: any[] = combinedFiles;
+    //   const fileIndex =
+    //     Array.isArray(array) && array.findLastIndex((elem) => elem.fileName === file.name);
+    //   array[fileIndex].isLoading = false;
+    //   array[fileIndex].url = "TestPath";
+    //   setFileLoading(false);
+    //   setFieldValue(fieldName, array);
+    // }, 5000);
+    doUploadFile(
+      { filename: `${file.name}`, formData },
+      {
+        onSuccess: (res) => {
+          const array: any[] = combinedFiles;
+          const fileIndex =
+            Array.isArray(array) && array.findLastIndex((elem) => elem.fileName === file.name);
+          array[fileIndex].isLoading = false;
+          array[fileIndex].url = res.path;
+          setFieldValue(fieldName, array);
+        },
+        onError: (error) => {
+          console.log("error", error);
+        },
+      }
+    );
   };
 
-  return [handleFileChange, handleFileDelete, isLoading] as const;
+  return [handleFileChange, handleFileDelete, isFileUploading] as const;
 };

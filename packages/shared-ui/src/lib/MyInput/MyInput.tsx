@@ -48,9 +48,7 @@ const InputComponent: ForwardRefRenderFunction<
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const componentId = useId();
   const idValue = id || componentId;
-
   const active = !!value || hasFocus || !!textAreaRef.current?.value.length;
-
   useEffect(() => {
     if (hasFocus) {
       textAreaRef.current?.focus();
@@ -127,13 +125,15 @@ const InputComponent: ForwardRefRenderFunction<
             ></Styles.Input>
             {autoResize && children && <Styles.AttachedFiles>{children}</Styles.AttachedFiles>}
             {autoResize && (
-              <Styles.ActionButtons
-                onClick={(event) => {
-                  event.stopPropagation();
-                  if (fileInputRef.current) fileInputRef.current?.click();
-                }}
-              >
-                <AttachFileIcon fontSize={"small"} />
+              <Styles.ActionButtons>
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    if (fileInputRef.current) fileInputRef.current?.click();
+                  }}
+                >
+                  <AttachFileIcon fontSize={"small"} />
+                </div>
                 <SendIcon
                   color={isValidForm && !error ? "primary" : "disabled"}
                   onClick={() => {

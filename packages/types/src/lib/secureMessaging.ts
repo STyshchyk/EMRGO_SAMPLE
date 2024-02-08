@@ -1,9 +1,36 @@
-import { TUserType } from "@emrgo-frontend/shared-ui";
-
 import { IEntity } from "./silver.entities";
 
 export interface IFetchGroupsProps {
   wrapper: TWrapperType;
+}
+
+export interface IFetchAuditHistoryProps {
+  wrapper: TWrapperType | null;
+  groupId: string;
+}
+
+export interface IAudit {
+  changedBy: string;
+  createdAt: Date | string | null;
+  entityType: TWrapperType;
+  groupId: string;
+  id: string;
+  newStatus: TGroupStatus | "Reopened";
+  oldStatus: TGroupStatus | "Reopened";
+  changedByUser: {
+    email: string;
+    id: string;
+    entityId: string;
+    firstName: string;
+    lastName: string;
+    type: TWrapperType;
+    kycVerified: boolean;
+  };
+}
+
+export interface ISecureAudit {
+  external: ISecureAudit[] | null;
+  internal: ISecureAudit[] | null;
 }
 
 export interface IFetchGroupMessagesIdProps {
@@ -32,19 +59,25 @@ export interface IUploadDraftMessage {
 }
 
 export interface IDeleteGroupProps {
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
   id: string;
 }
 
 export interface IUpdateFlagProps {
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
   id: string;
   status: "on" | "off";
 }
 
+export interface IUpdateGroupStatusProps {
+  wrapper: TWrapperType;
+  status: TGroupStatus;
+  groupId: string;
+}
+
 export interface IUpdateNewGroupMessageProps {
   message: IUploadDraftMessage;
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
   id: string;
 }
 
@@ -57,7 +90,7 @@ export interface IUploadAttachemnt {
 }
 
 export interface IUploadNewGroup {
-  attachments: IUploadAttachemnt[] | null;
+  attachments: IUploadAttachemnt[] | null | undefined;
   creatorEntities?: IEntity[] | string[] | null | string;
   groupStatus: "Sent" | "Draft";
   isFlagged: boolean;
@@ -74,17 +107,17 @@ export interface IUploadMessageGroup {
   messageId?: string | null;
   DeleteAttachmentIds: [];
   isDraft?: boolean;
-  lastTimeSavedDraft?: Date | null;
+  lastTimeSavedDraft?: Date | string | null;
 }
 
 export interface IPostNewGroupProps {
   message: IUploadNewGroup;
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
 }
 
 export interface IPostGroupMessageProps {
   message: IUploadMessageGroup;
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
   id?: string;
 }
 
@@ -98,7 +131,7 @@ export interface IUpdateGroupMessage {
 }
 
 export interface IUpdateGroupMessageProps {
-  wrapper: TWrapperType;
+  wrapper: TWrapperType | null;
   id: string;
   message: IUpdateGroupMessage;
 }
@@ -108,7 +141,7 @@ export interface ICreator {
   entityId: string;
   firstName: string;
   lastName: string;
-  type: TUserType;
+  type: TWrapperType;
   kycVerified: boolean;
 }
 
@@ -117,7 +150,7 @@ export interface IMessageChain {
   groupId: string;
   senderId: string;
   senderEntityId: string;
-  entityType: TUserType;
+  entityType: TWrapperType;
   message: string;
   sender: ICreator;
   isNew: boolean;
@@ -137,11 +170,10 @@ export interface IMessageData {
   creatorEntityId: string;
   creatorId: string;
   entities: IEntity;
-  entityType: TUserType;
+  entityType: TWrapperType;
   externalStatus: string;
   internalStatus: string;
   groupStatus: TMessageStatus;
-  id: string;
   isFlagged: boolean;
   label_id: string;
   label: { value: string; id: string; label: string };
@@ -163,6 +195,7 @@ export interface IGroups {
   externalStatus: string;
   internalStatus: string;
   entityType: TWrapperType;
+  isNew?: boolean;
   subject: string;
   groupStatus: TMessageStatus;
   isFlagged: boolean;
@@ -172,3 +205,15 @@ export interface IGroups {
 
 export type TWrapperType = "client" | "internal";
 export type TMessageStatus = "Sent" | "Draft";
+export type TGroupStatus = "New" | "InProgress" | "Closed";
+
+export const GroupOptions: { label: string; value: TGroupStatus }[] = [
+  { label: "In Progress", value: "InProgress" },
+  { label: "New", value: "New" },
+  { label: "Closed", value: "Closed" },
+];
+
+export const GroupOptions2: { label: string; value: TGroupStatus }[] = [
+  { label: "In Progress", value: "InProgress" },
+  { label: "Closed", value: "Closed" },
+];

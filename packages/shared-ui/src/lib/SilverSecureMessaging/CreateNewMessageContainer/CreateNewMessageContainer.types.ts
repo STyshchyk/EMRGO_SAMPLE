@@ -6,5 +6,5 @@ export interface IUploadnNewGroupInitialValuesProps extends IUploadNewGroup {
   DeleteAttachmentIds: string[] | null;
   id?: string;
   isDraft?: boolean;
-  lastTimeSavedDraft?: Date | null;
+  lastTimeSavedDraft?: Date | null | string;
 }

@@ -39,6 +39,7 @@ export const silverQueryKeys = {
   secureMessaging: include("secureMessaging", {
     fetch: "",
     id: "id/:id",
+    auditHistory: "auditHistory",
   }),
   document: include("/document", {
     fetch: "",

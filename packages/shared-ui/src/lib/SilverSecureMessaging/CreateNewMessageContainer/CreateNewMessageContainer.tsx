@@ -8,6 +8,7 @@ import {
   AutoSaveGroup,
   Checkbox,
   FormikInputCustom,
+  MultiValue,
   Spinner,
   useFetchEntities,
   useFilters,
@@ -20,9 +21,9 @@ import { Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 import { reverse } from "named-urls";
-import * as Yup from "yup";
 
 import { Spacer } from "../../Help Desk/HelpModal.styles";
+import { PostMessageSchema } from "./CreateNewMessage.schema";
 import * as Styles from "./CreateNewMessageContainer.styles";
 import {
   ICreateNewMessageContainerProps,
@@ -33,8 +34,8 @@ const initialValues2: IUploadnNewGroupInitialValuesProps = {
   message: "",
   label: "",
   subject: "",
-  creatorEntities: null,
-  attachments: null,
+  creatorEntities: [],
+  attachments: undefined,
   isFlagged: true,
   isBrodcast: false,
   groupStatus: "Sent",
@@ -43,13 +44,13 @@ const initialValues2: IUploadnNewGroupInitialValuesProps = {
   lastTimeSavedDraft: null,
 };
 
-export const transformResponseToDraft = (data: any, entityData, labelData) => {
+export const transformResponseToDraft = (data: any, entityData: any, labelData: any) => {
   const listOfEntitites = Array.isArray(data.creatorEntities) && data.creatorEntities.length > 0;
   const list = listOfEntitites
     ? entityData.filter((elem) => {
         return data.creatorEntities.indexOf(elem.entityId) >= 0;
       })
-    : [];
+    : undefined;
   const isMessagePresent = "chain" in data;
   const drafInitialValue: IUploadnNewGroupInitialValuesProps = {
     message: isMessagePresent ? data.chain[0].message : "",
@@ -62,7 +63,7 @@ export const transformResponseToDraft = (data: any, entityData, labelData) => {
     attachments: isMessagePresent ? data?.chain[0]?.attachments : [],
     creatorEntities: list,
     isDraft: true,
-    lastTimeSavedDraft: data.updatedAt,
+    lastTimeSavedDraft: customDateFormat(data.updatedAt),
   };
   return drafInitialValue;
 };
@@ -73,7 +74,7 @@ export const handleCreateGroupMessagePayload = (values: any, status: TMessageSta
     : values?.creatorEntities?.entityId
     ? [values?.creatorEntities?.entityId]
     : [];
-  const filterAttachment = Array.isArray(values.attachments) ? values.attachments : [];
+  const filterAttachment = Array.isArray(values.attachments) ? values.attachments : undefined;
   const payload: IUploadNewGroup = {
     label: values?.label?.id,
     creatorEntities: filterEntity,
@@ -112,14 +113,11 @@ export const handleUpdateDraftMessageData = (
   };
   return payload;
 };
-export const PostMessageSchema = Yup.object().shape({
-  subject: Yup.string().required("Required"),
-  label: Yup.object().required("Required"),
-  message: Yup.string().required("Enter message").min(1).max(500),
-});
+
 export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({}) => {
   const client = useQueryClient();
-  const id = useParams();
+  const currentId = useParams();
+  const id = extractId(currentId) || "";
   const navigate = useNavigate();
   const [initialValues, setInitialValue] =
     useState<IUploadnNewGroupInitialValuesProps>(initialValues2);
@@ -150,12 +148,17 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
       console.log(error);
     },
   });
-  const { data: draftMessage, isFetching } = useLastDraftMessageQuery(
-    extractId(id),
+  const {
+    data: draftMessage,
+    isFetching,
+    isRefetching,
+  } = useLastDraftMessageQuery(
+    id,
     userType,
     isLabelSuccess && isNewMsgGroup === "draft" && isSuccess
   );
   useEffect(() => {
+    console.log(id, "hello id");
     // if (!extractId(id) && i) setNewMsgGroup("none");
     if (!draftMessage || !entityData || !labelData) return;
     const drafInitialValue = transformResponseToDraft(draftMessage, entityData, labelData);
@@ -172,19 +175,30 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
       validationSchema={PostMessageSchema}
       enableReinitialize={true}
       onSubmit={(values, formikHelpers) => {
+        const sucessCallback = () => {
+          console.log("sent");
+          setInitialValue((prevState) => {
+            return initialValues2;
+          });
+          formikHelpers.resetForm({ values: initialValues2 });
+        };
+
         if (isNewMsgGroup === "draft") {
           const updateDraftToSent = handleUpdateDraftMessageData(values, draftMessage, "Sent");
-          updateMessage({
-            message: updateDraftToSent,
-            wrapper: userType,
-            id: extractId(id),
-          });
+          updateMessage(
+            {
+              message: updateDraftToSent,
+              wrapper: userType,
+              id: id,
+            },
+            {
+              onSuccess: sucessCallback,
+            }
+          );
         } else {
           const payload = handleCreateGroupMessagePayload(values, "Sent");
-          mutate({ message: payload, wrapper: userType });
+          mutate({ message: payload, wrapper: userType }, { onSuccess: sucessCallback });
         }
-        formikHelpers.setSubmitting(false);
-        formikHelpers.resetForm();
       }}
     >
       {({ values, setFieldValue, handleSubmit, isSubmitting, setFieldTouched, isValid }) => {
@@ -194,66 +208,78 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
               initial={initialValues}
               updateDraftMessageData={handleUpdateDraftMessageData(values, draftMessage)}
               draftMessageData={handleCreateGroupMessagePayload(values, "Draft")}
-              id={extractId(id)}
-              type={userType}
+              id={id}
               isFileUploading={isFileUploading && isSubmitting}
             />
             <Styles.Subject>
               <div className={"flex flex-col w-full gap-2"}>
-                <Field
-                  component={FormikInputCustom}
-                  type={"text"}
-                  value={values?.subject || ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setFieldValue("subject", e.target.value);
-                  }}
-                  label={"Add a subject"}
-                  name="subject"
-                  id="subject"
-                  variant={"signup"}
-                  size="small"
-                />
-                <Field
-                  component={FormikInputCustom}
-                  type={"select"}
-                  placeholder={"Label"}
-                  value={values?.label || ""}
-                  name={"label"}
-                  id={"label"}
-                  isClearable={true}
-                  options={labelData?.message_label}
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option}
-                  onBlur={() => {
-                    setFieldTouched("label");
-                  }}
-                  onChange={(selectedValue) => {
-                    setFieldValue("label", selectedValue);
-                  }}
-                />
-
-                <div className={"flex items-center"}>
+                <div className={""}>
+                  <Field
+                    component={FormikInputCustom}
+                    type={"text"}
+                    removeBorder={false}
+                    variant={"signup"}
+                    value={values?.subject || ""}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue("subject", e.target.value);
+                    }}
+                    label={"Add a subject"}
+                    name="subject"
+                    id="subject"
+                    size="small"
+                  />
+                </div>
+                <div className={""}>
                   <Field
                     component={FormikInputCustom}
                     type={"select"}
+                    placeholder={"Label"}
+                    value={values?.label || ""}
+                    name={"label"}
+                    removeBorder={false}
+                    menuPortalTarget={document.body}
                     variant={"signup"}
+                    id={"label"}
                     isClearable={true}
+                    options={labelData?.message_label}
+                    getOptionLabel={(option: any) => option.label}
+                    getOptionValue={(option: any) => option}
+                    onBlur={() => {
+                      setFieldTouched("label");
+                    }}
+                    onChange={(selectedValue: any) => {
+                      setFieldValue("label", selectedValue);
+                    }}
+                  />
+                </div>
+
+                <div className={"flex items-center pr-4 "}>
+                  <Field
+                    component={FormikInputCustom}
+                    type={"select"}
+                    isClearable={true}
+                    components={{ MultiValue }}
+                    removeBorder={false}
+                    menuPortalTarget={document.body}
+                    variant={"signup"}
+                    closeMenuOnSelect={!(values?.isBrodcast || false)}
                     isMulti={values?.isBrodcast || false}
                     placeholder={"To Entity"}
                     value={values?.creatorEntities || null}
                     name={"creatorEntities"}
                     options={entityData}
-                    getOptionLabel={(option) => option.entityName}
-                    getOptionValue={(option) => option}
+                    getOptionLabel={(option: any) => option.entityName}
+                    getOptionValue={(option: any) => option}
                     onBlur={() => {
                       setFieldTouched("creatorEntities");
                     }}
-                    onChange={(selectedValue) => {
+                    onChange={(selectedValue: any) => {
                       setFieldValue("creatorEntities", selectedValue);
                     }}
                   />
                   <Checkbox
                     checked={values?.isBrodcast || false}
+                    className={"ml-2"}
                     onChange={(e) => {
                       setFieldValue("isBrodcast", e.target.checked);
                       if (!e.target.checked && values?.creatorEntities) {
@@ -274,16 +300,16 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
             <Styles.MessageInput>
               {values.isDraft && (
                 <Typography variant={"body2"} color={"info"} className={"mb-0.5 accent-gray-500"}>
-                  *Draft saved at {customDateFormat(values.lastTimeSavedDraft)}{" "}
+                  *Draft saved at {`${values.lastTimeSavedDraft}`}{" "}
                 </Typography>
               )}
               <Field
                 component={FormikInputCustom}
                 type={"textarea"}
                 label={"Enter Text"}
-                variant={"signup"}
                 name={"message"}
-                isFormValud={isValid}
+                variant={"signup"}
+                isValidForm={isValid}
                 id={"message"}
                 autoResize={true}
                 value={values?.message || ""}
@@ -311,7 +337,10 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
                         index={index}
                         handleFileDelete={() => {
                           if (isNewMsgGroup === "draft" && "linkId" in file) {
-                            const deletedFiles = [...values.DeleteAttachmentIds, file.id];
+                            const deletedFiles = [
+                              ...(values.DeleteAttachmentIds as string[]),
+                              file.id,
+                            ];
                             setFieldValue("DeleteAttachmentIds", deletedFiles);
                           }
                           handleFileDelete(

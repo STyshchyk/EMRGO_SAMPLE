@@ -676,9 +676,17 @@ const SecurityTradesTable = ({
                     label="Status"
                     options={settlementStatusOptionsList}
                     customComponent={{
-                      MultiValueContainer: ({ data }) => (
-                        <Chip key={data.value} label={data.value} className="" color="primary" />
-                      ),
+                      MultiValueContainer: (props) => {
+                        console.log(props);
+                        return (
+                          <Chip
+                            key={props.data.value}
+                            label={props.data.value}
+                            className=""
+                            color="primary"
+                          />
+                        );
+                      },
                     }}
                     isMulti
                   />

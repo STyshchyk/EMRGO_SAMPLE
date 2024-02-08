@@ -25,7 +25,9 @@ export const SilverSecureMessagingProvider = ({ children }: PropsWithChildren) =
   const navigate = useNavigate();
   const { data } = useFetchGroups("internal");
   useEffect(() => {
-    setUserType("internal");
+    setUserType((prevState) => {
+      return "internal";
+    });
     navigate(clientAccountRoutes.secureMessaging.inbox.home);
   }, []);
 

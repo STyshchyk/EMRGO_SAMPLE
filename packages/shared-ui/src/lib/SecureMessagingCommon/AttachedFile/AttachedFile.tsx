@@ -24,14 +24,21 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
   return (
     <Styles.AttachedFile>
       <Chip
-        icon={isLoading ? <CircularProgress size={15} /> : <FileIcon name={fileType} size={15} />}
+        icon={
+          isLoading ? (
+            <CircularProgress size={15} />
+          ) : (
+            <FileIcon name={fileType ?? ""} className={"ml-2"} />
+          )
+        }
         label={
           <Styles.InfoWrapper>
             <span>{name_draft}</span>
             <span>{size_draf}</span>
           </Styles.InfoWrapper>
         }
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           if (onClick) onClick();
         }}
         onDelete={() => {
@@ -40,6 +47,9 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
         sx={{
           borderRadius: "4px",
           height: "42px",
+          "& .MuiChip-label": {
+            paddingLeft: "0.5rem !important",
+          },
         }}
         deleteIcon={handleFileDelete ? <DeleteIcon /> : <></>}
         variant={variant ?? "outlined"}

@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import {
   ExpandArrow,
@@ -6,63 +6,23 @@ import {
   MySelect as Select,
   useFetchEntities,
 } from "@emrgo-frontend/shared-ui";
-import { DEFAULT_DATE_FORMAT } from "@emrgo-frontend/utils";
-import { FormControl, TextField } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import Button from "@mui/material/Button";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+import { useFetchDropdowns } from "@emrgo-frontend/services";
+import { GroupOptions } from "@emrgo-frontend/types";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment";
 import { useLocalStorage } from "usehooks-ts";
 
 import { useFilters } from "../../Context/filter-context";
 import { TFilterValue } from "../../Context/filter-context.types";
 import * as Styles from "./TabHeader.styles";
+import { DatePickerStyled } from "./TabHeader.styles";
 import { ITabHeaderProps } from "./TabHeader.types";
-
-const statusOptions = [
-  {
-    label: "Resolved",
-    value: "resolved",
-  },
-  {
-    label: "In Progress",
-    value: "in_progress",
-  },
-  {
-    label: "Closed",
-    value: "closed",
-  },
-];
-const labelOption = [
-  {
-    label: "KYC Query",
-    value: "KYC Query",
-  },
-  {
-    label: "Compliance Query",
-    value: "Compliance Query",
-  },
-  {
-    label: "Operational Query",
-    value: "Operational Query",
-  },
-  {
-    label: "Accounting Query",
-    value: "Accounting Query",
-  },
-  {
-    label: "Technical Query",
-    value: "Technical Query",
-  },
-  {
-    label: "Support Query",
-    value: "Support Query",
-  },
-  {
-    label: "Funds Order Submission",
-    value: "Funds Order Submission",
-  },
-];
 
 const queryOptions = [
   {
@@ -72,7 +32,7 @@ const queryOptions = [
   {
     label: "Status",
     value: "queryStatus",
-    option: statusOptions,
+    option: GroupOptions,
   },
   {
     label: "Entity",
@@ -81,7 +41,6 @@ const queryOptions = [
   {
     label: "Label",
     value: "queryLabel",
-    option: labelOption,
   },
   {
     label: "Date",
@@ -97,23 +56,55 @@ const initialValues = {
   queryStatus: null,
   querySubject: null,
 };
+
 export const TabHeader: FC<ITabHeaderProps> = ({}) => {
-  const ref = useRef<HTMLInputElement>(null);
-  const { userType } = useFilters();
-  const [selectedQueryType, setSelectedQueryType] = useState(queryOptions[0]);
+  const [selectedQueryType, setSelectedQueryType] = useState(queryOptions[1]);
+  const [selectDropDown, setSelectDropDown] = useState(queryOptions);
+  const { setFilterValue, filters, setFilters, userType, clearFilterValue } = useFilters();
+  const [isMenuHidden, setMenuHidded] = useLocalStorage<boolean>("SideBarState", false);
+  const { data: labelData } = useFetchDropdowns("message_label");
   const [selectedDropDown, setDropDown] = useState(null);
   const [localFilters, setLocalFilters] = useState<TFilterValue | null>(null);
-  const {
-    data: entityData,
-    isRefetching: isEntityFetching,
-    isSuccess,
-  } = useFetchEntities(userType === "internal");
-  const { setFilterValue, filters, setFilters, clearFilterValue } = useFilters();
-  const [isMenuHidden, setMenuHidded] = useLocalStorage<boolean>("SideBarState", false);
-  function SetLocalFilters(value: any, key: string, label: string, type: string) {
+
+  const { data: entityData, isRefetching: isEntityFetching } = useFetchEntities(
+    userType === "internal"
+  );
+
+  useEffect(() => {
+    if (!entityData && userType === "client") {
+      setSelectDropDown((prevState) => {
+        const prevOptions = [...prevState].filter((elem) => elem.value !== "queryEntity");
+        return prevOptions;
+      });
+    }
+    if (entityData) {
+      setSelectDropDown((prevState) => {
+        const prevOptions = [...prevState];
+        const findOption = prevOptions.find((elem) => elem.value === "queryEntity");
+        findOption.option = entityData;
+        return prevOptions;
+      });
+    }
+    if (labelData) {
+      setSelectDropDown((prevState) => {
+        const prevOptions = [...prevState];
+        const findOption = prevOptions.find((elem) => elem.value === "queryLabel");
+        findOption.option = labelData.message_label;
+        return prevOptions;
+      });
+    }
+  }, [entityData, labelData]);
+
+  function SetLocalFilters(
+    value: any,
+    key: string,
+    label: string,
+    type: string,
+    filterValue: string
+  ) {
     setLocalFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
-      updatedFilters[key] = { value, label, key, type };
+      updatedFilters[key] = { value, label, key, type, filterValue };
       return updatedFilters;
     });
   }
@@ -131,20 +122,17 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
           setMenuHidded((prevState) => (prevState = !prevState));
         }}
       />
-      <span>Search by</span>
+      <span className={"whitespace-nowrap"}>Search by</span>
       <Styles.SearchWrapper>
         <Select
           variant={"signup"}
-          options={queryOptions}
+          border={true}
+          options={selectDropDown}
           menuPortalTarget={document.body}
           value={selectedQueryType}
           isClearable={true}
           placeholder={"Select query"}
           onChange={(selectedValue) => {
-            console.log(selectedValue);
-            if (ref.current) {
-              ref.current.value = null;
-            }
             setLocalFilters(null);
             setSelectedQueryType(selectedValue);
             setDropDown(null);
@@ -153,83 +141,64 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
         {(() => {
           if (["queryDate"].includes(selectedQueryType?.value)) {
             return (
-              <TextField
-                fullWidth
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-                name="searchText"
-                variant="outlined"
-                size="small"
-                inputProps={{
-                  style: {
-                    height: "24.0px",
-                  },
-                }}
-                InputProps={{
-                  inputComponent: ({ inputRef, ...rest }) => (
-                    <FormControl
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        width: "100%",
-                        alignItems: "center",
-                      }}
-                    >
-                      <DatePicker
-                        label="Start Date"
-                        format={DEFAULT_DATE_FORMAT}
-                        value={localFilters?.startDate?.value}
-                        sx={{
-                          width: "100%",
-                          ".MuiInputLabel-shrink": {
-                            display: "none",
-                          },
-                          ".MuiOutlinedInput-notchedOutline": {
-                            border: "none !important",
-                          },
-                        }}
-                        onChange={(selectedValue) => {
-                          console.log(selectedValue);
-                          SetLocalFilters(selectedValue, "startDate", "Start Date", "date");
-                        }}
-                      />
-                      <span> - </span>
-                      <DatePicker
-                        label="End Date"
-                        format={DEFAULT_DATE_FORMAT}
-                        key={"date"}
-                        value={localFilters?.endDate?.value}
-                        sx={{
-                          width: "100%",
-                          ".MuiInputLabel-shrink": {
-                            display: "none",
-                          },
-                          ".MuiOutlinedInput-notchedOutline": {
-                            border: "none !important",
-                          },
-                        }}
-                        onChange={(selectedValue) => {
-                          SetLocalFilters(selectedValue, "endDate", "End Date", "date");
-                        }}
-                      />
-                      <input ref={inputRef} {...rest} type="text" style={{ display: "none" }} />
-                    </FormControl>
-                  ),
-                }}
-              />
+              <Styles.DatePickerWrapper>
+                <DatePickerStyled
+                  selectsRange={true}
+                  placeholderText={"Start Date - End Date"}
+                  startDate={localFilters?.date?.filterValue.date1}
+                  endDate={localFilters?.date?.filterValue.date2}
+                  enableTabLoop={false}
+                  shouldCloseOnSelect={
+                    localFilters?.filterValue?.date1 && !localFilters?.filterValue?.date2
+                  }
+                  onBlur={() => {
+                    console.log("blur");
+                  }}
+                  onChange={(update) => {
+                    // SetLocalFilters(update[0], "startDate", "Start Date", "date");
+                    SetLocalFilters(
+                      `${moment(update[0]).format("DD/MM/YYYY")} -`,
+                      "date",
+                      "Date",
+                      "date",
+                      { date1: update[0], date2: update[1] }
+                    );
+                    if (update[1])
+                      SetLocalFilters(
+                        `${moment(update[0]).format("DD/MM/YYYY")} - ${moment(update[1]).format(
+                          "DD/MM/YYYY"
+                        )}`,
+                        "date",
+                        "Date",
+                        "date",
+                        { date1: update[0], date2: update[1] }
+                      );
+                  }}
+                />
+                <Styles.ClearButton
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setLocalFilters(null);
+                    console.log("click");
+                  }}
+                >
+                  <ClearIcon fontSize={"small"} />
+                </Styles.ClearButton>
+              </Styles.DatePickerWrapper>
             );
-          } else if (["querySubject", "queryEntity"].includes(selectedQueryType?.value)) {
+          } else if (["querySubject"].includes(selectedQueryType?.value)) {
             return (
               <Input
                 variant={"signup"}
                 label={"Search"}
+                border={true}
                 onChange={(e) => {
                   SetLocalFilters(
                     e.target.value,
                     selectedQueryType.value,
                     selectedQueryType.label,
-                    "text"
+                    "text",
+                    e.target.value
                   );
                 }}
               />
@@ -240,21 +209,26 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
                 options={selectedQueryType?.option}
                 menuPortalTarget={document.body}
                 isClearable={true}
+                border={true}
                 value={selectedDropDown}
                 placeholder={`Select ${selectedQueryType?.label ?? ""}`}
+                getOptionValue={(option) => {
+                  return option;
+                }}
+                getOptionLabel={(option) => {
+                  return selectedQueryType?.value === "queryEntity"
+                    ? `${option?.entityName}`
+                    : option?.label;
+                }}
                 onChange={(selectedValue, actionMeta) => {
                   setDropDown(selectedValue);
-                  // setLocalFilters({
-                  //   value: selectedValue.value,
-                  //   key: selectedQueryType.value,
-                  //   label: selectedQueryType.label,
-                  //   type: "dropdown",
-                  // });
+                  const isEntityQuery = selectedQueryType.value === "queryEntity";
                   SetLocalFilters(
-                    selectedValue.value,
+                    isEntityQuery ? selectedValue.entityName : selectedValue.value,
                     selectedQueryType.value,
                     selectedQueryType.label,
-                    "dropdown"
+                    "dropdown",
+                    isEntityQuery ? selectedValue.entityId : selectedValue.value
                   );
                 }}
               />
@@ -266,24 +240,13 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
           size={"medium"}
           type={"submit"}
           onClick={() => {
-            console.log(filters);
             if (!localFilters) return;
             for (let loopFilter in localFilters) {
               const obj = localFilters[loopFilter];
-              setFilterValue(obj.value, loopFilter, obj.label, obj.type);
+              console.log(obj);
+              setFilterValue(obj.value, loopFilter, obj.label, obj.type, obj.filterValue);
             }
-            // localFilters.forEach(elem =>{
-            //   setFilters(elem.value, elem.key, elem.label, elem.type)
-            // })
             setLocalFilters(null);
-            // if ((ref.current || selectedDropDown) && selectedQueryType) {
-            //   const oldValue = {
-            //     queryType: selectedQueryType?.value,
-            //     queryLabel: selectedQueryType?.label,
-            //     value: ref?.current?.value ?? selectedDropDown.value,
-            //   };
-            //   addOrUpdateObject(oldValue);
-            // }
           }}
         >
           + Add query
@@ -295,17 +258,18 @@ export const TabHeader: FC<ITabHeaderProps> = ({}) => {
           {filters &&
             Object.values(filters).map((elem, index) => {
               const dateType = elem.type === "date";
-              console.log(elem);
-              console.log(dateType);
               return (
                 <Chip
                   key={elem.key}
                   variant="outlined"
                   color={"primary"}
-                  sx={{ marginLeft: "0px !important" }}
-                  label={`${elem?.label} : ${
-                    dateType ? elem?.value.format("DD/MM/YYYY") : elem?.value
-                  }`}
+                  sx={{
+                    marginLeft: "0px !important",
+                    "& .MuiChip-label": {
+                      maxWidth: "250px",
+                    },
+                  }}
+                  label={`${elem?.label}:  ${elem?.value}`}
                   onDelete={() => {
                     handleDelete(elem.key);
                   }}

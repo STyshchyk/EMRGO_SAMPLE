@@ -6,6 +6,7 @@ import { SecureMessagesApi } from "@emrgo-frontend/services";
 import {
   AttachedFile,
   AutoSaveGroupMessage,
+  FormikInputCustom,
   MessageContainer,
   useFilters,
   useLastDraftMessageQuery,
@@ -18,9 +19,8 @@ import { IUploadMessageGroup } from "@emrgo-frontend/types";
 import { customDateFormat } from "@emrgo-frontend/utils";
 import { Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 
-import { MyTextArea } from "../../MyInput";
 import { MessageContainerCommonSchema } from "./MessageContainerCommon.schema";
 import * as Styles from "./MessagesContainerCommon.styles";
 import { IMessagesContainerCommonProps } from "./MessagesContainerCommon.types";
@@ -35,12 +35,29 @@ const initialValue: IUploadMessageGroup = {
   isDraft: false,
   lastTimeSavedDraft: null,
 };
-
+const trasfromInitialData = (lastDraftMessage: any) => {
+  const initialData: IUploadMessageGroup = {
+    message: lastDraftMessage.message,
+    addAttachments: lastDraftMessage?.attachments
+      ? lastDraftMessage?.attachments.map(({ fileName, attachmentURL, size, id }) => {
+          return { fileName, size, url: attachmentURL, id };
+        })
+      : [],
+    status: lastDraftMessage.linkStatus,
+    groupId: lastDraftMessage.groupId,
+    messageId: lastDraftMessage.id,
+    DeleteAttachmentIds: [],
+    isDraft: true,
+    lastTimeSavedDraft: customDateFormat(lastDraftMessage.updatedAt),
+  };
+  return initialData;
+};
 export const handlePostGroupMessage = (values, status, groupId) => {
   const payload = {
     ...values,
     status: status,
     groupId,
+    addAttachments: values.addAttachments.filter((elem) => !elem.id),
   };
   return payload;
 };
@@ -59,14 +76,14 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
 
   const { mutate: postMessage } = useMutation(SecureMessagesApi.postGroupMessage, {
     onSuccess: () => {
-      client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
+      client.invalidateQueries([queryKeys.secureMessaging.id, id]).then(() => {});
     },
     onError: () => {},
   });
   const { mutate: updateMessageGroup } = useMutation(SecureMessagesApi.updateGroupMessage, {
     onSuccess: () => {
       console.log("post update sucess");
-      client.invalidateQueries([queryKeys.secureMessaging.id, `${id}`]).then(() => {});
+      client.invalidateQueries([queryKeys.secureMessaging.id, id]).then(() => {});
     },
     onError: () => {},
   });
@@ -97,16 +114,8 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
       return;
     }
     if (lastDraftMessage) {
-      const initialData: IUploadMessageGroup = {
-        message: lastDraftMessage.message,
-        addAttachments: lastDraftMessage?.attachments ?? [],
-        status: lastDraftMessage.linkStatus,
-        groupId: lastDraftMessage.groupId,
-        messageId: lastDraftMessage.id,
-        DeleteAttachmentIds: [],
-        isDraft: true,
-        lastTimeSavedDraft: lastDraftMessage.updatedAt,
-      };
+      const initialData = trasfromInitialData(lastDraftMessage);
+      console.log("initialData", initialData);
       setInitialData(initialData);
       return;
     }
@@ -118,7 +127,7 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
         <div>{groupMessages?.subject ?? ""}</div>
       </Styles.Subject>
       <MessageContainer
-        messsageList={groupMessages?.chain}
+        messsageList={groupMessages}
         isLoading={isRefetching}
         Key={messageId}
         scrollDown={isSentMessage}
@@ -130,15 +139,18 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
           validationSchema={MessageContainerCommonSchema}
           onSubmit={(values, formikHelpers) => {
             const payload = handlePostGroupMessage(values, "Sent", id);
+            formikHelpers.setSubmitting(true);
             const secuessCallBack = () => {
-              setInitialData(initialValue);
-              formikHelpers.setSubmitting(false);
-              formikHelpers.resetForm(initialValue);
+              formikHelpers.resetForm({ values: initialValue });
+              setInitialData((prevState) => {
+                return initialValue;
+              });
               setTimeout(() => {
                 setIsSentMessage((prevState) => !prevState);
+                formikHelpers.setSubmitting(false);
               }, 250);
             };
-            // TODO: CHeck if draft message is asdasd
+
             const shouldUpdateDraft = payload.messageId;
             shouldUpdateDraft
               ? updateMessageGroup(
@@ -169,34 +181,34 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
               <Form>
                 {values.isDraft && (
                   <Typography variant={"body2"} color={"info"} className={"mb-0.5 accent-gray-500"}>
-                    *Draft saved at {customDateFormat(values.lastTimeSavedDraft)}{" "}
+                    *Draft saved at {values?.lastTimeSavedDraft as string}
                   </Typography>
                 )}
                 <AutoSaveGroupMessage
                   initial={initialData}
                   id={id}
-                  type={userType}
-                  isFileUploading={isFileUploading && isSubmitting}
+                  isSubmitting={isSubmitting}
+                  isFileUploading={isFileUploading}
                 />
-                <MyTextArea
+                <Field
+                  component={FormikInputCustom}
                   label={"Enter Text"}
                   variant={"signup"}
                   type={"textarea"}
-                  error={errors?.message && touched?.message ? errors.message : null}
                   isValidForm={isValid}
                   value={values?.message ?? ""}
                   autoResize={true}
                   onBlur={() => {
                     setFieldTouched("message");
                   }}
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setFieldValue("message", e.target.value);
                   }}
                   onSendClick={() => {
                     console.log("sent");
                     handleSubmit();
                   }}
-                  onAttachlick={(e) => {
+                  onAttachlick={(e: React.ChangeEvent<HTMLInputElement>) => {
                     handleFileChange(e, setFieldValue, values?.addAttachments, "addAttachments");
                   }}
                 >
@@ -224,7 +236,7 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
                         />
                       );
                     })}
-                </MyTextArea>
+                </Field>
               </Form>
             );
           }}

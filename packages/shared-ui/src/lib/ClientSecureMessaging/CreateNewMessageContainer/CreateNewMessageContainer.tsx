@@ -7,7 +7,6 @@ import {
   AttachedFile,
   AutoSaveGroup,
   FormikInputCustom,
-  Select,
   Spinner,
   useFilters,
   useLastDraftMessageQuery,
@@ -15,13 +14,13 @@ import {
 } from "@emrgo-frontend/shared-ui";
 import { IUploadDraftMessage, IUploadNewGroup, TMessageStatus } from "@emrgo-frontend/types";
 import { customDateFormat, extractId } from "@emrgo-frontend/utils";
-import { TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, Form, Formik } from "formik";
 import { reverse } from "named-urls";
-import * as Yup from "yup";
 
 import { Spacer } from "../../Help Desk/HelpModal.styles";
+import { PostMessageSchema } from "./CreateNewMessage.schema";
 import * as Styles from "./CreateNewMessageContainer.styles";
 import {
   ICreateNewMessageContainerProps,
@@ -52,7 +51,7 @@ export const transformResponseToDraft = (data: any, labelData) => {
     isBrodcast: Array.isArray(data.creatorEntities) && data.creatorEntities.length > 1,
     attachments: isMessagePresent ? data.chain[0].attachments : [],
     isDraft: true,
-    lastTimeSavedDraft: data.chain[0].createdAt,
+    lastTimeSavedDraft: customDateFormat(data.updatedAt),
   };
   return drafInitialValue;
 };
@@ -90,9 +89,6 @@ export const handleUpdateDraftMessageData = (
   };
   return payload;
 };
-export const PostMessageSchema = Yup.object().shape({
-  subject: Yup.string().required("Required"),
-});
 
 export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({}) => {
   const client = useQueryClient();
@@ -108,7 +104,7 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
     isSuccess: isLabelSuccess,
   } = useFetchDropdowns("message_label");
 
-  const { mutate: updateMessage } = useMutation(SecureMessagesApi.updateNewGroupMessage, {
+  const { mutate: updateGroup } = useMutation(SecureMessagesApi.updateNewGroupMessage, {
     onSuccess: (data) => {
       client.invalidateQueries([queryKeys.secureMessaging.fetch]).then(() => {
         const route = reverse(`${clientAccountRoutes.secureMessaging.inbox.home}`, {});
@@ -117,7 +113,7 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
       });
     },
   });
-  const { mutate } = useMutation(SecureMessagesApi.postNewGroup, {
+  const { mutate: postGroup } = useMutation(SecureMessagesApi.postNewGroup, {
     onSuccess: (data) => {
       client.invalidateQueries([queryKeys.secureMessaging.fetch]).then(() => {});
     },
@@ -150,36 +146,45 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
       validationSchema={PostMessageSchema}
       onSubmit={(values, formikHelpers) => {
         formikHelpers.setSubmitting(true);
+        const sucessCallback = () => {
+          formikHelpers.resetForm(initialValues2);
+          setInitialValue((prevState) => {
+            return initialValues2;
+          });
+        };
         if (isNewMsgGroup === "draft") {
           const updateDraftToSent = handleUpdateDraftMessageData(values, draftMessage, "Sent");
-          updateMessage(
+
+          updateGroup(
             {
               message: updateDraftToSent,
               wrapper: userType,
               id: extractId(id),
             },
             {
-              onSuccess: () => {
-                formikHelpers.setSubmitting(false);
-                formikHelpers.resetForm(initialValues2);
-              },
+              onSuccess: sucessCallback,
             }
           );
         } else {
           const payload = handleCreateGroupMessagePayload(values, "Sent");
-          mutate(
+          postGroup(
             { message: payload, wrapper: userType },
             {
-              onSuccess: () => {
-                formikHelpers.setSubmitting(false);
-                formikHelpers.resetForm(initialValues2);
-              },
+              onSuccess: sucessCallback,
             }
           );
         }
       }}
     >
-      {({ values, setFieldValue, handleSubmit, isSubmitting, errors }) => {
+      {({
+        values,
+        setFieldValue,
+        handleSubmit,
+        isSubmitting,
+        setFieldTouched,
+        errors,
+        isValid,
+      }) => {
         return (
           <Form className={"h-full flex flex-col"}>
             <AutoSaveGroup
@@ -187,43 +192,42 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
               updateDraftMessageData={handleUpdateDraftMessageData(values, draftMessage)}
               draftMessageData={handleCreateGroupMessagePayload(values, "Draft")}
               id={extractId(id)}
-              type={userType}
               isFileUploading={isFileUploading && isSubmitting}
               isSubmitting={isSubmitting}
             />
             <Styles.Subject>
               <div className={"flex flex-col w-full gap-2"}>
                 <Field
-                  component={TextField}
-                  value={values?.subject || ""}
-                  onClick={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.stopPropagation();
-                  }}
-                  sx={{
-                    "& .MuiInput-input": {
-                      paddingLeft: "1rem",
-                    },
-                  }}
+                  component={FormikInputCustom}
+                  type={"text"}
+                  removeBorder={false}
+                  variant={"signup"}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setFieldValue("subject", e.target.value);
                   }}
                   label={"Add a subject"}
                   name="subject"
-                  variant="standard"
-                  size="small"
+                  id="subject"
+                  value={values?.subject || ""}
                 />
                 <Field
-                  component={Select}
-                  className={"w-full border-solid border-0 border-b border-gray-400"}
-                  type={"standard"}
+                  component={FormikInputCustom}
+                  type={"select"}
                   placeholder={"Label"}
                   value={values?.label || ""}
                   name={"label"}
+                  removeBorder={false}
+                  menuPortalTarget={document.body}
+                  variant={"signup"}
+                  id={"label"}
                   isClearable={true}
                   options={labelData?.message_label}
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option}
-                  onChange={(selectedValue) => {
+                  getOptionLabel={(option: any) => option.label}
+                  getOptionValue={(option: any) => option}
+                  onBlur={() => {
+                    setFieldTouched("label");
+                  }}
+                  onChange={(selectedValue: any) => {
                     setFieldValue("label", selectedValue);
                   }}
                 />
@@ -233,17 +237,22 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
             <Styles.MessageInput>
               {values.isDraft && (
                 <Typography variant={"body2"} color={"info"} className={"mb-0.5 accent-gray-500"}>
-                  *Draft saved at {customDateFormat(values.lastTimeSavedDraft)}{" "}
+                  *Draft saved at {`${values.lastTimeSavedDraft}`}{" "}
                 </Typography>
               )}
               <Field
                 component={FormikInputCustom}
                 type={"textarea"}
                 label={"Enter Text"}
-                variant={"signup"}
                 name={"message"}
+                variant={"signup"}
+                isValidForm={isValid}
+                id={"message"}
                 autoResize={true}
                 value={values?.message || ""}
+                onBlur={() => {
+                  setFieldTouched("message");
+                }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setFieldValue("message", e.target.value);
                 }}
@@ -265,7 +274,10 @@ export const CreateNewMessageContainer: FC<ICreateNewMessageContainerProps> = ({
                         index={index}
                         handleFileDelete={() => {
                           if (isNewMsgGroup === "draft" && "linkId" in file) {
-                            const deletedFiles = [...values.DeleteAttachmentIds, file.id];
+                            const deletedFiles = [
+                              ...(values.DeleteAttachmentIds as string[]),
+                              file.id,
+                            ];
                             setFieldValue("DeleteAttachmentIds", deletedFiles);
                           }
                           handleFileDelete(

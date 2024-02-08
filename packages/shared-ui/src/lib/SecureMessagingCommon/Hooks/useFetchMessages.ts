@@ -2,23 +2,24 @@ import React from "react";
 
 import { silverQueryKeys as queryKeys } from "@emrgo-frontend/constants";
 import { SecureMessagesApi } from "@emrgo-frontend/services";
-import { TUserType } from "@emrgo-frontend/shared-ui";
-import { IMessageChain, IMessageData } from "@emrgo-frontend/types";
+import { IMessageChain, IMessageData, TWrapperType as TUserType } from "@emrgo-frontend/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useMessagesQuery = <TData = IMessageData>(
-  id: string,
-  userType: TUserType,
+  id: string | undefined,
+  userType: TUserType | null,
   enabled: boolean,
   select?: (data: IMessageData) => TData
 ) => {
-  return useQuery([queryKeys.secureMessaging.id, `${id}`], {
+  return useQuery([queryKeys.secureMessaging.id, id], {
     refetchOnMount: "always",
-    staleTime: 5000,
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 5000,
+    refetchInterval: 1000 * 1000,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
     enabled: enabled ?? false,
     queryFn: async ({ queryKey }) => {
-      if (!id) return Promise.reject();
+      if (!id || !userType) return Promise.reject();
       const data = await SecureMessagesApi.fetchGroupMessagesId({
         id: queryKey[1],
         wrapper: userType,
@@ -31,39 +32,7 @@ export const useMessagesQuery = <TData = IMessageData>(
 
 export const useSortedMessages = (
   id: string | undefined,
-  userType: TUserType,
-  enabled: boolean
-) => {
-  return useMessagesQuery(
-    id,
-    userType,
-    enabled,
-    React.useCallback((data: IMessageData): IMessageData => {
-      const chain = data.chain
-        .sort((a, b) => {
-          return a.index - b.index;
-        })
-        .filter((elem) => elem.linkStatus !== "Draft")
-        .map((elem, index, array) => {
-          const modifiedElem = elem;
-          const currentElement = array[index],
-            prevElement = typeof array[index] !== "undefined" && array[index - 1];
-          if (currentElement.isNew && (!prevElement || (prevElement && !prevElement.isNew)))
-            modifiedElem.isNewStarted = true;
-
-          return modifiedElem;
-        });
-      return {
-        ...data,
-        chain,
-      };
-    }, [])
-  );
-};
-
-export const useLastDraftMessageQuery = (
-  id: string | undefined,
-  userType: TUserType,
+  userType: TUserType | null,
   enabled: boolean
 ) => {
   return useMessagesQuery(
@@ -71,10 +40,49 @@ export const useLastDraftMessageQuery = (
     userType,
     enabled,
     React.useCallback(
-      (data: IMessageData): IMessageChain | IMessageData | null => {
+      (data: IMessageData): IMessageData => {
+        const chain = data.chain
+          .sort((a, b) => {
+            return a.index - b.index;
+          })
+          .filter((elem) => elem.linkStatus !== "Draft")
+          .map((elem, index, array) => {
+            const modifiedElem = elem;
+            const currentElement = array[index],
+              prevElement = typeof array[index] !== "undefined" && array[index - 1];
+            if (
+              currentElement.isNew &&
+              (!prevElement || (prevElement && !prevElement.isNew)) &&
+              currentElement.entityType !== userType
+            )
+              modifiedElem.isNewStarted = true;
+
+            return modifiedElem;
+          });
+        return {
+          ...data,
+          chain,
+        };
+      },
+      [id, userType]
+    )
+  );
+};
+
+export const useLastDraftMessageQuery = (
+  id: string | undefined,
+  userType: TUserType | null,
+  enabled: boolean
+) => {
+  return useMessagesQuery(
+    id,
+    userType,
+    enabled,
+    React.useCallback(
+      (data: IMessageData) => {
         if (data.groupStatus === "Draft" && data.entityType === userType)
           return data as IMessageData;
-        const chain: IMessageChain = data.chain.sort((a, b) => {
+        const chain: IMessageChain[] = data.chain.sort((a, b) => {
           return a.index - b.index;
         });
 
@@ -90,7 +98,7 @@ export const useLastDraftMessageQuery = (
 
 export const useLastDraftQuery = (
   id: string | undefined,
-  userType: TUserType,
+  userType: TUserType | null,
   enabled: boolean
 ) => {
   return useMessagesQuery(
@@ -98,16 +106,16 @@ export const useLastDraftQuery = (
     userType,
     enabled,
     React.useCallback(
-      (data: IMessageData): IMessageChain | null => {
+      (data: IMessageData): IMessageData | null => {
         const chain: IMessageChain[] = data.chain.sort((a, b) => {
           return a.index - b.index;
         });
 
-        const draftMessage = chain[data.chain.length - 1];
+        const draftMessage: IMessageChain = chain[data.chain.length - 1];
         if (draftMessage.linkStatus === "Draft" && draftMessage.sender.type === userType)
           return {
             ...data,
-            draftMessage,
+            chain: draftMessage,
           };
         return null;
       },
@@ -118,7 +126,7 @@ export const useLastDraftQuery = (
 
 export const useUnreadMessagesIds = (
   id: string | undefined,
-  userType: TUserType,
+  userType: TUserType | null,
   enabled: boolean
 ) => {
   return useMessagesQuery(
@@ -145,3 +153,44 @@ export const useUnreadMessagesIds = (
     )
   );
 };
+
+// export const useUnreadMessagesIds = (
+//   id: string | undefined,
+//   userType: TUserType | null,
+//   enabled: boolean
+// ) => {
+//   return useQuery([queryKeys.secureMessaging.id, `${id}`], {
+//     refetchOnMount: "always",
+//     staleTime: undefined,
+//     cacheTime: undefined,
+//     keepPreviousData: false,
+//     refetchOnWindowFocus: true,
+//     enabled: enabled ?? false,
+//     queryFn: async ({ queryKey }) => {
+//       if (!id || !userType) return Promise.reject();
+//       const data = await SecureMessagesApi.fetchGroupMessagesId({
+//         id: queryKey[1],
+//         wrapper: userType,
+//       });
+//       return data;
+//     },
+//     select: React.useCallback(
+//       (data: IMessageData): string[] | null => {
+//         const chain: IMessageChain[] = data.chain.reduce((accum, currentValue) => {
+//           const ids = [...accum];
+//           if (
+//             currentValue.linkStatus === "Sent" &&
+//             currentValue.sender.type !== userType &&
+//             currentValue.isNew
+//           ) {
+//             ids.push(currentValue.id);
+//           }
+//           return ids;
+//         }, []);
+//
+//         return chain.length > 0 ? chain : undefined;
+//       },
+//       [id, userType]
+//     ),
+//   });
+// };

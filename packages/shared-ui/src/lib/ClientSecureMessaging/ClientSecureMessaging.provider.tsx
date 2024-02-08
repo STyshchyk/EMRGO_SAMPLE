@@ -26,7 +26,9 @@ export const ClientSecureMessagingProvider = ({ children }: PropsWithChildren) =
   const navigate = useNavigate();
   const { data } = useFetchGroups("client");
   useEffect(() => {
-    setUserType("client");
+    setUserType((prevState) => {
+      return "client";
+    });
     navigate(clientAccountRoutes.secureMessaging.inbox.home);
   }, []);
 

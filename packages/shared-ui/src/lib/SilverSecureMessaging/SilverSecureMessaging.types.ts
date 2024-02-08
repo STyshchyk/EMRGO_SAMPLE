@@ -7,6 +7,7 @@ export interface ISilverSecureMessagingContext {
   user: IUser | null | undefined;
   checked: string[];
   isCheckModeSelected: boolean;
+
   setCheckMode: React.Dispatch<React.SetStateAction<boolean>>;
   setChecked: React.Dispatch<React.SetStateAction<string[]>>;
 }

@@ -24,7 +24,7 @@ export const SideBarList: FC<ISideBarListProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const id = useParams();
-  const { setNewMsgGroup, isNewMsgGroup } = useFilters();
+  const { setNewMsgGroup, isNewMsgGroup, setAuditUrl } = useFilters();
   const { mutate: deleteGroup } = useDeleteGroup();
   const { mutate: updateGroupFlag } = useUpdateMessageFlag();
   if (!messagesList) return <Spinner />;
@@ -47,10 +47,13 @@ export const SideBarList: FC<ISideBarListProps> = ({
             return (
               <>
                 {filteredData.map((message: any) => {
+                  const groupId = message.id;
+
                   const route = reverse(
                     `${constants.clientAccountRoutes.secureMessaging.inbox.id}`,
-                    { id: message.id }
+                    { id: groupId }
                   );
+                  const isMessageUnread = message.isNew;
                   const currentRoute = extractId(id);
                   const creatorInfo = message.creator;
                   const isMessageTypeDraft = message?.groupStatus === "Draft";
@@ -58,7 +61,7 @@ export const SideBarList: FC<ISideBarListProps> = ({
                     <Styles.SidebarListItem key={message.id}>
                       <Styles.SidebarListItemLink
                         $IsActive={location.pathname === route ? true : false}
-                        $IsNew={true}
+                        $IsNew={isMessageUnread}
                         $IsDisabled={false}
                         onClick={(event) => {
                           if (isMessageTypeDraft) {
@@ -106,7 +109,14 @@ export const SideBarList: FC<ISideBarListProps> = ({
                           </Styles.Elipsis>
                         </Styles.TextWrapper>
                         <Styles.TextWrapper>
-                          <Button size={"small"} variant={"primary"}>
+                          <Button
+                            size={"small"}
+                            variant={"primary"}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              setAuditUrl(groupId);
+                            }}
+                          >
                             Status
                           </Button>
                           <Styles.DateWrapper
@@ -121,7 +131,7 @@ export const SideBarList: FC<ISideBarListProps> = ({
                               });
                             }}
                           >
-                            <EmojiFlagsIcon fontSize={"small"} onClick={() => {}} />
+                            <EmojiFlagsIcon fontSize={"small"} />
                           </Styles.DateWrapper>
                         </Styles.TextWrapper>
                         <Styles.Delete

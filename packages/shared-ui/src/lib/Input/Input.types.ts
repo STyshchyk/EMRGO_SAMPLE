@@ -9,6 +9,7 @@ export interface IInputProps extends HTMLAttributes<HTMLInputElement> {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** The input label */
   label?: string;
+  border?: boolean;
   /** The input is in an error state */
   error?: string | false;
   /** The input helper text */

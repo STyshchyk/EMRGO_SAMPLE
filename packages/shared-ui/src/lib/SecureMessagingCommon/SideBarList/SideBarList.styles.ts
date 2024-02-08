@@ -193,7 +193,7 @@ export const SidebarListItemLink = styled.a<{
       ${activeLinkStyles}
     `}
   ${({ $IsNew }) =>
-    $IsNew === false &&
+    $IsNew &&
     css`
       ${getTheme("typography.semiBold.02")}
       ${unreadLinkStyles}
