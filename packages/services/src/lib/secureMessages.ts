@@ -26,6 +26,9 @@ export const fetchGroups = async (props: IFetchGroupsProps): Promise<IGroups[]> 
   const promise = sharedApi({
     method: "get",
     url: `/messaging/v1/groups`,
+    params: {
+      isArchived: true,
+    },
   });
   const data = await (await promise).data.data;
   return data || [];

@@ -36,7 +36,7 @@ export const SideBarList: FC<ISideBarListProps> = ({
           {({ messageType }) => {
             const filteredData = messagesList.filter((elem) => {
               const isDraftMsg = messageType === "Draft" && elem.groupStatus === "Draft";
-              const isArchivedMsg = messageType === "Archived" && elem.groupStatus === "archived";
+              const isArchivedMsg = messageType === "Archived" && elem.isArchived;
               const isMsgSent =
                 messageType === "Sent" && elem.groupStatus === "Sent" && elem.entityType === type;
               const isMsgRecieved = messageType === "Received" && elem.entityType !== type;
