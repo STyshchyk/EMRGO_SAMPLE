@@ -1,6 +1,5 @@
 import React, { FC, RefObject } from "react";
 
-import { IMessageData } from "@emrgo-frontend/types";
 import { DEFAULT_DATE_TIME_FORMAT_SM } from "@emrgo-frontend/utils";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
@@ -13,9 +12,8 @@ import * as Styles from "./MessageContainer.styles";
 export const MessageContainerItem: FC<{
   elem: any;
   index: number;
-  unreadRef: RefObject<HTMLElement | null>;
-  recepient: IMessageData;
-}> = ({ elem, index, unreadRef, recepient }) => {
+  unreadRef: RefObject<HTMLHRElement> | null;
+}> = ({ elem, index, unreadRef }) => {
   const { userType } = useFilters();
 
   const files = elem?.attachments ?? [];
@@ -37,17 +35,9 @@ export const MessageContainerItem: FC<{
       )}
       <Styles.MessageItem $isSender={!isCurrentMsgBelongToSender}>
         <Styles.MessageHeader>
-          <div className={"flex flex-col justify-start"}>
-            <span>
-              {sender.firstName} {sender.lastName}
-            </span>
-            <span>
-              to:
-              {isCurrentMsgBelongToSender
-                ? ` ${recepient?.creator?.firstName} ${recepient?.creator?.lastName}`
-                : ` ${recepient?.entities?.name}`}
-            </span>
-          </div>
+          <span>
+            {sender.firstName} {sender.lastName}
+          </span>
           <span>{date}</span>
         </Styles.MessageHeader>
         <Styles.MessageContent>{elem?.message}</Styles.MessageContent>
@@ -63,6 +53,7 @@ export const MessageContainerItem: FC<{
                   fileName={file?.fileName ?? "test_name.pdf"}
                   isLoading={false}
                   size={file?.size ?? "100KiB"}
+                  file={file}
                 />
               );
             })}

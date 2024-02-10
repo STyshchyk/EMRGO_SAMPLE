@@ -17,6 +17,7 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
   handleFileDelete,
   variant = "outlined",
   onClick,
+  file,
 }) => {
   const name_draft = fileName || "test_name.pdf";
   const fileType = name_draft ? name_draft.split(".").pop() : "empty";
@@ -39,6 +40,7 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
         }
         onClick={(e) => {
           e.stopPropagation();
+          console.log("file", file);
           if (onClick) onClick();
         }}
         onDelete={() => {

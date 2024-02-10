@@ -1,3 +1,5 @@
+import { IUploadAttachemnt } from "@emrgo-frontend/types";
+
 export interface IAttachedFileProps {
   isLoading?: boolean;
   fileName: string;
@@ -7,6 +9,7 @@ export interface IAttachedFileProps {
   handleFileDelete?: (index: string | number) => void;
   variant?: TVariant;
   color?: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  file: IUploadAttachemnt;
 }
 
 type TVariant = "filled" | "outlined";

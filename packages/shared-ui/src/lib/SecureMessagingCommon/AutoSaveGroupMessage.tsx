@@ -49,17 +49,23 @@ export const AutoSaveGroupMessage: FC<IAutoSaveGroupMessageProps> = ({
       Array.isArray(values.addAttachments) &&
       values.addAttachments.length === 0 &&
       values.DeleteAttachmentIds.length === 0 &&
-      values.message.length <= 1;
-    const payload: IUpdateGroupMessage = {
-      ...values,
-      status: "Draft",
-      addAttachments: filterAddedAttachment,
-    };
-    if (!payload.messageId) {
+      values.message.length <= 0;
+
+    if (!values.messageId) {
+      const payload: IUpdateGroupMessage = {
+        ...values,
+        status: "Draft",
+        attachments: filterAddedAttachment,
+      };
       console.log("create draft", isMessageEmpty, payload, values);
       if (isMessageEmpty) return;
       postDraftMessage({ message: payload, wrapper: type });
     } else {
+      const payload: IUpdateGroupMessage = {
+        ...values,
+        status: "Draft",
+        addAttachments: filterAddedAttachment,
+      };
       console.log("update draft", isMessageEmpty, payload, values);
       if (!payload.messageId) return;
       console.log("pre delete", isMessageEmpty);

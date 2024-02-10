@@ -221,6 +221,7 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
                           isLoading={file?.isLoading ?? false}
                           size={file?.size ?? ""}
                           index={index}
+                          file={file}
                           handleFileDelete={() => {
                             if (isNewMsgGroup === "none" && "linkId" in file) {
                               const deletedFiles = [...values.DeleteAttachmentIds, file.id];
