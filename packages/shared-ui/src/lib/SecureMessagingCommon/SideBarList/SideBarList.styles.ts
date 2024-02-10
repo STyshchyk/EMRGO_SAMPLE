@@ -144,7 +144,11 @@ export const Initials = styled.span<{ isChecked?: boolean; $isCheckMode?: boolea
   transform: translateY(-50%) translateX(0.25rem);
   display: ${(props) => (!!props.isChecked || !!props.$isCheckMode ? "none" : "flex")};
 `;
-export const Delete = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
+export const Delete = styled.span<{
+  isChecked?: boolean;
+  checkMode?: boolean;
+  $isDisabled?: boolean;
+}>`
   position: absolute;
   right: 4px;
   top: 50%;
@@ -161,6 +165,21 @@ export const Delete = styled.span<{ isChecked?: boolean; checkMode?: boolean }>`
       fill: red !important;
     }
   }
+
+  ${(props) =>
+    props.$isDisabled &&
+    css`
+      svg {
+        fill: lightgray !important;
+      }
+      &:hover {
+        background-color: rgba(211, 211, 211, 0);
+
+        svg {
+          fill: lightgray !important;
+        }
+      }
+    `};
 
   transition: all 0.5s ease;
   cursor: pointer;
@@ -204,7 +223,6 @@ export const SidebarListItemLink = styled.a<{
       pointer-events: none;
       ${disabledLinkStyles}
     `}
-
   &.active {
     ${getTheme("typography.regular.02")}
     ${activeLinkStyles}
@@ -234,7 +252,11 @@ export const TextWrapper = styled.div`
   padding-bottom: 0.1rem;
   line-height: 20px;
 `;
-export const DateWrapper = styled.div<{ $isActive?: boolean; $isHover?: boolean }>`
+export const DateWrapper = styled.div<{
+  $isActive?: boolean;
+  $isHoverEnabled?: boolean;
+  $isDisabled?: boolean;
+}>`
   ${getTheme("typography.medium.04")};
 
   svg {
@@ -242,7 +264,8 @@ export const DateWrapper = styled.div<{ $isActive?: boolean; $isHover?: boolean 
     border-radius: 0.25rem;
 
     ${(props) =>
-      props.$isHover &&
+      props.$isHoverEnabled &&
+      !props.$isDisabled &&
       css`
         &:hover {
           background-color: ${getTheme("colors.grey")};
@@ -257,6 +280,14 @@ export const DateWrapper = styled.div<{ $isActive?: boolean; $isHover?: boolean 
 
         &:hover {
           fill: red;
+        }
+      `}
+    ${(props) =>
+      props.$isDisabled &&
+      css`
+        fill: lightgray;
+
+        &:hover {
         }
       `}
   }

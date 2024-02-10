@@ -91,7 +91,7 @@ export const updateFlag = async (props: IUpdateFlagProps): Promise<any> => {
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
   const promise = sharedApi({
     method: "patch",
-    url: `/messaging/v1/group/${props.id}/status/${props.status}`,
+    url: `/messaging/v1/group/${props.id}/flagged/${props.status}`,
   });
   const data = await (await promise).data;
   return data || [];

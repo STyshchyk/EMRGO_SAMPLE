@@ -38,8 +38,16 @@ export const SideBarList: FC<ISideBarListProps> = ({
               const isDraftMsg = messageType === "Draft" && elem.groupStatus === "Draft";
               const isArchivedMsg = messageType === "Archived" && elem.isArchived;
               const isMsgSent =
-                messageType === "Sent" && elem.groupStatus === "Sent" && elem.entityType === type;
-              const isMsgRecieved = messageType === "Received" && elem.entityType !== type;
+                messageType === "Sent" &&
+                elem.groupStatus === "Sent" &&
+                elem.entityType === type &&
+                elem.groupStatus !== "Draft" &&
+                elem.groupStatus !== "Archived";
+              const isMsgRecieved =
+                messageType === "Received" &&
+                elem.entityType !== type &&
+                elem.groupStatus !== "Draft" &&
+                elem.groupStatus !== "Archived";
 
               return isDraftMsg || isArchivedMsg || isMsgSent || isMsgRecieved;
             });
@@ -56,6 +64,7 @@ export const SideBarList: FC<ISideBarListProps> = ({
                   const isMessageUnread = message.isNew;
                   const currentRoute = extractId(id);
                   const creatorInfo = message.creator;
+                  const isArchived = message.groupStatus === "Archived";
                   const isMessageTypeDraft = message?.groupStatus === "Draft";
                   return (
                     <Styles.SidebarListItem key={message.id}>
@@ -121,9 +130,11 @@ export const SideBarList: FC<ISideBarListProps> = ({
                           </Button>
                           <Styles.DateWrapper
                             $isActive={message?.isFlagged ?? false}
-                            $isHover={true}
+                            $isHoverEnabled={true}
+                            $isDisabled={isArchived}
                             onClick={(event) => {
                               event.stopPropagation();
+                              if (isArchived) return;
                               updateGroupFlag({
                                 id: message.id,
                                 wrapper: type,
@@ -135,8 +146,10 @@ export const SideBarList: FC<ISideBarListProps> = ({
                           </Styles.DateWrapper>
                         </Styles.TextWrapper>
                         <Styles.Delete
+                          $isDisabled={isArchived}
                           onClick={(event) => {
                             event.stopPropagation();
+                            if (isArchived) return;
                             deleteGroup({ id: message.id, wrapper: type });
                           }}
                         >
