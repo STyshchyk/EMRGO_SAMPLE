@@ -37,7 +37,7 @@ export const GroupMessagingAuditHistory: FC<IAuditHistoryLogsProps> = ({ open, h
   const { data } = useFetchAutditHistoryCombined(userType, auditUrl);
   const { data: currentGroupStatus } = useFetchLastGroupStatus(userType, auditUrl);
   const { mutate } = useMutation({
-    mutationFn: SecureMessagesApi.updateFlag,
+    mutationFn: SecureMessagesApi.updateGroupStatus,
     onSuccess: () => {
       client.invalidateQueries([queryKeys.secureMessaging.auditHistory, auditUrl]).then(() => {});
     },

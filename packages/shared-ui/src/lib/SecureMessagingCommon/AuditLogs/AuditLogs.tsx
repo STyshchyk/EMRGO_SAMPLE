@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import { dateFormatter } from "@emrgo-frontend/utils";
+import { DEFAULT_DATE_TIME_FORMAT_SM } from "@emrgo-frontend/utils";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import NoteAddOutlinedIcon from "@mui/icons-material/NoteAddOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+import ReplayIcon from "@mui/icons-material/Replay";
 import Timeline from "@mui/lab/Timeline";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
@@ -14,6 +14,7 @@ import TimelineOppositeContent, {
 } from "@mui/lab/TimelineOppositeContent";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import { Typography } from "@mui/material";
+import dayjs from "dayjs";
 
 import { IAuditLogItem, IAuditLogsProps } from "./AuditLogs.types";
 
@@ -30,26 +31,20 @@ const AuditItem = ({ log, isFirst, isLast }: IAuditLogItem) => {
     case "New":
       color = "primary";
       icon = <AddIcon size="small" color={color} />;
-      auditHistoryStatement = `Group status updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
-      change = `Status changed ${log.oldStatus} - ${log.newStatus}`;
+      auditHistoryStatement = `Updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
+      change = `Status changed from ${log.oldStatus} to ${log.newStatus}`;
       break;
     case "InProgress":
       color = "error";
-      icon = <NoteAddOutlinedIcon size="small" color={color} />;
-      auditHistoryStatement = `Group status updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
-      change = `Status changed ${log.oldStatus} - ${log.newStatus}`;
+      icon = <CloseIcon size="small" color={color} />;
+      auditHistoryStatement = `Updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
+      change = `Status changed from ${log.oldStatus} to ${log.newStatus}`;
       break;
     case "Closed":
       color = "primary";
-      icon = <NoteAddOutlinedIcon size="small" color={color} />;
-      auditHistoryStatement = `Group status updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
-      change = `Closed`;
-      break;
-    case "Reopened":
-      color = "primary";
-      icon = <EditIcon size="small" color={color} />;
-      auditHistoryStatement = `Group status updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
-      change = `Status changed ${log.oldStatus} - ${log.newStatus}`;
+      icon = <ReplayIcon size="small" color={color} />;
+      auditHistoryStatement = `Updated by ${log.changedByUser.firstName} ${log.changedByUser.lastName}`;
+      change = `Status changed from ${log.oldStatus} to ${log.newStatus}`;
       break;
 
     default:
@@ -58,7 +53,7 @@ const AuditItem = ({ log, isFirst, isLast }: IAuditLogItem) => {
   return (
     <TimelineItem>
       <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-        {dateFormatter(log.createdAt, "DD/MM/YYYY HH:MM:ss")}
+        {dayjs(log.createdAt).format(DEFAULT_DATE_TIME_FORMAT_SM)}
       </TimelineOppositeContent>
       <TimelineSeparator className={"justify-center"}>
         {!isFirst && <TimelineConnector />}

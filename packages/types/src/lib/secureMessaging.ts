@@ -72,7 +72,7 @@ export interface IUpdateFlagProps {
 export interface IUpdateGroupStatusProps {
   wrapper: TWrapperType;
   status: TGroupStatus;
-  groupId: string;
+  id: string;
 }
 
 export interface IUpdateNewGroupMessageProps {
@@ -173,7 +173,7 @@ export interface IMessageData {
   entityType: TWrapperType;
   externalStatus: string;
   internalStatus: string;
-  groupStatus: TMessageStatus;
+  groupStatus: TMessageStatus | "Archived";
   isFlagged: boolean;
   label_id: string;
   label: { value: string; id: string; label: string };

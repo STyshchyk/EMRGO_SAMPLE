@@ -184,18 +184,21 @@ export const MessagesContainerCommon: FC<IMessagesContainerCommonProps> = ({
                     *Draft saved at {values?.lastTimeSavedDraft as string}
                   </Typography>
                 )}
-                <AutoSaveGroupMessage
-                  initial={initialData}
-                  id={id}
-                  isSubmitting={isSubmitting}
-                  isFileUploading={isFileUploading}
-                />
+                {groupMessages?.groupStatus !== "Archived" && (
+                  <AutoSaveGroupMessage
+                    initial={initialData}
+                    id={id}
+                    isSubmitting={isSubmitting}
+                    isFileUploading={isFileUploading}
+                  />
+                )}
+
                 <Field
                   component={FormikInputCustom}
                   label={"Enter Text"}
                   variant={"signup"}
                   type={"textarea"}
-                  isValidForm={isValid}
+                  isValidForm={isValid && groupMessages?.groupStatus !== "Archived"}
                   value={values?.message ?? ""}
                   autoResize={true}
                   onBlur={() => {

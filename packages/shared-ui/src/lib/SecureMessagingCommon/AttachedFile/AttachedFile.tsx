@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 
+import { viewFile } from "@emrgo-frontend/services";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CircularProgress } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import { useMutation } from "@tanstack/react-query";
 
 import * as Styles from "./AttachedFile.styles";
 import { IAttachedFileProps } from "./AttachedFile.types";
@@ -22,6 +24,9 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
   const name_draft = fileName || "test_name.pdf";
   const fileType = name_draft ? name_draft.split(".").pop() : "empty";
   const size_draf = size || "100Kib";
+
+  const { mutate } = useMutation(viewFile);
+
   return (
     <Styles.AttachedFile>
       <Chip
@@ -40,7 +45,7 @@ export const AttachedFile: FC<IAttachedFileProps> = ({
         }
         onClick={(e) => {
           e.stopPropagation();
-          console.log("file", file);
+          mutate(file.url);
           if (onClick) onClick();
         }}
         onDelete={() => {

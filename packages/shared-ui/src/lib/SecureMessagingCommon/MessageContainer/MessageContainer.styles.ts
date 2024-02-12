@@ -85,16 +85,7 @@ export const MessageContent = styled.div`
 
 export const MessageFilesContainer = styled.div`
   /* Layout */ /* Element Styles */ /* Text styles */
-  ${(props) =>
-    props.theme.mode === "light" &&
-    css`
-      border-top: 1px solid ${getTheme("colors.strokes.light")};
-    `}
-  ${(props) =>
-    props.theme.mode === "dark" &&
-    css`
-      border-top: 1px solid ${getTheme("colors.light")};
-    `}
+
   display: flex;
   flex-wrap: wrap;
   margin-top: 0.25rem;

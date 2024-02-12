@@ -101,7 +101,7 @@ export const updateGroupStatus = async (props: IUpdateGroupStatusProps): Promise
   const sharedApi = props.wrapper === "client" ? sharedClient : sharedSilver;
   const promise = sharedApi({
     method: "patch",
-    url: `/messaging/v1/group/${props.groupId}/status/${props.status}`,
+    url: `/messaging/v1/group/${props.id}/status/${props.status}`,
   });
   const data = await (await promise).data;
   return data || [];

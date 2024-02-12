@@ -13,8 +13,8 @@ export const useMessagesQuery = <TData = IMessageData>(
 ) => {
   return useQuery([queryKeys.secureMessaging.id, id], {
     refetchOnMount: "always",
-    staleTime: 1000 * 5000,
-    refetchInterval: 1000 * 1000,
+    staleTime: 1000 * 5,
+    refetchInterval: 1000 * 10,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
     enabled: enabled ?? false,

@@ -73,3 +73,19 @@ export const getFileUploadLink = async (file: {
   });
   return response;
 };
+
+export const viewFile = async (path: string) => {
+  const promise = sharedDashboardApi({
+    url: "utils/v1/utils/files/link",
+    method: "PUT",
+    data: { path },
+  }).then((res) => {
+    const link = document.createElement("a");
+    link.href = res.data.data.url;
+    link.target = "_blank";
+    link.download = "files";
+    link.click();
+  });
+
+  return promise;
+};
